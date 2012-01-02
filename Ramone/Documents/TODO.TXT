@@ -1,4 +1,6 @@
-﻿HAL
+﻿xxx TEST
+
+HAL
 - IHaveLinks?
 - Follow()?
 
