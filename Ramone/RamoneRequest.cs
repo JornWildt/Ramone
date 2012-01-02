@@ -92,7 +92,7 @@ namespace Ramone
 
     protected void SetBody(object body)
     {
-      ICodecManager codecManager = Session.Service.Settings.CodecManager;
+      ICodecManager codecManager = Session.Service.CodecManager;
       MediaTypeWriterRegistration writer = BodyContentType == null 
                                            ? codecManager.GetWriter(body.GetType())
                                            : codecManager.GetWriter(body.GetType(), BodyContentType);
@@ -179,7 +179,7 @@ namespace Ramone
 
       if (t != null)
       {
-        IEnumerable<MediaTypeReaderRegistration> readers = Session.Service.Settings.CodecManager.GetReaders(t);
+        IEnumerable<MediaTypeReaderRegistration> readers = Session.Service.CodecManager.GetReaders(t);
         foreach (MediaTypeReaderRegistration r in readers)
         {
           if (accept.Length > 0)

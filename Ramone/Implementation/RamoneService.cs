@@ -4,15 +4,15 @@ using System.Net;
 
 namespace Ramone.Implementation
 {
-  public class RamoneService : IRamoneService
+  internal class RamoneService : IRamoneService
   {
     #region IRamoneService Members
-
-    public IRamoneSettings Settings { get; protected set; }
 
     public string UserAgent { get; set; }
 
     public Uri BaseUri { get; protected set; }
+
+    public ICodecManager CodecManager { get; protected set; }
 
     public IAuthorizationDispatcher AuthorizationDispatcher { get; protected set; }
 
@@ -26,11 +26,11 @@ namespace Ramone.Implementation
     #endregion
 
 
-    public RamoneService(IRamoneSettings settings, Uri baseUri)
+    public RamoneService(Uri baseUri)
     {
-      Settings = settings;
-      UserAgent = settings.UserAgent;
+      UserAgent = "Ramone/1.0";
       BaseUri = baseUri;
+      CodecManager = new CodecManager();
       AuthorizationDispatcher = new AuthorizationDispatcher();
       RequestInterceptors = new RequestInterceptorSet();
     }

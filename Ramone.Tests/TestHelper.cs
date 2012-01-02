@@ -38,16 +38,15 @@ namespace Ramone.Tests
     protected static readonly Uri BasicAuthUrl = new Uri(BaseUrl, Constants.BasicAuthPath);
     
 
-    public static IRamoneSettings Settings { get; set; }
-
-    protected IRamoneService TestService { get; set; }
+    public static IRamoneService TestService { get; set; }
 
     protected IRamoneSession Session { get; set; }
 
 
+
     static TestHelper()
     {
-      Settings = RamoneConfiguration.NewSettings();
+      TestService = RamoneConfiguration.NewService(BaseUrl);
     }
 
 
@@ -69,7 +68,6 @@ namespace Ramone.Tests
     /// </summary>
     protected virtual void TestFixtureSetUp()
     {
-      TestService = Settings.NewService(BaseUrl);
     }
 
 

@@ -4,19 +4,20 @@ using Ramone.Implementation;
 using Ramone.MediaTypes.Hal;
 using Ramone.MediaTypes.Xml;
 using Ramone.MediaTypes.Atom;
+using System;
 
 
 namespace Ramone
 {
   public static class RamoneConfiguration
   {
-    public static IRamoneSettings NewSettings()
+    public static IRamoneService NewService(Uri baseUrl)
     {
-      return new RamoneSettings();
+      return new RamoneService(baseUrl);
     }
 
 
-    public static IRamoneSettings WithStandardCodecs(this IRamoneSettings settings)
+    public static IRamoneService WithStandardCodecs(this IRamoneService settings)
     {
       settings.CodecManager.AddCodec<XmlDocument>("application/xml", new XmlDocumentCodec());
       settings.CodecManager.AddCodec<SyndicationFeed>("application/atom+xml", new AtomFeedCodec());

@@ -100,8 +100,6 @@
     <Compile Include="IMediaTypeCodec.cs" />
     <Compile Include="IMediaTypeReader.cs" />
     <Compile Include="IMediaTypeWriter.cs" />
-    <Compile Include="Implementation\RamoneSettings.cs" />
-    <Compile Include="IRamoneSettings.cs" />
     <Compile Include="IRamoneService.cs" />
     <Compile Include="IRequestInterceptorSet.cs" />
     <Compile Include="Implementation\RamoneService.cs" />

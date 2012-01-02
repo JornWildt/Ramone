@@ -33,7 +33,7 @@ namespace Ramone
       if (Response.ContentLength == 0 || string.IsNullOrEmpty(ContentType) || Response.StatusCode == HttpStatusCode.NoContent)
         return null;
 
-      IMediaTypeReader reader = Session.Service.Settings.CodecManager.GetReader(typeof(T), ContentType).Codec;
+      IMediaTypeReader reader = Session.Service.CodecManager.GetReader(typeof(T), ContentType).Codec;
       T result = reader.ReadFrom(Response.GetResponseStream(), typeof(T)) as T;
       return result;
     }

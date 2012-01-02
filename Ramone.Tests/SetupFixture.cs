@@ -16,7 +16,7 @@ namespace Ramone.Tests
     [SetUp]
     public void Setup()
     {
-      ICodecManager cm = TestHelper.Settings.CodecManager;
+      ICodecManager cm = TestHelper.TestService.CodecManager;
 
       cm.AddCodec<Dossier>(CMSConstants.CMSContentType, new XmlSerializerCodec<Dossier>());
       cm.AddCodec<DossierDocumentList>(CMSConstants.CMSContentType, new XmlSerializerCodec<DossierDocumentList>());

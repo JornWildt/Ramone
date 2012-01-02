@@ -13,14 +13,14 @@ namespace Ramone.Tests
     public void CanAddStandardCodecs()
     {
       // Act
-      IRamoneSettings settings = RamoneConfiguration.NewSettings()
+      IRamoneService service = RamoneConfiguration.NewService(BaseUrl)
                                                   .WithStandardCodecs();
 
       // Assert
-      Assert.IsNotNull(settings.CodecManager.GetReader(typeof(XmlDocument), "application/xml"));
-      Assert.IsNotNull(settings.CodecManager.GetReader(typeof(SyndicationItem), "application/atom+xml"));
-      Assert.IsNotNull(settings.CodecManager.GetReader(typeof(SyndicationFeed), "application/atom+xml"));
-      Assert.IsNotNull(settings.CodecManager.GetReader(typeof(HalResource), "application/hal+xml"));
+      Assert.IsNotNull(service.CodecManager.GetReader(typeof(XmlDocument), "application/xml"));
+      Assert.IsNotNull(service.CodecManager.GetReader(typeof(SyndicationItem), "application/atom+xml"));
+      Assert.IsNotNull(service.CodecManager.GetReader(typeof(SyndicationFeed), "application/atom+xml"));
+      Assert.IsNotNull(service.CodecManager.GetReader(typeof(HalResource), "application/hal+xml"));
     }
   }
 }

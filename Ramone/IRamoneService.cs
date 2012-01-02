@@ -6,7 +6,7 @@ namespace Ramone
 {
   public interface IRamoneService
   {
-    IRamoneSettings Settings { get; }
+    ICodecManager CodecManager { get; }
 
     string UserAgent { get; set; }
 

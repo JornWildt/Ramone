@@ -18,7 +18,7 @@ namespace Ramone.Tests.MediaTypes.Xml
     protected override void SetUp()
     {
       base.SetUp();
-      Session.Service.Settings.CodecManager.AddCodec<DataContractDossier>("application/xml", new XmlSerializerCodec<DataContractDossier>());
+      Session.Service.CodecManager.AddCodec<DataContractDossier>("application/xml", new XmlSerializerCodec<DataContractDossier>());
     }
 
 

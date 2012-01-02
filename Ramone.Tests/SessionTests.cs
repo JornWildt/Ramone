@@ -9,23 +9,22 @@ namespace Ramone.Tests
   [TestFixture]
   public class SessionTests : TestHelper
   {
-    IRamoneSettings MySettings = RamoneConfiguration.NewSettings();
+    IRamoneService MySettings = RamoneConfiguration.NewService(BaseUrl);
 
 
     [Test]
     public void WhenCreatingSessionItCopiesAllSimpleProperties()
     {
       // Arrange
-      IRamoneSettings settings = RamoneConfiguration.NewSettings();
-      settings.UserAgent = "Dummy";
+      IRamoneService service = RamoneConfiguration.NewService(BaseUrl);
+      service.UserAgent = "Dummy";
 
       // Act
-      IRamoneService service = settings.NewService(new Uri("http://dr.dk"));
       IRamoneSession session = service.NewSession();
 
       // Assert
-      Assert.AreEqual("Dummy", service.UserAgent);
       Assert.AreEqual("Dummy", session.UserAgent);
+      Assert.AreEqual(BaseUrl, session.BaseUri);
     }
 
 
@@ -33,7 +32,7 @@ namespace Ramone.Tests
     public void WhenCreatingSessionItClonesAuthorizationDispatcher()
     {
       // Arrange
-      IRamoneService service = MySettings.NewService(new Uri("http://dr.dk"));
+      IRamoneService service = RamoneConfiguration.NewService(BaseUrl);
 
       // Act
       IRamoneSession session1 = service.NewSession();
@@ -61,7 +60,7 @@ namespace Ramone.Tests
     public void WhenCreatingSessionItClonesInterceptors()
     {
       // Arrange
-      IRamoneService service = MySettings.NewService(new Uri("http://dr.dk"));
+      IRamoneService service = RamoneConfiguration.NewService(BaseUrl);
 
       // Act
       IRamoneSession session1 = service.NewSession();
