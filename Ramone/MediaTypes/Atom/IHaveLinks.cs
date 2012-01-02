@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 
 
-namespace Ramone.Common
+namespace Ramone.MediaTypes.Atom
 {
   public interface IHaveLinks
   {

@@ -1,8 +1,8 @@
 ﻿using System.Xml;
 using System.Xml.Serialization;
-using Ramone.Tests.Common.CMS;
-using Ramone.Common;
+using Ramone.MediaTypes.Atom;
 using Ramone.MediaTypes.Hal;
+using Ramone.Tests.Common.CMS;
 
 
 namespace Ramone.Tests.Server.Codecs.CMS

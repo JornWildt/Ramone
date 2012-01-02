@@ -71,14 +71,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AtomLink.cs" />
+    <Compile Include="MediaTypes\Atom\AtomLink.cs" />
     <Compile Include="AuthorizationInterceptors\BasicAuthorizationInterceptor.cs" />
-    <Compile Include="Codecs\FormUrlEncodedCodec.cs" />
-    <Compile Include="Codecs\StringCodec.cs" />
+    <Compile Include="MediaTypes\FormUrlEncoded\FormUrlEncodedCodec.cs" />
+    <Compile Include="MediaTypes\Atom\AtomNames.cs" />
     <Compile Include="MediaTypes\Xml\XmlDataContractSerializerCodec.cs" />
     <Compile Include="MediaTypes\Xml\XmlDocumentCodec.cs" />
     <Compile Include="MediaTypes\Xml\XmlSerializerCodec.cs" />
-    <Compile Include="IHaveLinks.cs" />
+    <Compile Include="MediaTypes\Atom\IHaveLinks.cs" />
     <Compile Include="MediaTypes\Hal\HalLink.cs" />
     <Compile Include="MediaTypes\Hal\HalResource.cs" />
     <Compile Include="MediaTypes\Hal\HalXmlCodec.cs" />

@@ -1,5 +1,5 @@
 ﻿using NUnit.Framework;
-using Ramone.Common;
+using Ramone.MediaTypes.Atom;
 using Ramone.Tests.Common.CMS;
 
 

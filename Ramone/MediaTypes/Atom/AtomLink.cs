@@ -2,7 +2,7 @@
 using System.Xml.Serialization;
 
 
-namespace Ramone.Common
+namespace Ramone.MediaTypes.Atom
 {
   /// <summary>
   /// Represents an ATOM feed link.
@@ -10,9 +10,6 @@ namespace Ramone.Common
   /// <remarks>Is similar to .NET's built in SyndicationItem, but that one is not serializable.</remarks>
   public class AtomLink
   {
-    public const string AtomNamespace = "http://www.w3.org/2005/Atom";
-
-
     [XmlAttribute("href")]
     public string HRef { get; set; }
 

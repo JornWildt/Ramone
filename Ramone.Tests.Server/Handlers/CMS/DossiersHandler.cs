@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using OpenRasta.Web;
+using Ramone.MediaTypes.Atom;
 using Ramone.Tests.Common.CMS;
-using Ramone.Common;
 
 
 namespace Ramone.Tests.Server.Handlers.CMS

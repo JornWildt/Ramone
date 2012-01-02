@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Xml.Serialization;
-using Ramone.Common;
+using Ramone.MediaTypes.Atom;
 
 
 namespace Ramone.Tests.Common.CMS
@@ -11,7 +11,7 @@ namespace Ramone.Tests.Common.CMS
     
     public string Title { get; set; }
 
-    [XmlElement("link", Namespace=AtomLink.AtomNamespace)]
+    [XmlElement("link", Namespace=AtomNames.AtomNamespace)]
     public List<AtomLink> Links { get; set; }
 
     

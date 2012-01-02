@@ -24,6 +24,10 @@ you can transfer an object like this:
 
   Cat c = req.Get<Cat>().Body;
 
+The name "Ramone" was inspired by the character "Ramone" in the movie "Cars".
+In the movie Ramone is an easy going car. Hopefully you will find using the 
+Ramone library just as easy going. Happy hacking.
+
 
 SIMILAR PROJECTS
 ----------------

@@ -3,7 +3,7 @@ using System.IO;
 using Ramone.Utility;
 
 
-namespace Ramone.Codecs
+namespace Ramone.MediaTypes.FormUrlEncoded
 {
   public class FormUrlEncodedCodec<TEntity> : IMediaTypeWriter
     where TEntity : class
