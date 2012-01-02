@@ -46,7 +46,7 @@ namespace Ramone.Tests
 
     static TestHelper()
     {
-      TestService = RamoneConfiguration.NewService(BaseUrl);
+      TestService = RamoneConfiguration.NewService(BaseUrl).WithStandardCodecs();
     }
 
 

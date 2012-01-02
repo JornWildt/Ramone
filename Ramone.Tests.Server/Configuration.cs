@@ -60,26 +60,26 @@ namespace Ramone.Tests.Server
           .AtUri(CMSConstants.DossierPath)
           .And.AtUri(CMSConstants.DossiersPath)
           .HandledBy<DossiersHandler>()
-          .TranscodedBy<DossierCodec>().ForMediaType(CMSConstants.CMSContentType)
+          .TranscodedBy<DossierCodec>()
           .And.TranscodedBy<HalDossierCodec>().ForMediaType("application/hal+xml");
 
       ResourceSpace.Has.ResourcesOfType<DossierDocumentList>()
           .AtUri(CMSConstants.DossierDocumentsPath)
           .HandledBy<DossierDocumentsHandler>()
           .TranscodedBy<DossierDocumentsCodec>()
-          .ForMediaType(CMSConstants.CMSContentType);
+          .ForMediaType(CMSConstants.CMSMediaType);
 
       ResourceSpace.Has.ResourcesOfType<Document>()
           .AtUri(CMSConstants.DocumentPath)
           .HandledBy<DocumentHandler>()
           .TranscodedBy<DocumentCodec>()
-          .ForMediaType(CMSConstants.CMSContentType);
+          .ForMediaType(CMSConstants.CMSMediaType);
 
       ResourceSpace.Has.ResourcesOfType<Party>()
           .AtUri(CMSConstants.PartyPath)
           .HandledBy<PartyHandler>()
           .TranscodedBy<PartyCodec>()
-          .ForMediaType(CMSConstants.CMSContentType);
+          .ForMediaType(CMSConstants.CMSMediaType);
     }
   }
 }

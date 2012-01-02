@@ -63,7 +63,7 @@ namespace Ramone.Tests
     public void CanPutAndGetResultWithAcceptMediaType()
     {
       // Act
-      Dossier newDossier = DossierReq.Accept<Dossier>(CMSConstants.CMSContentType).Put(MyDossier).Body;
+      Dossier newDossier = DossierReq.Accept<Dossier>(CMSConstants.CMSMediaType).Put(MyDossier).Body;
 
       // Assert
       Assert.IsNotNull(newDossier);

@@ -56,6 +56,7 @@
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.ServiceModel.Web">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -75,7 +76,6 @@
     <Compile Include="AuthorizationInterceptors\BasicAuthorizationInterceptor.cs" />
     <Compile Include="MediaTypes\FormUrlEncoded\FormUrlEncodedCodec.cs" />
     <Compile Include="MediaTypes\Atom\AtomNames.cs" />
-    <Compile Include="MediaTypes\Xml\XmlDataContractSerializerCodec.cs" />
     <Compile Include="MediaTypes\Xml\XmlDocumentCodec.cs" />
     <Compile Include="MediaTypes\Xml\XmlSerializerCodec.cs" />
     <Compile Include="MediaTypes\Atom\IHaveLinks.cs" />

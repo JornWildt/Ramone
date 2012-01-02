@@ -18,10 +18,10 @@ namespace Ramone.Tests
     {
       ICodecManager cm = TestHelper.TestService.CodecManager;
 
-      cm.AddCodec<Dossier>(CMSConstants.CMSContentType, new XmlSerializerCodec<Dossier>());
-      cm.AddCodec<DossierDocumentList>(CMSConstants.CMSContentType, new XmlSerializerCodec<DossierDocumentList>());
-      cm.AddCodec<Document>(CMSConstants.CMSContentType, new XmlSerializerCodec<Document>());
-      cm.AddCodec<Party>(CMSConstants.CMSContentType, new XmlSerializerCodec<Party>());
+      cm.AddCodec<Dossier>(CMSConstants.CMSMediaType, new XmlSerializerCodec<Dossier>());
+      cm.AddCodec<DossierDocumentList>(CMSConstants.CMSMediaType, new XmlSerializerCodec<DossierDocumentList>());
+      cm.AddCodec<Document>(CMSConstants.CMSMediaType, new XmlSerializerCodec<Document>());
+      cm.AddCodec<Party>(CMSConstants.CMSMediaType, new XmlSerializerCodec<Party>());
       cm.AddCodec<HalDossier>("application/hal+xml", new XmlSerializerCodec<HalDossier>());
       
       //cm.AddCodec<string>("application/hal+xml", new StringCodec()());
@@ -34,14 +34,9 @@ namespace Ramone.Tests
 
       cm.AddCodec<HeaderList>("application/xml", new XmlSerializerCodec<HeaderList>());
 
-      cm.AddCodec<XmlDocument>("application/xml", new XmlDocumentCodec());
-
       cm.AddCodec<string>("text/plain", new TextCodec());
       cm.AddCodec<string>("text/html", new TextCodec());
       cm.AddCodec<string>("text/xml", new TextCodec());
-
-      cm.AddCodec<SyndicationFeed>("application/atom+xml", new AtomFeedCodec());
-      cm.AddCodec<SyndicationItem>("application/atom+xml", new AtomItemCodec());
     }
   }
 }

@@ -6,7 +6,8 @@ using Ramone.Tests.Common.CMS;
 
 namespace Ramone.Tests.Server.Codecs.CMS
 {
-  [MediaType(CMSConstants.CMSContentType)]
+  [MediaType(CMSConstants.CMSMediaType)]
+  [MediaType("application/xml")]
   public class DocumentCodec : XmlCodecBase<Document>
   {
     XmlSerializer Serializer = new XmlSerializer(typeof(Document));
