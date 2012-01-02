@@ -1,0 +1,179 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{BC8D95DB-9320-4E7A-BD1E-C63F3710D9FB}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Ramone.Tests.Server</RootNamespace>
+    <AssemblyName>Ramone.Tests.Server</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <ProgramFiles32 Condition="Exists('$(PROGRAMFILES) (x86)')">$(PROGRAMFILES) (x86)</ProgramFiles32>
+    <ProgramFiles32 Condition="$(ProgramFiles32) == ''">$(PROGRAMFILES)</ProgramFiles32>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <UpgradeBackupLocation />
+    <TargetFrameworkProfile />
+    <UseIISExpress>false</UseIISExpress>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <NoWarn>1591</NoWarn>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <NoWarn>1591</NoWarn>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="OpenRasta, Version=2.0.3211.429, Culture=neutral, PublicKeyToken=e04bf464d7caae73, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>OpenRasta\OpenRasta.dll</HintPath>
+    </Reference>
+    <Reference Include="OpenRasta.Codecs.SharpView, Version=2.0.3214.437, Culture=neutral, PublicKeyToken=84191a26cb6a146c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>OpenRasta\OpenRasta.Codecs.SharpView.dll</HintPath>
+    </Reference>
+    <Reference Include="OpenRasta.Codecs.WebForms, Version=2.0.3214.437, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>OpenRasta\OpenRasta.Codecs.WebForms.dll</HintPath>
+    </Reference>
+    <Reference Include="OpenRasta.DI.Windsor, Version=2.0.3211.429, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>OpenRasta\OpenRasta.DI.Windsor.dll</HintPath>
+    </Reference>
+    <Reference Include="OpenRasta.Hosting.AspNet, Version=2.0.3211.429, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>OpenRasta\OpenRasta.Hosting.AspNet.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.ServiceModel.Web">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.Web.Mobile" />
+    <Reference Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="basicauthentication.aspx" />
+    <Content Include="errors.aspx" />
+    <Content Include="default.aspx" />
+    <Content Include="Web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="basicauthentication.aspx.cs">
+      <DependentUpon>basicauthentication.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="basicauthentication.aspx.designer.cs">
+      <DependentUpon>basicauthentication.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Codecs\AtomFeedCodec.cs" />
+    <Compile Include="Codecs\AtomItemCodec.cs" />
+    <Compile Include="Codecs\CatAsHtmlCodec.cs" />
+    <Compile Include="Codecs\CatAsTextCodec.cs" />
+    <Compile Include="Codecs\CatAsXmlCodec.cs" />
+    <Compile Include="Codecs\CMS\DossierDocumentsCodec.cs" />
+    <Compile Include="Codecs\CMS\DocumentCodec.cs" />
+    <Compile Include="Codecs\CMS\DossierCodec.cs" />
+    <Compile Include="Codecs\CMS\HalDossierCodec.cs" />
+    <Compile Include="Codecs\CMS\PartyCodec.cs" />
+    <Compile Include="Codecs\Dog2AsXmlCodec.cs" />
+    <Compile Include="Codecs\HeaderEchoCodec.cs" />
+    <Compile Include="Codecs\XmlCodecBase.cs" />
+    <Compile Include="Codecs\XmlSerializerCodec.cs" />
+    <Compile Include="errors.aspx.cs">
+      <DependentUpon>errors.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="errors.aspx.designer.cs">
+      <DependentUpon>errors.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Codecs\TextCodec.cs" />
+    <Compile Include="Configuration.cs" />
+    <Compile Include="Handlers\CatHandler.cs" />
+    <Compile Include="Handlers\CMS\DossierDocumentsHandler.cs" />
+    <Compile Include="Handlers\CMS\DocumentHandler.cs" />
+    <Compile Include="Handlers\CMS\DossiersHandler.cs" />
+    <Compile Include="Handlers\CMS\PartyHandler.cs" />
+    <Compile Include="Handlers\DogHandler.cs" />
+    <Compile Include="Handlers\HeaderEchoHandler.cs" />
+    <Compile Include="Handlers\TextNullHandler.cs" />
+    <Compile Include="Handlers\FeedHandler.cs" />
+    <Compile Include="Handlers\TextHandler.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Resources\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Ramone.Common\Ramone.Common.csproj">
+      <Project>{572EC8BD-8500-43B1-B8D6-C25193583B5F}</Project>
+      <Name>Ramone.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Ramone.Tests.Common\Ramone.Tests.Common.csproj">
+      <Project>{DD3B040F-3D75-4C46-BB54-CD06F594F894}</Project>
+      <Name>Ramone.Tests.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Ramone\Ramone.csproj">
+      <Project>{445D7DFA-0123-4CE0-ADE2-1D632A517E2C}</Project>
+      <Name>Ramone</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>False</UseIIS>
+          <AutoAssignPort>False</AutoAssignPort>
+          <DevelopmentServerPort>56789</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>
+          </IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>

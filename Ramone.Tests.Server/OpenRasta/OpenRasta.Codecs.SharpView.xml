@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>OpenRasta.Codecs.SharpView</name>
+    </assembly>
+    <members>
+        <member name="M:OpenRasta.Configuration.SharpViewConfiguration.SharpView(OpenRasta.Configuration.Fluent.IUses)">
+            <summary>
+            Registers SharpView in OpenRasta.
+            </summary>
+            <param name="src"></param>
+        </member>
+        <member name="M:OpenRasta.Codecs.SharpView.SharpViewSnippetModifier.ProcessString(System.String)">
+            <exception cref="T:System.InvalidOperationException">Something went really really wrong captain.</exception>
+        </member>
+        <member name="T:OpenRasta.Codecs.SharpView.Visitors.IfRewriterVisitor">
+            <summary>
+            Rewrites the If extension method.
+            </summary>
+        </member>
+    </members>
+</doc>

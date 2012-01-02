@@ -1,0 +1,161 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{445D7DFA-0123-4CE0-ADE2-1D632A517E2C}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Ramone</RootNamespace>
+    <AssemblyName>Ramone</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <UpgradeBackupLocation />
+    <TargetFrameworkProfile />
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.ServiceModel.Web">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AtomLink.cs" />
+    <Compile Include="AuthorizationInterceptors\BasicAuthorizationInterceptor.cs" />
+    <Compile Include="Codecs\FormUrlEncodedCodec.cs" />
+    <Compile Include="Codecs\StringCodec.cs" />
+    <Compile Include="MediaTypes\Xml\XmlDataContractSerializerCodec.cs" />
+    <Compile Include="MediaTypes\Xml\XmlDocumentCodec.cs" />
+    <Compile Include="MediaTypes\Xml\XmlSerializerCodec.cs" />
+    <Compile Include="IHaveLinks.cs" />
+    <Compile Include="MediaTypes\Hal\HalLink.cs" />
+    <Compile Include="MediaTypes\Hal\HalResource.cs" />
+    <Compile Include="MediaTypes\Hal\HalXmlCodec.cs" />
+    <Compile Include="RamoneConfiguration.cs" />
+    <Compile Include="Extensions.cs" />
+    <Compile Include="Html\HtmlAnchor.cs" />
+    <Compile Include="Html\HtmlForm.cs" />
+    <Compile Include="Html\RamoneResponseExtensions.cs" />
+    <Compile Include="Html\Utility.cs" />
+    <Compile Include="Html\XmlDocumentExtensions.cs" />
+    <Compile Include="IAuthorizationDispatcher.cs" />
+    <Compile Include="IAuthorizationHandler.cs" />
+    <Compile Include="Implementation\AuthorizationDispatcher.cs" />
+    <Compile Include="Implementation\CodecManager.cs" />
+    <Compile Include="MediaTypes\Atom\AtomFeedCodec.cs" />
+    <Compile Include="MediaTypes\Atom\AtomItemCodec.cs" />
+    <Compile Include="MediaTypes\Xml\XmlCodecBase.cs" />
+    <Compile Include="ICodecManager.cs" />
+    <Compile Include="IMediaTypeCodec.cs" />
+    <Compile Include="IMediaTypeReader.cs" />
+    <Compile Include="IMediaTypeWriter.cs" />
+    <Compile Include="Implementation\RamoneSettings.cs" />
+    <Compile Include="ISettings.cs" />
+    <Compile Include="IService.cs" />
+    <Compile Include="IRequestInterceptorSet.cs" />
+    <Compile Include="Implementation\RamoneService.cs" />
+    <Compile Include="Implementation\RequestInterceptorSet.cs" />
+    <Compile Include="IObjectContainer.cs" />
+    <Compile Include="ISession.cs" />
+    <Compile Include="IRequestInterceptor.cs" />
+    <Compile Include="Implementation\RamoneSession.cs" />
+    <Compile Include="RamoneException.cs" />
+    <Compile Include="RamoneRequest.cs" />
+    <Compile Include="RamoneResponse.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utility\DictionaryConverter.cs" />
+    <Compile Include="Utility\FormUrlEncodingSerializer.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Documents\TODO.TXT" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Ramone.Common\Ramone.Common.csproj">
+      <Project>{572EC8BD-8500-43B1-B8D6-C25193583B5F}</Project>
+      <Name>Ramone.Common</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>cd $(ProjectDir)
+copy bin\debug\Ramone.dll ..\Binaries
+
+</PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
