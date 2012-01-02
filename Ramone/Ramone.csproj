@@ -101,13 +101,13 @@
     <Compile Include="IMediaTypeReader.cs" />
     <Compile Include="IMediaTypeWriter.cs" />
     <Compile Include="Implementation\RamoneSettings.cs" />
-    <Compile Include="ISettings.cs" />
-    <Compile Include="IService.cs" />
+    <Compile Include="IRamoneSettings.cs" />
+    <Compile Include="IRamoneService.cs" />
     <Compile Include="IRequestInterceptorSet.cs" />
     <Compile Include="Implementation\RamoneService.cs" />
     <Compile Include="Implementation\RequestInterceptorSet.cs" />
     <Compile Include="IObjectContainer.cs" />
-    <Compile Include="ISession.cs" />
+    <Compile Include="IRamoneSession.cs" />
     <Compile Include="IRequestInterceptor.cs" />
     <Compile Include="Implementation\RamoneSession.cs" />
     <Compile Include="RamoneException.cs" />

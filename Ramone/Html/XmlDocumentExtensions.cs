@@ -8,7 +8,7 @@ namespace Ramone.Html
 {
   public static class XmlDocumentExtensions
   {
-    public static HtmlForm SelectHtmlForm(this XmlNode xml, string formSelector, Uri baseUrl, ISession session)
+    public static HtmlForm SelectHtmlForm(this XmlNode xml, string formSelector, Uri baseUrl, IRamoneSession session)
     {
       XmlNode formNode = Utility.SelectSingleNode(xml, formSelector);
       if (formNode == null)

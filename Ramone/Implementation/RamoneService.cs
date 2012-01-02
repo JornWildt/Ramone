@@ -4,11 +4,11 @@ using System.Net;
 
 namespace Ramone.Implementation
 {
-  public class RamoneService : IService
+  public class RamoneService : IRamoneService
   {
     #region IRamoneService Members
 
-    public ISettings Settings { get; protected set; }
+    public IRamoneSettings Settings { get; protected set; }
 
     public string UserAgent { get; set; }
 
@@ -18,7 +18,7 @@ namespace Ramone.Implementation
 
     public IRequestInterceptorSet RequestInterceptors { get; protected set; }
 
-    public ISession NewSession()
+    public IRamoneSession NewSession()
     {
       return new RamoneSession(this);
     }
@@ -26,7 +26,7 @@ namespace Ramone.Implementation
     #endregion
 
 
-    public RamoneService(ISettings settings, Uri baseUri)
+    public RamoneService(IRamoneSettings settings, Uri baseUri)
     {
       Settings = settings;
       UserAgent = settings.UserAgent;

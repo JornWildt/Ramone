@@ -16,6 +16,8 @@ Media type handling
       - GetAnchor()
       - GetForm().SetInput().Submit() [which now resides in Ramone.Html - remove it]
 
+Settings/Service/Session er lige i overkanten (drop settings)
+
 Skal have 
 - RamoneRequest.Execute(method)
 - RamoneRequest.Execute<T>(method)
@@ -39,6 +41,7 @@ Håndtering af charset i codecs
 Kan RamoneException.cs droppes?
 
 Nye Request metoder uden session (som så dannes automatisk). Gør det nemt at komme igang.
+- Giver det mening? Så har man ikke nogen settings med codecs.
 
 Tilbyd LinkList sammen med IHaveLinks
 

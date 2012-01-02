@@ -9,19 +9,19 @@ namespace Ramone.Tests
   [TestFixture]
   public class SessionTests : TestHelper
   {
-    ISettings MySettings = RamoneConfiguration.NewSettings();
+    IRamoneSettings MySettings = RamoneConfiguration.NewSettings();
 
 
     [Test]
     public void WhenCreatingSessionItCopiesAllSimpleProperties()
     {
       // Arrange
-      ISettings settings = RamoneConfiguration.NewSettings();
+      IRamoneSettings settings = RamoneConfiguration.NewSettings();
       settings.UserAgent = "Dummy";
 
       // Act
-      IService service = settings.NewService(new Uri("http://dr.dk"));
-      ISession session = service.NewSession();
+      IRamoneService service = settings.NewService(new Uri("http://dr.dk"));
+      IRamoneSession session = service.NewSession();
 
       // Assert
       Assert.AreEqual("Dummy", service.UserAgent);
@@ -33,17 +33,17 @@ namespace Ramone.Tests
     public void WhenCreatingSessionItClonesAuthorizationDispatcher()
     {
       // Arrange
-      IService service = MySettings.NewService(new Uri("http://dr.dk"));
+      IRamoneService service = MySettings.NewService(new Uri("http://dr.dk"));
 
       // Act
-      ISession session1 = service.NewSession();
+      IRamoneSession session1 = service.NewSession();
 
       service.AuthorizationDispatcher.Add("dummy1", new DummyHandler1());
       
-      ISession session2 = service.NewSession();
+      IRamoneSession session2 = service.NewSession();
       session2.AuthorizationDispatcher.Add("dummy2", new DummyHandler2());
 
-      ISession session3 = service.NewSession();
+      IRamoneSession session3 = service.NewSession();
 
       // Assert
       Assert.IsNull(session1.AuthorizationDispatcher.Get("dummy1"));
@@ -61,17 +61,17 @@ namespace Ramone.Tests
     public void WhenCreatingSessionItClonesInterceptors()
     {
       // Arrange
-      IService service = MySettings.NewService(new Uri("http://dr.dk"));
+      IRamoneService service = MySettings.NewService(new Uri("http://dr.dk"));
 
       // Act
-      ISession session1 = service.NewSession();
+      IRamoneSession session1 = service.NewSession();
 
       service.RequestInterceptors.Add(new DummyInterceptor1());
 
-      ISession session2 = service.NewSession();
+      IRamoneSession session2 = service.NewSession();
       session2.RequestInterceptors.Add(new DummyInterceptor2());
 
-      ISession session3 = service.NewSession();
+      IRamoneSession session3 = service.NewSession();
 
       // Assert
       Assert.AreEqual(0, session1.RequestInterceptors.Count());

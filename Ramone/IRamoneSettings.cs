@@ -3,10 +3,10 @@
 
 namespace Ramone
 {
-  public interface ISettings
+  public interface IRamoneSettings
   {
     ICodecManager CodecManager { get; }
     string UserAgent { get; set; }
-    IService NewService(Uri baseUri);
+    IRamoneService NewService(Uri baseUri);
   }
 }

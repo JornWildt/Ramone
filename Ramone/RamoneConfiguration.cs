@@ -10,13 +10,13 @@ namespace Ramone
 {
   public static class RamoneConfiguration
   {
-    public static ISettings NewSettings()
+    public static IRamoneSettings NewSettings()
     {
       return new RamoneSettings();
     }
 
 
-    public static ISettings WithStandardCodecs(this ISettings settings)
+    public static IRamoneSettings WithStandardCodecs(this IRamoneSettings settings)
     {
       settings.CodecManager.AddCodec<XmlDocument>("application/xml", new XmlDocumentCodec());
       settings.CodecManager.AddCodec<SyndicationFeed>("application/atom+xml", new AtomFeedCodec());

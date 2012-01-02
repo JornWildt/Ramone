@@ -4,9 +4,9 @@ using System.Net;
 
 namespace Ramone
 {
-  public interface IService
+  public interface IRamoneService
   {
-    ISettings Settings { get; }
+    IRamoneSettings Settings { get; }
 
     string UserAgent { get; set; }
 
@@ -16,6 +16,6 @@ namespace Ramone
 
     IRequestInterceptorSet RequestInterceptors { get; }
 
-    ISession NewSession();
+    IRamoneSession NewSession();
   }
 }

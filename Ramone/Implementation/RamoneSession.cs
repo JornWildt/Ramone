@@ -4,11 +4,11 @@ using System.Net;
 
 namespace Ramone.Implementation
 {
-  public class RamoneSession : ISession
+  public class RamoneSession : IRamoneSession
   {
     #region IRamoneSession Members
 
-    public IService Service { get; protected set; }
+    public IRamoneService Service { get; protected set; }
 
     public string UserAgent { get; set; }
     
@@ -23,7 +23,7 @@ namespace Ramone.Implementation
     #endregion
 
 
-    public RamoneSession(IService service)
+    public RamoneSession(IRamoneService service)
     {
       Service = service;
       UserAgent = service.UserAgent;

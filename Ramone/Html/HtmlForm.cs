@@ -22,13 +22,13 @@ namespace Ramone
 
     public Dictionary<string, Stream> Files { get; protected set; }
 
-    public ISession Session { get; protected set; }
+    public IRamoneSession Session { get; protected set; }
 
 
     protected XmlNode OriginalXml { get; set; }
 
 
-    public HtmlForm(Uri baseUri, XmlNode formXml, ISession session)
+    public HtmlForm(Uri baseUri, XmlNode formXml, IRamoneSession session)
     {
       OriginalXml = formXml;
       Action = baseUri;

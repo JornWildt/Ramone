@@ -3,7 +3,7 @@
 
 namespace Ramone.Implementation
 {
-  public class RamoneSettings : ISettings
+  public class RamoneSettings : IRamoneSettings
   {
     #region IRamoneSettings
 
@@ -12,7 +12,7 @@ namespace Ramone.Implementation
     public string UserAgent { get; set; }
 
 
-    public IService NewService(Uri baseUri)
+    public IRamoneService NewService(Uri baseUri)
     {
       return new RamoneService(this, baseUri);
     }

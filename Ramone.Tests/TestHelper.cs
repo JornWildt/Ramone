@@ -38,11 +38,11 @@ namespace Ramone.Tests
     protected static readonly Uri BasicAuthUrl = new Uri(BaseUrl, Constants.BasicAuthPath);
     
 
-    public static ISettings Settings { get; set; }
+    public static IRamoneSettings Settings { get; set; }
 
-    protected IService TestService { get; set; }
+    protected IRamoneService TestService { get; set; }
 
-    protected ISession Session { get; set; }
+    protected IRamoneSession Session { get; set; }
 
 
     static TestHelper()

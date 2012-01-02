@@ -13,7 +13,7 @@ namespace Ramone.Tests
     public void CanAddStandardCodecs()
     {
       // Act
-      ISettings settings = RamoneConfiguration.NewSettings()
+      IRamoneSettings settings = RamoneConfiguration.NewSettings()
                                                   .WithStandardCodecs();
 
       // Assert

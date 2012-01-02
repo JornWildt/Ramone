@@ -13,7 +13,7 @@ namespace Ramone
 
     #region Constructors
 
-    public RamoneRequest(ISession session, Uri url)
+    public RamoneRequest(IRamoneSession session, Uri url)
     {
       Session = session;
       Url = url;
@@ -21,7 +21,7 @@ namespace Ramone
     }
 
 
-    public RamoneRequest(ISession session, string url)
+    public RamoneRequest(IRamoneSession session, string url)
       : this(session, new Uri(url))
     {
     }
@@ -44,7 +44,7 @@ namespace Ramone
 
     #region Properties
 
-    protected ISession Session { get; set; }
+    protected IRamoneSession Session { get; set; }
 
     protected object BodyData { get; set; }
 

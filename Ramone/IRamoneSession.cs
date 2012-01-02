@@ -4,9 +4,9 @@ using System.Net;
 
 namespace Ramone
 {
-  public interface ISession
+  public interface IRamoneSession
   {
-    IService Service { get; }
+    IRamoneService Service { get; }
 
     CookieContainer Cookies { get; }
 

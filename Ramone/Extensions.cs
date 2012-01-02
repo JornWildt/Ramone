@@ -10,25 +10,25 @@ namespace Ramone
 {
   public static class Extensions
   {
-    public static RamoneRequest Request(this ISession session, Uri url)
+    public static RamoneRequest Request(this IRamoneSession session, Uri url)
     {
       return new RamoneRequest(session, url);
     }
 
 
-    public static RamoneRequest Request(this ISession session, string url)
+    public static RamoneRequest Request(this IRamoneSession session, string url)
     {
       return new RamoneRequest(session, url);
     }
 
 
-    public static RamoneRequest Request(this ISession session, AtomLink link)
+    public static RamoneRequest Request(this IRamoneSession session, AtomLink link)
     {
       return new RamoneRequest(session, link.HRef);
     }
 
 
-    public static RamoneResponse<T> AsRamoneResponse<T>(this HttpWebResponse response, ISession session) where T : class
+    public static RamoneResponse<T> AsRamoneResponse<T>(this HttpWebResponse response, IRamoneSession session) where T : class
     {
       return new RamoneResponse<T>(response, session);
     }
@@ -51,7 +51,7 @@ namespace Ramone
     }
 
 
-    public static RamoneRequest Bind(this ISession session, UriTemplate template, object parameters)
+    public static RamoneRequest Bind(this IRamoneSession session, UriTemplate template, object parameters)
     {
       Dictionary<string, string> parameterDictionary = DictionaryConverter.ConvertObjectPropertiesToDictionary(parameters);
       Uri url = template.BindByName(session.BaseUri, parameterDictionary);
@@ -59,7 +59,7 @@ namespace Ramone
     }
 
 
-    public static RamoneRequest Bind(this ISession session, string url, object parameters = null)
+    public static RamoneRequest Bind(this IRamoneSession session, string url, object parameters = null)
     {
       UriTemplate template = new UriTemplate(url);
       return session.Bind(template, parameters);

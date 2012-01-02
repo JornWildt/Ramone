@@ -16,10 +16,10 @@ namespace Ramone
 
     public Uri BaseUri { get { return new Uri(Response.ResponseUri.GetLeftPart(UriPartial.Path)); } }
 
-    public ISession Session { get; protected set; }
+    public IRamoneSession Session { get; protected set; }
 
 
-    public RamoneResponse(HttpWebResponse response, ISession session)
+    public RamoneResponse(HttpWebResponse response, IRamoneSession session)
     {
       Response = response;
       ContentType = string.IsNullOrEmpty(Response.ContentType) ? "" : Response.ContentType.Split(';')[0];
@@ -55,7 +55,7 @@ namespace Ramone
   public class RamoneResponse<T> : RamoneResponse
     where T : class
   {
-    public RamoneResponse(HttpWebResponse response, ISession session)
+    public RamoneResponse(HttpWebResponse response, IRamoneSession session)
       : base(response, session)
     {
     }
