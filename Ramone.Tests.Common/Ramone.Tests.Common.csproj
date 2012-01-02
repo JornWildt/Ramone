@@ -54,10 +54,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Ramone.Common\Ramone.Common.csproj">
-      <Project>{572EC8BD-8500-43B1-B8D6-C25193583B5F}</Project>
-      <Name>Ramone.Common</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Ramone\Ramone.csproj">
       <Project>{445D7DFA-0123-4CE0-ADE2-1D632A517E2C}</Project>
       <Name>Ramone</Name>

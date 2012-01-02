@@ -137,17 +137,11 @@
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Ramone.Common\Ramone.Common.csproj">
-      <Project>{572EC8BD-8500-43B1-B8D6-C25193583B5F}</Project>
-      <Name>Ramone.Common</Name>
-    </ProjectReference>
-  </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>cd $(ProjectDir)
-copy bin\debug\Ramone.dll ..\Binaries
+xcopy bin\debug\Ramone.dll ..\Binaries\ /S /I /R /Y
 
 </PostBuildEvent>
   </PropertyGroup>
