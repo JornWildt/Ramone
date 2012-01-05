@@ -3,7 +3,7 @@ using System.ServiceModel.Syndication;
 using NUnit.Framework;
 
 
-namespace Ramone.Tests
+namespace Ramone.Tests.MediaTypes.Atom
 {
   [TestFixture]
   public class AtomTests : TestHelper

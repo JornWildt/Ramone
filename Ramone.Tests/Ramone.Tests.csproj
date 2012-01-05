@@ -75,7 +75,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AtomTests.cs" />
+    <Compile Include="MediaTypes\Atom\AtomTests.cs" />
     <Compile Include="AuthenticationHandlerTests.cs" />
     <Compile Include="AuthenticationTests.cs" />
     <Compile Include="CodecManagerTests.cs" />
@@ -129,9 +129,7 @@
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="MediaTypes\Atom\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
