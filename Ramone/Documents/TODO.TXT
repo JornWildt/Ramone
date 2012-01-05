@@ -1,3 +1,4 @@
+﻿Specifying what the default codec is for a type (so Accept need not be set)
 ﻿Omdøbe Service => Client?
 
 

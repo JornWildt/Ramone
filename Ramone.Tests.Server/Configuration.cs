@@ -6,6 +6,7 @@ using Ramone.Tests.Server.Handlers;
 using Ramone.Tests.Server.Handlers.CMS;
 using Ramone.Tests.Common.CMS;
 using Ramone.Tests.Common;
+using OpenRasta.Codecs;
 
 
 namespace Ramone.Tests.Server
@@ -61,7 +62,8 @@ namespace Ramone.Tests.Server
           .And.AtUri(CMSConstants.DossiersPath)
           .HandledBy<DossiersHandler>()
           .TranscodedBy<DossierCodec>()
-          .And.TranscodedBy<HalDossierCodec>().ForMediaType("application/hal+xml");
+          .And.TranscodedBy<HalDossierCodec>().ForMediaType("application/hal+xml")
+          .And.TranscodedBy<JsonDataContractCodec>();
 
       ResourceSpace.Has.ResourcesOfType<DossierDocumentList>()
           .AtUri(CMSConstants.DossierDocumentsPath)

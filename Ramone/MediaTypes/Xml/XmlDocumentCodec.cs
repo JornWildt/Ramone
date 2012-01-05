@@ -1,21 +1,21 @@
-﻿using System;
-using System.IO;
-using System.Xml;
+﻿using System.Xml;
 
 
 namespace Ramone.MediaTypes.Xml
 {
-  public class XmlDocumentCodec : IMediaTypeReader
+  public class XmlDocumentCodec : XmlCodecBase<XmlDocument>
   {
-    #region IMediaTypeReader Members
-
-    public object ReadFrom(Stream s, Type t)
+    protected override XmlDocument ReadFrom(XmlReader reader)
     {
       XmlDocument doc = new XmlDocument();
-      doc.Load(s);
+      doc.Load(reader);
       return doc;
     }
 
-    #endregion
+
+    protected override void WriteTo(XmlDocument doc, XmlWriter writer)
+    {
+      doc.Save(writer);
+    }
   }
 }
