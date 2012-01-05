@@ -76,6 +76,7 @@
     <Compile Include="AuthorizationInterceptors\BasicAuthorizationInterceptor.cs" />
     <Compile Include="MediaTypes\FormUrlEncoded\FormUrlEncodedCodec.cs" />
     <Compile Include="MediaTypes\Atom\AtomNames.cs" />
+    <Compile Include="MediaTypes\Json\JsonSerializerCodec.cs" />
     <Compile Include="MediaTypes\Xml\XmlDocumentCodec.cs" />
     <Compile Include="MediaTypes\Xml\XmlSerializerCodec.cs" />
     <Compile Include="MediaTypes\Atom\IHaveLinks.cs" />

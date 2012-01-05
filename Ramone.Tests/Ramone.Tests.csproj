@@ -86,6 +86,7 @@
     <Compile Include="CustomHeaderTests.cs" />
     <Compile Include="DeleteTests.cs" />
     <Compile Include="MediaTypes\Hal\HalTests.cs" />
+    <Compile Include="MediaTypes\Json\JsonSerializerCodecTests.cs" />
     <Compile Include="MediaTypes\Xml\XmlDocumentCodecTests.cs" />
     <Compile Include="NoAuthenticationHandlerTests.cs" />
     <Compile Include="PostTests.cs" />

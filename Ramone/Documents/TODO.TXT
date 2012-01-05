@@ -1,4 +1,6 @@
-﻿IMediaTypeReader/Writer
+﻿Specifying what the default codec is for a type (so Accept need not be set)
+
+IMediaTypeReader/Writer
 - Missing info on charset and such like from headers (see TextCodec example)
 - Én samlet Args parameter mit-alles?
 
