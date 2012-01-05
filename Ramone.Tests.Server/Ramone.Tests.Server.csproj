@@ -96,7 +96,6 @@
     <Compile Include="basicauthentication.aspx.designer.cs">
       <DependentUpon>basicauthentication.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Codecs\CatAsJsonCodec.cs" />
     <Compile Include="Codecs\AtomFeedCodec.cs" />
     <Compile Include="Codecs\AtomItemCodec.cs" />
     <Compile Include="Codecs\CatAsHtmlCodec.cs" />

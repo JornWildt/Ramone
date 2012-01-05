@@ -1,12 +1,13 @@
-﻿using System.ServiceModel.Syndication;
+﻿using System.Collections.Generic;
+using System.ServiceModel.Syndication;
+using OpenRasta.Codecs;
 using OpenRasta.Configuration;
+using Ramone.Tests.Common;
+using Ramone.Tests.Common.CMS;
 using Ramone.Tests.Server.Codecs;
 using Ramone.Tests.Server.Codecs.CMS;
 using Ramone.Tests.Server.Handlers;
 using Ramone.Tests.Server.Handlers.CMS;
-using Ramone.Tests.Common.CMS;
-using Ramone.Tests.Common;
-using OpenRasta.Codecs;
 
 
 namespace Ramone.Tests.Server
@@ -35,10 +36,12 @@ namespace Ramone.Tests.Server
 
         ResourceSpace.Has.ResourcesOfType<Cat>()
             .AtUri(Constants.CatPath)
+            .And.AtUri(Constants.CatsPath)
             .HandledBy<CatHandler>()
             .TranscodedBy<CatAsTextCodec>()
             .And.TranscodedBy<CatAsHtmlCodec>()
-            .And.TranscodedBy<CatAsXmlCodec>();
+            .And.TranscodedBy<CatAsXmlCodec>()
+            .And.TranscodedBy<JsonDataContractCodec>();
 
         ResourceSpace.Has.ResourcesOfType<Dog2>()
             .AtUri(Constants.DogPath)
@@ -62,8 +65,7 @@ namespace Ramone.Tests.Server
           .And.AtUri(CMSConstants.DossiersPath)
           .HandledBy<DossiersHandler>()
           .TranscodedBy<DossierCodec>()
-          .And.TranscodedBy<HalDossierCodec>().ForMediaType("application/hal+xml")
-          .And.TranscodedBy<JsonDataContractCodec>();
+          .And.TranscodedBy<HalDossierCodec>().ForMediaType("application/hal+xml");
 
       ResourceSpace.Has.ResourcesOfType<DossierDocumentList>()
           .AtUri(CMSConstants.DossierDocumentsPath)

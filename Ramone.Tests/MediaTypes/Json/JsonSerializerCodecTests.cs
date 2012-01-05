@@ -1,10 +1,10 @@
-﻿using System.Xml;
-using NUnit.Framework;
+﻿using NUnit.Framework;
+using Ramone.MediaTypes.Json;
+using Ramone.Tests.Common;
 using Ramone.Tests.Common.CMS;
-using System;
 
 
-namespace Ramone.Tests.MediaTypes.Xml
+namespace Ramone.Tests.MediaTypes.Json
 {
   [TestFixture]
   public class JsonSerializerCodecTests : TestHelper
@@ -12,21 +12,22 @@ namespace Ramone.Tests.MediaTypes.Xml
     protected override void TestFixtureSetUp()
     {
       base.TestFixtureSetUp();
-      //settings.CodecManager.AddCodec<HalResource>("application/hal+xml", new AtomItemCodec());
-
+      TestService.CodecManager.AddCodec<Cat>("application/json", new JsonSerializerCodec<Cat>());
     }
+
+
     [Test]
     public void CanReadJson()
     {
       // Arrange
-      RamoneRequest req = Session.Bind(DossierTemplate, new { id = 5 });
+      RamoneRequest req = Session.Bind(CatTemplate, new { name = "Ramstein" });
 
       // Act
-      Dossier dossier = req.Accept("application/json").Get<Dossier>().Body;
+      Cat cat = req.Accept("application/json").Get<Cat>().Body;
 
       // Assert
-      Assert.IsNotNull(dossier);
-      Assert.AreEqual(5, dossier.Id);
+      Assert.IsNotNull(cat);
+      Assert.AreEqual("Ramstein", cat.Name);
     }
 
 
@@ -34,17 +35,15 @@ namespace Ramone.Tests.MediaTypes.Xml
     public void CanWriteJson()
     {
       // Arrange
-
-      RamoneRequest request = Session.Request(DossiersUrl);
+      Cat cat = new Cat { Name = "Prince" };
+      RamoneRequest request = Session.Bind(CatsTemplate);
 
       // Act
-      //RamoneResponse<Dossier> response = request.Post<Dossier>(dossierDoc);
+      Cat createdCat = request.ContentType("application/json").Post<Cat>(cat).Created();
 
       // Assert
-      //Dossier createdDossier = response.Body;
-
-      //Assert.IsNotNull(createdDossier);
-      //Assert.AreEqual("My dossier", createdDossier.Title);
+      Assert.IsNotNull(createdCat);
+      Assert.AreEqual("Prince", createdCat.Name);
     }
   }
 }

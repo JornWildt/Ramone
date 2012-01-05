@@ -1,18 +1,46 @@
 ﻿using System;
 using System.IO;
+using JsonFx.Json;
 
 
 namespace Ramone.MediaTypes.Json
 {
-  public class JsonSerializerCodec : IMediaTypeReader //NOT HERE!!!!! 
+  public class JsonSerializerCodec<TEntity> : TextCodecBase<TEntity>
+    where TEntity : class
   {
-    #region IMediaTypeReader Members
+    protected JsonReader Reader { get; set; }
 
-    public object ReadFrom(Stream s, Type t)
+    protected JsonWriter Writer { get; set; }
+
+
+    public JsonSerializerCodec()
     {
-      return null;
+      Reader = CreateReader();
+      Writer = CreateWriter();
     }
 
-    #endregion
+
+    protected override TEntity ReadFrom(TextReader reader)
+    {
+      return Reader.Read<TEntity>(reader);
+    }
+
+
+    protected override void WriteTo(TEntity item, TextWriter writer)
+    {
+      Writer.Write(item, writer);
+    }
+
+
+    protected virtual JsonReader CreateReader()
+    {
+      return new JsonReader();
+    }
+
+
+    protected virtual JsonWriter CreateWriter()
+    {
+      return new JsonWriter();
+    }
   }
 }

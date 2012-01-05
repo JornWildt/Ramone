@@ -7,7 +7,13 @@ namespace Ramone.MediaTypes.Xml
   public class XmlSerializerCodec<TEntity> : XmlCodecBase<TEntity> 
     where TEntity : class
   {
-    XmlSerializer Serializer = new XmlSerializer(typeof(TEntity));
+    protected XmlSerializer Serializer { get; set; }
+
+
+    public XmlSerializerCodec()
+    {
+      Serializer = CreateSerializer();
+    }
 
 
     protected override TEntity ReadFrom(XmlReader reader)
@@ -19,6 +25,12 @@ namespace Ramone.MediaTypes.Xml
     protected override void WriteTo(TEntity entity, XmlWriter writer)
     {
       Serializer.Serialize(writer, entity);
+    }
+
+
+    protected virtual XmlSerializer CreateSerializer()
+    {
+      return new XmlSerializer(typeof(TEntity));
     }
   }
 }

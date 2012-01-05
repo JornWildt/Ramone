@@ -1,4 +1,5 @@
 ﻿using Ramone.Tests.Common;
+using OpenRasta.Web;
 
 
 namespace Ramone.Tests.Server.Handlers
@@ -11,9 +12,13 @@ namespace Ramone.Tests.Server.Handlers
     }
 
 
-    public Cat Post(Cat c)
+    public OperationResult Post(Cat c)
     {
-      return c;
+      return new OperationResult.Created
+      {
+        ResponseResource = c,
+        RedirectLocation = typeof(Cat).CreateUri(new { name = c.Name })
+      };
     }
   }
 }

@@ -25,6 +25,8 @@ namespace Ramone.Tests
 
     protected static readonly UriTemplate CatTemplate = new UriTemplate(Constants.CatPath);
 
+    protected static readonly UriTemplate CatsTemplate = new UriTemplate(Constants.CatsPath);
+
     protected static readonly UriTemplate Dog1Template = new UriTemplate(Constants.DogPath + "?v=1");
 
     protected static readonly UriTemplate Dog2Template = new UriTemplate(Constants.DogPath + "?v=2");

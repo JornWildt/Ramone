@@ -4,6 +4,8 @@
   {
     public const string CatPath = "cat/{name}";
 
+    public const string CatsPath = "cats";
+
     public const string DogPath = "dog/{name}";
 
     public const string AtomFeedPath = "atomfeed/{name}";
