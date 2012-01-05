@@ -9,7 +9,7 @@ namespace Ramone.Tests
   public class CreationTests : TestHelper
   {
     [Test]
-    public void CanCreateNewDossier()
+    public void CanGetCreatedLocationAndBody()
     {
       // Arrange
       Dossier dossier = new Dossier
@@ -23,13 +23,40 @@ namespace Ramone.Tests
       RamoneResponse<Dossier> response = request.Post<Dossier>(dossier);
       
       // Assert
-      Uri createdDossierLocation = response.Created();
+      Uri createdDossierLocation = response.CreatedLocation();
       Dossier createdDossier = response.Body;
 
       Assert.IsNotNull(createdDossierLocation);
       Assert.IsNotNull(createdDossier);
       Assert.AreEqual("A new dossier", createdDossier.Title);
       Assert.AreEqual(999, createdDossier.Id);
+    }
+
+
+    [Test]
+    public void WhenCreatedHasNoBodyItFollowsLocation()
+    {
+      // Arrange
+      Dossier dossier = new Dossier
+      {
+        Title = "Do not return body" // magic string!
+      };
+
+      RamoneRequest request = Session.Request(DossiersUrl);
+
+      // Act
+      RamoneResponse<Dossier> response = request.Post<Dossier>(dossier);
+
+      // Assert that server does as expected
+      Uri createdDossierLocation = response.CreatedLocation();
+      Dossier createdDossier = response.Body;
+
+      Assert.IsNotNull(createdDossierLocation);
+      Assert.Null(createdDossier);
+
+      // Assert that client does as expected
+      createdDossier = response.Created();
+      Assert.IsNotNull(createdDossier);
     }
   }
 }

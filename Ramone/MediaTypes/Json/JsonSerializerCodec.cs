@@ -4,7 +4,7 @@ using System.IO;
 
 namespace Ramone.MediaTypes.Json
 {
-  public class JsonSerializerCodec : IMediaTypeReader
+  public class JsonSerializerCodec : IMediaTypeReader //NOT HERE!!!!! 
   {
     #region IMediaTypeReader Members
 

@@ -33,10 +33,13 @@ namespace Ramone.Tests.Server.Handlers.CMS
         Title = dossier.Title
       };
 
+      if (dossier.Title == "Do not return body")
+        d = null;
+
       return new OperationResult.Created
       {
         ResponseResource = d,
-        RedirectLocation = d.CreateUri()
+        RedirectLocation = typeof(Dossier).CreateUri(new { id = 999 })
       };
     }
 

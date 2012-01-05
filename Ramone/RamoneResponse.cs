@@ -39,7 +39,7 @@ namespace Ramone
     }
 
 
-    public Uri Created()
+    public Uri CreatedLocation()
     {
       if (Response.StatusCode != HttpStatusCode.Created)
         return null;
@@ -48,6 +48,25 @@ namespace Ramone
         return null;
 
       return new Uri(Response.Headers[HttpResponseHeader.Location]);
+    }
+
+
+    public T Created<T>() where T : class
+    {
+      if (Response.StatusCode != HttpStatusCode.Created)
+        return null;
+
+      T body = Decode<T>();
+      if (body == null)
+      {
+        if (Response.Headers[HttpResponseHeader.Location] == null)
+          return null;
+
+        RamoneRequest request = Session.Request(Response.Headers[HttpResponseHeader.Location]);
+        body = request.Get<T>().Body;
+      }
+
+      return body;
     }
   }
 
@@ -76,6 +95,12 @@ namespace Ramone
           _body = Decode<T>();
         return _body; 
       }
+    }
+
+
+    public T Created()
+    {
+      return base.Created<T>();
     }
   }
 }

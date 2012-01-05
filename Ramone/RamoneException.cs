@@ -30,4 +30,13 @@ namespace Ramone
     {
     }
   }
+
+
+  public class RamoneNotCreatedException : RamoneException
+  {
+    public RamoneNotCreatedException(HttpWebResponse response, WebException ex)
+      : base(response, ex)
+    {
+    }
+  }
 }

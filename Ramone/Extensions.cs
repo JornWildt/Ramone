@@ -51,7 +51,7 @@ namespace Ramone
     }
 
 
-    public static RamoneRequest Bind(this IRamoneSession session, UriTemplate template, object parameters)
+    public static RamoneRequest Bind(this IRamoneSession session, UriTemplate template, object parameters = null)
     {
       Dictionary<string, string> parameterDictionary = DictionaryConverter.ConvertObjectPropertiesToDictionary(parameters);
       Uri url = template.BindByName(session.BaseUri, parameterDictionary);
