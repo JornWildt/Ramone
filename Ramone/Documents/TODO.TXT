@@ -1,4 +1,8 @@
-﻿IMediaTypeReader/Writer
+﻿Omdøbe Service => Client?
+
+
+
+IMediaTypeReader/Writer
 - Missing info on charset and such like from headers (see TextCodec example)
 - Én samlet Args parameter mit-alles?
 
@@ -92,6 +96,13 @@ Versioning, different vocabularies (http://tech.groups.yahoo.com/group/rest-disc
 Conditional Delete, Get, etc.
 
 Der er en del som skal tænkes igennem ifm. Follow() ...
+
+RamoneConfiguration
+- Statiske udgaver af UserAgent, Interceptors etc. som så kopieres til service/client og igen til session
+
+Noget med at hooke ind i redirects
+- Case c = req.Get<Case>() ... ved automatisk redirect virker det, men vil man gerne vide at det er sket?
+- Opsætning på både session, service/client os.
 
 Make it possible to Follow() relative links.
 
