@@ -43,6 +43,12 @@ Kan RamoneException.cs droppes?
 
 Nye Request metoder uden session (som så dannes automatisk). Gør det nemt at komme igang.
 - Giver det mening? Så har man ikke nogen settings med codecs.
+- Kan evt. gøres lidt mere direkte med RamoneConfiguration.NewSession()
+  - Især hvis RamoneConfiguration får statiske metoder mm. som nedenfor
+
+RamoneConfiguration
+- Statiske udgaver af UserAgent, Interceptors etc. som så kopieres til service/client og igen til session
+
 
 Tilbyd LinkList sammen med IHaveLinks
 
@@ -101,9 +107,6 @@ Versioning, different vocabularies (http://tech.groups.yahoo.com/group/rest-disc
 Conditional Delete, Get, etc.
 
 Der er en del som skal tænkes igennem ifm. Follow() ...
-
-RamoneConfiguration
-- Statiske udgaver af UserAgent, Interceptors etc. som så kopieres til service/client og igen til session
 
 Noget med at hooke ind i redirects
 - Case c = req.Get<Case>() ... ved automatisk redirect virker det, men vil man gerne vide at det er sket?
