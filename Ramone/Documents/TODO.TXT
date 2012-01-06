@@ -1,7 +1,15 @@
-﻿Specifying what the default codec is for a type (so Accept need not be set)
-﻿Omdøbe Service => Client?
+﻿POST(anonymous type) virker ikke (giver det mening)?
 
-IMediaTypeReader/Writer
+Specifying what the default codec is for a type (so Accept need not be set)
+Support for quality "q" param in accept header and codec selector
+Håndtering af charset i codecs
+- Kan gøres i XmlCodecBase og TextCodecBase (mf?)
+
+text/json text/xml => default codecs
+
+Anvendelse af dynamics til JSON (som f.eks. https://github.com/Huddle/dynamicrest)
+
+﻿IMediaTypeReader/Writer
 - Missing info on charset and such like from headers (see TextCodec example)
 - Én samlet Args parameter mit-alles?
 
@@ -16,14 +24,28 @@ Media type handling
       - GetAnchor()
       - GetForm().SetInput().Submit() [which now resides in Ramone.Html - remove it]
 
+Include a set of constant strings for well known media type names.
+- MediaTypes.Xml
+
+
+Omdøbe Service => Client?
+
+Ramone.HyperMedia
+- ILink
+- ILinkTemplate
+- IForm
+  - SetInput(key, value), encoding etc.
+  - Husk "hidden" og initial values for input
+  - Submit()
+- Og så diverse extension metoder til at aflæse sådanne elementer fra diverse formater
+  - plus at kunne udvide det til nye formater
+- Follow(ILink), Follow(ILinkTemplate, params)
+
 Skal have 
 - RamoneRequest.Execute(method)
 - RamoneRequest.Execute<T>(method)
 - RamoneRequest.Execute(method, body)
 - RamoneRequest.Execute<T>(method, body)
-
-Include a set of constant strings for well known media type names.
-- MediaTypes.Xml
 
 Untyped response with return type "object" when you don't know what you get.
 
@@ -37,7 +59,6 @@ Authorization as first-class citizens
 - Key off IHaveInterceptors (som kommer på session, settings og service)
   - static void BasicAuthorization(this IHaveInterceptors xxx, string uname, string pwd)
 
-Håndtering af charset i codecs
 
 Kan RamoneException.cs droppes?
 
@@ -78,6 +99,9 @@ Before releasing:
   - RDFa
   - Direct streams
   - Any content as a string
+  - RSS
+  - oData
+  - Images
 - Demo NerdDinner, twitter, flickr etc. API 
 
 Folk vil blive forvirret af "AuthenticationHandlers" (som jo altså ikke authentikerer ...)
@@ -111,17 +135,13 @@ Noget med at hooke ind i redirects
 
 Make it possible to Follow() relative links.
 
+Compression
+- As some kind of "pipeline" contributor
+  - Wrapping incoming stream in another stream (zip for instance)
+
 Set referrer
 - Manually
 - Automatically when using Follow()
-
-Anvendelse af dynamics til JSON (som f.eks. https://github.com/Huddle/dynamicrest)
-
-Other client tools
-- http://msdn.microsoft.com/en-us/netframework/dd547388
-- http://www.restlet.org/
-- https://github.com/Huddle/dynamicrest
-- http://restsharp.org/
 
 
 IService
@@ -143,6 +163,7 @@ Caching
 Authorization
 - Check hvordan andre som f.eks. Hammock har gjort det.
 - Standard implementations for OK:Basic, Digest, OAuth, NTLM and more
+  - SimpleAuth (som sætter URL parametre ind https://github.com/restsharp/RestSharp/wiki/Authenticators)
 
 
 Lots of Condition.Requries()...

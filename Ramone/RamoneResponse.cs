@@ -39,6 +39,15 @@ namespace Ramone
     }
 
 
+    public object Body
+    {
+      get
+      {
+        return Decode<object>();
+      }
+    }
+
+
     public Uri CreatedLocation()
     {
       if (Response.StatusCode != HttpStatusCode.Created)
@@ -87,7 +96,7 @@ namespace Ramone
 
 
     private T _body;
-    public T Body
+    public new T Body
     {
       get 
       {

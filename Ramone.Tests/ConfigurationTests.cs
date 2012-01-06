@@ -18,6 +18,7 @@ namespace Ramone.Tests
 
       // Assert
       Assert.IsNotNull(service.CodecManager.GetReader(typeof(XmlDocument), "application/xml"));
+      Assert.IsNotNull(service.CodecManager.GetReader(typeof(object), "application/json"));
       Assert.IsNotNull(service.CodecManager.GetReader(typeof(SyndicationItem), "application/atom+xml"));
       Assert.IsNotNull(service.CodecManager.GetReader(typeof(SyndicationFeed), "application/atom+xml"));
       Assert.IsNotNull(service.CodecManager.GetReader(typeof(HalResource), "application/hal+xml"));
