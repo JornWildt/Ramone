@@ -31,6 +31,10 @@ Ramone library just as easy going. Happy hacking.
 
 SIMILAR PROJECTS
 ----------------
+- http://restsharp.org/
+- http://msdn.microsoft.com/en-us/netframework/dd547388
+- http://www.restlet.org/
+- https://github.com/Huddle/dynamicrest
 
 
 CREDITS
