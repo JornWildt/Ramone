@@ -17,23 +17,36 @@ namespace Ramone.Implementation
     public void AddCodec<TMediaType>(string mediaType, IMediaTypeCodec codec)
     {
       if (codec is IMediaTypeReader)
-        AddReader<TMediaType>(mediaType, (IMediaTypeReader)codec);
+        AddReader(typeof(TMediaType), mediaType, (IMediaTypeReader)codec);
       if (codec is IMediaTypeWriter)
-        AddWriter<TMediaType>(mediaType, (IMediaTypeWriter)codec);
+        AddWriter(typeof(TMediaType), mediaType, (IMediaTypeWriter)codec);
+    }
+
+
+    public void AddCodec(string mediaType, IMediaTypeCodec codec)
+    {
+      if (codec is IMediaTypeReader)
+        AddReader(null, mediaType, (IMediaTypeReader)codec);
+      if (codec is IMediaTypeWriter)
+        AddWriter(null, mediaType, (IMediaTypeWriter)codec);
     }
 
 
     public IEnumerable<MediaTypeReaderRegistration> GetReaders(Type t)
     {
-      return GetReaders(t, null);
+      return GetReaders(t, null, TypeSelectionMode.All);
     }
 
 
     public MediaTypeReaderRegistration GetReader(Type t, string mediaType)
     {
-      MediaTypeReaderRegistration r = GetSingleReaderOrNull(t, GetReaders(t, mediaType));
+      MediaTypeReaderRegistration r = GetSingleReaderOrNull(t, GetReaders(t, mediaType, TypeSelectionMode.OnlyTyped));
       if (r == null)
-        throw new ArgumentException(string.Format("Could not find a reader codec for '{0}' + {1}", mediaType, t));
+      {
+        r = GetSingleReaderOrNull(t, GetReaders(t, mediaType, TypeSelectionMode.All));
+        if (r == null)
+          throw new ArgumentException(string.Format("Could not find a reader codec for '{0}' + {1}", mediaType, t));
+      }
 
       return r;
     }
@@ -47,9 +60,13 @@ namespace Ramone.Implementation
 
     public MediaTypeWriterRegistration GetWriter(Type t, string mediaType)
     {
-      MediaTypeWriterRegistration w = GetSingleWriterOrNull(t, GetWriters(t, mediaType));
+      MediaTypeWriterRegistration w = GetSingleWriterOrNull(t, GetWriters(t, mediaType, TypeSelectionMode.OnlyTyped));
       if (w == null)
-        throw new ArgumentException(string.Format("Could not find a writer codec for '{0}' + {1}", mediaType, t));
+      {
+        w = GetSingleWriterOrNull(t, GetWriters(t, mediaType, TypeSelectionMode.All));
+        if (w == null)
+          throw new ArgumentException(string.Format("Could not find a writer codec for '{0}' + {1}", mediaType, t));
+      }
 
       return w;
     }
@@ -57,28 +74,31 @@ namespace Ramone.Implementation
     #endregion
 
 
-    protected virtual void AddReader<TMediaType>(string mediaType, IMediaTypeReader reader)
+    protected virtual void AddReader(Type t, string mediaType, IMediaTypeReader reader)
     {
-      MediaTypeReaderRegistration r = GetSingleReaderOrNull(typeof(TMediaType), GetReaders(typeof(TMediaType), mediaType));
+      MediaTypeReaderRegistration r = GetSingleReaderOrNull(t, GetReaders(t, mediaType, TypeSelectionMode.OnlyTyped));
       if (r != null)
-        throw new ArgumentException(string.Format("Could not add reader for media-type '{0}' since one already exists", mediaType));
-      RegisteredReaders.Add(new MediaTypeReaderRegistration(mediaType, typeof(TMediaType), reader));
+        throw new ArgumentException(string.Format("Could not add reader for media-type {0} since one already exists (got {1} for '{2}').", mediaType, r.ClrType, r.MediaType));
+      RegisteredReaders.Add(new MediaTypeReaderRegistration(mediaType, t, reader));
     }
 
 
-    protected virtual void AddWriter<TMediaType>(string mediaType, IMediaTypeWriter writer)
+    protected virtual void AddWriter(Type t, string mediaType, IMediaTypeWriter writer)
     {
-      MediaTypeWriterRegistration w = GetSingleWriterOrNull(typeof(TMediaType), GetWriters(typeof(TMediaType), mediaType));
+      MediaTypeWriterRegistration w = GetSingleWriterOrNull(t, GetWriters(t, mediaType, TypeSelectionMode.OnlyTyped));
       if (w != null)
-        throw new ArgumentException(string.Format("Could not add writer of type {'0'} for media-type '{1}' since one already exists"));
-      RegisteredWriters.Add(new MediaTypeWriterRegistration(mediaType, typeof(TMediaType), writer));
+        throw new ArgumentException(string.Format("Could not add writer of type {0} for media-type '{1}' since one already exists (got {2} for '{3}').", t, mediaType, w.ClrType, w.MediaType));
+      RegisteredWriters.Add(new MediaTypeWriterRegistration(mediaType, t, writer));
     }
 
 
-    protected IEnumerable<MediaTypeReaderRegistration> GetReaders(Type t, string mediaType)
+    protected enum TypeSelectionMode { All, OnlyTyped }
+
+    protected IEnumerable<MediaTypeReaderRegistration> GetReaders(Type t, string mediaType, TypeSelectionMode mode)
     {
       return from entry in RegisteredReaders
              where (entry.MediaType == mediaType || mediaType == null) && entry.ClrType == t
+                   || mode == TypeSelectionMode.All && entry.MediaType == mediaType && mediaType != null && entry.ClrType == null
              select entry;
     }
 
@@ -89,15 +109,16 @@ namespace Ramone.Implementation
       if (readersList.Count == 0)
         return null;
       if (readersList.Count > 1)
-        throw new ArgumentException(string.Format("Got multiple reader codecs for type '{0}'. Try specifying a media type.", t));
+        throw new ArgumentException(string.Format("Got multiple reader codecs for type '{0}'. Try specifying a media type.", (t == null ? "-any-" : t.ToString())));
       return readersList[0];
     }
 
 
-    protected IEnumerable<MediaTypeWriterRegistration> GetWriters(Type t, string mediaType)
+    protected IEnumerable<MediaTypeWriterRegistration> GetWriters(Type t, string mediaType, TypeSelectionMode mode)
     {
       return from entry in RegisteredWriters
              where (entry.MediaType == mediaType || mediaType == null) && entry.ClrType == t
+                   || mode == TypeSelectionMode.All && entry.MediaType == mediaType && mediaType != null && entry.ClrType == null
              select entry;
     }
 

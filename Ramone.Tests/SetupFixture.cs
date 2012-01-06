@@ -24,8 +24,6 @@ namespace Ramone.Tests
       cm.AddCodec<Party>(CMSConstants.CMSMediaType, new XmlSerializerCodec<Party>());
       cm.AddCodec<HalDossier>("application/hal+xml", new XmlSerializerCodec<HalDossier>());
       
-      //cm.AddCodec<string>("application/hal+xml", new StringCodec()());
-
       cm.AddCodec<Cat>("text/plain", new CatAsTextCodec());
       cm.AddCodec<Cat>("text/html", new CatAsHtmlCodec());
 

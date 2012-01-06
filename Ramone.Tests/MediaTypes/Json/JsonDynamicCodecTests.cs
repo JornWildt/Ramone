@@ -23,19 +23,16 @@ namespace Ramone.Tests.MediaTypes.Json
       Assert.AreEqual("Ramstein", cat.Name);
     }
 
-    // TEST
-    // - Created() with dynamic
-    // - write dynamic/object/typed + json
 
     [Test]
-    public void CanWriteJsonFromTypedObject()
+    public void CanWriteJsonFromAnonymous()
     {
       // Arrange
-      Cat cat = new Cat { Name = "Prince" };
+      dynamic cat = new { Name = "Prince" };
       RamoneRequest request = Session.Bind(CatsTemplate);
 
       // Act
-      dynamic createdCat = request.ContentType("application/json").Post(cat).Body;
+      dynamic createdCat = request.DuplexType("application/json").Post(cat).Body;
 
       // Assert
       Assert.IsNotNull(createdCat);

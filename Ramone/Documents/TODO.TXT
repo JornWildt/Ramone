@@ -1,4 +1,4 @@
-﻿POST(anonymous type) virker ikke (giver det mening)?
+﻿ILMerge på egen PC
 
 Specifying what the default codec is for a type (so Accept need not be set)
 Support for quality "q" param in accept header and codec selector
@@ -80,7 +80,13 @@ HAL
 - IHaveLinks?
 - Follow()?
 
+File download/upload
+Forms multipart for multiple files upload/download
+
 Ved at lave GET/POST/PUT etc. som extension methods viser man at andre kan tilføje deres egne metoder
+
+Deafult content type (per session, service and static)
+- For those json/json APIs
 
 Before releasing:
 - Include a license

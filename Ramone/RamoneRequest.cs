@@ -75,6 +75,20 @@ namespace Ramone
     }
 
 
+    /// <summary>
+    /// Set both Accept and ContentType
+    /// </summary>
+    /// <remarks>Same as calling both Accept(mediaType) and ContentType(mediaType).</remarks>
+    /// <param name="mediaType"></param>
+    /// <returns></returns>
+    public RamoneRequest DuplexType(string mediaType)
+    {
+      Accept(mediaType);
+      ContentType(mediaType);
+      return this;
+    }
+
+
     public RamoneRequest<TAccept> Accept<TAccept>(string accept = null)
       where TAccept : class
     {

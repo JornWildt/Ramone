@@ -21,10 +21,9 @@ namespace Ramone
     public static IRamoneService WithStandardCodecs(this IRamoneService settings)
     {
       settings.CodecManager.AddCodec<XmlDocument>("application/xml", new XmlDocumentCodec());
-      settings.CodecManager.AddCodec<object>("application/json", new JsonDynamicCodec());
       settings.CodecManager.AddCodec<SyndicationFeed>("application/atom+xml", new AtomFeedCodec());
       settings.CodecManager.AddCodec<SyndicationItem>("application/atom+xml", new AtomItemCodec());
-      settings.CodecManager.AddCodec<HalResource>("application/hal+xml", new AtomItemCodec());
+      settings.CodecManager.AddCodec("application/json", new JsonDynamicCodec());
       return settings;
     }
   }
