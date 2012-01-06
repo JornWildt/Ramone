@@ -77,6 +77,7 @@
   <ItemGroup>
     <Compile Include="MediaTypes\Atom\AtomLink.cs" />
     <Compile Include="AuthorizationInterceptors\BasicAuthorizationInterceptor.cs" />
+    <Compile Include="MediaTypes\Atom\AtomLinkList.cs" />
     <Compile Include="MediaTypes\FormUrlEncoded\FormUrlEncodedCodec.cs" />
     <Compile Include="MediaTypes\Atom\AtomNames.cs" />
     <Compile Include="MediaTypes\Json\JsonDynamicCodec.cs" />
@@ -84,7 +85,7 @@
     <Compile Include="MediaTypes\TextCodecBase.cs" />
     <Compile Include="MediaTypes\Xml\XmlDocumentCodec.cs" />
     <Compile Include="MediaTypes\Xml\XmlSerializerCodec.cs" />
-    <Compile Include="MediaTypes\Atom\IHaveLinks.cs" />
+    <Compile Include="MediaTypes\Atom\IHaveAtomLinks.cs" />
     <Compile Include="MediaTypes\Hal\HalLink.cs" />
     <Compile Include="MediaTypes\Hal\HalResource.cs" />
     <Compile Include="MediaTypes\Hal\HalXmlCodec.cs" />
@@ -144,9 +145,10 @@
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>cd $(ProjectDir)
-xcopy bin\debug\Ramone.dll ..\Binaries\ /S /I /R /Y
-
+    <PostBuildEvent>copy Ramone.dll Ramone.Core.dll 
+"C:\Program Files (x86)\Microsoft\ILMerge\ilmerge.exe" /target:library /out:Ramone.dll Ramone.Core.dll JsonFx.dll /targetplatform:v4
+cd $(ProjectDir)
+xcopy bin\debug\Ramone*.dll ..\Binaries\ /S /I /R /Y
 </PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

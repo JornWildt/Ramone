@@ -27,8 +27,9 @@ Media type handling
 Include a set of constant strings for well known media type names.
 - MediaTypes.Xml
 
-
 Omdøbe Service => Client?
+
+Hvordan bundler man DLL'er?
 
 Ramone.HyperMedia
 - ILink

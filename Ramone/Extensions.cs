@@ -66,20 +66,56 @@ namespace Ramone
     }
 
 
-    public static AtomLink Link(this IHaveLinks links, string rel)
+    public static AtomLink Link(this IHaveAtomLinks links, string rel)
     {
       return links.Links.Where(l => l.RelationshipType == rel).FirstOrDefault();
     }
 
 
+    public static AtomLink Link(this AtomLinkList links, string rel)
+    {
+      return links.Where(l => l.RelationshipType == rel).FirstOrDefault();
+    }
+
+
     public static RamoneRequest Follow<TResponse>(this RamoneResponse<TResponse> response, string rel)
-      where TResponse : class, IHaveLinks
+      where TResponse : class, IHaveAtomLinks
     {
       AtomLink link = response.Body.Link(rel);
       if (link == null)
         return null;
 
       return response.Session.Request(link);
+    }
+
+
+    public static RamoneRequest Follow(this IRamoneSession session, IHaveAtomLinks links, string rel)
+    {
+      AtomLink link = links.Link(rel);
+      if (link == null)
+        return null;
+
+      return session.Request(link);
+    }
+
+
+    public static RamoneRequest Follow(this IHaveAtomLinks links, IRamoneSession session, string rel)
+    {
+      AtomLink link = links.Link(rel);
+      if (link == null)
+        return null;
+
+      return session.Request(link);
+    }
+
+
+    public static RamoneRequest Follow(this AtomLinkList links, IRamoneSession session, string rel)
+    {
+      AtomLink link = links.Link(rel);
+      if (link == null)
+        return null;
+
+      return session.Request(link);
     }
   }
 }

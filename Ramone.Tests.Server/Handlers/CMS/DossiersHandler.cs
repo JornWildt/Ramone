@@ -16,7 +16,7 @@ namespace Ramone.Tests.Server.Handlers.CMS
       {
         Id = id,
         Title = string.Format("Dossier no. {0}", id),
-        Links = new List<AtomLink>
+        Links = new AtomLinkList
         {
           new AtomLink(typeof(DossierDocumentList).CreateUri(new { id = id }), CMSConstants.DocumentsLinkRelType, CMSConstants.CMSMediaType, "Documents"),
           new AtomLink(party.CreateUri(), CMSConstants.PartyLinkRelType, CMSConstants.CMSMediaType, party.FullName)

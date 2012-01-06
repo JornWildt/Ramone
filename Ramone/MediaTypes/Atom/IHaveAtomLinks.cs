@@ -3,8 +3,8 @@
 
 namespace Ramone.MediaTypes.Atom
 {
-  public interface IHaveLinks
+  public interface IHaveAtomLinks
   {
-    List<AtomLink> Links { get; }
+    AtomLinkList Links { get; }
   }
 }

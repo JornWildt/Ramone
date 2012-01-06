@@ -104,6 +104,28 @@ namespace Ramone.Tests
 
 
     [Test]
+    public void CanFollowLinksInGeneral()
+    {
+      // Arrange
+      RamoneRequest dossierReq = Session.Bind(DossierTemplate, new { id = 8 });
+      Dossier dossier = dossierReq.Get<Dossier>().Body;
+
+      // Act
+      DossierDocumentList documents1 = Session.Follow(dossier, CMSConstants.DocumentsLinkRelType).Get<DossierDocumentList>().Body;
+      DossierDocumentList documents2 = dossier.Follow(Session, CMSConstants.DocumentsLinkRelType).Get<DossierDocumentList>().Body;
+      DossierDocumentList documents3 = dossier.Links.Follow(Session, CMSConstants.DocumentsLinkRelType).Get<DossierDocumentList>().Body;
+
+      // Assert
+      Assert.IsNotNull(documents1);
+      Assert.IsNotNull(documents2);
+      Assert.IsNotNull(documents3);
+      Assert.AreEqual(2, documents1.Count);
+      Assert.AreEqual(2, documents2.Count);
+      Assert.AreEqual(2, documents3.Count);
+    }
+
+
+    [Test]
     public void CanGetAndIgnoreReturnedBody()
     {
       // Arrange
