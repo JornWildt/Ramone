@@ -2,6 +2,7 @@
 using System.Xml;
 using NUnit.Framework;
 using Ramone.MediaTypes.Hal;
+using HtmlAgilityPack;
 
 
 namespace Ramone.Tests
@@ -18,6 +19,8 @@ namespace Ramone.Tests
 
       // Assert
       Assert.IsNotNull(service.CodecManager.GetReader(typeof(XmlDocument), "application/xml"));
+      Assert.IsNotNull(service.CodecManager.GetReader(typeof(HtmlDocument), "text/html"));
+      Assert.IsNotNull(service.CodecManager.GetReader(typeof(HtmlDocument), "application/html+xml"));
       Assert.IsNotNull(service.CodecManager.GetReader(typeof(object), "application/json"));
       Assert.IsNotNull(service.CodecManager.GetReader(typeof(SyndicationItem), "application/atom+xml"));
       Assert.IsNotNull(service.CodecManager.GetReader(typeof(SyndicationFeed), "application/atom+xml"));

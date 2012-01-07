@@ -8,6 +8,8 @@
 
     public const string DogPath = "dog/{name}";
 
+    public const string PersonPath = "person/{name}";
+
     public const string AtomFeedPath = "atomfeed/{name}";
 
     public const string AtomItemPath = "atomfeed/{feedname}/{itemname}";

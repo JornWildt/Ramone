@@ -86,6 +86,7 @@
     <Content Include="basicauthentication.aspx" />
     <Content Include="errors.aspx" />
     <Content Include="default.aspx" />
+    <Content Include="Views\Person.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -126,6 +127,7 @@
     <Compile Include="Handlers\CMS\PartyHandler.cs" />
     <Compile Include="Handlers\DogHandler.cs" />
     <Compile Include="Handlers\HeaderEchoHandler.cs" />
+    <Compile Include="Handlers\PersonHandler.cs" />
     <Compile Include="Handlers\TextNullHandler.cs" />
     <Compile Include="Handlers\FeedHandler.cs" />
     <Compile Include="Handlers\TextHandler.cs" />

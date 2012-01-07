@@ -31,6 +31,8 @@ namespace Ramone.Tests
 
     protected static readonly UriTemplate Dog2Template = new UriTemplate(Constants.DogPath + "?v=2");
 
+    protected static readonly UriTemplate PersonTemplate = new UriTemplate(Constants.PersonPath);
+
     protected static readonly UriTemplate AtomFeedTemplate = new UriTemplate(Constants.AtomFeedPath);
 
     protected static readonly UriTemplate AtomItemTemplate = new UriTemplate(Constants.AtomItemPath);

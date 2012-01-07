@@ -52,6 +52,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="HtmlAgilityPack">
+      <HintPath>..\Libraries\HtmlAgilityPack.dll</HintPath>
+    </Reference>
     <Reference Include="JsonFx">
       <HintPath>..\Libraries\JsonFx.dll</HintPath>
     </Reference>
@@ -80,6 +83,7 @@
     <Compile Include="MediaTypes\Atom\AtomLinkList.cs" />
     <Compile Include="MediaTypes\FormUrlEncoded\FormUrlEncodedCodec.cs" />
     <Compile Include="MediaTypes\Atom\AtomNames.cs" />
+    <Compile Include="MediaTypes\Html\HtmlDocumentCodec.cs" />
     <Compile Include="MediaTypes\Json\JsonDynamicCodec.cs" />
     <Compile Include="MediaTypes\Json\JsonSerializerCodec.cs" />
     <Compile Include="MediaTypes\TextCodecBase.cs" />
@@ -142,14 +146,10 @@
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>copy Ramone.dll Ramone.Core.dll 
-"C:\Program Files (x86)\Microsoft\ILMerge\ilmerge.exe" /target:library /out:Ramone.dll Ramone.Core.dll JsonFx.dll /targetplatform:v4
-cd $(ProjectDir)
-xcopy bin\debug\Ramone*.dll ..\Binaries\ /S /I /R /Y
-</PostBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

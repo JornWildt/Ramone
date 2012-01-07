@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ServiceModel.Syndication;
 using OpenRasta.Codecs;
+using OpenRasta.Codecs.WebForms;
 using OpenRasta.Configuration;
 using Ramone.Tests.Common;
 using Ramone.Tests.Common.CMS;
@@ -47,6 +48,11 @@ namespace Ramone.Tests.Server
             .AtUri(Constants.DogPath)
             .HandledBy<DogHandler>()
             .TranscodedBy<Dog2AsXmlCodec>();
+
+        ResourceSpace.Has.ResourcesOfType<Person>()
+            .AtUri(Constants.PersonPath)
+            .HandledBy<PersonHandler>()
+            .RenderedByAspx("~/Views/Person.aspx");
 
         ResourceSpace.Has.ResourcesOfType<HeaderList>()
             .AtUri(Constants.HeaderEchoPath)
