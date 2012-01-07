@@ -1,6 +1,4 @@
-﻿ILMerge på egen PC
-
-Specifying what the default codec is for a type (so Accept need not be set)
+﻿Specifying what the default codec is for a type (so Accept need not be set)
 Support for quality "q" param in accept header and codec selector
 Håndtering af charset i codecs
 - Kan gøres i XmlCodecBase og TextCodecBase (mf?)
@@ -8,24 +6,12 @@ IMediaTypeReader/Writer
 - Missing info on charset and such like from headers (see TextCodec example)
 - Én samlet Args parameter mit-alles?
 
-text/json text/xml => default codecs
-
 - Predefined codecs for these (but maybe in separate assemblies if they need external assemblies?)
-  - OK: JSON (https://github.com/jsonfx/jsonfx)
-  - OK: XmlDocument
-  - HtmlDocument
-  - vCard (kan Xyperico udgaven dresseres til at ligne XmlSerializer i .NET?)
-  - Protocol buffers
   - Url-encoded post data
     - Mangler rekursion og datoer mm.
-  - HAL
-  - RDFa
   - Direct streams
   - Any content as a string
-  - RSS
-  - oData
   - Images
-
 
 Ramone.HyperMedia
 - Tre forskellige koncepter på tværs af media-types (to "dimensioner": hyper-media / media-types)
@@ -66,6 +52,10 @@ Authorization as first-class citizens
 
 Kan RamoneException.cs droppes?
 
+- Support 
+    OK:GET, OK:POST, OK:PUT, OK:DELETE, 
+    HEAD, OPTIONS, PATCH
+
 Nye Request metoder uden session (som så dannes automatisk). Gør det nemt at komme igang.
 - Giver det mening? Så har man ikke nogen settings med codecs.
 - Kan evt. gøres lidt mere direkte med RamoneConfiguration.NewSession()
@@ -89,9 +79,7 @@ Deafult content type (per session, service and static)
 
 Before releasing:
 - Include a license
-- Support 
-    OK:GET, OK:POST, OK:PUT, OK:DELETE, 
-    HEAD, OPTIONS, PATCH
+- Version numbers
 - Komplet README (med korrekt casing)
   - Installation
 - Demo how HTML + forms + url-encoded data can be auto-generated (a'la Eric)
@@ -159,6 +147,17 @@ Authorization
 
 
 Lots of Condition.Requries()...
+
+
+- More codecs
+  - vCard (kan Xyperico udgaven dresseres til at ligne XmlSerializer i .NET?)
+  - Protocol buffers
+  - Url-encoded post data
+    - Mangler rekursion og datoer mm.
+  - HAL
+  - RDFa
+  - RSS
+  - oData
 
 
 Test
