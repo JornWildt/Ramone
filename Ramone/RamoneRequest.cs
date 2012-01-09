@@ -52,9 +52,11 @@ namespace Ramone
 
     protected string BodyContentType { get; set; }
 
+    protected string BodyCharacterSet { get; set; }
+
     protected string AcceptHeader { get; set; }
 
-    protected Dictionary<string,string> AdditionalHeaders { get; set; }
+    protected Dictionary<string, string> AdditionalHeaders { get; set; }
 
     #endregion
 
@@ -97,9 +99,23 @@ namespace Ramone
     }
 
 
+    public RamoneRequest AcceptCharset(string charset)
+    {
+      Header("Accept-Charset", charset);
+      return this;
+    }
+
+
+    public RamoneRequest CharacterSet(string charset)
+    {
+      BodyCharacterSet = charset;
+      return this;
+    }
+
+
     public RamoneRequest Header(string name, string value)
     {
-      AdditionalHeaders.Add(name, value);
+      AdditionalHeaders[name] = value;
       return this;
     }
 
@@ -249,7 +265,10 @@ namespace Ramone
 
         if (BodyData != null)
         {
-          request.ContentType = BodyContentType;
+          string charset = "";
+          if (BodyCharacterSet != null)
+            charset = "; charset=" + BodyCharacterSet;
+          request.ContentType = BodyContentType + charset;
           BodyCodec.WriteTo(request.GetRequestStream(), BodyData.GetType(), BodyData);
           request.GetRequestStream().Close();
         }

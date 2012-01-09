@@ -15,9 +15,9 @@ namespace Ramone.MediaTypes
   {
     #region Ramone.IMediaTypeReader Members
 
-    public object ReadFrom(Stream s, Type t)
+    public object ReadFrom(ReaderContext context)
     {
-      using (var reader = XmlReader.Create(s))
+      using (var reader = XmlReader.Create(context.HttpStream))
       {
         return ReadFrom(reader);
       }

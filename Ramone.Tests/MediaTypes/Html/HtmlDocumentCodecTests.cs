@@ -26,5 +26,30 @@ namespace Ramone.Tests.MediaTypes.Html
 
       Assert.AreEqual("Petrea", nameNode.InnerText);
     }
+
+
+    [Test]
+    public void CanReadHtmlDocumentWithEncoding(
+      [Values("UTF-8", "")] string charset)
+    {
+      // Arrange
+      RamoneRequest req = Session.Bind(EncodingTemplate);
+
+      // Act
+      HtmlDocument doc = req.Get<HtmlDocument>().Body;
+
+      // Assert
+      HtmlNode nameNode = doc.DocumentNode.SelectSingleNode("/html/body");
+      Assert.IsNotNull(nameNode);
+
+      Assert.AreEqual("ÆØÅúï", nameNode.InnerText);
+    }
+
+  
+    //[Test]
+    //public void CanReadHtmlDocumentWithEncoding(
+    //  [Values("UTF-8", "")] string charset,
+    //  [Values("Petrea", "ÆØÅ", "üï")] string name)
+    //{
   }
 }

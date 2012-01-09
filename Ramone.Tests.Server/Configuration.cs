@@ -54,6 +54,11 @@ namespace Ramone.Tests.Server
             .HandledBy<PersonHandler>()
             .RenderedByAspx("~/Views/Person.aspx");
 
+        ResourceSpace.Has.ResourcesOfType<EncodingData>()
+            .AtUri(Constants.EncodingPath)
+            .HandledBy<EncodingHandler>()
+            .TranscodedBy<EncodingCodec>();
+
         ResourceSpace.Has.ResourcesOfType<HeaderList>()
             .AtUri(Constants.HeaderEchoPath)
             .HandledBy<HeaderEchoHandler>()

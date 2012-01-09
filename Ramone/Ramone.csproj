@@ -123,6 +123,7 @@
     <Compile Include="RamoneRequest.cs" />
     <Compile Include="RamoneResponse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utility\CharsetHelpers.cs" />
     <Compile Include="Utility\DictionaryConverter.cs" />
     <Compile Include="Utility\FormUrlEncodingSerializer.cs" />
   </ItemGroup>

@@ -50,6 +50,7 @@
     <Compile Include="CMS\Party.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="Dog.cs" />
+    <Compile Include="EncodingData.cs" />
     <Compile Include="HeaderList.cs" />
     <Compile Include="Person.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

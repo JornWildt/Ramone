@@ -10,10 +10,10 @@ namespace Ramone.Tests.Codecs
   {
     #region IMediaTypeReader Members
 
-    public object ReadFrom(Stream s, Type t)
+    public object ReadFrom(ReaderContext context)
     {
       string text = null;
-      using (StreamReader r = new StreamReader(s, Encoding.UTF8))
+      using (StreamReader r = new StreamReader(context.HttpStream, Encoding.UTF8))
       {
         text = r.ReadToEnd();
       }
