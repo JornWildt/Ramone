@@ -9,6 +9,12 @@ namespace Ramone
     void AddCodec<TMediaType>(string mediaType, IMediaTypeCodec codec);
 
     /// <summary>
+    /// Add codec for any media type
+    /// </summary>
+    /// <param name="codec"></param>
+    void AddCodec<TMediaType>(IMediaTypeCodec codec);
+
+    /// <summary>
     /// Add codec for any CLR type
     /// </summary>
     /// <param name="mediaType"></param>

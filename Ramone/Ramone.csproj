@@ -86,6 +86,7 @@
     <Compile Include="MediaTypes\Html\HtmlDocumentCodec.cs" />
     <Compile Include="MediaTypes\Json\JsonDynamicCodec.cs" />
     <Compile Include="MediaTypes\Json\JsonSerializerCodec.cs" />
+    <Compile Include="MediaTypes\StreamCodec.cs" />
     <Compile Include="MediaTypes\TextCodecBase.cs" />
     <Compile Include="MediaTypes\Xml\XmlDocumentCodec.cs" />
     <Compile Include="MediaTypes\Xml\XmlSerializerCodec.cs" />

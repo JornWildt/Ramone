@@ -219,7 +219,7 @@ namespace Ramone
       }
 
       if (string.IsNullOrEmpty(accept))
-        throw new InvalidOperationException(string.Format("Could not find a reader codec for {0}.", t));
+        throw new InvalidOperationException(string.Format("Could not find a reader codec for {0}. Try specifying Accept header.", t));
 
       return accept;
     }

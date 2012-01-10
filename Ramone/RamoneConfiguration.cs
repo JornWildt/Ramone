@@ -1,8 +1,10 @@
 ﻿using System;
+using System.IO;
 using System.ServiceModel.Syndication;
 using System.Xml;
 using HtmlAgilityPack;
 using Ramone.Implementation;
+using Ramone.MediaTypes;
 using Ramone.MediaTypes.Atom;
 using Ramone.MediaTypes.Html;
 using Ramone.MediaTypes.Json;
@@ -37,6 +39,9 @@ namespace Ramone
 
       // JSON
       settings.CodecManager.AddCodec("application/json", new JsonDynamicCodec());
+
+      // Streams
+      settings.CodecManager.AddCodec<Stream>(new StreamCodec());
 
       return settings;
     }

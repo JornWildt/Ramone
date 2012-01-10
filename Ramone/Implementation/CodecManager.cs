@@ -23,6 +23,15 @@ namespace Ramone.Implementation
     }
 
 
+    public void AddCodec<TMediaType>(IMediaTypeCodec codec)
+    {
+      if (codec is IMediaTypeReader)
+        AddReader(typeof(TMediaType), null, (IMediaTypeReader)codec);
+      if (codec is IMediaTypeWriter)
+        AddWriter(typeof(TMediaType), null, (IMediaTypeWriter)codec);
+    }
+
+
     public void AddCodec(string mediaType, IMediaTypeCodec codec)
     {
       if (codec is IMediaTypeReader)
@@ -99,6 +108,7 @@ namespace Ramone.Implementation
       return from entry in RegisteredReaders
              where (entry.MediaType == mediaType || mediaType == null) && entry.ClrType == t
                    || mode == TypeSelectionMode.All && entry.MediaType == mediaType && mediaType != null && entry.ClrType == null
+                   || mode == TypeSelectionMode.All && entry.MediaType == null && mediaType != null && entry.ClrType.IsAssignableFrom(t)
              select entry;
     }
 
@@ -118,7 +128,8 @@ namespace Ramone.Implementation
     {
       return from entry in RegisteredWriters
              where (entry.MediaType == mediaType || mediaType == null) && entry.ClrType == t
-                   || mode == TypeSelectionMode.All && entry.MediaType == mediaType && mediaType != null && entry.ClrType == null
+                   || mode == TypeSelectionMode.All && entry.MediaType == mediaType && mediaType != null && entry.ClrType == t
+                   || mode == TypeSelectionMode.All && entry.MediaType == null && mediaType != null && entry.ClrType.IsAssignableFrom(t)
              select entry;
     }
 

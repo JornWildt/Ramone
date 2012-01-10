@@ -18,6 +18,8 @@ Forms multipart for multiple files upload(download?)
    --AaB03x--
 
 
+OK: ReaderContext
+Mangler WriterContext
 
 Check at Url og parametre bliver korrekt escaped (%, ? etc.)
 

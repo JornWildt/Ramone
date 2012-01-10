@@ -109,6 +109,7 @@
     <Compile Include="Codecs\CMS\PartyCodec.cs" />
     <Compile Include="Codecs\Dog2AsXmlCodec.cs" />
     <Compile Include="Codecs\EncodingCodec.cs" />
+    <Compile Include="Codecs\FileCodec.cs" />
     <Compile Include="Codecs\HeaderEchoCodec.cs" />
     <Compile Include="Codecs\XmlCodecBase.cs" />
     <Compile Include="Codecs\XmlSerializerCodec.cs" />
@@ -128,6 +129,7 @@
     <Compile Include="Handlers\CMS\PartyHandler.cs" />
     <Compile Include="Handlers\DogHandler.cs" />
     <Compile Include="Handlers\EncodingHandler.cs" />
+    <Compile Include="Handlers\FileHandler.cs" />
     <Compile Include="Handlers\HeaderEchoHandler.cs" />
     <Compile Include="Handlers\PersonHandler.cs" />
     <Compile Include="Handlers\TextNullHandler.cs" />

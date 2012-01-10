@@ -9,6 +9,7 @@ using Ramone.Tests.Server.Codecs;
 using Ramone.Tests.Server.Codecs.CMS;
 using Ramone.Tests.Server.Handlers;
 using Ramone.Tests.Server.Handlers.CMS;
+using OpenRasta.IO;
 
 
 namespace Ramone.Tests.Server
@@ -58,6 +59,11 @@ namespace Ramone.Tests.Server
             .AtUri(Constants.EncodingPath)
             .HandledBy<EncodingHandler>()
             .TranscodedBy<EncodingCodec>();
+
+        ResourceSpace.Has.ResourcesOfType<IFile>()
+            .AtUri(Constants.FilePath)
+            .HandledBy<FileHandler>();
+            //.TranscodedBy<FileCodec>().ForMediaType("application/octet");
 
         ResourceSpace.Has.ResourcesOfType<HeaderList>()
             .AtUri(Constants.HeaderEchoPath)

@@ -3,6 +3,7 @@ using System.Xml;
 using NUnit.Framework;
 using Ramone.MediaTypes.Hal;
 using HtmlAgilityPack;
+using System.IO;
 
 
 namespace Ramone.Tests
@@ -21,6 +22,16 @@ namespace Ramone.Tests
       Assert.IsNotNull(service.CodecManager.GetReader(typeof(XmlDocument), "application/xml"));
       Assert.IsNotNull(service.CodecManager.GetReader(typeof(object), "application/json"));
       Assert.IsNotNull(service.CodecManager.GetReader(typeof(SyndicationFeed), "application/atom+xml"));
+
+      // Streams can read/write any media-type
+      Assert.IsNotNull(service.CodecManager.GetReader(typeof(Stream), "application/octet"));
+      Assert.IsNotNull(service.CodecManager.GetReader(typeof(Stream), "image/jpeg"));
+      Assert.IsNotNull(service.CodecManager.GetReader(typeof(Stream), "unknown/other"));
+
+      // Writers
+      Assert.IsNotNull(service.CodecManager.GetWriter(typeof(Stream), "application/octet"));
+      Assert.IsNotNull(service.CodecManager.GetWriter(typeof(Stream), "image/jpeg"));
+      Assert.IsNotNull(service.CodecManager.GetWriter(typeof(Stream), "unknown/other"));
     }
   }
 }
