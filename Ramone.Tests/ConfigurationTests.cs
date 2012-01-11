@@ -1,7 +1,6 @@
 ﻿using System.ServiceModel.Syndication;
 using System.Xml;
 using NUnit.Framework;
-using Ramone.MediaTypes.Hal;
 using HtmlAgilityPack;
 using System.IO;
 

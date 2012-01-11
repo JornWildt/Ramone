@@ -16,5 +16,6 @@ namespace Ramone
 
   public interface IMediaTypeCodec
   {
+    object CodecArgument { get; set; }
   }
 }

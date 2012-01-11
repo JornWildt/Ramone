@@ -3,12 +3,12 @@ using System.IO;
 using Ramone.Utility;
 
 
-namespace Ramone.MediaTypes.FormUrlEncoded
+namespace Ramone.MediaTypes.MultipartFormData
 {
-  public class FormUrlEncodedCodec<TEntity> : IMediaTypeWriter
+  public class MultipartFormDataSerializerCodec<TEntity> : IMediaTypeWriter
     where TEntity : class
   {
-    FormUrlEncodingSerializer Serializer = new FormUrlEncodingSerializer(typeof(TEntity));
+    MultipartFormDataSerializer Serializer = new MultipartFormDataSerializer(typeof(TEntity));
 
 
     public void WriteTo(Stream s, Type t, object data)
@@ -22,9 +22,15 @@ namespace Ramone.MediaTypes.FormUrlEncoded
 
       using (TextWriter w = new StreamWriter(s))
       {
-
-        Serializer.Serialize(w, entity);
+        Serializer.Serialize(w, entity, CodecArgument as string);
       }
     }
+
+
+    #region IMediaTypeCodec
+
+    public object CodecArgument { get; set; }
+
+    #endregion
   }
 }

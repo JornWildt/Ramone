@@ -25,5 +25,12 @@ namespace Ramone.MediaTypes
     }
 
     #endregion
+
+
+    #region IMediaTypeCodec
+
+    public object CodecArgument { get; set; }
+
+    #endregion
   }
 }

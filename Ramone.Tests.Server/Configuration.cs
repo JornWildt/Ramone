@@ -81,8 +81,7 @@ namespace Ramone.Tests.Server
           .AtUri(CMSConstants.DossierPath)
           .And.AtUri(CMSConstants.DossiersPath)
           .HandledBy<DossiersHandler>()
-          .TranscodedBy<DossierCodec>()
-          .And.TranscodedBy<HalDossierCodec>().ForMediaType("application/hal+xml");
+          .TranscodedBy<DossierCodec>();
 
       ResourceSpace.Has.ResourcesOfType<DossierDocumentList>()
           .AtUri(CMSConstants.DossierDocumentsPath)

@@ -89,10 +89,10 @@
     <Compile Include="ContentNegotiationTests.cs" />
     <Compile Include="CustomHeaderTests.cs" />
     <Compile Include="DeleteTests.cs" />
-    <Compile Include="MediaTypes\Hal\HalTests.cs" />
     <Compile Include="MediaTypes\Html\HtmlDocumentCodecTests.cs" />
     <Compile Include="MediaTypes\Json\JsonDynamicCodecTests.cs" />
     <Compile Include="MediaTypes\Json\JsonSerializerCodecTests.cs" />
+    <Compile Include="MediaTypes\MultipartFormData\MultipartFormDataTests.cs" />
     <Compile Include="MediaTypes\Xml\XmlDocumentCodecTests.cs" />
     <Compile Include="NoAuthenticationHandlerTests.cs" />
     <Compile Include="PostTests.cs" />
@@ -107,6 +107,7 @@
     <Compile Include="MediaTypes\StreamCodecTests.cs" />
     <Compile Include="TestHelper.cs" />
     <Compile Include="UserAgentTests.cs" />
+    <Compile Include="UtilitiesTests\MultipartFormDataSerializerTests.cs" />
     <Compile Include="UtilitiesTests\FormUrlEncodingSerializerTests.cs" />
     <Compile Include="XmlSerializerCodecTests.cs" />
   </ItemGroup>

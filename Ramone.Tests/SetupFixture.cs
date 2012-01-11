@@ -6,6 +6,7 @@ using Ramone.MediaTypes.Xml;
 using Ramone.Tests.Codecs;
 using Ramone.Tests.Common;
 using Ramone.Tests.Common.CMS;
+using Ramone.MediaTypes.MultipartFormData;
 
 
 namespace Ramone.Tests
@@ -22,7 +23,6 @@ namespace Ramone.Tests
       cm.AddCodec<DossierDocumentList>(CMSConstants.CMSMediaType, new XmlSerializerCodec<DossierDocumentList>());
       cm.AddCodec<Document>(CMSConstants.CMSMediaType, new XmlSerializerCodec<Document>());
       cm.AddCodec<Party>(CMSConstants.CMSMediaType, new XmlSerializerCodec<Party>());
-      cm.AddCodec<HalDossier>("application/hal+xml", new XmlSerializerCodec<HalDossier>());
       
       cm.AddCodec<Cat>("text/plain", new CatAsTextCodec());
       cm.AddCodec<Cat>("text/html", new CatAsHtmlCodec());
@@ -31,6 +31,8 @@ namespace Ramone.Tests
       cm.AddCodec<Dog2>("application/vnd.dog+xml", new XmlSerializerCodec<Dog2>());
 
       cm.AddCodec<HeaderList>("application/xml", new XmlSerializerCodec<HeaderList>());
+
+      cm.AddCodec<MultipartData>("multipart/form-data", new MultipartFormDataSerializerCodec<MultipartData>());
 
       cm.AddCodec<string>("text/plain", new TextCodec());
       cm.AddCodec<string>("text/html", new TextCodec());

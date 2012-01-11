@@ -35,5 +35,12 @@ namespace Ramone.Tests.Codecs
     }
 
     #endregion
+
+
+    #region IMediaTypeCodec
+
+    public object CodecArgument { get; set; }
+
+    #endregion
   }
 }

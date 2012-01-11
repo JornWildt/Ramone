@@ -23,6 +23,13 @@ Mangler WriterContext
 
 Check at Url og parametre bliver korrekt escaped (%, ? etc.)
 
+Det burde være muligt at anvende multipart/form-data og form/urlencoded på samme måde som JSON serializeren
+- Altså undlade at specificere codecs for hver gang
+
+Hvorfor oversætte dette ikke:
+  RamoneResponse<string> response = fileReq.Accept<string>("text/plain").ContentType("multipart/form-data").Post(data);
+
+
 Specifying what the default codec is for a type (so Accept need not be set)
 
 Håndtering af charset i codecs
@@ -48,6 +55,9 @@ Ramone.HyperMedia
 - Follow(ILink), Follow(ILinkTemplate, params)
 
 Omdøbe Service => Client?
+
+Mangler tests af FormUrlEncodedCodec<T> 
+- inkl. charset tests
 
 Skal have 
 - RamoneRequest.Execute(method)

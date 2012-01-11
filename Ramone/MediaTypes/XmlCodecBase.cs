@@ -38,6 +38,14 @@ namespace Ramone.MediaTypes
 
     #endregion
 
+
+    #region IMediaTypeCodec
+
+    public object CodecArgument { get; set; }
+
+    #endregion
+
+
     protected abstract TEntity ReadFrom(XmlReader reader);
 
     protected abstract void WriteTo(TEntity item, XmlWriter writer);

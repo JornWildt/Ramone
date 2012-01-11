@@ -54,6 +54,8 @@ namespace Ramone
 
     protected string BodyCharacterSet { get; set; }
 
+    protected string BodyBoundary { get; set; }
+
     protected string AcceptHeader { get; set; }
 
     protected Dictionary<string, string> AdditionalHeaders { get; set; }
@@ -127,6 +129,10 @@ namespace Ramone
                                            ? codecManager.GetWriter(body.GetType())
                                            : codecManager.GetWriter(body.GetType(), BodyContentType);
       BodyContentType = writer.MediaType;
+      if (BodyContentType == "multipart/form-data")
+      {
+        BodyBoundary = Guid.NewGuid().ToString();
+      }
       BodyCodec = writer.Codec;
       BodyData = body;
     }
@@ -268,7 +274,15 @@ namespace Ramone
           string charset = "";
           if (BodyCharacterSet != null)
             charset = "; charset=" + BodyCharacterSet;
-          request.ContentType = BodyContentType + charset;
+          
+          string boundary = "";
+          if (BodyBoundary != null)
+          {
+            boundary = "; boundary=" + BodyBoundary;
+            BodyCodec.CodecArgument = BodyBoundary;
+          }
+
+          request.ContentType = BodyContentType + charset + boundary;
           BodyCodec.WriteTo(request.GetRequestStream(), BodyData.GetType(), BodyData);
           request.GetRequestStream().Close();
         }

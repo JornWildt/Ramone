@@ -2,6 +2,7 @@
 using System.IO;
 using OpenRasta.Web;
 using System.Web;
+using Ramone.Tests.Common;
 
 
 namespace Ramone.Tests.Server.Handlers
@@ -15,12 +16,27 @@ namespace Ramone.Tests.Server.Handlers
     }
 
 
-    public object Post()
+    //public object Post()
+    //{
+    //  byte[] data = new byte[100];
+    //  int cou = HttpContext.Current.Request.InputStream.Read(data, 0, 100);
+    //  MemoryStream s = new MemoryStream(data, 0, cou);
+    //  return new InMemoryFile(s);
+    //}
+
+
+    //public object Post(IFile file)
+    //{
+    //  byte[] data = new byte[100];
+    //  int cou = file.OpenStream().Read(data, 0, 100);
+    //  MemoryStream s = new MemoryStream(data, 0, cou);
+    //  return new InMemoryFile(s) { ContentType = file.ContentType, FileName = file.FileName };
+    //}
+
+
+    public object Post(MultipartData data)
     {
-      byte[] data = new byte[100];
-      int cou = HttpContext.Current.Request.InputStream.Read(data, 0, 100);
-      MemoryStream s = new MemoryStream(data, 0, cou);
-      return new InMemoryFile(s);
+      return string.Format("{0}-{1}", data.Name, data.Age);
     }
   }
 }
