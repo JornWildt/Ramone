@@ -63,7 +63,11 @@ namespace Ramone.Tests.Server
         ResourceSpace.Has.ResourcesOfType<IFile>()
             .AtUri(Constants.FilePath)
             .HandledBy<FileHandler>();
-            //.TranscodedBy<FileCodec>().ForMediaType("application/octet");
+
+        ResourceSpace.Has.ResourcesOfType<MultipartData>()
+            .AtUri(Constants.MultipartFormDataPath).Named("SimpleData")
+            .And.AtUri(Constants.MultipartFormDataFilePath).Named("FileData")
+            .HandledBy<MultipartFormDataHandler>();
 
         ResourceSpace.Has.ResourcesOfType<HeaderList>()
             .AtUri(Constants.HeaderEchoPath)

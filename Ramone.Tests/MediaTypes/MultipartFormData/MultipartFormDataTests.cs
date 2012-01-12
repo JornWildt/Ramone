@@ -13,10 +13,10 @@ namespace Ramone.Tests.MediaTypes.MultipartFormData
     {
       // Arrange
       MultipartData data = new MultipartData { Name = "Pete", Age = 10 };
-      RamoneRequest fileReq = Session.Bind(FileTemplate);
+      RamoneRequest formdataReq = Session.Bind(MultipartFormDataTemplate);
 
       // Act
-      RamoneResponse<string> response = fileReq.Accept("text/plain").ContentType("multipart/form-data").Post<string>(data);
+      RamoneResponse<string> response = formdataReq.Accept("text/plain").ContentType("multipart/form-data").Post<string>(data);
 
       // Assert
       Assert.AreEqual("Pete-10", response.Body);
@@ -36,13 +36,29 @@ namespace Ramone.Tests.MediaTypes.MultipartFormData
       // Arrange
       IFile file = new File("..\\..\\data1.txt");
       MultipartDataFile data = new MultipartDataFile { DataFile = file, Age = 10 };
-      RamoneRequest fileReq = Session.Bind(FileTemplate);
+      RamoneRequest formdataReq = Session.Bind(MultipartFormDataFileTemplate);
 
       // Act
-      RamoneResponse<string> response = fileReq.Accept("text/plain").ContentType("multipart/form-data").Post<string>(data);
+      RamoneResponse<string> response = formdataReq.Accept("text/plain").ContentType("multipart/form-data").Post<string>(data);
 
       // Assert
-      Assert.AreEqual("data1.txt-Ramsaladin ÆØÅ-10", response.Body);
+      Assert.AreEqual("data1.txt-text/plain; charset=UTF-8-XxxÆØÅ-10", response.Body);
+    }
+
+
+    [Test]
+    public void CanPostMultipartFormDataWithBinaryFile()
+    {
+      // Arrange
+      IFile file = new File("..\\..\\data1.gif", "image/gif");
+      MultipartDataFile data = new MultipartDataFile { DataFile = file, Age = 99 };
+      RamoneRequest formdataReq = Session.Bind(MultipartFormDataFileTemplate);
+
+      // Act
+      RamoneResponse<string> response = formdataReq.Accept("text/plain").ContentType("multipart/form-data").Post<string>(data);
+
+      // Assert
+      Assert.AreEqual("data1.gif-image/gif-GIF89a-99", response.Body);
     }
   }
 }

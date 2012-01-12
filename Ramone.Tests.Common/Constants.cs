@@ -14,6 +14,10 @@
 
     public const string FilePath = "file";
 
+    public const string MultipartFormDataPath = "multipartformdata";
+
+    public const string MultipartFormDataFilePath = "multipartformdata-file";
+
     public const string AtomFeedPath = "atomfeed/{name}";
 
     public const string AtomItemPath = "atomfeed/{feedname}/{itemname}";

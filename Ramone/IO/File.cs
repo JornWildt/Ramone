@@ -10,6 +10,7 @@ namespace Ramone.IO
 
     public string Filename { get; protected set; }
 
+    public string ContentType { get; protected set; }
 
     public Stream OpenStream()
     {
@@ -19,9 +20,10 @@ namespace Ramone.IO
     #endregion
 
 
-    public File(string filename)
+    public File(string filename, string contentType = null)
     {
       Filename = filename;
+      ContentType = contentType;
     }
   }
 }

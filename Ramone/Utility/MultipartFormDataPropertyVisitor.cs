@@ -33,11 +33,23 @@ namespace Ramone.Utility
 
     public void SimpleValue(string name, object value)
     {
+      string filename = "";
+      string contentType = "";
+      if (value is IFile)
+      {
+        IFile file = (IFile)value;
+        filename = string.Format("; filename=\"{0}\"", System.IO.Path.GetFileName(file.Filename ?? "unknown"));
+        if (file.ContentType != null)
+          contentType = string.Format("\r\nContent-Type: {0}", file.ContentType);
+      }
+
       string header = string.Format(@"
 --{0}
-Content-Disposition: form-data; name=""{1}""
+Content-Disposition: form-data; name=""{1}""{2}{3}
 
-", Boundary, HttpUtility.UrlEncode(name));
+", Boundary, name, filename, contentType);
+
+      // FIXME: escaping name and filename
 
       Writer.Write(header);
       Writer.Flush();
