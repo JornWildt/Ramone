@@ -2,21 +2,6 @@
 Forms multipart for multiple files upload(download?)
 - På samme måde som form-url-encoded serialisering af object, men hvis den møder IFile eller en stream, så bliver
   indholdet af denne streamet. Altså => håndteres af passende codec
-  - Så skal den recursive gennemgang af object via reflection trækkes ud (JsonFX?)
-
-   Content-Type: multipart/form-data; boundary=AaB03x
-
-   --AaB03x
-   Content-Disposition: form-data; name="submit-name"
-
-   Larry
-   --AaB03x
-   Content-Disposition: form-data; name="files"; filename="file1.txt"
-   Content-Type: text/plain
-
-   ... contents of file1.txt ...
-   --AaB03x--
-
 
 OK: ReaderContext
 Mangler WriterContext
@@ -59,6 +44,8 @@ Omdøbe Service => Client?
 Mangler tests af FormUrlEncodedCodec<T> 
 - inkl. charset tests
 
+Diverse serializere skal have angivelse af locale og/eller dato-format
+
 Skal have 
 - RamoneRequest.Execute(method)
 - RamoneRequest.Execute<T>(method)
@@ -76,6 +63,13 @@ Authorization as first-class citizens
   - static void BasicAuthorization(this IHaveInterceptors xxx, string uname, string pwd)
 
 Kan RamoneException.cs droppes?
+
+Hvad med nogle overloads a'la 
+- Request.As(string contentType) og Request.AsJson/AsFormdata/AsUrlEncoded
+
+Charset Encoding skal sættes som en default værdie i session/service/config
+
+Angivelse af encoding i Multipart og UrlEncoding serializers
 
 - Support 
     OK:GET, OK:POST, OK:PUT, OK:DELETE, 

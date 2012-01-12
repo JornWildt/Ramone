@@ -3,10 +3,10 @@ using NUnit.Framework;
 using Ramone.Utility;
 
 
-namespace Ramone.Tests.UtilitiesTests
+namespace Ramone.Tests.Utilities
 {
   [TestFixture]
-  public class MultipartFormDataSerializerTests : TestHelper
+  public class FormUrlEncodingSerializerTests : TestHelper
   {
     [Test]
     public void CanSerializeSimpleClass()
@@ -18,20 +18,10 @@ namespace Ramone.Tests.UtilitiesTests
           MyInt = 10,
           MyString = "Abc"
         };
-        new MultipartFormDataSerializer(typeof(SimpleData)).Serialize(w, data, "xyzq");
-
-        string expected = @"
---xyzq
-Content-Disposition: form-data; name=""MyInt""
-
-10
---xyzq
-Content-Disposition: form-data; name=""MyString""
-
-Abc";
+        new FormUrlEncodingSerializer(typeof(SimpleData)).Serialize(w, data);
 
         string result = w.ToString();
-        Assert.AreEqual(expected, result);
+        Assert.AreEqual("MyInt=10&MyString=Abc", result);
       }
     }
 

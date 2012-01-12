@@ -18,6 +18,11 @@ namespace Ramone.Utility
 
     #region IPropertyVisitor
 
+    public void Begin()
+    {
+    }
+
+
     public void SimpleValue(string name, object value)
     {
       if (!FirstValue)
@@ -25,6 +30,12 @@ namespace Ramone.Utility
       string s = (value != null ? value.ToString() : "");
       Writer.Write(HttpUtility.UrlEncode(name) + "=" + HttpUtility.UrlEncode(s));
       FirstValue = false;
+    }
+
+
+    public void End()
+    {
+      Writer.Flush();
     }
 
     #endregion

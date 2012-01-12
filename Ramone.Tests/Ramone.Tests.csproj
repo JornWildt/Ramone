@@ -107,8 +107,8 @@
     <Compile Include="MediaTypes\StreamCodecTests.cs" />
     <Compile Include="TestHelper.cs" />
     <Compile Include="UserAgentTests.cs" />
-    <Compile Include="UtilitiesTests\MultipartFormDataSerializerTests.cs" />
-    <Compile Include="UtilitiesTests\FormUrlEncodingSerializerTests.cs" />
+    <Compile Include="Utilities\MultipartFormDataSerializerTests.cs" />
+    <Compile Include="Utilities\FormUrlEncodingSerializerTests.cs" />
     <Compile Include="XmlSerializerCodecTests.cs" />
   </ItemGroup>
   <ItemGroup>

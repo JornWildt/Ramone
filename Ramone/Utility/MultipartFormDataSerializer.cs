@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Web;
+using System.Text;
 
 
 namespace Ramone.Utility
@@ -16,10 +17,12 @@ namespace Ramone.Utility
     }
 
 
-    public void Serialize(TextWriter w, object data, string boundary = null)
+    public void Serialize(Stream s, object data, Encoding encoding = null, string boundary = null)
     {
-      MultipartFormDataPropertyVisitor v = new MultipartFormDataPropertyVisitor(w, boundary);
+      MultipartFormDataPropertyVisitor v = new MultipartFormDataPropertyVisitor(s, encoding, boundary);
+      v.Begin();
       Serializer.Serialize(data, v);
+      v.End();
     }
   }
 }

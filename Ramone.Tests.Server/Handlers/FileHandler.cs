@@ -38,5 +38,22 @@ namespace Ramone.Tests.Server.Handlers
     {
       return string.Format("{0}-{1}", data.Name, data.Age);
     }
+
+
+    public class MultipartDataFile
+    {
+      public IFile DataFile { get; set; }
+      public int Age { get; set; }
+    }
+
+
+    public object Post(MultipartDataFile data)
+    {
+      using (TextReader r = new StreamReader(data.DataFile.OpenStream()))
+      {
+        string content = r.ReadToEnd();
+        return string.Format("{0}-{1}-{2}", data.DataFile.FileName, data.DataFile.ContentType, content, data.Age);
+      }
+    }
   }
 }
