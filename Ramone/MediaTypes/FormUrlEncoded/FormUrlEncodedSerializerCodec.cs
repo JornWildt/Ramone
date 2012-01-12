@@ -11,16 +11,16 @@ namespace Ramone.MediaTypes.FormUrlEncoded
     FormUrlEncodingSerializer Serializer = new FormUrlEncodingSerializer(typeof(TEntity));
 
 
-    public void WriteTo(Stream s, Type t, object data)
+    public void WriteTo(WriterContext context)
     {
-      if (data == null)
+      if (context.Data == null)
         return;
 
-      TEntity entity = data as TEntity;
+      TEntity entity = context.Data as TEntity;
       if (entity == null)
-        throw new InvalidOperationException(string.Format("Could not write {0} - expected it to be {1}.", data.GetType(), typeof(TEntity)));
+        throw new InvalidOperationException(string.Format("Could not write {0} - expected it to be {1}.", context.Data.GetType(), typeof(TEntity)));
 
-      using (TextWriter w = new StreamWriter(s))
+      using (TextWriter w = new StreamWriter(context.HttpStream))
       {
 
         Serializer.Serialize(w, entity);

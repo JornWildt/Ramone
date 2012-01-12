@@ -20,14 +20,14 @@ namespace Ramone.MediaTypes
 
     #region IMediaTypeWriter
 
-    public void WriteTo(Stream s, Type t, object data)
+    public void WriteTo(WriterContext context)
     {
-      if (data == null)
+      if (context.Data == null)
         return;
-      if (!(data is Stream))
-        throw new ArgumentException(string.Format("Expected Stream in StreamCodec. Got {0}.", t));
-      Stream input = data as Stream;
-      input.CopyTo(s);
+      if (!(context.Data is Stream))
+        throw new ArgumentException(string.Format("Expected Stream in StreamCodec. Got {0}.", context.Data.GetType()));
+      Stream input = context.Data as Stream;
+      input.CopyTo(context.HttpStream);
     }
 
     #endregion

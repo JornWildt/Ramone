@@ -12,19 +12,19 @@ namespace Ramone.MediaTypes.MultipartFormData
     MultipartFormDataSerializer Serializer = new MultipartFormDataSerializer(typeof(TEntity));
 
 
-    public void WriteTo(Stream s, Type t, object data)
+    public void WriteTo(WriterContext context)
     {
-      if (data == null)
+      if (context.Data == null)
         return;
 
-      TEntity entity = data as TEntity;
+      TEntity entity = context.Data as TEntity;
       if (entity == null)
-        throw new InvalidOperationException(string.Format("Could not write {0} - expected it to be {1}.", data.GetType(), typeof(TEntity)));
+        throw new InvalidOperationException(string.Format("Could not write {0} - expected it to be {1}.", context.Data.GetType(), typeof(TEntity)));
 
       // FIXME: parameterize somewhere
       Encoding enc = Encoding.UTF8;
 
-      Serializer.Serialize(s, entity, enc, CodecArgument as string);
+      Serializer.Serialize(context.HttpStream, entity, enc, CodecArgument as string);
     }
 
 

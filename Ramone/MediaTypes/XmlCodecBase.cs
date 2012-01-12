@@ -28,11 +28,11 @@ namespace Ramone.MediaTypes
 
     #region IMediaTypeWriter
 
-    public void WriteTo(Stream s, Type t, object data)
+    public void WriteTo(WriterContext context)
     {
-      using (var writer = XmlWriter.Create(s))
+      using (var writer = XmlWriter.Create(context.HttpStream))
       {
-        WriteTo(data as TEntity, writer);
+        WriteTo(context.Data as TEntity, writer);
       }
     }
 

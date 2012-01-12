@@ -25,10 +25,10 @@ namespace Ramone.Tests.Codecs
 
     #region IMediaTypeWriter Members
 
-    public void WriteTo(Stream s, Type t, object data)
+    public void WriteTo(WriterContext context)
     {
-      Cat c = (Cat)data;
-      using (StreamWriter w = new StreamWriter(s, Encoding.UTF8))
+      Cat c = (Cat)context.Data;
+      using (StreamWriter w = new StreamWriter(context.HttpStream, Encoding.UTF8))
       {
         w.Write(c.Name);
       }

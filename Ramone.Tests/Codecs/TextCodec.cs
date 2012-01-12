@@ -11,10 +11,10 @@ namespace Ramone.Tests.Codecs
   {
     #region IMediaTypeWriter Members
 
-    public void WriteTo(Stream s, Type t, object data)
+    public void WriteTo(WriterContext context)
     {
-      string text = data as string;
-      s.Write(Encoding.UTF8.GetBytes(text), 0, Encoding.UTF8.GetByteCount(text));
+      string text = context.Data as string;
+      context.HttpStream.Write(Encoding.UTF8.GetBytes(text), 0, Encoding.UTF8.GetByteCount(text));
     }
 
     #endregion

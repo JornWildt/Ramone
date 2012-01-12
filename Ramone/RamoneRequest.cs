@@ -284,7 +284,7 @@ namespace Ramone
           }
 
           request.ContentType = BodyContentType + charset + boundary;
-          BodyCodec.WriteTo(request.GetRequestStream(), BodyData.GetType(), BodyData);
+          BodyCodec.WriteTo(new WriterContext(request.GetRequestStream(), BodyData, request));
           request.GetRequestStream().Close();
         }
 
