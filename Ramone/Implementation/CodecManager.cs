@@ -128,7 +128,7 @@ namespace Ramone.Implementation
     {
       return from entry in RegisteredWriters
              where (entry.MediaType == mediaType || mediaType == null) && entry.ClrType == t
-                   || mode == TypeSelectionMode.All && entry.MediaType == mediaType && mediaType != null && entry.ClrType == t
+                   || mode == TypeSelectionMode.All && entry.MediaType == mediaType && mediaType != null && entry.ClrType == null
                    || mode == TypeSelectionMode.All && entry.MediaType == null && mediaType != null && entry.ClrType.IsAssignableFrom(t)
              select entry;
     }
