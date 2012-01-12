@@ -63,7 +63,7 @@ Abc ÆØÅ
 --xyzq
 Content-Disposition: form-data; name=""MyFile""; filename=""data1.txt""
 
-Ramsaladin ÆØÅ";
+XxxÆØÅ";
 
         s.Seek(0, SeekOrigin.Begin);
         using (StreamReader r = new StreamReader(s))

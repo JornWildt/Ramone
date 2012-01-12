@@ -22,6 +22,12 @@ namespace Ramone.MediaTypes
 
     public void WriteTo(Stream s, Type t, object data)
     {
+      if (data == null)
+        return;
+      if (!(data is Stream))
+        throw new ArgumentException(string.Format("Expected Stream in StreamCodec. Got {0}.", t));
+      Stream input = data as Stream;
+      input.CopyTo(s);
     }
 
     #endregion

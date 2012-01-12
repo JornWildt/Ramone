@@ -16,21 +16,12 @@ namespace Ramone.Tests.Server.Handlers
     }
 
 
-    //public object Post()
-    //{
-    //  byte[] data = new byte[100];
-    //  int cou = HttpContext.Current.Request.InputStream.Read(data, 0, 100);
-    //  MemoryStream s = new MemoryStream(data, 0, cou);
-    //  return new InMemoryFile(s);
-    //}
-
-
-    //public object Post(IFile file)
-    //{
-    //  byte[] data = new byte[100];
-    //  int cou = file.OpenStream().Read(data, 0, 100);
-    //  MemoryStream s = new MemoryStream(data, 0, cou);
-    //  return new InMemoryFile(s) { ContentType = file.ContentType, FileName = file.FileName };
-    //}
+    public object Post(Stream file)
+    {
+      byte[] data = new byte[100];
+      int cou = file.Read(data, 0, 100);
+      MemoryStream s = new MemoryStream(data, 0, cou);
+      return new InMemoryFile(s);// { ContentType = file.ContentType, FileName = file.FileName };
+    }
   }
 }

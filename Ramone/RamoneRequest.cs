@@ -128,7 +128,8 @@ namespace Ramone
       MediaTypeWriterRegistration writer = BodyContentType == null 
                                            ? codecManager.GetWriter(body.GetType())
                                            : codecManager.GetWriter(body.GetType(), BodyContentType);
-      BodyContentType = writer.MediaType;
+      if (BodyContentType == null)
+        BodyContentType = writer.MediaType;
       if (BodyContentType == "multipart/form-data")
       {
         BodyBoundary = Guid.NewGuid().ToString();

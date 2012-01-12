@@ -16,6 +16,8 @@ namespace Ramone.Tests.Server
 {
   public class Configuration : IConfigurationSource
   {
+    public class MyFileResource { }
+
     public void Configure()
     {
       using (OpenRastaConfiguration.Manual)
@@ -60,9 +62,10 @@ namespace Ramone.Tests.Server
             .HandledBy<EncodingHandler>()
             .TranscodedBy<EncodingCodec>();
 
-        ResourceSpace.Has.ResourcesOfType<IFile>()
+        ResourceSpace.Has.ResourcesOfType<MyFileResource>()
             .AtUri(Constants.FilePath)
-            .HandledBy<FileHandler>();
+            .HandledBy<FileHandler>()
+            .TranscodedBy<ApplicationOctetStreamCodec>();
 
         ResourceSpace.Has.ResourcesOfType<MultipartData>()
             .AtUri(Constants.MultipartFormDataPath).Named("SimpleData")

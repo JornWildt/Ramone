@@ -44,7 +44,10 @@ namespace Ramone.Tests.MediaTypes
 
         // Assert
         Assert.AreEqual(4, response.ContentLength);
-
+        Assert.AreEqual(10, response.Body.ReadByte());
+        Assert.AreEqual(2, response.Body.ReadByte());
+        Assert.AreEqual(30, response.Body.ReadByte());
+        Assert.AreEqual(4, response.Body.ReadByte());
       }
     }
   }
