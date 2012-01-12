@@ -41,6 +41,9 @@ Ramone.HyperMedia
 
 Omdøbe Service => Client?
 
+Man kan få multiple writers for XmlDocument (application/xml og text/xml ... hvad med application/xhtml+xml mf.?) 
+- Der er behov for at prioritere hvilken der skal vælges ved skrivning (og læsning/accept)
+
 Mangler tests af FormUrlEncodedCodec<T> 
 - inkl. charset tests
 
