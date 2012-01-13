@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.IO;
 using System.Text;
-using System.IO;
+using Ramone.Utility;
+
 
 namespace Ramone.MediaTypes
 {
@@ -17,7 +16,13 @@ namespace Ramone.MediaTypes
 
     public object ReadFrom(ReaderContext context)
     {
-      using (var reader = new StreamReader(context.HttpStream))
+      Encoding enc = Encoding.Default;
+
+      MediaType m = MediaTypeParser.ParseMediaType(context.Response.ContentType);
+      if (m.Parameters.ContainsKey("charset"))
+        enc = Encoding.GetEncoding(m.Parameters["charset"]);
+
+      using (var reader = new StreamReader(context.HttpStream, enc))
       {
         return ReadFrom(reader);
       }

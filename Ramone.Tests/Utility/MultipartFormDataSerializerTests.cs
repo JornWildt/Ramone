@@ -1,12 +1,12 @@
-﻿using System.IO;
-using NUnit.Framework;
-using Ramone.Utility;
-using Ramone.IO;
+﻿using System;
+using System.IO;
 using System.Text;
-using System;
+using NUnit.Framework;
+using Ramone.IO;
+using Ramone.Utility;
 
 
-namespace Ramone.Tests.Utilities
+namespace Ramone.Tests.Utility
 {
   [TestFixture]
   public class MultipartFormDataSerializerTests : TestHelper

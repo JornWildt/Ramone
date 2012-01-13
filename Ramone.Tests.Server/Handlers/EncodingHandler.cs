@@ -7,7 +7,10 @@ namespace Ramone.Tests.Server.Handlers
   {
     public object Get()
     {
-      return string.Format("<html><body>{0}</body></html>", "ÆØÅúï");
+      return new EncodingData
+      {
+        Data = string.Format("<html><body>{0}</body></html>", "ÆØÅúï")
+      };
     }
   }
 }

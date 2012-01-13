@@ -23,33 +23,31 @@ namespace Ramone.Tests.MediaTypes.Html
 
       HtmlNode nameNode = personNode.SelectSingleNode("//*[@class=\"Name\"]");
       Assert.IsNotNull(nameNode);
-
       Assert.AreEqual("Petrea", nameNode.InnerText);
+
+      HtmlNode addressNode = personNode.SelectSingleNode("//*[@class=\"Address\"]");
+      Assert.IsNotNull(addressNode);
+      Assert.AreEqual("At home", addressNode.InnerText);
     }
 
 
     [Test]
     public void CanReadHtmlDocumentWithEncoding(
-      [Values("UTF-8", "")] string charset)
+      [Values("UTF-8", "Windows-1252", "UTF-16", "iso-8859-1")] string charset)
     {
       // Arrange
       RamoneRequest req = Session.Bind(EncodingTemplate);
 
       // Act
-      HtmlDocument doc = req.Get<HtmlDocument>().Body;
+      var response = req.AcceptCharset(charset).Get<HtmlDocument>();
+      HtmlDocument doc = response.Body;
 
       // Assert
       HtmlNode nameNode = doc.DocumentNode.SelectSingleNode("/html/body");
       Assert.IsNotNull(nameNode);
 
+      Assert.AreEqual(charset, response.Response.Headers["X-accept-charset"]);
       Assert.AreEqual("ÆØÅúï", nameNode.InnerText);
     }
-
-  
-    //[Test]
-    //public void CanReadHtmlDocumentWithEncoding(
-    //  [Values("UTF-8", "")] string charset,
-    //  [Values("Petrea", "ÆØÅ", "üï")] string name)
-    //{
   }
 }

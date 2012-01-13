@@ -6,6 +6,7 @@
     <div class="Person">
       <ul>
         <li class="Name"><%=Resource.Name%></li>
+        <li class="Address"><%=Resource.Address%></li>
       </ul>
     </div>
   </body>

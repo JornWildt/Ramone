@@ -42,18 +42,16 @@ namespace Ramone.Tests.Server.Codecs
     public void WriteTo(object entity, OpenRasta.Web.IHttpEntity response, string[] codecParameters)
     {
       HttpContext context = HttpContext.Current;
+      EncodingData data = (EncodingData)entity;
 
       string charset = context.Request.Headers["Accept-Charset"];
-
       context.Response.Headers.Add("X-accept-charset", charset);
-
-      // FIXME: can be a list of charsets!
-
-      // FIXME: Exception handling
+      context.Response.Headers.Add("Content-Type", "text/html: charset=" + charset);
       Encoding enc = Encoding.GetEncoding(charset);
+
       using (StreamWriter writer = new StreamWriter(response.Stream, enc))
       {
-        writer.Write(entity);
+        writer.Write(data.Data);
       }
     }
 

@@ -3,7 +3,7 @@ using NUnit.Framework;
 using Ramone.Utility;
 
 
-namespace Ramone.Tests.Utilities
+namespace Ramone.Tests.Utility
 {
   [TestFixture]
   public class FormUrlEncodingSerializerTests : TestHelper
