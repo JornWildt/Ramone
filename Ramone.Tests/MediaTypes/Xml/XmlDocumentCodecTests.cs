@@ -42,5 +42,25 @@ namespace Ramone.Tests.MediaTypes.Xml
       Assert.IsNotNull(createdDossier);
       Assert.AreEqual("My dossier", createdDossier.Title);
     }
+
+
+    [Test]
+    public void CanReadXmlDocumentWithEncoding(
+      [Values("UTF-8", "Windows-1252", "UTF-16", "iso-8859-1")] string charset)
+    {
+      // Arrange
+      RamoneRequest req = Session.Bind(EncodingTemplate);
+
+      // Act
+      var response = req.AcceptCharset(charset).Get<XmlDocument>();
+      XmlDocument doc = response.Body;
+
+      // Assert
+      XmlNode nameNode = doc.SelectSingleNode("/html/body");
+      Assert.IsNotNull(nameNode);
+
+      Assert.AreEqual(charset, response.Response.Headers["X-accept-charset"]);
+      Assert.AreEqual("ÆØÅúï", nameNode.InnerText);
+    }
   }
 }

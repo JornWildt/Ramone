@@ -2,6 +2,8 @@
 using System.IO;
 using System.Xml;
 using Ramone;
+using System.Text;
+using Ramone.Utility;
 
 
 namespace Ramone.MediaTypes
@@ -17,7 +19,14 @@ namespace Ramone.MediaTypes
 
     public object ReadFrom(ReaderContext context)
     {
-      using (var reader = XmlReader.Create(context.HttpStream))
+      Encoding enc = Encoding.Default;
+
+      MediaType m = MediaTypeParser.ParseMediaType(context.Response.ContentType);
+      if (m.Parameters.ContainsKey("charset"))
+        enc = Encoding.GetEncoding(m.Parameters["charset"]);
+
+      using (var textReader = new StreamReader(context.HttpStream, enc))
+      using (var reader = XmlReader.Create(textReader))
       {
         return ReadFrom(reader);
       }
