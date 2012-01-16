@@ -17,10 +17,22 @@
       OK: AsJson
       AsXml (afventer mere generisk XML serializer)
       AsMultipartFormdata
+      AsFormUrlEncoded
+
+Omvendt giver det også god mening, at man ikke skal angive AsXml hver eneste gang, såfremt
+man rent faktisk har registreret en codec (selvom XML/JSON osv. ikke kræver det).
+
+Andre genveje:
+
+      cm.AddCodec<DocumentList>(RestConstants.CaseManagementMediaType, new XmlSerializerCodec<Document>());
+  =>  cm.AddXmlCodec<DocumentList>(RestConstants.CaseManagementMediaType);
+
+Tror at default skal være *med* standard codecs.
 
 Ikke nødvendigt med (skal gøres li'som multipart/form-data):
   cm.AddCodec<NewCaseArgs>("application/x-www-form-urlencoded", new FormUrlEncodedSerializerCodec<NewCaseArgs>());
 
+System.Net.Mime.MimeType ... der var parseren. Tænkte nok det fandtes allerede.
 
 Det bør ikke være nødvendigt at angive "application/octet-stream" hvis man siger Accept<Stream>().
 
