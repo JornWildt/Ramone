@@ -8,6 +8,7 @@ using Ramone.MediaTypes;
 using Ramone.MediaTypes.Atom;
 using Ramone.MediaTypes.Html;
 using Ramone.MediaTypes.Json;
+using Ramone.MediaTypes.MultipartFormData;
 using Ramone.MediaTypes.Xml;
 
 
@@ -39,6 +40,9 @@ namespace Ramone
 
       // JSON
       settings.CodecManager.AddCodec("application/json", new JsonDynamicCodec());
+
+      // Multipart/form-data
+      settings.CodecManager.AddCodec("multipart/form-data", new MultipartFormDataSerializerCodec());
 
       // Streams
       settings.CodecManager.AddCodec<Stream>(new StreamCodec());

@@ -1,16 +1,30 @@
-﻿Check at Url og parametre bliver korrekt escaped (%, ? etc.)
+﻿Overvej hvilken vej der skal gåes med serializers/codecs
+- Hvorfor skal man f.eks. erklære en codec for application/xml mf.
+- Er det overhovedet nødvendigt med disse generic<T> codecs?
+  - I hvertfald så længe det drejer som om generiske media-types.
+    Der er forskel på disse to:
+      AddCodec<Person>("application/xml", new XmlCodec<Person>());
+        => kan gøres uden erklæring
+        => men bør kunne overstyres med en mere specialiseret udgave
+      AddCodec<Person>("application/person+xml", new XmlCodec<Person>());
+        => skal gøres med erklæring
+- Gælder for
+  - multipart/form-data
+  - application/xml
+  - application/json
+- Skal være muligt at overstyre standard codecs for disse
+  - Skal også være som er tilgængelige som AsJson, AsXml, 
 
-Det burde være muligt at anvende multipart/form-data og form/urlencoded på samme måde som JSON serializeren
-- Altså undlade at specificere codecs for hver gang
 
 Hvorfor oversætte dette ikke:
   RamoneResponse<string> response = fileReq.Accept<string>("text/plain").ContentType("multipart/form-data").Post(data);
 
 
-Specifying what the default codec is for a type (so Accept need not be set)
+Multipart/form-data
+- Content-Transfer-Encoding: binary
 
-Håndtering af charset i codecs
-- Kan gøres i XmlCodecBase og TextCodecBase (mf?)
+Specifying what the default codec is for a type (so Accept need not be set)
+- Især for application/xml (som også genkender text/xml)
 
 Predefined codecs
 - Url-encoded post data

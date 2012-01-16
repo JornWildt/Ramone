@@ -6,25 +6,23 @@ using System.Text;
 
 namespace Ramone.MediaTypes.MultipartFormData
 {
-  public class MultipartFormDataSerializerCodec<TEntity> : IMediaTypeWriter
-    where TEntity : class
+  public class MultipartFormDataSerializerCodec : IMediaTypeWriter
   {
-    MultipartFormDataSerializer Serializer = new MultipartFormDataSerializer(typeof(TEntity));
-
-
     public void WriteTo(WriterContext context)
     {
       if (context.Data == null)
         return;
 
-      TEntity entity = context.Data as TEntity;
-      if (entity == null)
-        throw new InvalidOperationException(string.Format("Could not write {0} - expected it to be {1}.", context.Data.GetType(), typeof(TEntity)));
+      Type t = context.Data.GetType();
+      MultipartFormDataSerializer Serializer = new MultipartFormDataSerializer(t);
 
-      // FIXME: parameterize somewhere
-      Encoding enc = Encoding.UTF8;
+      Encoding enc = Encoding.Default;
 
-      Serializer.Serialize(context.HttpStream, entity, enc, CodecArgument as string);
+      MediaType m = MediaTypeParser.ParseMediaType(context.Request.ContentType);
+      if (m.Parameters.ContainsKey("charset"))
+        enc = Encoding.GetEncoding(m.Parameters["charset"]);
+
+      Serializer.Serialize(context.HttpStream, context.Data, enc, CodecArgument as string);
     }
 
 

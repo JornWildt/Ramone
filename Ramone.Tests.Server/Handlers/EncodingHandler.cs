@@ -12,5 +12,14 @@ namespace Ramone.Tests.Server.Handlers
         Data = string.Format("<html><body>{0}</body></html>", "ÆØÅúï")
       };
     }
+
+
+    public object Post(EncodingData data)
+    {
+      return new EncodingData
+      {
+        Data = data.Data
+      };
+    }
   }
 }

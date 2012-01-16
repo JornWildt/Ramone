@@ -3,6 +3,7 @@ using System.Text;
 using System.Web;
 using OpenRasta.Codecs;
 using Ramone.Tests.Common;
+using Ramone.Utility;
 
 
 namespace Ramone.Tests.Server.Codecs
@@ -18,15 +19,14 @@ namespace Ramone.Tests.Server.Codecs
     {
       HttpContext context = HttpContext.Current;
 
-      string contentType = context.Request.ContentType;
-      int charsetPos = contentType.IndexOf("charset=");
-      string charset = charsetPos > 0
-                       ? contentType.Substring(charsetPos + 8).Trim()
-                       : "-unknown-";
+      Encoding enc = Encoding.Default;
+      string charset = request.ContentType.CharSet;
+      if (charset == null)
+        charset = "unknown";
+      else
+        enc = Encoding.GetEncoding(charset);
+      context.Response.Headers.Add("X-request-charset", charset);
 
-      context.Response.Headers.Add("X-charset", charset);
-
-      Encoding enc = Encoding.GetEncoding(charset);
       using (StreamReader reader = new StreamReader(request.Stream, enc))
       {
         string data = reader.ReadToEnd();

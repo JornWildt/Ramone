@@ -32,9 +32,6 @@ namespace Ramone.Tests
 
       cm.AddCodec<HeaderList>("application/xml", new XmlSerializerCodec<HeaderList>());
 
-      cm.AddCodec<MultipartData>("multipart/form-data", new MultipartFormDataSerializerCodec<MultipartData>());
-      cm.AddCodec<Ramone.Tests.MediaTypes.MultipartFormData.MultipartFormDataTests.MultipartDataFile>("multipart/form-data", new MultipartFormDataSerializerCodec<Ramone.Tests.MediaTypes.MultipartFormData.MultipartFormDataTests.MultipartDataFile>());
-
       cm.AddCodec<string>("text/plain", new TextCodec());
       cm.AddCodec<string>("text/html", new TextCodec());
       cm.AddCodec<string>("text/xml", new TextCodec());

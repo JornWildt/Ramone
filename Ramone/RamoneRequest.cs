@@ -108,7 +108,7 @@ namespace Ramone
     }
 
 
-    public RamoneRequest CharacterSet(string charset)
+    public RamoneRequest Charset(string charset)
     {
       BodyCharacterSet = charset;
       return this;

@@ -62,5 +62,36 @@ namespace Ramone.Tests.MediaTypes.Xml
       Assert.AreEqual(charset, response.Response.Headers["X-accept-charset"]);
       Assert.AreEqual("ÆØÅúï", nameNode.InnerText);
     }
+
+
+    // A rather useless test since the XmlSerializer always encodes using UT-8 and stamps that into the XML
+    //[Test]
+    //public void CanWriteXmlDocumentWithEncoding(
+    //  [Values("UTF-8", "Windows-1252", "UTF-16", "iso-8859-1")] string charsetIn,
+    //  [Values("UTF-8", "Windows-1252", "UTF-16", "iso-8859-1")] string charsetOut)
+    //{
+    //  // Arrange
+    //  XmlDocument doc = new XmlDocument();
+    //  doc.LoadXml("<Text>ÆØÅüî</Text>");
+
+    //  RamoneRequest request = Session.Bind(EncodingTemplate);
+
+    //  // Act
+    //  RamoneResponse<XmlDocument> response = request.AcceptCharset(charsetOut)
+    //                                                .ContentType("application/xml")
+    //                                                .Charset(charsetIn)
+    //                                                .Post<XmlDocument>(doc);
+
+    //  // Assert
+    //  XmlDocument result = response.Body;
+
+    //  Assert.IsNotNull(result);
+    //  XmlNode textNode = result.SelectSingleNode("/Text");
+    //  Assert.IsNotNull(textNode);
+
+    //  Assert.AreEqual(charsetIn, response.Response.Headers["X-request-charset"]);
+    //  Assert.AreEqual(charsetOut, response.Response.Headers["X-accept-charset"]);
+    //  Assert.AreEqual("ÆØÅüî", textNode.InnerText);
+    //}
   }
 }
