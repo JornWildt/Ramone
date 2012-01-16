@@ -23,6 +23,21 @@ namespace Ramone.Tests.MediaTypes.MultipartFormData
     }
 
 
+    [Test]
+    public void CanPostSimpleMultipartFormDataUsingShorthand()
+    {
+      // Arrange
+      MultipartData data = new MultipartData { Name = "Pete", Age = 10 };
+      RamoneRequest formdataReq = Session.Bind(MultipartFormDataTemplate);
+
+      // Act
+      RamoneResponse<string> response = formdataReq.Accept("text/plain").AsMultipartFormData().Post<string>(data);
+
+      // Assert
+      Assert.AreEqual("Pete-10", response.Body);
+    }
+
+
     public class MultipartDataFile
     {
       public IFile DataFile { get; set; }

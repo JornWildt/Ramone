@@ -117,5 +117,17 @@ namespace Ramone
 
       return session.Request(link);
     }
+
+
+    public static RamoneRequest AsJson(this RamoneRequest request)
+    {
+      return request.ContentType("application/json");
+    }
+
+
+    public static RamoneRequest AsMultipartFormData(this RamoneRequest request)
+    {
+      return request.ContentType("multipart/form-data");
+    }
   }
 }

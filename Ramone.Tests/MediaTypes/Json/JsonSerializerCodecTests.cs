@@ -45,5 +45,21 @@ namespace Ramone.Tests.MediaTypes.Json
       Assert.IsNotNull(createdCat);
       Assert.AreEqual("Prince", createdCat.Name);
     }
+
+
+    [Test]
+    public void CanWriteJsonUsingShorthand()
+    {
+      // Arrange
+      Cat cat = new Cat { Name = "Prince" };
+      RamoneRequest request = Session.Bind(CatsTemplate);
+
+      // Act
+      Cat createdCat = request.AsJson().Post<Cat>(cat).Created();
+
+      // Assert
+      Assert.IsNotNull(createdCat);
+      Assert.AreEqual("Prince", createdCat.Name);
+    }
   }
 }

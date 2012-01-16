@@ -14,7 +14,15 @@
   - application/json
 - Skal være muligt at overstyre standard codecs for disse
   - Skal også være som er tilgængelige som AsJson, AsXml, 
+      OK: AsJson
+      AsXml (afventer mere generisk XML serializer)
+      AsMultipartFormdata
 
+Ikke nødvendigt med (skal gøres li'som multipart/form-data):
+  cm.AddCodec<NewCaseArgs>("application/x-www-form-urlencoded", new FormUrlEncodedSerializerCodec<NewCaseArgs>());
+
+
+Det bør ikke være nødvendigt at angive "application/octet-stream" hvis man siger Accept<Stream>().
 
 Hvorfor oversætte dette ikke:
   RamoneResponse<string> response = fileReq.Accept<string>("text/plain").ContentType("multipart/form-data").Post(data);
