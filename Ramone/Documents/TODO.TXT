@@ -18,9 +18,8 @@
       AsXml (afventer mere generisk XML serializer)
       AsMultipartFormdata
       AsFormUrlEncoded
-
-Omvendt giver det også god mening, at man ikke skal angive AsXml hver eneste gang, såfremt
-man rent faktisk har registreret en codec (selvom XML/JSON osv. ikke kræver det).
+- Omvendt giver det også god mening, at man ikke skal angive AsXml hver eneste gang, såfremt
+  man rent faktisk har registreret en codec (selvom XML/JSON osv. ikke kræver det).
 
 Andre genveje:
 
