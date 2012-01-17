@@ -5,16 +5,22 @@ namespace Ramone.Tests.Server.Handlers
 {
   public class EncodingHandler
   {
-    public object Get()
+    public object Get(string type)
     {
-      return new EncodingData
-      {
-        Data = string.Format("<html><body>{0}</body></html>", "ÆØÅúï")
-      };
+      if (type == "html" || type == "xml")
+        return new EncodingData
+        {
+          Data = "<html><body>ÆØÅúï´`'</body></html>"
+        };
+      else
+        return new EncodingData
+        {
+          Data = "{ Name: \"ÆØÅúï´`'\\\"\" }"
+        };
     }
 
 
-    public object Post(EncodingData data)
+    public object Post(string type, EncodingData data)
     {
       return new EncodingData
       {

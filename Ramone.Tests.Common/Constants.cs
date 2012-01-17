@@ -10,7 +10,7 @@
 
     public const string PersonPath = "person/{name}";
 
-    public const string EncodingPath = "encoding";
+    public const string EncodingPath = "encoding?type={type}";
 
     public const string FilePath = "file";
 

@@ -18,6 +18,7 @@
       AsXml (afventer mere generisk XML serializer)
       AsMultipartFormdata
       AsFormUrlEncoded
+- AcceptJson ligesom like AsJson osv.
 - Omvendt giver det også god mening, at man ikke skal angive AsXml hver eneste gang, såfremt
   man rent faktisk har registreret en codec (selvom XML/JSON osv. ikke kræver det).
 
@@ -96,6 +97,10 @@ Hvad med nogle overloads a'la
 - Request.As(string contentType) og Request.AsJson/AsFormdata/AsUrlEncoded
 
 Charset Encoding skal sættes som en default værdie i session/service/config
+
+Kan der være en fordel i at lave en Multipart/form-data og url-encoded "formatter" 
+- Noget a'la en stream hvor man kan lave formatter.WriteParameter(key, value)
+- Findes der noget i System.Net[.Mime]?
 
 Angivelse af encoding i Multipart og UrlEncoding serializers
 

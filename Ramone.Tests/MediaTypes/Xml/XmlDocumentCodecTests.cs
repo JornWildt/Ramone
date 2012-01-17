@@ -46,7 +46,7 @@ namespace Ramone.Tests.MediaTypes.Xml
 
     [Test]
     public void CanReadXmlDocumentWithEncoding(
-      [Values("UTF-8", "Windows-1252", "UTF-16", "iso-8859-1")] string charset)
+      [Values("UTF-8", "Windows-1252", "iso-8859-1")] string charset)
     {
       // Arrange
       RamoneRequest req = Session.Bind(EncodingTemplate);

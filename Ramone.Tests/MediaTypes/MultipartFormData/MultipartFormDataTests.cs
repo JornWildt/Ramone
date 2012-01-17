@@ -94,8 +94,8 @@ namespace Ramone.Tests.MediaTypes.MultipartFormData
 
     [Test]
     public void CanPostSimpleMultipartFormDataWithEncoding(
-      [Values("UTF-8", "Windows-1252", "UTF-16", "iso-8859-1")] string charsetIn,
-      [Values("UTF-8", "Windows-1252", "UTF-16", "iso-8859-1")] string charsetOut)
+      [Values("UTF-8", "Windows-1252", "iso-8859-1")] string charsetIn,
+      [Values("UTF-8", "Windows-1252", "iso-8859-1")] string charsetOut)
     {
       // Arrange
       MultipartData data = new MultipartData { Name = "ÆØÅüî", Age = 10 };

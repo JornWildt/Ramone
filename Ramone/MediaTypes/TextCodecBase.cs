@@ -41,7 +41,7 @@ namespace Ramone.MediaTypes
       if (m.Parameters.ContainsKey("charset"))
         enc = Encoding.GetEncoding(m.Parameters["charset"]);
 
-      using (var writer = new StreamWriter(context.HttpStream))
+      using (var writer = new StreamWriter(context.HttpStream, enc))
       {
         WriteTo(context.Data as TEntity, writer);
       }

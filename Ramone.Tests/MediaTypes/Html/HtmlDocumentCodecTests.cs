@@ -33,10 +33,10 @@ namespace Ramone.Tests.MediaTypes.Html
 
     [Test]
     public void CanReadHtmlDocumentWithEncoding(
-      [Values("UTF-8", "Windows-1252", "UTF-16", "iso-8859-1")] string charset)
+      [Values("UTF-8", "Windows-1252", "iso-8859-1")] string charset)
     {
       // Arrange
-      RamoneRequest req = Session.Bind(EncodingTemplate);
+      RamoneRequest req = Session.Bind(EncodingTemplate, new { type = "html" });
 
       // Act
       var response = req.AcceptCharset(charset).Get<HtmlDocument>();
