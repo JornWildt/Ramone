@@ -39,7 +39,13 @@ namespace Ramone.MediaTypes
 
     public void WriteTo(WriterContext context)
     {
-      using (var writer = XmlWriter.Create(context.HttpStream))
+      Encoding enc = Encoding.Default;
+
+      MediaType m = MediaTypeParser.ParseMediaType(context.Request.ContentType);
+      if (m.Parameters.ContainsKey("charset"))
+        enc = Encoding.GetEncoding(m.Parameters["charset"]);
+
+      using (var writer = new XmlTextWriter(context.HttpStream, enc))
       {
         WriteTo(context.Data as TEntity, writer);
       }
