@@ -47,7 +47,7 @@ namespace Ramone.Tests.MediaTypes.Html
       Assert.IsNotNull(nameNode);
 
       Assert.AreEqual(charset, response.Response.Headers["X-accept-charset"]);
-      Assert.AreEqual("ÆØÅúï", nameNode.InnerText);
+      Assert.AreEqual("ÆØÅúï´`'", nameNode.InnerText);
     }
   }
 }

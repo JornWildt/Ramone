@@ -57,7 +57,7 @@ namespace Ramone.Tests.MediaTypes.MultipartFormData
       RamoneResponse<string> response = formdataReq.Accept("text/plain").ContentType("multipart/form-data").Post<string>(data);
 
       // Assert
-      Assert.AreEqual("data1.txt-text/plain; charset=UTF-8-XxxÆØÅ-10", response.Body);
+      Assert.AreEqual("data1.txt-text/plain-Æüî´`'-10", response.Body);
     }
 
 

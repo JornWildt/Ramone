@@ -65,6 +65,8 @@ Ramone.HyperMedia
   - eller ILink etc. der matcher de forskellige typer
 - Follow(ILink), Follow(ILinkTemplate, params)
 
+CodecManager: ignore case when looking for media type
+
 Omdøbe Service => Client?
 
 Man kan få multiple writers for XmlDocument (application/xml og text/xml ... hvad med application/xhtml+xml mf.?) 

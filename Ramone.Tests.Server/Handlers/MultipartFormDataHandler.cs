@@ -24,7 +24,7 @@ namespace Ramone.Tests.Server.Handlers
     {
       using (TextReader r = new StreamReader(data.DataFile.OpenStream()))
       {
-        string content = r.ReadToEnd().Substring(0, 6);
+        string content = r.ReadToEnd().Substring(0, 6); // Get substring in order to fetch "GIF89a" from binary GIF file
         return string.Format("{0}-{1}-{2}-{3}", data.DataFile.FileName, data.DataFile.ContentType, content, data.Age);
       }
     }

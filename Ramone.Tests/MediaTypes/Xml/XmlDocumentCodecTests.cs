@@ -49,7 +49,7 @@ namespace Ramone.Tests.MediaTypes.Xml
       [Values("UTF-8", "Windows-1252", "iso-8859-1")] string charset)
     {
       // Arrange
-      RamoneRequest req = Session.Bind(EncodingTemplate);
+      RamoneRequest req = Session.Bind(EncodingTemplate, new { type = "xml" });
 
       // Act
       var response = req.AcceptCharset(charset).Get<XmlDocument>();
@@ -60,7 +60,7 @@ namespace Ramone.Tests.MediaTypes.Xml
       Assert.IsNotNull(nameNode);
 
       Assert.AreEqual(charset, response.Response.Headers["X-accept-charset"]);
-      Assert.AreEqual("ÆØÅúï", nameNode.InnerText);
+      Assert.AreEqual("ÆØÅúï´`'", nameNode.InnerText);
     }
 
 

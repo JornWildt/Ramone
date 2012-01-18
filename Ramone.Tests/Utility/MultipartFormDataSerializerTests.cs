@@ -26,10 +26,12 @@ namespace Ramone.Tests.Utility
         string expected = @"
 --xyzq
 Content-Disposition: form-data; name=""MyInt""
+Content-Type: text/plain; charset=utf-8
 
 10
 --xyzq
 Content-Disposition: form-data; name=""MyString""
+Content-Type: text/plain; charset=utf-8
 
 Abc";
 
@@ -58,12 +60,13 @@ Abc";
         string expected = @"
 --xyzq
 Content-Disposition: form-data; name=""MyString""
+Content-Type: text/plain; charset=utf-8
 
 Abc ÆØÅ
 --xyzq
 Content-Disposition: form-data; name=""MyFile""; filename=""data1.txt""
 
-XxxÆØÅ";
+Æüî´`'";
 
         s.Seek(0, SeekOrigin.Begin);
         using (StreamReader r = new StreamReader(s))
@@ -90,6 +93,7 @@ XxxÆØÅ";
         string expected = @"
 --xyzq
 Content-Disposition: form-data; name=""MyString""
+Content-Type: text/plain; charset=utf-8
 
 Abc ÆØÅ
 --xyzq

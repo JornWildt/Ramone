@@ -12,7 +12,6 @@ namespace Ramone.Utility
     protected TextWriter Writer;
     protected Stream Output;
     protected string Boundary;
-    //protected Encoding TextDataEncoding;
 
 
     public MultipartFormDataPropertyVisitor(Stream s, Encoding encoding = null, string boundary = null)
@@ -22,7 +21,6 @@ namespace Ramone.Utility
       Writer = new StreamWriter(s, encoding);
       Output = s;
       Boundary = (boundary != null ? boundary : Guid.NewGuid().ToString());
-      //TextDataEncoding = encoding;
     }
 
 
@@ -46,7 +44,7 @@ namespace Ramone.Utility
       }
       else
       {
-        contentType = string.Format("\r\nContext-Type: text/plain; charset={0}", Writer.Encoding.BodyName);
+        contentType = string.Format("\r\nContent-Type: text/plain; charset={0}", Writer.Encoding.BodyName);
       }
 
       string header = string.Format(@"
