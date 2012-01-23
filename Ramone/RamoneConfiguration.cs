@@ -40,7 +40,7 @@ namespace Ramone
       settings.CodecManager.AddCodec<SyndicationItem>("application/atom+xml", new AtomItemCodec());
 
       // JSON
-      settings.CodecManager.AddCodec("application/json", new JsonDynamicCodec());
+      settings.CodecManager.AddCodec("application/json", new JsonSerializerCodec());
 
       // Multipart/form-data
       settings.CodecManager.AddCodec("multipart/form-data", new MultipartFormDataSerializerCodec());

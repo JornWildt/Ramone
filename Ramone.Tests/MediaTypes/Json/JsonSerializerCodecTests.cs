@@ -12,7 +12,7 @@ namespace Ramone.Tests.MediaTypes.Json
     protected override void TestFixtureSetUp()
     {
       base.TestFixtureSetUp();
-      TestService.CodecManager.AddCodec<Cat>("application/json", new JsonSerializerCodec<Cat>());
+      //TestService.CodecManager.AddCodec<Cat>("application/json", new JsonSerializerCodec<Cat>());
     }
 
 
@@ -40,7 +40,6 @@ namespace Ramone.Tests.MediaTypes.Json
 
       // Act
       var response = req.AcceptCharset(charset)
-                        .Accept("application/json")
                         .AsJson()
                         .Get();
       dynamic stuff = response.Body;
@@ -53,7 +52,7 @@ namespace Ramone.Tests.MediaTypes.Json
 
 
     [Test]
-    public void CanWriteJson()
+    public void CanPostJson()
     {
       // Arrange
       Cat cat = new Cat { Name = "Prince" };
@@ -71,7 +70,7 @@ namespace Ramone.Tests.MediaTypes.Json
 
 
     [Test]
-    public void CanWriteJsonWithEncoding(
+    public void CanPostJsonWithEncoding(
       [Values("UTF-8", "Windows-1252", "iso-8859-1")] string charsetIn,
       [Values("UTF-8", "Windows-1252", "iso-8859-1")] string charsetOut)
     {
@@ -100,7 +99,7 @@ namespace Ramone.Tests.MediaTypes.Json
 
 
     [Test]
-    public void CanWriteJsonUsingShorthand()
+    public void CanPostJsonUsingShorthand()
     {
       // Arrange
       Cat cat = new Cat { Name = "Prince" };
@@ -108,6 +107,61 @@ namespace Ramone.Tests.MediaTypes.Json
 
       // Act
       Cat createdCat = request.AsJson().Post<Cat>(cat).Created();
+
+      // Assert
+      Assert.IsNotNull(createdCat);
+      Assert.AreEqual("Prince", createdCat.Name);
+    }
+
+
+    [Test]
+    public void CanPostUnregisteredType()
+    {
+      UnregisteredClass data = new UnregisteredClass { Text = "Hello" };
+      RamoneRequest request = Session.Bind(AnyEchoTemplate);
+
+      RamoneResponse<UnregisteredClass> response = request.Accept("application/json").ContentType("application/json").Post<UnregisteredClass>(data);
+
+      Assert.AreEqual(data.Text, response.Body.Text);
+    }
+
+
+    [Test]
+    public void CanPostUnregisteredTypeUsingShorthand()
+    {
+      UnregisteredClass data = new UnregisteredClass { Text = "Hello" };
+      RamoneRequest request = Session.Bind(AnyEchoTemplate);
+
+      RamoneResponse<UnregisteredClass> response = request.AsJson().Post<UnregisteredClass>(data);
+
+      Assert.AreEqual(data.Text, response.Body.Text);
+    }
+
+
+    [Test]
+    public void CanReadJsonAsDynamic()
+    {
+      // Arrange
+      RamoneRequest req = Session.Bind(CatTemplate, new { name = "Ramstein" });
+
+      // Act
+      dynamic cat = req.Accept("application/json").Get().Body;
+
+      // Assert
+      Assert.IsNotNull(cat);
+      Assert.AreEqual("Ramstein", cat.Name);
+    }
+
+
+    [Test]
+    public void CanWriteJsonFromAnonymous()
+    {
+      // Arrange
+      dynamic cat = new { Name = "Prince" };
+      RamoneRequest request = Session.Bind(CatsTemplate);
+
+      // Act
+      dynamic createdCat = request.AsJson().Post(cat).Body;
 
       // Assert
       Assert.IsNotNull(createdCat);

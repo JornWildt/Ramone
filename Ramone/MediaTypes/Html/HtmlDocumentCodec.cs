@@ -6,7 +6,7 @@ namespace Ramone.MediaTypes.Html
 {
   public class HtmlDocumentCodec : TextCodecBase<HtmlDocument>
   {
-    protected override HtmlDocument ReadFrom(TextReader reader)
+    protected override HtmlDocument ReadFrom(TextReader reader, ReaderContext context)
     {
       HtmlDocument doc = new HtmlDocument();
       doc.Load(reader);
@@ -14,7 +14,7 @@ namespace Ramone.MediaTypes.Html
     }
 
 
-    protected override void WriteTo(HtmlDocument doc, TextWriter writer)
+    protected override void WriteTo(HtmlDocument doc, TextWriter writer, WriterContext context)
     {
       doc.Save(writer);
     }

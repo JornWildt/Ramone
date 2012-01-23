@@ -86,7 +86,6 @@
     <Compile Include="MediaTypes\FormUrlEncoded\FormUrlEncodedSerializerCodec.cs" />
     <Compile Include="MediaTypes\Atom\AtomNames.cs" />
     <Compile Include="MediaTypes\Html\HtmlDocumentCodec.cs" />
-    <Compile Include="MediaTypes\Json\JsonDynamicCodec.cs" />
     <Compile Include="MediaTypes\Json\JsonSerializerCodec.cs" />
     <Compile Include="MediaTypes\MultipartFormData\MultipartFormDataSerializerCodec.cs" />
     <Compile Include="MediaTypes\StreamCodec.cs" />

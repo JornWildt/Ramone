@@ -11,6 +11,7 @@ using Ramone.Tests.Server.Handlers;
 using Ramone.Tests.Server.Handlers.CMS;
 using OpenRasta.IO;
 using System.Xml;
+using System.IO;
 
 
 namespace Ramone.Tests.Server
@@ -20,6 +21,8 @@ namespace Ramone.Tests.Server
     public class MyFileResource { }
 
     public class XmlEcho { public XmlDocument Doc { get; set; } }
+
+    public class AnyEcho { public Stream S { get; set; } }
 
     public void Configure()
     {
@@ -84,6 +87,11 @@ namespace Ramone.Tests.Server
             .AtUri(Constants.XmlEchoPath)
             .HandledBy<XmlEchoHandler>()
             .TranscodedBy<XmlEchoCodec>();
+
+        ResourceSpace.Has.ResourcesOfType<AnyEcho>()
+            .AtUri(Constants.AnyEchoPath)
+            .HandledBy<AnyEchoHandler>()
+            .TranscodedBy<AnyEchoCodec>();
 
         ConfigureCMS();
       }

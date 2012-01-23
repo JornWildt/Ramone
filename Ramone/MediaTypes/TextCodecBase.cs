@@ -24,7 +24,7 @@ namespace Ramone.MediaTypes
 
       using (var reader = new StreamReader(context.HttpStream, enc))
       {
-        return ReadFrom(reader);
+        return ReadFrom(reader, context);
       }
     }
 
@@ -43,7 +43,7 @@ namespace Ramone.MediaTypes
 
       using (var writer = new StreamWriter(context.HttpStream, enc))
       {
-        WriteTo(context.Data as TEntity, writer);
+        WriteTo(context.Data as TEntity, writer, context);
       }
     }
 
@@ -56,8 +56,8 @@ namespace Ramone.MediaTypes
 
     #endregion
 
-    protected abstract TEntity ReadFrom(TextReader reader);
+    protected abstract TEntity ReadFrom(TextReader reader, ReaderContext context);
 
-    protected abstract void WriteTo(TEntity item, TextWriter writer);
+    protected abstract void WriteTo(TEntity item, TextWriter writer, WriterContext context);
   }
 }

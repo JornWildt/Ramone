@@ -1,46 +1,97 @@
 ﻿using System;
-using System.IO;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using JsonFx.Json;
-
+using System.IO;
 
 namespace Ramone.MediaTypes.Json
 {
-  public class JsonSerializerCodec<TEntity> : TextCodecBase<TEntity>
-    where TEntity : class
+  public class JsonSerializerCodec : TextCodecBase<object>
   {
-    protected JsonReader Reader { get; set; }
+    protected override object ReadFrom(TextReader reader, ReaderContext context)
+    {
+      JsonReader jsr = new JsonReader();
+      return jsr.Read(reader, context.DataType);
+    }
 
-    protected JsonWriter Writer { get; set; }
+
+    protected override void WriteTo(object item, TextWriter writer, WriterContext context)
+    {
+      if (item == null)
+        throw new ArgumentNullException("item");
+
+      JsonWriter jsw = new JsonWriter();
+      jsw.Write(item, writer);
+    }
+  }
+}
+
+
+#if false
+
+  public class JsonSerializerCodec : TextCodecBase<object>
+  {
+    protected Dictionary<Type, JsonReader> Readers { get; set; }
+
+    protected Dictionary<Type, JsonWriter> Writers { get; set; }
 
 
     public JsonSerializerCodec()
     {
-      Reader = CreateReader();
-      Writer = CreateWriter();
+      Readers = new Dictionary<Type, JsonReader>();
+      Writers = new Dictionary<Type, JsonWriter>();
     }
 
 
-    protected override TEntity ReadFrom(TextReader reader)
+    protected override object ReadFrom(TextReader reader, ReaderContext context)
     {
-      return Reader.Read<TEntity>(reader);
+      JsonReader jsr = GetReader(context.DataType);
+      return jsr.Read(reader);
     }
 
 
-    protected override void WriteTo(TEntity item, TextWriter writer)
+    protected override void WriteTo(object item, TextWriter writer)
     {
-      Writer.Write(item, writer);
+      if (item == null)
+        throw new ArgumentNullException("item");
+
+      JsonWriter jsw = GetWriter(item.GetType());
+      jsw.Write(item, writer);
     }
 
 
-    protected virtual JsonReader CreateReader()
+    protected JsonReader GetReader(Type t)
     {
-      return new JsonReader();
+      if (!Readers.ContainsKey(t))
+      {
+        Readers[t] = CreateReader(t);
+      }
+      return Readers[t];
     }
 
 
-    protected virtual JsonWriter CreateWriter()
+    protected JsonWriter GetWriter(Type t)
+    {
+      if (!Writers.ContainsKey(t))
+      {
+        Writers[t] = CreateWriter(t);
+      }
+      return Writers[t];
+    }
+
+
+    protected virtual JsonReader CreateReader(Type t)
+    {
+      return new JsonReader
+    }
+
+
+    protected virtual JsonWriter CreateWriter(Type t)
     {
       return new JsonWriter();
     }
   }
-}
+
+
+#endif

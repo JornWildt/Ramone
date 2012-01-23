@@ -106,6 +106,7 @@
     <Compile Include="Codecs\CMS\DocumentCodec.cs" />
     <Compile Include="Codecs\CMS\DossierCodec.cs" />
     <Compile Include="Codecs\CMS\PartyCodec.cs" />
+    <Compile Include="Codecs\AnyEchoCodec.cs" />
     <Compile Include="Codecs\Dog2AsXmlCodec.cs" />
     <Compile Include="Codecs\EncodingCodec.cs" />
     <Compile Include="Codecs\HeaderEchoCodec.cs" />
@@ -126,6 +127,7 @@
     <Compile Include="Handlers\CMS\DocumentHandler.cs" />
     <Compile Include="Handlers\CMS\DossiersHandler.cs" />
     <Compile Include="Handlers\CMS\PartyHandler.cs" />
+    <Compile Include="Handlers\AnyEchoHandler.cs" />
     <Compile Include="Handlers\DogHandler.cs" />
     <Compile Include="Handlers\EncodingHandler.cs" />
     <Compile Include="Handlers\FileHandler.cs" />

@@ -127,7 +127,7 @@ namespace Ramone
 
     public static RamoneRequest AsJson(this RamoneRequest request)
     {
-      return request.ContentType("application/json");
+      return request.ContentType("application/json").Accept("application/json");
     }
 
 

@@ -20,6 +20,8 @@
 
     public const string XmlEchoPath = "xml-echo";
 
+    public const string AnyEchoPath = "any-echo";
+
     public const string AtomFeedPath = "atomfeed/{name}";
 
     public const string AtomItemPath = "atomfeed/{feedname}/{itemname}";

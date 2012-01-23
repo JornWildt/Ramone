@@ -90,7 +90,6 @@
     <Compile Include="CustomHeaderTests.cs" />
     <Compile Include="DeleteTests.cs" />
     <Compile Include="MediaTypes\Html\HtmlDocumentCodecTests.cs" />
-    <Compile Include="MediaTypes\Json\JsonDynamicCodecTests.cs" />
     <Compile Include="MediaTypes\Json\JsonSerializerCodecTests.cs" />
     <Compile Include="MediaTypes\MultipartFormData\MultipartFormDataTests.cs" />
     <Compile Include="MediaTypes\Xml\XmlDocumentCodecTests.cs" />
