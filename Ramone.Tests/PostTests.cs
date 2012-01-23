@@ -8,9 +8,6 @@ namespace Ramone.Tests
   [TestFixture]
   public class PostTests : TestHelper
   {
-    // Many of the basic POST tests are covered in the "CreationTests" class, so here we cover the more
-    // specialized examples
-
     Dossier MyDossier = new Dossier
     {
       Title = "A new dossier"

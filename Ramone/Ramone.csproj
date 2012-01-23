@@ -107,7 +107,7 @@
     <Compile Include="Implementation\CodecManager.cs" />
     <Compile Include="MediaTypes\Atom\AtomFeedCodec.cs" />
     <Compile Include="MediaTypes\Atom\AtomItemCodec.cs" />
-    <Compile Include="MediaTypes\XmlCodecBase.cs" />
+    <Compile Include="MediaTypes\XmlStreamCodecBase.cs" />
     <Compile Include="ICodecManager.cs" />
     <Compile Include="IMediaTypeCodec.cs" />
     <Compile Include="IMediaTypeReader.cs" />

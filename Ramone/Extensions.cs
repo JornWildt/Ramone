@@ -119,6 +119,12 @@ namespace Ramone
     }
 
 
+    public static RamoneRequest AsXml(this RamoneRequest request)
+    {
+      return request.ContentType("application/xml").Accept("application/xml");
+    }
+
+
     public static RamoneRequest AsJson(this RamoneRequest request)
     {
       return request.ContentType("application/json");

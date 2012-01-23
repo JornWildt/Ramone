@@ -3,9 +3,9 @@
 
 namespace Ramone.MediaTypes.Xml
 {
-  public class XmlDocumentCodec : XmlCodecBase<XmlDocument>
+  public class XmlDocumentCodec : XmlStreamCodecBase
   {
-    protected override XmlDocument ReadFrom(XmlReader reader)
+    protected override object ReadFrom(XmlReader reader, ReaderContext context)
     {
       XmlDocument doc = new XmlDocument();
       doc.Load(reader);
@@ -13,8 +13,9 @@ namespace Ramone.MediaTypes.Xml
     }
 
 
-    protected override void WriteTo(XmlDocument doc, XmlWriter writer)
+    protected override void WriteTo(object item, XmlWriter writer, WriterContext context)
     {
+      XmlDocument doc = (XmlDocument)item;
       doc.Save(writer);
     }
   }

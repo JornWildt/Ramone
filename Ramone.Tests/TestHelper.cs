@@ -41,6 +41,8 @@ namespace Ramone.Tests
 
     protected static readonly UriTemplate MultipartFormDataFileTemplate = new UriTemplate(Constants.MultipartFormDataFilePath);
 
+    protected static readonly UriTemplate XmlEchoTemplate = new UriTemplate(Constants.XmlEchoPath);
+
     protected static readonly UriTemplate AtomFeedTemplate = new UriTemplate(Constants.AtomFeedPath);
 
     protected static readonly UriTemplate AtomItemTemplate = new UriTemplate(Constants.AtomItemPath);

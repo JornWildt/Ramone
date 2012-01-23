@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 
 
 namespace Ramone.Utility
@@ -46,6 +47,18 @@ namespace Ramone.Utility
       }
 
       return new MediaType(fullType, type, subType, parameters);
+    }
+
+
+    public static Encoding GetEncodingFromCharset(string mediaType)
+    {
+      Encoding enc = Encoding.Default;
+
+      MediaType m = MediaTypeParser.ParseMediaType(mediaType);
+      if (m.Parameters.ContainsKey("charset"))
+        enc = Encoding.GetEncoding(m.Parameters["charset"]);
+
+      return enc;
     }
   }
 }

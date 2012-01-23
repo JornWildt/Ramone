@@ -10,6 +10,7 @@ using Ramone.Tests.Server.Codecs.CMS;
 using Ramone.Tests.Server.Handlers;
 using Ramone.Tests.Server.Handlers.CMS;
 using OpenRasta.IO;
+using System.Xml;
 
 
 namespace Ramone.Tests.Server
@@ -17,6 +18,8 @@ namespace Ramone.Tests.Server
   public class Configuration : IConfigurationSource
   {
     public class MyFileResource { }
+
+    public class XmlEcho { public XmlDocument Doc { get; set; } }
 
     public void Configure()
     {
@@ -76,6 +79,11 @@ namespace Ramone.Tests.Server
             .AtUri(Constants.HeaderEchoPath)
             .HandledBy<HeaderEchoHandler>()
             .TranscodedBy<HeaderEchoCodec>();
+
+        ResourceSpace.Has.ResourcesOfType<XmlEcho>()
+            .AtUri(Constants.XmlEchoPath)
+            .HandledBy<XmlEchoHandler>()
+            .TranscodedBy<XmlEchoCodec>();
 
         ConfigureCMS();
       }

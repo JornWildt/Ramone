@@ -25,6 +25,7 @@ namespace Ramone
     public static IRamoneService WithStandardCodecs(this IRamoneService settings)
     {
       // XML
+      settings.CodecManager.AddCodec("application/xml", new XmlSerializerCodec());
       settings.CodecManager.AddCodec<XmlDocument>("application/xml", new XmlDocumentCodec());
       settings.CodecManager.AddCodec<XmlDocument>("text/xml", new XmlDocumentCodec());
 

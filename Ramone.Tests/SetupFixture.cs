@@ -19,18 +19,20 @@ namespace Ramone.Tests
     {
       ICodecManager cm = TestHelper.TestService.CodecManager;
 
-      cm.AddCodec<Dossier>(CMSConstants.CMSMediaType, new XmlSerializerCodec<Dossier>());
-      cm.AddCodec<DossierDocumentList>(CMSConstants.CMSMediaType, new XmlSerializerCodec<DossierDocumentList>());
-      cm.AddCodec<Document>(CMSConstants.CMSMediaType, new XmlSerializerCodec<Document>());
-      cm.AddCodec<Party>(CMSConstants.CMSMediaType, new XmlSerializerCodec<Party>());
+      cm.AddCodec<Dossier>(CMSConstants.CMSMediaType, new XmlSerializerCodec());
+      cm.AddCodec<DossierDocumentList>(CMSConstants.CMSMediaType, new XmlSerializerCodec());
+      cm.AddCodec<Document>(CMSConstants.CMSMediaType, new XmlSerializerCodec());
+      cm.AddCodec<Party>(CMSConstants.CMSMediaType, new XmlSerializerCodec());
       
       cm.AddCodec<Cat>("text/plain", new CatAsTextCodec());
       cm.AddCodec<Cat>("text/html", new CatAsHtmlCodec());
 
-      cm.AddCodec<Dog1>("application/vnd.dog+xml", new XmlSerializerCodec<Dog1>());
-      cm.AddCodec<Dog2>("application/vnd.dog+xml", new XmlSerializerCodec<Dog2>());
+      cm.AddCodec<Dog1>("application/vnd.dog+xml", new XmlSerializerCodec());
+      cm.AddCodec<Dog2>("application/vnd.dog+xml", new XmlSerializerCodec());
 
-      cm.AddCodec<HeaderList>("application/xml", new XmlSerializerCodec<HeaderList>());
+      cm.AddCodec<HeaderList>("application/xml", new XmlSerializerCodec());
+
+      cm.AddCodec<RegisteredClass>("application/xml", new XmlSerializerCodec());
 
       cm.AddCodec<string>("text/plain", new TextCodec());
       cm.AddCodec<string>("text/html", new TextCodec());

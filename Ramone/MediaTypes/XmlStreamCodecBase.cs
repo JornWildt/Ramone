@@ -12,23 +12,18 @@ namespace Ramone.MediaTypes
   /// Base for a type-checked codec which will only serialize objects of type TEntity
   /// </summary>
   /// <typeparam name="TEntity">The type of the entity.</typeparam>
-  public abstract class XmlCodecBase<TEntity> 
-    : IMediaTypeWriter, IMediaTypeReader where TEntity : class      
+  public abstract class XmlStreamCodecBase : IMediaTypeWriter, IMediaTypeReader
   {
     #region Ramone.IMediaTypeReader Members
 
     public object ReadFrom(ReaderContext context)
     {
-      Encoding enc = Encoding.Default;
-
-      MediaType m = MediaTypeParser.ParseMediaType(context.Response.ContentType);
-      if (m.Parameters.ContainsKey("charset"))
-        enc = Encoding.GetEncoding(m.Parameters["charset"]);
+      Encoding enc = MediaTypeParser.GetEncodingFromCharset(context.Response.ContentType);
 
       using (var textReader = new StreamReader(context.HttpStream, enc))
       using (var reader = XmlReader.Create(textReader))
       {
-        return ReadFrom(reader);
+        return ReadFrom(reader, context);
       }
     }
 
@@ -39,15 +34,11 @@ namespace Ramone.MediaTypes
 
     public void WriteTo(WriterContext context)
     {
-      Encoding enc = Encoding.Default;
-
-      MediaType m = MediaTypeParser.ParseMediaType(context.Request.ContentType);
-      if (m.Parameters.ContainsKey("charset"))
-        enc = Encoding.GetEncoding(m.Parameters["charset"]);
+      Encoding enc = MediaTypeParser.GetEncodingFromCharset(context.Request.ContentType);
 
       using (var writer = new XmlTextWriter(context.HttpStream, enc))
       {
-        WriteTo(context.Data as TEntity, writer);
+        WriteTo(context.Data, writer, context);
       }
     }
 
@@ -61,8 +52,8 @@ namespace Ramone.MediaTypes
     #endregion
 
 
-    protected abstract TEntity ReadFrom(XmlReader reader);
+    protected abstract object ReadFrom(XmlReader reader, ReaderContext context);
 
-    protected abstract void WriteTo(TEntity item, XmlWriter writer);
+    protected abstract void WriteTo(object item, XmlWriter writer, WriterContext context);
   }
 }

@@ -6,15 +6,16 @@ using Ramone.MediaTypes.Xml;
 
 namespace Ramone.MediaTypes.Atom
 {
-  public class AtomFeedCodec : XmlCodecBase<SyndicationFeed>
+  public class AtomFeedCodec : XmlStreamCodecBase
   {
-    protected override SyndicationFeed ReadFrom(XmlReader reader)
+    protected override object ReadFrom(XmlReader reader, ReaderContext context)
     {
       return SyndicationFeed.Load(reader);
     }
 
-    protected override void WriteTo(SyndicationFeed feed, XmlWriter writer)
+    protected override void WriteTo(object item, XmlWriter writer, WriterContext context)
     {
+      SyndicationFeed feed = (SyndicationFeed)item;
       feed.SaveAsAtom10(writer);
     }
   }

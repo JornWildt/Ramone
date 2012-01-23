@@ -1,4 +1,31 @@
-﻿Overvej hvilken vej der skal gåes med serializers/codecs
+﻿XmlSerializer encoding test (har kun testet XmlDocumentCodec)
+
+POST 
+  Unregistered class using UrlEncoded|MultipartFormData|JSON|XML
+
+    request.AsXxx().Post(new { ... });
+
+  Registered class
+
+    cm.AddCodec<Document>("application/xml", new XmlSerializerCodec<Document>());
+    cm.AddXmlCodec<Document>();
+    cm.AddXmlCodec<Document>("application/document+xml");
+
+    request.Post(doc);
+
+
+  XmlSerializerCodec<Document>
+  JsonSerializerCodec<Document>
+  FormUrlEncodedSerializerCodec<Document>
+  MultipartFormDataSerializerCodec<Document>
+
+  MultipartFormDataSerializerCodec
+
+  XmlDocumentCodec
+  HtmlDocumentCodec
+  (HalDocumentCodec)
+
+Overvej hvilken vej der skal gåes med serializers/codecs
 - Hvorfor skal man f.eks. erklære en codec for application/xml mf.
 - Er det overhovedet nødvendigt med disse generic<T> codecs?
   - I hvertfald så længe det drejer som om generiske media-types.

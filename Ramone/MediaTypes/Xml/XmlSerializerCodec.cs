@@ -1,36 +1,52 @@
 ﻿using System.Xml;
 using System.Xml.Serialization;
+using System;
+using System.Collections.Generic;
 
 
 namespace Ramone.MediaTypes.Xml
 {
-  public class XmlSerializerCodec<TEntity> : XmlCodecBase<TEntity> 
-    where TEntity : class
+  public class XmlSerializerCodec : XmlStreamCodecBase
   {
-    protected XmlSerializer Serializer { get; set; }
+    protected Dictionary<Type, XmlSerializer> Serializers { get; set; }
 
 
     public XmlSerializerCodec()
     {
-      Serializer = CreateSerializer();
+      Serializers = new Dictionary<Type, XmlSerializer>();
     }
 
 
-    protected override TEntity ReadFrom(XmlReader reader)
+    protected override object ReadFrom(XmlReader reader, ReaderContext context)
     {
-      return (TEntity)Serializer.Deserialize(reader);
+      XmlSerializer serializer = GetSerializer(context.DataType);
+      return serializer.Deserialize(reader);
     }
 
 
-    protected override void WriteTo(TEntity entity, XmlWriter writer)
+    protected override void WriteTo(object item, XmlWriter writer, WriterContext context)
     {
-      Serializer.Serialize(writer, entity);
+      if (item == null)
+        throw new ArgumentNullException("item");
+
+      XmlSerializer serializer = GetSerializer(item.GetType());
+      serializer.Serialize(writer, item);
     }
 
 
-    protected virtual XmlSerializer CreateSerializer()
+    protected XmlSerializer GetSerializer(Type t)
     {
-      return new XmlSerializer(typeof(TEntity));
+      if (!Serializers.ContainsKey(t))
+      {
+        Serializers[t] = CreateSerializer(t);
+      }
+      return Serializers[t];
+    }
+
+
+    protected virtual XmlSerializer CreateSerializer(Type t)
+    {
+      return new XmlSerializer(t);
     }
   }
 }
