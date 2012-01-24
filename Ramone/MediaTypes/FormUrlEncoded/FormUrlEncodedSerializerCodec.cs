@@ -1,29 +1,26 @@
 ﻿using System;
 using System.IO;
 using Ramone.Utility;
+using System.Text;
 
 
 namespace Ramone.MediaTypes.FormUrlEncoded
 {
-  public class FormUrlEncodedSerializerCodec<TEntity> : IMediaTypeWriter
-    where TEntity : class
+  public class FormUrlEncodedSerializerCodec : IMediaTypeWriter
   {
-    FormUrlEncodingSerializer Serializer = new FormUrlEncodingSerializer(typeof(TEntity));
-
-
     public void WriteTo(WriterContext context)
     {
       if (context.Data == null)
         return;
 
-      TEntity entity = context.Data as TEntity;
-      if (entity == null)
-        throw new InvalidOperationException(string.Format("Could not write {0} - expected it to be {1}.", context.Data.GetType(), typeof(TEntity)));
+      Encoding enc = MediaTypeParser.GetEncodingFromCharset(context.Request.ContentType);
 
-      using (TextWriter w = new StreamWriter(context.HttpStream))
+      Type t = context.Data.GetType();
+      FormUrlEncodingSerializer Serializer = new FormUrlEncodingSerializer(t);
+
+      using (TextWriter w = new StreamWriter(context.HttpStream, enc))
       {
-
-        Serializer.Serialize(w, entity);
+        Serializer.Serialize(w, context.Data);
       }
     }
 

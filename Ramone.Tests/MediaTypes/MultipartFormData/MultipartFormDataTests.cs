@@ -19,6 +19,7 @@ namespace Ramone.Tests.MediaTypes.MultipartFormData
       RamoneResponse<string> response = formdataReq.Accept("text/plain").ContentType("multipart/form-data").Post<string>(data);
 
       // Assert
+      Assert.IsTrue(response.Headers["x-contenttype"].StartsWith("multipart/form-data"));
       Assert.AreEqual("Pete-10", response.Body);
     }
 
@@ -34,6 +35,7 @@ namespace Ramone.Tests.MediaTypes.MultipartFormData
       RamoneResponse<string> response = formdataReq.Accept("text/plain").AsMultipartFormData().Post<string>(data);
 
       // Assert
+      Assert.IsTrue(response.Headers["x-contenttype"].StartsWith("multipart/form-data"));
       Assert.AreEqual("Pete-10", response.Body);
     }
 
@@ -57,6 +59,7 @@ namespace Ramone.Tests.MediaTypes.MultipartFormData
       RamoneResponse<string> response = formdataReq.Accept("text/plain").ContentType("multipart/form-data").Post<string>(data);
 
       // Assert
+      Assert.IsTrue(response.Headers["x-contenttype"].StartsWith("multipart/form-data"));
       Assert.AreEqual("data1.txt-text/plain-Æüî´`'-10", response.Body);
     }
 
@@ -73,6 +76,7 @@ namespace Ramone.Tests.MediaTypes.MultipartFormData
       RamoneResponse<string> response = formdataReq.Accept("text/plain").ContentType("multipart/form-data").Post<string>(data);
 
       // Assert
+      Assert.IsTrue(response.Headers["x-contenttype"].StartsWith("multipart/form-data"));
       Assert.AreEqual("data1.gif-image/gif-GIF89a-99", response.Body);
     }
 
@@ -88,6 +92,7 @@ namespace Ramone.Tests.MediaTypes.MultipartFormData
       RamoneResponse<string> response = formdataReq.Accept("text/plain").ContentType("multipart/form-data").Post<string>(data);
 
       // Assert
+      Assert.IsTrue(response.Headers["x-contenttype"].StartsWith("multipart/form-data"));
       Assert.AreEqual("Pete-10", response.Body);
     }
 
@@ -109,6 +114,7 @@ namespace Ramone.Tests.MediaTypes.MultipartFormData
                                                    .Post<string>(data);
 
       // Assert
+      Assert.IsTrue(response.Headers["x-contenttype"].StartsWith("multipart/form-data"));
       Assert.AreEqual("ÆØÅüî-10", response.Body);
     }
   }

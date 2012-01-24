@@ -49,6 +49,9 @@ Overvej hvilken vej der skal gåes med serializers/codecs
 - Omvendt giver det også god mening, at man ikke skal angive AsXml hver eneste gang, såfremt
   man rent faktisk har registreret en codec (selvom XML/JSON osv. ikke kræver det).
 
+Mangler tests af FormUrlEncodedCodec<T> 
+- inkl. charset tests
+
 Andre genveje:
 
       cm.AddCodec<DocumentList>(RestConstants.CaseManagementMediaType, new XmlSerializerCodec<Document>());
@@ -58,6 +61,12 @@ Tror at default skal være *med* standard codecs.
 
 Ikke nødvendigt med (skal gøres li'som multipart/form-data):
   cm.AddCodec<NewCaseArgs>("application/x-www-form-urlencoded", new FormUrlEncodedSerializerCodec<NewCaseArgs>());
+
+Predefined codecs
+- Url-encoded post data
+  - Mangler rekursion og datoer mm.
+- Any content as a string
+- Images
 
 System.Net.Mime.MimeType ... der var parseren. Tænkte nok det fandtes allerede.
 
@@ -72,12 +81,9 @@ Multipart/form-data
 
 Specifying what the default codec is for a type (so Accept need not be set)
 - Især for application/xml (som også genkender text/xml)
-
-Predefined codecs
-- Url-encoded post data
-  - Mangler rekursion og datoer mm.
-- Any content as a string
-- Images
+- Man kan få multiple writers for XmlDocument (application/xml og text/xml ... hvad med application/xhtml+xml mf.?) 
+  - Der er behov for at prioritere hvilken der skal vælges ved skrivning (og læsning/accept)
+  - q=x.x (quality priority)
 
 Ramone.HyperMedia
 - Tre forskellige koncepter på tværs af media-types (to "dimensioner": hyper-media / media-types)
@@ -95,12 +101,6 @@ Ramone.HyperMedia
 CodecManager: ignore case when looking for media type
 
 Omdøbe Service => Client?
-
-Man kan få multiple writers for XmlDocument (application/xml og text/xml ... hvad med application/xhtml+xml mf.?) 
-- Der er behov for at prioritere hvilken der skal vælges ved skrivning (og læsning/accept)
-
-Mangler tests af FormUrlEncodedCodec<T> 
-- inkl. charset tests
 
 Diverse serializere skal have angivelse af locale og/eller dato-format
 
@@ -131,7 +131,8 @@ Kan der være en fordel i at lave en Multipart/form-data og url-encoded "formatt
 - Noget a'la en stream hvor man kan lave formatter.WriteParameter(key, value)
 - Findes der noget i System.Net[.Mime]?
 
-Angivelse af encoding i Multipart og UrlEncoding serializers
+Retrying (if idempotent = user defined)
+  request.Retry(3[optional]).Post<x>(y);
 
 - Support 
     OK:GET, OK:POST, OK:PUT, OK:DELETE, 

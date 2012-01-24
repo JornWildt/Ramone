@@ -6,6 +6,7 @@ using HtmlAgilityPack;
 using Ramone.Implementation;
 using Ramone.MediaTypes;
 using Ramone.MediaTypes.Atom;
+using Ramone.MediaTypes.FormUrlEncoded;
 using Ramone.MediaTypes.Html;
 using Ramone.MediaTypes.Json;
 using Ramone.MediaTypes.MultipartFormData;
@@ -44,6 +45,9 @@ namespace Ramone
 
       // Multipart/form-data
       settings.CodecManager.AddCodec("multipart/form-data", new MultipartFormDataSerializerCodec());
+
+      // Form url encoded
+      settings.CodecManager.AddCodec("application/x-www-form-urlencoded", new FormUrlEncodedSerializerCodec());
 
       // Streams
       settings.CodecManager.AddCodec<Stream>(new StreamCodec());

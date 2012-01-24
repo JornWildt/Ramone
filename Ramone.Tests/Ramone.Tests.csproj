@@ -89,6 +89,7 @@
     <Compile Include="ContentNegotiationTests.cs" />
     <Compile Include="CustomHeaderTests.cs" />
     <Compile Include="DeleteTests.cs" />
+    <Compile Include="MediaTypes\FormUrlEncoded\FormUrlEncodedCodecTests.cs" />
     <Compile Include="MediaTypes\Html\HtmlDocumentCodecTests.cs" />
     <Compile Include="MediaTypes\Json\JsonSerializerCodecTests.cs" />
     <Compile Include="MediaTypes\MultipartFormData\MultipartFormDataTests.cs" />

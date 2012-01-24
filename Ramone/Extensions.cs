@@ -131,6 +131,12 @@ namespace Ramone
     }
 
 
+    public static RamoneRequest AsFormUrlEncoded(this RamoneRequest request)
+    {
+      return request.ContentType("application/x-www-form-urlencoded");
+    }
+
+
     public static RamoneRequest AsMultipartFormData(this RamoneRequest request)
     {
       return request.ContentType("multipart/form-data");

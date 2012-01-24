@@ -15,6 +15,7 @@ namespace Ramone.Tests.Server.Handlers
     [HttpOperation(ForUriName = "SimpleData")]
     public object Post(MultipartData data)
     {
+      HttpContext.Current.Response.Headers["X-contenttype"] = HttpContext.Current.Request.Headers["Content-Type"];
       return string.Format("{0}-{1}", data.Name, data.Age);
     }
 
@@ -22,6 +23,7 @@ namespace Ramone.Tests.Server.Handlers
     [HttpOperation(ForUriName = "FileData")]
     public object Post(MultipartDataFile data)
     {
+      HttpContext.Current.Response.Headers["X-contenttype"] = HttpContext.Current.Request.Headers["Content-Type"];
       using (TextReader r = new StreamReader(data.DataFile.OpenStream()))
       {
         string content = r.ReadToEnd().Substring(0, 6); // Get substring in order to fetch "GIF89a" from binary GIF file

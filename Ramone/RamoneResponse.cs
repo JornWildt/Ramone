@@ -28,6 +28,12 @@ namespace Ramone
     }
 
 
+    public WebHeaderCollection Headers
+    {
+      get { return Response.Headers; }
+    }
+
+
     public T Decode<T>() where T : class
     {
       if (Response.ContentLength == 0 || string.IsNullOrEmpty(ContentType) || Response.StatusCode == HttpStatusCode.NoContent)

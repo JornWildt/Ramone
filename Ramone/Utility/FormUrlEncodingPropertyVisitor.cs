@@ -28,7 +28,8 @@ namespace Ramone.Utility
       if (!FirstValue)
         Writer.Write("&");
       string s = (value != null ? value.ToString() : "");
-      Writer.Write(HttpUtility.UrlEncode(name, Writer.Encoding) + "=" + HttpUtility.UrlEncode(s, Writer.Encoding));
+      string output = HttpUtility.UrlEncode(name, Writer.Encoding) + "=" + HttpUtility.UrlEncode(s, Writer.Encoding);
+      Writer.Write(output);
       FirstValue = false;
     }
 
