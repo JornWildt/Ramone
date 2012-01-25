@@ -37,7 +37,7 @@ namespace Ramone
 
     public CodecRegistration(string mediaType, Type clrType, T codec)
     {
-      MediaType = mediaType;
+      MediaType = (mediaType != null ? mediaType.ToLower() : null);
       ClrType = clrType;
       Codec = codec;
     }

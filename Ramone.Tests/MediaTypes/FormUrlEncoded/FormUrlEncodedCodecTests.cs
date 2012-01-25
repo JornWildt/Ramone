@@ -1,5 +1,8 @@
 ﻿using NUnit.Framework;
 using Ramone.MediaTypes.FormUrlEncoded;
+using Ramone.Tests.Codecs;
+using System;
+using Ramone.Implementation;
 
 
 namespace Ramone.Tests.MediaTypes.FormUrlEncoded

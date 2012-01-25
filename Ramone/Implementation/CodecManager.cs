@@ -106,8 +106,8 @@ namespace Ramone.Implementation
     protected IEnumerable<MediaTypeReaderRegistration> GetReaders(Type t, string mediaType, TypeSelectionMode mode)
     {
       return from entry in RegisteredReaders
-             where (entry.MediaType == mediaType || mediaType == null) && entry.ClrType == t
-                   || mode == TypeSelectionMode.All && entry.MediaType == mediaType && mediaType != null && entry.ClrType == null
+             where (Equals(entry.MediaType, mediaType) || mediaType == null) && entry.ClrType == t
+                   || mode == TypeSelectionMode.All && Equals(entry.MediaType, mediaType) && mediaType != null && entry.ClrType == null
                    || mode == TypeSelectionMode.All && entry.MediaType == null && mediaType != null && entry.ClrType != null && entry.ClrType.IsAssignableFrom(t)
              select entry;
     }
@@ -127,8 +127,8 @@ namespace Ramone.Implementation
     protected IEnumerable<MediaTypeWriterRegistration> GetWriters(Type t, string mediaType, TypeSelectionMode mode)
     {
       return from entry in RegisteredWriters
-             where (entry.MediaType == mediaType || mediaType == null) && entry.ClrType == t
-                   || mode == TypeSelectionMode.All && entry.MediaType == mediaType && mediaType != null && entry.ClrType == null
+             where (Equals(entry.MediaType,mediaType) || mediaType == null) && entry.ClrType == t
+                   || mode == TypeSelectionMode.All && Equals(entry.MediaType, mediaType) && mediaType != null && entry.ClrType == null
                    || mode == TypeSelectionMode.All && entry.MediaType == null && mediaType != null && entry.ClrType != null && entry.ClrType.IsAssignableFrom(t)
              select entry;
     }
@@ -142,6 +142,12 @@ namespace Ramone.Implementation
       if (writersList.Count > 1)
         throw new ArgumentException(string.Format("Got multiple writer codecs for type '{0}'. Try specifying a media type.", t));
       return writersList[0];
+    }
+
+
+    protected bool Equals(string a, string b)
+    {
+      return string.Equals(a, b, StringComparison.OrdinalIgnoreCase);
     }
   }
 }

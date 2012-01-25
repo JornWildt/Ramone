@@ -25,34 +25,39 @@ namespace Ramone
 
     public static IRamoneService WithStandardCodecs(this IRamoneService settings)
     {
+      RegisterStandardCodecs(settings.CodecManager);
+      return settings;
+    }
+
+
+    public static void RegisterStandardCodecs(ICodecManager cm)
+    {
       // XML
-      settings.CodecManager.AddCodec("application/xml", new XmlSerializerCodec());
-      settings.CodecManager.AddCodec<XmlDocument>("application/xml", new XmlDocumentCodec());
-      settings.CodecManager.AddCodec<XmlDocument>("text/xml", new XmlDocumentCodec());
+      cm.AddCodec("application/xml", new XmlSerializerCodec());
+      cm.AddCodec<XmlDocument>("application/xml", new XmlDocumentCodec());
+      cm.AddCodec<XmlDocument>("text/xml", new XmlDocumentCodec());
 
       // HTML + XHTML
-      settings.CodecManager.AddCodec<HtmlDocument>("text/html", new HtmlDocumentCodec());
-      settings.CodecManager.AddCodec<HtmlDocument>("text/xml", new HtmlDocumentCodec());
-      settings.CodecManager.AddCodec<HtmlDocument>("application/xhtml+xml", new HtmlDocumentCodec());
-      settings.CodecManager.AddCodec<HtmlDocument>("application/xml", new HtmlDocumentCodec());
+      cm.AddCodec<HtmlDocument>("text/html", new HtmlDocumentCodec());
+      cm.AddCodec<HtmlDocument>("text/xml", new HtmlDocumentCodec());
+      cm.AddCodec<HtmlDocument>("application/xhtml+xml", new HtmlDocumentCodec());
+      cm.AddCodec<HtmlDocument>("application/xml", new HtmlDocumentCodec());
 
       // Atom
-      settings.CodecManager.AddCodec<SyndicationFeed>("application/atom+xml", new AtomFeedCodec());
-      settings.CodecManager.AddCodec<SyndicationItem>("application/atom+xml", new AtomItemCodec());
+      cm.AddCodec<SyndicationFeed>("application/atom+xml", new AtomFeedCodec());
+      cm.AddCodec<SyndicationItem>("application/atom+xml", new AtomItemCodec());
 
       // JSON
-      settings.CodecManager.AddCodec("application/json", new JsonSerializerCodec());
+      cm.AddCodec("application/json", new JsonSerializerCodec());
 
       // Multipart/form-data
-      settings.CodecManager.AddCodec("multipart/form-data", new MultipartFormDataSerializerCodec());
+      cm.AddCodec("multipart/form-data", new MultipartFormDataSerializerCodec());
 
       // Form url encoded
-      settings.CodecManager.AddCodec("application/x-www-form-urlencoded", new FormUrlEncodedSerializerCodec());
+      cm.AddCodec("application/x-www-form-urlencoded", new FormUrlEncodedSerializerCodec());
 
       // Streams
-      settings.CodecManager.AddCodec<Stream>(new StreamCodec());
-
-      return settings;
+      cm.AddCodec<Stream>(new StreamCodec());
     }
   }
 }

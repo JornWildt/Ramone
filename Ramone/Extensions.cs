@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using Ramone.MediaTypes.Atom;
+using Ramone.MediaTypes.FormUrlEncoded;
+using Ramone.MediaTypes.Json;
+using Ramone.MediaTypes.MultipartFormData;
+using Ramone.MediaTypes.Xml;
 using Ramone.Utility;
 
 
@@ -140,6 +144,54 @@ namespace Ramone
     public static RamoneRequest AsMultipartFormData(this RamoneRequest request)
     {
       return request.ContentType("multipart/form-data");
+    }
+
+
+    public static void AddFormUrlEncoded<T>(this ICodecManager codecManager)
+    {
+      codecManager.AddCodec<T>("application/x-www-form-urlencoded", new FormUrlEncodedSerializerCodec());
+    }
+
+
+    public static void AddFormUrlEncoded<T>(this ICodecManager codecManager, string mediaType)
+    {
+      codecManager.AddCodec<T>(mediaType, new FormUrlEncodedSerializerCodec());
+    }
+
+
+    public static void AddMultipartFormData<T>(this ICodecManager codecManager)
+    {
+      codecManager.AddCodec<T>("multipart/form-data", new MultipartFormDataSerializerCodec());
+    }
+
+
+    public static void AddMultipartFormData<T>(this ICodecManager codecManager, string mediaType)
+    {
+      codecManager.AddCodec<T>(mediaType, new MultipartFormDataSerializerCodec());
+    }
+
+
+    public static void AddXml<T>(this ICodecManager codecManager)
+    {
+      codecManager.AddCodec<T>("application/xml", new XmlSerializerCodec());
+    }
+
+
+    public static void AddXml<T>(this ICodecManager codecManager, string mediaType)
+    {
+      codecManager.AddCodec<T>(mediaType, new XmlSerializerCodec());
+    }
+
+
+    public static void AddJson<T>(this ICodecManager codecManager)
+    {
+      codecManager.AddCodec<T>("application/json", new JsonSerializerCodec());
+    }
+
+
+    public static void AddJson<T>(this ICodecManager codecManager, string mediaType)
+    {
+      codecManager.AddCodec<T>(mediaType, new JsonSerializerCodec());
     }
   }
 }
