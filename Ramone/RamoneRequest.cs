@@ -298,7 +298,7 @@ namespace Ramone
         }
         else
         {
-          throw new RamoneException("Unexpected missing HttpWebResponse in WebException. See inner exception for further details.", ex);
+          throw;
         }
       }
     }
