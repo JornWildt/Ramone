@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Net;
-using Ramone.Implementation;
+using CuttingEdge.Conditions;
 
 
 namespace Ramone
@@ -15,6 +15,9 @@ namespace Ramone
 
     public RamoneRequest(IRamoneSession session, Uri url)
     {
+      Condition.Requires(session, "session").IsNotNull();
+      Condition.Requires(url, "url").IsNotNull();
+
       Session = session;
       Url = url;
       AdditionalHeaders = new Dictionary<string, string>();
@@ -29,6 +32,8 @@ namespace Ramone
 
     public RamoneRequest(RamoneRequest src)
     {
+      Condition.Requires(src, "src").IsNotNull();
+
       Session = src.Session;
       Url = src.Url;
       BodyData = src.BodyData;

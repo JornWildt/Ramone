@@ -2,13 +2,13 @@
 using System.Xml.Serialization;
 
 
-namespace Ramone.MediaTypes.Atom
+namespace Ramone.HyperMedia.Atom
 {
   /// <summary>
   /// Represents an ATOM feed link.
   /// </summary>
   /// <remarks>Is similar to .NET's built in SyndicationItem, but that one is not serializable.</remarks>
-  public class AtomLink
+  public class AtomLink : ILink
   {
     [XmlAttribute("href")]
     public string HRef { get; set; }

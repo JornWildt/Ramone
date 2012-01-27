@@ -3,6 +3,7 @@ Version 1
 ---------
 
 Ramone.HyperMedia
+- Link selector med media-type
 - Tre forskellige koncepter på tværs af media-types (to "dimensioner": hyper-media / media-types)
   - ILink
   - ILinkTemplate
@@ -11,12 +12,12 @@ Ramone.HyperMedia
     - Husk "hidden" og initial values for input
     - Submit()
 - Og så diverse extension metoder til at aflæse sådanne elementer fra diverse formater
+  - Konvertering fra [Xml|Html]Node til ILink etc.
+  - Hvordan håndteres dynamic?
   - plus at kunne udvide det til nye formater
   - eller ILink etc. der matcher de forskellige typer
 - Follow(ILink), Follow(ILinkTemplate, params)
 - Make it possible to Follow() relative links.
-
-System.Net.Mime.MimeType ... der var parseren. Tænkte nok det fandtes allerede.
 
 Skal have 
 - RamoneRequest.Execute(method)
@@ -28,23 +29,27 @@ Skal have
     OK:GET, OK:POST, OK:PUT, OK:DELETE, 
     HEAD, OPTIONS, PATCH
 
-Nye Request metoder uden session (som så dannes automatisk). Gør det nemt at komme igang.
-- Giver det mening? Så har man ikke nogen settings med codecs.
-- Kan evt. gøres lidt mere direkte med RamoneConfiguration.NewSession()
-  - Især hvis RamoneConfiguration får statiske metoder mm. som nedenfor
-
 Authorization as first-class citizens
 - Session.BasicAuthorization(uname,pwd) - a short cut for the request interceptor
 - Key off IHaveInterceptors (som kommer på session, settings og service)
   - static void BasicAuthorization(this IHaveInterceptors xxx, string uname, string pwd)
 - Check hvordan andre som f.eks. Hammock har gjort det.
+  RestSharp:
+    client.Authenticator = OAuth1Authenticator.ForRequestToken(consumerKey, consumerSecret);
 - Standard implementations for OK:Basic, Digest, OAuth, NTLM and more
   - SimpleAuth (som sætter URL parametre ind https://github.com/restsharp/RestSharp/wiki/Authenticators)
 
 Test scenarie hvor der returneres "NoContent" og man forsøger at hente content (skal give null)
 
+Nye Request metoder uden session (som så dannes automatisk). Gør det nemt at komme igang.
+- Giver det mening? Så har man ikke nogen settings med codecs.
+- Kan evt. gøres lidt mere direkte med RamoneConfiguration.NewSession()
+  - Især hvis RamoneConfiguration får statiske metoder mm. som nedenfor
+
 RamoneConfiguration
 - Statiske udgaver af UserAgent, Interceptors etc. som så kopieres til service/client og igen til session
+- Deafult content type (per session, service and static)
+  - For those json/json APIs
 
 Url-encoded post data
 - Mangler rekursion og datoer mm.
@@ -57,9 +62,6 @@ Url-encoded post data
 
 Lots of Condition.Requries()...
 
-Deafult content type (per session, service and static)
-- For those json/json APIs
-
 Tror at default skal være *med* standard codecs.
 
 Before releasing:
@@ -67,28 +69,30 @@ Before releasing:
 - Version numbers
 - Komplet README (med korrekt casing)
   - Installation
-- Demo NerdDinner, twitter, flickr etc. API 
+- Demo Facebook Graph, NerdDinner, twitter, flickr etc. API 
 
 Folk vil blive forvirret af "AuthenticationHandlers" (som jo altså ikke authentikerer ...)
 
 Docs
 - Ramone 
-  - Er godt for object serialization
+  - Er godt for object serialization (pas på med dette udsagn)
   - Samler en række forskellige media types på ét sted
 - Alle Get/Post etc. operationer er uden sideeffekter i RamoneRequest. 
   Altså kan RamoneRequest genbruges flere gange. Eller hvad ...
 - Go through REST reciepes and show how its done in Ramone
 - Forsøger at "tvinge" REST igennem. F.eks. ved
+  - Indbygget support for hyper-media controls i forskellige formater
   - At skelne mellem media type codecs og serializere
   - Antager ikke at man KUN kan lave 1-1 serialisering med XML/JSON, men anvender derimod codecs.
   - Kun at arbejde med get/post etc. Ingen support for navngivne metoder som f.eks. "GetOrders".
 - Response.Created() laver evt. GET på location
 
 
-
 ---------
 Version 2
 ---------
+
+System.Net.Mime.MimeType ... der var parseren. Tænkte nok det fandtes allerede.
 
 Conditional Delete, Get, etc.
 

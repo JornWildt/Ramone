@@ -1,17 +1,17 @@
-﻿using System.Collections.Generic;
-using System.Xml.Serialization;
-using Ramone.MediaTypes.Atom;
+﻿using System.Xml.Serialization;
+using Ramone.HyperMedia;
+using Ramone.HyperMedia.Atom;
 
 
 namespace Ramone.Tests.Common.CMS
 {
-  public class Dossier : IHaveAtomLinks
+  public class Dossier
   {
     public long Id { get; set; }
     
     public string Title { get; set; }
 
-    [XmlElement("link", Namespace=AtomNames.AtomNamespace)]
+    [XmlElement("link", Namespace=HyperMediaNamespaces.Atom)]
     public AtomLinkList Links { get; set; }
 
     

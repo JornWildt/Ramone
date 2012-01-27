@@ -26,12 +26,6 @@ namespace Ramone
     }
 
 
-    public static RamoneRequest Request(this IRamoneSession session, AtomLink link)
-    {
-      return new RamoneRequest(session, link.HRef);
-    }
-
-
     public static RamoneResponse<T> AsRamoneResponse<T>(this HttpWebResponse response, IRamoneSession session) where T : class
     {
       return new RamoneResponse<T>(response, session);
@@ -67,59 +61,6 @@ namespace Ramone
     {
       UriTemplate template = new UriTemplate(url);
       return session.Bind(template, parameters);
-    }
-
-
-    public static AtomLink Link(this IHaveAtomLinks links, string rel)
-    {
-      return links.Links.Where(l => l.RelationshipType == rel).FirstOrDefault();
-    }
-
-
-    public static AtomLink Link(this AtomLinkList links, string rel)
-    {
-      return links.Where(l => l.RelationshipType == rel).FirstOrDefault();
-    }
-
-
-    public static RamoneRequest Follow<TResponse>(this RamoneResponse<TResponse> response, string rel)
-      where TResponse : class, IHaveAtomLinks
-    {
-      AtomLink link = response.Body.Link(rel);
-      if (link == null)
-        return null;
-
-      return response.Session.Request(link);
-    }
-
-
-    public static RamoneRequest Follow(this IRamoneSession session, IHaveAtomLinks links, string rel)
-    {
-      AtomLink link = links.Link(rel);
-      if (link == null)
-        return null;
-
-      return session.Request(link);
-    }
-
-
-    public static RamoneRequest Follow(this IHaveAtomLinks links, IRamoneSession session, string rel)
-    {
-      AtomLink link = links.Link(rel);
-      if (link == null)
-        return null;
-
-      return session.Request(link);
-    }
-
-
-    public static RamoneRequest Follow(this AtomLinkList links, IRamoneSession session, string rel)
-    {
-      AtomLink link = links.Link(rel);
-      if (link == null)
-        return null;
-
-      return session.Request(link);
     }
 
 

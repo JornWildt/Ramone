@@ -52,6 +52,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CuttingEdge.Conditions">
+      <HintPath>..\Libraries\CuttingEdge.Conditions.dll</HintPath>
+    </Reference>
     <Reference Include="HtmlAgilityPack">
       <HintPath>..\Libraries\HtmlAgilityPack.dll</HintPath>
     </Reference>
@@ -78,13 +81,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="HyperMedia\HyperMediaExtensions.cs" />
+    <Compile Include="HyperMedia\HyperMediaNamespaces.cs" />
+    <Compile Include="HyperMedia\ILink.cs" />
+    <Compile Include="HyperMedia\Atom\AtomLink.cs" />
+    <Compile Include="HyperMedia\Atom\AtomLinkList.cs" />
     <Compile Include="IO\File.cs" />
     <Compile Include="IO\IFile.cs" />
-    <Compile Include="MediaTypes\Atom\AtomLink.cs" />
     <Compile Include="AuthorizationInterceptors\BasicAuthorizationInterceptor.cs" />
-    <Compile Include="MediaTypes\Atom\AtomLinkList.cs" />
     <Compile Include="MediaTypes\FormUrlEncoded\FormUrlEncodedSerializerCodec.cs" />
-    <Compile Include="MediaTypes\Atom\AtomNames.cs" />
     <Compile Include="MediaTypes\Html\HtmlDocumentCodec.cs" />
     <Compile Include="MediaTypes\Json\JsonSerializerCodec.cs" />
     <Compile Include="MediaTypes\MultipartFormData\MultipartFormDataSerializerCodec.cs" />
@@ -92,7 +97,6 @@
     <Compile Include="MediaTypes\TextCodecBase.cs" />
     <Compile Include="MediaTypes\Xml\XmlDocumentCodec.cs" />
     <Compile Include="MediaTypes\Xml\XmlSerializerCodec.cs" />
-    <Compile Include="MediaTypes\Atom\IHaveAtomLinks.cs" />
     <Compile Include="RamoneConfiguration.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="Html\HtmlAnchor.cs" />

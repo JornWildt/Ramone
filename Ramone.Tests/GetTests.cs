@@ -1,5 +1,6 @@
 ﻿using NUnit.Framework;
-using Ramone.MediaTypes.Atom;
+using Ramone.HyperMedia;
+using Ramone.HyperMedia.Atom;
 using Ramone.Tests.Common.CMS;
 
 
@@ -78,7 +79,7 @@ namespace Ramone.Tests
       Dossier dossier = dossierReq.Get<Dossier>().Body;
 
       // Act
-      AtomLink documentsLink = dossier.Link(CMSConstants.DocumentsLinkRelType);
+      ILink documentsLink = dossier.Links.Link(CMSConstants.DocumentsLinkRelType);
 
       // Assert
       Assert.IsNotNull(documentsLink);
@@ -94,7 +95,7 @@ namespace Ramone.Tests
       RamoneResponse<Dossier> response = dossierReq.Get<Dossier>();
 
       // Act
-      RamoneRequest documentsReq = response.Follow(CMSConstants.DocumentsLinkRelType);
+      RamoneRequest documentsReq = response.Body.Links.Follow(Session, CMSConstants.DocumentsLinkRelType);
       DossierDocumentList documents = documentsReq.Get<DossierDocumentList>().Body;
 
       // Assert
@@ -111,17 +112,14 @@ namespace Ramone.Tests
       Dossier dossier = dossierReq.Get<Dossier>().Body;
 
       // Act
-      DossierDocumentList documents1 = Session.Follow(dossier, CMSConstants.DocumentsLinkRelType).Get<DossierDocumentList>().Body;
-      DossierDocumentList documents2 = dossier.Follow(Session, CMSConstants.DocumentsLinkRelType).Get<DossierDocumentList>().Body;
-      DossierDocumentList documents3 = dossier.Links.Follow(Session, CMSConstants.DocumentsLinkRelType).Get<DossierDocumentList>().Body;
+      DossierDocumentList documents1 = dossier.Links.Follow(Session, CMSConstants.DocumentsLinkRelType).Get<DossierDocumentList>().Body;
+      DossierDocumentList documents2 = dossier.Links.Follow(Session, CMSConstants.DocumentsLinkRelType).Get<DossierDocumentList>().Body;
 
       // Assert
       Assert.IsNotNull(documents1);
       Assert.IsNotNull(documents2);
-      Assert.IsNotNull(documents3);
       Assert.AreEqual(2, documents1.Count);
       Assert.AreEqual(2, documents2.Count);
-      Assert.AreEqual(2, documents3.Count);
     }
 
 

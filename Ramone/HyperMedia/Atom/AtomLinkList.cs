@@ -1,7 +1,8 @@
 ﻿using System.Collections.Generic;
+using System.Xml.Serialization;
 
 
-namespace Ramone.MediaTypes.Atom
+namespace Ramone.HyperMedia.Atom
 {
   public class AtomLinkList : List<AtomLink>
   {

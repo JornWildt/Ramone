@@ -1,6 +1,5 @@
-﻿using System.Collections.Generic;
-using OpenRasta.Web;
-using Ramone.MediaTypes.Atom;
+﻿using OpenRasta.Web;
+using Ramone.HyperMedia.Atom;
 using Ramone.Tests.Common.CMS;
 
 
