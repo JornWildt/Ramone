@@ -13,12 +13,12 @@ namespace Ramone.HyperMedia
     }
 
 
-    public static ILink Link(this IEnumerable<ILink> links, string rel)
+    public static ILink Link(this IEnumerable<ILink> links, string rel, string mediaType = null)
     {
       Condition.Requires(links, "links").IsNotNull();
       Condition.Requires(rel, "rel").IsNotNull();
 
-      return links.Where(l => l.RelationshipType == rel).FirstOrDefault();
+      return links.Where(l => l.RelationshipType == rel && (mediaType == null || l.MediaType == mediaType)).FirstOrDefault();
     }
 
 
@@ -31,13 +31,13 @@ namespace Ramone.HyperMedia
     }
 
 
-    public static RamoneRequest Follow(this IEnumerable<ILink> links, IRamoneSession session, string rel)
+    public static RamoneRequest Follow(this IEnumerable<ILink> links, IRamoneSession session, string rel, string mediaType = null)
     {
       Condition.Requires(links, "links").IsNotNull();
       Condition.Requires(session, "session").IsNotNull();
       Condition.Requires(rel, "rel").IsNotNull();
 
-      ILink link = links.Link(rel);
+      ILink link = links.Link(rel, mediaType);
       if (link == null)
         return null;
 

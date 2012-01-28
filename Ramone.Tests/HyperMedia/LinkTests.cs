@@ -13,6 +13,8 @@ namespace Ramone.Tests.HyperMedia
   {
     AtomLink Link1;
     AtomLink Link2;
+    AtomLink Link3;
+    AtomLink Link4;
     AtomLinkList Links;
     Resource MyResource;
 
@@ -22,9 +24,13 @@ namespace Ramone.Tests.HyperMedia
       base.SetUp();
       Link1 = new AtomLink("http://dr.dk/", "tv", "text/html", "Danish Television");
       Link2 = new AtomLink("http://elfisk.dk/", "home", "text/html", "Jorns website");
+      Link3 = new AtomLink("http://dr.dk/atom", "tv", "application/atom+xml", "Danish Television feed");
+      Link4 = new AtomLink("http://elfisk.dk/atom", "home", "application/atom+xml", "Jorns website feed");
       Links = new AtomLinkList();
       Links.Add(Link1);
       Links.Add(Link2);
+      Links.Add(Link3);
+      Links.Add(Link4);
       MyResource = new Resource { Links = Links };
     }
 
@@ -33,14 +39,26 @@ namespace Ramone.Tests.HyperMedia
     public void CanGetLinkFromLinkList()
     {
       // Act
-      ILink l1 = Links.Link(Link1.RelationshipType);
-      ILink l2 = Links.Link(Link2.RelationshipType);
+      ILink l1a = Links.Link(Link1.RelationshipType);
+      ILink l2a = Links.Link(Link2.RelationshipType);
+      ILink l1b = Links.Link(Link1.RelationshipType, "text/html");
+      ILink l2b = Links.Link(Link2.RelationshipType, "text/html");
+      ILink l3 = Links.Link(Link3.RelationshipType, "application/atom+xml");
+      ILink l4 = Links.Link(Link4.RelationshipType, "application/atom+xml");
 
       // Assert
-      Assert.IsNotNull(l1);
-      Assert.IsNotNull(l2);
-      Assert.AreEqual(Link1.HRef, l1.HRef);
-      Assert.AreEqual(Link2.HRef, l2.HRef);
+      Assert.IsNotNull(l1a);
+      Assert.IsNotNull(l2a);
+      Assert.IsNotNull(l1b);
+      Assert.IsNotNull(l2b);
+      Assert.IsNotNull(l3);
+      Assert.IsNotNull(l4);
+      Assert.AreEqual(Link1.HRef, l1a.HRef);
+      Assert.AreEqual(Link2.HRef, l2a.HRef);
+      Assert.AreEqual(Link1.HRef, l1b.HRef);
+      Assert.AreEqual(Link2.HRef, l2b.HRef);
+      Assert.AreEqual(Link3.HRef, l3.HRef);
+      Assert.AreEqual(Link4.HRef, l4.HRef);
     }
 
 
@@ -63,14 +81,27 @@ namespace Ramone.Tests.HyperMedia
     public void CanFollowFromLinkList()
     {
       // Act
-      RamoneRequest r1 = Links.Follow(Session, Link1.RelationshipType);
-      RamoneRequest r2 = Links.Follow(Session, Link2.RelationshipType);
+      RamoneRequest r1a = Links.Follow(Session, Link1.RelationshipType);
+      RamoneRequest r2a = Links.Follow(Session, Link2.RelationshipType);
+      RamoneRequest r1b = Links.Follow(Session, Link1.RelationshipType, Link1.MediaType);
+      RamoneRequest r2b = Links.Follow(Session, Link2.RelationshipType, Link2.MediaType);
+      RamoneRequest r3 = Links.Follow(Session, Link3.RelationshipType, Link3.MediaType);
+      RamoneRequest r4 = Links.Follow(Session, Link4.RelationshipType, Link4.MediaType);
+
 
       // Assert
-      Assert.IsNotNull(r1);
-      Assert.IsNotNull(21);
-      Assert.AreEqual(Link1.HRef, r1.Url.AbsoluteUri);
-      Assert.AreEqual(Link2.HRef, r2.Url.AbsoluteUri);
+      Assert.IsNotNull(r1a);
+      Assert.IsNotNull(r2a);
+      Assert.IsNotNull(r1b);
+      Assert.IsNotNull(r2b);
+      Assert.IsNotNull(r3);
+      Assert.IsNotNull(r4);
+      Assert.AreEqual(Link1.HRef, r1a.Url.AbsoluteUri);
+      Assert.AreEqual(Link2.HRef, r2a.Url.AbsoluteUri);
+      Assert.AreEqual(Link1.HRef, r1b.Url.AbsoluteUri);
+      Assert.AreEqual(Link2.HRef, r2b.Url.AbsoluteUri);
+      Assert.AreEqual(Link3.HRef, r3.Url.AbsoluteUri);
+      Assert.AreEqual(Link4.HRef, r4.Url.AbsoluteUri);
     }
 
 

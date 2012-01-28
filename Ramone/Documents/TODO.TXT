@@ -2,10 +2,12 @@
 Version 1
 ---------
 
+Alle new {} object params bør også kunne gives som Dictionary
+
 Ramone.HyperMedia
-- Link selector med media-type
+- OK: Link selector med media-type
 - Tre forskellige koncepter på tværs af media-types (to "dimensioner": hyper-media / media-types)
-  - ILink
+  - OK: ILink
   - ILinkTemplate
   - IForm (key/value eller måske bare HTML specific med mulighed for genbrug i andre media-types)
     - SetInput(key, value), encoding etc.
@@ -15,8 +17,8 @@ Ramone.HyperMedia
   - Konvertering fra [Xml|Html]Node til ILink etc.
   - Hvordan håndteres dynamic?
   - plus at kunne udvide det til nye formater
-  - eller ILink etc. der matcher de forskellige typer
-- Follow(ILink), Follow(ILinkTemplate, params)
+- OK: Follow(ILink), 
+- Follow(ILinkTemplate, params)
 - Make it possible to Follow() relative links.
 
 Skal have 
@@ -38,6 +40,7 @@ Authorization as first-class citizens
     client.Authenticator = OAuth1Authenticator.ForRequestToken(consumerKey, consumerSecret);
 - Standard implementations for OK:Basic, Digest, OAuth, NTLM and more
   - SimpleAuth (som sætter URL parametre ind https://github.com/restsharp/RestSharp/wiki/Authenticators)
+- Folk vil blive forvirret af "AuthenticationHandlers" (som jo altså ikke authentikerer ...)
 
 Test scenarie hvor der returneres "NoContent" og man forsøger at hente content (skal give null)
 
@@ -55,6 +58,9 @@ Url-encoded post data
 - Mangler rekursion og datoer mm.
 - Diverse serializere skal have angivelse af locale og/eller dato-format
 
+
+Serializers bør håndtere dictionaries og hashtables som noget særligt
+
 - Demo how HTML + forms + url-encoded data can be auto-generated (a'la Eric)
   - Still missing a generic domain data embedding in HTML
     - Could be done as a "visitor" to the ObjectSerializer (like multipart/form-data and url-encoded)
@@ -70,8 +76,6 @@ Before releasing:
 - Komplet README (med korrekt casing)
   - Installation
 - Demo Facebook Graph, NerdDinner, twitter, flickr etc. API 
-
-Folk vil blive forvirret af "AuthenticationHandlers" (som jo altså ikke authentikerer ...)
 
 Docs
 - Ramone 
