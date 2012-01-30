@@ -9,28 +9,21 @@ namespace Ramone.Utility
   {
     public static Dictionary<string, string> ConvertObjectPropertiesToDictionary(object src)
     {
+      if (src is Dictionary<string, string>)
+        return (Dictionary<string, string>)src;
+
       Dictionary<string, string> result = new Dictionary<string, string>();
 
       if (src == null)
         return result;
 
       Type t = src.GetType();
-      foreach (PropertyInfo fi in t.GetProperties())
-      {
-        string key = fi.Name;
-        object value = ReadValue(fi, src);
-        result[key] = value != null ? value.ToString() : "";
-      }
+      ObjectSerializer Serializer = new ObjectSerializer(t);
 
-      return result;
-    }
+      DictionaryConverterPropertyVisitor visitor = new DictionaryConverterPropertyVisitor();
+      Serializer.Serialize(src, visitor);
 
-
-    private static object ReadValue(PropertyInfo property, object data)
-    {
-      if (property.CanRead)
-        return property.GetValue(data, null);
-      throw new ArgumentException(string.Format("The value {0} cannot be read from {1}.", property.Name, property.DeclaringType));
+      return visitor.Result;
     }
   }
 }

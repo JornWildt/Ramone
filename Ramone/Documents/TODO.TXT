@@ -3,6 +3,8 @@ Version 1
 ---------
 
 Alle new {} object params bør også kunne gives som Dictionary
+Serializers bør håndtere dictionaries og hashtables som noget særligt
+
 
 Ramone.HyperMedia
 - OK: Link selector med media-type
@@ -57,9 +59,8 @@ RamoneConfiguration
 Url-encoded post data
 - Mangler rekursion og datoer mm.
 - Diverse serializere skal have angivelse af locale og/eller dato-format
+- Culture setting
 
-
-Serializers bør håndtere dictionaries og hashtables som noget særligt
 
 - Demo how HTML + forms + url-encoded data can be auto-generated (a'la Eric)
   - Still missing a generic domain data embedding in HTML

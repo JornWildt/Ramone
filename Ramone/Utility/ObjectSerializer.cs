@@ -32,7 +32,9 @@ namespace Ramone.Utility
       if (data != null && data.GetType() != DataType)
         throw new ArgumentException(string.Format("Cannot serialize {0} - expected {1}.", data.GetType(), DataType), "data");
 
+      visitor.Begin();
       Serialize(data, DataType, "");
+      visitor.End();
     }
 
 

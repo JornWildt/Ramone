@@ -109,6 +109,7 @@
     <Compile Include="MediaTypes\StreamCodecTests.cs" />
     <Compile Include="TestHelper.cs" />
     <Compile Include="UserAgentTests.cs" />
+    <Compile Include="Utility\DictionaryConverterTests.cs" />
     <Compile Include="Utility\MediaTypeParserTests.cs" />
     <Compile Include="Utility\MultipartFormDataSerializerTests.cs" />
     <Compile Include="Utility\FormUrlEncodingSerializerTests.cs" />
