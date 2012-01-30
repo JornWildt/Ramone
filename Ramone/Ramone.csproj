@@ -127,7 +127,6 @@
     <Compile Include="RamoneRequest.cs" />
     <Compile Include="RamoneResponse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Utility\CharsetHelpers.cs" />
     <Compile Include="Utility\DictionaryConverterPropertyVisitor.cs" />
     <Compile Include="Utility\MediaTypeParser.cs" />
     <Compile Include="Utility\MultipartFormDataPropertyVisitor.cs" />

@@ -113,6 +113,7 @@
     <Compile Include="Utility\MediaTypeParserTests.cs" />
     <Compile Include="Utility\MultipartFormDataSerializerTests.cs" />
     <Compile Include="Utility\FormUrlEncodingSerializerTests.cs" />
+    <Compile Include="Utility\ObjectSerializerTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Ramone.Tests.Common\Ramone.Tests.Common.csproj">
