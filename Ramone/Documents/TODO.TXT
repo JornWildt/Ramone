@@ -6,12 +6,16 @@ Alle new {} object params bør også kunne gives som Dictionary
 Serializers bør håndtere dictionaries og hashtables som noget særligt
 - Og have converters (fra f.eks. Uri og datetime mf. til string)
 - Locale, culture
+- Angivelse af formater for arrays (som er ":0" i OpenRasta og "[0]" i ASP.MVC)
+- Anvendelse af dictionary som "root" skal give ???
 
 Url-encoded post data
 - Mangler rekursion og datoer mm.
 - Diverse serializere skal have angivelse af locale og/eller dato-format
 - Culture setting
 
+ObjectSerializerSettings på Service
+Serializer settings for OpenRasta
 
 Ramone.HyperMedia
 - OK: Link selector med media-type
@@ -29,6 +33,9 @@ Ramone.HyperMedia
 - OK: Follow(ILink), 
 - Follow(ILinkTemplate, params)
 - Make it possible to Follow() relative links.
+
+Rename
+- RamoneRequest/RamoneResponse => Request/Response
 
 Skal have 
 - RamoneRequest.Execute(method)

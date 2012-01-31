@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Net;
+using Ramone.Utility;
 
 
 namespace Ramone.Implementation
@@ -20,6 +21,10 @@ namespace Ramone.Implementation
 
     public IRequestInterceptorSet RequestInterceptors { get; protected set; }
 
+    public ObjectSerializerSettings FormUrlEncodedSerializerSettings { get; set; }
+
+    public ObjectSerializerSettings MultipartFormDataSerializerSettings { get; set; }
+
     #endregion
 
 
@@ -31,6 +36,7 @@ namespace Ramone.Implementation
       Cookies = new CookieContainer();
       AuthorizationDispatcher = service.AuthorizationDispatcher.Clone();
       RequestInterceptors = service.RequestInterceptors.Clone();
+
     }
   }
 }

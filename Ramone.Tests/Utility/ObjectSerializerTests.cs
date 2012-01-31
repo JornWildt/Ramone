@@ -1,6 +1,8 @@
-﻿using NUnit.Framework;
+﻿using System.Collections.Generic;
+using NUnit.Framework;
+using Ramone.Tests.Common;
 using Ramone.Utility;
-using System.Collections.Generic;
+using System.Collections;
 
 
 namespace Ramone.Tests.Utility
@@ -147,6 +149,33 @@ namespace Ramone.Tests.Utility
 
 
     [Test]
+    public void CanSerializeWithDifferentSeparatorFormaters()
+    {
+      // Arrange
+      var o = new
+      {
+        B = new string[] { "abc", "xyz" },
+        A = new Hashtable()
+      };
+      ((Hashtable)o.A)["p"] = 17;
+      ((Hashtable)o.A)["q"] = "abc";
+
+      ObjectSerializerSettings settings = new ObjectSerializerSettings
+      {
+        ArrayFormat = "{0}:{1}",
+        DictionaryFormat = "{0}#{1}",
+        PropertyFormat = "{0}+{1}"
+      };
+
+      // Act
+      string result = Serialize(o, settings);
+
+      // Assert
+      Assert.AreEqual("|B:0=abc|B:1=xyz|A#p=17|A#q=abc", result);
+    }
+
+
+    [Test]
     public void CanSerializeComplexMix()
     {
       // Arrange
@@ -178,38 +207,48 @@ namespace Ramone.Tests.Utility
     }
 
 
-    protected string Serialize(object data)
+    [Test]
+    public void CanSerializeComplexClass()
+    {
+      // Arrange
+      ComplexClassForSerializationTests o = new ComplexClassForSerializationTests
+      {
+        X = 15,
+        Y = "Abc",
+        IntArray = new int[] { 1, 2 },
+        SubC = new ComplexClassForSerializationTests.SubClass
+        {
+          SubC = new ComplexClassForSerializationTests.SubClass
+          {
+            Data = new object[]
+            {
+              new Hashtable()
+            }
+          },
+          Data = new object[]
+          {
+            5, "Hello"
+          }
+        },
+        Dict = new Dictionary<string,string>()
+      };
+      ((Hashtable)o.SubC.SubC.Data[0])["w"] = 99;
+      o.Dict["123"] = "abc";
+
+      // Act
+      string result = Serialize(o);
+
+      // Assert
+      Assert.AreEqual("|X=15|Y=Abc|IntArray[0]=1|IntArray[1]=2|SubC.SubC.SubC=|SubC.SubC.Data[0][w]=99|SubC.SubC.SubComplex=|SubC.Data[0]=5|SubC.Data[1]=Hello|SubC.SubComplex=|Dict[123]=abc", result);
+    }
+
+
+    protected string Serialize(object data, ObjectSerializerSettings settings = null)
     {
       ObjectSerializer serializer = new ObjectSerializer(data.GetType());
-      ObjectVisitor visitor = new ObjectVisitor();
-      serializer.Serialize(data, visitor);
+      ObjectToStringPropertyVisitor visitor = new ObjectToStringPropertyVisitor();
+      serializer.Serialize(data, visitor, settings);
       return visitor.Result;
     }
-
-
-    class ObjectVisitor : IPropertyVisitor
-    {
-      public string Result;
-
-
-      #region IPropertyVisitor Members
-
-      public void Begin()
-      {
-        Result = "";
-      }
-
-      public void SimpleValue(string name, object value)
-      {
-        Result += string.Format("|{0}={1}", name, value);
-      }
-
-      public void End()
-      {
-      }
-
-      #endregion
-    }
-
   }
 }

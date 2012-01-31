@@ -93,6 +93,12 @@ namespace Ramone.Tests.Server
             .HandledBy<AnyEchoHandler>()
             .TranscodedBy<AnyEchoCodec>();
 
+        ResourceSpace.Has.ResourcesOfType<ComplexClassForOpenRastaSerializationTests>()
+            .AtUri(Constants.ComplexClassPath)
+            .HandledBy<ComplexClassHandler>()
+            .TranscodedBy<TextCodec>()
+            .ForMediaType("application/x-www-form-urlencoded");
+
         ConfigureCMS();
       }
     }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Net;
+using Ramone.Utility;
 
 
 namespace Ramone
@@ -17,5 +18,9 @@ namespace Ramone
     IAuthorizationDispatcher AuthorizationDispatcher { get; }
 
     IRequestInterceptorSet RequestInterceptors { get; }
+
+    ObjectSerializerSettings FormUrlEncodedSerializerSettings { get; set; }
+
+    ObjectSerializerSettings MultipartFormDataSerializerSettings { get; set; }
   }
 }

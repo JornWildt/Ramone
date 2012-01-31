@@ -13,11 +13,28 @@ namespace Ramone.Utility
   }
 
 
+  public class ObjectSerializerSettings
+  {
+    public string ArrayFormat { get; set; }
+    public string DictionaryFormat { get; set; }
+    public string PropertyFormat { get; set; }
+
+    public ObjectSerializerSettings()
+    {
+      ArrayFormat = "{0}[{1}]";
+      DictionaryFormat = "{0}[{1}]";
+      PropertyFormat = "{0}.{1}";
+    }
+  }
+
+
   public class ObjectSerializer
   {
     protected Type DataType { get; set; }
 
     protected IPropertyVisitor Visitor { get; set; }
+
+    protected ObjectSerializerSettings Settings { get; set; }
 
 
     public ObjectSerializer(Type t)
@@ -26,9 +43,10 @@ namespace Ramone.Utility
     }
 
 
-    public void Serialize(object data, IPropertyVisitor visitor)
+    public void Serialize(object data, IPropertyVisitor visitor, ObjectSerializerSettings settings = null)
     {
       Visitor = visitor;
+      Settings = settings ?? new ObjectSerializerSettings();
 
       if (data != null && data.GetType() != DataType)
         throw new ArgumentException(string.Format("Cannot serialize {0} - expected {1}.", data.GetType(), DataType), "data");
@@ -41,9 +59,11 @@ namespace Ramone.Utility
 
     protected void Serialize(object data, Type dataType, string prefix)
     {
-      if (data is IDictionary)
+      if (data == null)
+        SerializeSimpleValue(data, dataType, prefix);
+      else if (typeof(IDictionary).IsAssignableFrom(dataType))
         SerializeDictionary((IDictionary)data, dataType, prefix);
-      else if (data is IList)
+      else if (typeof(IList).IsAssignableFrom(dataType))
         SerializeList((IList)data, dataType, prefix);
       else if (IsSimpleType(dataType))
         SerializeSimpleValue(data, dataType, prefix);
@@ -67,12 +87,11 @@ namespace Ramone.Utility
 
     protected void SerializeProperties(object data, Type dataType, string prefix)
     {
-      if (prefix != string.Empty)
-        prefix = prefix + ".";
-
       foreach (PropertyInfo p in dataType.GetProperties())
       {
-        string propertyName = prefix + p.Name;
+        string propertyName = prefix != string.Empty 
+                              ? string.Format(Settings.PropertyFormat, prefix, p.Name)
+                              : p.Name;
         object propertyValue = (data != null ? p.GetValue(data, null) : null);
 
         Serialize(propertyValue, p.PropertyType, propertyName);
@@ -84,7 +103,7 @@ namespace Ramone.Utility
     {
       foreach (DictionaryEntry entry in dict)
       {
-        string name = string.Format("{0}[{1}]", prefix, entry.Key);
+        string name = string.Format(Settings.DictionaryFormat, prefix, entry.Key);
         Serialize(entry.Value, entry.Value != null ? entry.Value.GetType() : null, name);
       }
     }
@@ -94,7 +113,7 @@ namespace Ramone.Utility
     {
       for (int i=0; i<collection.Count; ++i)
       {
-        string name = string.Format("{0}[{1}]", prefix, i);
+        string name = string.Format(Settings.ArrayFormat, prefix, i);
         Serialize(collection[i], collection[i] != null ? collection[i].GetType() : null, name);
       }
     }

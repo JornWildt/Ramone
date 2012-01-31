@@ -20,7 +20,7 @@ namespace Ramone.MediaTypes.FormUrlEncoded
 
       using (TextWriter w = new StreamWriter(context.HttpStream, enc))
       {
-        Serializer.Serialize(w, context.Data);
+        Serializer.Serialize(w, context.Data, context.Session.FormUrlEncodedSerializerSettings);
       }
     }
 

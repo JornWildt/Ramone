@@ -3,6 +3,11 @@ using Ramone.MediaTypes.FormUrlEncoded;
 using Ramone.Tests.Codecs;
 using System;
 using Ramone.Implementation;
+using Ramone.Tests.Common;
+using System.Collections;
+using Ramone.Utility;
+using System.IO;
+using System.Collections.Generic;
 
 
 namespace Ramone.Tests.MediaTypes.FormUrlEncoded
@@ -83,6 +88,48 @@ namespace Ramone.Tests.MediaTypes.FormUrlEncoded
       // Assert
       Assert.AreEqual("application/x-www-form-urlencoded; charset="+charset, response.Headers["x-contenttype"]);
       Assert.AreNotEqual("ÆØÅüî-10", response.Body, "What a hack: OpenRasta always assume UTF-8, so if body is not identical to the expected it must mean that it was actually send in non-UTF-8!");
+    }
+
+
+    [Test]
+    public void CanPostComplexClass()
+    {
+      // Arrange
+      ComplexClassForOpenRastaSerializationTests o = new ComplexClassForOpenRastaSerializationTests
+      {
+        X = 15,
+        Y = "Abc",
+        IntArray = new List<int> { 1, 2 },
+        SubC = new ComplexClassForOpenRastaSerializationTests.SubClass
+        {
+          SubC = new ComplexClassForOpenRastaSerializationTests.SubClass
+          {
+            Data = new List<string> { "Benny" }
+          },
+          Data = new List<string> { "Brian" }
+        },
+        Dict = new Dictionary<string,string>()
+      };
+      o.Dict["abc"] = "123";
+      o.Dict["qwe"] = "xyz";
+
+      Session.FormUrlEncodedSerializerSettings = new ObjectSerializerSettings
+      {
+        ArrayFormat = "{0}:{1}",
+        DictionaryFormat = "{0}:{1}",
+        PropertyFormat = "{0}.{1}"
+      };
+
+      RamoneRequest request = Session.Bind(ComplexClassTemplate);
+
+      // Act
+      RamoneResponse<string> response = request.Accept("text/plain")
+                                               .AsFormUrlEncoded()
+                                               .Post<string>(o);
+
+      // Assert
+      Console.WriteLine(response.Body);
+      Assert.AreEqual("|X=15|Y=Abc|IntArray[0]=1|IntArray[1]=2|SubC.SubC.SubC=|SubC.SubC.Data[0]=Benny|SubC.Data[0]=Brian|Dict[abc]=123|Dict[qwe]=xyz", response.Body);
     }
   }
 }

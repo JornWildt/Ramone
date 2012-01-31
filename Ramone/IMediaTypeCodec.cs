@@ -7,6 +7,8 @@ namespace Ramone
   public class MediaTypeContext
   {
     public Stream HttpStream { get; protected set; }
+
+    public IRamoneSession Session { get; protected set; }
   }
 
 

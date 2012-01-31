@@ -40,7 +40,7 @@ namespace Ramone
         return null;
 
       IMediaTypeReader reader = Session.Service.CodecManager.GetReader(typeof(T), ContentType).Codec;
-      ReaderContext context = new ReaderContext(Response.GetResponseStream(), typeof(T), Response);
+      ReaderContext context = new ReaderContext(Response.GetResponseStream(), typeof(T), Response, Session);
       T result = reader.ReadFrom(context) as T;
       return result;
     }

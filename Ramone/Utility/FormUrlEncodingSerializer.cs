@@ -16,10 +16,10 @@ namespace Ramone.Utility
     }
 
 
-    public void Serialize(TextWriter w, object data)
+    public void Serialize(TextWriter w, object data, ObjectSerializerSettings settings = null)
     {
       FormUrlEncodingPropertyVisitor v = new FormUrlEncodingPropertyVisitor(w);
-      Serializer.Serialize(data, v);
+      Serializer.Serialize(data, v, settings);
     }
   }
 }
