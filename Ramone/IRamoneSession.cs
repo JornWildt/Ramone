@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Net;
-using Ramone.Utility;
+using Ramone.Utility.ObjectSerialization;
 
 
 namespace Ramone
@@ -19,8 +19,6 @@ namespace Ramone
 
     IRequestInterceptorSet RequestInterceptors { get; }
 
-    ObjectSerializerSettings FormUrlEncodedSerializerSettings { get; set; }
-
-    ObjectSerializerSettings MultipartFormDataSerializerSettings { get; set; }
+    ObjectSerializerSettings SerializerSettings { get; set; }
   }
 }

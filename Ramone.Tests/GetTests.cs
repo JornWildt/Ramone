@@ -2,6 +2,7 @@
 using Ramone.HyperMedia;
 using Ramone.HyperMedia.Atom;
 using Ramone.Tests.Common.CMS;
+using System.Collections.Generic;
 
 
 namespace Ramone.Tests
@@ -14,6 +15,24 @@ namespace Ramone.Tests
     {
       // Arrange
       RamoneRequest dossierReq = Session.Bind(DossierTemplate, new { id = 8 });
+
+      // Act
+      Dossier dossier = dossierReq.Get<Dossier>().Body;
+
+      // Assert
+      Assert.AreEqual(8, dossier.Id);
+      Assert.AreEqual("Dossier no. 8", dossier.Title);
+      Assert.IsNotNull(dossier.Links);
+    }
+
+
+    [Test]
+    public void CanGetDossierWithDictionaryParams()
+    {
+      // Arrange
+      Dictionary<string, string> p = new Dictionary<string, string>();
+      p["id"] = "8";
+      RamoneRequest dossierReq = Session.Bind(DossierTemplate, p);
 
       // Act
       Dossier dossier = dossierReq.Get<Dossier>().Body;

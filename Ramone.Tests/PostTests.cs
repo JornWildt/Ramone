@@ -66,48 +66,5 @@ namespace Ramone.Tests
       // Assert
       Assert.IsNotNull(newDossier);
     }
-
-
-#if false
-
-    FIXME: Move to separate codec tests
-
-    [Test]
-    public void CanPostAtomItemToAtomFeed()
-    {
-      SyndicationItem item = new SyndicationItem("A new item", "New item content ...", null);
-
-      var response = FeedEndPoint.Bind(new { feed = "Petes" })
-                                 .Body(item)
-                                 .Post<SyndicationItem>();
-
-      Assert.AreEqual("A new item (in Petes)", response.Body.Title.Text);
-      Assert.AreEqual("New item content ...", ((TextSyndicationContent)response.Body.Content).Text);
-    }
-
-
-    [Test]
-    public void WhenPostResultsIn204NoContentItShouldReturnNullBody()
-    {
-      var response = ErrorEndpoint.Bind(new { code = 204, description = "No Content" })
-                                  .ContentType("text/plain")
-                                  .Body("hello")
-                                  .Post<string>();
-
-      Assert.IsNull(response.Body);
-    }
-
-
-    [Test]
-    public void WhenPostResultsIn204NoContentAndNoReturnTypeIsSpecifiedItShouldReturnNullBody()
-    {
-      var response = ErrorEndpoint.Bind(new { code = 204, description = "No Content" })
-                                  .ContentType("text/plain")
-                                  .Body("hello")
-                                  .Post();
-
-      Assert.IsNull(response.Body);
-    }
-#endif
   }
 }

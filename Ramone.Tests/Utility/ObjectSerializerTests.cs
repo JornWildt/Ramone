@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using NUnit.Framework;
 using Ramone.Tests.Common;
-using Ramone.Utility;
-using System.Collections;
+using Ramone.Utility.ObjectSerialization;
 
 
 namespace Ramone.Tests.Utility
@@ -240,6 +240,22 @@ namespace Ramone.Tests.Utility
 
       // Assert
       Assert.AreEqual("|X=15|Y=Abc|IntArray[0]=1|IntArray[1]=2|SubC.SubC.SubC=|SubC.SubC.Data[0][w]=99|SubC.SubC.SubComplex=|SubC.Data[0]=5|SubC.Data[1]=Hello|SubC.SubComplex=|Dict[123]=abc", result);
+    }
+
+
+    [Test]
+    public void WhenSerializingSingleDictionaryItAddsNoSeparators()
+    {
+      // Arrange
+      var o = new Dictionary<string,string>();
+      o["A"] = "0";
+      o["B"] = "X";
+
+      // Act
+      string result = Serialize(o);
+
+      // Assert
+      Assert.AreEqual("|A=0|B=X", result);
     }
 
 

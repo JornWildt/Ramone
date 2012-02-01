@@ -1,33 +1,10 @@
 ﻿using System;
-using System.Reflection;
 using System.Collections;
+using System.Reflection;
 
 
-namespace Ramone.Utility
+namespace Ramone.Utility.ObjectSerialization
 {
-  public interface IPropertyVisitor
-  {
-    void Begin();
-    void SimpleValue(string name, object value);
-    void End();
-  }
-
-
-  public class ObjectSerializerSettings
-  {
-    public string ArrayFormat { get; set; }
-    public string DictionaryFormat { get; set; }
-    public string PropertyFormat { get; set; }
-
-    public ObjectSerializerSettings()
-    {
-      ArrayFormat = "{0}[{1}]";
-      DictionaryFormat = "{0}[{1}]";
-      PropertyFormat = "{0}.{1}";
-    }
-  }
-
-
   public class ObjectSerializer
   {
     protected Type DataType { get; set; }
@@ -59,6 +36,13 @@ namespace Ramone.Utility
 
     protected void Serialize(object data, Type dataType, string prefix)
     {
+      IObjectSerializerFormater formater = Settings.Formaters.GetFormater(dataType);
+      if (formater != null)
+      {
+        data = formater.Format(data);
+        dataType = typeof(string);
+      }
+
       if (data == null)
         SerializeSimpleValue(data, dataType, prefix);
       else if (typeof(IDictionary).IsAssignableFrom(dataType))
@@ -103,7 +87,9 @@ namespace Ramone.Utility
     {
       foreach (DictionaryEntry entry in dict)
       {
-        string name = string.Format(Settings.DictionaryFormat, prefix, entry.Key);
+        string name = prefix != string.Empty
+                      ? string.Format(Settings.DictionaryFormat, prefix, entry.Key)
+                      : entry.Key.ToString();
         Serialize(entry.Value, entry.Value != null ? entry.Value.GetType() : null, name);
       }
     }

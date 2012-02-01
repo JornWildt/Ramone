@@ -1,9 +1,9 @@
-﻿using NUnit.Framework;
+﻿using System;
+using System.Collections.Generic;
+using NUnit.Framework;
 using Ramone.IO;
 using Ramone.Tests.Common;
-using System;
-using System.Collections.Generic;
-using Ramone.Utility;
+using Ramone.Utility.ObjectSerialization;
 
 
 namespace Ramone.Tests.MediaTypes.MultipartFormData
@@ -144,7 +144,7 @@ namespace Ramone.Tests.MediaTypes.MultipartFormData
       o.Dict["abc"] = "123";
       o.Dict["qwe"] = "xyz";
 
-      Session.FormUrlEncodedSerializerSettings = new ObjectSerializerSettings
+      Session.SerializerSettings = new ObjectSerializerSettings
       {
         ArrayFormat = "{0}:{1}",
         DictionaryFormat = "{0}:{1}",

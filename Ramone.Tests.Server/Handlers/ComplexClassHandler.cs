@@ -1,5 +1,5 @@
 ﻿using Ramone.Tests.Common;
-using Ramone.Utility;
+using Ramone.Utility.ObjectSerialization;
 
 
 namespace Ramone.Tests.Server.Handlers

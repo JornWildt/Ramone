@@ -1,13 +1,9 @@
-﻿using NUnit.Framework;
-using Ramone.MediaTypes.FormUrlEncoded;
-using Ramone.Tests.Codecs;
-using System;
-using Ramone.Implementation;
-using Ramone.Tests.Common;
-using System.Collections;
-using Ramone.Utility;
-using System.IO;
+﻿using System;
 using System.Collections.Generic;
+using NUnit.Framework;
+using Ramone.MediaTypes.FormUrlEncoded;
+using Ramone.Tests.Common;
+using Ramone.Utility.ObjectSerialization;
 
 
 namespace Ramone.Tests.MediaTypes.FormUrlEncoded
@@ -113,7 +109,7 @@ namespace Ramone.Tests.MediaTypes.FormUrlEncoded
       o.Dict["abc"] = "123";
       o.Dict["qwe"] = "xyz";
 
-      Session.FormUrlEncodedSerializerSettings = new ObjectSerializerSettings
+      Session.SerializerSettings = new ObjectSerializerSettings
       {
         ArrayFormat = "{0}:{1}",
         DictionaryFormat = "{0}:{1}",

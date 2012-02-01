@@ -134,7 +134,12 @@
     <Compile Include="Utility\FormUrlEncodingPropertyVisitor.cs" />
     <Compile Include="Utility\FormUrlEncodingSerializer.cs" />
     <Compile Include="Utility\MultipartFormDataSerializer.cs" />
-    <Compile Include="Utility\ObjectSerializer.cs" />
+    <Compile Include="Utility\ObjectSerialization\IObjectSerializerFormater.cs" />
+    <Compile Include="Utility\ObjectSerialization\IObjectSerializerFormaterManager.cs" />
+    <Compile Include="Utility\ObjectSerialization\IPropertyVisitor.cs" />
+    <Compile Include="Utility\ObjectSerialization\ObjectSerializer.cs" />
+    <Compile Include="Utility\ObjectSerialization\ObjectSerializerFormaterManager.cs" />
+    <Compile Include="Utility\ObjectSerialization\ObjectSerializerSettings.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Documents\TODO.TXT" />
