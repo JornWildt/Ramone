@@ -6,19 +6,6 @@ using Ramone.Utility.ObjectSerialization;
 
 namespace Ramone.Tests.Utility
 {
-  public class UriObjectSerializerFormater : IObjectSerializerFormater
-  {
-    #region IObjectSerializerFormater Members
-
-    public string Format(object src)
-    {
-      return ((Uri)src).AbsoluteUri;
-    }
-
-    #endregion
-  }
-
-
   [TestFixture]
   public class ObjectSerializerFormaterTests : TestHelper
   {
@@ -33,13 +20,32 @@ namespace Ramone.Tests.Utility
 
 
     [Test]
+    public void CanSerializeWithStandardFormaters()
+    {
+      // Arrange
+      RamoneConfiguration.RegisterStandardSerializationFormaters(Session.SerializerSettings.Formaters);
+      var o = new
+      {
+        Url = new Uri("http://dr.dk"),
+        Date = new DateTime(2012, 10, 12, 15, 14, 13)
+      };
+
+      // Act
+      string result = Serialize(o);
+
+      // Assert
+      Assert.AreEqual("|Url=http://dr.dk/|Date=2012-10-12 15:14:13", result);
+    }
+
+
+    [Test]
     public void CanSerializeWithFormaters()
     {
       // Arrange
-      MyObjectSerializerFormaterManager.AddFormater(typeof(Uri), new UriObjectSerializerFormater());
+      MyObjectSerializerFormaterManager.AddFormater(typeof(Mail), new MailObjectSerializerFormater());
       var o = new
       {
-        Url = new Uri("http://dr.dk")
+        Mail = new Mail { Address = "jw@fjeldgruppen.dk" }
       };
 
       // Act
@@ -51,16 +57,26 @@ namespace Ramone.Tests.Utility
       string result = Serialize(o, settings);
 
       // Assert
-      Assert.AreEqual("|Url=http://dr.dk/", result);
+      Assert.AreEqual("|Mail=jw@fjeldgruppen.dk", result);
     }
 
 
-    protected string Serialize(object data, ObjectSerializerSettings settings = null)
+    public class Mail
     {
-      ObjectSerializer serializer = new ObjectSerializer(data.GetType());
-      ObjectToStringPropertyVisitor visitor = new ObjectToStringPropertyVisitor();
-      serializer.Serialize(data, visitor, settings);
-      return visitor.Result;
+      public string Address { get; set; }
+    }
+
+
+    public class MailObjectSerializerFormater : IObjectSerializerFormater
+    {
+      #region IObjectSerializerFormater Members
+
+      public string Format(object src)
+      {
+        return ((Mail)src).Address;
+      }
+
+      #endregion
     }
   }
 }

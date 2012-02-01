@@ -11,6 +11,8 @@ using Ramone.MediaTypes.Html;
 using Ramone.MediaTypes.Json;
 using Ramone.MediaTypes.MultipartFormData;
 using Ramone.MediaTypes.Xml;
+using Ramone.Utility.ObjectSerialization;
+using Ramone.Utility.ObjectSerialization.Formaters;
 
 
 namespace Ramone
@@ -58,6 +60,12 @@ namespace Ramone
 
       // Streams
       cm.AddCodec<Stream>(new StreamCodec());
+    }
+
+
+    public static void RegisterStandardSerializationFormaters(IObjectSerializerFormaterManager formatManager)
+    {
+      formatManager.AddFormater(typeof(Uri), new UriFormater());
     }
   }
 }

@@ -34,7 +34,7 @@ namespace Ramone.Implementation
       Cookies = new CookieContainer();
       AuthorizationDispatcher = service.AuthorizationDispatcher.Clone();
       RequestInterceptors = service.RequestInterceptors.Clone();
-
+      SerializerSettings = new ObjectSerializerSettings(service.SerializerSettings);
     }
   }
 }

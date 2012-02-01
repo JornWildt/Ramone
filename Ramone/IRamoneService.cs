@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Net;
+using Ramone.Utility.ObjectSerialization;
 
 
 namespace Ramone
@@ -15,6 +16,8 @@ namespace Ramone
     IAuthorizationDispatcher AuthorizationDispatcher { get; }
 
     IRequestInterceptorSet RequestInterceptors { get; }
+
+    ObjectSerializerSettings SerializerSettings { get; set; }
 
     IRamoneSession NewSession();
   }

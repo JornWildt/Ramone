@@ -17,6 +17,9 @@ OK: - Mangler rekursion
 - Diverse serializere skal have angivelse af locale og/eller dato-format
 - Culture setting
 
+Formaters.AddFormater(typeof(SomeClass), new SomeClassFormater());
+=> Formaters.AddFormater<SomeClass>(new SomeClassFormater());
+
 ObjectSerializerSettings på Service
 Serializer settings for OpenRasta
 
@@ -82,6 +85,7 @@ RamoneConfiguration
 Lots of Condition.Requries()...
 
 Tror at default skal være *med* standard codecs.
+- RamoneConfiguration/session?/.WithoutDefaultCodecs().WithoutDefaultFormaters().Start();
 
 Before releasing:
 - Include a license

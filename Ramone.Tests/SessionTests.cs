@@ -2,6 +2,7 @@
 using System.Linq;
 using NUnit.Framework;
 using Ramone.Implementation;
+using Ramone.Utility.ObjectSerialization;
 
 
 namespace Ramone.Tests
@@ -82,6 +83,37 @@ namespace Ramone.Tests
 
 
     [Test]
+    public void WhenCreatingSessionItClonesSerializerSettings()
+    {
+      // Arrange
+      IRamoneService service = RamoneConfiguration.NewService(BaseUrl);
+      service.SerializerSettings.ArrayFormat = "A";
+      service.SerializerSettings.DictionaryFormat = "B";
+      service.SerializerSettings.PropertyFormat = "C";
+      service.SerializerSettings.Formaters.AddFormater(typeof(SomeClass1), new SomeClass1Formater());
+
+      // Act
+      IRamoneSession session = service.NewSession();
+      session.SerializerSettings.ArrayFormat = "A2";
+      session.SerializerSettings.DictionaryFormat = "B2";
+      session.SerializerSettings.PropertyFormat = "C2";
+      session.SerializerSettings.Formaters.AddFormater(typeof(SomeClass2), new SomeClass2Formater());
+
+      // Assert
+      Assert.AreEqual("A2", session.SerializerSettings.ArrayFormat);
+      Assert.AreEqual("B2", session.SerializerSettings.DictionaryFormat);
+      Assert.AreEqual("C2", session.SerializerSettings.PropertyFormat);
+      Assert.AreEqual("A", service.SerializerSettings.ArrayFormat);
+      Assert.AreEqual("B", service.SerializerSettings.DictionaryFormat);
+      Assert.AreEqual("C", service.SerializerSettings.PropertyFormat);
+      Assert.IsNotNull(session.SerializerSettings.Formaters.GetFormater(typeof(SomeClass1)));
+      Assert.IsNotNull(session.SerializerSettings.Formaters.GetFormater(typeof(SomeClass2)));
+      Assert.IsNotNull(service.SerializerSettings.Formaters.GetFormater(typeof(SomeClass1)));
+      Assert.IsNull(service.SerializerSettings.Formaters.GetFormater(typeof(SomeClass2)));
+    }
+
+
+    [Test]
     public void CanBindRelativeUrlAsStringWithoutParameters()
     {
       // Act
@@ -134,6 +166,42 @@ namespace Ramone.Tests
       public void Intercept(System.Net.HttpWebRequest request)
       {
       }
+    }
+
+
+    class SomeClass1
+    {
+    }
+
+
+    public class SomeClass1Formater : IObjectSerializerFormater
+    {
+      #region IObjectSerializerFormater Members
+
+      public string Format(object src)
+      {
+        throw new NotImplementedException();
+      }
+
+      #endregion
+    }
+
+
+    class SomeClass2
+    {
+    }
+
+
+    public class SomeClass2Formater : IObjectSerializerFormater
+    {
+      #region IObjectSerializerFormater Members
+
+      public string Format(object src)
+      {
+        throw new NotImplementedException();
+      }
+
+      #endregion
     }
   }
 }

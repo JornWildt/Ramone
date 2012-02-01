@@ -1,8 +1,8 @@
 ﻿using System;
 using NUnit.Framework;
-using Ramone.Implementation;
 using Ramone.Tests.Common;
 using Ramone.Tests.Common.CMS;
+using Ramone.Utility.ObjectSerialization;
 
 
 namespace Ramone.Tests
@@ -196,6 +196,15 @@ namespace Ramone.Tests
       }
 
       Assert.Fail(String.Format("Expected {0}, but no exception was thrown", typeof(ExT)));
+    }
+
+
+    protected string Serialize(object data, ObjectSerializerSettings settings = null)
+    {
+      ObjectSerializer serializer = new ObjectSerializer(data.GetType());
+      ObjectToStringPropertyVisitor visitor = new ObjectToStringPropertyVisitor();
+      serializer.Serialize(data, visitor, settings);
+      return visitor.Result;
     }
   }
 }

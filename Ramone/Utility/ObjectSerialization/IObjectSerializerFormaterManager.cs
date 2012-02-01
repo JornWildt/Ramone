@@ -7,5 +7,6 @@ namespace Ramone.Utility.ObjectSerialization
   {
     void AddFormater(Type t, IObjectSerializerFormater converter);
     IObjectSerializerFormater GetFormater(Type t);
+    IObjectSerializerFormaterManager Clone();
   }
 }

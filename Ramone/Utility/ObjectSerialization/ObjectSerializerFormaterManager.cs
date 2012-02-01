@@ -27,6 +27,23 @@ namespace Ramone.Utility.ObjectSerialization
       return f;
     }
 
+
+    public IObjectSerializerFormaterManager Clone()
+    {
+      return new ObjectSerializerFormaterManager(this);
+    }
+
     #endregion
+
+
+    public ObjectSerializerFormaterManager()
+    {
+    }
+
+
+    public ObjectSerializerFormaterManager(ObjectSerializerFormaterManager src)
+    {
+      Formaters = new Dictionary<Type, IObjectSerializerFormater>(src.Formaters);
+    }
   }
 }

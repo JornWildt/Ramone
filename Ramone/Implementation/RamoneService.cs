@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Net;
+using Ramone.Utility.ObjectSerialization;
 
 
 namespace Ramone.Implementation
@@ -18,6 +19,8 @@ namespace Ramone.Implementation
 
     public IRequestInterceptorSet RequestInterceptors { get; protected set; }
 
+    public ObjectSerializerSettings SerializerSettings { get; set; }
+
     public IRamoneSession NewSession()
     {
       return new RamoneSession(this);
@@ -33,6 +36,7 @@ namespace Ramone.Implementation
       CodecManager = new CodecManager();
       AuthorizationDispatcher = new AuthorizationDispatcher();
       RequestInterceptors = new RequestInterceptorSet();
+      SerializerSettings = new ObjectSerializerSettings();
     }
   }
 }

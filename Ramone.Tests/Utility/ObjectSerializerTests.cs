@@ -257,14 +257,5 @@ namespace Ramone.Tests.Utility
       // Assert
       Assert.AreEqual("|A=0|B=X", result);
     }
-
-
-    protected string Serialize(object data, ObjectSerializerSettings settings = null)
-    {
-      ObjectSerializer serializer = new ObjectSerializer(data.GetType());
-      ObjectToStringPropertyVisitor visitor = new ObjectToStringPropertyVisitor();
-      serializer.Serialize(data, visitor, settings);
-      return visitor.Result;
-    }
   }
 }
