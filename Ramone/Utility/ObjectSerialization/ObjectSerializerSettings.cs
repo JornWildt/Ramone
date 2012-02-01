@@ -1,4 +1,7 @@
-﻿namespace Ramone.Utility.ObjectSerialization
+﻿using System.Globalization;
+
+
+namespace Ramone.Utility.ObjectSerialization
 {
   public class ObjectSerializerSettings
   {
@@ -9,6 +12,8 @@
     public string PropertyFormat { get; set; }
 
     public string DateTimeFormat { get; set; }
+
+    public CultureInfo Culture { get; set; }
     
     public IObjectSerializerFormaterManager Formaters { get; set; }
 
@@ -20,6 +25,7 @@
       PropertyFormat = "{0}.{1}";
       DateTimeFormat = "s";
       Formaters = new ObjectSerializerFormaterManager();
+      Culture = CultureInfo.InvariantCulture;
     }
 
 
@@ -30,6 +36,7 @@
       PropertyFormat = src.PropertyFormat;
       DateTimeFormat = src.DateTimeFormat;
       Formaters = src.Formaters.Clone();
+      Culture = (CultureInfo)src.Culture.Clone();
     }
   }
 }

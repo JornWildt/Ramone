@@ -3,6 +3,7 @@ using System.Linq;
 using NUnit.Framework;
 using Ramone.Implementation;
 using Ramone.Utility.ObjectSerialization;
+using System.Globalization;
 
 
 namespace Ramone.Tests
@@ -92,6 +93,7 @@ namespace Ramone.Tests
       service.SerializerSettings.PropertyFormat = "C";
       service.SerializerSettings.DateTimeFormat = "O";
       service.SerializerSettings.Formaters.AddFormater(typeof(SomeClass1), new SomeClass1Formater());
+      service.SerializerSettings.Culture = CultureInfo.GetCultureInfo("da-DK");
 
       // Act 1
       IRamoneSession session = service.NewSession();
@@ -101,6 +103,7 @@ namespace Ramone.Tests
       Assert.AreEqual("B", session.SerializerSettings.DictionaryFormat);
       Assert.AreEqual("C", session.SerializerSettings.PropertyFormat);
       Assert.AreEqual("O", session.SerializerSettings.DateTimeFormat);
+      Assert.AreEqual("da-DK", session.SerializerSettings.Culture.Name);
       
       // Act 2
       session.SerializerSettings.ArrayFormat = "A2";
@@ -108,16 +111,19 @@ namespace Ramone.Tests
       session.SerializerSettings.PropertyFormat = "C2";
       session.SerializerSettings.DateTimeFormat = "R";
       session.SerializerSettings.Formaters.AddFormater(typeof(SomeClass2), new SomeClass2Formater());
+      session.SerializerSettings.Culture = CultureInfo.GetCultureInfo("pt-BR");
 
       // Assert
       Assert.AreEqual("A2", session.SerializerSettings.ArrayFormat);
       Assert.AreEqual("B2", session.SerializerSettings.DictionaryFormat);
       Assert.AreEqual("C2", session.SerializerSettings.PropertyFormat);
       Assert.AreEqual("R", session.SerializerSettings.DateTimeFormat);
+      Assert.AreEqual("pt-BR", session.SerializerSettings.Culture.Name);
       Assert.AreEqual("A", service.SerializerSettings.ArrayFormat);
       Assert.AreEqual("B", service.SerializerSettings.DictionaryFormat);
       Assert.AreEqual("C", service.SerializerSettings.PropertyFormat);
       Assert.AreEqual("O", service.SerializerSettings.DateTimeFormat);
+      Assert.AreEqual("da-DK", service.SerializerSettings.Culture.Name);
       Assert.IsNotNull(session.SerializerSettings.Formaters.GetFormater(typeof(SomeClass1)));
       Assert.IsNotNull(session.SerializerSettings.Formaters.GetFormater(typeof(SomeClass2)));
       Assert.IsNotNull(service.SerializerSettings.Formaters.GetFormater(typeof(SomeClass1)));

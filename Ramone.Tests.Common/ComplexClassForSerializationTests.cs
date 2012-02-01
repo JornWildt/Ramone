@@ -37,5 +37,6 @@ namespace Ramone.Tests.Common
     public SubClass SubC { get; set; }
     public Dictionary<string, string> Dict { get; set; }
     public DateTime Date { get; set; }
+    public double Dou { get; set; }
   }
 }

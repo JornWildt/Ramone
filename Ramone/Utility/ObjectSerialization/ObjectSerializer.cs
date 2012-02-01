@@ -69,6 +69,12 @@ namespace Ramone.Utility.ObjectSerialization
       string formatedValue = "";
       if (data is DateTime)
         formatedValue = ((DateTime)data).ToString(Settings.DateTimeFormat);
+      else if (data is decimal)
+        formatedValue = ((decimal)data).ToString(Settings.Culture.NumberFormat);
+      else if (data is float)
+        formatedValue = ((float)data).ToString(Settings.Culture.NumberFormat);
+      else if (data is double)
+        formatedValue = ((double)data).ToString(Settings.Culture.NumberFormat);
       else if (data != null)
         formatedValue = data.ToString();
       

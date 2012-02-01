@@ -105,7 +105,8 @@ namespace Ramone.Tests.MediaTypes.FormUrlEncoded
           Data = new List<string> { "Brian" }
         },
         Dict = new Dictionary<string,string>(),
-        Date = new DateTime(2012, 10, 30, 12, 13, 14)
+        Date = new DateTime(2012, 10, 30, 12, 13, 14),
+        Dou = 15.234
       };
       o.Dict["abc"] = "123";
       o.Dict["qwe"] = "xyz";
@@ -126,7 +127,7 @@ namespace Ramone.Tests.MediaTypes.FormUrlEncoded
 
       // Assert
       Console.WriteLine(response.Body);
-      Assert.AreEqual("|X=15|Y=Abc|IntArray[0]=1|IntArray[1]=2|SubC.SubC.SubC=|SubC.SubC.Data[0]=Benny|SubC.Data[0]=Brian|Dict[abc]=123|Dict[qwe]=xyz|Date=2012-10-30T12:13:14", response.Body);
+      Assert.AreEqual("|X=15|Y=Abc|IntArray[0]=1|IntArray[1]=2|SubC.SubC.SubC=|SubC.SubC.Data[0]=Benny|SubC.Data[0]=Brian|Dict[abc]=123|Dict[qwe]=xyz|Date=2012-10-30T12:13:14|Dou=15.234", response.Body);
     }
   }
 }

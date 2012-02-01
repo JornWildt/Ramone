@@ -1,9 +1,10 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using NUnit.Framework;
 using Ramone.Tests.Common;
 using Ramone.Utility.ObjectSerialization;
-using System;
 
 
 namespace Ramone.Tests.Utility
@@ -258,6 +259,57 @@ namespace Ramone.Tests.Utility
 
       // Assert
       Assert.AreEqual("|A=0|B=X", result);
+    }
+
+
+    [Test]
+    public void WhenSerializingItUsesDefaultLocale()
+    {
+      // Arrange
+      ClassWithLocaleDependentValues o = new ClassWithLocaleDependentValues
+      {
+        Dec = 10.5M,
+        Flo = 20.12F,
+        Dou = 13.23
+      };
+
+      // Act
+      string result = Serialize(o);
+
+      // Assert
+      Assert.AreEqual("|Dec=10.5|Flo=20.12|Dou=13.23", result);
+    }
+
+
+    [Test]
+    public void WhenSerializingItUsesSuppliedLocale()
+    {
+      // Arrange
+      ClassWithLocaleDependentValues o = new ClassWithLocaleDependentValues
+      {
+        Dec = 10.5M,
+        Flo = 20.12F,
+        Dou = 13.23
+      };
+
+      // Act
+      ObjectSerializerSettings settings = new ObjectSerializerSettings
+      {
+        Culture = CultureInfo.GetCultureInfo("da-DK")
+      };
+
+      string result = Serialize(o, settings);
+
+      // Assert
+      Assert.AreEqual("|Dec=10,5|Flo=20,12|Dou=13,23", result);
+    }
+
+
+    class ClassWithLocaleDependentValues
+    {
+      public decimal Dec { get; set; }
+      public float Flo { get; set; }
+      public double Dou { get; set; }
     }
   }
 }
