@@ -17,10 +17,10 @@ namespace Ramone.Utility
     }
 
 
-    public void Serialize(Stream s, object data, Encoding encoding = null, string boundary = null)
+    public void Serialize(Stream s, object data, Encoding encoding = null, string boundary = null, ObjectSerializerSettings settings = null)
     {
       MultipartFormDataPropertyVisitor v = new MultipartFormDataPropertyVisitor(s, encoding, boundary);
-      Serializer.Serialize(data, v);
+      Serializer.Serialize(data, v, settings);
     }
   }
 }

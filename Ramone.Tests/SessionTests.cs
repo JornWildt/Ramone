@@ -90,22 +90,34 @@ namespace Ramone.Tests
       service.SerializerSettings.ArrayFormat = "A";
       service.SerializerSettings.DictionaryFormat = "B";
       service.SerializerSettings.PropertyFormat = "C";
+      service.SerializerSettings.DateTimeFormat = "O";
       service.SerializerSettings.Formaters.AddFormater(typeof(SomeClass1), new SomeClass1Formater());
 
-      // Act
+      // Act 1
       IRamoneSession session = service.NewSession();
+
+      // Assert
+      Assert.AreEqual("A", session.SerializerSettings.ArrayFormat);
+      Assert.AreEqual("B", session.SerializerSettings.DictionaryFormat);
+      Assert.AreEqual("C", session.SerializerSettings.PropertyFormat);
+      Assert.AreEqual("O", session.SerializerSettings.DateTimeFormat);
+      
+      // Act 2
       session.SerializerSettings.ArrayFormat = "A2";
       session.SerializerSettings.DictionaryFormat = "B2";
       session.SerializerSettings.PropertyFormat = "C2";
+      session.SerializerSettings.DateTimeFormat = "R";
       session.SerializerSettings.Formaters.AddFormater(typeof(SomeClass2), new SomeClass2Formater());
 
       // Assert
       Assert.AreEqual("A2", session.SerializerSettings.ArrayFormat);
       Assert.AreEqual("B2", session.SerializerSettings.DictionaryFormat);
       Assert.AreEqual("C2", session.SerializerSettings.PropertyFormat);
+      Assert.AreEqual("R", session.SerializerSettings.DateTimeFormat);
       Assert.AreEqual("A", service.SerializerSettings.ArrayFormat);
       Assert.AreEqual("B", service.SerializerSettings.DictionaryFormat);
       Assert.AreEqual("C", service.SerializerSettings.PropertyFormat);
+      Assert.AreEqual("O", service.SerializerSettings.DateTimeFormat);
       Assert.IsNotNull(session.SerializerSettings.Formaters.GetFormater(typeof(SomeClass1)));
       Assert.IsNotNull(session.SerializerSettings.Formaters.GetFormater(typeof(SomeClass2)));
       Assert.IsNotNull(service.SerializerSettings.Formaters.GetFormater(typeof(SomeClass1)));

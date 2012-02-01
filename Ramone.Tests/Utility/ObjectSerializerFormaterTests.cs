@@ -23,29 +23,12 @@ namespace Ramone.Tests.Utility
     public void CanSerializeWithStandardFormaters()
     {
       // Arrange
-      RamoneConfiguration.RegisterStandardSerializationFormaters(Session.SerializerSettings.Formaters);
+      RamoneConfiguration.RegisterStandardSerializationFormaters(MyObjectSerializerFormaterManager);
       var o = new
       {
-        Url = new Uri("http://dr.dk"),
-        Date = new DateTime(2012, 10, 12, 15, 14, 13)
-      };
-
-      // Act
-      string result = Serialize(o);
-
-      // Assert
-      Assert.AreEqual("|Url=http://dr.dk/|Date=2012-10-12 15:14:13", result);
-    }
-
-
-    [Test]
-    public void CanSerializeWithFormaters()
-    {
-      // Arrange
-      MyObjectSerializerFormaterManager.AddFormater(typeof(Mail), new MailObjectSerializerFormater());
-      var o = new
-      {
-        Mail = new Mail { Address = "jw@fjeldgruppen.dk" }
+        Bool = false,
+        Date = new DateTime(2012, 10, 12, 15, 14, 13),
+        Url = new Uri("http://dr.dk")
       };
 
       // Act
@@ -57,7 +40,32 @@ namespace Ramone.Tests.Utility
       string result = Serialize(o, settings);
 
       // Assert
-      Assert.AreEqual("|Mail=jw@fjeldgruppen.dk", result);
+      Assert.AreEqual("|Bool=False|Date=2012-10-12T15:14:13|Url=http://dr.dk/", result);
+    }
+
+
+    [Test]
+    public void CanSerializeWithFormaters()
+    {
+      // Arrange
+      MyObjectSerializerFormaterManager.AddFormater(typeof(Mail), new MailObjectSerializerFormater());
+      MyObjectSerializerFormaterManager.AddFormater(typeof(bool), new BoolObjectSerializerFormater());
+      var o = new
+      {
+        Mail = new Mail { Address = "jw@fjeldgruppen.dk" },
+        Bool = true
+      };
+
+      // Act
+      ObjectSerializerSettings settings = new ObjectSerializerSettings
+      {
+        Formaters = MyObjectSerializerFormaterManager
+      };
+
+      string result = Serialize(o, settings);
+
+      // Assert
+      Assert.AreEqual("|Mail=jw@fjeldgruppen.dk|Bool=1", result);
     }
 
 
@@ -74,6 +82,19 @@ namespace Ramone.Tests.Utility
       public string Format(object src)
       {
         return ((Mail)src).Address;
+      }
+
+      #endregion
+    }
+
+
+    public class BoolObjectSerializerFormater : IObjectSerializerFormater
+    {
+      #region IObjectSerializerFormater Members
+
+      public string Format(object src)
+      {
+        return ((bool)src) ? "1" : "0";
       }
 
       #endregion

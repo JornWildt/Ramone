@@ -16,11 +16,10 @@ namespace Ramone.Utility
       Result = new Dictionary<string, string>();
     }
 
-    
-    public void SimpleValue(string name, object value)
+
+    public void SimpleValue(string name, object value, string formatedValue)
     {
-      string s = (value != null ? value.ToString() : "");
-      Result[name] = s;
+      Result[name] = formatedValue;
     }
 
 

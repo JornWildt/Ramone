@@ -4,7 +4,7 @@ Version 1
 
 OK: Alle new {} object params bør også kunne gives som Dictionary
 OK: Serializers bør håndtere dictionaries og hashtables som noget særligt
-- Og have converters (fra f.eks. Uri og datetime mf. til string)
+OK: - Og have converters (fra f.eks. Uri og datetime mf. til string)
 - Locale, culture
 OK: - Angivelse af formater for arrays (som er ":0" i OpenRasta og "[0]" i ASP.MVC)
 OK: - Anvendelse af dictionary som "root" skal give ???
@@ -13,14 +13,15 @@ Url-encoded post data
 OK: - Mangler rekursion 
 - Mangler 
   - datoer, 
-  - Uri
+OK:  - Uri
 - Diverse serializere skal have angivelse af locale og/eller dato-format
 - Culture setting
 
 Formaters.AddFormater(typeof(SomeClass), new SomeClassFormater());
 => Formaters.AddFormater<SomeClass>(new SomeClassFormater());
+=> Formaters.AddFormater<SomeClass>(c => c.ToString());
 
-ObjectSerializerSettings på Service
+OK: ObjectSerializerSettings på Service
 Serializer settings for OpenRasta
 
 Ramone.HyperMedia

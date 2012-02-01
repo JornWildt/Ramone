@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using NUnit.Framework;
 using Ramone.Tests.Common;
 using Ramone.Utility.ObjectSerialization;
+using System;
 
 
 namespace Ramone.Tests.Utility
@@ -230,7 +231,8 @@ namespace Ramone.Tests.Utility
             5, "Hello"
           }
         },
-        Dict = new Dictionary<string,string>()
+        Dict = new Dictionary<string,string>(),
+        Date = new DateTime(2012, 5, 30, 19, 20 ,21)
       };
       ((Hashtable)o.SubC.SubC.Data[0])["w"] = 99;
       o.Dict["123"] = "abc";
@@ -239,7 +241,7 @@ namespace Ramone.Tests.Utility
       string result = Serialize(o);
 
       // Assert
-      Assert.AreEqual("|X=15|Y=Abc|IntArray[0]=1|IntArray[1]=2|SubC.SubC.SubC=|SubC.SubC.Data[0][w]=99|SubC.SubC.SubComplex=|SubC.Data[0]=5|SubC.Data[1]=Hello|SubC.SubComplex=|Dict[123]=abc", result);
+      Assert.AreEqual("|X=15|Y=Abc|IntArray[0]=1|IntArray[1]=2|SubC.SubC.SubC=|SubC.SubC.Data[0][w]=99|SubC.SubC.SubComplex=|SubC.Data[0]=5|SubC.Data[1]=Hello|SubC.SubComplex=|Dict[123]=abc|Date=2012-05-30T19:20:21", result);
     }
 
 

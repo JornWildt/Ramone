@@ -22,7 +22,7 @@ namespace Ramone.MediaTypes.MultipartFormData
       if (m.Parameters.ContainsKey("charset"))
         enc = Encoding.GetEncoding(m.Parameters["charset"]);
 
-      Serializer.Serialize(context.HttpStream, context.Data, enc, CodecArgument as string);
+      Serializer.Serialize(context.HttpStream, context.Data, enc, CodecArgument as string, context.Session.SerializerSettings);
     }
 
 

@@ -19,6 +19,7 @@ namespace Ramone.Tests.Common
     public int[] IntArray { get; set; }
     public SubClass SubC { get; set; }
     public Dictionary<string, string> Dict { get; set; }
+    public DateTime Date { get; set; }
   }
 
 
@@ -35,5 +36,6 @@ namespace Ramone.Tests.Common
     public List<int> IntArray { get; set; }
     public SubClass SubC { get; set; }
     public Dictionary<string, string> Dict { get; set; }
+    public DateTime Date { get; set; }
   }
 }

@@ -65,7 +65,14 @@ namespace Ramone.Utility.ObjectSerialization
     protected void SerializeSimpleValue(object data, Type dataType, string prefix)
     {
       string name = prefix;
-      Visitor.SimpleValue(name, data);
+      
+      string formatedValue = "";
+      if (data is DateTime)
+        formatedValue = ((DateTime)data).ToString(Settings.DateTimeFormat);
+      else if (data != null)
+        formatedValue = data.ToString();
+      
+      Visitor.SimpleValue(name, data, formatedValue);
     }
 
 

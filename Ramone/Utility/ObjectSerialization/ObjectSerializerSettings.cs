@@ -7,6 +7,8 @@
     public string DictionaryFormat { get; set; }
     
     public string PropertyFormat { get; set; }
+
+    public string DateTimeFormat { get; set; }
     
     public IObjectSerializerFormaterManager Formaters { get; set; }
 
@@ -16,6 +18,7 @@
       ArrayFormat = "{0}[{1}]";
       DictionaryFormat = "{0}[{1}]";
       PropertyFormat = "{0}.{1}";
+      DateTimeFormat = "s";
       Formaters = new ObjectSerializerFormaterManager();
     }
 
@@ -25,6 +28,7 @@
       ArrayFormat = src.ArrayFormat;
       DictionaryFormat = src.DictionaryFormat;
       PropertyFormat = src.PropertyFormat;
+      DateTimeFormat = src.DateTimeFormat;
       Formaters = src.Formaters.Clone();
     }
   }

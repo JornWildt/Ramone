@@ -31,7 +31,7 @@ namespace Ramone.Utility
     }
 
 
-    public void SimpleValue(string name, object value)
+    public void SimpleValue(string name, object value, string formatedValue)
     {
       string filename = "";
       string contentType = "";
@@ -57,7 +57,7 @@ Content-Disposition: form-data; name=""{1}""{2}{3}
 
       Writer.Write(header);
       Writer.Flush();
-      WritePropertyValue(value);
+      WritePropertyValue(value, formatedValue);
     }
 
 
@@ -69,7 +69,7 @@ Content-Disposition: form-data; name=""{1}""{2}{3}
     #endregion
 
 
-    protected void WritePropertyValue(object value)
+    protected void WritePropertyValue(object value, string formatedValue)
     {
       if (value is IFile)
       {
@@ -83,8 +83,7 @@ Content-Disposition: form-data; name=""{1}""{2}{3}
       }
       else
       {
-        string s = (value != null ? value.ToString() : "");
-        Writer.Write(s);
+        Writer.Write(formatedValue);
       }
     }
   }

@@ -24,12 +24,11 @@ namespace Ramone.Utility
     }
 
 
-    public void SimpleValue(string name, object value)
+    public void SimpleValue(string name, object value, string formatedValue)
     {
       if (!FirstValue)
         Writer.Write("&");
-      string s = (value != null ? value.ToString() : "");
-      string output = HttpUtility.UrlEncode(name, Writer.Encoding) + "=" + HttpUtility.UrlEncode(s, Writer.Encoding);
+      string output = HttpUtility.UrlEncode(name, Writer.Encoding) + "=" + HttpUtility.UrlEncode(formatedValue, Writer.Encoding);
       Writer.Write(output);
       FirstValue = false;
     }

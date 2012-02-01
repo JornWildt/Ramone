@@ -15,9 +15,9 @@ namespace Ramone.Tests.Common
       Result = "";
     }
 
-    public void SimpleValue(string name, object value)
+    public void SimpleValue(string name, object value, string formatedValue)
     {
-      Result += string.Format("|{0}={1}", name, value);
+      Result += string.Format("|{0}={1}", name, formatedValue);
     }
 
     public void End()
