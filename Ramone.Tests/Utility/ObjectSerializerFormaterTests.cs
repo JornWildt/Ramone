@@ -2,6 +2,7 @@
 using NUnit.Framework;
 using Ramone.Tests.Common;
 using Ramone.Utility.ObjectSerialization;
+using Ramone.Utility.ObjectSerialization.Formaters;
 
 
 namespace Ramone.Tests.Utility
@@ -66,6 +67,25 @@ namespace Ramone.Tests.Utility
 
       // Assert
       Assert.AreEqual("|Mail=jw@fjeldgruppen.dk|Bool=1", result);
+    }
+
+
+    [Test]
+    public void CanAddFormatersInVariousWays()
+    {
+      // Act
+      MyObjectSerializerFormaterManager.AddFormater<Mail>(new MailObjectSerializerFormater());
+      MyObjectSerializerFormaterManager.AddFormater<bool>(b => b ? "yes" : "no");
+
+      // Act
+      IObjectSerializerFormater f1 = MyObjectSerializerFormaterManager.GetFormater(typeof(Mail));
+      IObjectSerializerFormater f2 = MyObjectSerializerFormaterManager.GetFormater(typeof(bool));
+
+      // Assert
+      Assert.IsNotNull(f1);
+      Assert.IsNotNull(f2);
+      Assert.AreEqual(typeof(MailObjectSerializerFormater), f1.GetType());
+      Assert.AreEqual(typeof(DelegateFormater<bool>), f2.GetType());
     }
 
 

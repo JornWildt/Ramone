@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Ramone.Utility.ObjectSerialization.Formaters;
 
 
 namespace Ramone.Utility.ObjectSerialization
@@ -14,6 +15,19 @@ namespace Ramone.Utility.ObjectSerialization
     public void AddFormater(Type t, IObjectSerializerFormater formater)
     {
       Formaters[t] = formater;
+    }
+
+
+    public void AddFormater<T>(IObjectSerializerFormater formater)
+    {
+      Formaters[typeof(T)] = formater;
+    }
+
+
+    public void AddFormater<T>(Func<T, string> formater)
+    {
+      DelegateFormater<T> df = new DelegateFormater<T>(formater);
+      Formaters[typeof(T)] = df;
     }
 
 

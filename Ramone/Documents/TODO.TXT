@@ -2,11 +2,6 @@
 Version 1
 ---------
 
-Formaters.AddFormater(typeof(SomeClass), new SomeClassFormater());
-=> Formaters.AddFormater<SomeClass>(new SomeClassFormater());
-=> Formaters.AddFormater<SomeClass>(c => c.ToString());
-
-OK: ObjectSerializerSettings på Service
 Serializer settings for OpenRasta
 
 RegisterStandardSerializationFormaters på config

@@ -134,6 +134,7 @@
     <Compile Include="Utility\FormUrlEncodingPropertyVisitor.cs" />
     <Compile Include="Utility\FormUrlEncodingSerializer.cs" />
     <Compile Include="Utility\MultipartFormDataSerializer.cs" />
+    <Compile Include="Utility\ObjectSerialization\Formaters\DelegateFormater.cs" />
     <Compile Include="Utility\ObjectSerialization\Formaters\FormaterBase.cs" />
     <Compile Include="Utility\ObjectSerialization\Formaters\UriFormater.cs" />
     <Compile Include="Utility\ObjectSerialization\IObjectSerializerFormater.cs" />
