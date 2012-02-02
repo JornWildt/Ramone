@@ -2,12 +2,6 @@
 Version 1
 ---------
 
-Default configs for
-- RamoneConfiguration.AuthorizationDispatcher;
-- RamoneConfiguration.RequestInterceptors;
-
-Serializer settings for OpenRasta
-
 Rename
 - RamoneRequest/RamoneResponse => Request/Response
 
@@ -89,6 +83,8 @@ Docs
   - Antager ikke at man KUN kan lave 1-1 serialisering med XML/JSON, men anvender derimod codecs.
   - Kun at arbejde med get/post etc. Ingen support for navngivne metoder som f.eks. "GetOrders".
 - Response.Created() laver evt. GET på location
+
+Serializer settings for OpenRasta
 
 
 ---------
