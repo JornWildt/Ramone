@@ -64,7 +64,7 @@ namespace Ramone.Tests
 
     static TestHelper()
     {
-      TestService = RamoneConfiguration.NewService(BaseUrl).WithStandardCodecs();
+      TestService = RamoneConfiguration.NewService(BaseUrl);
     }
 
 
@@ -107,6 +107,7 @@ namespace Ramone.Tests
     /// </summary>
     protected virtual void SetUp()
     {
+      RamoneConfiguration.Reset();
       // Create a new session for each test
       Session = TestService.NewSession();
     }

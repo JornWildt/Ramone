@@ -31,7 +31,6 @@ namespace Ramone.Implementation
 
     public RamoneService(Uri baseUri)
     {
-      UserAgent = "Ramone/1.0";
       BaseUri = baseUri;
       CodecManager = new CodecManager();
       AuthorizationDispatcher = new AuthorizationDispatcher();

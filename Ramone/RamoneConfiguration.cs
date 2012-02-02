@@ -19,16 +19,37 @@ namespace Ramone
 {
   public static class RamoneConfiguration
   {
-    public static IRamoneService NewService(Uri baseUrl)
+    public static bool UseStandardCodecs { get; set; }
+
+    public static string UserAgent { get; set; }
+
+    public static ObjectSerializerSettings SerializerSettings { get; set; }
+
+
+    static RamoneConfiguration()
     {
-      return new RamoneService(baseUrl);
+      Reset();
     }
 
 
-    public static IRamoneService WithStandardCodecs(this IRamoneService settings)
+    public static void Reset()
     {
-      RegisterStandardCodecs(settings.CodecManager);
-      return settings;
+      UseStandardCodecs = true;
+      UserAgent = "Ramone/1.0";
+      SerializerSettings = new ObjectSerializerSettings();
+    }
+
+    
+    public static IRamoneService NewService(Uri baseUrl)
+    {
+      IRamoneService service = new RamoneService(baseUrl)
+      {
+        UserAgent = UserAgent,
+        SerializerSettings = new ObjectSerializerSettings(SerializerSettings)
+      };
+      if (UseStandardCodecs)
+        RamoneConfiguration.RegisterStandardCodecs(service.CodecManager);
+      return service;
     }
 
 
