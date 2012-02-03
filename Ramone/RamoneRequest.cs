@@ -132,7 +132,7 @@ namespace Ramone
     #endregion
 
 
-    #region Operations
+    #region Standard methods
 
     public RamoneResponse<TResponse> Get<TResponse>(string accept = null) where TResponse : class
     {
@@ -191,6 +191,40 @@ namespace Ramone
       if (accept != null)
         Accept(accept);
       return Request("DELETE");
+    }
+
+    #endregion
+
+
+    #region Generic methods
+
+    public RamoneResponse<TResponse> Execute<TResponse>(string method, string accept = null) where TResponse : class
+    {
+      if (accept != null)
+        Accept(accept);
+      return Request<TResponse>(method);
+    }
+
+
+    public RamoneResponse Execute(string method, string accept = null)
+    {
+      if (accept != null)
+        Accept(accept);
+      return Request(method);
+    }
+
+
+    public RamoneResponse<TResponse> Execute<TResponse>(string method, object body) where TResponse : class
+    {
+      SetBody(body);
+      return Request<TResponse>(method);
+    }
+
+
+    public RamoneResponse Execute(string method, object body)
+    {
+      SetBody(body);
+      return Request(method);
     }
 
     #endregion
@@ -336,11 +370,11 @@ namespace Ramone
     }
 
 
-    #region Operations
+    #region Standard methods
 
-    public RamoneResponse<TResponse> Get()
+    public new RamoneResponse<TResponse> Get(string accept = null)
     {
-      return Get<TResponse>();
+      return Get<TResponse>(accept);
     }
 
 
@@ -359,6 +393,22 @@ namespace Ramone
     public RamoneResponse<TResponse> Delete()
     {
       return Delete<TResponse>();
+    }
+
+    #endregion
+
+
+    #region Generic methods
+
+    public new RamoneResponse<TResponse> Execute(string method, string accept = null)
+    {
+      return Execute<TResponse>(method, accept);
+    }
+
+
+    public new RamoneResponse<TResponse> Execute(string method, object body)
+    {
+      return Execute<TResponse>(method, body);
     }
 
     #endregion

@@ -79,6 +79,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GenericMethodTests.cs" />
     <Compile Include="HyperMedia\LinkTests.cs" />
     <Compile Include="MediaTypes\Atom\AtomTests.cs" />
     <Compile Include="AuthenticationHandlerTests.cs" />
