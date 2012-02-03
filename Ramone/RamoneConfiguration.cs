@@ -53,6 +53,21 @@ namespace Ramone
     }
 
 
+    /// <summary>
+    /// Create a new session with implicit service.
+    /// </summary>
+    /// <remarks>This will create a new session just as if it was created normally from a service. The only difference is
+    /// that a new implicit service is create automatically on each call to NewSession(). This method is primarily for "getting
+    /// started" scenarios. Any serious usage of Ramone should create and configure a specific service.</remarks>
+    /// <param name="baseUrl">Base URL for implicit service.</param>
+    /// <returns>A new session.</returns>
+    public static IRamoneSession NewSession(Uri baseUrl)
+    {
+      IRamoneService service = NewService(baseUrl);
+      return service.NewSession();
+    }
+
+
     public static void RegisterStandardCodecs(ICodecManager cm)
     {
       // XML
