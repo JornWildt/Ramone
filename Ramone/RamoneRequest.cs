@@ -352,7 +352,7 @@ namespace Ramone
               return Request(method, retryLevel+1);
             }
             else
-              throw new RamoneNotAuthorizedException(response, ex);
+              throw new NotAuthorizedException(response, ex);
           }
           else
             throw;
@@ -378,7 +378,7 @@ namespace Ramone
           return;
       }
 
-      throw new RamoneNotAuthorizedException(response, ex);
+      throw new NotAuthorizedException(response, ex);
     }
   }
 

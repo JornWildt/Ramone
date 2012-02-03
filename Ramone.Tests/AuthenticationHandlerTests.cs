@@ -20,7 +20,7 @@ namespace Ramone.Tests
     [Test]
     public void WhenNoAuthorizationCodeIsSendItAsksForAuthorization()
     {
-      AssertThrows<RamoneNotAuthorizedException>(() => Session.Request(BasicAuthUrl).Get<string>());
+      AssertThrows<NotAuthorizedException>(() => Session.Request(BasicAuthUrl).Get<string>());
       // Will get called twice since it does not try to fix the access problem
       Assert.AreEqual(2, CountingAuthorizationHandler.Count);
     }

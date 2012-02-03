@@ -24,7 +24,7 @@ namespace Ramone.Tests
     public void WhenAskedForAuthorizationAndAnsweredItGetsAccess()
     {
       // Throws first time
-      AssertThrows<RamoneNotAuthorizedException>(() => Session.Request(BasicAuthUrl).Get<string>());
+      AssertThrows<NotAuthorizedException>(() => Session.Request(BasicAuthUrl).Get<string>());
 
       // Then we assign a authorization handler - and now we gain access
       Session.AuthorizationDispatcher.Add("basic", new BasicAuthorizationHandler());

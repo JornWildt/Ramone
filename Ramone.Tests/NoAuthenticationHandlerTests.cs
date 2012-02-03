@@ -9,7 +9,7 @@ namespace Ramone.Tests
     [Test]
     public void WhenNoAuthorizationCodeIsSendItThrowsRamoneNotAuthorizedException()
     {
-      AssertThrows<RamoneNotAuthorizedException>(() => Session.Request(BasicAuthUrl).Get<string>());
+      AssertThrows<NotAuthorizedException>(() => Session.Request(BasicAuthUrl).Get<string>());
     }
   }
 }

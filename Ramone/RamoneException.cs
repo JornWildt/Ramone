@@ -23,18 +23,18 @@ namespace Ramone
   }
 
 
-  public class RamoneNotAuthorizedException : RamoneException
+  public class NotAuthorizedException : RamoneException
   {
-    public RamoneNotAuthorizedException(HttpWebResponse response, WebException ex)
+    public NotAuthorizedException(HttpWebResponse response, WebException ex)
       : base(response, ex)
     {
     }
   }
 
 
-  public class RamoneNotCreatedException : RamoneException
+  public class NotCreatedException : RamoneException
   {
-    public RamoneNotCreatedException(HttpWebResponse response, WebException ex)
+    public NotCreatedException(HttpWebResponse response, WebException ex)
       : base(response, ex)
     {
     }
