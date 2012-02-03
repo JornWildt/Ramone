@@ -21,6 +21,31 @@ namespace Ramone.Tests
 
 
     [Test]
+    public void CanAddAuthorizerToSession()
+    {
+      Session.BasicAuthentication("John", "magic");
+      string result = Session.Request(BasicAuthUrl).Get<string>().Body;
+      Assert.IsNotNull(result);
+    }
+
+
+    [Test]
+    public void CanAddAuthorizerToService()
+    {
+      // Arrange
+      IRamoneService service = RamoneConfiguration.NewService(BaseUrl);
+
+      // Act
+      service.BasicAuthentication("John", "magic");
+      IRamoneSession session = service.NewSession();
+      RamoneResponse response = session.Request(BasicAuthUrl).Get();
+
+      // Assert
+      Assert.IsNotNull(response);
+    }
+
+
+    [Test]
     public void WhenAskedForAuthorizationAndAnsweredItGetsAccess()
     {
       // Throws first time

@@ -81,11 +81,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AuthorizationExtensions.cs" />
     <Compile Include="HyperMedia\HyperMediaExtensions.cs" />
     <Compile Include="HyperMedia\HyperMediaNamespaces.cs" />
     <Compile Include="HyperMedia\ILink.cs" />
     <Compile Include="HyperMedia\Atom\AtomLink.cs" />
     <Compile Include="HyperMedia\Atom\AtomLinkList.cs" />
+    <Compile Include="IHaveRequestInterceptors.cs" />
     <Compile Include="IO\File.cs" />
     <Compile Include="IO\IFile.cs" />
     <Compile Include="AuthorizationInterceptors\BasicAuthorizationInterceptor.cs" />
