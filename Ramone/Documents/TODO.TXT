@@ -2,6 +2,13 @@
 Version 1
 ---------
 
+Serialization
+- Guid
+
+Deserialization of dates
+- JSON
+- XML
+
 Authorization as first-class citizens
 - Session.BasicAuthorization(uname,pwd) - a short cut for the request interceptor
 - Key off IHaveInterceptors (som kommer på session, settings og service)
@@ -9,8 +16,14 @@ Authorization as first-class citizens
 - Check hvordan andre som f.eks. Hammock har gjort det.
   RestSharp:
     client.Authenticator = OAuth1Authenticator.ForRequestToken(consumerKey, consumerSecret);
+    // implements IAuthenticator
 - Standard implementations for OK:Basic, Digest, OAuth, NTLM and more
   - SimpleAuth (som sætter URL parametre ind https://github.com/restsharp/RestSharp/wiki/Authenticators)
+      var client = new RestClient("http://example.com");
+      client.Authenticator = new SimpleAuthenticator("username", "foo", "password", "bar");
+      var request = new RestRequest("resource", Method.GET);
+      client.Execute(request);
+      The URL generated for this request would be http://example.com/resource?username=foo&password=bar
 - Folk vil blive forvirret af "AuthenticationHandlers" (som jo altså ikke authentikerer ...)
 
 Ramone.HyperMedia
@@ -58,7 +71,17 @@ Before releasing:
 - Version numbers
 - Komplet README (med korrekt casing)
   - Installation
-- Demo Facebook Graph, NerdDinner, twitter, flickr etc. API 
+- Demo 
+  - Github
+  - Dropbox
+  - ITunes search
+  - del.icio.us
+  - YouTube
+  - Google weather
+  - Facebook Graph
+  - NerdDinner
+  - Twitter
+  - Flickr
 
 Docs
 - Ramone 
