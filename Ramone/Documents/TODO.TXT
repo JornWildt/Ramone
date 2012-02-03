@@ -2,10 +2,6 @@
 Version 1
 ---------
 
-- Support 
-    OK:GET, OK:POST, OK:PUT, OK:DELETE, 
-    HEAD, OPTIONS, PATCH
-
 Authorization as first-class citizens
 - Session.BasicAuthorization(uname,pwd) - a short cut for the request interceptor
 - Key off IHaveInterceptors (som kommer på session, settings og service)

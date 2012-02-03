@@ -193,6 +193,28 @@ namespace Ramone
       return Request("DELETE");
     }
 
+
+    public RamoneResponse Head()
+    {
+      return Request("HEAD");
+    }
+
+
+    public RamoneResponse<TResponse> Options<TResponse>(string accept = null) where TResponse : class
+    {
+      if (accept != null)
+        Accept(accept);
+      return Request<TResponse>("OPTIONS");
+    }
+
+
+    public RamoneResponse Options(string accept = null)
+    {
+      if (accept != null)
+        Accept(accept);
+      return Request("OPTIONS");
+    }
+
     #endregion
 
 
@@ -393,6 +415,12 @@ namespace Ramone
     public RamoneResponse<TResponse> Delete()
     {
       return Delete<TResponse>();
+    }
+
+
+    public new RamoneResponse<TResponse> Options(string accept = null)
+    {
+      return Options<TResponse>(accept);
     }
 
     #endregion

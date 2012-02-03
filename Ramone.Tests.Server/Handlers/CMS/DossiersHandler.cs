@@ -1,6 +1,7 @@
 ﻿using OpenRasta.Web;
 using Ramone.HyperMedia.Atom;
 using Ramone.Tests.Common.CMS;
+using System.Web;
 
 
 namespace Ramone.Tests.Server.Handlers.CMS
@@ -57,5 +58,20 @@ namespace Ramone.Tests.Server.Handlers.CMS
     {
       return new OperationResult.OK("Deleted, yup!");
     }
+
+
+    public object Head(long id)
+    {
+      HttpContext.Current.Response.Headers["X-ExtraHeader"] = "1";
+      return null;
+    }
+
+
+    public object Options(long id)
+    {
+      HttpContext.Current.Response.Headers["X-ExtraHeader"] = "2";
+
+      return "Yes";
+   }
   }
 }
