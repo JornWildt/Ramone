@@ -153,6 +153,19 @@ namespace Ramone.Tests
     }
 
 
+    [Test]
+    public void CanSkipUseOfService()
+    {
+      // Act
+      IRamoneSession session = RamoneConfiguration.NewSession(BaseUrl);
+
+      // Assert
+      Assert.IsNotNull(session.Service);
+      Assert.IsNotNull(session.Service.BaseUri);
+      Assert.AreEqual(BaseUrl, BaseUrl.AbsoluteUri);
+    }
+
+
     class DummyHandler1 : IAuthorizationHandler
     {
       public bool HandleAuthorizationRequest(AuthorizationContext context)

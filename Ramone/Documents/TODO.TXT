@@ -2,12 +2,20 @@
 Version 1
 ---------
 
+RamoneConfiguration
+- Deafult content type (per session, service and static)
+  - For those json/json APIs
+
+
 Serialization
 - Guid
 
 Deserialization of dates
 - JSON
 - XML
+
+UrlEncoded serialisering direkte til URL (når man ikke anvender URL templates)
+- Request r = Session.Request("http://xxx.yy", new { a= 1 }) => "http://xxx.yy?a=1"
 
 Authorization as first-class citizens
 - Folk vil blive forvirret af "AuthenticationHandlers" (som jo altså ikke authentikerer ...)
@@ -37,17 +45,6 @@ Ramone.HyperMedia
 - Make it possible to Follow() relative links.
 
 Test scenarie hvor der returneres "NoContent" og man forsøger at hente content (skal give null)
-
-Nye Request metoder uden session (som så dannes automatisk). Gør det nemt at komme igang.
-- Giver det mening? Så har man ikke nogen settings med codecs.
-- Kan evt. gøres lidt mere direkte med RamoneConfiguration.NewSession()
-  - Især hvis RamoneConfiguration får statiske metoder mm. som nedenfor
-
-RamoneConfiguration
-- Statiske udgaver af UserAgent, Interceptors etc. som så kopieres til service/client og igen til session
-- Deafult content type (per session, service and static)
-  - For those json/json APIs
-
 
 - Demo how HTML + forms + url-encoded data can be auto-generated (a'la Eric)
   - Still missing a generic domain data embedding in HTML
