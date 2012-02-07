@@ -42,6 +42,10 @@
     <NoWarn>1591</NoWarn>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="JsonFx, Version=2.0.1106.2515, Culture=neutral, PublicKeyToken=315052dd637f8a52, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Libraries\JsonFx.dll</HintPath>
+    </Reference>
     <Reference Include="OpenRasta, Version=2.0.3211.429, Culture=neutral, PublicKeyToken=e04bf464d7caae73, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>OpenRasta\OpenRasta.dll</HintPath>
@@ -100,6 +104,7 @@
     <Compile Include="Codecs\AtomFeedCodec.cs" />
     <Compile Include="Codecs\AtomItemCodec.cs" />
     <Compile Include="Codecs\CatAsHtmlCodec.cs" />
+    <Compile Include="Codecs\CatAsJsonCodec.cs" />
     <Compile Include="Codecs\CatAsTextCodec.cs" />
     <Compile Include="Codecs\CatAsXmlCodec.cs" />
     <Compile Include="Codecs\CMS\DossierDocumentsCodec.cs" />
@@ -110,6 +115,7 @@
     <Compile Include="Codecs\Dog2AsXmlCodec.cs" />
     <Compile Include="Codecs\EncodingCodec.cs" />
     <Compile Include="Codecs\HeaderEchoCodec.cs" />
+    <Compile Include="Codecs\JsonSerializerCodec.cs" />
     <Compile Include="Codecs\XmlCodecBase.cs" />
     <Compile Include="Codecs\XmlEchoCodec.cs" />
     <Compile Include="Codecs\XmlSerializerCodec.cs" />

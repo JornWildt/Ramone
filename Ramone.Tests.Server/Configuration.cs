@@ -51,7 +51,7 @@ namespace Ramone.Tests.Server
             .TranscodedBy<CatAsTextCodec>()
             .And.TranscodedBy<CatAsHtmlCodec>()
             .And.TranscodedBy<CatAsXmlCodec>()
-            .And.TranscodedBy<JsonDataContractCodec>();
+            .And.TranscodedBy<CatAsJsonCodec>();
 
         ResourceSpace.Has.ResourcesOfType<Dog2>()
             .AtUri(Constants.DogPath)

@@ -2,6 +2,7 @@
 using Ramone.MediaTypes.Json;
 using Ramone.Tests.Common;
 using Ramone.Tests.Common.CMS;
+using System;
 
 
 namespace Ramone.Tests.MediaTypes.Json
@@ -55,15 +56,16 @@ namespace Ramone.Tests.MediaTypes.Json
     public void CanPostJson()
     {
       // Arrange
-      Cat cat = new Cat { Name = "Prince" };
+      Cat cat = new Cat { Name = "Prince", DateOfBirth = DateTime.Now.Date };
       RamoneRequest request = Session.Bind(CatsTemplate);
 
       // Act
-      Cat createdCat = request.ContentType("application/json").Post<Cat>(cat).Created();
+      Cat createdCat = request.Accept("application/json").ContentType("application/json").Post<Cat>(cat).Created();
 
       // Assert
       Assert.IsNotNull(createdCat);
       Assert.AreEqual("Prince", createdCat.Name);
+      Assert.AreEqual(cat.DateOfBirth, createdCat.DateOfBirth);
     }
 
 

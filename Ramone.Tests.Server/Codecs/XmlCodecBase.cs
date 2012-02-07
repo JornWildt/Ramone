@@ -19,6 +19,7 @@ namespace Ramone.Tests.Server.Codecs
       set { }
     }
 
+
     public void WriteTo(object entity, IHttpEntity response, string[] codecParameters)
     {
       var item = entity as TEntity;
