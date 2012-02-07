@@ -13,6 +13,10 @@ namespace Ramone
 
     Uri BaseUri { get; }
 
+    string DefaultRequestMediaType { get; set; }
+
+    string DefaultResponseMediaType { get; set; }
+
     IAuthorizationDispatcher AuthorizationDispatcher { get; }
 
     ObjectSerializerSettings SerializerSettings { get; set; }

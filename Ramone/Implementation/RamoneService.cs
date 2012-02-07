@@ -13,6 +13,10 @@ namespace Ramone.Implementation
 
     public Uri BaseUri { get; protected set; }
 
+    public string DefaultRequestMediaType { get; set; }
+
+    public string DefaultResponseMediaType { get; set; }
+
     public ICodecManager CodecManager { get; protected set; }
 
     public IAuthorizationDispatcher AuthorizationDispatcher { get; protected set; }
@@ -20,6 +24,7 @@ namespace Ramone.Implementation
     public IRequestInterceptorSet RequestInterceptors { get; protected set; }
 
     public ObjectSerializerSettings SerializerSettings { get; set; }
+
 
     public IRamoneSession NewSession()
     {

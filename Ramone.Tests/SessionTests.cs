@@ -20,12 +20,16 @@ namespace Ramone.Tests
       // Arrange
       IRamoneService service = RamoneConfiguration.NewService(BaseUrl);
       service.UserAgent = "Dummy";
+      service.DefaultRequestMediaType = "X";
+      service.DefaultResponseMediaType = "Y";
 
       // Act
       IRamoneSession session = service.NewSession();
 
       // Assert
       Assert.AreEqual("Dummy", session.UserAgent);
+      Assert.AreEqual("X", session.DefaultRequestMediaType);
+      Assert.AreEqual("Y", session.DefaultResponseMediaType);
       Assert.AreEqual(BaseUrl, session.BaseUri);
     }
 

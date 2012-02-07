@@ -14,6 +14,10 @@ namespace Ramone
     string UserAgent { get; set; }
 
     Uri BaseUri { get; }
+
+    string DefaultRequestMediaType { get; set; }
+
+    string DefaultResponseMediaType { get; set; }
     
     IAuthorizationDispatcher AuthorizationDispatcher { get; }
 

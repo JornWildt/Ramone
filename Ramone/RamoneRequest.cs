@@ -116,6 +116,9 @@ namespace Ramone
     protected void SetBody(object body)
     {
       ICodecManager codecManager = Session.Service.CodecManager;
+      if (BodyContentType == null)
+        BodyContentType = Session.DefaultRequestMediaType;
+      string contentType = BodyContentType ?? Session.DefaultRequestMediaType;
       MediaTypeWriterRegistration writer = BodyContentType == null 
                                            ? codecManager.GetWriter(body.GetType())
                                            : codecManager.GetWriter(body.GetType(), BodyContentType);
@@ -256,6 +259,9 @@ namespace Ramone
     {
       if (!string.IsNullOrEmpty(AcceptHeader))
         return AcceptHeader;
+      if (Session.DefaultResponseMediaType != null)
+        return Session.DefaultResponseMediaType;
+
       if (t == null)
         return null;
 

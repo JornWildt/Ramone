@@ -15,6 +15,10 @@ namespace Ramone.Implementation
     
     public Uri BaseUri { get; protected set; }
 
+    public string DefaultRequestMediaType { get; set; }
+
+    public string DefaultResponseMediaType { get; set; }
+
     public CookieContainer Cookies { get; protected set; }
 
     public IAuthorizationDispatcher AuthorizationDispatcher { get; protected set; }
@@ -31,6 +35,8 @@ namespace Ramone.Implementation
       Service = service;
       UserAgent = service.UserAgent;
       BaseUri = Service.BaseUri;
+      DefaultRequestMediaType = service.DefaultRequestMediaType;
+      DefaultResponseMediaType = service.DefaultResponseMediaType;
       Cookies = new CookieContainer();
       AuthorizationDispatcher = service.AuthorizationDispatcher.Clone();
       RequestInterceptors = service.RequestInterceptors.Clone();
