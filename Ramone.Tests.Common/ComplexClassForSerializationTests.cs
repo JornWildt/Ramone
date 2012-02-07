@@ -38,5 +38,6 @@ namespace Ramone.Tests.Common
     public Dictionary<string, string> Dict { get; set; }
     public DateTime Date { get; set; }
     public double Dou { get; set; }
+    public Guid GID { get; set; }
   }
 }

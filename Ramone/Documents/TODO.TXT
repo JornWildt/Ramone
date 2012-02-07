@@ -2,14 +2,6 @@
 Version 1
 ---------
 
-RamoneConfiguration
-- Deafult content type (per session, service and static)
-  - For those json/json APIs
-
-
-Serialization
-- Guid
-
 Deserialization of dates
 - JSON
 - XML

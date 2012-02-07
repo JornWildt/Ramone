@@ -32,6 +32,24 @@ namespace Ramone.Tests.Utility
 
 
     [Test]
+    public void CanSerializeGuid()
+    {
+      // Arrange
+      Guid g = Guid.NewGuid();
+      object o = new
+      {
+        A = g
+      };
+
+      // Act
+      string result = Serialize(o);
+
+      // Assert
+      Assert.AreEqual("|A="+g.ToString(), result);
+    }
+
+
+    [Test]
     public void CanSerializeClassWithDictionary()
     {
       // Arrange
