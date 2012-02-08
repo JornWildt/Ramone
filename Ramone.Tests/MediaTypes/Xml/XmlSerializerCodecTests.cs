@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using System;
+using NUnit.Framework;
 using Ramone.Tests.Common;
 
 
@@ -40,6 +41,19 @@ namespace Ramone.Tests.MediaTypes.Xml
       RamoneResponse<RegisteredClass> response = request.Post<RegisteredClass>(data);
 
       Assert.AreEqual(data.Title, response.Body.Title);
+    }
+
+
+    [Test]
+    public void CanReadWriteDates()
+    {
+      RegisteredClass data = new RegisteredClass { Title = "The World", Date = DateTime.Now };
+      RamoneRequest request = Session.Bind(XmlEchoTemplate);
+
+      RamoneResponse<RegisteredClass> response = request.Post<RegisteredClass>(data);
+
+      Assert.AreEqual(data.Title, response.Body.Title);
+      Assert.AreEqual(data.Date, response.Body.Date);
     }
 
 

@@ -2,10 +2,6 @@
 Version 1
 ---------
 
-Deserialization of dates
-- JSON
-- XML
-
 UrlEncoded serialisering direkte til URL (når man ikke anvender URL templates)
 - Request r = Session.Request("http://xxx.yy", new { a= 1 }) => "http://xxx.yy?a=1"
 

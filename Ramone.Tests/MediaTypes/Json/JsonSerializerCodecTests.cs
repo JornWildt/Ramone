@@ -56,7 +56,7 @@ namespace Ramone.Tests.MediaTypes.Json
     public void CanPostJson()
     {
       // Arrange
-      Cat cat = new Cat { Name = "Prince", DateOfBirth = DateTime.Now };
+      Cat cat = new Cat { Name = "Prince", DateOfBirth = DateTime.Now.ToUniversalTime() };
       RamoneRequest request = Session.Bind(CatsTemplate);
 
       // Act
