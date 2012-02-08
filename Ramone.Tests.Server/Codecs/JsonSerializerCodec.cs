@@ -2,6 +2,7 @@
 using System.IO;
 using JsonFx.Json;
 using OpenRasta.Web;
+using JsonFx.Serialization;
 
 
 namespace Ramone.Tests.Server.Codecs
