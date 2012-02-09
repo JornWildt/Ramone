@@ -10,6 +10,7 @@ namespace Ramone.MediaTypes.Json
     protected override object ReadFrom(TextReader reader, ReaderContext context)
     {
       JsonReader jsr = new JsonReader();
+      //string text = reader.ReadToEnd();
       return jsr.Read(reader, context.DataType);
     }
 

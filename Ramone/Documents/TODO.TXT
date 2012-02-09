@@ -2,9 +2,6 @@
 Version 1
 ---------
 
-UrlEncoded serialisering direkte til URL (når man ikke anvender URL templates)
-- Request r = Session.Request("http://xxx.yy", new { a= 1 }) => "http://xxx.yy?a=1"
-
 Authorization as first-class citizens
 - Folk vil blive forvirret af "AuthenticationHandlers" (som jo altså ikke authentikerer ...)
 - Standard implementations for OK:Basic, Digest, OAuth, NTLM and more
@@ -63,6 +60,7 @@ Before releasing:
 
 Docs
 - Ramone 
+  - Focus on RESTful patterns
   - Er godt for object serialization (pas på med dette udsagn)
   - Samler en række forskellige media types på ét sted
 - Alle Get/Post etc. operationer er uden sideeffekter i RamoneRequest. 
@@ -74,6 +72,7 @@ Docs
   - Antager ikke at man KUN kan lave 1-1 serialisering med XML/JSON, men anvender derimod codecs.
   - Kun at arbejde med get/post etc. Ingen support for navngivne metoder som f.eks. "GetOrders".
 - Response.Created() laver evt. GET på location
+- How to debug using Fiddler and local machine name (not "localhost"!)
 
 Serializer settings for OpenRasta
 
@@ -134,8 +133,8 @@ Hardcoded test URL into config
 Version N
 ---------
 
-Possibility to log all operations
-- Configuration.Log(filename-pattern) => as an extension method on a smart interface
+UrlEncoded serialisering direkte til URL (når man ikke anvender URL templates)
+- Request r = Session.Request("http://xxx.yy", new { a= 1 }) => "http://xxx.yy?a=1"
 
 Kan der være en fordel i at lave en Multipart/form-data og url-encoded "formatter" 
 - Noget a'la en stream hvor man kan lave formatter.WriteParameter(key, value)
