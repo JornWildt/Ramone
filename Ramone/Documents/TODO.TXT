@@ -1,6 +1,9 @@
 ﻿---------
 Version 1
 ---------
+Undgå authorization exception - så kan man ikke aflæse body som normalt.
+
+Post(null) bør være  muligt
 
 Authorization as first-class citizens
 - Folk vil blive forvirret af "AuthenticationHandlers" (som jo altså ikke authentikerer ...)
@@ -11,6 +14,8 @@ Authorization as first-class citizens
       var request = new RestRequest("resource", Method.GET);
       client.Execute(request);
       The URL generated for this request would be http://example.com/resource?username=foo&password=bar
+
+Interceptors med "Context" argument (og ikke kun httprequest)
 
 Ramone.HyperMedia
 - OK: Link selector med media-type
@@ -48,6 +53,7 @@ Before releasing:
   - Installation
 - Demo 
   - Github
+  - Ohloh
   - Dropbox
   - ITunes search
   - del.icio.us
