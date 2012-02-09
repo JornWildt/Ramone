@@ -82,7 +82,7 @@ namespace TwitterDemo
 
     static void UpdateUserName()
     {
-      RamoneRequest request = Session.Bind(TwitterApi.UpdateProfileTemplate, new { name = "Peter-Pedal-2" });
+      RamoneRequest request = Session.Bind(TwitterApi.UpdateProfileTemplate, new { name = "Peter Pedal 2" });
       RamoneResponse response = request.Post(new { });
     }
 
@@ -113,8 +113,8 @@ namespace TwitterDemo
         string timestamp = o.GenerateTimeStamp();
         string nonce = o.GenerateNonce();
 
-        timestamp = "1328824349";
-        nonce = "c54be2858d15ba0e61f27353729e13d6";
+        //timestamp = "1328824349";
+        //nonce = "c54be2858d15ba0e61f27353729e13d6";
 
         string url;
         string requestParams;

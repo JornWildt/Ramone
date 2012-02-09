@@ -148,7 +148,7 @@ namespace Ramone.Utility
             if (s.IndexOf('=') > -1)
             {
               string[] temp = s.Split('=');
-              result.Add(new QueryParameter(temp[0], temp[1]));
+              result.Add(new QueryParameter(HttpUtility.UrlDecode(temp[0]), HttpUtility.UrlDecode(temp[1])));
             }
             else
             {
@@ -198,7 +198,8 @@ namespace Ramone.Utility
       for (int i = 0; i < parameters.Count; i++)
       {
         p = parameters[i];
-        sb.AppendFormat("{0}={1}", p.Name, p.Value);
+        //sb.AppendFormat("{0}={1}", p.Name, p.Value);
+        sb.AppendFormat("{0}={1}", UrlEncode(Encoding.ASCII.GetString(Encoding.UTF8.GetBytes(p.Name))), UrlEncode(Encoding.ASCII.GetString(Encoding.UTF8.GetBytes(p.Value))));
 
         if (i < parameters.Count - 1)
         {
