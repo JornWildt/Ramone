@@ -1,4 +1,7 @@
 ﻿using CuttingEdge.Conditions;
+using Ramone.OAuth.Parameters;
+
+
 namespace Ramone.OAuth
 {
   public static class OAuthExtensions
@@ -12,7 +15,7 @@ namespace Ramone.OAuth
     }
 
 
-    public static void OAuth1Token(this IRamoneSession session, string token, string token_secret)
+    public static void OAuth1Token(this IRamoneSession session, TokenResponse response)
     {
       //session.RequestInterceptors.Add("OAuth", new OAuthRequestInterceptor(consumer_key, consumer_secret, callback, access_token, access_token_secret));
     }

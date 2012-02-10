@@ -5,7 +5,10 @@ Version 1
 ObjectSerialiser, deserializing
 - Format specifiers for index operators
 
-FormUrlEncodingSerializer deserialize til dynamic
+FormUrlEncodingSerializer (plus json) deserialize til
+- static type
+- dynamic type / expando
+- namevalue coll.
 
 Logging af OAuth signature base mm. for debugging
 Learn how to override the oauth_timestamp and oauth_nonce values in your OAuth library. Use this capability to replay signature generation scenarios for comparative analysis.

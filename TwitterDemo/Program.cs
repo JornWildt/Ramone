@@ -49,18 +49,18 @@ namespace TwitterDemo
 
     static void AuthorizeTwitterAccess()
     {
-      Session.Service.CodecManager.AddCodec<TokenResponse>("text/html", new JsonSerializerCodec());
-      Session.Service.CodecManager.AddCodec<NameValueCollection>("text/html", new FormUrlEncodedSerializerCodec());
+      Session.Service.CodecManager.AddCodec<TokenResponse>("text/html", new FormUrlEncodedSerializerCodec());
 
       TwitterKeys keys = ReadKeys();
       Session.OAuth1Start(keys.consumer_key, keys.consumer_secret, "oob");//, keys.access_token, keys.access_token_secret);
 
-      var response = Session.Bind(TwitterApi.OAuthRequestTokenTemplate).Post<NameValueCollection>();
-      NameValueCollection oauthResponse = response.Body;
+      RamoneResponse<TokenResponse> response = Session.Bind(TwitterApi.OAuthRequestTokenTemplate).Accept<TokenResponse>("application/x-www-form-urlencoded").Post();
+      TokenResponse oauthResponse = response.Body;
 
       // FIXME: recognize <TokenResponse>
       //   Session.OAuth1Token(tokenResponse);
-      Session.OAuth1Token(oauthResponse["oauth_token"], oauthResponse["oauth_token_secret"]);
+      //Session.OAuth1Token(oauthResponse["oauth_token"], oauthResponse["oauth_token_secret"]);
+      Session.OAuth1Token(oauthResponse);
     }
 
 

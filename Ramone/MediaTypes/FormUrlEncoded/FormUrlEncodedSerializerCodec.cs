@@ -22,9 +22,8 @@ namespace Ramone.MediaTypes.FormUrlEncoded
 
     protected override object ReadFrom(TextReader reader, ReaderContext context)
     {
-      string data = reader.ReadToEnd();
-      NameValueCollection values = HttpUtility.ParseQueryString(data);
-      return values;
+      FormUrlEncodingSerializer Serializer = new FormUrlEncodingSerializer(context.DataType);
+      return Serializer.Deserialize(reader);
     }
 
 

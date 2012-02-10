@@ -446,9 +446,21 @@ namespace Ramone
     }
 
 
+    public new RamoneResponse<TResponse> Post()
+    {
+      return Post<TResponse>();
+    }
+
+
     public new RamoneResponse<TResponse> Put(object body)
     {
       return Put<TResponse>(body);
+    }
+
+
+    public new RamoneResponse<TResponse> Put()
+    {
+      return Put<TResponse>();
     }
 
 
