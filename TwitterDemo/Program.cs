@@ -4,6 +4,8 @@ using System.Net;
 using Ramone.Utility;
 using Ramone.OAuth;
 using System.IO;
+using Ramone.OAuth.Parameters;
+using Ramone.MediaTypes;
 
 
 namespace TwitterDemo
@@ -31,7 +33,7 @@ namespace TwitterDemo
     static void Setup()
     {
       // Create new session with implicit service
-      Session = RamoneConfiguration.NewSession(new Uri("https://api.twitter.com/1/"));
+      Session = RamoneConfiguration.NewSession(new Uri("https://api.twitter.com"));
 
       // Set default request/response media-type to JSON for Twitter.
       // This saves us the hassle of specifying codecs for all the Twitter resource types (Tweet, Timeline, User etc.)
@@ -44,8 +46,14 @@ namespace TwitterDemo
 
     static void AuthorizeTwitterAccess()
     {
+      Session.Service.CodecManager.AddCodec<string>("text/html", new StringCodec());
+
       TwitterKeys keys = ReadKeys();
-      Session.OAuth1Start(keys.consumer_key, keys.consumer_secret);
+      Session.OAuth1Start(keys.consumer_key, keys.consumer_secret, "oob");//, keys.access_token, keys.access_token_secret);
+
+      //TokenResponse oauthResponse = Session.Bind(TwitterApi.OAuthRequestTokenTemplate).Post<TokenResponse>(new { }).Body;
+      var response = Session.Bind(TwitterApi.OAuthRequestTokenTemplate).Post<string>(new { }).Body;
+      
     }
 
 
@@ -91,7 +99,7 @@ namespace TwitterDemo
 
     static void UpdateUserName()
     {
-      RamoneRequest request = Session.Bind(TwitterApi.UpdateProfileTemplate, new { name = "Peter Pedal 2" });
+      RamoneRequest request = Session.Bind(TwitterApi.UpdateProfileTemplate, new { name = "Jorn Wildt" });
       RamoneResponse response = request.Post(new { });
     }
 

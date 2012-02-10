@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Net;
-using System.IO;
+﻿using System.Net;
+
 
 namespace Ramone.OAuth
 {
@@ -13,11 +9,30 @@ namespace Ramone.OAuth
 
     protected string consumer_secret { get; set; }
 
+    protected string callback { get; set; }
 
-    public OAuthRequestInterceptor(string consumer_key, string consumer_secret)
+    protected string access_token { get; set; }
+
+    protected string access_token_secret { get; set; }
+
+
+    protected enum AuthorizationStateType { Started }
+
+    protected AuthorizationStateType AuthorizationState { get; set; }
+
+
+
+    public OAuthRequestInterceptor(string consumer_key, string consumer_secret, string callback = null, string access_token = null, string access_token_secret = null)
     {
       this.consumer_key = consumer_key;
       this.consumer_secret = consumer_secret;
+      
+      this.callback = callback;
+
+      this.access_token = access_token;
+      this.access_token_secret = access_token_secret;
+
+      AuthorizationState = AuthorizationStateType.Started;
     }
 
 
@@ -25,26 +40,13 @@ namespace Ramone.OAuth
 
     public void Intercept(HttpWebRequest request)
     {
-      string[] keys;
-      using (TextReader reader = new StreamReader("c:\\tmp\\twitterkeys.txt"))
-      {
-        string keystring = reader.ReadToEnd();
-        keys = keystring.Split('|');
-      }
-
       SignatureHelper o = new SignatureHelper();
-
-      string consumer_key = keys[0];
-      string consumer_secret = keys[1];
-
-      string access_token = keys[2];
-      string access_token_secret = keys[3];
 
       string timestamp = o.GenerateTimeStamp();
       string nonce = o.GenerateNonce();
 
-      //timestamp = "1328824349";
-      //nonce = "c54be2858d15ba0e61f27353729e13d6";
+      //timestamp = "1328856925";
+      //nonce = "adde2ef436c6430692b1cff5fc5205c1";
 
       string url;
       string requestParams;
@@ -52,24 +54,33 @@ namespace Ramone.OAuth
       string signature = o.GenerateSignature(request.RequestUri,
                                               consumer_key,
                                               consumer_secret,
+                                              callback,
                                               access_token,
                                               access_token_secret,
                                               request.Method,
                                               timestamp,
                                               nonce,
-                                              SignatureHelper.SignatureTypes.HMACSHA1,
+                                              SignatureHelper.SignatureTypes.HMACSHA1, // FIXME: constructor parameter
                                               out url,
                                               out requestParams);
 
-      string auth = string.Format(@"OAuth oauth_consumer_key=""{1}"", oauth_nonce=""{3}"", oauth_signature=""{6}"", oauth_signature_method=""{5}"", oauth_timestamp=""{4}"", oauth_token=""{2}"", oauth_version=""1.0""",
+      string auth = string.Format(@"OAuth 
+  oauth_consumer_key=""{0}"", 
+  oauth_token=""{1}"", 
+  oauth_nonce=""{2}"", 
+  oauth_timestamp=""{3}"", 
+  oauth_signature_method=""{4}"", 
+  oauth_signature=""{5}"", 
+  oauth_version=""1.0""",
+        consumer_key,
+        access_token,
+        nonce,
+        timestamp,
+        "HMAC-SHA1",
+        o.UrlEncode(signature));
 
-      url,
-      consumer_key,
-      access_token,
-      nonce,
-      timestamp,
-      "HMAC-SHA1",
-      o.UrlEncode(signature));
+      if (callback != null)
+        auth += string.Format(@", oauth_callback=""{0}""", callback);
 
       request.Headers["Authorization"] = auth;
     }

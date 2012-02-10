@@ -5,6 +5,8 @@ Undgå authorization exception - så kan man ikke aflæse body som normalt.
 
 Post(null) bør være  muligt
 
+ReaderCodec for text/html (xml mf.) + string
+
 Authorization as first-class citizens
 - Folk vil blive forvirret af "AuthenticationHandlers" (som jo altså ikke authentikerer ...)
 - Standard implementations for OK:Basic, Digest, OAuth, NTLM and more

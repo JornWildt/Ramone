@@ -100,11 +100,13 @@
     <Compile Include="MediaTypes\Json\JsonSerializerCodec.cs" />
     <Compile Include="MediaTypes\MultipartFormData\MultipartFormDataSerializerCodec.cs" />
     <Compile Include="MediaTypes\StreamCodec.cs" />
+    <Compile Include="MediaTypes\StringCodec.cs" />
     <Compile Include="MediaTypes\TextCodecBase.cs" />
     <Compile Include="MediaTypes\Xml\XmlDocumentCodec.cs" />
     <Compile Include="MediaTypes\Xml\XmlSerializerCodec.cs" />
     <Compile Include="OAuth\OAuthExtensions.cs" />
     <Compile Include="OAuth\OAuthRequestInterceptor.cs" />
+    <Compile Include="OAuth\Parameters\TokenResponse.cs" />
     <Compile Include="RamoneConfiguration.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="Html\HtmlAnchor.cs" />

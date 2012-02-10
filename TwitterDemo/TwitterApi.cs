@@ -1,16 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+
 
 namespace TwitterDemo
 {
   public class TwitterApi
   {
-    public const string UserTimeLinePath = "statuses/user_timeline.json?screen_name={screen_name}&count={count}";
-    public const string UpdateProfilePath = "account/update_profile.json?name={name}";
+    // OAuth
+    public static UriTemplate OAuthRequestTokenTemplate = new UriTemplate("oauth/request_token");
 
-    public static UriTemplate UserTimeLineTemplate = new UriTemplate(UserTimeLinePath);
-    public static UriTemplate UpdateProfileTemplate = new UriTemplate(UpdateProfilePath);
+    public static UriTemplate UserTimeLineTemplate = new UriTemplate("/1/statuses/user_timeline.json?screen_name={screen_name}&count={count}");
+    public static UriTemplate UpdateProfileTemplate = new UriTemplate("/1/account/update_profile.json?name={name}");
   }
 }
