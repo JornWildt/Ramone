@@ -68,5 +68,33 @@ namespace Ramone.Tests
       // Assert
       Assert.IsNotNull(newDossier);
     }
+
+
+    [Test]
+    public void CanPutEmptyBody_Typed()
+    {
+      // Arrange
+      RamoneRequest request = Session.Bind(AnyEchoTemplate);
+
+      // Act
+      RamoneResponse<string> response = request.Accept("text/plain").ContentType("application/x-www-url-formencoded").Put<string>();
+
+      // Assert
+      Assert.AreEqual(null, response.Body);
+    }
+
+
+    [Test]
+    public void CanPutEmptyBody_Untyped()
+    {
+      // Arrange
+      RamoneRequest request = Session.Bind(AnyEchoTemplate);
+
+      // Act
+      RamoneResponse response = request.Accept("text/plain").ContentType("application/x-www-url-formencoded").Put();
+
+      // Assert
+      Assert.AreEqual(null, response.Body);
+    }
   }
 }

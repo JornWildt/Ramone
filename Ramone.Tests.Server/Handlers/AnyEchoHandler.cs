@@ -17,5 +17,11 @@ namespace Ramone.Tests.Server.Handlers
     {
       return new Ramone.Tests.Server.Configuration.AnyEcho { S = s };
     }
+
+
+    public object Put()
+    {
+      return null;
+    }
   }
 }

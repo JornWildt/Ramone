@@ -178,6 +178,18 @@ namespace Ramone
     }
 
 
+    public RamoneResponse Post()
+    {
+      return Post(null);
+    }
+
+
+    public RamoneResponse<TResponse> Put<TResponse>() where TResponse : class
+    {
+      return Put<TResponse>(null);
+    }
+
+
     public RamoneResponse<TResponse> Put<TResponse>(object body) where TResponse : class
     {
       SetBody(body);
@@ -189,6 +201,12 @@ namespace Ramone
     {
       SetBody(body);
       return Request("PUT");
+    }
+
+
+    public RamoneResponse Put()
+    {
+      return Put(null);
     }
 
 

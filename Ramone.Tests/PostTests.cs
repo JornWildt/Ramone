@@ -69,13 +69,27 @@ namespace Ramone.Tests
 
 
     [Test]
-    public void CanPostEmptyBody()
+    public void CanPostEmptyBody_Typed()
     {
-      // Act
+      // Arrange
       RamoneRequest request = Session.Bind(AnyEchoTemplate);
 
+      // Act
       RamoneResponse<string> response = request.Accept("text/plain").ContentType("application/octet-stream").Post<string>();
       
+      // Assert
+      Assert.AreEqual(null, response.Body);
+    }
+
+
+    [Test]
+    public void CanPostEmptyBody_Untyped()
+    {
+      // Arrange
+      RamoneRequest request = Session.Bind(AnyEchoTemplate);
+
+      // Act
+      RamoneResponse response = request.Accept("text/plain").ContentType("application/octet-stream").Post();
 
       // Assert
       Assert.AreEqual(null, response.Body);
