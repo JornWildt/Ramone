@@ -103,6 +103,8 @@
     <Compile Include="MediaTypes\TextCodecBase.cs" />
     <Compile Include="MediaTypes\Xml\XmlDocumentCodec.cs" />
     <Compile Include="MediaTypes\Xml\XmlSerializerCodec.cs" />
+    <Compile Include="OAuth\OAuthExtensions.cs" />
+    <Compile Include="OAuth\OAuthRequestInterceptor.cs" />
     <Compile Include="RamoneConfiguration.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="Html\HtmlAnchor.cs" />
@@ -142,7 +144,7 @@
     <Compile Include="Utility\FormUrlEncodingPropertyVisitor.cs" />
     <Compile Include="Utility\FormUrlEncodingSerializer.cs" />
     <Compile Include="Utility\MultipartFormDataSerializer.cs" />
-    <Compile Include="Utility\OAuth.cs" />
+    <Compile Include="OAuth\SignatureHelper.cs" />
     <Compile Include="Utility\ObjectSerialization\Formaters\DelegateFormater.cs" />
     <Compile Include="Utility\ObjectSerialization\Formaters\FormaterBase.cs" />
     <Compile Include="Utility\ObjectSerialization\Formaters\UriFormater.cs" />

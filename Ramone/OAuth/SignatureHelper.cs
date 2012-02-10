@@ -1,15 +1,16 @@
 ﻿using System;
-using System.Security.Cryptography;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using System.Text;
 using System.Web;
 
-namespace Ramone.Utility
+
+namespace Ramone.OAuth
 {
   /// <summary>
   /// OAuth utility from http://code.google.com/p/oauth/
   /// </summary>
-  public class OAuthBase
+  public class SignatureHelper
   {
 
     /// <summary>
