@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Reflection;
+using System.Collections.Specialized;
 
 
 namespace Ramone.Utility.ObjectSerialization
@@ -33,6 +34,25 @@ namespace Ramone.Utility.ObjectSerialization
       visitor.End();
     }
 
+
+    public object Deserialize(NameValueCollection values)
+    {
+      object result = Activator.CreateInstance(DataType);
+      foreach (string key in values.AllKeys)
+      {
+        if (key != null)
+        {
+          string value = values[key];
+          IEnumerator propertyNames = key.Split('.').GetEnumerator();
+          propertyNames.MoveNext();
+          Evaluate(result, DataType, propertyNames, value);
+        }
+      }
+      return result;
+    }
+
+
+    #region Serialization internals
 
     protected void Serialize(object data, Type dataType, string prefix)
     {
@@ -116,5 +136,54 @@ namespace Ramone.Utility.ObjectSerialization
         Serialize(collection[i], collection[i] != null ? collection[i].GetType() : null, name);
       }
     }
+
+    #endregion
+
+
+    #region Deserialization internals
+
+    protected void Evaluate(object classValue, Type t, IEnumerator propertyNames, string value)
+    {
+      string propertyName = (string)propertyNames.Current;
+      PropertyInfo property = t.GetProperty(propertyName);
+
+      if (property != null)
+      {
+        object propertyValue = EvaluateProperty(classValue, property, value);
+        property.SetValue(classValue, propertyValue, new object[] { });
+
+        if (propertyNames.MoveNext())
+        {
+          Evaluate(propertyValue, property.PropertyType, propertyNames, value);
+        }
+      }
+    }
+
+
+    protected object EvaluateProperty(object classValue, PropertyInfo property, string value)
+    {
+      if (property.PropertyType == typeof(int))
+      {
+        int i;
+        int.TryParse(value, out i);
+        return i;
+      }
+      else if (property.PropertyType == typeof(string))
+        return value;
+      else
+      {
+        object propertyValue = property.GetValue(classValue, new object[] { });
+
+        if (propertyValue == null)
+        {
+          propertyValue = Activator.CreateInstance(property.PropertyType);
+        }
+
+        return propertyValue;
+      }
+    }
+
+
+    #endregion
   }
 }

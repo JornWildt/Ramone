@@ -1,6 +1,9 @@
 ﻿using System;
 using System.IO;
 using Ramone.Utility.ObjectSerialization;
+using System.Collections.Specialized;
+using System.Web;
+using CuttingEdge.Conditions;
 
 
 namespace Ramone.Utility
@@ -16,10 +19,22 @@ namespace Ramone.Utility
     }
 
 
-    public void Serialize(TextWriter w, object data, ObjectSerializerSettings settings = null)
+    public void Serialize(TextWriter writer, object data, ObjectSerializerSettings settings = null)
     {
-      FormUrlEncodingPropertyVisitor v = new FormUrlEncodingPropertyVisitor(w);
+      Condition.Requires(writer, "writer").IsNotNull();
+
+      FormUrlEncodingPropertyVisitor v = new FormUrlEncodingPropertyVisitor(writer);
       Serializer.Serialize(data, v, settings);
+    }
+
+
+    public object Deserialize(TextReader reader)
+    {
+      Condition.Requires(reader, "reader").IsNotNull();
+
+      string data = reader.ReadToEnd();
+      NameValueCollection values = HttpUtility.ParseQueryString(data);
+      return Serializer.Deserialize(values);
     }
   }
 }

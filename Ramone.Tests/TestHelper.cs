@@ -9,7 +9,7 @@ namespace Ramone.Tests
 {
   public class TestHelper
   {
-    protected static readonly Uri BaseUrl = new Uri("http://jw-pc261/ramone-testserver/");
+    protected static readonly Uri BaseUrl = new Uri("http://localhost/ramone-testserver/");
 
 
     protected static readonly UriTemplate DossierTemplate = new UriTemplate(CMSConstants.DossierPath);

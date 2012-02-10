@@ -78,7 +78,7 @@ namespace Ramone.Tests.Utility
       }
     }
 
-
+    
     public class SimpleData
     {
       public int MyInt { get; set; }

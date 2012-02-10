@@ -1,11 +1,11 @@
 ﻿---------
 Version 1
 ---------
-Undgå authorization exception - så kan man ikke aflæse body som normalt.
 
-Post(null) bør være  muligt
+ObjectSerialiser, deserializing
+- Format specifiers for index operators
 
-ReaderCodec for text/html (xml mf.) + string
+FormUrlEncodingSerializer deserialize til dynamic
 
 Logging af OAuth signature base mm. for debugging
 Learn how to override the oauth_timestamp and oauth_nonce values in your OAuth library. Use this capability to replay signature generation scenarios for comparative analysis.
@@ -26,7 +26,15 @@ Authorization as first-class citizens
       client.Execute(request);
       The URL generated for this request would be http://example.com/resource?username=foo&password=bar
 
+Serializer overloads that accepts streams and strings (not only readers)
+
 AsJson() osv. er ikke helt OK fordi det sjældet er begge veje der er det samme.
+
+Undgå authorization exception - så kan man ikke aflæse body som normalt.
+
+ReaderCodec for text/html (xml mf.) + string
+
+Can FormUrlEncodingSerializer (object serializeren) håndtere dynamics (Expando) og NameValueCollections?
 
 Interceptors med "Context" argument (og ikke kun httprequest)
 
@@ -49,6 +57,9 @@ Ramone.HyperMedia
 - OK: Follow(ILink), 
 - Follow(ILinkTemplate, params)
 - Make it possible to Follow() relative links.
+
+Bind en ”non-template” URL med vilkårlige params:
+  ”http://dr.dk” BIND { a = 1 & b = 2 } => ”http://dr.dk?a=1&b=2”
 
 De generiske readers kunne også returnere NameValueCollection. Bør måske kunne styres?
 
