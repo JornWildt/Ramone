@@ -53,7 +53,7 @@ namespace TwitterDemo
 
       //TokenResponse oauthResponse = Session.Bind(TwitterApi.OAuthRequestTokenTemplate).Post<TokenResponse>(new { }).Body;
       var response = Session.Bind(TwitterApi.OAuthRequestTokenTemplate).Post<string>(new { });
-      var oauthResponse = response.Body;      
+      var oauthResponse = response.Body;
     }
 
 

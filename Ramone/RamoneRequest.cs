@@ -119,16 +119,21 @@ namespace Ramone
       if (BodyContentType == null)
         BodyContentType = Session.DefaultRequestMediaType;
       string contentType = BodyContentType ?? Session.DefaultRequestMediaType;
-      MediaTypeWriterRegistration writer = BodyContentType == null 
-                                           ? codecManager.GetWriter(body.GetType())
-                                           : codecManager.GetWriter(body.GetType(), BodyContentType);
-      if (BodyContentType == null)
-        BodyContentType = writer.MediaType;
+      if (body != null)
+      {
+        MediaTypeWriterRegistration writer = BodyContentType == null
+                                             ? codecManager.GetWriter(body.GetType())
+                                             : codecManager.GetWriter(body.GetType(), BodyContentType);
+        if (BodyContentType == null)
+          BodyContentType = writer.MediaType;
+        BodyCodec = writer.Codec;
+      }
+
       if (BodyContentType == "multipart/form-data")
       {
         BodyBoundary = Guid.NewGuid().ToString();
       }
-      BodyCodec = writer.Codec;
+
       BodyData = body;
     }
 
@@ -150,6 +155,12 @@ namespace Ramone
       if (accept != null)
         Accept(accept);
       return Request("GET");
+    }
+
+
+    public RamoneResponse<TResponse> Post<TResponse>() where TResponse : class
+    {
+      return Post<TResponse>(null);
     }
 
 
@@ -323,22 +334,27 @@ namespace Ramone
           interceptor.Intercept(request);
         }
 
+        string charset = "";
+        if (BodyCharacterSet != null)
+          charset = "; charset=" + BodyCharacterSet;
+          
+        string boundary = "";
+        if (BodyBoundary != null && BodyCodec != null)
+        {
+          boundary = "; boundary=" + BodyBoundary;
+          BodyCodec.CodecArgument = BodyBoundary;
+        }
+
+        request.ContentType = BodyContentType + charset + boundary;
+
         if (BodyData != null)
         {
-          string charset = "";
-          if (BodyCharacterSet != null)
-            charset = "; charset=" + BodyCharacterSet;
-          
-          string boundary = "";
-          if (BodyBoundary != null)
-          {
-            boundary = "; boundary=" + BodyBoundary;
-            BodyCodec.CodecArgument = BodyBoundary;
-          }
-
-          request.ContentType = BodyContentType + charset + boundary;
           BodyCodec.WriteTo(new WriterContext(request.GetRequestStream(), BodyData, request, Session));
           request.GetRequestStream().Close();
+        }
+        else
+        {
+          request.ContentLength = 0;
         }
 
         HttpWebResponse response = (HttpWebResponse)request.GetResponse();

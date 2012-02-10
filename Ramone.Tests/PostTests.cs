@@ -66,5 +66,19 @@ namespace Ramone.Tests
       // Assert
       Assert.IsNotNull(newDossier);
     }
+
+
+    [Test]
+    public void CanPostEmptyBody()
+    {
+      // Act
+      RamoneRequest request = Session.Bind(AnyEchoTemplate);
+
+      RamoneResponse<string> response = request.Accept("text/plain").ContentType("application/octet-stream").Post<string>();
+      
+
+      // Assert
+      Assert.AreEqual(null, response.Body);
+    }
   }
 }
