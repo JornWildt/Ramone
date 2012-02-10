@@ -52,8 +52,8 @@ namespace TwitterDemo
       Session.OAuth1Start(keys.consumer_key, keys.consumer_secret, "oob");//, keys.access_token, keys.access_token_secret);
 
       //TokenResponse oauthResponse = Session.Bind(TwitterApi.OAuthRequestTokenTemplate).Post<TokenResponse>(new { }).Body;
-      var response = Session.Bind(TwitterApi.OAuthRequestTokenTemplate).Post<string>(new { }).Body;
-      
+      var response = Session.Bind(TwitterApi.OAuthRequestTokenTemplate).Post<string>(new { });
+      var oauthResponse = response.Body;      
     }
 
 

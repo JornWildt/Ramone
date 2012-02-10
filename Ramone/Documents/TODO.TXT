@@ -7,6 +7,14 @@ Post(null) bør være  muligt
 
 ReaderCodec for text/html (xml mf.) + string
 
+Logging af OAuth signature base mm. for debugging
+Learn how to override the oauth_timestamp and oauth_nonce values in your OAuth library. Use this capability to replay signature generation scenarios for comparative analysis.
+
+
+Twitter:
+- Ensure that your system's timestamp is in sync with Twitter's. We return the current time in the "Date" HTTP header with every request. If your request fails due to a timestamp mismatch, use this time to determine the delta between the system clock and our server clock and adjust your oauth_timestamps for subsequent requests accordingly.
+- Defaults media types virker ikke rigtigt
+
 Authorization as first-class citizens
 - Folk vil blive forvirret af "AuthenticationHandlers" (som jo altså ikke authentikerer ...)
 - Standard implementations for OK:Basic, Digest, OAuth, NTLM and more
