@@ -24,6 +24,7 @@ namespace Ramone.Tests.Server
 
     public class AnyEcho { public Stream S { get; set; } }
 
+
     public void Configure()
     {
       using (OpenRastaConfiguration.Manual)
@@ -77,6 +78,11 @@ namespace Ramone.Tests.Server
             .AtUri(Constants.MultipartFormDataPath).Named("SimpleData")
             .And.AtUri(Constants.MultipartFormDataFilePath).Named("FileData")
             .HandledBy<MultipartFormDataHandler>();
+
+        ResourceSpace.Has.ResourcesOfType<FormUrlEncodedData>()
+            .AtUri(Constants.FormUrlEncodedPath)
+            .HandledBy<FormUrlEncodedHandler>()
+            .TranscodedBy<FormUrlencodedCodec>();
 
         ResourceSpace.Has.ResourcesOfType<HeaderList>()
             .AtUri(Constants.HeaderEchoPath)

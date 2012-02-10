@@ -114,6 +114,7 @@
     <Compile Include="Codecs\AnyEchoCodec.cs" />
     <Compile Include="Codecs\Dog2AsXmlCodec.cs" />
     <Compile Include="Codecs\EncodingCodec.cs" />
+    <Compile Include="Codecs\FormUrlencodedCodec.cs" />
     <Compile Include="Codecs\HeaderEchoCodec.cs" />
     <Compile Include="Codecs\JsonSerializerCodec.cs" />
     <Compile Include="Codecs\XmlCodecBase.cs" />
@@ -138,6 +139,7 @@
     <Compile Include="Handlers\DogHandler.cs" />
     <Compile Include="Handlers\EncodingHandler.cs" />
     <Compile Include="Handlers\FileHandler.cs" />
+    <Compile Include="Handlers\FormUrlEncodedHandler.cs" />
     <Compile Include="Handlers\HeaderEchoHandler.cs" />
     <Compile Include="Handlers\MultipartFormDataHandler.cs" />
     <Compile Include="Handlers\PersonHandler.cs" />

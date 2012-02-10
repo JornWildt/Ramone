@@ -131,5 +131,35 @@ namespace Ramone.Tests.MediaTypes.FormUrlEncoded
       Console.WriteLine(response.Body);
       Assert.AreEqual("|X=15|Y=Abc|IntArray[0]=1|IntArray[1]=2|SubC.SubC.SubC=|SubC.SubC.Data[0]=Benny|SubC.Data[0]=Brian|Dict[abc]=123|Dict[qwe]=xyz|Date=2012-10-30T12:13:14|Dou=15.234|GID="+g.ToString(), response.Body);
     }
+
+
+    [Test]
+    public void CanReadUntyped()
+    {
+      // Arrange
+      RamoneRequest request = Session.Bind(FormUrlEncodedTemplate);
+
+      // Act
+      RamoneResponse response = request.Accept("application/x-www-form-urlencoded").Get();
+      dynamic data = response.Body;
+
+      // Assert
+      Assert.AreEqual("Abc", data["Title"]);
+    }
+
+
+    [Test]
+    public void CanReadTyped()
+    {
+      // Arrange
+      RamoneRequest request = Session.Bind(FormUrlEncodedTemplate);
+
+      // Act
+      RamoneResponse<FormUrlEncodedData> response = request.Accept("application/x-www-form-urlencoded").Get<FormUrlEncodedData>();
+      FormUrlEncodedData data = response.Body;
+
+      // Assert
+      Assert.AreEqual("Abc", data.Title);
+    }
   }
 }

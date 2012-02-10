@@ -49,6 +49,7 @@
     <Compile Include="CMS\Party.cs" />
     <Compile Include="ComplexClassForSerializationTests.cs" />
     <Compile Include="Constants.cs" />
+    <Compile Include="FormUrlEncodedData.cs" />
     <Compile Include="ObjectToStringPropertyVisitor.cs" />
     <Compile Include="RegisteredClass.cs" />
     <Compile Include="Dog.cs" />

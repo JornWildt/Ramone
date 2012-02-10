@@ -6,6 +6,9 @@ using Ramone.OAuth;
 using System.IO;
 using Ramone.OAuth.Parameters;
 using Ramone.MediaTypes;
+using Ramone.MediaTypes.Json;
+using System.Collections.Specialized;
+using Ramone.MediaTypes.FormUrlEncoded;
 
 
 namespace TwitterDemo
@@ -26,7 +29,7 @@ namespace TwitterDemo
       //Console.WriteLine();
       //ShowTimelineForScreenName_Static(TwitterUserScreenName);
 
-      UpdateUserName();
+      //UpdateUserName();
     }
 
 
@@ -46,14 +49,18 @@ namespace TwitterDemo
 
     static void AuthorizeTwitterAccess()
     {
-      Session.Service.CodecManager.AddCodec<string>("text/html", new StringCodec());
+      Session.Service.CodecManager.AddCodec<TokenResponse>("text/html", new JsonSerializerCodec());
+      Session.Service.CodecManager.AddCodec<NameValueCollection>("text/html", new FormUrlEncodedSerializerCodec());
 
       TwitterKeys keys = ReadKeys();
       Session.OAuth1Start(keys.consumer_key, keys.consumer_secret, "oob");//, keys.access_token, keys.access_token_secret);
 
-      //TokenResponse oauthResponse = Session.Bind(TwitterApi.OAuthRequestTokenTemplate).Post<TokenResponse>(new { }).Body;
-      var response = Session.Bind(TwitterApi.OAuthRequestTokenTemplate).Post<string>(new { });
-      var oauthResponse = response.Body;
+      var response = Session.Bind(TwitterApi.OAuthRequestTokenTemplate).Post<NameValueCollection>();
+      NameValueCollection oauthResponse = response.Body;
+
+      // FIXME: recognize <TokenResponse>
+      //   Session.OAuth1Token(tokenResponse);
+      Session.OAuth1Token(oauthResponse["oauth_token"], oauthResponse["oauth_token_secret"]);
     }
 
 

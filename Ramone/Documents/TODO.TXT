@@ -10,6 +10,7 @@ ReaderCodec for text/html (xml mf.) + string
 Logging af OAuth signature base mm. for debugging
 Learn how to override the oauth_timestamp and oauth_nonce values in your OAuth library. Use this capability to replay signature generation scenarios for comparative analysis.
 
+Når nu Twitter leverer "text/html" for UrlEncoded, så skal det kunne styres uden at lave en codec registrering.
 
 Twitter:
 - Ensure that your system's timestamp is in sync with Twitter's. We return the current time in the "Date" HTTP header with every request. If your request fails due to a timestamp mismatch, use this time to determine the delta between the system clock and our server clock and adjust your oauth_timestamps for subsequent requests accordingly.
@@ -25,7 +26,12 @@ Authorization as first-class citizens
       client.Execute(request);
       The URL generated for this request would be http://example.com/resource?username=foo&password=bar
 
+AsJson() osv. er ikke helt OK fordi det sjældet er begge veje der er det samme.
+
 Interceptors med "Context" argument (og ikke kun httprequest)
+
+TextCodecBase
+- WriteTo(object item, TextWriter writer, WriterContext context) => "item" findes nu i context
 
 Ramone.HyperMedia
 - OK: Link selector med media-type
@@ -43,6 +49,8 @@ Ramone.HyperMedia
 - OK: Follow(ILink), 
 - Follow(ILinkTemplate, params)
 - Make it possible to Follow() relative links.
+
+De generiske readers kunne også returnere NameValueCollection. Bør måske kunne styres?
 
 Test scenarie hvor der returneres "NoContent" og man forsøger at hente content (skal give null)
 

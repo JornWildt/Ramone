@@ -18,6 +18,8 @@
 
     public const string MultipartFormDataFilePath = "multipartformdata-file";
 
+    public const string FormUrlEncodedPath = "formurlencoded";
+
     public const string XmlEchoPath = "xml-echo";
 
     public const string AnyEchoPath = "any-echo";
