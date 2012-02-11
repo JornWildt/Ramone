@@ -48,6 +48,9 @@ Can FormUrlEncodingSerializer (object serializeren) håndtere dynamics (Expando)
 
 Interceptors med "Context" argument (og ikke kun httprequest)
 
+Codecs
+- Skal kunne registrere reader-codecs for wildcards (f.eks. "*/*" for UrlFormEncoded fra Twitter)
+
 TextCodecBase
 - WriteTo(object item, TextWriter writer, WriterContext context) => "item" findes nu i context
 
@@ -108,6 +111,7 @@ Docs
   - Focus on RESTful patterns
   - Er godt for object serialization (pas på med dette udsagn)
   - Samler en række forskellige media types på ét sted
+- OAuth + Basic authorization
 - Alle Get/Post etc. operationer er uden sideeffekter i RamoneRequest. 
   Altså kan RamoneRequest genbruges flere gange. Eller hvad ...
 - Go through REST reciepes and show how its done in Ramone
