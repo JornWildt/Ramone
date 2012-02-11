@@ -347,9 +347,9 @@ namespace Ramone
         if (requestModifier != null)
           requestModifier(request);
 
-        foreach (IRequestInterceptor interceptor in Session.RequestInterceptors)
+        foreach (KeyValuePair<string,IRequestInterceptor> interceptor in Session.RequestInterceptors)
         {
-          interceptor.Intercept(request);
+          interceptor.Value.Intercept(request);
         }
 
         string charset = "";

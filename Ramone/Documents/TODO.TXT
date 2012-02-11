@@ -2,13 +2,20 @@
 Version 1
 ---------
 
+OAuth
+- Encoding for ÆØÅ (Jørn Wildt)
+- Gennemkommentere hele koden for Twitter access
+
 ObjectSerialiser, deserializing
+- Format specifiers for dot operators
 - Format specifiers for index operators
 
 FormUrlEncodingSerializer (plus json) deserialize til
-- static type
+- OK: static type
 - dynamic type / expando
 - namevalue coll.
+- Encoding
+- dates, doubles, float, dictionaries, arrays, lists
 
 Logging af OAuth signature base mm. for debugging
 Learn how to override the oauth_timestamp and oauth_nonce values in your OAuth library. Use this capability to replay signature generation scenarios for comparative analysis.
