@@ -34,6 +34,15 @@ namespace Ramone.Implementation
     }
 
 
+    public IRequestInterceptor Find(string name)
+    {
+      IRequestInterceptor i;
+      if (Interceptors.TryGetValue(name, out i))
+        return i;
+      return null;
+    }
+
+
     public void Remove(Type type)
     {
       Interceptors.Remove(type.ToString());
@@ -52,15 +61,15 @@ namespace Ramone.Implementation
     }
 
 
-    public IEnumerator<IRequestInterceptor> GetEnumerator()
+    public IEnumerator<KeyValuePair<string, IRequestInterceptor>> GetEnumerator()
     {
-      return Interceptors.Values.GetEnumerator();
+      return Interceptors.GetEnumerator();
     }
 
 
     IEnumerator IEnumerable.GetEnumerator()
     {
-      return Interceptors.Values.GetEnumerator();
+      return Interceptors.GetEnumerator();
     }
   }
 }

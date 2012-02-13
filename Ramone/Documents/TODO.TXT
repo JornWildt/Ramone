@@ -1,11 +1,21 @@
 ﻿---------
 Version 1
 ---------
-Undgå authorization exception - så kan man ikke aflæse body som normalt.
 
-Post(null) bør være  muligt
+OAuth
+- Encoding for ÆØÅ (Jørn Wildt)
+- Gennemkommentere hele koden for Twitter access
 
-ReaderCodec for text/html (xml mf.) + string
+ObjectSerialiser, deserializing
+- Format specifiers for dot operators
+- Format specifiers for index operators
+
+FormUrlEncodingSerializer (plus json) deserialize til
+- OK: static type
+- dynamic type / expando
+- namevalue coll.
+- Encoding
+- dates, doubles, float, dictionaries, arrays, lists
 
 Logging af OAuth signature base mm. for debugging
 Learn how to override the oauth_timestamp and oauth_nonce values in your OAuth library. Use this capability to replay signature generation scenarios for comparative analysis.
@@ -26,9 +36,20 @@ Authorization as first-class citizens
       client.Execute(request);
       The URL generated for this request would be http://example.com/resource?username=foo&password=bar
 
+Serializer overloads that accepts streams and strings (not only readers)
+
 AsJson() osv. er ikke helt OK fordi det sjældet er begge veje der er det samme.
 
+Undgå authorization exception - så kan man ikke aflæse body som normalt.
+
+ReaderCodec for text/html (xml mf.) + string
+
+Can FormUrlEncodingSerializer (object serializeren) håndtere dynamics (Expando) og NameValueCollections?
+
 Interceptors med "Context" argument (og ikke kun httprequest)
+
+Codecs
+- Skal kunne registrere reader-codecs for wildcards (f.eks. "*/*" for UrlFormEncoded fra Twitter)
 
 TextCodecBase
 - WriteTo(object item, TextWriter writer, WriterContext context) => "item" findes nu i context
@@ -49,6 +70,9 @@ Ramone.HyperMedia
 - OK: Follow(ILink), 
 - Follow(ILinkTemplate, params)
 - Make it possible to Follow() relative links.
+
+Bind en ”non-template” URL med vilkårlige params:
+  ”http://dr.dk” BIND { a = 1 & b = 2 } => ”http://dr.dk?a=1&b=2”
 
 De generiske readers kunne også returnere NameValueCollection. Bør måske kunne styres?
 
@@ -87,6 +111,7 @@ Docs
   - Focus on RESTful patterns
   - Er godt for object serialization (pas på med dette udsagn)
   - Samler en række forskellige media types på ét sted
+- OAuth + Basic authorization
 - Alle Get/Post etc. operationer er uden sideeffekter i RamoneRequest. 
   Altså kan RamoneRequest genbruges flere gange. Eller hvad ...
 - Go through REST reciepes and show how its done in Ramone

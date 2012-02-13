@@ -347,9 +347,9 @@ namespace Ramone
         if (requestModifier != null)
           requestModifier(request);
 
-        foreach (IRequestInterceptor interceptor in Session.RequestInterceptors)
+        foreach (KeyValuePair<string,IRequestInterceptor> interceptor in Session.RequestInterceptors)
         {
-          interceptor.Intercept(request);
+          interceptor.Value.Intercept(request);
         }
 
         string charset = "";
@@ -446,9 +446,21 @@ namespace Ramone
     }
 
 
+    public new RamoneResponse<TResponse> Post()
+    {
+      return Post<TResponse>();
+    }
+
+
     public new RamoneResponse<TResponse> Put(object body)
     {
       return Put<TResponse>(body);
+    }
+
+
+    public new RamoneResponse<TResponse> Put()
+    {
+      return Put<TResponse>();
     }
 
 

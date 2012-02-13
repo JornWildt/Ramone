@@ -1,4 +1,5 @@
 ﻿using System.Net;
+using Ramone.OAuth.Parameters;
 
 
 namespace Ramone.OAuth
@@ -33,6 +34,13 @@ namespace Ramone.OAuth
       this.access_token_secret = access_token_secret;
 
       AuthorizationState = AuthorizationStateType.Started;
+    }
+
+
+    public void SetAccessToken(TokenResponse token)
+    {
+      access_token = token.oauth_token;
+      access_token_secret = token.oauth_token_secret;
     }
 
 
