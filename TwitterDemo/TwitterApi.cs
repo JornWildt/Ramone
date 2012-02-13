@@ -10,10 +10,11 @@ namespace TwitterDemo
     public static string OAuthAuthorizePath = "oauth/authorize";
     public static string OAuthAccessTokenPath = "oauth/access_token";
 
-    // Account
-    public static UriTemplate UserTimeLineTemplate = new UriTemplate("/1/statuses/user_timeline.json?screen_name={screen_name}&count={count}");
-
     // Tweets and timeline
-    public static UriTemplate UpdateProfileTemplate = new UriTemplate("/1/account/update_profile.json?name={name}");
+    public static UriTemplate UserTimeLinePath = new UriTemplate("/1/statuses/user_timeline.json?screen_name={screen_name}&count={count}");
+    public static UriTemplate StatusesUpdate = new UriTemplate("/1/statuses/update.json?status={status}");
+
+    // Account
+    public static UriTemplate UpdateProfilePath = new UriTemplate("/1/account/update_profile.json?name={name}");
   }
 }

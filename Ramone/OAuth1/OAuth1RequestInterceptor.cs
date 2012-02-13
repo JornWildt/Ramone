@@ -7,6 +7,8 @@ namespace Ramone.OAuth1
   {
     public OAuth1Settings Settings { get; set; }
 
+    public bool IsAuthorized { get; set; }
+
 
     public OAuth1RequestInterceptor(OAuth1Settings settings)
     {

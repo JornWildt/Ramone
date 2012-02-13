@@ -51,6 +51,7 @@
   <ItemGroup>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StatusUpdate.cs" />
     <Compile Include="Timeline.cs" />
     <Compile Include="Tweet.cs" />
     <Compile Include="TwitterApi.cs" />

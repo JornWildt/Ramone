@@ -44,16 +44,24 @@ namespace Ramone.OAuth1
                                   .Body;
 
       if (rememberToken)
-        OAuth1SetAccessToken(session, token);
+        OAuth1SetAccessToken(session, token, true);
 
       return token;
     }
 
 
-    public static void OAuth1SetAccessToken(this IRamoneSession session, OAuth1Token token)
+    public static void OAuth1SetAccessToken(this IRamoneSession session, OAuth1Token token, bool isAuthorized = false)
     {
       OAuth1RequestInterceptor interceptor = GetExistingInterceptor(session);
       interceptor.SetAccessToken(token);
+      interceptor.IsAuthorized = isAuthorized;
+    }
+
+
+    public static bool OAuth1IsAuthorized(this IRamoneSession session)
+    {
+      OAuth1RequestInterceptor interceptor = GetExistingInterceptor(session);
+      return interceptor.IsAuthorized;
     }
 
 

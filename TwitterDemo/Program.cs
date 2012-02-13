@@ -8,11 +8,16 @@ using Ramone.OAuth1;
 
 namespace TwitterDemo
 {
+  // Demo of Ramone used as a Twitter client that shows timelines and posts updates.
+
+  // In order to run this program you must first obtain an OAuth1 API consumer_key and consumer_secret from Twitter
+  // Put these in a file c:\tmp\twitterkeys.txt formated as one line of "<consumer_key>|<consumer_secret>"
+
   public class Program
   {
     static IRamoneSession Session { get; set; }
 
-    // Put your own screen name here
+    // Put a screen name here for showing timeline
     static string TwitterUserScreenName = "JornWildt";
 
 
@@ -20,11 +25,25 @@ namespace TwitterDemo
     {
       Setup();
 
-      //ShowTimelineForScreenName_Dynamic(TwitterUserScreenName);
-      //Console.WriteLine();
-      //ShowTimelineForScreenName_Static(TwitterUserScreenName);
+      // Read-only, non-authorized, operations
 
-      UpdateUserName();
+      ShowTimelineForScreenName_Dynamic(TwitterUserScreenName);
+      Console.WriteLine();
+      ShowTimelineForScreenName_Typed(TwitterUserScreenName);
+
+      // Authorize access to Twitter
+      AuthorizeTwitterAccess();
+
+      // Updating, authorized, operations
+
+      if (Session.OAuth1IsAuthorized())
+      {
+        // I find this operation less anoying when testing - it doesn't spam my followers with test messages
+        //UpdateUserName("Ramone was here");
+
+        PostTweet_Dynamic();
+        PostTweet_Typed();
+      }
     }
 
 
@@ -37,9 +56,6 @@ namespace TwitterDemo
       // This saves us the hassle of specifying codecs for all the Twitter resource types (Tweet, Timeline, User etc.)
       Session.DefaultRequestMediaType = "application/x-www-form-urlencoded";
       Session.DefaultResponseMediaType = "application/json";
-
-      // Authorize access to Twitter
-      AuthorizeTwitterAccess();
     }
 
 
@@ -76,8 +92,11 @@ namespace TwitterDemo
       Console.WriteLine("Please enter Twitter pincode: ");
       string pincode = Console.ReadLine();
 
-      // Get access credentials from Twitter
-      Session.OAuth1GetAccessTokenFromRequestToken(pincode);
+      if (!string.IsNullOrWhiteSpace(pincode))
+      {
+        // Get access credentials from Twitter
+        Session.OAuth1GetAccessTokenFromRequestToken(pincode);
+      }
     }
 
 
@@ -85,7 +104,7 @@ namespace TwitterDemo
     static void ShowTimelineForScreenName_Dynamic(string screenName)
     {
       // Bind user-timeline template to supplied values
-      RamoneRequest request = Session.Bind(TwitterApi.UserTimeLineTemplate, new { screen_name = screenName, count = 2 });
+      RamoneRequest request = Session.Bind(TwitterApi.UserTimeLinePath, new { screen_name = screenName, count = 2 });
 
       RamoneResponse response = request.Get();
 
@@ -102,10 +121,10 @@ namespace TwitterDemo
 
 
     // Get timeline for a Twitter user and access it using typed types
-    static void ShowTimelineForScreenName_Static(string screenName)
+    static void ShowTimelineForScreenName_Typed(string screenName)
     {
       // Bind user-timeline template to supplied values
-      RamoneRequest request = Session.Bind(TwitterApi.UserTimeLineTemplate, new { screen_name = screenName, count = 2 });
+      RamoneRequest request = Session.Bind(TwitterApi.UserTimeLinePath, new { screen_name = screenName, count = 2 });
 
       RamoneResponse<Timeline> response = request.Get<Timeline>();
 
@@ -121,9 +140,26 @@ namespace TwitterDemo
     }
 
 
-    static void UpdateUserName()
+    static void PostTweet_Dynamic()
     {
-      RamoneRequest request = Session.Bind(TwitterApi.UpdateProfileTemplate, new { name = "Jorn Wildt" });
+      string message = "A dynamic tweet from the Ramone client [" + Guid.NewGuid() + "]";
+      Session.Bind(TwitterApi.StatusesUpdate, new { status = message }).Post();
+      Console.WriteLine("Posted update using dynamic object parameters.");
+    }
+
+
+    static void PostTweet_Typed()
+    {
+      string message = "A typed tweet from the Ramone client [" + Guid.NewGuid() + "]";
+      StatusUpdate update = new StatusUpdate { status = message };
+      Session.Bind(TwitterApi.StatusesUpdate, update).Post();
+      Console.WriteLine("Posted update using typed object parameters.");
+    }
+
+
+    static void UpdateUserName(string name)
+    {
+      RamoneRequest request = Session.Bind(TwitterApi.UpdateProfilePath, new { name = name });
       RamoneResponse response = request.Post(new { });
     }
 
@@ -150,8 +186,8 @@ namespace TwitterDemo
         {
           consumer_key = keys[0],
           consumer_secret = keys[1],
-          access_token = keys[2],
-          access_token_secret = keys[3]
+          access_token = keys.Length > 2 ? keys[2] : null,
+          access_token_secret = keys.Length > 3 ? keys[3] : null
         };
       }
     }
