@@ -2,31 +2,35 @@
 Version 1
 ---------
 
+Codecs
+- Skal kunne registrere reader-codecs for wildcards (f.eks. "*/*" for UrlFormEncoded fra Twitter)
+- Når nu Twitter leverer "text/html" for UrlEncoded, så skal det kunne styres uden at lave en codec registrering.
+
+Session.Bind
+- String(path) => Uri
+- Uri + params (dictionary or objects) => "uri?params"
+- Skelne mellem
+    Bind => Uri ELLER Session.Uri(...)
+    Request => Request (med param binding)
+
 OAuth
+- Reading callback URL from response
+- Tænk på adskillelse mellem low-level signering af request og higj-level interaction med services.
 - Encoding for ÆØÅ (Jørn Wildt)
 - Gennemkommentere hele koden for Twitter access
-
-ObjectSerialiser, deserializing
-- Format specifiers for dot operators
-- Format specifiers for index operators
-
-FormUrlEncodingSerializer (plus json) deserialize til
-- OK: static type
-- dynamic type / expando
-- namevalue coll.
-- Encoding
-- dates, doubles, float, dictionaries, arrays, lists
-
-Logging af OAuth signature base mm. for debugging
-Learn how to override the oauth_timestamp and oauth_nonce values in your OAuth library. Use this capability to replay signature generation scenarios for comparative analysis.
-
-Når nu Twitter leverer "text/html" for UrlEncoded, så skal det kunne styres uden at lave en codec registrering.
+- Aflæsning af urlencoded body
+- Skal kunne angive access_token direkte
+- Logging af OAuth signature base mm. for debugging
+  - callback method
+  - Learn how to override the oauth_timestamp and oauth_nonce values in your OAuth library. 
+    Use this capability to replay signature generation scenarios for comparative analysis.
 
 Twitter:
 - Ensure that your system's timestamp is in sync with Twitter's. We return the current time in the "Date" HTTP header with every request. If your request fails due to a timestamp mismatch, use this time to determine the delta between the system clock and our server clock and adjust your oauth_timestamps for subsequent requests accordingly.
 - Defaults media types virker ikke rigtigt
 
 Authorization as first-class citizens
+- Interceptor pr. service (kan f.eks. have forskellige OAuth settings for forskellige services)
 - Folk vil blive forvirret af "AuthenticationHandlers" (som jo altså ikke authentikerer ...)
 - Standard implementations for OK:Basic, Digest, OAuth, NTLM and more
   - SimpleAuth (som sætter URL parametre ind https://github.com/restsharp/RestSharp/wiki/Authenticators)
@@ -36,20 +40,29 @@ Authorization as first-class citizens
       client.Execute(request);
       The URL generated for this request would be http://example.com/resource?username=foo&password=bar
 
-Serializer overloads that accepts streams and strings (not only readers)
-
 AsJson() osv. er ikke helt OK fordi det sjældet er begge veje der er det samme.
 
 Undgå authorization exception - så kan man ikke aflæse body som normalt.
 
-ReaderCodec for text/html (xml mf.) + string
+Serializing
+  ObjectSerialiser, deserializing
+  - Format specifiers for dot operators
+  - Format specifiers for index operators
 
-Can FormUrlEncodingSerializer (object serializeren) håndtere dynamics (Expando) og NameValueCollections?
+  FormUrlEncodingSerializer (plus json) deserialize til
+  - OK: static type
+  - dynamic type / expando
+  - namevalue coll.
+  - Encoding
+  - dates, doubles, float, dictionaries, arrays, lists
 
-Interceptors med "Context" argument (og ikke kun httprequest)
+  Serializer overloads that accepts streams and strings (not only readers)
 
-Codecs
-- Skal kunne registrere reader-codecs for wildcards (f.eks. "*/*" for UrlFormEncoded fra Twitter)
+  ReaderCodec for text/html (xml mf.) + string
+
+  Can FormUrlEncodingSerializer (object serializeren) håndtere dynamics (Expando) og NameValueCollections?
+
+Interceptors med "Context" argument (og ikke kun httprequest). Dvs. incl. session.
 
 TextCodecBase
 - WriteTo(object item, TextWriter writer, WriterContext context) => "item" findes nu i context
@@ -87,6 +100,7 @@ Lots of Condition.Requries()...
 
 Rename
 - RamoneRequest/RamoneResponse => Request/Response
+- IRamoneSession/Service => ISession, IService
 
 Before releasing:
 - Include a license
@@ -96,6 +110,7 @@ Before releasing:
 - Demo 
   - Github
   - Ohloh
+  - Google pages
   - Dropbox
   - ITunes search
   - del.icio.us

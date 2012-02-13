@@ -8,6 +8,8 @@ using Ramone.MediaTypes.Json;
 using Ramone.MediaTypes.MultipartFormData;
 using Ramone.MediaTypes.Xml;
 using Ramone.Utility;
+using System.Collections.Specialized;
+using System.Web;
 
 
 namespace Ramone
@@ -61,6 +63,21 @@ namespace Ramone
     {
       UriTemplate template = new UriTemplate(url);
       return session.Bind(template, parameters);
+    }
+
+
+    public static RamoneRequest Bind(this IRamoneSession session, Uri url, object parameters = null)
+    {
+      NameValueCollection query = HttpUtility.ParseQueryString(url.Query);
+      Dictionary<string, string> parameterDictionary = DictionaryConverter.ConvertObjectPropertiesToDictionary(parameters);
+      foreach (KeyValuePair<string, string> p in parameterDictionary)
+      {
+        query.Add(p.Key, p.Value);
+      }
+      if (url.AbsoluteUri.Contains("?"))
+        return new RamoneRequest(session, new Uri(url.AbsoluteUri + "&" + query.ToString()));
+      else
+        return new RamoneRequest(session, new Uri(url.AbsoluteUri + "?" + query.ToString()));
     }
 
 

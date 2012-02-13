@@ -1,6 +1,6 @@
-﻿namespace Ramone.OAuth.Parameters
+﻿namespace Ramone.OAuth1
 {
-  public class TokenResponse
+  public class OAuth1Token
   {
     public string oauth_token { get; set; }
     public string oauth_token_secret { get; set; }

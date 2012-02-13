@@ -104,9 +104,10 @@
     <Compile Include="MediaTypes\TextCodecBase.cs" />
     <Compile Include="MediaTypes\Xml\XmlDocumentCodec.cs" />
     <Compile Include="MediaTypes\Xml\XmlSerializerCodec.cs" />
-    <Compile Include="OAuth\OAuthExtensions.cs" />
-    <Compile Include="OAuth\OAuthRequestInterceptor.cs" />
-    <Compile Include="OAuth\Parameters\TokenResponse.cs" />
+    <Compile Include="OAuth1\OAuth1Settings.cs" />
+    <Compile Include="OAuth1\OAuth1Token.cs" />
+    <Compile Include="OAuth1\OAuth1Extensions.cs" />
+    <Compile Include="OAuth1\OAuth1RequestInterceptor.cs" />
     <Compile Include="RamoneConfiguration.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="Html\HtmlAnchor.cs" />
@@ -146,7 +147,7 @@
     <Compile Include="Utility\FormUrlEncodingPropertyVisitor.cs" />
     <Compile Include="Utility\FormUrlEncodingSerializer.cs" />
     <Compile Include="Utility\MultipartFormDataSerializer.cs" />
-    <Compile Include="OAuth\SignatureHelper.cs" />
+    <Compile Include="OAuth1\SignatureHelper.cs" />
     <Compile Include="Utility\ObjectSerialization\Formaters\DelegateFormater.cs" />
     <Compile Include="Utility\ObjectSerialization\Formaters\FormaterBase.cs" />
     <Compile Include="Utility\ObjectSerialization\Formaters\UriFormater.cs" />

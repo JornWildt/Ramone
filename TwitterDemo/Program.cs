@@ -1,15 +1,9 @@
 ﻿using System;
-using Ramone;
-using System.Net;
-using Ramone.Utility;
-using Ramone.OAuth;
-using System.IO;
-using Ramone.OAuth.Parameters;
-using Ramone.MediaTypes;
-using Ramone.MediaTypes.Json;
-using System.Collections.Specialized;
-using Ramone.MediaTypes.FormUrlEncoded;
 using System.Diagnostics;
+using System.IO;
+using Ramone;
+using Ramone.MediaTypes.FormUrlEncoded;
+using Ramone.OAuth1;
 
 
 namespace TwitterDemo
@@ -51,44 +45,39 @@ namespace TwitterDemo
 
     static void AuthorizeTwitterAccess()
     {
+      // FIXME: move this to OAuth1 library (and use "*/*" media type when possible)
       // Register codecs for interacting with Twitter.
       // (This is so silly: Twitter returning text/html when it is application/x-www-form-urlencoded.
       // See https://dev.twitter.com/discussions/5662)
-      Session.Service.CodecManager.AddCodec<TokenResponse>("text/html", new FormUrlEncodedSerializerCodec());
+      Session.Service.CodecManager.AddCodec<OAuth1Token>("text/html", new FormUrlEncodedSerializerCodec());
 
-      // Get Twitter API keys
+      // Get Twitter API keys from file (don't want the secret parts hardcoded in public repository
       TwitterKeys keys = ReadKeys();
 
-      // Configure OAuth with consumer key/secret - and callback URL "oob" (Twitters Out-Of-Band callback)
-      Session.OAuth1Configure(keys.consumer_key, keys.consumer_secret, "oob");
+      // Configure OAuth1 with the stuff it needs for it's magic
+      OAuth1Settings settings = new OAuth1Settings
+      {
+        ConsumerKey = keys.consumer_key,
+        ConsumerSecrect = keys.consumer_secret,
+        RequestTokenUrl = new Uri(Session.BaseUri, TwitterApi.OAuthRequestTokenPath),
+        AuthorizeUrl = new Uri(Session.BaseUri, TwitterApi.OAuthAuthorizePath),
+        AccessTokenUrl = new Uri(Session.BaseUri, TwitterApi.OAuthAccessTokenPath)
+      };
+      Session.OAuth1Configure(settings);
 
-      // FIXME: naming of tokens, TokenResponse (OAuthToken?)
+      // Get temporary credentials from Twitter (request token) and remember it internally
+      OAuth1Token requestToken = Session.OAuth1GetRequestToken();
 
-      // Get temporary credentials from Twitter
-      TokenResponse tmpToken = Session.Bind(TwitterApi.OAuthRequestTokenTemplate)
-                                      .Accept<TokenResponse>()
-                                      .Post()
-                                      .Body;
-
-      // Assign temporary token to OAuth authorizer
-      Session.OAuth1Token(tmpToken);
-
+      // Ask user to authorize use of the request token
       Console.WriteLine("Now opening a browser with autorization info. Please follow instructions there.");
-      RamoneRequest authorizationRequest = Session.Bind(TwitterApi.OAuthAuthorizeTemplate, tmpToken);
+      RamoneRequest authorizationRequest = Session.Bind(TwitterApi.OAuthAuthorizePath, requestToken);
       Process.Start(authorizationRequest.Url.AbsoluteUri);
 
       Console.WriteLine("Please enter Twitter pincode: ");
       string pincode = Console.ReadLine();
 
       // Get access credentials from Twitter
-      // FIXME: typed params
-      TokenResponse accessToken = Session.Bind(TwitterApi.OAuthAccessTokenTemplate, new { oauth_verifier = pincode })
-                                         .Accept<TokenResponse>()
-                                         .Post()
-                                         .Body;
-
-      // Assign access token to OAuth authorizer
-      Session.OAuth1Token(accessToken);
+      Session.OAuth1GetAccessTokenFromRequestToken(pincode);
     }
 
 

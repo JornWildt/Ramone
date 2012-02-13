@@ -5,7 +5,7 @@ using System.Text;
 using System.Web;
 
 
-namespace Ramone.OAuth
+namespace Ramone.OAuth1
 {
   /// <summary>
   /// OAuth utility from http://code.google.com/p/oauth/
