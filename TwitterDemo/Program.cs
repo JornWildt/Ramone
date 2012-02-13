@@ -32,7 +32,7 @@ namespace TwitterDemo
       ShowTimelineForScreenName_Typed(TwitterUserScreenName);
 
       // Authorize access to Twitter
-      AuthorizeTwitterAccess();
+      AuthorizeTwitterAccess_UsingOutOfBandPincode();
 
       // Updating, authorized, operations
 
@@ -59,14 +59,8 @@ namespace TwitterDemo
     }
 
 
-    static void AuthorizeTwitterAccess()
+    static void AuthorizeTwitterAccess_UsingOutOfBandPincode()
     {
-      // FIXME: move this to OAuth1 library (and use "*/*" media type when possible)
-      // Register codecs for interacting with Twitter.
-      // (This is so silly: Twitter returning text/html when it is application/x-www-form-urlencoded.
-      // See https://dev.twitter.com/discussions/5662)
-      Session.Service.CodecManager.AddCodec<OAuth1Token>("text/html", new FormUrlEncodedSerializerCodec());
-
       // Get Twitter API keys from file (don't want the secret parts hardcoded in public repository
       TwitterKeys keys = ReadKeys();
 
@@ -77,7 +71,8 @@ namespace TwitterDemo
         ConsumerSecrect = keys.consumer_secret,
         RequestTokenUrl = new Uri(Session.BaseUri, TwitterApi.OAuthRequestTokenPath),
         AuthorizeUrl = new Uri(Session.BaseUri, TwitterApi.OAuthAuthorizePath),
-        AccessTokenUrl = new Uri(Session.BaseUri, TwitterApi.OAuthAccessTokenPath)
+        AccessTokenUrl = new Uri(Session.BaseUri, TwitterApi.OAuthAccessTokenPath),
+        CallbackUrl = "oob"
       };
       Session.OAuth1Configure(settings);
 
@@ -160,7 +155,7 @@ namespace TwitterDemo
     static void UpdateUserName(string name)
     {
       RamoneRequest request = Session.Bind(TwitterApi.UpdateProfilePath, new { name = name });
-      RamoneResponse response = request.Post(new { });
+      RamoneResponse response = request.Post();
     }
 
 

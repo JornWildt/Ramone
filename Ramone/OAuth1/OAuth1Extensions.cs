@@ -1,5 +1,6 @@
 ﻿using System;
 using CuttingEdge.Conditions;
+using Ramone.MediaTypes.FormUrlEncoded;
 
 
 namespace Ramone.OAuth1
@@ -8,6 +9,11 @@ namespace Ramone.OAuth1
   {
     public static void OAuth1Configure(this IRamoneSession session, OAuth1Settings settings)
     {
+      // FIXME: use "*/*" media type when possible
+      // (This is so silly: Twitter returning text/html when it is application/x-www-form-urlencoded.
+      // See https://dev.twitter.com/discussions/5662)
+      session.Service.CodecManager.AddCodec<OAuth1Token>("text/html", new FormUrlEncodedSerializerCodec());
+
       Condition.Requires(settings.ConsumerKey, "settings.ConsumerKey").IsNotNull();
       Condition.Requires(settings.ConsumerSecrect, "settings.ConsumerSecrect").IsNotNull();
       Condition.Requires(settings.RequestTokenUrl, "settings.RequestTokenUrl").IsNotNull();
