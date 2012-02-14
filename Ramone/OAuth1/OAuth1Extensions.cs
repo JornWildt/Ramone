@@ -12,7 +12,7 @@ namespace Ramone.OAuth1
       // FIXME: use "*/*" media type when possible
       // (This is so silly: Twitter returning text/html when it is application/x-www-form-urlencoded.
       // See https://dev.twitter.com/discussions/5662)
-      session.Service.CodecManager.AddCodec<OAuth1Token>("text/html", new FormUrlEncodedSerializerCodec());
+      session.Service.CodecManager.AddFormUrlEncoded<OAuth1Token>("text/html");
 
       Condition.Requires(settings.ConsumerKey, "settings.ConsumerKey").IsNotNull();
       Condition.Requires(settings.ConsumerSecrect, "settings.ConsumerSecrect").IsNotNull();

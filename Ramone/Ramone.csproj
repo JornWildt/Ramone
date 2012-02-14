@@ -94,6 +94,7 @@
     <Compile Include="IO\File.cs" />
     <Compile Include="IO\IFile.cs" />
     <Compile Include="AuthorizationInterceptors\BasicAuthorizationInterceptor.cs" />
+    <Compile Include="MediaType.cs" />
     <Compile Include="MediaTypes\FormUrlEncoded\FormUrlEncodedSerializerCodec.cs" />
     <Compile Include="MediaTypes\Html\HtmlDocumentCodec.cs" />
     <Compile Include="MediaTypes\Json\ServiceStackJsonSerializerCodec.cs" />

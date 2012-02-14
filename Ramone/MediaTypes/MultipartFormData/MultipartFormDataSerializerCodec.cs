@@ -2,6 +2,7 @@
 using System.IO;
 using Ramone.Utility;
 using System.Text;
+using System.Net.Mime;
 
 
 namespace Ramone.MediaTypes.MultipartFormData
@@ -16,11 +17,7 @@ namespace Ramone.MediaTypes.MultipartFormData
       Type t = context.Data.GetType();
       MultipartFormDataSerializer Serializer = new MultipartFormDataSerializer(t);
 
-      Encoding enc = Encoding.Default;
-
-      MediaType m = MediaTypeParser.ParseMediaType(context.Request.ContentType);
-      if (m.Parameters.ContainsKey("charset"))
-        enc = Encoding.GetEncoding(m.Parameters["charset"]);
+      Encoding enc = MediaTypeParser.GetEncodingFromCharset(context.Request.ContentType);
 
       Serializer.Serialize(context.HttpStream, context.Data, enc, CodecArgument as string, context.Session.SerializerSettings);
     }
