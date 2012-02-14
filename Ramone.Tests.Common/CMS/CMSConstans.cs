@@ -9,7 +9,8 @@
     public const string DocumentPath = "cms/documents/{id}";
     public const string PartyPath = "cms/party/{id}";
 
-    public const string CMSMediaType = "application/vnd.cms+xml";
+    public const string CMSMediaTypeId = "application/vnd.cms+xml";
+    public static readonly MediaType CMSMediaType = new MediaType(CMSMediaTypeId);
 
     public const string DocumentsLinkRelType = "documents";
     public const string PartyLinkRelType = "party";

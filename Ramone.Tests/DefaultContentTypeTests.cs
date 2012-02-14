@@ -16,8 +16,8 @@ namespace Ramone.Tests
 
       // Act
       AssertThrows<ArgumentException>(() => request.Post(cat));
-      Session.DefaultRequestMediaType = "application/json";
-      Session.DefaultResponseMediaType = "application/json";
+      Session.DefaultRequestMediaType = MediaType.ApplicationJson;
+      Session.DefaultResponseMediaType = MediaType.ApplicationJson;
       dynamic response = request.Post(cat);
 
       // Assert
@@ -35,8 +35,8 @@ namespace Ramone.Tests
 
       // Act
       AssertThrows<ArgumentException>(() => request.Post(cat));
-      Session.DefaultRequestMediaType = "multipart/form-data";
-      Session.DefaultResponseMediaType = "text/plain";
+      Session.DefaultRequestMediaType = MediaType.MultipartFormData;
+      Session.DefaultResponseMediaType = MediaType.TextPlain;
       var response = request.Post<string>(cat);
 
       // Assert

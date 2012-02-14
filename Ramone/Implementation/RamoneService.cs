@@ -13,9 +13,9 @@ namespace Ramone.Implementation
 
     public Uri BaseUri { get; protected set; }
 
-    public string DefaultRequestMediaType { get; set; }
+    public MediaType DefaultRequestMediaType { get; set; }
 
-    public string DefaultResponseMediaType { get; set; }
+    public MediaType DefaultResponseMediaType { get; set; }
 
     public ICodecManager CodecManager { get; protected set; }
 

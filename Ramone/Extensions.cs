@@ -83,19 +83,19 @@ namespace Ramone
 
     public static RamoneRequest AsXml(this RamoneRequest request)
     {
-      return request.ContentType("application/xml").Accept("application/xml");
+      return request.ContentType(MediaType.ApplicationXml).Accept(MediaType.ApplicationXml);
     }
 
 
     public static RamoneRequest AsJson(this RamoneRequest request)
     {
-      return request.ContentType("application/json").Accept("application/json");
+      return request.ContentType(MediaType.ApplicationJson).Accept(MediaType.ApplicationJson);
     }
 
 
     public static RamoneRequest AsFormUrlEncoded(this RamoneRequest request)
     {
-      return request.ContentType("application/x-www-form-urlencoded");
+      return request.ContentType(MediaType.ApplicationFormUrlEncoded);
     }
 
 
@@ -107,11 +107,11 @@ namespace Ramone
 
     public static void AddFormUrlEncoded<T>(this ICodecManager codecManager)
     {
-      codecManager.AddCodec<T>("application/x-www-form-urlencoded", new FormUrlEncodedSerializerCodec());
+      codecManager.AddCodec<T>(MediaType.ApplicationFormUrlEncoded, new FormUrlEncodedSerializerCodec());
     }
 
 
-    public static void AddFormUrlEncoded<T>(this ICodecManager codecManager, string mediaType)
+    public static void AddFormUrlEncoded<T>(this ICodecManager codecManager, MediaType mediaType)
     {
       codecManager.AddCodec<T>(mediaType, new FormUrlEncodedSerializerCodec());
     }
@@ -119,11 +119,11 @@ namespace Ramone
 
     public static void AddMultipartFormData<T>(this ICodecManager codecManager)
     {
-      codecManager.AddCodec<T>("multipart/form-data", new MultipartFormDataSerializerCodec());
+      codecManager.AddCodec<T>(MediaType.MultipartFormData, new MultipartFormDataSerializerCodec());
     }
 
 
-    public static void AddMultipartFormData<T>(this ICodecManager codecManager, string mediaType)
+    public static void AddMultipartFormData<T>(this ICodecManager codecManager, MediaType mediaType)
     {
       codecManager.AddCodec<T>(mediaType, new MultipartFormDataSerializerCodec());
     }
@@ -131,11 +131,11 @@ namespace Ramone
 
     public static void AddXml<T>(this ICodecManager codecManager)
     {
-      codecManager.AddCodec<T>("application/xml", new XmlSerializerCodec());
+      codecManager.AddCodec<T>(MediaType.ApplicationXml, new XmlSerializerCodec());
     }
 
 
-    public static void AddXml<T>(this ICodecManager codecManager, string mediaType)
+    public static void AddXml<T>(this ICodecManager codecManager, MediaType mediaType)
     {
       codecManager.AddCodec<T>(mediaType, new XmlSerializerCodec());
     }
@@ -143,11 +143,11 @@ namespace Ramone
 
     public static void AddJson<T>(this ICodecManager codecManager)
     {
-      codecManager.AddCodec<T>("application/json", new JsonSerializerCodec());
+      codecManager.AddCodec<T>(MediaType.ApplicationJson, new JsonSerializerCodec());
     }
 
 
-    public static void AddJson<T>(this ICodecManager codecManager, string mediaType)
+    public static void AddJson<T>(this ICodecManager codecManager, MediaType mediaType)
     {
       codecManager.AddCodec<T>(mediaType, new JsonSerializerCodec());
     }

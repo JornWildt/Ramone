@@ -31,11 +31,11 @@ namespace Ramone.Tests
       // Arrange
 
       // Act
-      CM.AddCodec<Cat>("x", new CatAsHtmlCodec());
-      CM.AddCodec<Cat>("y", new CatAsHtmlCodec());
+      CM.AddCodec<Cat>(MediaType.ApplicationJson, new CatAsHtmlCodec());
+      CM.AddCodec<Cat>(MediaType.ApplicationXml, new CatAsHtmlCodec());
 
       // Assert
-      AssertThrows<ArgumentException>(() => CM.AddCodec<Cat>("x", new CatAsHtmlCodec()));
+      AssertThrows<ArgumentException>(() => CM.AddCodec<Cat>(MediaType.ApplicationJson, new CatAsHtmlCodec()));
     }
 
 
@@ -45,13 +45,13 @@ namespace Ramone.Tests
       // Act
       CM.AddFormUrlEncoded<MyData>();
       MediaTypeWriterRegistration codecReg1 = CM.GetWriter(typeof(MyData));
-      MediaTypeWriterRegistration codecReg2 = CM.GetWriter(typeof(MyData), "application/x-www-form-urlencoded");
+      MediaTypeWriterRegistration codecReg2 = CM.GetWriter(typeof(MyData), MediaType.ApplicationFormUrlEncoded);
 
       // Assert
       Assert.IsNotNull(codecReg1);
       Assert.IsNotNull(codecReg2);
-      Assert.AreEqual("application/x-www-form-urlencoded", codecReg1.MediaType);
-      Assert.AreEqual("application/x-www-form-urlencoded", codecReg2.MediaType);
+      Assert.AreEqual(MediaType.ApplicationFormUrlEncoded, codecReg1.MediaType);
+      Assert.AreEqual(MediaType.ApplicationFormUrlEncoded, codecReg2.MediaType);
       Assert.AreEqual(typeof(FormUrlEncodedSerializerCodec), codecReg1.Codec.GetType());
       Assert.AreEqual(typeof(FormUrlEncodedSerializerCodec), codecReg2.Codec.GetType());
     }
@@ -61,12 +61,12 @@ namespace Ramone.Tests
     public void CanRegisterFormUrlEncodedCodecWithShorthandAndMediaType()
     {
       // Act
-      CM.AddFormUrlEncoded<MyData>("application/ramone");
-      MediaTypeWriterRegistration codecReg = CM.GetWriter(typeof(MyData), "application/ramone");
+      CM.AddFormUrlEncoded<MyData>(new MediaType("application/ramone"));
+      MediaTypeWriterRegistration codecReg = CM.GetWriter(typeof(MyData), new MediaType("application/ramone"));
 
       // Assert
       Assert.IsNotNull(codecReg);
-      Assert.AreEqual("application/ramone", codecReg.MediaType);
+      Assert.AreEqual(new MediaType("application/ramone"), codecReg.MediaType);
       Assert.AreEqual(typeof(FormUrlEncodedSerializerCodec), codecReg.Codec.GetType());
     }
 
@@ -77,13 +77,13 @@ namespace Ramone.Tests
       // Act
       CM.AddMultipartFormData<MyData>();
       MediaTypeWriterRegistration codecReg1 = CM.GetWriter(typeof(MyData));
-      MediaTypeWriterRegistration codecReg2 = CM.GetWriter(typeof(MyData), "multipart/form-data");
+      MediaTypeWriterRegistration codecReg2 = CM.GetWriter(typeof(MyData), MediaType.MultipartFormData);
 
       // Assert
       Assert.IsNotNull(codecReg1);
       Assert.IsNotNull(codecReg2);
-      Assert.AreEqual("multipart/form-data", codecReg1.MediaType);
-      Assert.AreEqual("multipart/form-data", codecReg2.MediaType);
+      Assert.AreEqual(MediaType.MultipartFormData, codecReg1.MediaType);
+      Assert.AreEqual(MediaType.MultipartFormData, codecReg2.MediaType);
       Assert.AreEqual(typeof(MultipartFormDataSerializerCodec), codecReg1.Codec.GetType());
       Assert.AreEqual(typeof(MultipartFormDataSerializerCodec), codecReg2.Codec.GetType());
     }
@@ -93,12 +93,12 @@ namespace Ramone.Tests
     public void CanRegisterMultipartFormDataCodecWithShorthandAndMediaType()
     {
       // Act
-      CM.AddMultipartFormData<MyData>("application/ramone");
-      MediaTypeWriterRegistration codecReg = CM.GetWriter(typeof(MyData), "application/ramone");
+      CM.AddMultipartFormData<MyData>(new MediaType("application/ramone"));
+      MediaTypeWriterRegistration codecReg = CM.GetWriter(typeof(MyData), new MediaType("application/ramone"));
 
       // Assert
       Assert.IsNotNull(codecReg);
-      Assert.AreEqual("application/ramone", codecReg.MediaType);
+      Assert.AreEqual(new MediaType("application/ramone"), codecReg.MediaType);
       Assert.AreEqual(typeof(MultipartFormDataSerializerCodec), codecReg.Codec.GetType());
     }
 
@@ -109,13 +109,13 @@ namespace Ramone.Tests
       // Act
       CM.AddXml<MyData>();
       MediaTypeWriterRegistration codecReg1 = CM.GetWriter(typeof(MyData));
-      MediaTypeWriterRegistration codecReg2 = CM.GetWriter(typeof(MyData), "application/xml");
+      MediaTypeWriterRegistration codecReg2 = CM.GetWriter(typeof(MyData), MediaType.ApplicationXml);
 
       // Assert
       Assert.IsNotNull(codecReg1);
       Assert.IsNotNull(codecReg2);
-      Assert.AreEqual("application/xml", codecReg1.MediaType);
-      Assert.AreEqual("application/xml", codecReg2.MediaType);
+      Assert.AreEqual(MediaType.ApplicationXml, codecReg1.MediaType);
+      Assert.AreEqual(MediaType.ApplicationXml, codecReg2.MediaType);
       Assert.AreEqual(typeof(XmlSerializerCodec), codecReg1.Codec.GetType());
       Assert.AreEqual(typeof(XmlSerializerCodec), codecReg2.Codec.GetType());
     }
@@ -125,12 +125,12 @@ namespace Ramone.Tests
     public void CanRegisterXmlSerializerCodecWithShorthandAndMediaType()
     {
       // Act
-      CM.AddXml<MyData>("application/ramone+xml");
-      MediaTypeWriterRegistration codecReg = CM.GetWriter(typeof(MyData), "application/ramone+xml");
+      CM.AddXml<MyData>(new MediaType("application/ramone+xml"));
+      MediaTypeWriterRegistration codecReg = CM.GetWriter(typeof(MyData), new MediaType("application/ramone+xml"));
 
       // Assert
       Assert.IsNotNull(codecReg);
-      Assert.AreEqual("application/ramone+xml", codecReg.MediaType);
+      Assert.AreEqual(new MediaType("application/ramone+xml"), codecReg.MediaType);
       Assert.AreEqual(typeof(XmlSerializerCodec), codecReg.Codec.GetType());
     }
 
@@ -141,13 +141,13 @@ namespace Ramone.Tests
       // Act
       CM.AddJson<MyData>();
       MediaTypeWriterRegistration codecReg1 = CM.GetWriter(typeof(MyData));
-      MediaTypeWriterRegistration codecReg2 = CM.GetWriter(typeof(MyData), "application/json");
+      MediaTypeWriterRegistration codecReg2 = CM.GetWriter(typeof(MyData), MediaType.ApplicationJson);
 
       // Assert
       Assert.IsNotNull(codecReg1);
       Assert.IsNotNull(codecReg2);
-      Assert.AreEqual("application/json", codecReg1.MediaType);
-      Assert.AreEqual("application/json", codecReg2.MediaType);
+      Assert.AreEqual(MediaType.ApplicationJson, codecReg1.MediaType);
+      Assert.AreEqual(MediaType.ApplicationJson, codecReg2.MediaType);
       Assert.AreEqual(typeof(JsonSerializerCodec), codecReg1.Codec.GetType());
       Assert.AreEqual(typeof(JsonSerializerCodec), codecReg2.Codec.GetType());
     }
@@ -157,12 +157,12 @@ namespace Ramone.Tests
     public void CanRegisterJsonSerializerCodecWithShorthandAndMediaType()
     {
       // Act
-      CM.AddJson<MyData>("application/ramone+json");
-      MediaTypeWriterRegistration codecReg = CM.GetWriter(typeof(MyData), "application/ramone+json");
+      CM.AddJson<MyData>(new MediaType("application/ramone+json"));
+      MediaTypeWriterRegistration codecReg = CM.GetWriter(typeof(MyData), new MediaType("application/ramone+json"));
 
       // Assert
       Assert.IsNotNull(codecReg);
-      Assert.AreEqual("application/ramone+json", codecReg.MediaType);
+      Assert.AreEqual(new MediaType("application/ramone+json"), codecReg.MediaType);
       Assert.AreEqual(typeof(JsonSerializerCodec), codecReg.Codec.GetType());
     }
 
@@ -171,12 +171,12 @@ namespace Ramone.Tests
     public void MediaTypeQueryingIsCaseInsensitive()
     {
       // Act
-      CM.AddJson<MyData>("application/RAMONE+json");
-      MediaTypeWriterRegistration codecReg = CM.GetWriter(typeof(MyData), "appLICAtion/ramone+json");
+      CM.AddJson<MyData>(new MediaType("application/RAMONE+json"));
+      MediaTypeWriterRegistration codecReg = CM.GetWriter(typeof(MyData), new MediaType("appLICAtion/ramone+json"));
 
       // Assert
       Assert.IsNotNull(codecReg);
-      Assert.AreEqual("application/ramone+json", codecReg.MediaType, "Media-type identifiers are stored in lower case.");
+      Assert.AreEqual(new MediaType("application/ramone+json"), codecReg.MediaType, "Media-type identifiers are stored in lower case.");
       Assert.AreEqual(typeof(JsonSerializerCodec), codecReg.Codec.GetType());
     }
 
@@ -185,15 +185,15 @@ namespace Ramone.Tests
     public void CanHandleMediaTypeWildcards()
     {
       // Act
-      CM.AddJson<MyData>("*/*");
-      MediaTypeWriterRegistration codecReg1 = CM.GetWriter(typeof(MyData), "application/json");
-      MediaTypeWriterRegistration codecReg2 = CM.GetWriter(typeof(MyData), "something/else");
+      CM.AddJson<MyData>(new MediaType("*/*"));
+      MediaTypeWriterRegistration codecReg1 = CM.GetWriter(typeof(MyData), new MediaType("application/json"));
+      MediaTypeWriterRegistration codecReg2 = CM.GetWriter(typeof(MyData), new MediaType("something/else"));
 
       // Assert
       Assert.IsNotNull(codecReg1);
       Assert.IsNotNull(codecReg2);
-      Assert.AreEqual("*/*", codecReg1.MediaType);
-      Assert.AreEqual("*/*", codecReg2.MediaType);
+      Assert.AreEqual(new MediaType("*/*"), codecReg1.MediaType);
+      Assert.AreEqual(new MediaType("*/*"), codecReg2.MediaType);
       Assert.AreEqual(typeof(JsonSerializerCodec), codecReg1.Codec.GetType());
       Assert.AreEqual(typeof(JsonSerializerCodec), codecReg2.Codec.GetType());
     }
@@ -203,17 +203,17 @@ namespace Ramone.Tests
     public void CanHandleMediaSubTypeWildcards()
     {
       // Act
-      CM.AddJson<MyData>("application/*");
-      MediaTypeWriterRegistration codecReg1 = CM.GetWriter(typeof(MyData), "application/json");
-      MediaTypeWriterRegistration codecReg2 = CM.GetWriter(typeof(MyData), "application/other");
-      MediaTypeWriterRegistration codecReg3 = CM.GetWriter(typeof(MyData), "something/else");
+      CM.AddJson<MyData>(new MediaType("application/*"));
+      MediaTypeWriterRegistration codecReg1 = CM.GetWriter(typeof(MyData), new MediaType("application/json"));
+      MediaTypeWriterRegistration codecReg2 = CM.GetWriter(typeof(MyData), new MediaType("application/other"));
+      MediaTypeWriterRegistration codecReg3 = CM.GetWriter(typeof(MyData), new MediaType("something/else"));
 
       // Assert
       Assert.IsNotNull(codecReg1);
       Assert.IsNotNull(codecReg2);
       Assert.IsNull(codecReg3);
-      Assert.AreEqual("application/*", codecReg1.MediaType);
-      Assert.AreEqual("application/*", codecReg2.MediaType);
+      Assert.AreEqual(new MediaType("application/*"), codecReg1.MediaType);
+      Assert.AreEqual(new MediaType("application/*"), codecReg2.MediaType);
       Assert.AreEqual(typeof(JsonSerializerCodec), codecReg1.Codec.GetType());
       Assert.AreEqual(typeof(JsonSerializerCodec), codecReg2.Codec.GetType());
     }

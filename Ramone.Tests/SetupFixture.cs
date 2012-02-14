@@ -24,19 +24,19 @@ namespace Ramone.Tests
       cm.AddCodec<Document>(CMSConstants.CMSMediaType, new XmlSerializerCodec());
       cm.AddCodec<Party>(CMSConstants.CMSMediaType, new XmlSerializerCodec());
       
-      cm.AddCodec<Cat>("text/plain", new CatAsTextCodec());
-      cm.AddCodec<Cat>("text/html", new CatAsHtmlCodec());
+      cm.AddCodec<Cat>(MediaType.TextPlain, new CatAsTextCodec());
+      cm.AddCodec<Cat>(MediaType.TextHtml, new CatAsHtmlCodec());
 
-      cm.AddCodec<Dog1>("application/vnd.dog+xml", new XmlSerializerCodec());
-      cm.AddCodec<Dog2>("application/vnd.dog+xml", new XmlSerializerCodec());
+      cm.AddCodec<Dog1>(new MediaType("application/vnd.dog+xml"), new XmlSerializerCodec());
+      cm.AddCodec<Dog2>(new MediaType("application/vnd.dog+xml"), new XmlSerializerCodec());
 
-      cm.AddCodec<HeaderList>("application/xml", new XmlSerializerCodec());
+      cm.AddCodec<HeaderList>(MediaType.ApplicationXml, new XmlSerializerCodec());
 
-      cm.AddCodec<RegisteredClass>("application/xml", new XmlSerializerCodec());
+      cm.AddCodec<RegisteredClass>(MediaType.ApplicationXml, new XmlSerializerCodec());
 
-      cm.AddCodec<string>("text/plain", new TextCodec());
-      cm.AddCodec<string>("text/html", new TextCodec());
-      cm.AddCodec<string>("text/xml", new TextCodec());
+      cm.AddCodec<string>(MediaType.TextPlain, new TextCodec());
+      cm.AddCodec<string>(MediaType.TextHtml, new TextCodec());
+      cm.AddCodec<string>(MediaType.TextXml, new TextCodec());
     }
   }
 }

@@ -12,7 +12,7 @@ namespace Ramone.Tests.Server.Handlers
     public object Get()
     {
       MemoryStream s = new MemoryStream(new byte[] { 6, 7, 8, 9 });
-      return new InMemoryFile(s) { ContentType = MediaType.ApplicationOctetStream };
+      return new InMemoryFile(s) { ContentType = OpenRasta.Web.MediaType.ApplicationOctetStream };
     }
 
 

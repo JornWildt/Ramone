@@ -55,7 +55,7 @@ namespace Ramone
 
     protected IMediaTypeWriter BodyCodec { get; set; }
 
-    protected string BodyContentType { get; set; }
+    protected MediaType BodyContentType { get; set; }
 
     protected string BodyCharacterSet { get; set; }
 
@@ -72,23 +72,42 @@ namespace Ramone
 
     public RamoneRequest ContentType(string contentType)
     {
+      return ContentType(new MediaType(contentType));
+    }
+
+    
+    public RamoneRequest ContentType(MediaType contentType)
+    {
       BodyContentType = contentType;
       return this;
     }
 
 
-    public RamoneRequest Accept(string accept)
+    public RamoneRequest Accept(MediaType accept)
     {
-      AcceptHeader = accept;
+      AcceptHeader = (accept != null ? accept.MediaType : null);
       return this;
     }
 
 
-    public RamoneRequest<TAccept> Accept<TAccept>(string accept = null)
+    public RamoneRequest<TAccept> Accept<TAccept>(MediaType accept = null)
       where TAccept : class
     {
       Accept(accept);
       return new RamoneRequest<TAccept>(this);
+    }
+
+
+    public RamoneRequest Accept(string accept)
+    {
+      return Accept(new MediaType(accept));
+    }
+
+
+    public RamoneRequest<TAccept> Accept<TAccept>(string accept)
+      where TAccept : class
+    {
+      return Accept<TAccept>(new MediaType(accept));
     }
 
 
@@ -118,7 +137,7 @@ namespace Ramone
       ICodecManager codecManager = Session.Service.CodecManager;
       if (BodyContentType == null)
         BodyContentType = Session.DefaultRequestMediaType;
-      string contentType = BodyContentType ?? Session.DefaultRequestMediaType;
+      MediaType contentType = BodyContentType ?? Session.DefaultRequestMediaType;
       if (body != null)
       {
         MediaTypeWriterRegistration writer = BodyContentType == null
@@ -129,7 +148,7 @@ namespace Ramone
         BodyCodec = writer.Codec;
       }
 
-      if (BodyContentType == "multipart/form-data")
+      if (BodyContentType.Matches("multipart/form-data"))
       {
         BodyBoundary = Guid.NewGuid().ToString();
       }
@@ -289,7 +308,7 @@ namespace Ramone
       if (!string.IsNullOrEmpty(AcceptHeader))
         return AcceptHeader;
       if (Session.DefaultResponseMediaType != null)
-        return Session.DefaultResponseMediaType;
+        return Session.DefaultResponseMediaType.MediaType;
 
       if (t == null)
         return null;

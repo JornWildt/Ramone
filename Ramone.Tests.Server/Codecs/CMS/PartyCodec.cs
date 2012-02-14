@@ -6,7 +6,7 @@ using Ramone.Tests.Common.CMS;
 
 namespace Ramone.Tests.Server.Codecs.CMS
 {
-  [MediaType(CMSConstants.CMSMediaType)]
+  [MediaType(CMSConstants.CMSMediaTypeId)]
   [MediaType("application/xml")]
   public class PartyCodec : XmlCodecBase<Party>
   {

@@ -8,7 +8,7 @@ namespace Ramone
   {
     public HttpWebResponse Response { get; protected set; }
 
-    public string ContentType { get; protected set; }
+    public MediaType ContentType { get; protected set; }
 
     public long ContentLength { get { return Response.ContentLength; } }
 
@@ -22,8 +22,15 @@ namespace Ramone
     public RamoneResponse(HttpWebResponse response, IRamoneSession session)
     {
       Response = response;
-      ContentType = string.IsNullOrEmpty(Response.ContentType) ? "" : Response.ContentType.Split(';')[0];
-      ContentType = ContentType.Trim();
+      try
+      {
+        // FIXME: TryParse
+        ContentType = new MediaType(Response.ContentType);
+      }
+      catch (Exception)
+      {
+        ContentType = null;
+      }
       Session = session;
     }
 
@@ -36,7 +43,7 @@ namespace Ramone
 
     public T Decode<T>() where T : class
     {
-      if (Response.ContentLength == 0 || string.IsNullOrEmpty(ContentType) || Response.StatusCode == HttpStatusCode.NoContent)
+      if (Response.ContentLength == 0 || ContentType == null || Response.StatusCode == HttpStatusCode.NoContent)
         return null;
 
       IMediaTypeReader reader = Session.Service.CodecManager.GetReader(typeof(T), ContentType).Codec;

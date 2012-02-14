@@ -15,9 +15,9 @@ namespace Ramone
 
     Uri BaseUri { get; }
 
-    string DefaultRequestMediaType { get; set; }
+    MediaType DefaultRequestMediaType { get; set; }
 
-    string DefaultResponseMediaType { get; set; }
+    MediaType DefaultResponseMediaType { get; set; }
     
     IAuthorizationDispatcher AuthorizationDispatcher { get; }
 

@@ -18,8 +18,8 @@ namespace Ramone.Tests.Server.Handlers.CMS
         Title = string.Format("Dossier no. {0}", id),
         Links = new AtomLinkList
         {
-          new AtomLink(typeof(DossierDocumentList).CreateUri(new { id = id }), CMSConstants.DocumentsLinkRelType, CMSConstants.CMSMediaType, "Documents"),
-          new AtomLink(party.CreateUri(), CMSConstants.PartyLinkRelType, CMSConstants.CMSMediaType, party.FullName)
+          new AtomLink(typeof(DossierDocumentList).CreateUri(new { id = id }), CMSConstants.DocumentsLinkRelType, CMSConstants.CMSMediaTypeId, "Documents"),
+          new AtomLink(party.CreateUri(), CMSConstants.PartyLinkRelType, CMSConstants.CMSMediaTypeId, party.FullName)
         }
       };
     }

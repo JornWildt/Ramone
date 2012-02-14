@@ -13,7 +13,7 @@ namespace Ramone.Tests.Server.Codecs
 
     public void WriteTo(object entity, OpenRasta.Web.IHttpEntity response, string[] codecParameters)
     {
-      response.ContentType = new MediaType(HttpContext.Current.Request.ContentType);
+      response.ContentType = new OpenRasta.Web.MediaType(HttpContext.Current.Request.ContentType);
       Ramone.Tests.Server.Configuration.AnyEcho e = (Ramone.Tests.Server.Configuration.AnyEcho)entity;
       e.S.CopyTo(response.Stream);
     }

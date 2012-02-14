@@ -16,11 +16,7 @@ namespace Ramone.MediaTypes
 
     public object ReadFrom(ReaderContext context)
     {
-      Encoding enc = Encoding.Default;
-
-      MediaType m = MediaTypeParser.ParseMediaType(context.Response.ContentType);
-      if (m.Parameters.ContainsKey("charset"))
-        enc = Encoding.GetEncoding(m.Parameters["charset"]);
+      Encoding enc = MediaTypeParser.GetEncodingFromCharset(context.Response.ContentType);
 
       using (var reader = new StreamReader(context.HttpStream, enc))
       {
@@ -35,11 +31,7 @@ namespace Ramone.MediaTypes
 
     public void WriteTo(WriterContext context)
     {
-      Encoding enc = Encoding.Default;
-
-      MediaType m = MediaTypeParser.ParseMediaType(context.Request.ContentType);
-      if (m.Parameters.ContainsKey("charset"))
-        enc = Encoding.GetEncoding(m.Parameters["charset"]);
+      Encoding enc = MediaTypeParser.GetEncodingFromCharset(context.Request.ContentType);
 
       using (var writer = new StreamWriter(context.HttpStream, enc))
       {

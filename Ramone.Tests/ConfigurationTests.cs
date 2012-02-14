@@ -34,19 +34,19 @@ namespace Ramone.Tests
       IRamoneService service = RamoneConfiguration.NewService(BaseUrl);
 
       // Assert (a few of them)
-      Assert.IsNotNull(service.CodecManager.GetReader(typeof(XmlDocument), "application/xml"));
-      Assert.IsNotNull(service.CodecManager.GetReader(typeof(object), "application/json"));
-      Assert.IsNotNull(service.CodecManager.GetReader(typeof(SyndicationFeed), "application/atom+xml"));
+      Assert.IsNotNull(service.CodecManager.GetReader(typeof(XmlDocument), MediaType.ApplicationXml));
+      Assert.IsNotNull(service.CodecManager.GetReader(typeof(object), MediaType.ApplicationJson));
+      Assert.IsNotNull(service.CodecManager.GetReader(typeof(SyndicationFeed), MediaType.ApplicationAtom));
 
       // Streams can read/write any media-type
-      Assert.IsNotNull(service.CodecManager.GetReader(typeof(Stream), "application/octet"));
-      Assert.IsNotNull(service.CodecManager.GetReader(typeof(Stream), "image/jpeg"));
-      Assert.IsNotNull(service.CodecManager.GetReader(typeof(Stream), "unknown/other"));
+      Assert.IsNotNull(service.CodecManager.GetReader(typeof(Stream), MediaType.ApplicationOctetStream));
+      Assert.IsNotNull(service.CodecManager.GetReader(typeof(Stream), new MediaType("image/jpeg")));
+      Assert.IsNotNull(service.CodecManager.GetReader(typeof(Stream), new MediaType("unknown/other")));
 
       // Writers
-      Assert.IsNotNull(service.CodecManager.GetWriter(typeof(Stream), "application/octet"));
-      Assert.IsNotNull(service.CodecManager.GetWriter(typeof(Stream), "image/jpeg"));
-      Assert.IsNotNull(service.CodecManager.GetWriter(typeof(Stream), "unknown/other"));
+      Assert.IsNotNull(service.CodecManager.GetWriter(typeof(Stream), MediaType.ApplicationOctetStream));
+      Assert.IsNotNull(service.CodecManager.GetWriter(typeof(Stream), new MediaType("image/jpeg")));
+      Assert.IsNotNull(service.CodecManager.GetWriter(typeof(Stream), new MediaType("unknown/other")));
     }
 
 
@@ -58,9 +58,9 @@ namespace Ramone.Tests
       IRamoneService service = RamoneConfiguration.NewService(BaseUrl);
 
       // Assert (a few of them)
-      AssertThrows<ArgumentException>(() => service.CodecManager.GetReader(typeof(XmlDocument), "application/xml"));
-      AssertThrows<ArgumentException>(() => service.CodecManager.GetReader(typeof(Stream), "application/octet"));
-      AssertThrows<ArgumentException>(() => service.CodecManager.GetWriter(typeof(Stream), "unknown/other"));
+      AssertThrows<ArgumentException>(() => service.CodecManager.GetReader(typeof(XmlDocument), MediaType.ApplicationXml));
+      AssertThrows<ArgumentException>(() => service.CodecManager.GetReader(typeof(Stream), MediaType.ApplicationOctetStream));
+      AssertThrows<ArgumentException>(() => service.CodecManager.GetWriter(typeof(Stream), new MediaType("unknown/other")));
     }
 
 

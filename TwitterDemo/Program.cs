@@ -54,8 +54,8 @@ namespace TwitterDemo
 
       // Set default request/response media-type to JSON for Twitter.
       // This saves us the hassle of specifying codecs for all the Twitter resource types (Tweet, Timeline, User etc.)
-      Session.DefaultRequestMediaType = "application/x-www-form-urlencoded";
-      Session.DefaultResponseMediaType = "application/json";
+      Session.DefaultRequestMediaType = MediaType.ApplicationFormUrlEncoded;
+      Session.DefaultResponseMediaType = MediaType.ApplicationJson;
     }
 
 

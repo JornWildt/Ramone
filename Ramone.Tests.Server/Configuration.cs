@@ -122,19 +122,19 @@ namespace Ramone.Tests.Server
           .AtUri(CMSConstants.DossierDocumentsPath)
           .HandledBy<DossierDocumentsHandler>()
           .TranscodedBy<DossierDocumentsCodec>()
-          .ForMediaType(CMSConstants.CMSMediaType);
+          .ForMediaType(CMSConstants.CMSMediaType.MediaType);
 
       ResourceSpace.Has.ResourcesOfType<Document>()
           .AtUri(CMSConstants.DocumentPath)
           .HandledBy<DocumentHandler>()
           .TranscodedBy<DocumentCodec>()
-          .ForMediaType(CMSConstants.CMSMediaType);
+          .ForMediaType(CMSConstants.CMSMediaType.MediaType);
 
       ResourceSpace.Has.ResourcesOfType<Party>()
           .AtUri(CMSConstants.PartyPath)
           .HandledBy<PartyHandler>()
           .TranscodedBy<PartyCodec>()
-          .ForMediaType(CMSConstants.CMSMediaType);
+          .ForMediaType(CMSConstants.CMSMediaType.MediaType);
     }
   }
 }

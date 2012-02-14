@@ -14,7 +14,7 @@ namespace Ramone.Implementation
 
     #region ICodecManager Members
 
-    public void AddCodec<TMediaType>(string mediaType, IMediaTypeCodec codec)
+    public void AddCodec<TMediaType>(MediaType mediaType, IMediaTypeCodec codec)
     {
       if (codec is IMediaTypeReader)
         AddReader(typeof(TMediaType), mediaType, (IMediaTypeReader)codec);
@@ -32,7 +32,7 @@ namespace Ramone.Implementation
     }
 
 
-    public void AddCodec(string mediaType, IMediaTypeCodec codec)
+    public void AddCodec(MediaType mediaType, IMediaTypeCodec codec)
     {
       if (codec is IMediaTypeReader)
         AddReader(null, mediaType, (IMediaTypeReader)codec);
@@ -47,7 +47,7 @@ namespace Ramone.Implementation
     }
 
 
-    public MediaTypeReaderRegistration GetReader(Type t, string mediaType)
+    public MediaTypeReaderRegistration GetReader(Type t, MediaType mediaType)
     {
       MediaTypeReaderRegistration r = GetSingleReaderOrNull(t, GetReaders(t, mediaType, TypeSelectionMode.OnlyTyped));
       if (r == null)
@@ -67,7 +67,7 @@ namespace Ramone.Implementation
     }
 
 
-    public MediaTypeWriterRegistration GetWriter(Type t, string mediaType)
+    public MediaTypeWriterRegistration GetWriter(Type t, MediaType mediaType)
     {
       MediaTypeWriterRegistration w = GetSingleWriterOrNull(t, GetWriters(t, mediaType, TypeSelectionMode.OnlyTyped));
       if (w == null)
@@ -83,7 +83,7 @@ namespace Ramone.Implementation
     #endregion
 
 
-    protected virtual void AddReader(Type t, string mediaType, IMediaTypeReader reader)
+    protected virtual void AddReader(Type t, MediaType mediaType, IMediaTypeReader reader)
     {
       MediaTypeReaderRegistration r = GetSingleReaderOrNull(t, GetReaders(t, mediaType, TypeSelectionMode.OnlyTyped));
       if (r != null)
@@ -92,7 +92,7 @@ namespace Ramone.Implementation
     }
 
 
-    protected virtual void AddWriter(Type t, string mediaType, IMediaTypeWriter writer)
+    protected virtual void AddWriter(Type t, MediaType mediaType, IMediaTypeWriter writer)
     {
       MediaTypeWriterRegistration w = GetSingleWriterOrNull(t, GetWriters(t, mediaType, TypeSelectionMode.OnlyTyped));
       if (w != null)
@@ -103,7 +103,7 @@ namespace Ramone.Implementation
 
     protected enum TypeSelectionMode { All, OnlyTyped }
 
-    protected IEnumerable<MediaTypeReaderRegistration> GetReaders(Type t, string mediaType, TypeSelectionMode mode)
+    protected IEnumerable<MediaTypeReaderRegistration> GetReaders(Type t, MediaType mediaType, TypeSelectionMode mode)
     {
       return from entry in RegisteredReaders
              where (Equals(entry.MediaType, mediaType) || mediaType == null) && entry.ClrType == t
@@ -124,7 +124,7 @@ namespace Ramone.Implementation
     }
 
 
-    protected IEnumerable<MediaTypeWriterRegistration> GetWriters(Type t, string mediaType, TypeSelectionMode mode)
+    protected IEnumerable<MediaTypeWriterRegistration> GetWriters(Type t, MediaType mediaType, TypeSelectionMode mode)
     {
       return from entry in RegisteredWriters
              where (Equals(entry.MediaType,mediaType) || mediaType == null) && entry.ClrType == t
@@ -145,9 +145,11 @@ namespace Ramone.Implementation
     }
 
 
-    protected bool Equals(string a, string b)
+    protected bool Equals(MediaType a, MediaType b)
     {
-      return string.Equals(a, b, StringComparison.OrdinalIgnoreCase);
+      if (a == null)
+        return b == null;
+      return a.Matches(b);
     }
   }
 }
