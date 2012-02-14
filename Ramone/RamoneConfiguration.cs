@@ -95,7 +95,7 @@ namespace Ramone
       cm.AddCodec(MediaType.ApplicationFormUrlEncoded, new FormUrlEncodedSerializerCodec());
 
       // Streams
-      cm.AddCodec<Stream>(new StreamCodec());
+      cm.AddCodec<Stream>(new MediaType("*/*"), new StreamCodec());
     }
 
 

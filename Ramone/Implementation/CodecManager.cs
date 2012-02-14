@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Collections.Generic;
+using CuttingEdge.Conditions;
 
 
 namespace Ramone.Implementation
@@ -16,6 +17,9 @@ namespace Ramone.Implementation
 
     public void AddCodec<TMediaType>(MediaType mediaType, IMediaTypeCodec codec)
     {
+      Condition.Requires(mediaType, "mediaType").IsNotNull();
+      Condition.Requires(codec, "codec").IsNotNull();
+
       if (codec is IMediaTypeReader)
         AddReader(typeof(TMediaType), mediaType, (IMediaTypeReader)codec);
       if (codec is IMediaTypeWriter)
@@ -23,17 +27,11 @@ namespace Ramone.Implementation
     }
 
 
-    public void AddCodec<TMediaType>(IMediaTypeCodec codec)
-    {
-      if (codec is IMediaTypeReader)
-        AddReader(typeof(TMediaType), null, (IMediaTypeReader)codec);
-      if (codec is IMediaTypeWriter)
-        AddWriter(typeof(TMediaType), null, (IMediaTypeWriter)codec);
-    }
-
-
     public void AddCodec(MediaType mediaType, IMediaTypeCodec codec)
     {
+      Condition.Requires(mediaType, "mediaType").IsNotNull();
+      Condition.Requires(codec, "codec").IsNotNull();
+
       if (codec is IMediaTypeReader)
         AddReader(null, mediaType, (IMediaTypeReader)codec);
       if (codec is IMediaTypeWriter)
@@ -43,41 +41,27 @@ namespace Ramone.Implementation
 
     public IEnumerable<MediaTypeReaderRegistration> GetReaders(Type t)
     {
-      return GetReaders(t, null, TypeSelectionMode.All);
+      return SelectReaders(t, MediaType.Wildcard);
     }
 
 
     public MediaTypeReaderRegistration GetReader(Type t, MediaType mediaType)
     {
-      MediaTypeReaderRegistration r = GetSingleReaderOrNull(t, GetReaders(t, mediaType, TypeSelectionMode.OnlyTyped));
-      if (r == null)
-      {
-        r = GetSingleReaderOrNull(t, GetReaders(t, mediaType, TypeSelectionMode.All));
-        if (r == null)
-          throw new ArgumentException(string.Format("Could not find a reader codec for '{0}' + {1}", mediaType, t));
-      }
+      MediaTypeReaderRegistration reader = SelectReaders(t, mediaType).FirstOrDefault();
+      if (reader == null)
+        throw new ArgumentException(string.Format("Could not find a reader codec for '{0}' + {1}", mediaType, t));
 
-      return r;
-    }
-
-
-    public MediaTypeWriterRegistration GetWriter(Type t)
-    {
-      return GetWriter(t, null);
+      return reader;
     }
 
 
     public MediaTypeWriterRegistration GetWriter(Type t, MediaType mediaType)
     {
-      MediaTypeWriterRegistration w = GetSingleWriterOrNull(t, GetWriters(t, mediaType, TypeSelectionMode.OnlyTyped));
-      if (w == null)
-      {
-        w = GetSingleWriterOrNull(t, GetWriters(t, mediaType, TypeSelectionMode.All));
-        if (w == null)
-          throw new ArgumentException(string.Format("Could not find a writer codec for '{0}' + {1}", mediaType, t));
-      }
+      MediaTypeWriterRegistration writer = SelectWriters(t, mediaType).FirstOrDefault();
+      if (writer == null)
+        throw new ArgumentException(string.Format("Could not find a writer codec for '{0}' + {1}", mediaType, t));
 
-      return w;
+      return writer;
     }
 
     #endregion
@@ -85,6 +69,9 @@ namespace Ramone.Implementation
 
     protected virtual void AddReader(Type t, MediaType mediaType, IMediaTypeReader reader)
     {
+      Condition.Requires(mediaType, "mediaType").IsNotNull();
+      Condition.Requires(reader, "reader").IsNotNull();
+
       MediaTypeReaderRegistration r = GetSingleReaderOrNull(t, GetReaders(t, mediaType, TypeSelectionMode.OnlyTyped));
       if (r != null)
         throw new ArgumentException(string.Format("Could not add reader for media-type {0} since one already exists (got {1} for '{2}').", mediaType, r.ClrType, r.MediaType));
@@ -94,6 +81,9 @@ namespace Ramone.Implementation
 
     protected virtual void AddWriter(Type t, MediaType mediaType, IMediaTypeWriter writer)
     {
+      Condition.Requires(mediaType, "mediaType").IsNotNull();
+      Condition.Requires(writer, "writer").IsNotNull();
+
       MediaTypeWriterRegistration w = GetSingleWriterOrNull(t, GetWriters(t, mediaType, TypeSelectionMode.OnlyTyped));
       if (w != null)
         throw new ArgumentException(string.Format("Could not add writer of type {0} for media-type '{1}' since one already exists (got {2} for '{3}').", t, mediaType, w.ClrType, w.MediaType));
@@ -105,10 +95,12 @@ namespace Ramone.Implementation
 
     protected IEnumerable<MediaTypeReaderRegistration> GetReaders(Type t, MediaType mediaType, TypeSelectionMode mode)
     {
+      Condition.Requires(mediaType, "mediaType").IsNotNull();
+
       return from entry in RegisteredReaders
-             where (Equals(entry.MediaType, mediaType) || mediaType == null) && entry.ClrType == t
-                   || mode == TypeSelectionMode.All && Equals(entry.MediaType, mediaType) && mediaType != null && entry.ClrType == null
-                   || mode == TypeSelectionMode.All && entry.MediaType == null && mediaType != null && entry.ClrType != null && entry.ClrType.IsAssignableFrom(t)
+             where Equals(entry.MediaType, mediaType) && entry.ClrType == t
+                   || mode == TypeSelectionMode.All && Equals(entry.MediaType, mediaType) && entry.ClrType == null
+                   || mode == TypeSelectionMode.All && Equals(entry.MediaType, mediaType) && entry.ClrType != null && entry.ClrType.IsAssignableFrom(t)
              select entry;
     }
 
@@ -126,8 +118,10 @@ namespace Ramone.Implementation
 
     protected IEnumerable<MediaTypeWriterRegistration> GetWriters(Type t, MediaType mediaType, TypeSelectionMode mode)
     {
+      Condition.Requires(mediaType, "mediaType").IsNotNull();
+
       return from entry in RegisteredWriters
-             where (Equals(entry.MediaType,mediaType) || mediaType == null) && entry.ClrType == t
+             where Equals(entry.MediaType,mediaType) && entry.ClrType == t
                    || mode == TypeSelectionMode.All && Equals(entry.MediaType, mediaType) && mediaType != null && entry.ClrType == null
                    || mode == TypeSelectionMode.All && entry.MediaType == null && mediaType != null && entry.ClrType != null && entry.ClrType.IsAssignableFrom(t)
              select entry;
@@ -145,10 +139,46 @@ namespace Ramone.Implementation
     }
 
 
+    protected IEnumerable<MediaTypeWriterRegistration> SelectWriters(Type t, MediaType mediaType)
+    {
+      Condition.Requires(mediaType, "mediaType").IsNotNull();
+      Condition.Requires(t, "t").IsNotNull();
+
+      var exactMatch = RegisteredWriters.Where(w => Equals(w.MediaType, mediaType) && w.ClrType == t);
+
+      var anyMediaTypeMatch = RegisteredWriters.Where(w => Matches(w.MediaType, mediaType) && w.ClrType != null && w.ClrType.IsAssignableFrom(t));
+
+      var anyClrTypeMatch = RegisteredWriters.Where(w => Equals(w.MediaType, mediaType) && w.ClrType == null);
+
+      // Return Union since ordering is important (hopefully Union respects that ...)
+      return exactMatch.Union(anyMediaTypeMatch).Union(anyClrTypeMatch);
+    }
+
+
+    protected IEnumerable<MediaTypeReaderRegistration> SelectReaders(Type t, MediaType mediaType)
+    {
+      Condition.Requires(mediaType, "mediaType").IsNotNull();
+      Condition.Requires(t, "t").IsNotNull();
+
+      var exactMatch = RegisteredReaders.Where(r => Equals(r.MediaType, mediaType) && r.ClrType == t);
+
+      var anyMediaTypeMatch = RegisteredReaders.Where(r => Matches(r.MediaType, mediaType) && r.ClrType != null && r.ClrType.IsAssignableFrom(t));
+
+      var anyClrTypeMatch = RegisteredReaders.Where(r => Equals(r.MediaType, mediaType) && r.ClrType == null);
+
+      // Return Union since ordering is important (hopefully Union respects that ...)
+      return exactMatch.Union(anyMediaTypeMatch).Union(anyClrTypeMatch);
+    }
+
+
     protected bool Equals(MediaType a, MediaType b)
     {
-      if (a == null)
-        return b == null;
+      return a.MediaType == b.MediaType;
+    }
+
+
+    protected bool Matches(MediaType a, MediaType b)
+    {
       return a.Matches(b);
     }
   }

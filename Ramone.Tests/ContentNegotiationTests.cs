@@ -84,14 +84,15 @@ namespace Ramone.Tests
 
 
     [Test]
-    public void WhenPostingWithoutSpecifyingContentTypeItThrows()
+    public void WhenPostingWithoutSpecifyingContentTypeItSelectsRandomCodec()
     {
       // Arrange
-      Cat c = new Cat { Name = "Monster Baby" };
+      Cat c1 = new Cat { Name = "Monster Baby" };
       RamoneRequest catReq = Session.Bind(CatTemplate, new { name = "Fiona" });
 
       // Act + Assert
-      AssertThrows<ArgumentException>(() => catReq.Post<Cat>(c));
+      Cat c2 = catReq.Post<Cat>(c1).Body;
+      Assert.AreEqual("Fiona", c2.Name);
     }
 
 

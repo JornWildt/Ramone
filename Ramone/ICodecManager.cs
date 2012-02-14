@@ -9,19 +9,12 @@ namespace Ramone
     void AddCodec<TMediaType>(MediaType mediaType, IMediaTypeCodec codec);
 
     /// <summary>
-    /// Add codec for any media type
-    /// </summary>
-    /// <param name="codec"></param>
-    void AddCodec<TMediaType>(IMediaTypeCodec codec);
-
-    /// <summary>
     /// Add codec for any CLR type
     /// </summary>
     /// <param name="mediaType"></param>
     /// <param name="codec"></param>
     void AddCodec(MediaType mediaType, IMediaTypeCodec codec);
 
-    MediaTypeWriterRegistration GetWriter(Type t);
     MediaTypeWriterRegistration GetWriter(Type t, MediaType mediaType);
 
     IEnumerable<MediaTypeReaderRegistration> GetReaders(Type t);

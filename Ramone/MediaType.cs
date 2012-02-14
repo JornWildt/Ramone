@@ -39,6 +39,8 @@ namespace Ramone
 
     public static readonly MediaType ApplicationFormUrlEncoded = new MediaType("application/x-www-form-urlencoded");
 
+    public static readonly MediaType Wildcard = new MediaType("*/*");
+
 
     public MediaType()
     {
@@ -85,11 +87,9 @@ namespace Ramone
     {
       if (t == null)
         return false;
-      if (t.IsTopLevelWildcard || t.IsSubTypeWildcard)
-        throw new ArgumentException("Cannot match with wildcard argument.");
 
-      return (IsTopLevelWildcard || TopLevelType.Equals(t.TopLevelType, StringComparison.OrdinalIgnoreCase))
-             && (IsSubTypeWildcard || SubType.Equals(t.SubType, StringComparison.OrdinalIgnoreCase));
+      return       (IsTopLevelWildcard || t.IsTopLevelWildcard || TopLevelType.Equals(t.TopLevelType, StringComparison.OrdinalIgnoreCase))
+                && (IsSubTypeWildcard || t.IsSubTypeWildcard || SubType.Equals(t.SubType, StringComparison.OrdinalIgnoreCase));
     }
   }
 }
