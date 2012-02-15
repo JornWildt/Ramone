@@ -51,7 +51,18 @@ namespace Ramone
     }
 
 
-    public static RamoneRequest Bind(this IRamoneSession session, UriTemplate template, object parameters = null)
+
+    // FIXME: rename this or remove it (it does not bind)
+    public static RamoneRequest Bind(this IRamoneSession session, UriTemplate template)
+    {
+      Dictionary<string, string> parameters = new Dictionary<string, string>();
+      Uri url = template.BindByName(session.BaseUri, parameters);
+      return session.Request(url);
+    }
+
+
+
+    public static RamoneRequest Bind(this IRamoneSession session, UriTemplate template, object parameters)
     {
       Dictionary<string, string> parameterDictionary = DictionaryConverter.ConvertObjectPropertiesToDictionary(parameters);
       Uri url = template.BindByName(session.BaseUri, parameterDictionary);
@@ -59,11 +70,45 @@ namespace Ramone
     }
 
 
-    public static RamoneRequest Bind(this IRamoneSession session, string url, object parameters = null)
+    public static RamoneRequest Bind(this IRamoneSession session, UriTemplate template, IDictionary<string, string> parameters)
+    {
+      Uri url = template.BindByName(session.BaseUri, parameters);
+      return session.Request(url);
+    }
+
+
+    public static RamoneRequest Bind(this IRamoneSession session, UriTemplate template, NameValueCollection parameters)
+    {
+      Uri url = template.BindByName(session.BaseUri, parameters);
+      return session.Request(url);
+    }
+
+
+
+
+    public static RamoneRequest Bind(this IRamoneSession session, string url, object parameters)
     {
       UriTemplate template = new UriTemplate(url);
       return session.Bind(template, parameters);
     }
+
+
+
+    public static RamoneRequest Bind(this IRamoneSession session, string url, IDictionary<string, string> parameters)
+    {
+      UriTemplate template = new UriTemplate(url);
+      return session.Bind(template, parameters);
+    }
+
+
+
+    public static RamoneRequest Bind(this IRamoneSession session, string url, NameValueCollection parameters)
+    {
+      UriTemplate template = new UriTemplate(url);
+      return session.Bind(template, parameters);
+    }
+
+
 
 
     public static RamoneRequest Bind(this IRamoneSession session, Uri url, object parameters = null)
@@ -102,54 +147,6 @@ namespace Ramone
     public static RamoneRequest AsMultipartFormData(this RamoneRequest request)
     {
       return request.ContentType("multipart/form-data");
-    }
-
-
-    public static void AddFormUrlEncoded<T>(this ICodecManager codecManager)
-    {
-      codecManager.AddCodec<T>(MediaType.ApplicationFormUrlEncoded, new FormUrlEncodedSerializerCodec());
-    }
-
-
-    public static void AddFormUrlEncoded<T>(this ICodecManager codecManager, MediaType mediaType)
-    {
-      codecManager.AddCodec<T>(mediaType, new FormUrlEncodedSerializerCodec());
-    }
-
-
-    public static void AddMultipartFormData<T>(this ICodecManager codecManager)
-    {
-      codecManager.AddCodec<T>(MediaType.MultipartFormData, new MultipartFormDataSerializerCodec());
-    }
-
-
-    public static void AddMultipartFormData<T>(this ICodecManager codecManager, MediaType mediaType)
-    {
-      codecManager.AddCodec<T>(mediaType, new MultipartFormDataSerializerCodec());
-    }
-
-
-    public static void AddXml<T>(this ICodecManager codecManager)
-    {
-      codecManager.AddCodec<T>(MediaType.ApplicationXml, new XmlSerializerCodec());
-    }
-
-
-    public static void AddXml<T>(this ICodecManager codecManager, MediaType mediaType)
-    {
-      codecManager.AddCodec<T>(mediaType, new XmlSerializerCodec());
-    }
-
-
-    public static void AddJson<T>(this ICodecManager codecManager)
-    {
-      codecManager.AddCodec<T>(MediaType.ApplicationJson, new JsonSerializerCodec());
-    }
-
-
-    public static void AddJson<T>(this ICodecManager codecManager, MediaType mediaType)
-    {
-      codecManager.AddCodec<T>(mediaType, new JsonSerializerCodec());
     }
   }
 }

@@ -2,9 +2,33 @@
 Version 1
 ---------
 
-Codecs
-- Skal kunne registrere reader-codecs for wildcards (f.eks. "*/*" for UrlFormEncoded fra Twitter)
-- Når nu Twitter leverer "text/html" for UrlEncoded, så skal det kunne styres uden at lave en codec registrering.
+URL Binding
+  Template bindings
+    string (path)  "/account/{user}"                [add base-url, bind params]
+    string (url)   "http://dr.dk/{rss}/?day={day}"  [bind params]
+    UriTemplate                                     [add base-url, bind params]
+
+  Non-template bindings (simply adding ?x=1 to URL/path)
+    string (path)  "/account"      [add base-url, add params]
+    string (url)   "http://dr.dk"  [add params]
+    URI                            [add params]
+
+  Parameter inputs
+    None (no templating)
+    Typed objects: new { a = 1 }
+    Hashtable
+    IDictionary<string,string>
+    NameValueCollection
+
+  Return values
+    RamoneRequest  [Bind()]
+    Uri            [BindUri()]
+
+  Method name ideas
+    At()
+    Bind()
+    Request()
+
 
 Session.Bind
 - String(path) => Uri

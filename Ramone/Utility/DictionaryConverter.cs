@@ -9,9 +9,6 @@ namespace Ramone.Utility
   {
     public static Dictionary<string, string> ConvertObjectPropertiesToDictionary(object src)
     {
-      if (src is Dictionary<string, string>)
-        return (Dictionary<string, string>)src;
-
       Dictionary<string, string> result = new Dictionary<string, string>();
 
       if (src == null)
