@@ -6,11 +6,13 @@ using CuttingEdge.Conditions;
 
 namespace Ramone
 {
-  public class MediaType : System.Net.Mime.ContentType
+  public class MediaType
   {
-    public string TopLevelType { get; protected set; }
+    public string FullType { get; private set; }
 
-    public string SubType { get; protected set; }
+    public string TopLevelType { get; private set; }
+
+    public string SubType { get; private set; }
 
     public bool IsTopLevelWildcard { get { return TopLevelType == "*"; } }
 
@@ -48,30 +50,42 @@ namespace Ramone
 
 
     public MediaType(string topLevelType, string subType)
-      : base(topLevelType + "/" + subType)
+      : this(topLevelType + "/" + subType)
     {
-      TopLevelType = topLevelType;
-      SubType = subType;
+      //Condition.Requires(topLevelType, "topLevelType").IsNotNullOrEmpty();
+      //Condition.Requires(subType, "subType").IsNotNullOrEmpty();
+
+      //TopLevelType = topLevelType;
+      //SubType = subType;
+      //FullType = TopLevelType + "/" + SubType;
     }
 
 
     public MediaType(string mediaType)
-      : base(mediaType)
     {
-      Condition.Requires(mediaType, "mediaType").IsNotNullOrEmpty();
+      Condition.Requires(mediaType, "mediaType").IsNotNull();
 
-      string[] types = base.MediaType.Split('/');
+      string[] parameters = mediaType.Split(';');
+      string mediaType2 = parameters[0].Trim();
+
+      if (mediaType2 == string.Empty)
+        throw new FormatException(string.Format("The media-type string '{0}' did not contain any media-type.", mediaType));
+
+      string[] types = mediaType2.Split('/');
       if (types.Length != 2)
         throw new FormatException(string.Format("Cannot instantiate MediaType from '{0}' - expected exactly one '/'.", mediaType));
 
+      if (
+
+      FullType = mediaType2;
       TopLevelType = types[0];
       SubType = types[1];
     }
 
 
     public MediaType(MediaType src)
-      : base(src.MediaType)
     {
+      FullType = src.FullType;
       TopLevelType = src.TopLevelType;
       SubType = src.SubType;
     }
@@ -90,6 +104,52 @@ namespace Ramone
 
       return       (IsTopLevelWildcard || t.IsTopLevelWildcard || TopLevelType.Equals(t.TopLevelType, StringComparison.OrdinalIgnoreCase))
                 && (IsSubTypeWildcard || t.IsSubTypeWildcard || SubType.Equals(t.SubType, StringComparison.OrdinalIgnoreCase));
+    }
+
+
+    public override string ToString()
+    {
+      return FullType;
+    }
+
+
+    public override bool Equals(object obj)
+    {
+      MediaType other = obj as MediaType;
+      if (other == null)
+        return false;
+
+      // Call overloaded == operator
+      return this == other;
+    }
+
+
+    public override int GetHashCode()
+    {
+      return FullType.GetHashCode();
+    }
+
+
+    public static bool operator ==(MediaType a, MediaType b)
+    {
+      // If both are null, or both are same instance, return true.
+      if (System.Object.ReferenceEquals(a, b))
+        return true;
+
+      // If one is null, but not both, return false.
+      // Convert to null to avoid infinite recursion
+      if ((object)a == null || (object)b == null)
+      {
+        return false;
+      }
+
+      return a.FullType.Equals(b.FullType, StringComparison.OrdinalIgnoreCase);
+    }
+
+
+    public static bool operator !=(MediaType a, MediaType b)
+    {
+      return !(a == b);
     }
   }
 }

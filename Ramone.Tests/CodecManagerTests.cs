@@ -176,7 +176,7 @@ namespace Ramone.Tests
 
       // Assert
       Assert.IsNotNull(codecReg);
-      Assert.AreEqual(new MediaType("application/ramone+json"), codecReg.MediaType, "Media-type identifiers are stored in lower case.");
+      Assert.AreEqual(new MediaType("application/ramone+json"), codecReg.MediaType);
       Assert.AreEqual(typeof(JsonSerializerCodec), codecReg.Codec.GetType());
     }
 

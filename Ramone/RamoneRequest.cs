@@ -85,7 +85,7 @@ namespace Ramone
 
     public RamoneRequest Accept(MediaType accept)
     {
-      AcceptHeader = (accept != null ? accept.MediaType : null);
+      AcceptHeader = (accept != null ? accept.FullType : null);
       return this;
     }
 
@@ -307,7 +307,7 @@ namespace Ramone
       if (!string.IsNullOrEmpty(AcceptHeader))
         return AcceptHeader;
       if (Session.DefaultResponseMediaType != null)
-        return Session.DefaultResponseMediaType.MediaType;
+        return Session.DefaultResponseMediaType.FullType;
 
       if (t == null)
         return null;

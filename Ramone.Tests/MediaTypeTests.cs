@@ -17,22 +17,22 @@ namespace Ramone.Tests
       MediaType m = new MediaType("text/plain");
 
       // Assert
-      Assert.AreEqual("text/plain", m.MediaType);
+      Assert.AreEqual("text/plain", m.FullType);
       Assert.AreEqual("text", m.TopLevelType);
       Assert.AreEqual("plain", m.SubType);
-      Assert.IsNotNull(m.Parameters);
     }
 
 
     [Test]
-    public void CanReadParametersAndStripWhitespace()
+    public void ItOnlyReadsMediaTypeAndThrowsAwayOtherParameters()
     {
-      MediaType m = new MediaType("text/plain ; charset=utf-8 ");
-      Assert.AreEqual("text/plain", m.MediaType);
+      // Act
+      MediaType m = new MediaType("text/plain; charset=utf-8");
+
+      // Assert
+      Assert.AreEqual("text/plain", m.FullType);
       Assert.AreEqual("text", m.TopLevelType);
       Assert.AreEqual("plain", m.SubType);
-      Assert.IsNotNull(m.Parameters);
-      Assert.AreEqual("utf-8", m.Parameters["charset"]);
     }
 
 
@@ -44,14 +44,14 @@ namespace Ramone.Tests
       MediaType m2 = new MediaType("*/*");
 
       // Assert
-      Assert.AreEqual("text/*", m1.MediaType);
+      Assert.AreEqual("text/*", m1.FullType);
       Assert.AreEqual("text", m1.TopLevelType);
       Assert.AreEqual("*", m1.SubType);
       Assert.IsFalse(m1.IsTopLevelWildcard);
       Assert.IsTrue(m1.IsSubTypeWildcard);
       Assert.IsFalse(m1.IsWildcard);
 
-      Assert.AreEqual("*/*", m2.MediaType);
+      Assert.AreEqual("*/*", m2.FullType);
       Assert.AreEqual("*", m2.TopLevelType);
       Assert.AreEqual("*", m2.SubType);
       Assert.IsTrue(m2.IsTopLevelWildcard);
@@ -83,15 +83,28 @@ namespace Ramone.Tests
     }
 
 
-    // The base ContentType class doesn't do as expected, so these fail
-    //[Test]
-    //public void ThrowsOnInvalidMediaTypes()
-    //{
-    //  AssertThrows<ArgumentNullException>(() => new MediaType((string)null));
-    //  AssertThrows<ArgumentException>(() => new MediaType(""));
-    //  AssertThrows<FormatException>(() => new MediaType("text"));
-    //  AssertThrows<FormatException>(() => new MediaType("text/"));
-    //  AssertThrows<FormatException>(() => new MediaType(""));
-    //}
+    [Test]
+    public void ThrowsOnInvalidMediaTypes()
+    {
+      AssertThrows<ArgumentNullException>(() => new MediaType((string)null));
+      AssertThrows<FormatException>(() => new MediaType(""));
+      AssertThrows<FormatException>(() => new MediaType("text"));
+      AssertThrows<FormatException>(() => new MediaType("text/"));
+      AssertThrows<FormatException>(() => new MediaType("text/"));
+      AssertThrows<FormatException>(() => new MediaType("text/xxx/qqq"));
+      new MediaType("  ; charset=utf-8");
+    }
+
+
+    [Test]
+    public void CanCompareAlsoCaseInsensitive()
+    {
+      // Arrange
+      MediaType m1 = new MediaType("x/y");
+      MediaType m2 = new MediaType("X/Y");
+
+      // Assert
+      Assert.IsTrue(m1 == m2);
+    }
   }
 }

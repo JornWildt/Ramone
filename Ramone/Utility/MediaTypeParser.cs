@@ -1,4 +1,5 @@
 ﻿using System.Text;
+using System.Net.Mime;
 
 
 namespace Ramone.Utility
@@ -9,7 +10,7 @@ namespace Ramone.Utility
     {
       Encoding enc = Encoding.Default;
 
-      MediaType m = new MediaType(mediaType);
+      ContentType m = new ContentType(mediaType);
       if (m.Parameters.ContainsKey("charset"))
         enc = Encoding.GetEncoding(m.Parameters["charset"]);
 
