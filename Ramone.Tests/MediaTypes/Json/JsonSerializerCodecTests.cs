@@ -57,6 +57,8 @@ namespace Ramone.Tests.MediaTypes.Json
     {
       // Arrange
       Cat cat = new Cat { Name = "Prince", DateOfBirth = DateTime.Now.ToUniversalTime() };
+      cat.DateOfBirth = cat.DateOfBirth.AddTicks(-(cat.DateOfBirth.Ticks % TimeSpan.TicksPerSecond));
+
       RamoneRequest request = Session.Bind(CatsTemplate);
 
       // Act
