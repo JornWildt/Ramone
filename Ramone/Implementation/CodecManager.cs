@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Linq;
 using System.Collections.Generic;
+using System.Linq;
 using CuttingEdge.Conditions;
 
 
@@ -97,69 +97,27 @@ namespace Ramone.Implementation
     }
 
 
-    //protected enum TypeSelectionMode { All, OnlyTyped }
-
-    //protected IEnumerable<MediaTypeReaderRegistration> GetReaders(Type t, MediaType mediaType, TypeSelectionMode mode)
-    //{
-    //  Condition.Requires(mediaType, "mediaType").IsNotNull();
-
-    //  return from entry in RegisteredReaders
-    //         where Equals(entry.MediaType, mediaType) && entry.ClrType == t
-    //               || mode == TypeSelectionMode.All && Equals(entry.MediaType, mediaType) && entry.ClrType == null
-    //               || mode == TypeSelectionMode.All && Equals(entry.MediaType, mediaType) && entry.ClrType != null && entry.ClrType.IsAssignableFrom(t)
-    //         select entry;
-    //}
-
-
-    //protected virtual MediaTypeReaderRegistration GetSingleReaderOrNull(Type t, IEnumerable<MediaTypeReaderRegistration> readers)
-    //{
-    //  IList<MediaTypeReaderRegistration> readersList = readers.ToList();
-    //  if (readersList.Count == 0)
-    //    return null;
-    //  if (readersList.Count > 1)
-    //    throw new ArgumentException(string.Format("Got multiple reader codecs for type '{0}'. Try specifying a media type.", (t == null ? "-any-" : t.ToString())));
-    //  return readersList[0];
-    //}
-
-
-    //protected IEnumerable<MediaTypeWriterRegistration> GetWriters(Type t, MediaType mediaType, TypeSelectionMode mode)
-    //{
-    //  Condition.Requires(mediaType, "mediaType").IsNotNull();
-
-    //  return from entry in RegisteredWriters
-    //         where Equals(entry.MediaType,mediaType) && entry.ClrType == t
-    //               || mode == TypeSelectionMode.All && Equals(entry.MediaType, mediaType) && mediaType != null && entry.ClrType == null
-    //               || mode == TypeSelectionMode.All && entry.MediaType == null && mediaType != null && entry.ClrType != null && entry.ClrType.IsAssignableFrom(t)
-    //         select entry;
-    //}
-
-
-    //protected virtual MediaTypeWriterRegistration GetSingleWriterOrNull(Type t, IEnumerable<MediaTypeWriterRegistration> writers)
-    //{
-    //  IList<MediaTypeWriterRegistration> writersList = writers.ToList();
-    //  if (writersList.Count == 0)
-    //    return null;
-    //  if (writersList.Count > 1)
-    //    throw new ArgumentException(string.Format("Got multiple writer codecs for type '{0}'. Try specifying a media type.", t));
-    //  return writersList[0];
-    //}
-
-
     protected IEnumerable<MediaTypeWriterRegistration> SelectExactMatchingWriters(Type t, MediaType mediaType)
     {
-      var exactMatch = RegisteredWriters.Where(r => Equals(r.MediaType, mediaType) && r.ClrType == t);
+      var exactMatch = RegisteredWriters.Where(r => r.MediaType == mediaType && r.ClrType == t);
 
       return exactMatch;
     }
 
 
+    /// <summary>
+    /// Find all writers matching a CLR type and a media type.
+    /// </summary>
+    /// <param name="t"></param>
+    /// <param name="mediaType"></param>
+    /// <returns>Returns sorted sequence of matching writers (most relevant writers first)</returns>
     protected IEnumerable<MediaTypeWriterRegistration> SelectWriters(Type t, MediaType mediaType)
     {
       var exactMatch = SelectExactMatchingWriters(t, mediaType);
 
-      var anyMediaTypeMatch = RegisteredWriters.Where(w => Matches(w.MediaType, mediaType) && w.ClrType != null && w.ClrType.IsAssignableFrom(t));
+      var anyMediaTypeMatch = RegisteredWriters.Where(w => w.MediaType.Matches(mediaType) && w.ClrType != null && w.ClrType.IsAssignableFrom(t));
 
-      var anyClrTypeMatch = RegisteredWriters.Where(w => Equals(w.MediaType, mediaType) && w.ClrType == null);
+      var anyClrTypeMatch = RegisteredWriters.Where(w => w.MediaType == mediaType && w.ClrType == null);
 
       // Return Union since ordering is important (hopefully Union respects that ...)
       return exactMatch.Union(anyMediaTypeMatch).Union(anyClrTypeMatch);
@@ -168,34 +126,29 @@ namespace Ramone.Implementation
 
     protected IEnumerable<MediaTypeReaderRegistration> SelectExactMatchingReaders(Type t, MediaType mediaType)
     {
-      var exactMatch = RegisteredReaders.Where(r => Equals(r.MediaType, mediaType) && r.ClrType == t);
+      var exactMatch = RegisteredReaders.Where(r => r.MediaType == mediaType && r.ClrType == t);
 
       return exactMatch;
     }
 
 
+
+    /// <summary>
+    /// Find all readers matching a CLR type and a media type.
+    /// </summary>
+    /// <param name="t"></param>
+    /// <param name="mediaType"></param>
+    /// <returns>Returns sorted sequence of matching readers (most relevant readers first)</returns>
     protected IEnumerable<MediaTypeReaderRegistration> SelectReaders(Type t, MediaType mediaType)
     {
       var exactMatch = SelectExactMatchingReaders(t, mediaType);
 
-      var anyMediaTypeMatch = RegisteredReaders.Where(r => Matches(r.MediaType, mediaType) && r.ClrType != null && r.ClrType.IsAssignableFrom(t));
+      var anyMediaTypeMatch = RegisteredReaders.Where(r => r.MediaType.Matches(mediaType) && r.ClrType != null && r.ClrType.IsAssignableFrom(t));
 
-      var anyClrTypeMatch = RegisteredReaders.Where(r => Equals(r.MediaType, mediaType) && r.ClrType == null);
+      var anyClrTypeMatch = RegisteredReaders.Where(r => r.MediaType == mediaType && r.ClrType == null);
 
       // Return Union since ordering is important (hopefully Union respects that ...)
       return exactMatch.Union(anyMediaTypeMatch).Union(anyClrTypeMatch);
-    }
-
-
-    protected bool Equals(MediaType a, MediaType b)
-    {
-      return a.FullType == b.FullType;
-    }
-
-
-    protected bool Matches(MediaType a, MediaType b)
-    {
-      return a.Matches(b);
     }
   }
 }
