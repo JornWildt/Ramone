@@ -49,18 +49,6 @@ namespace Ramone
     }
 
 
-    public MediaType(string topLevelType, string subType)
-      : this(topLevelType + "/" + subType)
-    {
-      //Condition.Requires(topLevelType, "topLevelType").IsNotNullOrEmpty();
-      //Condition.Requires(subType, "subType").IsNotNullOrEmpty();
-
-      //TopLevelType = topLevelType;
-      //SubType = subType;
-      //FullType = TopLevelType + "/" + SubType;
-    }
-
-
     public MediaType(string mediaType)
     {
       Condition.Requires(mediaType, "mediaType").IsNotNull();
@@ -75,11 +63,15 @@ namespace Ramone
       if (types.Length != 2)
         throw new FormatException(string.Format("Cannot instantiate MediaType from '{0}' - expected exactly one '/'.", mediaType));
 
-      if (
-
       FullType = mediaType2;
       TopLevelType = types[0];
       SubType = types[1];
+
+      if (TopLevelType == string.Empty)
+        throw new FormatException(string.Format("The media-type string '{0}' did not contain any top-level type.", TopLevelType));
+
+      if (SubType == string.Empty)
+        throw new FormatException(string.Format("The media-type string '{0}' did not contain any sub-level type.", SubType));
     }
 
 

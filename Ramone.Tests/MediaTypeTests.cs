@@ -92,7 +92,7 @@ namespace Ramone.Tests
       AssertThrows<FormatException>(() => new MediaType("text/"));
       AssertThrows<FormatException>(() => new MediaType("text/"));
       AssertThrows<FormatException>(() => new MediaType("text/xxx/qqq"));
-      new MediaType("  ; charset=utf-8");
+      AssertThrows<FormatException>(() => new MediaType("  ; charset=utf-8"));
     }
 
 
