@@ -72,13 +72,26 @@ namespace Ramone.Tests
 
 
     [Test]
+    public void CanBindAsUri_UriTemplate_Path()
+    {
+      // Act
+      Uri url1 = Session.BindUri(UriTemplate_Path, ObjectParameters);
+      Uri url2 = Session.BindUri(UriTemplate_Path, HashtableParameters);
+      Uri url3 = Session.BindUri(UriTemplate_Path, DictionaryParameters);
+      Uri url4 = Session.BindUri(UriTemplate_Path, NameValueCollectionParameters);
+
+      // Assert
+      Assert.AreEqual(BaseUrl + "users/10?b=John", url1.AbsoluteUri);
+      Assert.AreEqual(BaseUrl + "users/10?b=John", url2.AbsoluteUri);
+      Assert.AreEqual(BaseUrl + "users/10?b=John", url3.AbsoluteUri);
+      Assert.AreEqual(BaseUrl + "users/10?b=John", url4.AbsoluteUri);
+    }
+
+
+    [Test]
     public void CanBind_String_TemplatedPath()
     {
       // Act
-      //Uri url1 = Session.Bind(StringPathTemplate, ObjectParameters);
-      //Uri url2 = Session.Bind(StringPathTemplate, HashtableParameters);
-      //Uri url3 = Session.Bind(StringPathTemplate, DictionaryParameters);
-      //Uri url4 = Session.Bind(StringPathTemplate, NameValueCollectionParameters);
       RamoneRequest req1 = Session.Bind(String_TemplatedPath, ObjectParameters);
       RamoneRequest req2 = Session.Bind(String_TemplatedPath, HashtableParameters);
       RamoneRequest req3 = Session.Bind(String_TemplatedPath, DictionaryParameters);
@@ -123,13 +136,13 @@ namespace Ramone.Tests
 
       // Act
       RamoneRequest req1 = Session.Bind(Uri_TemplatedUrl, ObjectParameters);
-      //RamoneRequest req2 = Session.Bind(Uri_TemplatedUrl, HashtableParameters);
+      RamoneRequest req2 = Session.Bind(Uri_TemplatedUrl, HashtableParameters);
       RamoneRequest req3 = Session.Bind(Uri_TemplatedUrl, DictionaryParameters);
       RamoneRequest req4 = Session.Bind(Uri_TemplatedUrl, NameValueCollectionParameters);
 
       // Assert
       Assert.AreEqual("http://home/users/10?b=John", req1.Url.AbsoluteUri);
-      //Assert.AreEqual("http://home/users/10?b=John", req2.Url.AbsoluteUri);
+      Assert.AreEqual("http://home/users/10?b=John", req2.Url.AbsoluteUri);
       Assert.AreEqual("http://home/users/10?b=John", req3.Url.AbsoluteUri);
       Assert.AreEqual("http://home/users/10?b=John", req4.Url.AbsoluteUri);
     }

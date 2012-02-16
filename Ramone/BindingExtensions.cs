@@ -12,15 +12,21 @@ namespace Ramone
 
     public static RamoneRequest Bind(this IRamoneSession session, UriTemplate template, object parameters)
     {
-      return Bind(session, session.BaseUri, template, parameters);
-    }
-
-
-    private static RamoneRequest Bind(this IRamoneSession session, Uri baseUri, UriTemplate template, object parameters)
-    {
-      Uri url = BindTemplate(baseUri, template, parameters);
+      Uri url = BindTemplate(session.BaseUri, template, parameters);
       return session.Request(url);
     }
+
+
+    public static Uri BindUri(this IRamoneSession session, UriTemplate template, object parameters)
+    {
+      return BindTemplate(session.BaseUri, template, parameters);
+    }
+
+    //private static RamoneRequest Bind(this IRamoneSession session, Uri baseUri, UriTemplate template, object parameters)
+    //{
+    //  Uri url = BindTemplate(baseUri, template, parameters);
+    //  return session.Request(url);
+    //}
 
     #endregion
 
@@ -32,10 +38,12 @@ namespace Ramone
       Uri absoluteUri;
       if (Uri.TryCreate(url, UriKind.Absolute, out absoluteUri))
       {
+        // String as absolute URI template
         return Bind(session, absoluteUri, parameters);
       }
       else
       {
+        // String as relative path template
         UriTemplate template = new UriTemplate(url);
         return session.Bind(template, parameters);
       }
@@ -50,7 +58,9 @@ namespace Ramone
     {
       Uri baseUri = new Uri(url.GetComponents(UriComponents.SchemeAndServer, UriFormat.Unescaped));
       UriTemplate template = new UriTemplate(url.GetComponents(UriComponents.PathAndQuery, UriFormat.Unescaped));
-      return Bind(session, baseUri, template, parameters);
+      
+      Uri boundUrl = BindTemplate(baseUri, template, parameters);
+      return session.Request(boundUrl);
     }
 
     #endregion
