@@ -104,7 +104,6 @@
     <Compile Include="NoAuthenticationHandlerTests.cs" />
     <Compile Include="PostTests.cs" />
     <Compile Include="PutTests.cs" />
-    <Compile Include="RequestBuilderTests.cs" />
     <Compile Include="Codecs\TextCodec.cs" />
     <Compile Include="CreationTests.cs" />
     <Compile Include="GetTests.cs" />

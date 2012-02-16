@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using NUnit.Framework;
 using System.Collections;
+using System.Collections.Generic;
 using System.Collections.Specialized;
+using NUnit.Framework;
 
 
 namespace Ramone.Tests
@@ -12,9 +10,7 @@ namespace Ramone.Tests
   [TestFixture]
   public class BindingTests : TestHelper
   {
-    // FIXME; include tests from RequestBuilderTests and SessionTests
-
-    object ObjectParameters = new { a = 10, b = "John" };
+    object ObjectParameters = new { a = 10, b = "John", c = 33 };
 
     Hashtable HashtableParameters = new Hashtable();
 
@@ -29,22 +25,19 @@ namespace Ramone.Tests
     Uri         Uri_TemplatedUrl     = new Uri("http://home/users/{a}?b={b}");
 
 
-    // Non-templated inputs
-    //string StringPath = "/users";
-    //string StringUrl = "http://home/users";
-    //Uri UriUrl = new Uri("http://home/users");
-
-
     protected override void TestFixtureSetUp()
     {
       base.TestFixtureSetUp();
 
       HashtableParameters["a"] = 10;
       HashtableParameters["b"] = "John";
+      HashtableParameters["c"] = 33;
       DictionaryParameters["a"] = "10";
       DictionaryParameters["b"] = "John";
+      DictionaryParameters["c"] = "33";
       NameValueCollectionParameters["a"] = "10";
       NameValueCollectionParameters["b"] = "John";
+      NameValueCollectionParameters["c"] = "33";
     }
 
 
@@ -64,10 +57,10 @@ namespace Ramone.Tests
       RamoneRequest req4 = Session.Bind(UriTemplate_Path, NameValueCollectionParameters);
 
       // Assert
-      Assert.AreEqual(BaseUrl + "users/10?b=John", req1.Url.AbsoluteUri);
-      Assert.AreEqual(BaseUrl + "users/10?b=John", req2.Url.AbsoluteUri);
-      Assert.AreEqual(BaseUrl + "users/10?b=John", req3.Url.AbsoluteUri);
-      Assert.AreEqual(BaseUrl + "users/10?b=John", req4.Url.AbsoluteUri);
+      Assert.AreEqual(BaseUrl + "users/10?b=John&c=33", req1.Url.AbsoluteUri);
+      Assert.AreEqual(BaseUrl + "users/10?b=John&c=33", req2.Url.AbsoluteUri);
+      Assert.AreEqual(BaseUrl + "users/10?b=John&c=33", req3.Url.AbsoluteUri);
+      Assert.AreEqual(BaseUrl + "users/10?b=John&c=33", req4.Url.AbsoluteUri);
     }
 
 
@@ -81,10 +74,10 @@ namespace Ramone.Tests
       Uri url4 = Session.BindUri(UriTemplate_Path, NameValueCollectionParameters);
 
       // Assert
-      Assert.AreEqual(BaseUrl + "users/10?b=John", url1.AbsoluteUri);
-      Assert.AreEqual(BaseUrl + "users/10?b=John", url2.AbsoluteUri);
-      Assert.AreEqual(BaseUrl + "users/10?b=John", url3.AbsoluteUri);
-      Assert.AreEqual(BaseUrl + "users/10?b=John", url4.AbsoluteUri);
+      Assert.AreEqual(BaseUrl + "users/10?b=John&c=33", url1.AbsoluteUri);
+      Assert.AreEqual(BaseUrl + "users/10?b=John&c=33", url2.AbsoluteUri);
+      Assert.AreEqual(BaseUrl + "users/10?b=John&c=33", url3.AbsoluteUri);
+      Assert.AreEqual(BaseUrl + "users/10?b=John&c=33", url4.AbsoluteUri);
     }
 
 
@@ -98,10 +91,10 @@ namespace Ramone.Tests
       RamoneRequest req4 = Session.Bind(String_TemplatedPath, NameValueCollectionParameters);
 
       // Assert
-      Assert.AreEqual(BaseUrl + "users/10?b=John", req1.Url.AbsoluteUri);
-      Assert.AreEqual(BaseUrl + "users/10?b=John", req2.Url.AbsoluteUri);
-      Assert.AreEqual(BaseUrl + "users/10?b=John", req3.Url.AbsoluteUri);
-      Assert.AreEqual(BaseUrl + "users/10?b=John", req4.Url.AbsoluteUri);
+      Assert.AreEqual(BaseUrl + "users/10?b=John&c=33", req1.Url.AbsoluteUri);
+      Assert.AreEqual(BaseUrl + "users/10?b=John&c=33", req2.Url.AbsoluteUri);
+      Assert.AreEqual(BaseUrl + "users/10?b=John&c=33", req3.Url.AbsoluteUri);
+      Assert.AreEqual(BaseUrl + "users/10?b=John&c=33", req4.Url.AbsoluteUri);
     }
 
 
@@ -115,10 +108,10 @@ namespace Ramone.Tests
       Uri url4 = Session.BindUri(String_TemplatedPath, NameValueCollectionParameters);
 
       // Assert
-      Assert.AreEqual(BaseUrl + "users/10?b=John", url1.AbsoluteUri);
-      Assert.AreEqual(BaseUrl + "users/10?b=John", url2.AbsoluteUri);
-      Assert.AreEqual(BaseUrl + "users/10?b=John", url3.AbsoluteUri);
-      Assert.AreEqual(BaseUrl + "users/10?b=John", url4.AbsoluteUri);
+      Assert.AreEqual(BaseUrl + "users/10?b=John&c=33", url1.AbsoluteUri);
+      Assert.AreEqual(BaseUrl + "users/10?b=John&c=33", url2.AbsoluteUri);
+      Assert.AreEqual(BaseUrl + "users/10?b=John&c=33", url3.AbsoluteUri);
+      Assert.AreEqual(BaseUrl + "users/10?b=John&c=33", url4.AbsoluteUri);
     }
 
     
@@ -140,10 +133,10 @@ namespace Ramone.Tests
       RamoneRequest req4 = Session.Bind(String_TemplatedUrl, NameValueCollectionParameters);
 
       // Assert
-      Assert.AreEqual("http://home/users/10?b=John", req1.Url.AbsoluteUri);
-      Assert.AreEqual("http://home/users/10?b=John", req2.Url.AbsoluteUri);
-      Assert.AreEqual("http://home/users/10?b=John", req3.Url.AbsoluteUri);
-      Assert.AreEqual("http://home/users/10?b=John", req4.Url.AbsoluteUri);
+      Assert.AreEqual("http://home/users/10?b=John&c=33", req1.Url.AbsoluteUri);
+      Assert.AreEqual("http://home/users/10?b=John&c=33", req2.Url.AbsoluteUri);
+      Assert.AreEqual("http://home/users/10?b=John&c=33", req3.Url.AbsoluteUri);
+      Assert.AreEqual("http://home/users/10?b=John&c=33", req4.Url.AbsoluteUri);
     }
 
 
@@ -160,10 +153,10 @@ namespace Ramone.Tests
       Uri url4 = Session.BindUri(String_TemplatedUrl, NameValueCollectionParameters);
 
       // Assert
-      Assert.AreEqual("http://home/users/10?b=John", url1.AbsoluteUri);
-      Assert.AreEqual("http://home/users/10?b=John", url2.AbsoluteUri);
-      Assert.AreEqual("http://home/users/10?b=John", url3.AbsoluteUri);
-      Assert.AreEqual("http://home/users/10?b=John", url4.AbsoluteUri);
+      Assert.AreEqual("http://home/users/10?b=John&c=33", url1.AbsoluteUri);
+      Assert.AreEqual("http://home/users/10?b=John&c=33", url2.AbsoluteUri);
+      Assert.AreEqual("http://home/users/10?b=John&c=33", url3.AbsoluteUri);
+      Assert.AreEqual("http://home/users/10?b=John&c=33", url4.AbsoluteUri);
     }
 
 
@@ -180,10 +173,10 @@ namespace Ramone.Tests
       RamoneRequest req4 = Session.Bind(Uri_TemplatedUrl, NameValueCollectionParameters);
 
       // Assert
-      Assert.AreEqual("http://home/users/10?b=John", req1.Url.AbsoluteUri);
-      Assert.AreEqual("http://home/users/10?b=John", req2.Url.AbsoluteUri);
-      Assert.AreEqual("http://home/users/10?b=John", req3.Url.AbsoluteUri);
-      Assert.AreEqual("http://home/users/10?b=John", req4.Url.AbsoluteUri);
+      Assert.AreEqual("http://home/users/10?b=John&c=33", req1.Url.AbsoluteUri);
+      Assert.AreEqual("http://home/users/10?b=John&c=33", req2.Url.AbsoluteUri);
+      Assert.AreEqual("http://home/users/10?b=John&c=33", req3.Url.AbsoluteUri);
+      Assert.AreEqual("http://home/users/10?b=John&c=33", req4.Url.AbsoluteUri);
     }
 
 
@@ -200,28 +193,10 @@ namespace Ramone.Tests
       Uri url4 = Session.BindUri(Uri_TemplatedUrl, NameValueCollectionParameters);
 
       // Assert
-      Assert.AreEqual("http://home/users/10?b=John", url1.AbsoluteUri);
-      Assert.AreEqual("http://home/users/10?b=John", url2.AbsoluteUri);
-      Assert.AreEqual("http://home/users/10?b=John", url3.AbsoluteUri);
-      Assert.AreEqual("http://home/users/10?b=John", url4.AbsoluteUri);
-    }
-
-
-    [Test]
-    public void CanAddParametersToStringPath()
-    {
-    }
-
-
-    [Test]
-    public void CanAddParametersToStringUrl()
-    {
-    }
-
-
-    [Test]
-    public void CanAddParametersToUri()
-    {
+      Assert.AreEqual("http://home/users/10?b=John&c=33", url1.AbsoluteUri);
+      Assert.AreEqual("http://home/users/10?b=John&c=33", url2.AbsoluteUri);
+      Assert.AreEqual("http://home/users/10?b=John&c=33", url3.AbsoluteUri);
+      Assert.AreEqual("http://home/users/10?b=John&c=33", url4.AbsoluteUri);
     }
   }
 }

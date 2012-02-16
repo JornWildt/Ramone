@@ -135,28 +135,6 @@ namespace Ramone.Tests
     }
 
 
-    //[Test]
-    //public void CanBindRelativeUrlAsStringWithoutParameters()
-    //{
-    //  // Act
-    //  RamoneRequest request = Session.Bind("xx/yy");
-
-    //  // Assert
-    //  Assert.AreEqual(new Uri(BaseUrl, "xx/yy"), request.Url);
-    //}
-
-
-    //[Test]
-    //public void CanBindRelativeUrlAsStringWithParameters()
-    //{
-    //  // Act
-    //  RamoneRequest request = Session.Bind("xx/{yy}", new { yy = 123 });
-
-    //  // Assert
-    //  Assert.AreEqual(new Uri(BaseUrl, "xx/123"), request.Url);
-    //}
-
-
     [Test]
     public void CanSkipUseOfService()
     {
