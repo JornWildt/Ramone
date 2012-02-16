@@ -43,6 +43,7 @@ OAuth
 - Encoding for ÆØÅ (Jørn Wildt)
 - Gennemkommentere hele koden for Twitter access
 - Aflæsning af urlencoded body
+  - Måske via plugin i UrlEncodedSerializer?
   - Vis i demo
 - Skal kunne angive access_token direkte
 - Logging af OAuth signature base mm. for debugging
