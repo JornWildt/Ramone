@@ -10,14 +10,14 @@ namespace Ramone
   {
     #region UriTemplate
 
-    public static RamoneRequest Bind(this IRamoneSession session, UriTemplate template, object parameters)
+    public static RamoneRequest Bind(this IRamoneSession session, UriTemplate template, object parameters = null)
     {
       Uri url = BindUri(session, template, parameters);
       return session.Request(url);
     }
 
 
-    public static Uri BindUri(this IRamoneSession session, UriTemplate template, object parameters)
+    public static Uri BindUri(this IRamoneSession session, UriTemplate template, object parameters = null)
     {
       return BindTemplate(session.BaseUri, template, parameters);
     }
@@ -27,14 +27,14 @@ namespace Ramone
 
     #region String template
 
-    public static RamoneRequest Bind(this IRamoneSession session, string url, object parameters)
+    public static RamoneRequest Bind(this IRamoneSession session, string url, object parameters = null)
     {
       Uri boundUrl = BindUri(session, url, parameters);
       return session.Request(boundUrl);
     }
 
 
-    public static Uri BindUri(this IRamoneSession session, string url, object parameters)
+    public static Uri BindUri(this IRamoneSession session, string url, object parameters = null)
     {
       Uri absoluteUri;
       if (Uri.TryCreate(url, UriKind.Absolute, out absoluteUri))
@@ -55,14 +55,14 @@ namespace Ramone
 
     #region Uri as template
 
-    public static RamoneRequest Bind(this IRamoneSession session, Uri url, object parameters)
+    public static RamoneRequest Bind(this IRamoneSession session, Uri url, object parameters = null)
     {
       Uri boundUrl = BindUri(session, url, parameters);
       return session.Request(boundUrl);
     }
 
 
-    public static Uri BindUri(this IRamoneSession session, Uri url, object parameters)
+    public static Uri BindUri(this IRamoneSession session, Uri url, object parameters = null)
     {
       Uri baseUri = new Uri(url.GetComponents(UriComponents.SchemeAndServer, UriFormat.Unescaped));
       UriTemplate template = new UriTemplate(url.GetComponents(UriComponents.PathAndQuery, UriFormat.Unescaped));
@@ -73,9 +73,14 @@ namespace Ramone
     #endregion
 
 
-    private static Uri BindTemplate(Uri baseUri, UriTemplate template, object parameters)
+    private static Uri BindTemplate(Uri baseUri, UriTemplate template, object parameters = null)
     {
-      if (parameters is IDictionary<string, string>)
+      if (parameters == null)
+      {
+        Dictionary<string, string> emptyParameters = new Dictionary<string, string>();
+        return template.BindByName(baseUri, emptyParameters);
+      }
+      else if (parameters is IDictionary<string, string>)
       {
         return template.BindByName(baseUri, (IDictionary<string, string>)parameters);
       }

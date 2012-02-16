@@ -198,5 +198,60 @@ namespace Ramone.Tests
       Assert.AreEqual("http://home/users/10?b=John&c=33", url3.AbsoluteUri);
       Assert.AreEqual("http://home/users/10?b=John&c=33", url4.AbsoluteUri);
     }
+
+
+    [Test]
+    public void CanBind_UriTemplate_NonTemplated()
+    {
+      // Act
+      RamoneRequest req = Session.Bind(new UriTemplate("/cats"));
+
+      // Assert
+      Assert.AreEqual(BaseUrl + "cats", req.Url.AbsoluteUri);
+    }
+
+
+    [Test]
+    public void CanBind_String_NonTemplatedPath()
+    {
+      // Act
+      RamoneRequest req = Session.Bind("/cats");
+
+      // Assert
+      Assert.AreEqual(BaseUrl + "cats", req.Url.AbsoluteUri);
+    }
+
+
+    [Test]
+    public void CanBind_String_NonTemplatedAbsoluteUrl()
+    {
+      // Act
+      RamoneRequest req = Session.Bind("http://home/cats");
+
+      // Assert
+      Assert.AreEqual("http://home/cats", req.Url.AbsoluteUri);
+    }
+
+
+    [Test]
+    public void CanBind_Uri_NonTemplated()
+    {
+      // Act
+      RamoneRequest req = Session.Bind(new Uri("http://dr.dk"));
+
+      // Assert
+      Assert.AreEqual("http://dr.dk/", req.Url.AbsoluteUri);
+    }
+
+
+    //[Test]
+    //public void CanRequest_Uri()
+    //{
+    //  // Act
+    //  RamoneRequest req = Session.Request(new Uri("http://dr.dk"));
+
+    //  // Assert
+    //  Assert.AreEqual("http://dr.dk/", req.Url.AbsoluteUri);
+    //}
   }
 }

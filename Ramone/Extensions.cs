@@ -36,25 +36,6 @@ namespace Ramone
     }
 
 
-    public static Uri Bind(this UriTemplate template, Uri baseUrl, object parameters)
-    {
-      Dictionary<string, string> parameterDictionary = DictionaryConverter.ConvertObjectPropertiesToDictionary(parameters);
-      return template.BindByName(baseUrl, parameterDictionary);
-    }
-
-
-
-    // FIXME: rename this or remove it (it does not bind)
-    public static RamoneRequest Bind(this IRamoneSession session, UriTemplate template)
-    {
-      Dictionary<string, string> parameters = new Dictionary<string, string>();
-      Uri url = template.BindByName(session.BaseUri, parameters);
-      return session.Request(url);
-    }
-
-
-
-
     public static RamoneRequest AsXml(this RamoneRequest request)
     {
       return request.ContentType(MediaType.ApplicationXml).Accept(MediaType.ApplicationXml);
