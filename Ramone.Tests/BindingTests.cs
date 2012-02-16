@@ -104,9 +104,28 @@ namespace Ramone.Tests
       Assert.AreEqual(BaseUrl + "users/10?b=John", req4.Url.AbsoluteUri);
     }
 
+
+    [Test]
+    public void CanBindAsUri_String_TemplatedPath()
+    {
+      // Act
+      Uri url1 = Session.BindUri(String_TemplatedPath, ObjectParameters);
+      Uri url2 = Session.BindUri(String_TemplatedPath, HashtableParameters);
+      Uri url3 = Session.BindUri(String_TemplatedPath, DictionaryParameters);
+      Uri url4 = Session.BindUri(String_TemplatedPath, NameValueCollectionParameters);
+
+      // Assert
+      Assert.AreEqual(BaseUrl + "users/10?b=John", url1.AbsoluteUri);
+      Assert.AreEqual(BaseUrl + "users/10?b=John", url2.AbsoluteUri);
+      Assert.AreEqual(BaseUrl + "users/10?b=John", url3.AbsoluteUri);
+      Assert.AreEqual(BaseUrl + "users/10?b=John", url4.AbsoluteUri);
+    }
+
+    
     // FIXME: test also with escaped URI values
     // FIXME: test also including fragments and semicolon
     // FIXME: date formating and encoding?
+
 
     [Test]
     public void CanBind_String_TemplatedAbsoluteUrl()
@@ -129,6 +148,26 @@ namespace Ramone.Tests
 
 
     [Test]
+    public void CanBindAsUri_String_TemplatedAbsoluteUrl()
+    {
+      // Does it make sense to bind absolute URL through session (service) which has its own BaseUrl?
+      // - Yes, otherwise we cannot "follow" any arbitrary link in the response.
+
+      // Act
+      Uri url1 = Session.BindUri(String_TemplatedUrl, ObjectParameters);
+      Uri url2 = Session.BindUri(String_TemplatedUrl, HashtableParameters);
+      Uri url3 = Session.BindUri(String_TemplatedUrl, DictionaryParameters);
+      Uri url4 = Session.BindUri(String_TemplatedUrl, NameValueCollectionParameters);
+
+      // Assert
+      Assert.AreEqual("http://home/users/10?b=John", url1.AbsoluteUri);
+      Assert.AreEqual("http://home/users/10?b=John", url2.AbsoluteUri);
+      Assert.AreEqual("http://home/users/10?b=John", url3.AbsoluteUri);
+      Assert.AreEqual("http://home/users/10?b=John", url4.AbsoluteUri);
+    }
+
+
+    [Test]
     public void CanBind_Uri_TemplatedAbsoluteUrl()
     {
       // Does it make sense to bind absolute URL through session (service) which has its own BaseUrl?
@@ -145,6 +184,26 @@ namespace Ramone.Tests
       Assert.AreEqual("http://home/users/10?b=John", req2.Url.AbsoluteUri);
       Assert.AreEqual("http://home/users/10?b=John", req3.Url.AbsoluteUri);
       Assert.AreEqual("http://home/users/10?b=John", req4.Url.AbsoluteUri);
+    }
+
+
+    [Test]
+    public void CanBindAsUri_Uri_TemplatedAbsoluteUrl()
+    {
+      // Does it make sense to bind absolute URL through session (service) which has its own BaseUrl?
+      // - Yes, otherwise we cannot "follow" any arbitrary link in the response.
+
+      // Act
+      Uri url1 = Session.BindUri(Uri_TemplatedUrl, ObjectParameters);
+      Uri url2 = Session.BindUri(Uri_TemplatedUrl, HashtableParameters);
+      Uri url3 = Session.BindUri(Uri_TemplatedUrl, DictionaryParameters);
+      Uri url4 = Session.BindUri(Uri_TemplatedUrl, NameValueCollectionParameters);
+
+      // Assert
+      Assert.AreEqual("http://home/users/10?b=John", url1.AbsoluteUri);
+      Assert.AreEqual("http://home/users/10?b=John", url2.AbsoluteUri);
+      Assert.AreEqual("http://home/users/10?b=John", url3.AbsoluteUri);
+      Assert.AreEqual("http://home/users/10?b=John", url4.AbsoluteUri);
     }
 
 

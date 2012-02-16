@@ -12,7 +12,7 @@ namespace Ramone
 
     public static RamoneRequest Bind(this IRamoneSession session, UriTemplate template, object parameters)
     {
-      Uri url = BindTemplate(session.BaseUri, template, parameters);
+      Uri url = BindUri(session, template, parameters);
       return session.Request(url);
     }
 
@@ -22,12 +22,6 @@ namespace Ramone
       return BindTemplate(session.BaseUri, template, parameters);
     }
 
-    //private static RamoneRequest Bind(this IRamoneSession session, Uri baseUri, UriTemplate template, object parameters)
-    //{
-    //  Uri url = BindTemplate(baseUri, template, parameters);
-    //  return session.Request(url);
-    //}
-
     #endregion
 
 
@@ -35,17 +29,24 @@ namespace Ramone
 
     public static RamoneRequest Bind(this IRamoneSession session, string url, object parameters)
     {
+      Uri boundUrl = BindUri(session, url, parameters);
+      return session.Request(boundUrl);
+    }
+
+
+    public static Uri BindUri(this IRamoneSession session, string url, object parameters)
+    {
       Uri absoluteUri;
       if (Uri.TryCreate(url, UriKind.Absolute, out absoluteUri))
       {
         // String as absolute URI template
-        return Bind(session, absoluteUri, parameters);
+        return BindUri(session, absoluteUri, parameters);
       }
       else
       {
         // String as relative path template
         UriTemplate template = new UriTemplate(url);
-        return session.Bind(template, parameters);
+        return BindUri(session, template, parameters);
       }
     }
 
@@ -56,11 +57,17 @@ namespace Ramone
 
     public static RamoneRequest Bind(this IRamoneSession session, Uri url, object parameters)
     {
+      Uri boundUrl = BindUri(session, url, parameters);
+      return session.Request(boundUrl);
+    }
+
+
+    public static Uri BindUri(this IRamoneSession session, Uri url, object parameters)
+    {
       Uri baseUri = new Uri(url.GetComponents(UriComponents.SchemeAndServer, UriFormat.Unescaped));
       UriTemplate template = new UriTemplate(url.GetComponents(UriComponents.PathAndQuery, UriFormat.Unescaped));
-      
-      Uri boundUrl = BindTemplate(baseUri, template, parameters);
-      return session.Request(boundUrl);
+
+      return BindTemplate(baseUri, template, parameters);
     }
 
     #endregion
