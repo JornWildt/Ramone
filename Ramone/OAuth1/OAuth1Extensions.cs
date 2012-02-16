@@ -24,6 +24,13 @@ namespace Ramone.OAuth1
     }
 
 
+    public static void OAuth1Logger(this IRamoneSession session, IOAuth1Logger logger)
+    {
+      OAuth1RequestInterceptor interceptor = GetExistingInterceptor(session);
+      interceptor.Logger = logger;
+    }
+
+
     public static OAuth1Token OAuth1GetRequestToken(this IRamoneSession session, bool rememberToken = true)
     {
       OAuth1Settings settings = GetExistingSettings(session);

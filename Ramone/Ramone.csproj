@@ -107,6 +107,7 @@
     <Compile Include="MediaTypes\TextCodecBase.cs" />
     <Compile Include="MediaTypes\Xml\XmlDocumentCodec.cs" />
     <Compile Include="MediaTypes\Xml\XmlSerializerCodec.cs" />
+    <Compile Include="OAuth1\IOAuth1Logger.cs" />
     <Compile Include="OAuth1\OAuth1Settings.cs" />
     <Compile Include="OAuth1\OAuth1Token.cs" />
     <Compile Include="OAuth1\OAuth1Extensions.cs" />

@@ -12,6 +12,10 @@ namespace Ramone.OAuth1
   /// </summary>
   public class SignatureHelper
   {
+    protected OAuth1Settings Settings { get; set; }
+
+    protected IOAuth1Logger Logger { get; set; }
+
 
     /// <summary>
     /// Provides a predefined set of algorithms that are supported officially by the protocol
@@ -99,6 +103,13 @@ namespace Ramone.OAuth1
     protected Random random = new Random();
 
     protected string unreservedChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_.~";
+
+
+    public SignatureHelper(OAuth1Settings settings, IOAuth1Logger logger)
+    {
+      Settings = settings;
+      Logger = logger;
+    }
 
 
     /// <summary>
@@ -334,6 +345,7 @@ namespace Ramone.OAuth1
           return HttpUtility.UrlEncode(string.Format("{0}&{1}", consumerSecret, tokenSecret));
         case SignatureTypes.HMACSHA1:
           string signatureBase = GenerateSignatureBase(url, consumerKey, callback, token, tokenSecret, httpMethod, timeStamp, nonce, HMACSHA1SignatureType, out normalizedUrl, out normalizedRequestParameters);
+          Log("Signaturebase: " + signatureBase);
 
           HMACSHA1 hmacsha1 = new HMACSHA1();
           hmacsha1.Key = Encoding.ASCII.GetBytes(string.Format("{0}&{1}", UrlEncode(consumerSecret), string.IsNullOrEmpty(tokenSecret) ? "" : UrlEncode(tokenSecret)));
@@ -367,5 +379,11 @@ namespace Ramone.OAuth1
       return random.Next(123400, 9999999).ToString();
     }
 
+
+    protected void Log(string message)
+    {
+      if (Logger != null)
+        Logger.Log(Settings, message);
+    }
   }
 }

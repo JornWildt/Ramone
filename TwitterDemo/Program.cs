@@ -39,10 +39,10 @@ namespace TwitterDemo
       if (Session.OAuth1IsAuthorized())
       {
         // I find this operation less anoying when testing - it doesn't spam my followers with test messages
-        //UpdateUserName("Ramone was here");
+        UpdateUserName("Jønke");
 
-        PostTweet_Dynamic();
-        PostTweet_Typed();
+        //PostTweet_Dynamic();
+        //PostTweet_Typed();
       }
     }
 
@@ -154,6 +154,7 @@ namespace TwitterDemo
 
     static void UpdateUserName(string name)
     {
+      Session.OAuth1Logger(new OAuth1Logger());
       RamoneRequest request = Session.Bind(TwitterApi.UpdateProfilePath, new { name = name });
       RamoneResponse response = request.Post();
     }

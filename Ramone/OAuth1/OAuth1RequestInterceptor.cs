@@ -9,6 +9,8 @@ namespace Ramone.OAuth1
 
     public bool IsAuthorized { get; set; }
 
+    public IOAuth1Logger Logger { get; set; }
+
 
     public OAuth1RequestInterceptor(OAuth1Settings settings)
     {
@@ -27,7 +29,7 @@ namespace Ramone.OAuth1
 
     public void Intercept(HttpWebRequest request)
     {
-      SignatureHelper o = new SignatureHelper();
+      SignatureHelper o = new SignatureHelper(Settings, Logger);
 
       string timestamp = o.GenerateTimeStamp();
       string nonce = o.GenerateNonce();
@@ -51,6 +53,8 @@ namespace Ramone.OAuth1
                                               out url,
                                               out requestParams);
 
+      Log("Signature: " + signature);
+
       string auth = string.Format(@"OAuth 
   oauth_consumer_key=""{0}"", 
   oauth_token=""{1}"", 
@@ -69,9 +73,18 @@ namespace Ramone.OAuth1
       if (Settings.CallbackUrl != null)
         auth += string.Format(@", oauth_callback=""{0}""", Settings.CallbackUrl);
 
+      Log("Authorization header: " + auth);
+
       request.Headers["Authorization"] = auth;
     }
 
     #endregion IRequestInterceptor Members
+
+
+    protected void Log(string message)
+    {
+      if (Logger != null)
+        Logger.Log(Settings, message);
+    }
   }
 }
