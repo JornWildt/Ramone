@@ -66,7 +66,6 @@ namespace Ramone.Tests
     }
 
 
-
     class SomeInterceptor : IRequestInterceptor
     {
       #region IRequestInterceptor Members

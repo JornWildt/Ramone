@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Net;
 using CuttingEdge.Conditions;
+using System.IO;
 
 
 namespace Ramone
@@ -385,7 +386,12 @@ namespace Ramone
 
         if (BodyData != null)
         {
-          BodyCodec.WriteTo(new WriterContext(request.GetRequestStream(), BodyData, request, Session));
+          Stream requestStream = request.GetRequestStream();
+          foreach (KeyValuePair<string, IRequestInterceptor> interceptor in Session.RequestInterceptors)
+            if (interceptor.Value is IRequestStreamWrapper)
+              requestStream = ((IRequestStreamWrapper)interceptor.Value).Wrap(new RequestStreamWrapperContext(requestStream, request, Session));
+
+          BodyCodec.WriteTo(new WriterContext(requestStream, BodyData, request, Session));
           request.GetRequestStream().Close();
         }
         else
