@@ -34,24 +34,27 @@ namespace Ramone.OAuth1
       string timestamp = o.GenerateTimeStamp();
       string nonce = o.GenerateNonce();
 
-      //timestamp = "1328856925";
-      //nonce = "adde2ef436c6430692b1cff5fc5205c1";
+      if (Settings.Debug_Timestamp != null)
+        timestamp = Settings.Debug_Timestamp;
+
+      if (Settings.Debug_Nonce != null)
+        nonce = Settings.Debug_Nonce;
 
       string url;
       string requestParams;
 
       string signature = o.GenerateSignature(request.RequestUri,
-                                              Settings.ConsumerKey,
-                                              Settings.ConsumerSecrect,
-                                              Settings.CallbackUrl,
-                                              Settings.AccessToken,
-                                              Settings.AccessTokenSecrect,
-                                              request.Method,
-                                              timestamp,
-                                              nonce,
-                                              SignatureHelper.SignatureTypes.HMACSHA1, // FIXME: constructor parameter
-                                              out url,
-                                              out requestParams);
+                                             Settings.ConsumerKey,
+                                             Settings.ConsumerSecrect,
+                                             Settings.CallbackUrl,
+                                             Settings.AccessToken,
+                                             Settings.AccessTokenSecrect,
+                                             request.Method,
+                                             timestamp,
+                                             nonce,
+                                             SignatureTypes.HMACSHA1, // FIXME: constructor parameter
+                                             out url,
+                                             out requestParams);
 
       Log("Signature: " + signature);
 

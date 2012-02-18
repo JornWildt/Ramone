@@ -7,17 +7,10 @@ OAuth
 - Aflæsning af urlencoded body
   - Måske via plugin i UrlEncodedSerializer?
   - Vis i demo
-- Skal kunne angive access_token direkte
-- Logging af OAuth signature base mm. for debugging
-  - callback method
-  - Learn how to override the oauth_timestamp and oauth_nonce values in your OAuth library. 
-    Use this capability to replay signature generation scenarios for comparative analysis.
+- Følge op på hvilke oauth_xxx params som er påkrævede - især OAuthTokenKey
 
 Twitter:
-- Ensure that your system's timestamp is in sync with Twitter's. 
-  We return the current time in the "Date" HTTP header with every request. 
-  If your request fails due to a timestamp mismatch, use this time to determine the delta 
-  between the system clock and our server clock and adjust your oauth_timestamps for subsequent requests accordingly.
+- Link with Ramone DLL
 
 Authorization as first-class citizens
 - Interceptor pr. service (kan f.eks. have forskellige OAuth settings for forskellige services)

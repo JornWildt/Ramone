@@ -61,9 +61,6 @@ namespace TwitterDemo
 
     static void AuthorizeTwitterAccess_UsingOutOfBandPincode()
     {
-      // Attach a logger (use debugger for breakpoints inside it)
-      Session.OAuth1Logger(new OAuth1Logger());
-
       // Get Twitter API keys from file (don't want the secret parts hardcoded in public repository
       TwitterKeys keys = ReadKeys();
 
@@ -78,6 +75,9 @@ namespace TwitterDemo
         CallbackUrl = "oob" // oob = Out Of Band
       };
       Session.OAuth1Configure(settings);
+
+      // Attach a logger after settings has been assigned (use debugger for breakpoints inside it)
+      Session.OAuth1Logger(new OAuth1Logger());
 
       // Get temporary credentials from Twitter (request token) and remember it internally
       OAuth1Token requestToken = Session.OAuth1GetRequestToken();

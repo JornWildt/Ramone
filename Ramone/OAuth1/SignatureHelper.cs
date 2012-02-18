@@ -1,10 +1,11 @@
 ﻿using System;
-using System.Linq;
 using System.Collections.Generic;
+using System.Collections.Specialized;
+using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Web;
-using System.Collections.Specialized;
+using CuttingEdge.Conditions;
 
 
 /// <summary>
@@ -12,6 +13,17 @@ using System.Collections.Specialized;
 /// </summary>
 namespace Ramone.OAuth1
 {
+  /// <summary>
+  /// Provides a predefined set of algorithms that are supported officially by the protocol
+  /// </summary>
+  public enum SignatureTypes
+  {
+    HMACSHA1,
+    PLAINTEXT,
+    RSASHA1
+  }
+
+
   public class SignatureHelper
   {
     protected OAuth1Settings Settings { get; set; }
@@ -19,17 +31,6 @@ namespace Ramone.OAuth1
     protected IOAuth1Logger Logger { get; set; }
 
 
-    /// <summary>
-    /// Provides a predefined set of algorithms that are supported officially by the protocol
-    /// </summary>
-    public enum SignatureTypes
-    {
-      HMACSHA1,
-      PLAINTEXT,
-      RSASHA1
-    }
-
-    
     protected const string OAuthVersion = "1.0";
     
     protected const string OAuthParameterPrefix = "oauth_";
@@ -88,6 +89,7 @@ namespace Ramone.OAuth1
       return Convert.ToBase64String(hashBytes);
     }
 
+
     /// <summary>
     /// Internal function to cut out all non oauth query string parameters (all parameters not begining with "oauth_")
     /// </summary>
@@ -107,6 +109,7 @@ namespace Ramone.OAuth1
                    .Where(key => !key.StartsWith(OAuthParameterPrefix))
                    .Select(key => new QueryParameter(key, parameters[key])));
     }
+
 
     /// <summary>
     /// This is a different Url Encode implementation since the default .NET one outputs the percent encoding in lower case.
@@ -133,6 +136,7 @@ namespace Ramone.OAuth1
       return result.ToString();
     }
 
+
     /// <summary>
     /// Normalizes the request parameters according to the spec
     /// </summary>
@@ -157,6 +161,7 @@ namespace Ramone.OAuth1
       return sb.ToString();
     }
 
+
     /// <summary>
     /// Generate the signature base that is used to produce the signature
     /// </summary>
@@ -169,30 +174,15 @@ namespace Ramone.OAuth1
     /// <returns>The signature base</returns>
     public string GenerateSignatureBase(Uri url, string consumerKey, string callback, string token, string tokenSecret, string httpMethod, string timeStamp, string nonce, string signatureType, out string normalizedUrl, out string normalizedRequestParameters)
     {
+      Condition.Requires(consumerKey, "consumerKey").IsNotNullOrEmpty();
+      Condition.Requires(httpMethod, "httpMethod").IsNotNullOrEmpty();
+      Condition.Requires(signatureType, "signatureType").IsNotNullOrEmpty();
+
       if (token == null)
-      {
         token = string.Empty;
-      }
 
       if (tokenSecret == null)
-      {
         tokenSecret = string.Empty;
-      }
-
-      if (string.IsNullOrEmpty(consumerKey))
-      {
-        throw new ArgumentNullException("consumerKey");
-      }
-
-      if (string.IsNullOrEmpty(httpMethod))
-      {
-        throw new ArgumentNullException("httpMethod");
-      }
-
-      if (string.IsNullOrEmpty(signatureType))
-      {
-        throw new ArgumentNullException("signatureType");
-      }
 
       normalizedUrl = null;
       normalizedRequestParameters = null;
@@ -203,16 +193,10 @@ namespace Ramone.OAuth1
       parameters.Add(new QueryParameter(OAuthTimestampKey, timeStamp));
       parameters.Add(new QueryParameter(OAuthSignatureMethodKey, signatureType));
       parameters.Add(new QueryParameter(OAuthConsumerKeyKey, consumerKey));
+      parameters.Add(new QueryParameter(OAuthTokenKey, token));
 
       if (callback != null)
-      {
         parameters.Add(new QueryParameter(OAuthCallbackKey, callback));
-      }
-
-      //if (!string.IsNullOrEmpty(token))
-      {
-        parameters.Add(new QueryParameter(OAuthTokenKey, token));
-      }
 
       normalizedUrl = string.Format("{0}://{1}", url.Scheme, url.Host);
       if (!((url.Scheme == "http" && url.Port == 80) || (url.Scheme == "https" && url.Port == 443)))
@@ -230,6 +214,7 @@ namespace Ramone.OAuth1
       return signatureBase.ToString();
     }
 
+
     /// <summary>
     /// Generate the signature value based on the given signature base and hash algorithm
     /// </summary>
@@ -241,20 +226,7 @@ namespace Ramone.OAuth1
       return ComputeHash(hash, signatureBase);
     }
 
-    /// <summary>
-    /// Generates a signature using the HMAC-SHA1 algorithm
-    /// </summary>		
-    /// <param name="url">The full url that needs to be signed including its non OAuth url parameters</param>
-    /// <param name="consumerKey">The consumer key</param>
-    /// <param name="consumerSecret">The consumer seceret</param>
-    /// <param name="token">The token, if available. If not available pass null or an empty string</param>
-    /// <param name="tokenSecret">The token secret, if available. If not available pass null or an empty string</param>
-    /// <param name="httpMethod">The http method used. Must be a valid HTTP method verb (POST,GET,PUT, etc)</param>
-    /// <returns>A base64 string of the hash value</returns>
-    public string GenerateSignature(Uri url, string consumerKey, string consumerSecret, string callback, string token, string tokenSecret, string httpMethod, string timeStamp, string nonce, out string normalizedUrl, out string normalizedRequestParameters)
-    {
-      return GenerateSignature(url, consumerKey, consumerSecret, callback, token, tokenSecret, httpMethod, timeStamp, nonce, SignatureTypes.HMACSHA1, out normalizedUrl, out normalizedRequestParameters);
-    }
+
 
     /// <summary>
     /// Generates a signature using the specified signatureType 
@@ -291,6 +263,7 @@ namespace Ramone.OAuth1
       }
     }
 
+
     /// <summary>
     /// Generate the timestamp for the signature        
     /// </summary>
@@ -301,6 +274,7 @@ namespace Ramone.OAuth1
       TimeSpan ts = DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0, 0);
       return Convert.ToInt64(ts.TotalSeconds).ToString();
     }
+
 
     /// <summary>
     /// Generate a nonce

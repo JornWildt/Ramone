@@ -21,6 +21,16 @@ namespace Ramone.OAuth1
 
     public string CallbackUrl { get; set; }
 
+    /// <summary>
+    /// Set specific Nonce to be used when debugging problems with OAuth1. Do not use normally.
+    /// </summary>
+    public string Debug_Nonce { get; set; }
+
+    /// <summary>
+    /// Set specific timestamp to be used when debugging problems with OAuth1. Do not use normally.
+    /// </summary>
+    public string Debug_Timestamp { get; set; }
+
 
     public OAuth1Settings()
     {
@@ -37,6 +47,8 @@ namespace Ramone.OAuth1
       AuthorizeUrl = src.AuthorizeUrl;
       AccessTokenUrl = src.AccessTokenUrl;
       CallbackUrl = src.CallbackUrl;
+      Debug_Nonce = src.Debug_Nonce;
+      Debug_Timestamp = src.Debug_Timestamp;
     }
   }
 }

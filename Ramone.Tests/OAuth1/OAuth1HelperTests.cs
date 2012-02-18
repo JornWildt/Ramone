@@ -102,6 +102,7 @@ namespace Ramone.Tests.OAuth1
                                                   "post",
                                                   "12345",
                                                   "abcd",
+                                                  SignatureTypes.HMACSHA1,
                                                   out normalizedUrl,
                                                   out normalizedRequestParameters);
 
@@ -128,6 +129,7 @@ namespace Ramone.Tests.OAuth1
                                                   "post",
                                                   "12345",
                                                   "abcd",
+                                                  SignatureTypes.HMACSHA1,
                                                   out normalizedUrl,
                                                   out normalizedRequestParameters);
 
