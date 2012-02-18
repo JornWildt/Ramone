@@ -1,14 +1,10 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using Ramone.Utility;
-using System.Text;
-using System.Collections.Specialized;
-using System.Web;
 
 
 namespace Ramone.MediaTypes.FormUrlEncoded
 {
-  public class FormUrlEncodedSerializerCodec : TextCodecBase<object>  //IMediaTypeWriter, IMediaTypeReader
+  public class FormUrlEncodedSerializerCodec : TextCodecBase<object>
   {
     protected override void WriteTo(object item, TextWriter writer, WriterContext context)
     {
@@ -25,37 +21,5 @@ namespace Ramone.MediaTypes.FormUrlEncoded
       FormUrlEncodingSerializer Serializer = new FormUrlEncodingSerializer(context.DataType);
       return Serializer.Deserialize(reader);
     }
-
-
-#if false
-    public void WriteTo(WriterContext context)
-    {
-      if (context.Data == null)
-        return;
-
-      Encoding enc = MediaTypeParser.GetEncodingFromCharset(context.Request.ContentType);
-
-      Type t = context.Data.GetType();
-      FormUrlEncodingSerializer Serializer = new FormUrlEncodingSerializer(t);
-
-      using (TextWriter w = new StreamWriter(context.HttpStream, enc))
-      {
-        Serializer.Serialize(w, context.Data, context.Session.SerializerSettings);
-      }
-    }
-
-
-    public object ReadFrom(ReaderContext context)
-    {
-      NameValueCollection query = HttpUtility.ParseQueryString(uri.Query);
-    }
-
-
-    #region IMediaTypeCodec
-
-    public object CodecArgument { get; set; }
-
-    #endregion
-#endif
   }
 }
