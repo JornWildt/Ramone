@@ -27,9 +27,10 @@ namespace Ramone.OAuth1
 
     #region IRequestInterceptor Members
 
-    public void Intercept(HttpWebRequest request)
+    public void Intercept(RequestContext context)
     {
       SignatureHelper o = new SignatureHelper(Settings, Logger);
+      HttpWebRequest request = context.Request;
 
       string timestamp = o.GenerateTimeStamp();
       string nonce = o.GenerateNonce();

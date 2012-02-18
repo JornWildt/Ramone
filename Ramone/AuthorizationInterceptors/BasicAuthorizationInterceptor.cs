@@ -18,10 +18,10 @@ namespace Ramone.AuthorizationInterceptors
     }
 
 
-    public void Intercept(HttpWebRequest request)
+    public void Intercept(RequestContext context)
     {
       string token = Convert.ToBase64String(Encoding.ASCII.GetBytes(Username + ":" + Passsword));
-      request.Headers["Authorization"] = "Basic " + token;
+      context.Request.Headers["Authorization"] = "Basic " + token;
     }
   }
 }

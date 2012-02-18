@@ -71,7 +71,7 @@ namespace Ramone.Tests
     {
       #region IRequestInterceptor Members
 
-      public void Intercept(System.Net.HttpWebRequest request)
+      public void Intercept(RequestContext context)
       {
         throw new NotImplementedException();
       }

@@ -168,7 +168,7 @@ namespace Ramone.Tests
 
     class DummyInterceptor1 : IRequestInterceptor
     {
-      public void Intercept(System.Net.HttpWebRequest request)
+      public void Intercept(RequestContext context)
       {
       }
     }
@@ -176,7 +176,7 @@ namespace Ramone.Tests
 
     class DummyInterceptor2 : IRequestInterceptor
     {
-      public void Intercept(System.Net.HttpWebRequest request)
+      public void Intercept(RequestContext context)
       {
       }
     }

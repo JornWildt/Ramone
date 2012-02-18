@@ -367,7 +367,7 @@ namespace Ramone
 
         foreach (KeyValuePair<string,IRequestInterceptor> interceptor in Session.RequestInterceptors)
         {
-          interceptor.Value.Intercept(request);
+          interceptor.Value.Intercept(new RequestContext(request, Session));
         }
 
         string charset = "";
