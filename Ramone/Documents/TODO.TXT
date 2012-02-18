@@ -4,13 +4,7 @@ Version 1
 
 OAuth
 - Encoding for ÆØÅ (Jørn Wildt)
-- Aflæsning af urlencoded body
-  - Måske via plugin i UrlEncodedSerializer?
-  - Vis i demo
 - Følge op på hvilke oauth_xxx params som er påkrævede - især OAuthTokenKey
-
-Twitter:
-- Link with Ramone DLL
 
 Authorization as first-class citizens
 - Interceptor pr. service (kan f.eks. have forskellige OAuth settings for forskellige services)
@@ -101,7 +95,8 @@ Docs
   - Focus on RESTful patterns
   - Er godt for object serialization (pas på med dette udsagn)
   - Samler en række forskellige media types på ét sted
-- OAuth + Basic authorization
+- OAuth1 + Basic authorization
+- OAuth1 cannot handle UrlEncoded post body
 - Alle Get/Post etc. operationer er uden sideeffekter i RamoneRequest. 
   Altså kan RamoneRequest genbruges flere gange. Eller hvad ...
 - Go through REST reciepes and show how its done in Ramone
