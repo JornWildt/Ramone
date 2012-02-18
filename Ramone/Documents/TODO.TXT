@@ -4,7 +4,6 @@ Version 1
 
 OAuth
 - Encoding for ÆØÅ (Jørn Wildt)
-- Gennemkommentere hele koden for Twitter access
 - Aflæsning af urlencoded body
   - Måske via plugin i UrlEncodedSerializer?
   - Vis i demo
@@ -15,7 +14,10 @@ OAuth
     Use this capability to replay signature generation scenarios for comparative analysis.
 
 Twitter:
-- Ensure that your system's timestamp is in sync with Twitter's. We return the current time in the "Date" HTTP header with every request. If your request fails due to a timestamp mismatch, use this time to determine the delta between the system clock and our server clock and adjust your oauth_timestamps for subsequent requests accordingly.
+- Ensure that your system's timestamp is in sync with Twitter's. 
+  We return the current time in the "Date" HTTP header with every request. 
+  If your request fails due to a timestamp mismatch, use this time to determine the delta 
+  between the system clock and our server clock and adjust your oauth_timestamps for subsequent requests accordingly.
 
 Authorization as first-class citizens
 - Interceptor pr. service (kan f.eks. have forskellige OAuth settings for forskellige services)
@@ -28,6 +30,7 @@ Undgå authorization exception - så kan man ikke aflæse body som normalt.
 
 Serializing
   ObjectSerialiser, deserializing
+  - Kan parser (af xxx.yyy.zzz) kombineres med builder? 
   - Format specifiers for dot operators
   - Format specifiers for index operators
 
@@ -43,6 +46,8 @@ Serializing
   ReaderCodec for text/html (xml mf.) + string
 
   Can FormUrlEncodingSerializer (object serializeren) håndtere dynamics (Expando) og NameValueCollections?
+
+  De generiske readers kunne også returnere NameValueCollection. Bør måske kunne styres?
 
 Interceptors med "Context" argument (og ikke kun httprequest). Dvs. incl. session.
 
@@ -65,11 +70,6 @@ Ramone.HyperMedia
 - OK: Follow(ILink), 
 - Follow(ILinkTemplate, params)
 - Make it possible to Follow() relative links.
-
-Bind en ”non-template” URL med vilkårlige params:
-  ”http://dr.dk” BIND { a = 1 & b = 2 } => ”http://dr.dk?a=1&b=2”
-
-De generiske readers kunne også returnere NameValueCollection. Bør måske kunne styres?
 
 Test scenarie hvor der returneres "NoContent" og man forsøger at hente content (skal give null)
 

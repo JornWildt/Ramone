@@ -2,7 +2,6 @@
 using System.Diagnostics;
 using System.IO;
 using Ramone;
-using Ramone.MediaTypes.FormUrlEncoded;
 using Ramone.OAuth1;
 
 
@@ -10,12 +9,13 @@ namespace TwitterDemo
 {
   // Demo of Ramone used as a Twitter client that shows timelines and posts updates.
 
-  // In order to run this program you must first obtain an OAuth1 API consumer_key and consumer_secret from Twitter
-  // Put these in a file c:\tmp\twitterkeys.txt formated as one line of "<consumer_key>|<consumer_secret>"
+  // In order to run this program you must first obtain pair of OAuth1 API consumer_key and consumer_secret from Twitter.
+  // Put these in a file c:\tmp\twitterkeys.txt formated as one line of "consumer_key|consumer_secret"
 
   public class Program
   {
     static IRamoneSession Session { get; set; }
+
 
     // Put a screen name here for showing timeline
     static string TwitterUserScreenName = "JornWildt";
@@ -38,7 +38,7 @@ namespace TwitterDemo
 
       if (Session.OAuth1IsAuthorized())
       {
-        // I find this operation less anoying when testing - it doesn't spam my followers with test messages
+        // I find this operation less annoying when testing - it doesn't spam my followers with test messages
         UpdateUserName("Jønke");
 
         //PostTweet_Dynamic();
@@ -52,7 +52,7 @@ namespace TwitterDemo
       // Create new session with implicit service
       Session = RamoneConfiguration.NewSession(new Uri("https://api.twitter.com"));
 
-      // Set default request/response media-type to JSON for Twitter.
+      // Set default request/response media-types to UrlEncoded/JSON for Twitter.
       // This saves us the hassle of specifying codecs for all the Twitter resource types (Tweet, Timeline, User etc.)
       Session.DefaultRequestMediaType = MediaType.ApplicationFormUrlEncoded;
       Session.DefaultResponseMediaType = MediaType.ApplicationJson;
@@ -61,6 +61,9 @@ namespace TwitterDemo
 
     static void AuthorizeTwitterAccess_UsingOutOfBandPincode()
     {
+      // Attach a logger (use debugger for breakpoints inside it)
+      Session.OAuth1Logger(new OAuth1Logger());
+
       // Get Twitter API keys from file (don't want the secret parts hardcoded in public repository
       TwitterKeys keys = ReadKeys();
 
@@ -72,7 +75,7 @@ namespace TwitterDemo
         RequestTokenUrl = new Uri(Session.BaseUri, TwitterApi.OAuthRequestTokenPath),
         AuthorizeUrl = new Uri(Session.BaseUri, TwitterApi.OAuthAuthorizePath),
         AccessTokenUrl = new Uri(Session.BaseUri, TwitterApi.OAuthAccessTokenPath),
-        CallbackUrl = "oob"
+        CallbackUrl = "oob" // oob = Out Of Band
       };
       Session.OAuth1Configure(settings);
 
@@ -101,12 +104,14 @@ namespace TwitterDemo
       // Bind user-timeline template to supplied values
       RamoneRequest request = Session.Bind(TwitterApi.UserTimeLinePath, new { screen_name = screenName, count = 2 });
 
+      // GET response
       RamoneResponse response = request.Get();
 
       dynamic timeline = response.Body;
 
       Console.WriteLine("This is the timeline for {0} using C# dynamics:", screenName);
       Console.WriteLine();
+
       foreach (dynamic tweet in timeline)
       {
         Console.WriteLine("* [{0}] {1}.", tweet.user.name, tweet.text);
@@ -121,6 +126,7 @@ namespace TwitterDemo
       // Bind user-timeline template to supplied values
       RamoneRequest request = Session.Bind(TwitterApi.UserTimeLinePath, new { screen_name = screenName, count = 2 });
 
+      // GET statically typed response
       RamoneResponse<Timeline> response = request.Get<Timeline>();
 
       Timeline timeline = response.Body;
@@ -137,6 +143,7 @@ namespace TwitterDemo
 
     static void PostTweet_Dynamic()
     {
+      // Insert GUID because Twitter denies access to identical tweets
       string message = "A dynamic tweet from the Ramone client [" + Guid.NewGuid() + "]";
       Session.Bind(TwitterApi.StatusesUpdate, new { status = message }).Post();
       Console.WriteLine("Posted update using dynamic object parameters.");
@@ -145,6 +152,7 @@ namespace TwitterDemo
 
     static void PostTweet_Typed()
     {
+      // Insert GUID because Twitter denies access to identical tweets
       string message = "A typed tweet from the Ramone client [" + Guid.NewGuid() + "]";
       StatusUpdate update = new StatusUpdate { status = message };
       Session.Bind(TwitterApi.StatusesUpdate, update).Post();
@@ -154,11 +162,12 @@ namespace TwitterDemo
 
     static void UpdateUserName(string name)
     {
-      Session.OAuth1Logger(new OAuth1Logger());
       RamoneRequest request = Session.Bind(TwitterApi.UpdateProfilePath, new { name = name });
       RamoneResponse response = request.Post();
     }
 
+
+    #region Utility stuff for reading Twitter keys
 
     class TwitterKeys
     {
@@ -187,6 +196,9 @@ namespace TwitterDemo
         };
       }
     }
+
+    #endregion
+
 
 #if false
     // Ignore this for now ...

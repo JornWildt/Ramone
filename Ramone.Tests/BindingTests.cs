@@ -244,6 +244,18 @@ namespace Ramone.Tests
     }
 
 
+    [Test]
+    public void CanBind_UriTemplate_WithEncoding()
+    {
+      // Act
+      RamoneRequest req = Session.Bind(new UriTemplate("set?name={name}"), new { name = "Jørn" });
+      Uri url = req.Url;
+
+      // Assert
+      Assert.AreEqual(BaseUrl + "set?name=J%c3%b8rn", req.Url.AbsoluteUri);
+    }
+
+
     //[Test]
     //public void CanRequest_Uri()
     //{

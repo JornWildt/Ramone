@@ -112,6 +112,7 @@
     <Compile Include="OAuth1\OAuth1Token.cs" />
     <Compile Include="OAuth1\OAuth1Extensions.cs" />
     <Compile Include="OAuth1\OAuth1RequestInterceptor.cs" />
+    <Compile Include="OAuth1\QueryParameter.cs" />
     <Compile Include="RamoneConfiguration.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="Html\HtmlAnchor.cs" />

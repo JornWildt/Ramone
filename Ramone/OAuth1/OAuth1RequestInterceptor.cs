@@ -68,7 +68,7 @@ namespace Ramone.OAuth1
         nonce,
         timestamp,
         "HMAC-SHA1",
-        o.UrlEncode(signature));
+        SignatureHelper.UrlEncode(signature));
 
       if (Settings.CallbackUrl != null)
         auth += string.Format(@", oauth_callback=""{0}""", Settings.CallbackUrl);

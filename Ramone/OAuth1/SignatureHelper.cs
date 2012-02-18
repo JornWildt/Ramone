@@ -1,15 +1,17 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Security.Cryptography;
 using System.Text;
 using System.Web;
+using System.Collections.Specialized;
 
 
+/// <summary>
+/// OAuth utility originally from http://code.google.com/p/oauth/
+/// </summary>
 namespace Ramone.OAuth1
 {
-  /// <summary>
-  /// OAuth utility from http://code.google.com/p/oauth/
-  /// </summary>
   public class SignatureHelper
   {
     protected OAuth1Settings Settings { get; set; }
@@ -28,56 +30,6 @@ namespace Ramone.OAuth1
     }
 
     
-    /// <summary>
-    /// Provides an internal structure to sort the query parameter
-    /// </summary>
-    protected class QueryParameter
-    {
-      private string name = null;
-      private string value = null;
-
-      public QueryParameter(string name, string value)
-      {
-        this.name = name;
-        this.value = value;
-      }
-
-      public string Name
-      {
-        get { return name; }
-      }
-
-      public string Value
-      {
-        get { return value; }
-      }
-    }
-
-    
-    /// <summary>
-    /// Comparer class used to perform the sorting of the query parameters
-    /// </summary>
-    protected class QueryParameterComparer : IComparer<QueryParameter>
-    {
-
-      #region IComparer<QueryParameter> Members
-
-      public int Compare(QueryParameter x, QueryParameter y)
-      {
-        if (x.Name == y.Name)
-        {
-          return string.Compare(x.Value, y.Value);
-        }
-        else
-        {
-          return string.Compare(x.Name, y.Name);
-        }
-      }
-
-      #endregion
-    }
-
-    
     protected const string OAuthVersion = "1.0";
     
     protected const string OAuthParameterPrefix = "oauth_";
@@ -86,23 +38,23 @@ namespace Ramone.OAuth1
     //
     // List of known and used oauth parameters' names
     //        
-    protected const string OAuthConsumerKeyKey = "oauth_consumer_key";
-    protected const string OAuthCallbackKey = "oauth_callback";
-    protected const string OAuthVersionKey = "oauth_version";
-    protected const string OAuthSignatureMethodKey = "oauth_signature_method";
-    protected const string OAuthSignatureKey = "oauth_signature";
-    protected const string OAuthTimestampKey = "oauth_timestamp";
-    protected const string OAuthNonceKey = "oauth_nonce";
-    protected const string OAuthTokenKey = "oauth_token";
-    protected const string OAuthTokenSecretKey = "oauth_token_secret";
+    public const string OAuthConsumerKeyKey = "oauth_consumer_key";
+    public const string OAuthCallbackKey = "oauth_callback";
+    public const string OAuthVersionKey = "oauth_version";
+    public const string OAuthSignatureMethodKey = "oauth_signature_method";
+    public const string OAuthSignatureKey = "oauth_signature";
+    public const string OAuthTimestampKey = "oauth_timestamp";
+    public const string OAuthNonceKey = "oauth_nonce";
+    public const string OAuthTokenKey = "oauth_token";
+    public const string OAuthTokenSecretKey = "oauth_token_secret";
 
-    protected const string HMACSHA1SignatureType = "HMAC-SHA1";
-    protected const string PlainTextSignatureType = "PLAINTEXT";
-    protected const string RSASHA1SignatureType = "RSA-SHA1";
+    public const string HMACSHA1SignatureType = "HMAC-SHA1";
+    public const string PlainTextSignatureType = "PLAINTEXT";
+    public const string RSASHA1SignatureType = "RSA-SHA1";
+
+    protected const string unreservedChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_.~";
 
     protected Random random = new Random();
-
-    protected string unreservedChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_.~";
 
 
     public SignatureHelper(OAuth1Settings settings, IOAuth1Logger logger)
@@ -139,38 +91,21 @@ namespace Ramone.OAuth1
     /// <summary>
     /// Internal function to cut out all non oauth query string parameters (all parameters not begining with "oauth_")
     /// </summary>
-    /// <param name="parameters">The query string part of the Url</param>
+    /// <param name="query">The query string part of the Url</param>
     /// <returns>A list of QueryParameter each containing the parameter name and value</returns>
-    private List<QueryParameter> GetQueryParameters(string parameters)
+    public List<QueryParameter> GetQueryParameters(string query)
     {
-      if (parameters.StartsWith("?"))
+      if (query.StartsWith("?"))
       {
-        parameters = parameters.Remove(0, 1);
+        query = query.Remove(0, 1);
       }
 
-      List<QueryParameter> result = new List<QueryParameter>();
+      NameValueCollection parameters = HttpUtility.ParseQueryString(query);
 
-      if (!string.IsNullOrEmpty(parameters))
-      {
-        string[] p = parameters.Split('&');
-        foreach (string s in p)
-        {
-          if (!string.IsNullOrEmpty(s) && !s.StartsWith(OAuthParameterPrefix))
-          {
-            if (s.IndexOf('=') > -1)
-            {
-              string[] temp = s.Split('=');
-              result.Add(new QueryParameter(HttpUtility.UrlDecode(temp[0]), HttpUtility.UrlDecode(temp[1])));
-            }
-            else
-            {
-              result.Add(new QueryParameter(s, string.Empty));
-            }
-          }
-        }
-      }
-
-      return result;
+      return new List<QueryParameter>(
+                   parameters.Cast<string>()
+                   .Where(key => !key.StartsWith(OAuthParameterPrefix))
+                   .Select(key => new QueryParameter(key, parameters[key])));
     }
 
     /// <summary>
@@ -179,7 +114,7 @@ namespace Ramone.OAuth1
     /// </summary>
     /// <param name="value">The value to Url encode</param>
     /// <returns>Returns a Url encoded string</returns>
-    public string UrlEncode(string value)
+    public static string UrlEncode(string value)
     {
       StringBuilder result = new StringBuilder();
 
@@ -203,20 +138,20 @@ namespace Ramone.OAuth1
     /// </summary>
     /// <param name="parameters">The list of parameters already sorted</param>
     /// <returns>a string representing the normalized parameters</returns>
-    protected string NormalizeRequestParameters(IList<QueryParameter> parameters)
+    public string NormalizeRequestParameters(List<QueryParameter> parameters)
     {
+      parameters.Sort(new QueryParameterComparer());
+
       StringBuilder sb = new StringBuilder();
       QueryParameter p = null;
       for (int i = 0; i < parameters.Count; i++)
       {
         p = parameters[i];
-        //sb.AppendFormat("{0}={1}", p.Name, p.Value);
-        sb.AppendFormat("{0}={1}", UrlEncode(Encoding.ASCII.GetString(Encoding.UTF8.GetBytes(p.Name))), UrlEncode(Encoding.ASCII.GetString(Encoding.UTF8.GetBytes(p.Value))));
 
-        if (i < parameters.Count - 1)
-        {
+        if (i > 0)
           sb.Append("&");
-        }
+
+        sb.AppendFormat("{0}={1}", p.Name, p.Value);
       }
 
       return sb.ToString();
@@ -278,8 +213,6 @@ namespace Ramone.OAuth1
       {
         parameters.Add(new QueryParameter(OAuthTokenKey, token));
       }
-
-      parameters.Sort(new QueryParameterComparer());
 
       normalizedUrl = string.Format("{0}://{1}", url.Scheme, url.Host);
       if (!((url.Scheme == "http" && url.Port == 80) || (url.Scheme == "https" && url.Port == 443)))
