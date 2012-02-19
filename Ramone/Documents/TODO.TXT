@@ -6,8 +6,6 @@ OAuth
 - Encoding for ÆØÅ (Jørn Wildt)
 - Følge op på hvilke oauth_xxx params som er påkrævede - især OAuthTokenKey
 
-Undgå authorization exception - så kan man ikke aflæse body som normalt.
-
 Serializing
   ObjectSerialiser, deserializing
   - Kan parser (af xxx.yyy.zzz) kombineres med builder? 
