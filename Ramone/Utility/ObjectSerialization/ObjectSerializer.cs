@@ -35,15 +35,17 @@ namespace Ramone.Utility.ObjectSerialization
     }
 
 
-    public object Deserialize(NameValueCollection values)
+    public object Deserialize(NameValueCollection values, ObjectSerializerSettings settings = null)
     {
+      Settings = settings ?? new ObjectSerializerSettings();
+
       object result = Activator.CreateInstance(DataType);
       foreach (string key in values.AllKeys)
       {
         if (key != null)
         {
           string value = values[key];
-          IEnumerator propertyNames = key.Split('.').GetEnumerator();
+          IEnumerator propertyNames = key.Split(Settings.PropertySeparator).GetEnumerator();
           propertyNames.MoveNext();
           Evaluate(result, DataType, propertyNames, value);
         }
@@ -168,8 +170,34 @@ namespace Ramone.Utility.ObjectSerialization
         int.TryParse(value, out i);
         return i;
       }
+      else if (property.PropertyType == typeof(DateTime))
+      {
+        DateTime d;
+        DateTime.TryParse(value, out d);
+        return d;
+      }
+      else if (property.PropertyType == typeof(float))
+      {
+        float f;
+        float.TryParse(value, System.Globalization.NumberStyles.Float, Settings.Culture.NumberFormat, out f);
+        return f;
+      }
+      else if (property.PropertyType == typeof(double))
+      {
+        Double d;
+        double.TryParse(value, System.Globalization.NumberStyles.Float, Settings.Culture.NumberFormat, out d);
+        return d;
+      }
+      else if (property.PropertyType == typeof(decimal))
+      {
+        Decimal d;
+        Decimal.TryParse(value, System.Globalization.NumberStyles.Float, Settings.Culture.NumberFormat, out d);
+        return d;
+      }
       else if (property.PropertyType == typeof(string))
+      {
         return value;
+      }
       else
       {
         object propertyValue = property.GetValue(classValue, new object[] { });

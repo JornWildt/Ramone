@@ -13,6 +13,8 @@ namespace Ramone.Utility.ObjectSerialization
 
     public string DateTimeFormat { get; set; }
 
+    public char PropertySeparator { get; set; }
+
     public CultureInfo Culture { get; set; }
     
     public IObjectSerializerFormaterManager Formaters { get; set; }
@@ -24,6 +26,7 @@ namespace Ramone.Utility.ObjectSerialization
       DictionaryFormat = "{0}[{1}]";
       PropertyFormat = "{0}.{1}";
       DateTimeFormat = "s";
+      PropertySeparator = '.';
       Formaters = new ObjectSerializerFormaterManager();
       Culture = CultureInfo.InvariantCulture;
     }
@@ -35,6 +38,7 @@ namespace Ramone.Utility.ObjectSerialization
       DictionaryFormat = src.DictionaryFormat;
       PropertyFormat = src.PropertyFormat;
       DateTimeFormat = src.DateTimeFormat;
+      PropertySeparator = src.PropertySeparator;
       Formaters = src.Formaters.Clone();
       Culture = (CultureInfo)src.Culture.Clone();
     }

@@ -7,18 +7,6 @@ OAuth
 - Følge op på hvilke oauth_xxx params som er påkrævede - især OAuthTokenKey
 
 Serializing
-  ObjectSerialiser, deserializing
-  - Kan parser (af xxx.yyy.zzz) kombineres med builder? 
-  - Format specifiers for dot operators
-  - Format specifiers for index operators
-
-  FormUrlEncodingSerializer (plus json) deserialize til
-  - OK: static type
-  - dynamic type / expando
-  - namevalue coll.
-  - Encoding
-  - dates, doubles, float, dictionaries, arrays, lists
-
   Serializer overloads that accepts streams and strings (not only readers)
 
   ReaderCodec for text/html (xml mf.) + string
@@ -27,7 +15,9 @@ Serializing
 
   De generiske readers kunne også returnere NameValueCollection. Bør måske kunne styres?
 
-Interceptors med "Context" argument (og ikke kun httprequest). Dvs. incl. session.
+Serializer v2
+- Deserialize arrays and dictionaries, list
+
 
 TextCodecBase
 - WriteTo(object item, TextWriter writer, WriterContext context) => "item" findes nu i context

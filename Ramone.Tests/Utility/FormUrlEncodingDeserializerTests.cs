@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using NUnit.Framework;
 using Ramone.Utility;
-using Ramone.Utility.ObjectSerialization;
 
 
 namespace Ramone.Tests.Utility
@@ -14,7 +14,7 @@ namespace Ramone.Tests.Utility
     public void CanDeserializeSimpleTypes()
     {
       // Arrange
-      string s = "MyInt=10&MyString=Abc";
+      string s = "MyInt=10&MyString=Abc&MyDate=2012-10-30T12:13:14&MyFloat=10.5&MyDouble=9.25&MyDecimal=8.75";
 
       // Act
       SimpleData data = Deserialize<SimpleData>(s);
@@ -23,6 +23,10 @@ namespace Ramone.Tests.Utility
       Assert.IsNotNull(data);
       Assert.AreEqual(10, data.MyInt);
       Assert.AreEqual("Abc", data.MyString);
+      Assert.AreEqual(new DateTime(2012,10,30,12,13,14), data.MyDate);
+      Assert.AreEqual(10.5f, data.MyFloat);
+      Assert.AreEqual(9.25d, data.MyDouble);
+      Assert.AreEqual(8.75m, data.MyDecimal);
     }
 
 
@@ -125,7 +129,10 @@ namespace Ramone.Tests.Utility
     {
       public int MyInt { get; set; }
       public string MyString { get; set; }
-      //public DateTime MyDate { get; set; }
+      public DateTime MyDate { get; set; }
+      public float MyFloat { get; set; }
+      public float MyDouble { get; set; }
+      public float MyDecimal { get; set; }
     }
 
 
