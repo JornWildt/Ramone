@@ -26,7 +26,7 @@ namespace Ramone.Tests.MediaTypes.Xml
       UnregisteredClass data = new UnregisteredClass { Text = "Hello" };
       RamoneRequest request = Session.Bind(XmlEchoTemplate);
 
-      RamoneResponse<UnregisteredClass> response = request.AsXml().Post<UnregisteredClass>(data);
+      RamoneResponse<UnregisteredClass> response = request.AsXml().AcceptXml().Post<UnregisteredClass>(data);
 
       Assert.AreEqual(data.Text, response.Body.Text);
     }

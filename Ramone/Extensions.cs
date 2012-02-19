@@ -38,13 +38,25 @@ namespace Ramone
 
     public static RamoneRequest AsXml(this RamoneRequest request)
     {
-      return request.ContentType(MediaType.ApplicationXml).Accept(MediaType.ApplicationXml);
+      return request.ContentType(MediaType.ApplicationXml);
+    }
+
+
+    public static RamoneRequest AcceptXml(this RamoneRequest request)
+    {
+      return request.Accept(MediaType.ApplicationXml);
     }
 
 
     public static RamoneRequest AsJson(this RamoneRequest request)
     {
-      return request.ContentType(MediaType.ApplicationJson).Accept(MediaType.ApplicationJson);
+      return request.ContentType(MediaType.ApplicationJson);
+    }
+
+
+    public static RamoneRequest AcceptJson(this RamoneRequest request)
+    {
+      return request.Accept(MediaType.ApplicationJson);
     }
 
 

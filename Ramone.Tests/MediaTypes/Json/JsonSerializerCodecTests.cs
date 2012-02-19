@@ -42,6 +42,7 @@ namespace Ramone.Tests.MediaTypes.Json
       // Act
       var response = req.AcceptCharset(charset)
                         .AsJson()
+                        .AcceptJson()
                         .Get();
       dynamic stuff = response.Body;
 
@@ -89,8 +90,8 @@ namespace Ramone.Tests.MediaTypes.Json
       // Act
       var response = req.Charset(charsetIn)
                         .AcceptCharset(charsetOut)
-                        .Accept("application/json")
                         .AsJson()
+                        .AcceptJson()
                         .Post(data);
       dynamic stuff = response.Body;
 
@@ -110,7 +111,7 @@ namespace Ramone.Tests.MediaTypes.Json
       RamoneRequest request = Session.Bind(CatsTemplate);
 
       // Act
-      Cat createdCat = request.AsJson().Post<Cat>(cat).Created();
+      Cat createdCat = request.AsJson().AcceptJson().Post<Cat>(cat).Created();
 
       // Assert
       Assert.IsNotNull(createdCat);
@@ -136,7 +137,7 @@ namespace Ramone.Tests.MediaTypes.Json
       UnregisteredClass data = new UnregisteredClass { Text = "Hello" };
       RamoneRequest request = Session.Bind(AnyEchoTemplate);
 
-      RamoneResponse<UnregisteredClass> response = request.AsJson().Post<UnregisteredClass>(data);
+      RamoneResponse<UnregisteredClass> response = request.AsJson().AcceptJson().Post<UnregisteredClass>(data);
 
       Assert.AreEqual(data.Text, response.Body.Text);
     }
@@ -165,7 +166,7 @@ namespace Ramone.Tests.MediaTypes.Json
       RamoneRequest request = Session.Bind(CatsTemplate);
 
       // Act
-      dynamic createdCat = request.AsJson().Post(cat).Body;
+      dynamic createdCat = request.AsJson().AcceptJson().Post(cat).Body;
 
       // Assert
       Assert.IsNotNull(createdCat);

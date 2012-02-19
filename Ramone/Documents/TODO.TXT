@@ -6,13 +6,6 @@ OAuth
 - Encoding for ÆØÅ (Jørn Wildt)
 - Følge op på hvilke oauth_xxx params som er påkrævede - især OAuthTokenKey
 
-Authorization as first-class citizens
-- Interceptor pr. service (kan f.eks. have forskellige OAuth settings for forskellige services)
-- Folk vil blive forvirret af "AuthenticationHandlers" (som jo altså ikke authentikerer ...)
-
-
-AsJson() osv. er ikke helt OK fordi det sjældet er begge veje der er det samme.
-
 Undgå authorization exception - så kan man ikke aflæse body som normalt.
 
 Serializing
