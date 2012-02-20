@@ -39,17 +39,7 @@ namespace Ramone.Tests.OAuth1
 
       // Act
       List<QueryParameter> parameters = Helper.GetQueryParameters(RequestUrl.Query);
-      string signatureBase = Helper.GenerateSignatureBase(RequestUrl, 
-                                                          "xckey", 
-                                                          "xcb", 
-                                                          "xat", 
-                                                          "xats", 
-                                                          "post", 
-                                                          "12345", 
-                                                          "abcd",
-                                                          SignatureHelper.HMACSHA1SignatureType, 
-                                                          out normalizedUrl, 
-                                                          out normalizedRequestParameters);
+      string signatureBase = Helper.GenerateSignatureBase(RequestUrl, "xckey", "xcb", "xat", "post", "12345", "abcd", SignatureHelper.HMACSHA1SignatureType, out normalizedUrl, out normalizedRequestParameters);
 
       // Assert
       Assert.AreEqual("POST&http%3A%2F%2Fhome.dk%2Fset&age%3D6%26name%3DJ%25C3%25B8rn%26oauth_callback%3Dxcb%26oauth_consumer_key%3Dxckey%26oauth_nonce%3Dabcd%26oauth_signature_method%3DHMAC-SHA1%26oauth_timestamp%3D12345%26oauth_token%3Dxat%26oauth_version%3D1.0", 
@@ -66,17 +56,7 @@ namespace Ramone.Tests.OAuth1
 
       // Act
       List<QueryParameter> parameters = Helper.GetQueryParameters(RequestUrl.Query);
-      string signatureBase = Helper.GenerateSignatureBase(RequestUrl,
-                                                          "xÆckey",
-                                                          "xØcb",
-                                                          "xÅat",
-                                                          "xÅats",
-                                                          "post",
-                                                          "12345",
-                                                          "abcd",
-                                                          SignatureHelper.HMACSHA1SignatureType,
-                                                          out normalizedUrl,
-                                                          out normalizedRequestParameters);
+      string signatureBase = Helper.GenerateSignatureBase(RequestUrl, "xÆckey", "xØcb", "xÅat", "post", "12345", "abcd", SignatureHelper.HMACSHA1SignatureType, out normalizedUrl, out normalizedRequestParameters);
 
       // Assert
       Assert.AreEqual("POST&http%3A%2F%2Fhome.dk%2Fset&age%3D6%26name%3DJ%25C3%25B8rn%26oauth_callback%3Dx%25C3%2598cb%26oauth_consumer_key%3Dx%25C3%2586ckey%26oauth_nonce%3Dabcd%26oauth_signature_method%3DHMAC-SHA1%26oauth_timestamp%3D12345%26oauth_token%3Dx%25C3%2585at%26oauth_version%3D1.0",
