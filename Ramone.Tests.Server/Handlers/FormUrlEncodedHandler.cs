@@ -9,7 +9,9 @@ namespace Ramone.Tests.Server.Handlers
     {
       return new FormUrlEncodedData
       {
-        Title = "Abc"
+        Title = "Abc",
+        Age = 15,
+        SubData = new FormUrlEncodedSubData { Name = "Grethe" }
       };
     }
   }

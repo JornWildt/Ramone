@@ -4,6 +4,7 @@ using NUnit.Framework;
 using Ramone.MediaTypes.FormUrlEncoded;
 using Ramone.Tests.Common;
 using Ramone.Utility.ObjectSerialization;
+using System.Collections.Specialized;
 
 
 namespace Ramone.Tests.MediaTypes.FormUrlEncoded
@@ -134,21 +135,6 @@ namespace Ramone.Tests.MediaTypes.FormUrlEncoded
 
 
     [Test]
-    public void CanReadUntyped()
-    {
-      // Arrange
-      RamoneRequest request = Session.Bind(FormUrlEncodedTemplate);
-
-      // Act
-      RamoneResponse response = request.Accept("application/x-www-form-urlencoded").Get();
-      dynamic data = response.Body;
-
-      // Assert
-      Assert.AreEqual("Abc", data["Title"]);
-    }
-
-
-    [Test]
     public void CanReadTyped()
     {
       // Arrange
@@ -160,6 +146,24 @@ namespace Ramone.Tests.MediaTypes.FormUrlEncoded
 
       // Assert
       Assert.AreEqual("Abc", data.Title);
+      Assert.AreEqual(15, data.Age);
+    }
+
+
+    [Test]
+    public void CanReadNameValueCollection()
+    {
+      // Arrange
+      RamoneRequest request = Session.Bind(FormUrlEncodedTemplate);
+
+      // Act
+      RamoneResponse<NameValueCollection> response = request.Accept("application/x-www-form-urlencoded").Get<NameValueCollection>();
+      NameValueCollection data = response.Body;
+
+      // Assert
+      Assert.AreEqual("Abc", data["Title"]);
+      Assert.AreEqual("15", data["Age"]);
+      Assert.AreEqual("Grethe", data["SubData.Grethe"]);
     }
   }
 }

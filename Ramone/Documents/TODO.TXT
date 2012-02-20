@@ -7,16 +7,21 @@ OAuth
 - Følge op på hvilke oauth_xxx params som er påkrævede - især OAuthTokenKey
 
 Serializing
-  Serializer overloads that accepts streams and strings (not only readers)
-
-  ReaderCodec for text/html (xml mf.) + string
-
-  Can FormUrlEncodingSerializer (object serializeren) håndtere dynamics (Expando) og NameValueCollections?
-
   De generiske readers kunne også returnere NameValueCollection. Bør måske kunne styres?
+  - From
+      FormUrlEncoded
+      Multpart
+  - To
+      Typed object
+      NameValueCollection
+      Dictionary
+      Hashtable
 
 Serializer v2
 - Deserialize arrays and dictionaries, list
+- Handle NameValueCollections just like Hashtable and dict
+- Serializer overloads that accepts streams and strings (not only readers)
+- ReaderCodec for text/html (xml mf.) + string
 
 
 TextCodecBase

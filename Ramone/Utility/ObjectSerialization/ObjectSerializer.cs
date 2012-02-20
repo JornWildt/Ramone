@@ -37,6 +37,9 @@ namespace Ramone.Utility.ObjectSerialization
 
     public object Deserialize(NameValueCollection values, ObjectSerializerSettings settings = null)
     {
+      if (DataType == typeof(NameValueCollection))
+        return values;
+
       Settings = settings ?? new ObjectSerializerSettings();
 
       object result = Activator.CreateInstance(DataType);
@@ -210,7 +213,6 @@ namespace Ramone.Utility.ObjectSerialization
         return propertyValue;
       }
     }
-
 
     #endregion
   }
