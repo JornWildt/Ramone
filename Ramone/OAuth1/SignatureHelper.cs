@@ -57,6 +57,8 @@ namespace Ramone.OAuth1
 
     protected Random random = new Random();
 
+    private static Encoding Encoder8bit = Encoding.GetEncoding("iso-8859-1");
+
 
     public SignatureHelper(OAuth1Settings settings, IOAuth1Logger logger)
     {
@@ -246,14 +248,16 @@ namespace Ramone.OAuth1
 
       switch (signatureType)
       {
-        case SignatureTypes.PLAINTEXT:
+        case SignatureTypes.PLAINTEXT: // FIXME: Is this correct?
           return HttpUtility.UrlEncode(string.Format("{0}&{1}", consumerSecret, tokenSecret));
         case SignatureTypes.HMACSHA1:
           string signatureBase = GenerateSignatureBase(url, consumerKey, callback, token, tokenSecret, httpMethod, timeStamp, nonce, HMACSHA1SignatureType, out normalizedUrl, out normalizedRequestParameters);
           Log("Signaturebase: " + signatureBase);
 
           HMACSHA1 hmacsha1 = new HMACSHA1();
-          hmacsha1.Key = Encoding.ASCII.GetBytes(string.Format("{0}&{1}", UrlEncode(consumerSecret), string.IsNullOrEmpty(tokenSecret) ? "" : UrlEncode(tokenSecret)));
+          hmacsha1.Key = Encoder8bit.GetBytes(string.Format("{0}&{1}", 
+                                                            UrlEncode(Encoder8bit.GetString(Encoding.UTF8.GetBytes(consumerSecret))),
+                                                            UrlEncode(Encoder8bit.GetString(Encoding.UTF8.GetBytes(tokenSecret)))));
 
           return GenerateSignatureUsingHash(signatureBase, hmacsha1);
         case SignatureTypes.RSASHA1:

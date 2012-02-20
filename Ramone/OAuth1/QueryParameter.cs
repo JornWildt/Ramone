@@ -10,7 +10,7 @@ namespace Ramone.OAuth1
 {
   public class QueryParameter
   {
-    static Encoding Encoder = Encoding.GetEncoding("iso-8859-1");
+    static Encoding Encoder8bit = Encoding.GetEncoding("iso-8859-1");
 
     public string Name { get; private set; }
     public string Value { get; private set; }
@@ -22,8 +22,8 @@ namespace Ramone.OAuth1
       if (value == null)
         value = "";
 
-      Name = SignatureHelper.UrlEncode(Encoder.GetString(Encoding.UTF8.GetBytes(name)));
-      Value = SignatureHelper.UrlEncode(Encoder.GetString(Encoding.UTF8.GetBytes(value)));
+      Name = SignatureHelper.UrlEncode(Encoder8bit.GetString(Encoding.UTF8.GetBytes(name)));
+      Value = SignatureHelper.UrlEncode(Encoder8bit.GetString(Encoding.UTF8.GetBytes(value)));
     }
   }
 

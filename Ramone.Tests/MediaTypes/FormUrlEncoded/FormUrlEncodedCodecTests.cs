@@ -163,7 +163,7 @@ namespace Ramone.Tests.MediaTypes.FormUrlEncoded
       // Assert
       Assert.AreEqual("Abc", data["Title"]);
       Assert.AreEqual("15", data["Age"]);
-      Assert.AreEqual("Grethe", data["SubData.Grethe"]);
+      Assert.AreEqual("Grethe", data["SubData.Name"]);
     }
   }
 }
