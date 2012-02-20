@@ -122,10 +122,10 @@ namespace Ramone.Tests.OAuth1
       List<QueryParameter> parameters = Helper.GetQueryParameters(RequestUrl.Query);
       string signature = Helper.GenerateSignature(RequestUrl,
                                                   "xÆckey",
-                                                  "xØcs",
+                                                  "xcs",
                                                   "xØcb",
                                                   "xÅat",
-                                                  "xÅats",
+                                                  "xats",
                                                   "post",
                                                   "12345",
                                                   "abcd",
@@ -134,7 +134,7 @@ namespace Ramone.Tests.OAuth1
                                                   out normalizedRequestParameters);
 
       // Assert
-      Assert.AreEqual("/IvA08fKUZlrVO46cK7VeKQUcdc=", signature);
+      Assert.AreEqual("7enLOZ/MUnOs1nFZhdhFN/r6TU4=", signature);
     }
   }
 }
