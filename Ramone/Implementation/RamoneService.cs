@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Net;
+using System.Text;
 using Ramone.Utility.ObjectSerialization;
 
 
@@ -12,6 +12,8 @@ namespace Ramone.Implementation
     public string UserAgent { get; set; }
 
     public Uri BaseUri { get; protected set; }
+
+    public Encoding DefaultEncoding { get; set; }
 
     public MediaType DefaultRequestMediaType { get; set; }
 
@@ -37,6 +39,7 @@ namespace Ramone.Implementation
     public RamoneService(Uri baseUri)
     {
       BaseUri = baseUri;
+      DefaultEncoding = Encoding.UTF8;
       CodecManager = new CodecManager();
       AuthorizationDispatcher = new AuthorizationDispatcher();
       RequestInterceptors = new RequestInterceptorSet();

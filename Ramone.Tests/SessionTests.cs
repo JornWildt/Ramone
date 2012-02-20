@@ -4,6 +4,7 @@ using NUnit.Framework;
 using Ramone.Implementation;
 using Ramone.Utility.ObjectSerialization;
 using System.Globalization;
+using System.Text;
 
 
 namespace Ramone.Tests
@@ -20,6 +21,7 @@ namespace Ramone.Tests
       // Arrange
       IRamoneService service = RamoneConfiguration.NewService(BaseUrl);
       service.UserAgent = "Dummy";
+      service.DefaultEncoding = Encoding.ASCII;
       service.DefaultRequestMediaType = new MediaType("X/1");
       service.DefaultResponseMediaType = new MediaType("Y/1");
 
@@ -28,6 +30,7 @@ namespace Ramone.Tests
 
       // Assert
       Assert.AreEqual("Dummy", session.UserAgent);
+      Assert.AreEqual(Encoding.ASCII, session.DefaultEncoding);
       Assert.AreEqual(new MediaType("X/1"), session.DefaultRequestMediaType);
       Assert.AreEqual(new MediaType("Y/1"), session.DefaultResponseMediaType);
       Assert.AreEqual(BaseUrl, session.BaseUri);

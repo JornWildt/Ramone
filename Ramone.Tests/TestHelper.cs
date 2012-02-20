@@ -3,6 +3,7 @@ using NUnit.Framework;
 using Ramone.Tests.Common;
 using Ramone.Tests.Common.CMS;
 using Ramone.Utility.ObjectSerialization;
+using System.Text;
 
 
 namespace Ramone.Tests
@@ -67,6 +68,7 @@ namespace Ramone.Tests
     static TestHelper()
     {
       TestService = RamoneConfiguration.NewService(BaseUrl);
+      TestService.DefaultEncoding = Encoding.GetEncoding("iso-8859-1");
     }
 
 

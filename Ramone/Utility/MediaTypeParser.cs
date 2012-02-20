@@ -6,9 +6,9 @@ namespace Ramone.Utility
 {
   public static class MediaTypeParser
   {
-    public static Encoding GetEncodingFromCharset(string mediaType)
+    public static Encoding GetEncodingFromCharset(string mediaType, Encoding defaultEncoding)
     {
-      Encoding enc = Encoding.Default;
+      Encoding enc = defaultEncoding;
 
       ContentType m = new ContentType(mediaType);
       if (m.Parameters.ContainsKey("charset"))

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Net;
+using System.Text;
 using Ramone.Utility.ObjectSerialization;
 
 
@@ -14,6 +15,8 @@ namespace Ramone
     string UserAgent { get; set; }
 
     Uri BaseUri { get; }
+
+    Encoding DefaultEncoding { get; set; }
 
     MediaType DefaultRequestMediaType { get; set; }
 

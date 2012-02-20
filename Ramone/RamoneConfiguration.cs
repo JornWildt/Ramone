@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.ServiceModel.Syndication;
+using System.Text;
 using System.Xml;
 using HtmlAgilityPack;
 using Ramone.Implementation;
@@ -23,6 +24,8 @@ namespace Ramone
 
     public static string UserAgent { get; set; }
 
+    public static Encoding DefaultEncoding { get; set; }
+
     public static ObjectSerializerSettings SerializerSettings { get; set; }
 
 
@@ -36,6 +39,7 @@ namespace Ramone
     {
       UseStandardCodecs = true;
       UserAgent = "Ramone/1.0";
+      DefaultEncoding = Encoding.UTF8;
       SerializerSettings = new ObjectSerializerSettings();
     }
 
@@ -45,6 +49,7 @@ namespace Ramone
       IRamoneService service = new RamoneService(baseUrl)
       {
         UserAgent = UserAgent,
+        DefaultEncoding = DefaultEncoding,
         SerializerSettings = new ObjectSerializerSettings(SerializerSettings)
       };
       if (UseStandardCodecs)
@@ -93,6 +98,9 @@ namespace Ramone
 
       // Form url encoded
       cm.AddCodec(MediaType.ApplicationFormUrlEncoded, new FormUrlEncodedSerializerCodec());
+
+      // Strings
+      cm.AddCodec<String>(new MediaType("*/*"), new StringCodec());
 
       // Streams
       cm.AddCodec<Stream>(new MediaType("*/*"), new StreamCodec());

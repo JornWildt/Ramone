@@ -3,6 +3,7 @@ using System.IO;
 using OpenRasta.Web;
 using System.Web;
 using Ramone.Tests.Common;
+using System.Text;
 
 
 namespace Ramone.Tests.Server.Handlers
@@ -11,7 +12,7 @@ namespace Ramone.Tests.Server.Handlers
   {
     public object Get()
     {
-      MemoryStream s = new MemoryStream(new byte[] { 6, 7, 8, 9 });
+      MemoryStream s = new MemoryStream(Encoding.UTF8.GetBytes("Hello ÆØÅ"));
       return new InMemoryFile(s) { ContentType = OpenRasta.Web.MediaType.ApplicationOctetStream };
     }
 

@@ -2,18 +2,8 @@
 Version 1
 ---------
 
-Serializing
-  De generiske readers kunne også returnere NameValueCollection. Bør måske kunne styres?
-  - From
-      OK: FormUrlEncoded
-      Multpart
-  - To
-      FU, MU: Typed object
-      FU: NameValueCollection
-
 Serializer v2
 - Deserialize arrays and dictionaries, list
-- Handle NameValueCollections just like Hashtable and dict
 - Serializer overloads that accepts streams and strings (not only readers)
 - ReaderCodec for text/html (xml mf.) + string
 

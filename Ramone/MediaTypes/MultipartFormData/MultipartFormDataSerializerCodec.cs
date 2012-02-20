@@ -17,7 +17,7 @@ namespace Ramone.MediaTypes.MultipartFormData
       Type t = context.Data.GetType();
       MultipartFormDataSerializer Serializer = new MultipartFormDataSerializer(t);
 
-      Encoding enc = MediaTypeParser.GetEncodingFromCharset(context.Request.ContentType);
+      Encoding enc = MediaTypeParser.GetEncodingFromCharset(context.Request.ContentType, context.Session.DefaultEncoding);
 
       Serializer.Serialize(context.HttpStream, context.Data, enc, CodecArgument as string, context.Session.SerializerSettings);
     }

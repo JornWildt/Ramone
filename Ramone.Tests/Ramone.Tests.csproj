@@ -99,6 +99,7 @@
     <Compile Include="MediaTypes\Html\HtmlDocumentCodecTests.cs" />
     <Compile Include="MediaTypes\Json\JsonSerializerCodecTests.cs" />
     <Compile Include="MediaTypes\MultipartFormData\MultipartFormDataTests.cs" />
+    <Compile Include="MediaTypes\StringCodecTests.cs" />
     <Compile Include="MediaTypes\Xml\XmlDocumentCodecTests.cs" />
     <Compile Include="MediaTypes\Xml\XmlSerializerCodecTests.cs" />
     <Compile Include="MediaTypeTests.cs" />

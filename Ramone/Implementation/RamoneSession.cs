@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Net;
+using System.Text;
 using Ramone.Utility.ObjectSerialization;
 
 
@@ -14,6 +15,8 @@ namespace Ramone.Implementation
     public string UserAgent { get; set; }
     
     public Uri BaseUri { get; protected set; }
+
+    public Encoding DefaultEncoding { get; set; }
 
     public MediaType DefaultRequestMediaType { get; set; }
 
@@ -35,6 +38,7 @@ namespace Ramone.Implementation
       Service = service;
       UserAgent = service.UserAgent;
       BaseUri = Service.BaseUri;
+      DefaultEncoding = service.DefaultEncoding;
       DefaultRequestMediaType = service.DefaultRequestMediaType;
       DefaultResponseMediaType = service.DefaultResponseMediaType;
       Cookies = new CookieContainer();

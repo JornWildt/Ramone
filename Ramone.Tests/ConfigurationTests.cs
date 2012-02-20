@@ -2,6 +2,7 @@
 using System.Globalization;
 using System.IO;
 using System.ServiceModel.Syndication;
+using System.Text;
 using System.Xml;
 using NUnit.Framework;
 
@@ -19,6 +20,7 @@ namespace Ramone.Tests
 
       // Assert
       Assert.AreEqual("Ramone/1.0", service.UserAgent);
+      Assert.AreEqual(Encoding.UTF8, service.DefaultEncoding);
       Assert.AreEqual("{0}[{1}]", service.SerializerSettings.ArrayFormat);
       Assert.AreEqual("{0}[{1}]", service.SerializerSettings.DictionaryFormat);
       Assert.AreEqual("{0}.{1}", service.SerializerSettings.PropertyFormat);
@@ -90,11 +92,13 @@ namespace Ramone.Tests
     {
       // Act
       RamoneConfiguration.UserAgent = "Tester";
+      RamoneConfiguration.DefaultEncoding = Encoding.ASCII;
       
       IRamoneService service = RamoneConfiguration.NewService(BaseUrl);
 
       // Assert
       Assert.AreEqual("Tester", service.UserAgent);
+      Assert.AreEqual(Encoding.ASCII, service.DefaultEncoding);
     }
   }
 }

@@ -1,8 +1,5 @@
-﻿using NUnit.Framework;
-using Ramone.MediaTypes.Atom;
-using Ramone.Tests.Common.CMS;
-using System.IO;
-using System.Text;
+﻿using System.IO;
+using NUnit.Framework;
 
 
 namespace Ramone.Tests.MediaTypes
