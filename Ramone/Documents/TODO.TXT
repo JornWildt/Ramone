@@ -2,12 +2,6 @@
 Version 1
 ---------
 
-Serializer v2
-- Deserialize arrays and dictionaries, list
-- Serializer overloads that accepts streams and strings (not only readers)
-- ReaderCodec for text/html (xml mf.) + string
-
-
 TextCodecBase
 - WriteTo(object item, TextWriter writer, WriterContext context) => "item" findes nu i context
 
@@ -85,7 +79,10 @@ Serializer settings for OpenRasta
 Version 2
 ---------
 
-System.Net.Mime.MimeType ... der var parseren. Tænkte nok det fandtes allerede.
+Serializer v2
+- Deserialize arrays and dictionaries, list
+- Serializer overloads that accepts streams and strings (not only readers)
+- Read/write byte[] codec (like stream and string)
 
 Conditional Delete, Get, etc.
 

@@ -17,13 +17,13 @@ namespace Ramone.Tests.MediaTypes
       RamoneResponse<Stream> response = fileReq.Accept("application/octet-stream").Get<Stream>();
 
       // Assert
-      Assert.AreEqual(4, response.ContentLength);
-      byte[] data = new byte[4];
-      response.Body.Read(data, 0, 4);
-      Assert.AreEqual(6, data[0]);
-      Assert.AreEqual(7, data[1]);
-      Assert.AreEqual(8, data[2]);
-      Assert.AreEqual(9, data[3]);
+      Assert.AreEqual(12, response.ContentLength);
+      byte[] data = new byte[12];
+      response.Body.Read(data, 0, 12);
+      Assert.AreEqual((int)'H', data[0]);
+      Assert.AreEqual((int)'e', data[1]);
+      Assert.AreEqual((int)'l', data[2]);
+      Assert.AreEqual((int)'l', data[3]);
     }
 
     
