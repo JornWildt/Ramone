@@ -2,9 +2,6 @@
 Version 1
 ---------
 
-TextCodecBase
-- WriteTo(object item, TextWriter writer, WriterContext context) => "item" findes nu i context
-
 Ramone.HyperMedia
 - OK: Link selector med media-type
 - Tre forskellige koncepter på tværs af media-types (to "dimensioner": hyper-media / media-types)
@@ -63,6 +60,7 @@ Docs
     - Do not share sessions, requests, responses
 - OAuth1 + Basic authorization
 - OAuth1 cannot handle UrlEncoded post body
+- Credits for libraires
 - Alle Get/Post etc. operationer er uden sideeffekter i RamoneRequest. 
   Altså kan RamoneRequest genbruges flere gange. Eller hvad ...
 - Go through REST reciepes and show how its done in Ramone
@@ -95,6 +93,12 @@ Caching
 - Findes det allerede i .NET eller som open source
 - Skal det laves med Sqlite?
 - Er det pr. session eller hvad?
+
+- More codecs
+  - vCard (kan Xyperico udgaven dresseres til at ligne XmlSerializer i .NET?)
+  - Protocol buffers
+  - HAL
+  - oData
 
 Support for quality "q" param in accept header and codec selector
 
