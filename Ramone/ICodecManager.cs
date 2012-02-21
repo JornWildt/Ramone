@@ -6,6 +6,20 @@ namespace Ramone
 {
   public interface ICodecManager
   {
+    void AddCodec<TMediaType, TCodec>(MediaType mediaType) where TCodec : IMediaTypeCodec;
+    void AddCodec<TMediaType>(MediaType mediaType, Type codecType);
+
+    /// <summary>
+    /// Add codec for any CLR type
+    /// </summary>
+    /// <param name="mediaType"></param>
+    /// <param name="codec"></param>
+    void AddCodec<TCodec>(MediaType mediaType) where TCodec : IMediaTypeCodec;
+    void AddCodec(MediaType mediaType, Type codecType);
+
+
+    #region To Be Deleted
+
     void AddCodec<TMediaType>(MediaType mediaType, IMediaTypeCodec codec);
 
     /// <summary>
@@ -14,6 +28,9 @@ namespace Ramone
     /// <param name="mediaType"></param>
     /// <param name="codec"></param>
     void AddCodec(MediaType mediaType, IMediaTypeCodec codec);
+
+    #endregion
+
 
     MediaTypeWriterRegistration GetWriter(Type t, MediaType mediaType);
 

@@ -31,11 +31,12 @@ namespace Ramone.Tests
       // Arrange
 
       // Act
-      CM.AddCodec<Cat>(MediaType.ApplicationJson, new CatAsHtmlCodec());
-      CM.AddCodec<Cat>(MediaType.ApplicationXml, new CatAsHtmlCodec());
+      CM.AddCodec<Cat, CatAsHtmlCodec>(MediaType.ApplicationJson);
+      CM.AddCodec<Cat>(MediaType.ApplicationXml, typeof(CatAsHtmlCodec));
 
       // Assert
-      AssertThrows<ArgumentException>(() => CM.AddCodec<Cat>(MediaType.ApplicationJson, new CatAsHtmlCodec()));
+      AssertThrows<ArgumentException>(() => CM.AddCodec<Cat, CatAsHtmlCodec>(MediaType.ApplicationJson));
+      AssertThrows<ArgumentException>(() => CM.AddCodec<Cat>(MediaType.ApplicationJson, typeof(CatAsHtmlCodec)));
     }
 
 
