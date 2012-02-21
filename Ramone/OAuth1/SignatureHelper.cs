@@ -154,10 +154,12 @@ namespace Ramone.OAuth1
           string signatureBase = GenerateSignatureBase(url, consumerKey, callback, token, httpMethod, timeStamp, nonce, HMACSHA1SignatureType, out normalizedUrl, out normalizedRequestParameters);
           Log("Signaturebase: " + signatureBase);
 
+          string key = string.Format("{0}&{1}", UrlEncode(Encoder8bit.GetString(Encoding.UTF8.GetBytes(consumerSecret ?? ""))),
+                                                UrlEncode(Encoder8bit.GetString(Encoding.UTF8.GetBytes(tokenSecret ?? ""))));
+          Log("Signature key: " + key);
+
           HMACSHA1 hmacsha1 = new HMACSHA1();
-          hmacsha1.Key = Encoder8bit.GetBytes(string.Format("{0}&{1}", 
-                                                            UrlEncode(Encoder8bit.GetString(Encoding.UTF8.GetBytes(consumerSecret))),
-                                                            UrlEncode(Encoder8bit.GetString(Encoding.UTF8.GetBytes(tokenSecret)))));
+          hmacsha1.Key = Encoder8bit.GetBytes(key);
 
           return GenerateSignatureUsingHash(signatureBase, hmacsha1);
         case SignatureTypes.RSASHA1:
