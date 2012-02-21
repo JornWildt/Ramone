@@ -8,10 +8,12 @@ namespace Ramone.MediaTypes.Xml
 {
   public class XmlSerializerCodec : XmlStreamCodecBase
   {
-    protected Dictionary<Type, XmlSerializer> Serializers { get; set; }
+    // The XmlSerializer is thread safe according to the online docs, so it should be safe
+    // to share instances.
+    static Dictionary<Type, XmlSerializer> Serializers { get; set; }
 
 
-    public XmlSerializerCodec()
+    static XmlSerializerCodec()
     {
       Serializers = new Dictionary<Type, XmlSerializer>();
     }

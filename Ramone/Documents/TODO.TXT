@@ -2,8 +2,6 @@
 Version 1
 ---------
 
-Thread safety!
-
 TextCodecBase
 - WriteTo(object item, TextWriter writer, WriterContext context) => "item" findes nu i context
 
@@ -61,6 +59,8 @@ Docs
   - Focus on RESTful patterns
   - Er godt for object serialization (pas på med dette udsagn)
   - Samler en række forskellige media types på ét sted
+  - Tried to make it thread safe (almost no static values)
+    - Do not share sessions, requests, responses
 - OAuth1 + Basic authorization
 - OAuth1 cannot handle UrlEncoded post body
 - Alle Get/Post etc. operationer er uden sideeffekter i RamoneRequest. 
