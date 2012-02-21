@@ -18,20 +18,6 @@ namespace Ramone
     void AddCodec(MediaType mediaType, Type codecType);
 
 
-    #region To Be Deleted
-
-    void AddCodec<TMediaType>(MediaType mediaType, IMediaTypeCodec codec);
-
-    /// <summary>
-    /// Add codec for any CLR type
-    /// </summary>
-    /// <param name="mediaType"></param>
-    /// <param name="codec"></param>
-    void AddCodec(MediaType mediaType, IMediaTypeCodec codec);
-
-    #endregion
-
-
     MediaTypeWriterRegistration GetWriter(Type t, MediaType mediaType);
 
     IEnumerable<MediaTypeReaderRegistration> GetReaders(Type t);

@@ -81,6 +81,8 @@ Serializer settings for OpenRasta
 Version 2
 ---------
 
+Dependency injection in codecs (and more?)
+
 Serializer v2
 - Deserialize arrays and dictionaries, list
 - Serializer overloads that accepts streams and strings (not only readers)

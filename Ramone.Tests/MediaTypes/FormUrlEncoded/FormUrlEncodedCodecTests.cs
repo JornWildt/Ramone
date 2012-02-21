@@ -55,7 +55,7 @@ namespace Ramone.Tests.MediaTypes.FormUrlEncoded
     public void CanPostRegisteredFormUrlEncoded()
     {
       // Arrange
-      Session.Service.CodecManager.AddCodec<RegisteredData>(MediaType.ApplicationFormUrlEncoded, new FormUrlEncodedSerializerCodec());
+      Session.Service.CodecManager.AddCodec<RegisteredData, FormUrlEncodedSerializerCodec>(MediaType.ApplicationFormUrlEncoded);
       RegisteredData data = new RegisteredData { Name = "Pete", Age = 10 };
       RamoneRequest formdataReq = Session.Bind(MultipartFormDataTemplate);
 

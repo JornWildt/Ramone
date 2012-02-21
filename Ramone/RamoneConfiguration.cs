@@ -76,34 +76,34 @@ namespace Ramone
     public static void RegisterStandardCodecs(ICodecManager cm)
     {
       // XML
-      cm.AddCodec(MediaType.ApplicationXml, new XmlSerializerCodec());
-      cm.AddCodec<XmlDocument>(MediaType.ApplicationXml, new XmlDocumentCodec());
-      cm.AddCodec<XmlDocument>(MediaType.TextXml, new XmlDocumentCodec());
+      cm.AddCodec<XmlSerializerCodec>(MediaType.ApplicationXml);
+      cm.AddCodec<XmlDocument, XmlSerializerCodec>(MediaType.ApplicationXml);
+      cm.AddCodec<XmlDocument, XmlSerializerCodec>(MediaType.TextXml);
 
       // HTML + XHTML
-      cm.AddCodec<HtmlDocument>(MediaType.TextHtml, new HtmlDocumentCodec());
-      cm.AddCodec<HtmlDocument>(MediaType.TextXml, new HtmlDocumentCodec());
-      cm.AddCodec<HtmlDocument>(MediaType.ApplicationXHtml, new HtmlDocumentCodec());
-      cm.AddCodec<HtmlDocument>(MediaType.ApplicationXml, new HtmlDocumentCodec());
+      cm.AddCodec<HtmlDocument, HtmlDocumentCodec>(MediaType.TextHtml);
+      cm.AddCodec<HtmlDocument, HtmlDocumentCodec>(MediaType.TextXml);
+      cm.AddCodec<HtmlDocument, HtmlDocumentCodec>(MediaType.ApplicationXHtml);
+      cm.AddCodec<HtmlDocument, HtmlDocumentCodec>(MediaType.ApplicationXml);
 
       // Atom
-      cm.AddCodec<SyndicationFeed>(MediaType.ApplicationAtom, new AtomFeedCodec());
-      cm.AddCodec<SyndicationItem>(MediaType.ApplicationAtom, new AtomItemCodec());
+      cm.AddCodec<SyndicationFeed, AtomFeedCodec>(MediaType.ApplicationAtom);
+      cm.AddCodec<SyndicationItem, AtomItemCodec>(MediaType.ApplicationAtom);
 
       // JSON
-      cm.AddCodec(MediaType.ApplicationJson, new JsonSerializerCodec());
+      cm.AddCodec<JsonSerializerCodec>(MediaType.ApplicationJson);
 
       // Multipart/form-data
-      cm.AddCodec(MediaType.MultipartFormData, new MultipartFormDataSerializerCodec());
+      cm.AddCodec<MultipartFormDataSerializerCodec>(MediaType.MultipartFormData);
 
       // Form url encoded
-      cm.AddCodec(MediaType.ApplicationFormUrlEncoded, new FormUrlEncodedSerializerCodec());
+      cm.AddCodec<FormUrlEncodedSerializerCodec>(MediaType.ApplicationFormUrlEncoded);
 
       // Strings
-      cm.AddCodec<String>(new MediaType("*/*"), new StringCodec());
+      cm.AddCodec<String, StringCodec>(new MediaType("*/*"));
 
       // Streams
-      cm.AddCodec<Stream>(new MediaType("*/*"), new StreamCodec());
+      cm.AddCodec<Stream, StreamCodec>(new MediaType("*/*"));
     }
 
 

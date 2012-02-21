@@ -10,49 +10,49 @@ namespace Ramone
   {
     public static void AddFormUrlEncoded<T>(this ICodecManager codecManager)
     {
-      codecManager.AddCodec<T>(MediaType.ApplicationFormUrlEncoded, new FormUrlEncodedSerializerCodec());
+      codecManager.AddCodec<T, FormUrlEncodedSerializerCodec>(MediaType.ApplicationFormUrlEncoded);
     }
 
 
     public static void AddFormUrlEncoded<T>(this ICodecManager codecManager, MediaType mediaType)
     {
-      codecManager.AddCodec<T>(mediaType, new FormUrlEncodedSerializerCodec());
+      codecManager.AddCodec<T, FormUrlEncodedSerializerCodec>(mediaType);
     }
 
 
     public static void AddMultipartFormData<T>(this ICodecManager codecManager)
     {
-      codecManager.AddCodec<T>(MediaType.MultipartFormData, new MultipartFormDataSerializerCodec());
+      codecManager.AddCodec<T, MultipartFormDataSerializerCodec>(MediaType.MultipartFormData);
     }
 
 
     public static void AddMultipartFormData<T>(this ICodecManager codecManager, MediaType mediaType)
     {
-      codecManager.AddCodec<T>(mediaType, new MultipartFormDataSerializerCodec());
+      codecManager.AddCodec<T, MultipartFormDataSerializerCodec>(mediaType);
     }
 
 
     public static void AddXml<T>(this ICodecManager codecManager)
     {
-      codecManager.AddCodec<T>(MediaType.ApplicationXml, new XmlSerializerCodec());
+      codecManager.AddCodec<T, XmlSerializerCodec>(MediaType.ApplicationXml);
     }
 
 
     public static void AddXml<T>(this ICodecManager codecManager, MediaType mediaType)
     {
-      codecManager.AddCodec<T>(mediaType, new XmlSerializerCodec());
+      codecManager.AddCodec<T, XmlSerializerCodec>(mediaType);
     }
 
 
     public static void AddJson<T>(this ICodecManager codecManager)
     {
-      codecManager.AddCodec<T>(MediaType.ApplicationJson, new JsonSerializerCodec());
+      codecManager.AddCodec<T, JsonSerializerCodec>(MediaType.ApplicationJson);
     }
 
 
     public static void AddJson<T>(this ICodecManager codecManager, MediaType mediaType)
     {
-      codecManager.AddCodec<T>(mediaType, new JsonSerializerCodec());
+      codecManager.AddCodec<T, JsonSerializerCodec>(mediaType);
     }
   }
 }
