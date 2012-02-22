@@ -12,6 +12,7 @@ using Ramone.Tests.Server.Handlers.CMS;
 using OpenRasta.IO;
 using System.Xml;
 using System.IO;
+using Ramone.Tests.Server.Handlers.Blog;
 
 
 namespace Ramone.Tests.Server
@@ -106,6 +107,7 @@ namespace Ramone.Tests.Server
             .ForMediaType("application/x-www-form-urlencoded");
 
         ConfigureCMS();
+        ConfigureBlog();
       }
     }
 
@@ -135,6 +137,20 @@ namespace Ramone.Tests.Server
           .HandledBy<PartyHandler>()
           .TranscodedBy<PartyCodec>()
           .ForMediaType(CMSConstants.CMSMediaTypeId);
+    }
+
+
+    private void ConfigureBlog()
+    {
+      ResourceSpace.Has.ResourcesOfType<BlogItem>()
+                   .AtUri(BlogConstants.BlogItemPath)
+                   .HandledBy<BlogItemHandler>()
+                   .RenderedByAspx("~/Views/Blog/Item.aspx");
+
+      ResourceSpace.Has.ResourcesOfType<BlogList>()
+                   .AtUri(BlogConstants.BlogListPath)
+                   .HandledBy<BlogListHandler>()
+                   .RenderedByAspx("~/Views/Blog/List.aspx");
     }
   }
 }

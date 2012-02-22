@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Net;
+using Ramone.HyperMedia;
 
 
 namespace Ramone
@@ -94,8 +95,8 @@ namespace Ramone
   }
 
 
-  public class RamoneResponse<T> : RamoneResponse
-    where T : class
+  public class RamoneResponse<TBody> : RamoneResponse
+    where TBody : class
   {
     public RamoneResponse(HttpWebResponse response, IRamoneSession session)
       : base(response, session)
@@ -109,21 +110,30 @@ namespace Ramone
     }
 
 
-    private T _body;
-    public new T Body
+    private TBody _body;
+    public new TBody Body
     {
       get 
       {
         if (_body == null)
-          _body = Decode<T>();
+          _body = Decode<TBody>();
         return _body; 
       }
     }
 
 
-    public T Created()
+    public IHyperMedia<TBody> HyperMedia
     {
-      return base.Created<T>();
+      get
+      {
+        return null;
+      }
+    }
+
+
+    public TBody Created()
+    {
+      return base.Created<TBody>();
     }
   }
 }

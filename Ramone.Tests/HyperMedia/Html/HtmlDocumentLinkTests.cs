@@ -8,7 +8,7 @@ using Ramone.HyperMedia;
 using Ramone.HyperMedia.Html;
 
 
-namespace Ramone.Tests.HyperMedia.MediaTypes.Html
+namespace Ramone.Tests.HyperMedia.Html
 {
   [TestFixture]
   public class HtmlDocumentLinkTests : TestHelper

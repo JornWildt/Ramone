@@ -90,6 +90,8 @@
     <Content Include="basicauthentication.aspx" />
     <Content Include="errors.aspx" />
     <Content Include="default.aspx" />
+    <Content Include="Views\Blog\List.aspx" />
+    <Content Include="Views\Blog\Item.aspx" />
     <Content Include="Views\Person.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
@@ -103,6 +105,7 @@
     </Compile>
     <Compile Include="Codecs\AtomFeedCodec.cs" />
     <Compile Include="Codecs\AtomItemCodec.cs" />
+    <Compile Include="Codecs\Blog\BlogItemCodec.cs" />
     <Compile Include="Codecs\CatAsHtmlCodec.cs" />
     <Compile Include="Codecs\CatAsJsonCodec.cs" />
     <Compile Include="Codecs\CatAsTextCodec.cs" />
@@ -129,6 +132,11 @@
     </Compile>
     <Compile Include="Codecs\TextCodec.cs" />
     <Compile Include="Configuration.cs" />
+    <Compile Include="Handlers\Blog\BlogConstants.cs" />
+    <Compile Include="Handlers\Blog\BlogItem.cs" />
+    <Compile Include="Handlers\Blog\BlogItemHandler.cs" />
+    <Compile Include="Handlers\Blog\BlogList.cs" />
+    <Compile Include="Handlers\Blog\BlogListHandler.cs" />
     <Compile Include="Handlers\CatHandler.cs" />
     <Compile Include="Handlers\CMS\DossierDocumentsHandler.cs" />
     <Compile Include="Handlers\CMS\DocumentHandler.cs" />
@@ -149,9 +157,7 @@
     <Compile Include="Handlers\XmlEchoHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Resources\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\Ramone.Tests.Common\Ramone.Tests.Common.csproj">
       <Project>{DD3B040F-3D75-4C46-BB54-CD06F594F894}</Project>

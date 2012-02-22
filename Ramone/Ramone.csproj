@@ -87,9 +87,11 @@
     <Compile Include="AuthorizationExtensions.cs" />
     <Compile Include="BindingExtensions.cs" />
     <Compile Include="CodecManagerExtensions.cs" />
+    <Compile Include="HyperMedia\IResponseLink.cs" />
     <Compile Include="HyperMedia\Html\HtmlExtensions.cs" />
     <Compile Include="HyperMedia\HyperMediaExtensions.cs" />
     <Compile Include="HyperMedia\HyperMediaNamespaces.cs" />
+    <Compile Include="HyperMedia\IHyperMedia.cs" />
     <Compile Include="HyperMedia\ILink.cs" />
     <Compile Include="HyperMedia\Atom\AtomLink.cs" />
     <Compile Include="HyperMedia\Atom\AtomLinkList.cs" />

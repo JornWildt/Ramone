@@ -85,7 +85,7 @@
     <Compile Include="ExceptionHandlingTests.cs" />
     <Compile Include="GenericMethodTests.cs" />
     <Compile Include="HyperMedia\LinkTests.cs" />
-    <Compile Include="HyperMedia\MediaTypes\Html\HtmlDocumentLinkTests.cs" />
+    <Compile Include="HyperMedia\Html\HtmlDocumentLinkTests.cs" />
     <Compile Include="MediaTypes\Atom\AtomTests.cs" />
     <Compile Include="AuthenticationHandlerTests.cs" />
     <Compile Include="AuthenticationTests.cs" />

@@ -18,13 +18,18 @@ Skal kunne tage højde for
 - Links i del-elementer (f.eks. links fra element i en liste med samme slags elementer): param
 
 
-  interface IHyperMedia
+  interface IHyperMedia<TBody>
   {
     IEnumerable<IResponseLink> Links;
     IEnumerable<IResponseForm> Forms;
-    IEnumerable<IResponseLink> Links(object node);
     Uri BaseUri;
   }
+
+  // Extensions per TBody type
+  static IHyperMedia<TElement> SubElement<TBody,TElement>(this IHyperMedia<TBody>, ...)
+  {
+  }
+
 
   RamoneResponse response = request1.Get<HtmlDocument>();
   HtmlDocument doc = response.Body;
@@ -105,6 +110,14 @@ Before releasing:
   - NerdDinner
   - Twitter
   - Flickr
+
+
+Release
+- Oprette release-branch
+- Bygge binaries
+- Teste alle demoer med de nye DLL'er
+- Opdatere versionsnumre
+- Opdatere hjemmeside
 
 Docs
 - Ramone 
