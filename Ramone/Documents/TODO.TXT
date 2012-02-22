@@ -2,6 +2,61 @@
 Version 1
 ---------
 
+
+DROP Link(relType) => Links().Link(relType)
+
+Skal ikke kunne lave abs. stier fra relative - det gør Follow()
+- "Base" kan findes i:
+  - Html meta data
+  - Response URI
+
+Skal kunne tage højde for
+- Relative URL'er (dvs. kende response.Uri): response
+- Relative URL'er fra HTML-base
+- Media-type (så den kan kende forskel på forskellige XML/JSON variationer): response
+- Håndtere generiske XML variationer (dvs. app/xml men med forskellige link-elementer): param
+- Links i del-elementer (f.eks. links fra element i en liste med samme slags elementer): param
+
+
+  interface IHyperMedia
+  {
+    IEnumerable<IResponseLink> Links;
+    IEnumerable<IResponseForm> Forms;
+    IEnumerable<IResponseLink> Links(object node);
+    Uri BaseUri;
+  }
+
+  RamoneResponse response = request1.Get<HtmlDocument>();
+  HtmlDocument doc = response.Body;
+
+  response<HtmlDocument>.HyperMedia     => IHyperMedia
+                        .Links          => Find links og gør dem absolutte
+                                        => IEnumerable<ILink>
+                                           Kunne også være forms den fandt frem
+                       [.Link(node, "self")]
+                        .Link("next")   => Look up <media-type,clr-type> and get hyper-media provider  => IResponseLink
+                        .Follow()       => Makes absolute from response info, makes request via response.Session
+
+  
+Bemærk at den nuværende Follow(Session) ikke kan håndtere relative URL'er. Skal den kunne det?
+
+Check/demo/test URL templates med OpenSearch
+
+
+- Supported hyper-media types
+  - Html: HtmlDocument
+      <a href="" rel="">xxx</>
+  - Xml: XmlDocument ??? Can be Html, XHtml (namespace), Atom or other. Needs a media type.
+      <atom:link href rel title>
+  - Atom: SyndicationFeed/Item
+      <atom:link href rel title>
+  - Hal:
+  - Json:
+      links : [ { href : "...", rel : "..." } ]
+      _links : { relname : { href : "..." } }
+  - Other types: ILink, IEnumerable<ILink>
+  - Link header
+
 Ramone.HyperMedia
 - OK: Link selector med media-type
 - Tre forskellige koncepter på tværs af media-types (to "dimensioner": hyper-media / media-types)
@@ -56,6 +111,7 @@ Docs
   - Focus on RESTful patterns
   - Er godt for object serialization (pas på med dette udsagn)
   - Samler en række forskellige media types på ét sted
+  - Hyper-media aware (links)
   - Tried to make it thread safe (almost no static values)
     - Do not share sessions, requests, responses
 - OAuth1 + Basic authorization
