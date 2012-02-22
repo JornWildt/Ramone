@@ -1,7 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Collections.Generic;
+using OpenRasta.Web;
+
 
 namespace Ramone.Tests.Server.Handlers.Blog
 {
@@ -20,6 +19,9 @@ namespace Ramone.Tests.Server.Handlers.Blog
           itemHandler.Get(12)
         }
       };
+
+      list.AuthorName = "Pete";
+      list.AuthorLink = typeof(Author).CreateUri(new { Id = 3 });
 
       return list;
     }

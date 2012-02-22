@@ -142,15 +142,20 @@ namespace Ramone.Tests.Server
 
     private void ConfigureBlog()
     {
+      ResourceSpace.Has.ResourcesOfType<BlogList>()
+                   .AtUri(BlogConstants.BlogListPath)
+                   .HandledBy<BlogListHandler>()
+                   .RenderedByAspx("~/Views/Blog/List.aspx");
+      
       ResourceSpace.Has.ResourcesOfType<BlogItem>()
                    .AtUri(BlogConstants.BlogItemPath)
                    .HandledBy<BlogItemHandler>()
                    .RenderedByAspx("~/Views/Blog/Item.aspx");
 
-      ResourceSpace.Has.ResourcesOfType<BlogList>()
-                   .AtUri(BlogConstants.BlogListPath)
-                   .HandledBy<BlogListHandler>()
-                   .RenderedByAspx("~/Views/Blog/List.aspx");
+      ResourceSpace.Has.ResourcesOfType<Author>()
+                   .AtUri(BlogConstants.AuthorPath)
+                   .HandledBy<AuthorHandler>()
+                   .RenderedByAspx("~/Views/Blog/Author.aspx");
     }
   }
 }

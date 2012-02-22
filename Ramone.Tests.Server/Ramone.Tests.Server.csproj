@@ -90,6 +90,7 @@
     <Content Include="basicauthentication.aspx" />
     <Content Include="errors.aspx" />
     <Content Include="default.aspx" />
+    <Content Include="Views\Blog\Author.aspx" />
     <Content Include="Views\Blog\List.aspx" />
     <Content Include="Views\Blog\Item.aspx" />
     <Content Include="Views\Person.aspx" />
@@ -132,6 +133,8 @@
     </Compile>
     <Compile Include="Codecs\TextCodec.cs" />
     <Compile Include="Configuration.cs" />
+    <Compile Include="Handlers\Blog\Author.cs" />
+    <Compile Include="Handlers\Blog\AuthorHandler.cs" />
     <Compile Include="Handlers\Blog\BlogConstants.cs" />
     <Compile Include="Handlers\Blog\BlogItem.cs" />
     <Compile Include="Handlers\Blog\BlogItemHandler.cs" />

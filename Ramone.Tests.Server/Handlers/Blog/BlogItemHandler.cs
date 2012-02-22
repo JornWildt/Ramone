@@ -10,6 +10,7 @@ namespace Ramone.Tests.Server.Handlers.Blog
     {
       BlogItem item = new BlogItem
       {
+        Id = id,
         Title = "Blog Item No. " + id,
         Text = "Blah blah blah ..:",
         CreatedDate = DateTime.Now

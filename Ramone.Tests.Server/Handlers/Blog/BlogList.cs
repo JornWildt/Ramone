@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 
 namespace Ramone.Tests.Server.Handlers.Blog
@@ -7,5 +8,8 @@ namespace Ramone.Tests.Server.Handlers.Blog
   {
     public string Title { get; set; }
     public List<BlogItem> Items { get; set; }
+    public string AuthorName { get; set; }
+
+    public Uri AuthorLink { get; set; }
   }
 }

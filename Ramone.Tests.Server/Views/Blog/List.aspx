@@ -3,9 +3,12 @@
 <html>
   <body>
     <h1><%=Resource.Title %></h1>
+    <p>Author: <a rel="author" href="<%=Resource.AuthorLink%>"><%=Resource.AuthorName%></a></p>
     <% foreach (BlogItem item in Resource.Items) { %>
-      <h2><a href="<%=item.SelfLink%>"><%=item.Title %></a></h2>
-      <p><%=item.Text %></p>
+      <div class="post">
+        <h2><a class="post-title" href="<%=item.SelfLink%>"><%=item.Title %></a></h2>
+        <p class="post-content"><%=item.Text %></p>
+      </div>
     <% } %>
   </body>
 </html>

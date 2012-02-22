@@ -81,6 +81,8 @@
   <ItemGroup>
     <Compile Include="AdditionalMethodsTests.cs" />
     <Compile Include="BindingTests.cs" />
+    <Compile Include="Blog\BlogTestHelper.cs" />
+    <Compile Include="Blog\HtmlDocumentTests.cs" />
     <Compile Include="DefaultContentTypeTests.cs" />
     <Compile Include="ExceptionHandlingTests.cs" />
     <Compile Include="GenericMethodTests.cs" />
