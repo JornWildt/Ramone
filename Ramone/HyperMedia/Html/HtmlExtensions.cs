@@ -3,7 +3,6 @@ using System.Linq;
 using CuttingEdge.Conditions;
 using HtmlAgilityPack;
 using Ramone.HyperMedia.Atom;
-using System.Collections;
 
 
 namespace Ramone.HyperMedia.Html

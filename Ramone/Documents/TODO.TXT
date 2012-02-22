@@ -2,6 +2,8 @@
 Version 1
 ---------
 
+Oprydning i HtmlDocument link tests (skal nu anvende "anchor")
+
 Blog scenarier:
 - Hent blog listen
   - Find forfatter
