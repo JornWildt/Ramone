@@ -1,6 +1,6 @@
 ﻿using System.Xml.Serialization;
-using Ramone.HyperMedia;
 using Ramone.HyperMedia.Atom;
+using Ramone.MediaTypes.Atom;
 
 
 namespace Ramone.Tests.Common.CMS
@@ -11,7 +11,7 @@ namespace Ramone.Tests.Common.CMS
     
     public string Title { get; set; }
 
-    [XmlElement("link", Namespace=HyperMediaNamespaces.Atom)]
+    [XmlElement("link", Namespace = AtomConstants.AtomNamespace)]
     public AtomLinkList Links { get; set; }
 
     

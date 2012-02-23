@@ -1,9 +1,9 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using System.Xml.Serialization;
 using NUnit.Framework;
 using Ramone.HyperMedia;
 using Ramone.HyperMedia.Atom;
+using Ramone.MediaTypes.Atom;
 
 
 namespace Ramone.Tests.HyperMedia
@@ -129,7 +129,7 @@ namespace Ramone.Tests.HyperMedia
       XmlSerializer serializer = new XmlSerializer(typeof(Resource));
       
       XmlSerializerNamespaces xmlns = new XmlSerializerNamespaces();
-      xmlns.Add("atom", HyperMediaNamespaces.Atom);
+      xmlns.Add("atom", AtomConstants.AtomNamespace);
 
       Resource r = new Resource { Links = new AtomLinkList() };
       r.Links.Add(Link1);
@@ -153,7 +153,7 @@ namespace Ramone.Tests.HyperMedia
 
     public class Resource
     {
-      [XmlElement("link", Namespace = HyperMediaNamespaces.Atom)]
+      [XmlElement("link", Namespace = AtomConstants.AtomNamespace)]
       public AtomLinkList Links { get; set; }
     }
   }

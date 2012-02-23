@@ -40,8 +40,8 @@ namespace Ramone.Tests.Blog
       Assert.IsNotNull(post1);
       HtmlNode post1Title = post1.SelectNodes(@".//*[@class=""post-title""]").First();
       HtmlNode post1Content = post1.SelectNodes(@".//*[@class=""post-content""]").First();
-      Assert.AreEqual("Blog Item No. 5", post1Title.InnerText);
-      Assert.AreEqual("Blah blah blah ..:", post1Content.InnerText);
+      Assert.AreEqual("Hot summer", post1Title.InnerText);
+      Assert.AreEqual("It is a hot summer this year.", post1Content.InnerText);
     }
 
 
@@ -68,7 +68,7 @@ namespace Ramone.Tests.Blog
 
       // - Check e-mail of author
       HtmlNode email = author.DocumentNode.SelectNodes(@"//a[@rel=""email""]").First();
-      Assert.AreEqual("pete3@mail.dk", email.Attributes["href"].Value);
+      Assert.AreEqual("pp@ramonerest.dk", email.Attributes["href"].Value);
     }
   }
 }

@@ -90,7 +90,6 @@
     <Compile Include="HyperMedia\IResponseLink.cs" />
     <Compile Include="HyperMedia\Html\HtmlExtensions.cs" />
     <Compile Include="HyperMedia\HyperMediaExtensions.cs" />
-    <Compile Include="HyperMedia\HyperMediaNamespaces.cs" />
     <Compile Include="HyperMedia\IHyperMedia.cs" />
     <Compile Include="HyperMedia\ILink.cs" />
     <Compile Include="HyperMedia\Atom\AtomLink.cs" />
@@ -101,6 +100,7 @@
     <Compile Include="AuthorizationInterceptors\BasicAuthorizationInterceptor.cs" />
     <Compile Include="IRequestStreamWrapper.cs" />
     <Compile Include="MediaType.cs" />
+    <Compile Include="MediaTypes\Atom\AtomConstants.cs" />
     <Compile Include="MediaTypes\FormUrlEncoded\FormUrlEncodedSerializerCodec.cs" />
     <Compile Include="MediaTypes\Html\HtmlDocumentCodec.cs" />
     <Compile Include="MediaTypes\Json\ServiceStackJsonSerializerCodec.cs" />
