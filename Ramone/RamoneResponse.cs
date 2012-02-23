@@ -122,15 +122,6 @@ namespace Ramone
     }
 
 
-    public IHyperMedia<TBody> HyperMedia
-    {
-      get
-      {
-        return null;
-      }
-    }
-
-
     public TBody Created()
     {
       return base.Created<TBody>();

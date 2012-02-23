@@ -27,6 +27,37 @@ Blog media-types + linking
 - JSON som særlig type
 - ATOM som SyndicationFeed
 
+Better HTML extension methods:
+  RamoneResponse<HtmlDocument> blog = blogRequest.Get<HtmlDocument>();
+  ILink editLink = blog.SelectNode(@"//a[@rel=""edit""]").Anchor();
+  -> kan på snedig vis overføre blog-response til Anchor() (og Form() mf.)
+     husk at teste om base-url og response-charset følger med
+     kan også lede efter <head> der angiver base-url
+
+Forms
+- Der mangler temmeligt mange tests ...
+  - Submit(name/id)
+  - Default values for enctype and accept
+  - Hidden inputs
+- HTML, case insensitive
+- Form
+  - enctype (multipart, urlenc)
+  - action
+  - method
+  - accept-charset
+- Normal inputs (including default values - also for hidden inputs)
+  - text, password, checkbox, radio
+  - file
+  - hidden
+  - image
+  - button
+- input.submit
+- Select
+- Textarea
+- Button
+
+Links
+- HTML, case insensitive
 
 DROP Link(relType) => Links().Link(relType)
 
@@ -104,6 +135,8 @@ Ramone.HyperMedia
 - Follow(ILinkTemplate, params)
 - Make it possible to Follow() relative links.
 
+Hvad er den nemmeste måde at dumpe fejlresultatet fra et request? F.eks. ved not-found eller not-authorized.
+
 Test scenarie hvor der returneres "NoContent" og man forsøger at hente content (skal give null)
 
 - Demo how HTML + forms + url-encoded data can be auto-generated (a'la Eric)
@@ -152,6 +185,7 @@ Docs
   - Er godt for object serialization (pas på med dette udsagn) - eller "typed access"
   - Samler en række forskellige media types på ét sted
   - Hyper-media aware (links)
+    - Builds on extension methods for converting unknown formats to ILink
 - Tried to make it thread safe (almost no static values)
   - Do not share sessions, requests, responses
 - OAuth1 + Basic authorization

@@ -25,7 +25,7 @@ namespace Ramone.Tests.Server.Handlers.Blog
     }
 
 
-    public static int AddPost(string title, string text, int authorId)
+    public static PostEntry AddPost(string title, string text, int authorId)
     {
       PostEntry entry = new PostEntry
       {
@@ -38,7 +38,7 @@ namespace Ramone.Tests.Server.Handlers.Blog
 
       Posts.Add(entry);
 
-      return entry.Id;
+      return entry;
     }
 
 
@@ -65,12 +65,12 @@ namespace Ramone.Tests.Server.Handlers.Blog
       BlogDB.Clear();
       AuthorDB.Clear();
 
-      int author1Id = AuthorDB.AddAuthor("Pete Peterson", "pp@ramonerest.dk");
-      int author2Id = AuthorDB.AddAuthor("Bo Borentson", "bb@ramonerest.dk");
-      int author3Id = AuthorDB.AddAuthor("Chris Christofferson", "cc@ramonerest.dk");
+      AuthorDB.AuthorEntry author1 = AuthorDB.AddAuthor("Pete Peterson", "pp@ramonerest.dk");
+      AuthorDB.AuthorEntry author2 = AuthorDB.AddAuthor("Bo Borentson", "bb@ramonerest.dk");
+      AuthorDB.AuthorEntry author3 = AuthorDB.AddAuthor("Chris Christofferson", "cc@ramonerest.dk");
 
-      BlogDB.AddPost("Hot summer", "It is a hot summer this year.", author2Id);
-      BlogDB.AddPost("Cold winter", "It is a cold winter this year.", author3Id);
+      BlogDB.AddPost("Hot summer", "It is a hot summer this year.", author2.Id);
+      BlogDB.AddPost("Cold winter", "It is a cold winter this year.", author3.Id);
     }
   }
 }

@@ -72,6 +72,8 @@ namespace Ramone.Utility.ObjectSerialization
         SerializeSimpleValue(data, dataType, prefix);
       else if (typeof(IDictionary).IsAssignableFrom(dataType))
         SerializeDictionary((IDictionary)data, dataType, prefix);
+      else if (typeof(NameValueCollection).IsAssignableFrom(dataType))
+        SerializeNameValueCollection((NameValueCollection)data, dataType, prefix);
       else if (typeof(IList).IsAssignableFrom(dataType))
         SerializeList((IList)data, dataType, prefix);
       else if (IsSimpleType(dataType))
@@ -129,6 +131,19 @@ namespace Ramone.Utility.ObjectSerialization
                       ? string.Format(Settings.DictionaryFormat, prefix, entry.Key)
                       : entry.Key.ToString();
         Serialize(entry.Value, entry.Value != null ? entry.Value.GetType() : null, name);
+      }
+    }
+
+
+    protected void SerializeNameValueCollection(NameValueCollection collection, Type dataType, string prefix)
+    {
+      foreach (string name in collection)
+      {
+        string prefixedName = prefix != string.Empty
+                              ? string.Format(Settings.DictionaryFormat, prefix, name)
+                              : name;
+        string value = collection[name];
+        Serialize(value, value != null ? value.GetType() : null, prefixedName);
       }
     }
 

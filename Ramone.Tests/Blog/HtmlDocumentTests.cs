@@ -10,7 +10,7 @@ using Ramone.HyperMedia.Html;
 namespace Ramone.Tests.Blog
 {
   /// <summary>
-  /// These test shows interesting blog scenarios using the generic "text/html" media-type.
+  /// These test shows various blog scenarios using the generic "text/html" media-type.
   /// </summary>
   /// <remarks>
   /// The use of text/html as HtmlDocument requires no extra codec registrations, but instead
@@ -111,6 +111,42 @@ namespace Ramone.Tests.Blog
       Assert.AreEqual(2, foundEMails.Count);
       Assert.IsTrue(foundEMails.Contains("bb@ramonerest.dk"));
       Assert.IsTrue(foundEMails.Contains("cc@ramonerest.dk"));
+    }
+
+
+    [Test]
+    public void CanAddNewBlogItem()
+    {
+      // Arrange
+      RamoneRequest blogRequest = Session.Bind(BlogRootPath);
+
+      // Act ...
+
+      // - GET blog
+      HtmlDocument blog = blogRequest.Get<HtmlDocument>().Body;
+
+      // - Extract "edit" anchor
+      ILink editLink = blog.DocumentNode.SelectNodes(@"//a[@rel=""edit""]").First().Anchor();
+
+      // - GET form describing how to input
+      RamoneResponse<HtmlDocument> createDescriptor = editLink.Follow(Session).Get<HtmlDocument>();
+
+      // - Extract "create" form
+      IKeyValueForm form = createDescriptor.Body.DocumentNode.SelectNodes(@"//form[@id=""create""]").First().Form();
+
+      // - Populate form inputs
+      form.Value("Title", "New item");
+      form.Value("Text", "Yaj!");
+
+      // - Submit the form
+      HtmlDocument createdBlogItem = form.Submit<HtmlDocument>(createDescriptor).Created();
+
+      // Assert ...
+      Assert.IsNotNull(createdBlogItem);
+      HtmlNode postTitle = createdBlogItem.DocumentNode.SelectNodes(@"//*[@class=""post-title""]").First();
+      HtmlNode postContent = createdBlogItem.DocumentNode.SelectNodes(@"//*[@class=""post-content""]").First();
+      Assert.AreEqual("New item", postTitle.InnerText);
+      Assert.AreEqual("Yaj!", postContent.InnerText);
     }
   }
 }

@@ -26,8 +26,10 @@ namespace Ramone.Tests.Server.Handlers.Blog
         }).ToList();
 
       AuthorDB.AuthorEntry author = AuthorDB.Get(0);
+      
       list.AuthorName = author.Name;
       list.AuthorLink = typeof(Author).CreateUri(new { Id = author.Id });
+      list.EditLink = typeof(BlogItemCreationDescriptor).CreateUri();
 
       return list;
     }
@@ -39,3 +41,4 @@ namespace Ramone.Tests.Server.Handlers.Blog
     }
   }
 }
+

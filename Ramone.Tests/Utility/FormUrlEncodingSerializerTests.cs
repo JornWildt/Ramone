@@ -3,6 +3,8 @@ using NUnit.Framework;
 using Ramone.Utility;
 using System.Text;
 using System.Collections.Generic;
+using System.Collections.Specialized;
+using System.Collections;
 
 
 namespace Ramone.Tests.Utility
@@ -50,12 +52,56 @@ namespace Ramone.Tests.Utility
       DictionaryData data = new DictionaryData
       {
         MyInt = 20,
-        MyDict = new Dictionary<string, object>()
+        MyDict = new Dictionary<string, object>(),
+        MyNameValues = new NameValueCollection(),
+        MyHashtable = new Hashtable()
       };
       data.MyDict["A"] = "1234uio";
+      data.MyNameValues["X"] = "xxx";
+      data.MyHashtable["1"] = "aaa";
 
       // Act
-      CheckSerialization("MyInt=20&MyDict%5bA%5d=1234uio", data);
+      CheckSerialization("MyInt=20&MyDict%5bA%5d=1234uio&MyNameValues%5bX%5d=xxx&MyHashtable%5b1%5d=aaa", data);
+    }
+
+
+    [Test]
+    public void WhenSerializingDictionaryOnlyItIncludesContentWithNoPrefix()
+    {
+      // Arrange
+      Dictionary<string, string> dictionary = new Dictionary<string, string>();
+      dictionary["A"] = "123";
+      dictionary["B"] = "xyz";
+
+      // Act
+      CheckSerialization("A=123&B=xyz", dictionary);
+    }
+
+
+    [Test]
+    public void WhenSerializingNameValueCollectionOnlyItIncludesContentWithNoPrefix()
+    {
+      // Arrange
+      // Arrange
+      NameValueCollection values = new NameValueCollection();
+      values["A"] = "123";
+      values["B"] = "xyz";
+
+      // Act
+      CheckSerialization("A=123&B=xyz", values);
+    }
+
+
+    [Test]
+    public void WhenSerializingHashtableOnlyItIncludesContentWithNoPrefix()
+    {
+      // Arrange
+      Hashtable hashtable = new Hashtable();
+      hashtable["A"] = "123";
+      hashtable["B"] = "xyz";
+
+      // Act
+      CheckSerialization("A=123&B=xyz", hashtable);
     }
 
 
@@ -91,7 +137,8 @@ namespace Ramone.Tests.Utility
     {
       public int MyInt { get; set; }
       public Dictionary<string, object> MyDict { get; set; }
-      //public DateTime MyDate { get; set; }
+      public NameValueCollection MyNameValues { get; set; }
+      public Hashtable MyHashtable { get; set; }
     }
   }
 }

@@ -154,6 +154,11 @@ namespace Ramone.Tests.Server
                    .HandledBy<BlogItemHandler>()
                    .RenderedByAspx("~/Views/Blog/Item.aspx");
 
+      ResourceSpace.Has.ResourcesOfType<BlogItemCreationDescriptor>()
+                   .AtUri(BlogConstants.BlogItemCreationPath)
+                   .HandledBy<BlogItemCreationDescriptorHandler>()
+                   .RenderedByAspx("~/Views/Blog/BlogItemCreationDescriptor.aspx");
+
       ResourceSpace.Has.ResourcesOfType<Author>()
                    .AtUri(BlogConstants.AuthorPath)
                    .HandledBy<AuthorHandler>()

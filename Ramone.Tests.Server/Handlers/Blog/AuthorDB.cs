@@ -22,7 +22,7 @@ namespace Ramone.Tests.Server.Handlers.Blog
     }
 
 
-    public static int AddAuthor(string name, string email)
+    public static AuthorEntry AddAuthor(string name, string email)
     {
       AuthorEntry entry = new AuthorEntry
       {
@@ -33,7 +33,7 @@ namespace Ramone.Tests.Server.Handlers.Blog
 
       Authors.Add(entry);
 
-      return entry.Id;
+      return entry;
     }
 
 

@@ -10,5 +10,9 @@
         <p class="post-content"><%=item.Text %></p>
       </div>
     <% } %>
+
+    <p>
+      <a rel="edit" href="<%=Resource.EditLink %>">Add new blog post</a>
+    </p>
   </body>
 </html>

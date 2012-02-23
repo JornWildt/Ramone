@@ -11,5 +11,6 @@ namespace Ramone.Tests.Server.Handlers.Blog
     public string AuthorName { get; set; }
 
     public Uri AuthorLink { get; set; }
+    public Uri EditLink { get; set; }
   }
 }
