@@ -37,10 +37,10 @@ namespace Ramone.Tests.HyperMedia.Html
 
 
     [Test]
-    public void CanExtractLinksFromHtmlDocument()
+    public void CanExtractAnchorLinksFromHtmlDocument()
     {
       // Act
-      List<ILink> links = HtmlDoc.Links().ToList();
+      List<ILink> links = HtmlDoc.Anchors().ToList();
 
       // Assert
       Assert.AreEqual(4, links.Count);
@@ -58,13 +58,13 @@ namespace Ramone.Tests.HyperMedia.Html
 
 
     [Test]
-    public void CanExtractLinksFromHtmlNode()
+    public void CanExtractAnchorLinksFromHtmlNode()
     {
       // Arrange (get sub-node)
       HtmlNode node = HtmlDoc.DocumentNode.SelectNodes(@"//div[@id=""set1""]").First();
 
       // Act
-      List<ILink> links = node.Links().ToList();
+      List<ILink> links = node.Anchors().ToList();
 
       // Assert
       Assert.AreEqual(2, links.Count);
@@ -80,8 +80,8 @@ namespace Ramone.Tests.HyperMedia.Html
     public void CanExtractLinkByRelationFromHtmlDocument()
     {
       // Act
-      ILink link1 = HtmlDoc.Link("next");
-      ILink link2 = HtmlDoc.Link("up");
+      ILink link1 = HtmlDoc.Anchors().Link("next");
+      ILink link2 = HtmlDoc.Anchors().Link("up");
 
       // Assert
       Assert.AreEqual("http://link1", link1.HRef);
@@ -101,8 +101,8 @@ namespace Ramone.Tests.HyperMedia.Html
       HtmlNode node = HtmlDoc.DocumentNode.SelectNodes(@"//div[@id=""set1""]").First();
 
       // Act
-      ILink link1 = node.Link("next");
-      ILink link2 = node.Link("up");
+      ILink link1 = node.Anchors().Link("next");
+      ILink link2 = node.Anchors().Link("up");
 
       // Assert
       Assert.IsNull(link1);

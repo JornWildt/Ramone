@@ -9,6 +9,11 @@ namespace Ramone.HyperMedia.Html
 {
   public static class HtmlExtensions
   {
+    /// <summary>
+    /// Get all anchors in the HTML document as a sequence of ILink.
+    /// </summary>
+    /// <param name="html"></param>
+    /// <returns></returns>
     public static IEnumerable<ILink> Anchors(this HtmlDocument html)
     {
       if (html == null)
@@ -20,6 +25,11 @@ namespace Ramone.HyperMedia.Html
     }
 
 
+    /// <summary>
+    /// Get all anchors in the HTML sub-document as a sequence of ILink.
+    /// </summary>
+    /// <param name="node"></param>
+    /// <returns></returns>
     public static IEnumerable<ILink> Anchors(this HtmlNode node)
     {
       if (node == null)
@@ -30,6 +40,11 @@ namespace Ramone.HyperMedia.Html
     }
 
 
+    /// <summary>
+    /// Get all anchors, in all HTML sub-documents, as a sequence of ILink.
+    /// </summary>
+    /// <param name="nodes"></param>
+    /// <returns></returns>
     public static IEnumerable<ILink> Anchors(this HtmlNodeCollection nodes)
     {
       if (nodes == null)
@@ -44,6 +59,11 @@ namespace Ramone.HyperMedia.Html
     }
 
 
+    /// <summary>
+    /// Convert a single HTML node to ILink, assuming the node represents a anchor.
+    /// </summary>
+    /// <param name="node"></param>
+    /// <returns></returns>
     public static ILink Anchor(this HtmlNode node)
     {
       Condition.Requires(node, "node").IsNotNull();
@@ -52,65 +72,16 @@ namespace Ramone.HyperMedia.Html
     }
 
 
-
-    #region Not really the right stuff
-
-    public static IEnumerable<ILink> Links(this HtmlDocument html)
-    {
-      Condition.Requires(html, "html").IsNotNull();
-
-      return html.DocumentNode
-                 .SelectNodes("//a")
-                 .Select(a => new AtomLink(GetAttribute(a, "href"), GetAttribute(a, "rel"), null, a.InnerText));
-    }
-
-
-    public static IEnumerable<ILink> Links(this HtmlNode node)
-    {
-      Condition.Requires(node, "node").IsNotNull();
-
-      return node.SelectNodes(".//a")
-                 .Select(a => new AtomLink(GetAttribute(a, "href"), GetAttribute(a, "rel"), null, a.InnerText));
-    }
-
-
-    public static ILink Link(this HtmlDocument html, string rel)
-    {
-      Condition.Requires(html, "html").IsNotNull();
-      Condition.Requires(rel, "rel").IsNotNull();
-
-      return html.DocumentNode
-                 .SelectNodes("//a")
-                 .Where(a => GetAttribute(a, "rel") == rel)
-                 .Select(a => new AtomLink(GetAttribute(a, "href"), GetAttribute(a, "rel"), null, a.InnerText))
-                 .FirstOrDefault();
-    }
-
-
-    public static ILink Link(this HtmlNode node, string rel)
-    {
-      Condition.Requires(node, "node").IsNotNull();
-      Condition.Requires(rel, "rel").IsNotNullOrEmpty();
-
-      return node.SelectNodes(".//a")
-                 .Where(a => GetAttribute(a,"rel") == rel)
-                 .Select(a => new AtomLink(GetAttribute(a,"href"), GetAttribute(a,"rel"), null, a.InnerText))
-                 .FirstOrDefault();
-    }
-
-
     private static string GetAttribute(HtmlNode node, string name)
     {
       if (node == null)
         return null;
-      
+
       HtmlAttribute a = node.Attributes[name];
       if (a == null)
         return null;
 
       return a.Value;
     }
-
-    #endregion
   }
 }
