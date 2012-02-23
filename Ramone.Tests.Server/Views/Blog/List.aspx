@@ -6,7 +6,7 @@
     <p>Author: <a rel="author" href="<%=Resource.AuthorLink%>"><%=Resource.AuthorName%></a></p>
     <% foreach (BlogItem item in Resource.Items) { %>
       <div class="post">
-        <h2><a class="post-title" href="<%=item.SelfLink%>"><%=item.Title %></a></h2>
+        <h2><a class="post-title" rel="self" href="<%=item.SelfLink%>"><%=item.Title %></a></h2>
         <p class="post-content"><%=item.Text %></p>
       </div>
     <% } %>

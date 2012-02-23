@@ -12,6 +12,11 @@ Blog scenarier:
 - Find "indsend her" link, læs webform, post data
 - Find enkelt blog, læs webform, post kommentar
 
+README om blog
+- HVorfor er den her
+- Forskellige media-types (fordele og ulemper)
+- Specific vs. generic codecs.
+
 
 Blog media-types + linking
 - HTML som HtmlDocument

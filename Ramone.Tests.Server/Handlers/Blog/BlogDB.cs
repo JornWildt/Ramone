@@ -67,7 +67,7 @@ namespace Ramone.Tests.Server.Handlers.Blog
 
       int author1Id = AuthorDB.AddAuthor("Pete Peterson", "pp@ramonerest.dk");
       int author2Id = AuthorDB.AddAuthor("Bo Borentson", "bb@ramonerest.dk");
-      int author3Id = AuthorDB.AddAuthor("Chris Christofferson", "dd@ramonerest.dk");
+      int author3Id = AuthorDB.AddAuthor("Chris Christofferson", "cc@ramonerest.dk");
 
       BlogDB.AddPost("Hot summer", "It is a hot summer this year.", author2Id);
       BlogDB.AddPost("Cold winter", "It is a cold winter this year.", author3Id);

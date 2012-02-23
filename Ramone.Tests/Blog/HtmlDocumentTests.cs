@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using HtmlAgilityPack;
 using NUnit.Framework;
 using Ramone.HyperMedia;
@@ -53,7 +55,7 @@ namespace Ramone.Tests.Blog
 
       // Act ...
 
-      // - Fetch blog
+      // - GET blog
       HtmlDocument blog = blogRequest.Get<HtmlDocument>().Body;
 
       // - Select first HTML anchor node with rel="author" as a anchor link
@@ -69,6 +71,46 @@ namespace Ramone.Tests.Blog
       // - Check e-mail of author
       HtmlNode email = author.DocumentNode.SelectNodes(@"//a[@rel=""email""]").First();
       Assert.AreEqual("pp@ramonerest.dk", email.Attributes["href"].Value);
+    }
+
+
+    [Test]
+    public void CanFollowAllAuthorsAndGetAllEMails()
+    {
+      // Arrange
+      HashSet<string> foundEMails = new HashSet<string>();
+      RamoneRequest blogRequest = Session.Bind(BlogRootPath);
+
+      // Act ...
+
+      // - GET blog
+      HtmlDocument blog = blogRequest.Get<HtmlDocument>().Body;
+
+      // - Extract "post" nodes
+      HtmlNodeCollection posts = blog.DocumentNode.SelectNodes(@"//*[@class=""post""]");
+
+      foreach (HtmlNode listPost in posts)
+      {
+        // - Extract post link, follow and GET the post
+        ILink postLink = listPost.SelectNodes(@".//a[@rel=""self""]").First().Anchor();
+        HtmlDocument postItem = postLink.Follow(Session).Get<HtmlDocument>().Body;
+
+        // - Extract author link from post
+        ILink authorLink = postItem.DocumentNode.SelectNodes(@".//a[@rel=""author""]").First().Anchor();
+
+        // - Follow author link and get HTML document representing the author
+        HtmlDocument author = authorLink.Follow(Session).Get<HtmlDocument>().Body;
+
+        // - Get e-mail of author
+        HtmlNode email = author.DocumentNode.SelectNodes(@"//a[@rel=""email""]").First();
+
+        foundEMails.Add(email.Attributes["href"].Value);
+      }
+
+      // Assert ...
+      Assert.AreEqual(2, foundEMails.Count);
+      Assert.IsTrue(foundEMails.Contains("bb@ramonerest.dk"));
+      Assert.IsTrue(foundEMails.Contains("cc@ramonerest.dk"));
     }
   }
 }
