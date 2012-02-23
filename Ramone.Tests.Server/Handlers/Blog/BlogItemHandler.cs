@@ -8,15 +8,17 @@ namespace Ramone.Tests.Server.Handlers.Blog
   {
     public BlogItem Get(int id)
     {
+      BlogDB.PostEntry entry = BlogDB.Get(id);
+
       BlogItem item = new BlogItem
       {
-        Id = id,
-        Title = "Blog Item No. " + id,
-        Text = "Blah blah blah ..:",
-        CreatedDate = DateTime.Now
+        Id = entry.Id,
+        Title = entry.Title,
+        Text = entry.Text,
+        CreatedDate = entry.CreatedDate
       };
 
-      item.SelfLink = typeof(BlogItem).CreateUri(new { id = id });
+      item.SelfLink = typeof(BlogItem).CreateUri(new { id = entry.Id });
       item.UpLink = typeof(BlogList).CreateUri();
 
       return item;

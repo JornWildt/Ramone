@@ -134,8 +134,10 @@
     <Compile Include="Codecs\TextCodec.cs" />
     <Compile Include="Configuration.cs" />
     <Compile Include="Handlers\Blog\Author.cs" />
+    <Compile Include="Handlers\Blog\AuthorDB.cs" />
     <Compile Include="Handlers\Blog\AuthorHandler.cs" />
     <Compile Include="Handlers\Blog\BlogConstants.cs" />
+    <Compile Include="Handlers\Blog\BlogDB.cs" />
     <Compile Include="Handlers\Blog\BlogItem.cs" />
     <Compile Include="Handlers\Blog\BlogItemHandler.cs" />
     <Compile Include="Handlers\Blog\BlogList.cs" />

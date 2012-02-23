@@ -7,11 +7,13 @@ namespace Ramone.Tests.Server.Handlers.Blog
   {
     public Author Get(int id)
     {
+      AuthorDB.AuthorEntry entry = AuthorDB.Get(id);
+
       Author a = new Author
       {
-        Id = id,
-        Name = "Pete no. " + id,
-        EMail = "pete" + id + "@mail.dk"
+        Id = entry.Id,
+        Name = entry.Name,
+        EMail = entry.EMail
       };
 
       a.SelfLink = typeof(Author).CreateUri(new { Id = a.Id });

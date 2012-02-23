@@ -28,6 +28,8 @@ namespace Ramone.Tests.Server
 
     public void Configure()
     {
+      BlogDB.Reset();
+
       using (OpenRastaConfiguration.Manual)
       {
         ResourceSpace.Has.ResourcesOfType<SyndicationFeed>()
