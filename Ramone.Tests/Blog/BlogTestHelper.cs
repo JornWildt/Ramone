@@ -9,6 +9,7 @@
     {
       base.SetUp();
 
+      // Clear the in-memory database
       RamoneRequest blogRequest = Session.Bind(BlogRootPath);
       blogRequest.Delete();
     }

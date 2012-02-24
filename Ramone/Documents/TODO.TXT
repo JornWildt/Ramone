@@ -39,7 +39,7 @@ Forms
   - Submit(name/id)
   - Default values for enctype and accept
   - Hidden inputs
-- HTML, case insensitive
+  - Files (multipart)
 - Form
   - enctype (multipart, urlenc)
   - action
