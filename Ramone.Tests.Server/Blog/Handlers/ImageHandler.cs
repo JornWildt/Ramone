@@ -14,6 +14,8 @@ namespace Ramone.Tests.Server.Blog.Handlers
       Image i = new Image
       {
         Id = entry.Id,
+        Name = entry.Name,
+        MediaType = entry.MediaType,
         Data = entry.Data
       };
 

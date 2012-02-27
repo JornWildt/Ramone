@@ -10,6 +10,7 @@ namespace Ramone.Tests.Server.Blog.Data
     {
       public int Id { get; set; }
       public string Name { get; set; }
+      public OpenRasta.Web.MediaType MediaType { get; set; }
       public MemoryStream Data { get; set; }
     }
 
@@ -23,12 +24,13 @@ namespace Ramone.Tests.Server.Blog.Data
     }
 
 
-    public static ImageEntry AddImage(string name, MemoryStream data)
+    public static ImageEntry AddImage(string name, OpenRasta.Web.MediaType mediaType, MemoryStream data)
     {
       ImageEntry entry = new ImageEntry
       {
         Id = Images.Count,
         Name = name,
+        MediaType = mediaType,
         Data = data
       };
 

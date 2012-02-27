@@ -5,6 +5,7 @@ using HtmlAgilityPack;
 using NUnit.Framework;
 using Ramone.HyperMedia;
 using Ramone.HyperMedia.Html;
+using Ramone.IO;
 
 
 namespace Ramone.Tests.Blog
@@ -115,7 +116,7 @@ namespace Ramone.Tests.Blog
 
 
     [Test]
-    public void CanAddNewBlogItem()
+    public void CanAddNewBlogItemIncludingImage()
     {
       // Arrange
       RamoneRequest blogRequest = Session.Bind(BlogRootPath);
@@ -135,8 +136,10 @@ namespace Ramone.Tests.Blog
       IKeyValueForm form = createDescriptor.Body.DocumentNode.SelectNodes(@"//form[@id=""create""]").First().Form();
 
       // - Populate form inputs
+      IFile file = new File("..\\..\\data1.gif", "image/gif");
       form.Value("Title", "New item");
       form.Value("Text", "Yaj!");
+      form.Value("Image", file);
 
       // - Submit the form
       HtmlDocument createdBlogItem = form.Submit<HtmlDocument>(createDescriptor).Created();
