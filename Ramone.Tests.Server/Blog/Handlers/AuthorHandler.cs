@@ -1,7 +1,9 @@
 ﻿using OpenRasta.Web;
+using Ramone.Tests.Server.Blog.Data;
+using Ramone.Tests.Server.Blog.Resources;
 
 
-namespace Ramone.Tests.Server.Handlers.Blog
+namespace Ramone.Tests.Server.Blog.Handlers
 {
   public class AuthorHandler
   {

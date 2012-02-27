@@ -1,8 +1,9 @@
-﻿using System;
-using OpenRasta.Web;
+﻿using OpenRasta.Web;
+using Ramone.Tests.Server.Blog.Data;
+using Ramone.Tests.Server.Blog.Resources;
 
 
-namespace Ramone.Tests.Server.Handlers.Blog
+namespace Ramone.Tests.Server.Blog.Handlers
 {
   public class BlogItemHandler
   {
@@ -23,6 +24,9 @@ namespace Ramone.Tests.Server.Handlers.Blog
       item.SelfLink = typeof(BlogItem).CreateUri(new { Id = postEntry.Id });
       item.UpLink = typeof(BlogList).CreateUri();
       item.AuthorLink = typeof(Author).CreateUri(new { Id = authorEntry.Id });
+
+      if (postEntry.ImageId != null)
+        item.ImageLink = typeof(Image).CreateUri(new { Id = postEntry.ImageId });
 
       return item;
     }

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 
 
-namespace Ramone.Tests.Server.Handlers.Blog
+namespace Ramone.Tests.Server.Blog.Resources
 {
   public class BlogList
   {

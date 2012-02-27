@@ -1,7 +1,7 @@
 ﻿using System;
 
 
-namespace Ramone.Tests.Server.Handlers.Blog
+namespace Ramone.Tests.Server.Blog.Resources
 {
   public class BlogItemCreationDescriptor
   {

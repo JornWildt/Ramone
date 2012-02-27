@@ -1,4 +1,4 @@
-﻿<%@ Import Namespace="Ramone.Tests.Server.Handlers.Blog" %>
+﻿<%@ Import Namespace="Ramone.Tests.Server.Blog.Resources" %>
 <%@ Page Language="C#" Inherits="OpenRasta.Codecs.WebForms.ResourceView<Author>" %>
 <html>
   <body>

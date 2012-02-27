@@ -2,6 +2,7 @@
 using HtmlAgilityPack;
 using CuttingEdge.Conditions;
 using System.Collections.Specialized;
+using System.Collections;
 
 
 namespace Ramone.HyperMedia.Html
@@ -17,12 +18,12 @@ namespace Ramone.HyperMedia.Html
     public string AcceptCharset { get; protected set; }
 
 
-    protected NameValueCollection Values { get; set; }
+    protected Hashtable Values { get; set; }
 
 
     #region IKeyValueForm Members
 
-    public void Value(string key, string value)
+    public void Value(string key, object value)
     {
       Condition.Requires(key, "key").IsNotNullOrEmpty();
       Condition.Requires(value, "value").IsNotNull();
@@ -67,7 +68,7 @@ namespace Ramone.HyperMedia.Html
       // FIXME: needs response in order to get default charset
       AcceptCharset = formNode.GetAttributeValue("accept-charset", "UNKNOWN");
 
-      Values = new NameValueCollection();
+      Values = new Hashtable();
     }
   }
 }

@@ -1,7 +1,7 @@
 ﻿using System;
 
 
-namespace Ramone.Tests.Server.Handlers.Blog
+namespace Ramone.Tests.Server.Blog.Resources
 {
   public class BlogItem
   {
@@ -14,5 +14,6 @@ namespace Ramone.Tests.Server.Handlers.Blog
     public Uri UpLink { get; set; }
     public Uri SelfLink { get; set; }
     public Uri AuthorLink { get; set; }
+    public Uri ImageLink { get; set; }
   }
 }

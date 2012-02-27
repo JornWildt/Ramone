@@ -2,7 +2,7 @@
 {
   public interface IKeyValueForm
   {
-    void Value(string key, string value);
+    void Value(string key, object value);
     RamoneResponse Submit(RamoneResponse response);
     RamoneResponse<T> Submit<T>(RamoneResponse response) where T : class;
   }

@@ -2,21 +2,11 @@
 Version 1
 ---------
 
-Oprydning i HtmlDocument link tests (skal nu anvende "anchor")
-
 Blog scenarier:
 - Hent blog listen
   - Find forfatter
-  - Find første indlæg
 - Indsamle alle anvendte e-mails
 - Find "indsend her" link, læs webform, post data
-- Find enkelt blog, læs webform, post kommentar
-
-README om blog
-- HVorfor er den her
-- Forskellige media-types (fordele og ulemper)
-- Specific vs. generic codecs.
-
 
 Blog media-types + linking
 - HTML som HtmlDocument
@@ -27,13 +17,6 @@ Blog media-types + linking
 - JSON som særlig type
 - ATOM som SyndicationFeed
 
-Better HTML extension methods:
-  RamoneResponse<HtmlDocument> blog = blogRequest.Get<HtmlDocument>();
-  ILink editLink = blog.SelectNode(@"//a[@rel=""edit""]").Anchor();
-  -> kan på snedig vis overføre blog-response til Anchor() (og Form() mf.)
-     husk at teste om base-url og response-charset følger med
-     kan også lede efter <head> der angiver base-url
-
 Forms
 - Der mangler temmeligt mange tests ...
   - Submit(name/id)
@@ -41,9 +24,9 @@ Forms
   - Hidden inputs
   - Files (multipart)
 - Form
-  - enctype (multipart, urlenc)
-  - action
-  - method
+  - OK: enctype (multipart, urlenc)
+  - OK: action
+  - OK: method
   - accept-charset
 - Normal inputs (including default values - also for hidden inputs)
   - text, password, checkbox, radio
@@ -56,49 +39,18 @@ Forms
 - Textarea
 - Button
 
-Links
-- HTML, case insensitive
-
-DROP Link(relType) => Links().Link(relType)
-
-Skal ikke kunne lave abs. stier fra relative - det gør Follow()
-- "Base" kan findes i:
-  - Html meta data
-  - Response URI
 
 Skal kunne tage højde for
 - Relative URL'er (dvs. kende response.Uri): response
 - Relative URL'er fra HTML-base
-- Media-type (så den kan kende forskel på forskellige XML/JSON variationer): response
-- Håndtere generiske XML variationer (dvs. app/xml men med forskellige link-elementer): param
-- Links i del-elementer (f.eks. links fra element i en liste med samme slags elementer): param
-
-
-  interface IHyperMedia<TBody>
-  {
-    IEnumerable<IResponseLink> Links;
-    IEnumerable<IResponseForm> Forms;
-    Uri BaseUri;
-  }
-
-  // Extensions per TBody type
-  static IHyperMedia<TElement> SubElement<TBody,TElement>(this IHyperMedia<TBody>, ...)
-  {
-  }
-
-
-  RamoneResponse response = request1.Get<HtmlDocument>();
-  HtmlDocument doc = response.Body;
-
-  response<HtmlDocument>.HyperMedia     => IHyperMedia
-                        .Links          => Find links og gør dem absolutte
-                                        => IEnumerable<ILink>
-                                           Kunne også være forms den fandt frem
-                       [.Link(node, "self")]
-                        .Link("next")   => Look up <media-type,clr-type> and get hyper-media provider  => IResponseLink
-                        .Follow()       => Makes absolute from response info, makes request via response.Session
 
   
+README om blog
+- HVorfor er den her
+- Forskellige media-types (fordele og ulemper)
+- Specific vs. generic codecs.
+
+
 Bemærk at den nuværende Follow(Session) ikke kan håndtere relative URL'er. Skal den kunne det?
 
 Check/demo/test URL templates med OpenSearch
@@ -119,18 +71,20 @@ Check/demo/test URL templates med OpenSearch
   - Link header
 
 
+Better HTML extension methods:
+  RamoneResponse<HtmlDocument> blog = blogRequest.Get<HtmlDocument>();
+  ILink editLink = blog.SelectNode(@"//a[@rel=""edit""]").Anchor();
+  -> kan på snedig vis overføre blog-response til Anchor() (og Form() mf.)
+     husk at teste om base-url og response-charset følger med
+     kan også lede efter <head> der angiver base-url
+
+
 Ramone.HyperMedia
 - OK: Link selector med media-type
 - Tre forskellige koncepter på tværs af media-types (to "dimensioner": hyper-media / media-types)
   - OK: ILink
   - ILinkTemplate
-  - IForm (key/value eller måske bare HTML specific med mulighed for genbrug i andre media-types)
-    - SetInput(key, value), encoding etc.
-    - Husk "hidden" og initial values for input
-    - Submit()
-- Og så diverse extension metoder til at aflæse sådanne elementer fra diverse formater
-  - Konvertering fra [Xml|Html]Node til ILink etc.
-  - plus at kunne udvide det til nye formater
+  - IForm
 - OK: Follow(ILink), 
 - Follow(ILinkTemplate, params)
 - Make it possible to Follow() relative links.

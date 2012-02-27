@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 
 
-namespace Ramone.Tests.Server.Handlers.Blog
+namespace Ramone.Tests.Server.Blog.Data
 {
   public static class AuthorDB
   {

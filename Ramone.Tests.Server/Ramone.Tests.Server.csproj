@@ -90,10 +90,10 @@
     <Content Include="basicauthentication.aspx" />
     <Content Include="errors.aspx" />
     <Content Include="default.aspx" />
-    <Content Include="Views\Blog\Author.aspx" />
-    <Content Include="Views\Blog\BlogItemCreationDescriptor.aspx" />
-    <Content Include="Views\Blog\List.aspx" />
-    <Content Include="Views\Blog\Item.aspx" />
+    <Content Include="Blog\Views\Author.aspx" />
+    <Content Include="Blog\Views\BlogItemCreationDescriptor.aspx" />
+    <Content Include="Blog\Views\List.aspx" />
+    <Content Include="Blog\Views\Item.aspx" />
     <Content Include="Views\Person.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
@@ -105,9 +105,11 @@
     <Compile Include="basicauthentication.aspx.designer.cs">
       <DependentUpon>basicauthentication.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Blog\Codecs\ImageCodec.cs" />
+    <Compile Include="Blog\Data\ImageDB.cs" />
+    <Compile Include="Blog\Handlers\ImageHandler.cs" />
     <Compile Include="Codecs\AtomFeedCodec.cs" />
     <Compile Include="Codecs\AtomItemCodec.cs" />
-    <Compile Include="Codecs\Blog\BlogItemCodec.cs" />
     <Compile Include="Codecs\CatAsHtmlCodec.cs" />
     <Compile Include="Codecs\CatAsJsonCodec.cs" />
     <Compile Include="Codecs\CatAsTextCodec.cs" />
@@ -134,17 +136,18 @@
     </Compile>
     <Compile Include="Codecs\TextCodec.cs" />
     <Compile Include="Configuration.cs" />
-    <Compile Include="Handlers\Blog\Author.cs" />
-    <Compile Include="Handlers\Blog\AuthorDB.cs" />
-    <Compile Include="Handlers\Blog\AuthorHandler.cs" />
-    <Compile Include="Handlers\Blog\BlogConstants.cs" />
-    <Compile Include="Handlers\Blog\BlogDB.cs" />
-    <Compile Include="Handlers\Blog\BlogItem.cs" />
-    <Compile Include="Handlers\Blog\BlogItemCreationDescriptor.cs" />
-    <Compile Include="Handlers\Blog\BlogItemCreationDescriptorHandler.cs" />
-    <Compile Include="Handlers\Blog\BlogItemHandler.cs" />
-    <Compile Include="Handlers\Blog\BlogList.cs" />
-    <Compile Include="Handlers\Blog\BlogListHandler.cs" />
+    <Compile Include="Blog\Resources\Author.cs" />
+    <Compile Include="Blog\Data\AuthorDB.cs" />
+    <Compile Include="Blog\Handlers\AuthorHandler.cs" />
+    <Compile Include="Blog\BlogConstants.cs" />
+    <Compile Include="Blog\Data\BlogDB.cs" />
+    <Compile Include="Blog\Resources\BlogItem.cs" />
+    <Compile Include="Blog\Resources\BlogItemCreationDescriptor.cs" />
+    <Compile Include="Blog\Handlers\BlogItemCreationDescriptorHandler.cs" />
+    <Compile Include="Blog\Handlers\BlogItemHandler.cs" />
+    <Compile Include="Blog\Resources\BlogList.cs" />
+    <Compile Include="Blog\Handlers\BlogListHandler.cs" />
+    <Compile Include="Blog\Resources\Image.cs" />
     <Compile Include="Handlers\CatHandler.cs" />
     <Compile Include="Handlers\CMS\DossierDocumentsHandler.cs" />
     <Compile Include="Handlers\CMS\DocumentHandler.cs" />
