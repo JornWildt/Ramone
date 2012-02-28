@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Reflection;
 using System.Collections.Specialized;
+using Ramone.IO;
 
 
 namespace Ramone.Utility.ObjectSerialization
@@ -76,6 +77,8 @@ namespace Ramone.Utility.ObjectSerialization
         SerializeNameValueCollection((NameValueCollection)data, dataType, prefix);
       else if (typeof(IList).IsAssignableFrom(dataType))
         SerializeList((IList)data, dataType, prefix);
+      else if (typeof(IFile).IsAssignableFrom(dataType))
+        SerializeFile((IFile)data, dataType, prefix);
       else if (IsSimpleType(dataType))
         SerializeSimpleValue(data, dataType, prefix);
       else
@@ -155,6 +158,12 @@ namespace Ramone.Utility.ObjectSerialization
         string name = string.Format(Settings.ArrayFormat, prefix, i);
         Serialize(collection[i], collection[i] != null ? collection[i].GetType() : null, name);
       }
+    }
+
+
+    protected void SerializeFile(IFile file, Type dataType, string prefix)
+    {
+      Visitor.File(file, prefix);
     }
 
     #endregion

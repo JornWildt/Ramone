@@ -4,6 +4,7 @@ using NUnit.Framework;
 using Ramone.IO;
 using Ramone.Tests.Common;
 using Ramone.Utility.ObjectSerialization;
+using System.Collections;
 
 
 namespace Ramone.Tests.MediaTypes.MultipartFormData
@@ -51,6 +52,25 @@ namespace Ramone.Tests.MediaTypes.MultipartFormData
 
 
     [Test]
+    public void CanPostMultipartFormDataWithFileUsingHashtable()
+    {
+      // Arrange
+      IFile file = new File("..\\..\\data1.txt");
+      Hashtable data = new Hashtable();
+      data["DataFile"] = file;
+      data["Age"] = 10;
+      RamoneRequest formdataReq = Session.Bind(MultipartFormDataFileTemplate);
+
+      // Act
+      RamoneResponse<string> response = formdataReq.Accept("text/plain").ContentType("multipart/form-data").Post<string>(data);
+
+      // Assert
+      Assert.IsTrue(response.Headers["x-contenttype"].StartsWith("multipart/form-data"));
+      Assert.AreEqual("data1.txt-text/plain-Æüî´`'-10", response.Body);
+    }
+
+
+    [Test]
     public void CanPostMultipartFormDataWithFile()
     {
       // Arrange
@@ -81,6 +101,13 @@ namespace Ramone.Tests.MediaTypes.MultipartFormData
       // Assert
       Assert.IsTrue(response.Headers["x-contenttype"].StartsWith("multipart/form-data"));
       Assert.AreEqual("data1.gif-image/gif-GIF89a-99", response.Body);
+    }
+
+
+    [Test]
+    public void CanPostWithPropertyNamesThatNeedsEscaping()
+    {
+      Assert.Fail();
     }
 
 

@@ -56,8 +56,31 @@ Content-Disposition: form-data; name=""{1}""{2}{3}
       // FIXME: escaping name and filename
 
       Writer.Write(header);
+      Writer.Write(formatedValue);
+    }
+
+
+    public void File(IFile file, string name)
+    {
+      string contentType = "";
+      string filename = string.Format("; filename=\"{0}\"", Path.GetFileName(file.Filename ?? "unknown"));
+      if (file.ContentType != null)
+        contentType = string.Format("\r\nContent-Type: {0}", file.ContentType);
+
+      string header = string.Format(@"
+--{0}
+Content-Disposition: form-data; name=""{1}""{2}{3}
+
+", Boundary, name, filename, contentType);
+
+      // FIXME: escaping name and filename
+
+      Writer.Write(header);
       Writer.Flush();
-      WritePropertyValue(value, formatedValue);
+      using (Stream s = file.OpenStream())
+      {
+        s.CopyTo(Output);
+      }
     }
 
 
@@ -67,24 +90,5 @@ Content-Disposition: form-data; name=""{1}""{2}{3}
     }
 
     #endregion
-
-
-    protected void WritePropertyValue(object value, string formatedValue)
-    {
-      if (value is IFile)
-      {
-        IFile file = (IFile)value;
-        // Make sure we write to right place in stream!
-        Writer.Flush();
-        using (Stream s = file.OpenStream())
-        {
-          s.CopyTo(Output);
-        }
-      }
-      else
-      {
-        Writer.Write(formatedValue);
-      }
-    }
   }
 }
