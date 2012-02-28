@@ -40,7 +40,7 @@ namespace Ramone.Tests.HyperMedia.Html
     public void CanExtractAnchorLinksFromHtmlDocument()
     {
       // Act
-      List<ILink> links = HtmlDoc.Anchors().ToList();
+      List<Anchor> links = HtmlDoc.Anchors().ToList();
 
       // Assert
       Assert.AreEqual(4, links.Count);
@@ -64,7 +64,7 @@ namespace Ramone.Tests.HyperMedia.Html
       HtmlNode node = HtmlDoc.DocumentNode.SelectNodes(@"//div[@id=""set1""]").First();
 
       // Act
-      List<ILink> links = node.Anchors().ToList();
+      List<Anchor> links = node.Anchors().ToList();
 
       // Assert
       Assert.AreEqual(2, links.Count);

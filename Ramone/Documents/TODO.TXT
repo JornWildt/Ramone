@@ -9,7 +9,7 @@ Blog scenarier:
 - Find "indsend her" link, læs webform, post data
 
 Blog media-types + linking
-- HTML som HtmlDocument
+- OK: HTML som HtmlDocument
 - HTML som særlig type
 - XML som XmlDocument
 - XML som særlig type
@@ -22,7 +22,7 @@ Forms
   - Submit(name/id)
   - Default values for enctype and accept
   - Hidden inputs
-  - Files (multipart)
+  - OK: Files (multipart)
 - Form
   - OK: enctype (multipart, urlenc)
   - OK: action

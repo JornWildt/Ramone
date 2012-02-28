@@ -13,10 +13,10 @@ namespace Ramone.HyperMedia.Html
     /// </summary>
     /// <param name="html"></param>
     /// <returns></returns>
-    public static IEnumerable<ILink> Anchors(this HtmlDocument html)
+    public static IEnumerable<Anchor> Anchors(this HtmlDocument html)
     {
       if (html == null)
-        return Enumerable.Empty<ILink>();
+        return Enumerable.Empty<Anchor>();
 
       return html.DocumentNode
                  .SelectNodes("//a")
@@ -29,10 +29,10 @@ namespace Ramone.HyperMedia.Html
     /// </summary>
     /// <param name="node"></param>
     /// <returns></returns>
-    public static IEnumerable<ILink> Anchors(this HtmlNode node)
+    public static IEnumerable<Anchor> Anchors(this HtmlNode node)
     {
       if (node == null)
-        return Enumerable.Empty<ILink>();
+        return Enumerable.Empty<Anchor>();
 
       return node.SelectNodes(".//a")
                  .Select(a => new Anchor(a.GetAttributeValue("href", null), a.GetAttributeValue("rel", null), null, a.InnerText));
@@ -44,10 +44,10 @@ namespace Ramone.HyperMedia.Html
     /// </summary>
     /// <param name="nodes"></param>
     /// <returns></returns>
-    public static IEnumerable<ILink> Anchors(this HtmlNodeCollection nodes)
+    public static IEnumerable<Anchor> Anchors(this HtmlNodeCollection nodes)
     {
       if (nodes == null)
-        return Enumerable.Empty<ILink>();
+        return Enumerable.Empty<Anchor>();
 
       var anchors = 
         from c in nodes
@@ -63,7 +63,7 @@ namespace Ramone.HyperMedia.Html
     /// </summary>
     /// <param name="node"></param>
     /// <returns></returns>
-    public static ILink Anchor(this HtmlNode node)
+    public static Anchor Anchor(this HtmlNode node)
     {
       Condition.Requires(node, "node").IsNotNull();
 
@@ -71,7 +71,7 @@ namespace Ramone.HyperMedia.Html
     }
 
 
-    public static IKeyValueForm Form(this HtmlNode node)
+    public static Form Form(this HtmlNode node)
     {
       return new Form(node);
     }
