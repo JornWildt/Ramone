@@ -82,7 +82,11 @@
     <Compile Include="AdditionalMethodsTests.cs" />
     <Compile Include="BindingTests.cs" />
     <Compile Include="Blog\BlogTestHelper.cs" />
+    <Compile Include="Blog\Codecs\Html\AuthorCodec_Html.cs" />
+    <Compile Include="Blog\Codecs\Html\BaseCodec_Html.cs" />
+    <Compile Include="Blog\Codecs\Html\BlogCodec_Html.cs" />
     <Compile Include="Blog\HtmlDocumentTests.cs" />
+    <Compile Include="Blog\Resources\Author.cs" />
     <Compile Include="Blog\Resources\Blog.cs" />
     <Compile Include="Blog\Resources\Post.cs" />
     <Compile Include="Blog\TypedHtmlTests.cs" />

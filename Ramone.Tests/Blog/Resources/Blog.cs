@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Ramone.HyperMedia;
 
 
 namespace Ramone.Tests.Blog.Resources
@@ -7,11 +8,9 @@ namespace Ramone.Tests.Blog.Resources
   public class Blog
   {
     public string Title { get; set; }
-    public List<Post> Items { get; set; }
-    public string AuthorName { get; set; }
+    public List<Post> Posts { get; set; }
 
-    public Uri AuthorLink { get; set; }
-    public Uri EditLink { get; set; }
+    public IEnumerable<ILink> Links { get; set; }
     
     
     public class Post

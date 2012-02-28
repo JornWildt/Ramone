@@ -2,7 +2,7 @@
 <%@ Page Language="C#" Inherits="OpenRasta.Codecs.WebForms.ResourceView<BlogList>" %>
 <html>
   <body>
-    <h1><%=Resource.Title %></h1>
+    <h1 class="blog-title"><%=Resource.Title %></h1>
     <p>Author: <a rel="author" href="<%=Resource.AuthorLink%>"><%=Resource.AuthorName%></a></p>
     <% foreach (BlogItem item in Resource.Items) { %>
       <div class="post">
