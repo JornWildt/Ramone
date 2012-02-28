@@ -105,13 +105,6 @@ namespace Ramone.Tests.MediaTypes.MultipartFormData
 
 
     [Test]
-    public void CanPostWithPropertyNamesThatNeedsEscaping()
-    {
-      Assert.Fail();
-    }
-
-
-    [Test]
     public void CanPostSMultipartFormDataFromAnonymousTypes()
     {
       // Arrange
