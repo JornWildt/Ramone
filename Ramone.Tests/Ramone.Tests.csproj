@@ -83,6 +83,9 @@
     <Compile Include="BindingTests.cs" />
     <Compile Include="Blog\BlogTestHelper.cs" />
     <Compile Include="Blog\HtmlDocumentTests.cs" />
+    <Compile Include="Blog\Resources\Blog.cs" />
+    <Compile Include="Blog\Resources\Post.cs" />
+    <Compile Include="Blog\TypedHtmlTests.cs" />
     <Compile Include="DefaultContentTypeTests.cs" />
     <Compile Include="ExceptionHandlingTests.cs" />
     <Compile Include="GenericMethodTests.cs" />
