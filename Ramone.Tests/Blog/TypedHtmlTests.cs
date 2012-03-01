@@ -1,5 +1,6 @@
 ﻿using NUnit.Framework;
 using Ramone.HyperMedia;
+using System.Collections.Generic;
 
 
 namespace Ramone.Tests.Blog
@@ -21,6 +22,7 @@ namespace Ramone.Tests.Blog
     {
       base.TestFixtureSetUp();
       TestService.CodecManager.AddCodec<Resources.Blog, Codecs.Html.BlogCodec_Html>(MediaType.TextHtml);
+      TestService.CodecManager.AddCodec<Resources.Post, Codecs.Html.PostCodec_Html>(MediaType.TextHtml);
       TestService.CodecManager.AddCodec<Resources.Author, Codecs.Html.AuthorCodec_Html>(MediaType.TextHtml);
     }
 
@@ -71,6 +73,37 @@ namespace Ramone.Tests.Blog
       // - Check e-mail of author
       Assert.AreEqual("Pete Peterson", author.Name);
       Assert.AreEqual("pp@ramonerest.dk", author.EMail);
+    }
+
+
+    [Test]
+    public void CanFollowAllAuthorsAndGetAllEMails()
+    {
+      // Arrange
+      HashSet<string> foundEMails = new HashSet<string>();
+      RamoneRequest blogRequest = Session.Bind(BlogRootPath);
+
+      // Act ...
+
+      // - GET blog
+      Resources.Blog blog = blogRequest.Get<Resources.Blog>().Body;
+
+      foreach (Resources.Blog.Post post in blog.Posts)
+      {
+        // - GET post
+        Resources.Post fullPost = post.Links.Follow(Session, "self").Get<Resources.Post>().Body;
+
+        // - Follow author link
+        Resources.Author author = fullPost.Links.Follow(Session, "author").Get<Resources.Author>().Body;
+
+        // - Register e-mail
+        foundEMails.Add(author.EMail);
+      }
+
+      // Assert ...
+      Assert.AreEqual(2, foundEMails.Count);
+      Assert.IsTrue(foundEMails.Contains("bb@ramonerest.dk"));
+      Assert.IsTrue(foundEMails.Contains("cc@ramonerest.dk"));
     }
 
   }

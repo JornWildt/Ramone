@@ -2,6 +2,7 @@
 using HtmlAgilityPack;
 using System.Collections.Generic;
 using Ramone.HyperMedia.Html;
+using Ramone.HyperMedia;
 
 
 namespace Ramone.Tests.Blog.Codecs.Html
@@ -13,28 +14,28 @@ namespace Ramone.Tests.Blog.Codecs.Html
       HtmlNode doc = html.DocumentNode;
 
       List<Resources.Blog.Post> posts = new List<Resources.Blog.Post>();
-      List<Anchor> links = new List<Anchor>();
 
       foreach (HtmlNode postNode in doc.SelectNodes(@"//div[@class=""post""]"))
       {
         HtmlNode title = postNode.SelectNodes(@".//*[@class=""post-title""]").First();
         HtmlNode content = postNode.SelectNodes(@".//*[@class=""post-content""]").First();
+        List<Anchor> links = new List<Anchor>(postNode.Anchors());
 
         posts.Add(new Resources.Blog.Post
         {
           Title = title.InnerText,
-          Text = content.InnerText
+          Text = content.InnerText,
+          Links = links
         });
       }
 
-      HtmlNode authorLinkNode = doc.SelectNodes(@"//a[@rel=""author""]").First();
-      links.Add(new Anchor(authorLinkNode.Attributes["href"].Value, "author", null, authorLinkNode.InnerText));
+      List<Anchor> blogLinks = new List<Anchor>(doc.Anchors());
 
       Resources.Blog blog = new Resources.Blog()
       {
         Title = doc.SelectNodes(@".//*[@class=""blog-title""]").First().InnerText,
         Posts = posts,
-        Links = links
+        Links = blogLinks
       };
 
       return blog;

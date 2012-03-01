@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using Ramone.HyperMedia;
 
 
 namespace Ramone.Tests.Blog.Resources
@@ -11,9 +13,6 @@ namespace Ramone.Tests.Blog.Resources
     public DateTime CreatedDate { get; set; }
     public string AuthorName { get; set; }
 
-    public Uri UpLink { get; set; }
-    public Uri SelfLink { get; set; }
-    public Uri AuthorLink { get; set; }
-    public Uri ImageLink { get; set; }
+    public IEnumerable<ILink> Links { get; set; }
   }
 }

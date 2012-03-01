@@ -2,6 +2,8 @@
 Version 1
 ---------
 
+Uri.Follow()
+
 Blog scenarier:
 - Hent blog listen
   - Find forfatter
@@ -92,6 +94,8 @@ Ramone.HyperMedia
 Hvad er den nemmeste måde at dumpe fejlresultatet fra et request? F.eks. ved not-found eller not-authorized.
 
 Test scenarie hvor der returneres "NoContent" og man forsøger at hente content (skal give null)
+
+Eksemplificering af hvordan man håndterer et service-dokument (ATOM, og det dersens til OpenId)
 
 - Demo how HTML + forms + url-encoded data can be auto-generated (a'la Eric)
   - Still missing a generic domain data embedding in HTML
