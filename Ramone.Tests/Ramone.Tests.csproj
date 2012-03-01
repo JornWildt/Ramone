@@ -85,10 +85,12 @@
     <Compile Include="Blog\Codecs\Html\AuthorCodec_Html.cs" />
     <Compile Include="Blog\Codecs\Html\BaseCodec_Html.cs" />
     <Compile Include="Blog\Codecs\Html\BlogCodec_Html.cs" />
+    <Compile Include="Blog\Codecs\Html\CreatePostDescriptorCodec_Html.cs" />
     <Compile Include="Blog\Codecs\Html\PostCodec_Html.cs" />
     <Compile Include="Blog\HtmlDocumentTests.cs" />
     <Compile Include="Blog\Resources\Author.cs" />
     <Compile Include="Blog\Resources\Blog.cs" />
+    <Compile Include="Blog\Resources\CreatePostDescriptor.cs" />
     <Compile Include="Blog\Resources\Post.cs" />
     <Compile Include="Blog\TypedHtmlTests.cs" />
     <Compile Include="DefaultContentTypeTests.cs" />

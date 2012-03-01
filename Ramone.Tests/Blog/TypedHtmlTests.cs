@@ -1,6 +1,7 @@
-﻿using NUnit.Framework;
+﻿using System.Collections.Generic;
+using NUnit.Framework;
 using Ramone.HyperMedia;
-using System.Collections.Generic;
+using Ramone.IO;
 
 
 namespace Ramone.Tests.Blog
@@ -24,6 +25,7 @@ namespace Ramone.Tests.Blog
       TestService.CodecManager.AddCodec<Resources.Blog, Codecs.Html.BlogCodec_Html>(MediaType.TextHtml);
       TestService.CodecManager.AddCodec<Resources.Post, Codecs.Html.PostCodec_Html>(MediaType.TextHtml);
       TestService.CodecManager.AddCodec<Resources.Author, Codecs.Html.AuthorCodec_Html>(MediaType.TextHtml);
+      TestService.CodecManager.AddCodec<Resources.CreatePostDescriptor, Codecs.Html.CreatePostDescriptorCodec_Html>(MediaType.TextHtml);
     }
 
 
@@ -106,5 +108,38 @@ namespace Ramone.Tests.Blog
       Assert.IsTrue(foundEMails.Contains("cc@ramonerest.dk"));
     }
 
+
+    [Test]
+    public void CanAddNewBlogItemIncludingImage()
+    {
+      // Arrange
+      RamoneRequest blogRequest = Session.Bind(BlogRootPath);
+
+      // Act ...
+
+      // - GET blog
+      Resources.Blog blog = blogRequest.Get<Resources.Blog>().Body;
+
+      // - Follow "edit" link and GET form describing how to input
+      RamoneResponse<Resources.CreatePostDescriptor> createDescriptorResponse 
+        = blog.Links.Follow(Session, "edit").Get<Resources.CreatePostDescriptor>();
+
+      // - Extract "create" form
+      IKeyValueForm form = createDescriptorResponse.Body.Form;
+
+      // - Populate form inputs
+      IFile file = new File("..\\..\\data1.gif", "image/gif");
+      form.Value("Title", "New item");
+      form.Value("Text", "Yaj!");
+      form.Value("Image", file);
+
+      // - Submit the form
+      Resources.Post createdPost = form.Submit<Resources.Post>(createDescriptorResponse).Created();
+
+      // Assert ...
+      Assert.IsNotNull(createdPost);
+      Assert.AreEqual("New item", createdPost.Title);
+      Assert.AreEqual("Yaj!", createdPost.Text);
+    }
   }
 }
