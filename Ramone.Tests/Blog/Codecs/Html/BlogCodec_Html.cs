@@ -9,7 +9,7 @@ namespace Ramone.Tests.Blog.Codecs.Html
 {
   public class BlogCodec_Html : BaseCodec_Html<Resources.Blog>
   {
-    public override Resources.Blog ReadFromHtml(HtmlDocument html)
+    public override Resources.Blog ReadFromHtml(HtmlDocument html, ReaderContext context)
     {
       HtmlNode doc = html.DocumentNode;
 

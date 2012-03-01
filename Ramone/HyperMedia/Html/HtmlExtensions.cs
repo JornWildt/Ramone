@@ -2,6 +2,7 @@
 using System.Linq;
 using CuttingEdge.Conditions;
 using HtmlAgilityPack;
+using System;
 
 
 namespace Ramone.HyperMedia.Html
@@ -71,9 +72,15 @@ namespace Ramone.HyperMedia.Html
     }
 
 
-    public static Form Form(this HtmlNode node)
+    public static Form Form(this HtmlNode node, IRamoneSession session, Uri baseUri)
     {
-      return new Form(node);
+      return new Form(node, session, baseUri);
+    }
+
+
+    public static Form Form(this HtmlNode node, RamoneResponse response)
+    {
+      return new Form(node, response.Session, response.BaseUri);
     }
 
 

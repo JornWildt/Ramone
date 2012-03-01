@@ -134,7 +134,7 @@ namespace Ramone.Tests.Blog
       RamoneResponse<HtmlDocument> createDescriptor = editLink.Follow(Session).Get<HtmlDocument>();
 
       // - Extract "create" form
-      IKeyValueForm form = createDescriptor.Body.DocumentNode.SelectNodes(@"//form[@id=""create""]").First().Form();
+      IKeyValueForm form = createDescriptor.Body.DocumentNode.SelectNodes(@"//form[@id=""create""]").First().Form(createDescriptor);
 
       // - Populate form inputs
       IFile file = new File("..\\..\\data1.gif", "image/gif");
@@ -143,7 +143,7 @@ namespace Ramone.Tests.Blog
       form.Value("Image", file);
 
       // - Submit the form
-      HtmlDocument createdBlogItem = form.Submit<HtmlDocument>(createDescriptor).Created();
+      HtmlDocument createdBlogItem = form.Submit<HtmlDocument>().Created();
 
       // Assert ...
       Assert.IsNotNull(createdBlogItem);

@@ -12,7 +12,7 @@ namespace Ramone.Tests.Blog.Codecs.Html
     {
       HtmlDocument doc = new HtmlDocument();
       doc.Load(reader);
-      return ReadFromHtml(doc);
+      return ReadFromHtml(doc, context);
     }
 
 
@@ -22,6 +22,6 @@ namespace Ramone.Tests.Blog.Codecs.Html
     }
 
 
-    public abstract T ReadFromHtml(HtmlDocument html);
+    public abstract T ReadFromHtml(HtmlDocument html, ReaderContext context);
   }
 }

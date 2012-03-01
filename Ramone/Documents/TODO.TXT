@@ -4,17 +4,16 @@ Version 1
 
 Forms
 - Der mangler temmeligt mange tests ...
-  - Submit(name/id)
   - Default values for enctype and accept
-  - Hidden inputs
   - OK: Files (multipart)
-- Form
   - OK: enctype (multipart, urlenc)
   - OK: action
   - OK: method
   - accept-charset
 - Normal inputs (including default values - also for hidden inputs)
   - text, password, checkbox, radio
+  - Submit(name/id)
+    - Har den egenskab at default-værdien kun sendes med hvis denne submit-button aktiveres.
   - OK: file
   - hidden
   - NO: image

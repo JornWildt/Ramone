@@ -139,7 +139,7 @@ namespace Ramone.Tests.Blog
       form.Value(args);
 
       // - Submit the form
-      Resources.Post createdPost = form.Submit<Resources.Post>(createDescriptorResponse).Created();
+      Resources.Post createdPost = form.Submit<Resources.Post>().Created();
 
       // Assert ...
       Assert.IsNotNull(createdPost);

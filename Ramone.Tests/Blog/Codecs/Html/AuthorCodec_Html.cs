@@ -6,7 +6,7 @@ namespace Ramone.Tests.Blog.Codecs.Html
 {
   public class AuthorCodec_Html : BaseCodec_Html<Resources.Author>
   {
-    public override Resources.Author ReadFromHtml(HtmlDocument html)
+    public override Resources.Author ReadFromHtml(HtmlDocument html, ReaderContext context)
     {
       HtmlNode doc = html.DocumentNode;
 

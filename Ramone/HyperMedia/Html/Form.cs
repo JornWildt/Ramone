@@ -9,18 +9,22 @@ namespace Ramone.HyperMedia.Html
 {
   public class Form : IKeyValueForm
   {
-    public Uri Action { get; protected set; }
+    public Uri Action { get; set; }
 
-    public string Method { get; protected set; }
+    public string Method { get; set; }
 
-    public MediaType EncodingType { get; protected set; }
+    public MediaType EncodingType { get; set; }
 
-    public string AcceptCharset { get; protected set; }
+    public string AcceptCharset { get; set; }
+
+    public Uri BaseUrl { get; set; }
 
 
     protected Hashtable Values { get; set; }
 
     protected object AlternateValues { get; set; }
+
+    protected IRamoneSession Session { get; set; }
 
 
     #region IKeyValueForm Members
@@ -42,17 +46,18 @@ namespace Ramone.HyperMedia.Html
     }
 
 
-    public RamoneResponse Submit(RamoneResponse current)
+    public RamoneResponse Submit()
     {
-      RamoneResponse response = current.Session.Bind(Action, Values).Execute(Method);
+      RamoneResponse response = Session.Bind(Action, Values)
+                                       .ContentType(EncodingType)
+                                       .Execute(Method);
       return response;
     }
 
 
-    public RamoneResponse<T> Submit<T>(RamoneResponse current) where T : class
+    public RamoneResponse<T> Submit<T>() where T : class
     {
-      RamoneResponse<T> response = current.Session
-                                          .Bind(Action)
+      RamoneResponse<T> response = Session.Bind(Action)
                                           .ContentType(EncodingType)
                                           .Execute<T>(Method, AlternateValues ?? Values);
       return response;
@@ -61,9 +66,12 @@ namespace Ramone.HyperMedia.Html
     #endregion
 
 
-    public Form(HtmlNode formNode)
+    public Form(HtmlNode formNode, IRamoneSession session, Uri baseUrl)
     {
       Condition.Requires(formNode, "formNode").IsNotNull();
+      Condition.Requires(session, "session").IsNotNull();
+      Condition.Requires(baseUrl, "baseUrl").IsNotNull();
+
       if (!formNode.Name.Equals("form", StringComparison.OrdinalIgnoreCase))
         throw new ArgumentException(string.Format("Cannot create HTML form from '{0}' node.", formNode.Name));
 
@@ -71,6 +79,10 @@ namespace Ramone.HyperMedia.Html
       Action = new Uri(formNode.GetAttributeValue("action", null));
 
       Method = formNode.GetAttributeValue("method", "get");
+
+      Session = session;
+
+      BaseUrl = baseUrl;
 
       string enctype = formNode.GetAttributeValue("enctype", null);
       EncodingType = (enctype != null ? new MediaType(enctype) : MediaType.ApplicationFormUrlEncoded);
