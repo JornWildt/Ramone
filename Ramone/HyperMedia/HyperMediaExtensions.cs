@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using CuttingEdge.Conditions;
 using System.Collections.Generic;
+using System;
 
 
 namespace Ramone.HyperMedia
@@ -41,6 +42,21 @@ namespace Ramone.HyperMedia
       Condition.Requires(session, "session").IsNotNull();
 
       return new RamoneRequest(session, link.HRef);
+    }
+
+
+    /// <summary>
+    /// Create request from URI.
+    /// </summary>
+    /// <param name="url"></param>
+    /// <param name="session"></param>
+    /// <returns></returns>
+    public static RamoneRequest Follow(this Uri url, IRamoneSession session)
+    {
+      Condition.Requires(url, "url").IsNotNull();
+      Condition.Requires(session, "session").IsNotNull();
+
+      return new RamoneRequest(session, url);
     }
 
 
