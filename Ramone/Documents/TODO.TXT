@@ -2,15 +2,6 @@
 Version 1
 ---------
 
-Blog media-types + linking
-- OK: HTML som HtmlDocument
-- OK: HTML som særlig type
-- XML som XmlDocument
-- XML som særlig type
-- JSON som dynamic
-- JSON som særlig type
-- ATOM som SyndicationFeed
-
 Forms
 - Der mangler temmeligt mange tests ...
   - Submit(name/id)
@@ -32,19 +23,6 @@ Forms
   - Textarea
 - OK: input.submit
 
-
-Skal kunne tage højde for
-- Relative URL'er (dvs. kende response.Uri): response
-- Relative URL'er fra HTML-base
-
-  
-README om blog
-- HVorfor er den her
-- Forskellige media-types (fordele og ulemper)
-- Specific vs. generic codecs.
-
-
-Bemærk at den nuværende Follow(Session) ikke kan håndtere relative URL'er. Skal den kunne det?
 
 Check/demo/test URL templates med OpenSearch
 
@@ -158,7 +136,7 @@ Serializer settings for OpenRasta
 Version 2
 ---------
 
-Dependency injection in codecs (and more?)
+Dependency injection in codecs (and other classes?)
 
 Serializer v2
 - Deserialize arrays and dictionaries, list
@@ -178,6 +156,11 @@ Caching
   - Protocol buffers
   - HAL
   - oData
+
+Skal kunne tage højde for
+- Relative URL'er (dvs. kende response.Uri): response
+- Relative URL'er fra HTML-base  
+Bemærk at den nuværende Follow(Session) ikke kan håndtere relative URL'er. Skal den kunne det?
 
 Support for quality "q" param in accept header and codec selector
 

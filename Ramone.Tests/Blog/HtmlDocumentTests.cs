@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using HtmlAgilityPack;
 using NUnit.Framework;
@@ -19,6 +18,8 @@ namespace Ramone.Tests.Blog
   /// fine with simple one-off scenarios but as soon as you start copying the xpath strings and
   /// access patterns all over the code it becomes a maintaince nightmare. Then it is time to
   /// create codecs specific for the service and work with a type-safe access to the data.
+  /// 
+  /// Compare this code to the code found in TypedHtmlTests.cs and consider what is the most readable.
   /// </remarks>
   [TestFixture]
   public class HtmlDocumentTests : BlogTestHelper

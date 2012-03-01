@@ -15,6 +15,8 @@ namespace Ramone.Tests.Blog
   /// split parsing of the resource representation from the higher level "business" use of the data.
   /// This separation of concerns makes the code using the API much simpler, easier to read and easier
   /// to maintain.
+  /// 
+  /// Compare this code to the code found in HtmlDocumentTests.cs and consider what is the most readable.
   /// </remarks>
   [TestFixture]
   public class TypedHtmlTests : BlogTestHelper
