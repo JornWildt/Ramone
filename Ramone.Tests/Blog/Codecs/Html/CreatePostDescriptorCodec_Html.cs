@@ -1,29 +1,23 @@
 ﻿using System.Linq;
 using HtmlAgilityPack;
-using System.Collections.Generic;
 using Ramone.HyperMedia.Html;
-using Ramone.HyperMedia;
 using Ramone.Tests.Blog.Resources;
 
 
 namespace Ramone.Tests.Blog.Codecs.Html
 {
-  public class CreatePostDescriptorCodec_Html : BaseCodec_Html<Resources.Post>
+  public class CreatePostDescriptorCodec_Html : BaseCodec_Html<Resources.CreatePostDescriptor>
   {
-    public override Resources.Post ReadFromHtml(HtmlDocument html)
+    public override Resources.CreatePostDescriptor ReadFromHtml(HtmlDocument html)
     {
       HtmlNode doc = html.DocumentNode;
 
-      List<Anchor> links = new List<Anchor>(doc.Anchors());
-
-      Post post = new Post
+      Resources.CreatePostDescriptor descriptor = new CreatePostDescriptor
       {
-        Title = doc.SelectNodes(@".//*[@class=""post-title""]").First().InnerText,
-        Text = doc.SelectNodes(@".//*[@class=""post-content""]").First().InnerText,
-        Links = links
+        Form = doc.SelectNodes(@"//form").First().Form()
       };
 
-      return post;
+      return descriptor;
     }
   }
 }

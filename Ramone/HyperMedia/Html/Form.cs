@@ -20,6 +20,8 @@ namespace Ramone.HyperMedia.Html
 
     protected Hashtable Values { get; set; }
 
+    protected object AlternateValues { get; set; }
+
 
     #region IKeyValueForm Members
 
@@ -29,6 +31,14 @@ namespace Ramone.HyperMedia.Html
       Condition.Requires(value, "value").IsNotNull();
 
       Values.Add(key, value);
+    }
+
+
+    public void Value(object value)
+    {
+      Condition.Requires(value, "value").IsNotNull();
+
+      AlternateValues = value;
     }
 
 
@@ -44,7 +54,7 @@ namespace Ramone.HyperMedia.Html
       RamoneResponse<T> response = current.Session
                                           .Bind(Action)
                                           .ContentType(EncodingType)
-                                          .Execute<T>(Method, Values);
+                                          .Execute<T>(Method, AlternateValues ?? Values);
       return response;
     }
 

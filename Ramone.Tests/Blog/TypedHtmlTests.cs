@@ -128,10 +128,13 @@ namespace Ramone.Tests.Blog
       IKeyValueForm form = createDescriptorResponse.Body.Form;
 
       // - Populate form inputs
-      IFile file = new File("..\\..\\data1.gif", "image/gif");
-      form.Value("Title", "New item");
-      form.Value("Text", "Yaj!");
-      form.Value("Image", file);
+      Resources.CreatePostArgs args = new Resources.CreatePostArgs
+      {
+        Title = "New item",
+        Text = "Yaj!",
+        Image = new File("..\\..\\data1.gif", "image/gif")
+      };
+      form.Value(args);
 
       // - Submit the form
       Resources.Post createdPost = form.Submit<Resources.Post>(createDescriptorResponse).Created();

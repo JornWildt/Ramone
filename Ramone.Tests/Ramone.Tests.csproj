@@ -90,6 +90,7 @@
     <Compile Include="Blog\HtmlDocumentTests.cs" />
     <Compile Include="Blog\Resources\Author.cs" />
     <Compile Include="Blog\Resources\Blog.cs" />
+    <Compile Include="Blog\Resources\CreatePostArgs.cs" />
     <Compile Include="Blog\Resources\CreatePostDescriptor.cs" />
     <Compile Include="Blog\Resources\Post.cs" />
     <Compile Include="Blog\TypedHtmlTests.cs" />
