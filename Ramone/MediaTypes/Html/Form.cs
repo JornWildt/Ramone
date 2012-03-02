@@ -1,12 +1,12 @@
 ﻿using System;
-using HtmlAgilityPack;
-using CuttingEdge.Conditions;
-using System.Collections.Specialized;
 using System.Collections;
 using System.Linq;
+using CuttingEdge.Conditions;
+using HtmlAgilityPack;
+using Ramone.HyperMedia;
 
 
-namespace Ramone.HyperMedia.Html
+namespace Ramone.MediaTypes.Html
 {
   public class Form : IKeyValueForm
   {

@@ -2,7 +2,7 @@
 using HtmlAgilityPack;
 using NUnit.Framework;
 using Ramone.HyperMedia;
-using Ramone.HyperMedia.Html;
+using Ramone.MediaTypes.Html;
 using Ramone.Tests.Common;
 
 

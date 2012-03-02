@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 using HtmlAgilityPack;
-using Ramone.HyperMedia.Html;
+using Ramone.MediaTypes.Html;
 using Ramone.Tests.Blog.Resources;
 
 

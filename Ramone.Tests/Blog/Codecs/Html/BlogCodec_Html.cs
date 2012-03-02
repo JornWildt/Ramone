@@ -1,8 +1,7 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using HtmlAgilityPack;
-using System.Collections.Generic;
-using Ramone.HyperMedia.Html;
-using Ramone.HyperMedia;
+using Ramone.MediaTypes.Html;
 
 
 namespace Ramone.Tests.Blog.Codecs.Html

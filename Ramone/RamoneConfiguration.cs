@@ -79,6 +79,7 @@ namespace Ramone
       cm.AddCodec<XmlSerializerCodec>(MediaType.ApplicationXml);
       cm.AddCodec<XmlDocument, XmlSerializerCodec>(MediaType.ApplicationXml);
       cm.AddCodec<XmlDocument, XmlSerializerCodec>(MediaType.TextXml);
+      cm.AddCodec<XmlDocument, XmlSerializerCodec>(MediaType.TextHtml);
 
       // HTML + XHTML
       cm.AddCodec<HtmlDocument, HtmlDocumentCodec>(MediaType.TextHtml);

@@ -5,7 +5,7 @@ using HtmlAgilityPack;
 using System;
 
 
-namespace Ramone.HyperMedia.Html
+namespace Ramone.MediaTypes.Html
 {
   public static class HtmlExtensions
   {

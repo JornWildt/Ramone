@@ -1,7 +1,8 @@
 ﻿using System;
+using Ramone.HyperMedia;
 
 
-namespace Ramone.HyperMedia.Html
+namespace Ramone.MediaTypes.Html
 {
   public class Anchor : ILink
   {

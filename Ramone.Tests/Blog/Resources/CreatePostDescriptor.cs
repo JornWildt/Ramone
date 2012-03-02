@@ -1,4 +1,4 @@
-﻿using Ramone.HyperMedia.Html;
+﻿using Ramone.MediaTypes.Html;
 
 
 namespace Ramone.Tests.Blog.Resources

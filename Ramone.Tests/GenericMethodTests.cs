@@ -1,9 +1,6 @@
-﻿using NUnit.Framework;
-using Ramone.HyperMedia;
-using Ramone.HyperMedia.Atom;
+﻿using System.Net;
+using NUnit.Framework;
 using Ramone.Tests.Common.CMS;
-using System.Collections.Generic;
-using System.Net;
 
 
 namespace Ramone.Tests

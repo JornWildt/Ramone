@@ -1,6 +1,5 @@
 ﻿using NUnit.Framework;
 using Ramone.HyperMedia;
-using Ramone.HyperMedia.Atom;
 using Ramone.Tests.Common.CMS;
 using System.Collections.Generic;
 

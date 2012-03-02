@@ -1,5 +1,4 @@
 ﻿using System.Xml.Serialization;
-using Ramone.HyperMedia.Atom;
 using Ramone.MediaTypes.Atom;
 
 

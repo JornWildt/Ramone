@@ -3,8 +3,8 @@ using System.Linq;
 using HtmlAgilityPack;
 using NUnit.Framework;
 using Ramone.HyperMedia;
-using Ramone.HyperMedia.Html;
 using Ramone.IO;
+using Ramone.MediaTypes.Html;
 
 
 namespace Ramone.Tests.Blog

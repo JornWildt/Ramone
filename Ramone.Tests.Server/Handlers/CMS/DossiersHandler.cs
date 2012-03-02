@@ -1,7 +1,7 @@
-﻿using OpenRasta.Web;
-using Ramone.HyperMedia.Atom;
+﻿using System.Web;
+using OpenRasta.Web;
+using Ramone.MediaTypes.Atom;
 using Ramone.Tests.Common.CMS;
-using System.Web;
 
 
 namespace Ramone.Tests.Server.Handlers.CMS

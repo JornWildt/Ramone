@@ -2,7 +2,6 @@
 using System.Xml.Serialization;
 using NUnit.Framework;
 using Ramone.HyperMedia;
-using Ramone.HyperMedia.Atom;
 using Ramone.MediaTypes.Atom;
 
 

@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using NUnit.Framework;
 using HtmlAgilityPack;
+using NUnit.Framework;
 using Ramone.HyperMedia;
-using Ramone.HyperMedia.Html;
+using Ramone.MediaTypes.Html;
 
 
 namespace Ramone.Tests.HyperMedia.Html
