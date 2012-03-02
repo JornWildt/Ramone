@@ -33,5 +33,7 @@
     public const string HeaderEchoPath = "headerecho";
 
     public const string BasicAuthPath = "basicauthentication.aspx";
+
+    public const string FormPath = "form";
   }
 }

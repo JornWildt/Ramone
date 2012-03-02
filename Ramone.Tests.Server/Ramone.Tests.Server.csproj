@@ -94,6 +94,7 @@
     <Content Include="Blog\Views\BlogItemCreationDescriptor.aspx" />
     <Content Include="Blog\Views\List.aspx" />
     <Content Include="Blog\Views\Item.aspx" />
+    <Content Include="Views\Form.aspx" />
     <Content Include="Views\Person.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
@@ -158,6 +159,7 @@
     <Compile Include="Handlers\DogHandler.cs" />
     <Compile Include="Handlers\EncodingHandler.cs" />
     <Compile Include="Handlers\FileHandler.cs" />
+    <Compile Include="Handlers\FormHandler.cs" />
     <Compile Include="Handlers\FormUrlEncodedHandler.cs" />
     <Compile Include="Handlers\HeaderEchoHandler.cs" />
     <Compile Include="Handlers\MultipartFormDataHandler.cs" />

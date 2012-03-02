@@ -109,6 +109,11 @@ namespace Ramone.Tests.Server
             .TranscodedBy<TextCodec>()
             .ForMediaType("application/x-www-form-urlencoded");
 
+        ResourceSpace.Has.ResourcesOfType<TestForm>()
+                     .AtUri(Constants.FormPath)
+                     .HandledBy<FormHandler>()
+                     .RenderedByAspx("~/Views/Form.aspx");
+
         ConfigureCMS();
         ConfigureBlog();
       }

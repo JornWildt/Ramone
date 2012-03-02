@@ -1,8 +1,8 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using HtmlAgilityPack;
 using Ramone.HyperMedia.Html;
 using Ramone.Tests.Blog.Resources;
-using System;
 
 
 namespace Ramone.Tests.Blog.Codecs.Html
