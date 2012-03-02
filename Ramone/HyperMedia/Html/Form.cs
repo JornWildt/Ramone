@@ -3,6 +3,7 @@ using HtmlAgilityPack;
 using CuttingEdge.Conditions;
 using System.Collections.Specialized;
 using System.Collections;
+using System.Linq;
 
 
 namespace Ramone.HyperMedia.Html
@@ -29,20 +30,24 @@ namespace Ramone.HyperMedia.Html
 
     #region IKeyValueForm Members
 
-    public void Value(string key, object value)
+    public IKeyValueForm Value(string key, object value)
     {
       Condition.Requires(key, "key").IsNotNullOrEmpty();
       Condition.Requires(value, "value").IsNotNull();
 
       Values.Add(key, value);
+
+      return this;
     }
 
 
-    public void Value(object value)
+    public IKeyValueForm Value(object value)
     {
       Condition.Requires(value, "value").IsNotNull();
 
       AlternateValues = value;
+
+      return this;
     }
 
 
@@ -50,7 +55,7 @@ namespace Ramone.HyperMedia.Html
     {
       RamoneResponse response = Session.Bind(Action, Values)
                                        .ContentType(EncodingType)
-                                       .Execute(Method);
+                                       .Execute(Method, AlternateValues ?? Values);
       return response;
     }
 
@@ -77,11 +82,8 @@ namespace Ramone.HyperMedia.Html
 
       // FIXME: needs response to get default URI if it is not supplied
       Action = new Uri(formNode.GetAttributeValue("action", null));
-
       Method = formNode.GetAttributeValue("method", "get");
-
       Session = session;
-
       BaseUrl = baseUrl;
 
       string enctype = formNode.GetAttributeValue("enctype", null);
@@ -91,6 +93,32 @@ namespace Ramone.HyperMedia.Html
       AcceptCharset = formNode.GetAttributeValue("accept-charset", "UNKNOWN");
 
       Values = new Hashtable();
+
+      ParseInputs(formNode);
+    }
+
+
+    protected void ParseInputs(HtmlNode formNode)
+    {
+      foreach (HtmlNode inputNode in formNode.SelectNodes(".//input") ?? Enumerable.Empty<HtmlNode>())
+      {
+        string type = inputNode.GetAttributeValue("type", "text");
+        string value = inputNode.GetAttributeValue("value", null);
+        string name = inputNode.GetAttributeValue("name", null);
+
+        if (name != null)
+        {
+          if (type == "submit")
+          {
+          }
+          else// if (type == "hidden")
+          {
+            // Set default values
+            if (value != null)
+              Values.Add(name, value);
+          }
+        }
+      }
     }
   }
 }

@@ -5,7 +5,7 @@ using Ramone.Tests.Common;
 
 namespace Ramone.Tests.Server.Handlers
 {
-  public class TestForm
+  public class TestForm : FormArgs
   {
     public Uri ActionUrl { get; set; }
   }
@@ -22,7 +22,7 @@ namespace Ramone.Tests.Server.Handlers
     }
 
 
-    public object Post(FormArgs args)
+    public object Post(TestForm args)
     {
       return args;
     }

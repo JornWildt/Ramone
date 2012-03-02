@@ -112,7 +112,8 @@ namespace Ramone.Tests.Server
         ResourceSpace.Has.ResourcesOfType<TestForm>()
                      .AtUri(Constants.FormPath)
                      .HandledBy<FormHandler>()
-                     .RenderedByAspx("~/Views/Form.aspx");
+                     .RenderedByAspx("~/Views/Form.aspx")
+                     .And.TranscodedBy<FormUrlencodedCodec>();
 
         ConfigureCMS();
         ConfigureBlog();

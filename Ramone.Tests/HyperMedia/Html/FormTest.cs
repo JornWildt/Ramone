@@ -19,31 +19,53 @@ namespace Ramone.Tests.HyperMedia.Html
 
 
     [Test]
-    public void WhenSubmittingFormItOnlySubmitsDataFromTheActivatedSubmitButton()
+    public void WhenSubmittingFormItIncludesDefaultValues()
     {
-      IKeyValueForm form = GetForm();
-      form.Value("Title", "My title");
+      // Arrange
+      FormArgs args = new FormArgs();
 
+      // Act
+      IKeyValueForm form = GetForm();
+      FormArgs result = form.Value(args).Submit<FormArgs>().Body;
+
+      // Assert
+      Assert.IsNotNull(result);
+      Assert.AreEqual("text", result.InputText);
+    }
+
+
+    // Test with 
+    //   action[empty|relative|absolut]
+    //   encoding
+    //   different submit buttons
+
+    // WHat happens for forms with errors (repeated inputs for instance)
+
+    [Test]
+    public void CanSubmitFormWithAllSortsOfSpecialities()
+    {
+      // Arrange
       FormArgs args = new FormArgs
       {
-        Title = "My title"
+        InputText = "My title"
       };
 
-      Session.Bind(FormTemplate).Post(args);
+      // Act
+      IKeyValueForm form = GetForm();
+      FormArgs result = form.Value(args).Submit<FormArgs>().Body;
 
-      //form.Submit().Body;
+      // Assert
+      Assert.IsNotNull(result);
+      Assert.AreEqual(args.InputText, result.InputText);
+      Assert.AreEqual("Createx", result.Create);
     }
 
 
     IKeyValueForm GetForm()
     {
       RamoneRequest formRequest = Session.Bind(FormTemplate);
-
-      // GET blog
       RamoneResponse<HtmlDocument> response = formRequest.Get<HtmlDocument>();
-
       IKeyValueForm form = response.Body.DocumentNode.SelectNodes(@"//form").First().Form(response);
-
       return form;
     }
   }

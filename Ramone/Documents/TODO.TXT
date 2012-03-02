@@ -2,6 +2,8 @@
 Version 1
 ---------
 
+Skal kunne overføre default værdier til object serializer
+
 Forms
 - Normal inputs (including default values - also for hidden inputs)
   - <input>
