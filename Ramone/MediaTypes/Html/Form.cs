@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using CuttingEdge.Conditions;
 using HtmlAgilityPack;
 using Ramone.HyperMedia;
+using Ramone.Utility;
 
 
 namespace Ramone.MediaTypes.Html
@@ -35,7 +37,7 @@ namespace Ramone.MediaTypes.Html
       Condition.Requires(key, "key").IsNotNullOrEmpty();
       Condition.Requires(value, "value").IsNotNull();
 
-      Values.Add(key, value);
+      Values[key] = value;
 
       return this;
     }
@@ -55,7 +57,7 @@ namespace Ramone.MediaTypes.Html
     {
       RamoneResponse response = Session.Bind(Action, Values)
                                        .ContentType(EncodingType)
-                                       .Execute(Method, AlternateValues ?? Values);
+                                       .Execute(Method, GetSubmitData());
       return response;
     }
 
@@ -64,7 +66,7 @@ namespace Ramone.MediaTypes.Html
     {
       RamoneResponse<T> response = Session.Bind(Action)
                                           .ContentType(EncodingType)
-                                          .Execute<T>(Method, AlternateValues ?? Values);
+                                          .Execute<T>(Method, GetSubmitData());
       return response;
     }
 
@@ -115,10 +117,27 @@ namespace Ramone.MediaTypes.Html
           {
             // Set default values
             if (value != null)
-              Values.Add(name, value);
+              Values[name] = value;
           }
         }
       }
+    }
+
+
+    protected Hashtable GetSubmitData()
+    {
+      if (AlternateValues == null)
+        return Values;
+
+      Hashtable serializedValues = HashtableConverter.ConvertObjectPropertiesToHashtable(AlternateValues);
+      foreach (string key in serializedValues.Keys)
+      {
+        object value = serializedValues[key];
+        if (value != null)
+          Values[key] = value;
+      }
+
+      return Values;
     }
   }
 }

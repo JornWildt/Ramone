@@ -120,11 +120,6 @@
     <Compile Include="OAuth1\QueryParameter.cs" />
     <Compile Include="RamoneConfiguration.cs" />
     <Compile Include="Extensions.cs" />
-    <Compile Include="Html\HtmlAnchor.cs" />
-    <Compile Include="Html\HtmlForm.cs" />
-    <Compile Include="Html\RamoneResponseExtensions.cs" />
-    <Compile Include="Html\Utility.cs" />
-    <Compile Include="Html\XmlDocumentExtensions.cs" />
     <Compile Include="IAuthorizationDispatcher.cs" />
     <Compile Include="IAuthorizationHandler.cs" />
     <Compile Include="Implementation\AuthorizationDispatcher.cs" />
@@ -150,6 +145,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RequestContext.cs" />
     <Compile Include="RequestStreamWrapperContext.cs" />
+    <Compile Include="Utility\HashtableConverterPropertyVisitor.cs" />
+    <Compile Include="Utility\HashtableConverter.cs" />
     <Compile Include="Utility\DictionaryConverterPropertyVisitor.cs" />
     <Compile Include="Utility\EchoStream.cs" />
     <Compile Include="Utility\MediaTypeParser.cs" />

@@ -2,33 +2,34 @@
 using System.Collections.Generic;
 using Ramone.IO;
 using Ramone.Utility.ObjectSerialization;
+using System.Collections;
 
 
 namespace Ramone.Utility
 {
-  public class DictionaryConverterPropertyVisitor : IPropertyVisitor
+  public class HashtableConverterPropertyVisitor : IPropertyVisitor
   {
-    public Dictionary<string, string> Result { get; set; }
+    public Hashtable Result { get; set; }
 
     
     #region IPropertyVisitor Members
 
     public void Begin()
     {
-      Result = new Dictionary<string, string>();
+      Result = new Hashtable();
     }
 
 
     public void SimpleValue(string name, object value, string formatedValue)
     {
       if (value != null)
-        Result[name] = formatedValue;
+        Result[name] = value;
     }
 
 
     public void File(IFile file, string name)
     {
-      throw new InvalidOperationException(string.Format("Cannot serialize Ramone IFile '{0}' to dictionary.", name));
+      Result[name] = file;
     }
 
 

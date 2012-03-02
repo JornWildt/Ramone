@@ -19,7 +19,43 @@ namespace Ramone.Tests.HyperMedia.Html
 
 
     [Test]
-    public void WhenSubmittingFormItIncludesDefaultValues()
+    public void WhenSubmittingFormItIncludesDefaultValues_Keyed()
+    {
+      // Act
+      IKeyValueForm form = GetForm();
+      form.Value("Unused", "---");
+      FormArgs result = form.Submit<FormArgs>().Body;
+
+      // Assert
+      Assert.IsNotNull(result);
+      Assert.AreEqual("text", result.InputText);
+      Assert.AreEqual("password", result.InputPassword);
+      Assert.AreEqual("checkbox", result.InputCheckbox);
+      Assert.AreEqual("hidden", result.InputHidden);
+    }
+
+
+    [Test]
+    public void WhenSubmittingFormItOverridesDefaultValues_Keyed()
+    {
+      // Act
+      IKeyValueForm form = GetForm();
+      form.Value("InputText", "abc");
+      form.Value("InputPassword", "1234");
+      form.Value("InputCheckbox", "not");
+      FormArgs result = form.Submit<FormArgs>().Body;
+
+      // Assert
+      Assert.IsNotNull(result);
+      Assert.AreEqual("abc", result.InputText);
+      Assert.AreEqual("1234", result.InputPassword);
+      Assert.AreEqual("not", result.InputCheckbox);
+      Assert.AreEqual("hidden", result.InputHidden);
+    }
+
+
+    [Test]
+    public void WhenSubmittingFormItIncludesDefaultValues_Typed()
     {
       // Arrange
       FormArgs args = new FormArgs();
@@ -31,6 +67,33 @@ namespace Ramone.Tests.HyperMedia.Html
       // Assert
       Assert.IsNotNull(result);
       Assert.AreEqual("text", result.InputText);
+      Assert.AreEqual("password", result.InputPassword);
+      Assert.AreEqual("checkbox", result.InputCheckbox);
+      Assert.AreEqual("hidden", result.InputHidden);
+    }
+
+
+    [Test]
+    public void WhenSubmittingFormItOverridesDefaultValues_Typed()
+    {
+      // Arrange
+      FormArgs args = new FormArgs
+      {
+        InputText = "abc",
+        InputPassword = "1234",
+        InputCheckbox = "not"
+      };
+
+      // Act
+      IKeyValueForm form = GetForm();
+      FormArgs result = form.Value(args).Submit<FormArgs>().Body;
+
+      // Assert
+      Assert.IsNotNull(result);
+      Assert.AreEqual("abc", result.InputText);
+      Assert.AreEqual("1234", result.InputPassword);
+      Assert.AreEqual("not", result.InputCheckbox);
+      Assert.AreEqual("hidden", result.InputHidden);
     }
 
 

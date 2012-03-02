@@ -52,7 +52,7 @@ namespace Ramone.Tests.MediaTypes.Atom
 
       // Assert
       Assert.IsNotNull(request);
-      Assert.AreEqual("http://dr.dk", request.Url.AbsoluteUri);
+      Assert.AreEqual("http://dr.dk/", request.Url.AbsoluteUri);
     }
 
 
