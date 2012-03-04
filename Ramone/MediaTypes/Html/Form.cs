@@ -25,6 +25,8 @@ namespace Ramone.MediaTypes.Html
 
     protected Hashtable Values { get; set; }
 
+    protected List<SubmitElement> SubmitElements { get; set; }
+
     protected object AlternateValues { get; set; }
 
     protected IRamoneSession Session { get; set; }
@@ -53,20 +55,20 @@ namespace Ramone.MediaTypes.Html
     }
 
 
-    public RamoneResponse Submit()
+    public RamoneResponse Submit(string button = null)
     {
       RamoneResponse response = Session.Bind(Action, Values)
                                        .ContentType(EncodingType)
-                                       .Execute(Method, GetSubmitData());
+                                       .Execute(Method, GetSubmitData(button));
       return response;
     }
 
 
-    public RamoneResponse<T> Submit<T>() where T : class
+    public RamoneResponse<T> Submit<T>(string button = null) where T : class
     {
       RamoneResponse<T> response = Session.Bind(Action)
                                           .ContentType(EncodingType)
-                                          .Execute<T>(Method, GetSubmitData());
+                                          .Execute<T>(Method, GetSubmitData(button));
       return response;
     }
 
@@ -95,6 +97,7 @@ namespace Ramone.MediaTypes.Html
       AcceptCharset = formNode.GetAttributeValue("accept-charset", "UNKNOWN");
 
       Values = new Hashtable();
+      SubmitElements = new List<SubmitElement>();
 
       ParseInputs(formNode);
     }
@@ -107,11 +110,16 @@ namespace Ramone.MediaTypes.Html
         string type = inputNode.GetAttributeValue("type", "text");
         string value = inputNode.GetAttributeValue("value", null);
         string name = inputNode.GetAttributeValue("name", null);
+        string id = inputNode.GetAttributeValue("id", null);
 
         if (name != null)
         {
           if (type == "submit")
           {
+            if (value != null)
+            {
+              SubmitElements.Add(new SubmitElement { Name = name, Value = value, Id = id });
+            }
           }
           else// if (type == "hidden")
           {
@@ -124,7 +132,7 @@ namespace Ramone.MediaTypes.Html
     }
 
 
-    protected Hashtable GetSubmitData()
+    protected Hashtable GetSubmitData(string button = null)
     {
       if (AlternateValues == null)
         return Values;
@@ -137,7 +145,39 @@ namespace Ramone.MediaTypes.Html
           Values[key] = value;
       }
 
+      AssignSubmitButton(button);
+
       return Values;
+    }
+
+
+    protected void AssignSubmitButton(string button = null)
+    {
+      SubmitElement submit = null;
+
+      if (button != null)
+      {
+        if (button.StartsWith("#"))
+        {
+          string id = button.Substring(1);
+          submit = SubmitElements.Where(s => s.Id == id).FirstOrDefault();
+        }
+        else
+          submit = SubmitElements.Where(s => s.Name == button).FirstOrDefault();
+      }
+      else if (SubmitElements.Count > 0)
+        submit = SubmitElements[0];
+
+      if (submit != null)
+        Values[submit.Name] = submit.Value;
+    }
+
+
+    protected class SubmitElement
+    {
+      public string Id { get; set; }
+      public string Name { get; set; }
+      public object Value { get; set; }
     }
   }
 }

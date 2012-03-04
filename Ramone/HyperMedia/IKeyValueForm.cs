@@ -4,7 +4,7 @@
   {
     IKeyValueForm Value(string key, object value);
     IKeyValueForm Value(object value);
-    RamoneResponse Submit();
-    RamoneResponse<T> Submit<T>() where T : class;
+    RamoneResponse Submit(string button = null);
+    RamoneResponse<T> Submit<T>(string button = null) where T : class;
   }
 }

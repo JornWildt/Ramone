@@ -6,7 +6,8 @@
     public string InputPassword { get; set; }
     public string InputCheckbox { get; set; }
     public string InputHidden { get; set; }
-    public string Create { get; set; }
+    public string Save { get; set; }
     public string Cancel { get; set; }
+    public string Help { get; set; }
   }
 }

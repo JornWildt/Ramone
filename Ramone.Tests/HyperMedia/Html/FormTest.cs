@@ -105,13 +105,10 @@ namespace Ramone.Tests.HyperMedia.Html
     // WHat happens for forms with errors (repeated inputs for instance)
 
     [Test]
-    public void CanSubmitFormWithAllSortsOfSpecialities()
+    public void WhenSubmittingWithoutNameItIncludesValuesFromFirstSubmitButton()
     {
       // Arrange
-      FormArgs args = new FormArgs
-      {
-        InputText = "My title"
-      };
+      FormArgs args = new FormArgs();
 
       // Act
       IKeyValueForm form = GetForm();
@@ -119,8 +116,45 @@ namespace Ramone.Tests.HyperMedia.Html
 
       // Assert
       Assert.IsNotNull(result);
-      Assert.AreEqual(args.InputText, result.InputText);
-      Assert.AreEqual("Createx", result.Create);
+      Assert.AreEqual("Save", result.Save);
+      Assert.IsEmpty(result.Cancel);
+      Assert.IsEmpty(result.Help);
+    }
+
+
+    [Test]
+    public void WhenSubmittingByNameItOnlyIncludesValuesFromTheSubmitButtonUsed()
+    {
+      // Arrange
+      FormArgs args = new FormArgs();
+
+      // Act
+      IKeyValueForm form = GetForm();
+      FormArgs result = form.Value(args).Submit<FormArgs>("Cancel").Body;
+
+      // Assert
+      Assert.IsNotNull(result);
+      Assert.IsEmpty(result.Save);
+      Assert.AreEqual("Cancel", result.Cancel);
+      Assert.IsEmpty(result.Help);
+    }
+
+
+    [Test]
+    public void WhenSubmittingByIdItOnlyIncludesValuesFromTheSubmitButtonUsed()
+    {
+      // Arrange
+      FormArgs args = new FormArgs();
+
+      // Act
+      IKeyValueForm form = GetForm();
+      FormArgs result = form.Value(args).Submit<FormArgs>("#help-button").Body;
+
+      // Assert
+      Assert.IsNotNull(result);
+      Assert.IsEmpty(result.Save);
+      Assert.IsEmpty(result.Cancel);
+      Assert.AreEqual("Help", result.Help);
     }
 
 

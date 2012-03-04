@@ -2,16 +2,14 @@
 Version 1
 ---------
 
-Skal kunne overføre default værdier til object serializer
-
 Forms
 - Normal inputs (including default values - also for hidden inputs)
   - <input>
-    - text
-    - password
-    - checkbox
+    - OK: text
+    - OK: password
+    - OK: checkbox
     - radio
-    - hidden
+    - OK: hidden
     - submit(name/id)
       - Har den egenskab at default-værdien kun sendes med hvis denne submit-button aktiveres.
   - Select
@@ -20,7 +18,7 @@ Forms
   - OK: file
   - NO: image
 - Der mangler temmeligt mange tests ...
-  - Empty (or relative) action
+  - Empty (or relative) action attribute in form
   - Default values for enctype and accept
   - OK: Files (multipart)
   - OK: enctype (multipart, urlenc)
@@ -30,7 +28,6 @@ Forms
 
 
 Check/demo/test URL templates med OpenSearch
-
 
 - Supported hyper-media types
   - Html: HtmlDocument
@@ -64,6 +61,9 @@ Ramone.HyperMedia
 - OK: Follow(ILink), 
 - Follow(ILinkTemplate, params)
 - Make it possible to Follow() relative links.
+
+Mocking restful services: http://groups.google.com/group/api-craft/browse_thread/thread/e0e78813f8329b1d
+- Kunne gøres med Ramone hvor HTTP delen er skåret væk.
 
 Hvad er den nemmeste måde at dumpe fejlresultatet fra et request? F.eks. ved not-found eller not-authorized.
 

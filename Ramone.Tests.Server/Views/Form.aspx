@@ -23,6 +23,7 @@
         <p>
           <input type="submit" name="Save" value="Save">
           <input type="submit" name="Cancel" value="Cancel"/>
+          <input type="submit" name="Help" value="Help" id="help-button"/>
         </p>
       </div>
       </form>
