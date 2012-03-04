@@ -116,14 +116,15 @@ namespace Ramone.MediaTypes.Html
         {
           if (type == "submit")
           {
+            // Register submit buttons
             if (value != null)
             {
               SubmitElements.Add(new SubmitElement { Name = name, Value = value, Id = id });
             }
           }
-          else// if (type == "hidden")
+          else
           {
-            // Set default values
+            // Set default values for input
             if (value != null)
               Values[name] = value;
           }

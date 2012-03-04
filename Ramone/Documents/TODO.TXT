@@ -10,8 +10,7 @@ Forms
     - OK: checkbox
     - radio
     - OK: hidden
-    - submit(name/id)
-      - Har den egenskab at default-værdien kun sendes med hvis denne submit-button aktiveres.
+    - OK: submit(name/id)
   - Select
   - Textarea
   - button
