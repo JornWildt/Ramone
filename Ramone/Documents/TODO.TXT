@@ -8,12 +8,13 @@ Forms
     - OK: text
     - OK: password
     - OK: checkbox
-    - radio
+      - Multi select!
+    - OK: radio
     - OK: hidden
     - OK: submit(name/id)
-  - Select
-  - Textarea
-  - button
+  - OK: Select
+  - OK: Textarea
+  - NO: button
   - OK: file
   - NO: image
 - Der mangler temmeligt mange tests ...

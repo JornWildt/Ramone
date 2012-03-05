@@ -124,6 +124,12 @@ namespace Ramone.MediaTypes.Html
                 SubmitElements.Add(new SubmitElement { Name = name, Value = value, Id = id });
               }
             }
+            else if (type == "radio")
+            {
+              string isChecked = inputNode.GetAttributeValue("checked", null);
+              if (isChecked != null && value != null)
+                Values[name] = value;
+            }
             else
             {
               // Set default values for input

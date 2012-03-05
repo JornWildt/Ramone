@@ -8,6 +8,8 @@
     public string InputHidden { get; set; }
     public string TextArea { get; set; }
     public string Select { get; set; }
+    public string Radio1 { get; set; }
+    public string Radio2 { get; set; }
     public string Save { get; set; }
     public string Cancel { get; set; }
     public string Help { get; set; }

@@ -31,6 +31,20 @@
             <option value="3">Three</option>
           </SELECT>
         </p>
+        <p>
+          <label for="Radio1a">Radio1a:</label>
+          <input type="radio" name="Radio1" value="1a" id="Radio1a"></input>
+          <label for="Radio1b">Radio1b:</label>
+          <input type="radio" name="Radio1" value="1b" id="Radio1b" checked="checked"></input>
+          <label for="Radio1c">Radio1c:</label>
+          <input type="radio" name="Radio1" value="1c" id="Radio1c"></input>
+        </p>
+        <p>
+          <label for="Radio2a">Radio2a:</label>
+          <input type="radio" name="Radio2" value="2a" id="Radio2a"></input>
+          <label for="Radio2b">Radio2b:</label>
+          <input type="radio" name="Radio2" value="2b" id="Radio2b"></input>
+        </p>
         <input name="InputHidden" type="hidden" value="hidden"></input>
         <p>
           <input type="submit" name="Save" value="Save">
