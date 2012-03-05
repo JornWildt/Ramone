@@ -132,6 +132,7 @@ Docs
   - Kun at arbejde med get/post etc. Ingen support for navngivne metoder som f.eks. "GetOrders".
 - Response.Created() laver evt. GET på location
 - How to debug using Fiddler and local machine name (not "localhost"!)
+- Supported HTML hyper-media elements
 
 Serializer settings for OpenRasta
 

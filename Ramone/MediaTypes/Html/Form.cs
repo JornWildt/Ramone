@@ -105,29 +105,39 @@ namespace Ramone.MediaTypes.Html
 
     protected void ParseInputs(HtmlNode formNode)
     {
-      foreach (HtmlNode inputNode in formNode.SelectNodes(".//input") ?? Enumerable.Empty<HtmlNode>())
+      foreach (HtmlNode inputNode in formNode.SelectNodes(".//*") ?? Enumerable.Empty<HtmlNode>())
       {
-        string type = inputNode.GetAttributeValue("type", "text");
-        string value = inputNode.GetAttributeValue("value", null);
-        string name = inputNode.GetAttributeValue("name", null);
         string id = inputNode.GetAttributeValue("id", null);
-
-        if (name != null)
+        if (inputNode.Name == "input")
         {
-          if (type == "submit")
+          string type = inputNode.GetAttributeValue("type", "text");
+          string value = inputNode.GetAttributeValue("value", null);
+          string name = inputNode.GetAttributeValue("name", null);
+
+          if (name != null)
           {
-            // Register submit buttons
-            if (value != null)
+            if (type == "submit")
             {
-              SubmitElements.Add(new SubmitElement { Name = name, Value = value, Id = id });
+              // Register submit buttons
+              if (value != null)
+              {
+                SubmitElements.Add(new SubmitElement { Name = name, Value = value, Id = id });
+              }
+            }
+            else
+            {
+              // Set default values for input
+              if (value != null)
+                Values[name] = value;
             }
           }
-          else
-          {
-            // Set default values for input
-            if (value != null)
-              Values[name] = value;
-          }
+        }
+        else if (inputNode.Name == "textarea")
+        {
+          string name = inputNode.GetAttributeValue("name", null);
+          string value = inputNode.InnerText;
+          if (value != null)
+            Values[name] = value;
         }
       }
     }

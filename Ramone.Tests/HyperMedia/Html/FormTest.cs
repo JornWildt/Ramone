@@ -32,6 +32,7 @@ namespace Ramone.Tests.HyperMedia.Html
       Assert.AreEqual("password", result.InputPassword);
       Assert.AreEqual("checkbox", result.InputCheckbox);
       Assert.AreEqual("hidden", result.InputHidden);
+      Assert.AreEqual("textarea", result.TextArea);
     }
 
 
@@ -43,6 +44,7 @@ namespace Ramone.Tests.HyperMedia.Html
       form.Value("InputText", "abc");
       form.Value("InputPassword", "1234");
       form.Value("InputCheckbox", "not");
+      form.Value("TextArea", "qwe");
       FormArgs result = form.Submit<FormArgs>().Body;
 
       // Assert
@@ -51,6 +53,7 @@ namespace Ramone.Tests.HyperMedia.Html
       Assert.AreEqual("1234", result.InputPassword);
       Assert.AreEqual("not", result.InputCheckbox);
       Assert.AreEqual("hidden", result.InputHidden);
+      Assert.AreEqual("qwe", result.TextArea);
     }
 
 
@@ -70,6 +73,7 @@ namespace Ramone.Tests.HyperMedia.Html
       Assert.AreEqual("password", result.InputPassword);
       Assert.AreEqual("checkbox", result.InputCheckbox);
       Assert.AreEqual("hidden", result.InputHidden);
+      Assert.AreEqual("textarea", result.TextArea);
     }
 
 
@@ -81,7 +85,8 @@ namespace Ramone.Tests.HyperMedia.Html
       {
         InputText = "abc",
         InputPassword = "1234",
-        InputCheckbox = "not"
+        InputCheckbox = "not",
+        TextArea = "qwe"
       };
 
       // Act
@@ -94,6 +99,7 @@ namespace Ramone.Tests.HyperMedia.Html
       Assert.AreEqual("1234", result.InputPassword);
       Assert.AreEqual("not", result.InputCheckbox);
       Assert.AreEqual("hidden", result.InputHidden);
+      Assert.AreEqual("qwe", result.TextArea);
     }
 
 

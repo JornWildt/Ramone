@@ -19,6 +19,10 @@
           <label for="InputCheckbox">InputCheckbox:</label>
           <input id="InputCheckbox" name="InputCheckbox" value="checkbox">
         </p>
+        <p>
+          <label for="TextArea">TextArea:</label>
+          <textarea name="TextArea">textarea</textarea>
+        </p>
         <input name="InputHidden" type="hidden" value="hidden"></input>
         <p>
           <input type="submit" name="Save" value="Save">
