@@ -139,6 +139,17 @@ namespace Ramone.MediaTypes.Html
           if (value != null)
             Values[name] = value;
         }
+        else if (inputNode.Name == "select")
+        {
+          string name = inputNode.GetAttributeValue("name", null);
+          foreach (HtmlNode optionNode in inputNode.SelectNodes(".//option") ?? Enumerable.Empty<HtmlNode>())
+          {
+            string value = optionNode.GetAttributeValue("value", null);
+            string selected = optionNode.GetAttributeValue("selected", null);
+            if (selected != null && value != null)
+              Values[name] = value;
+          }
+        }
       }
     }
 

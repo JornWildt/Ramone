@@ -23,6 +23,14 @@
           <label for="TextArea">TextArea:</label>
           <textarea name="TextArea">textarea</textarea>
         </p>
+        <p>
+          <label for="Select">Select:</label>
+          <SELECT name="Select">
+            <option value="1">One</option>
+            <option value="2" selected>Two</option>
+            <option value="3">Three</option>
+          </SELECT>
+        </p>
         <input name="InputHidden" type="hidden" value="hidden"></input>
         <p>
           <input type="submit" name="Save" value="Save">
