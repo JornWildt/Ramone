@@ -2,13 +2,17 @@
 Version 1
 ---------
 
+What happens for forms with errors (repeated inputs for instance)
+
+Serialisering generelt skal kunne håndtere multiple værdier for samme nøgle (List)
+
 Forms
 - Normal inputs (including default values - also for hidden inputs)
   - <input>
     - OK: text
     - OK: password
     - OK: checkbox
-      - Multi select!
+      - NO: Multi select!
     - OK: radio
     - OK: hidden
     - OK: submit(name/id)
@@ -19,6 +23,7 @@ Forms
   - NO: image
 - Der mangler temmeligt mange tests ...
   - Empty (or relative) action attribute in form
+  - Missing "value" and other attribs in various inputs/textarea etc.
   - Default values for enctype and accept
   - OK: Files (multipart)
   - OK: enctype (multipart, urlenc)
@@ -28,6 +33,9 @@ Forms
 
 
 Check/demo/test URL templates med OpenSearch
+
+Demo hvordan IKeyValueForm kan anvendes til blog-kommentarer direkte på blog-entry. 
+Bliver bedst hvis demoen viser at den typede udgave er ligeglad med hvor form-def kommer fra.
 
 - Supported hyper-media types
   - Html: HtmlDocument
@@ -62,14 +70,15 @@ Ramone.HyperMedia
 - Follow(ILinkTemplate, params)
 - Make it possible to Follow() relative links.
 
-Mocking restful services: http://groups.google.com/group/api-craft/browse_thread/thread/e0e78813f8329b1d
-- Kunne gøres med Ramone hvor HTTP delen er skåret væk.
+
+Eksemplificering af hvordan man håndterer et service-dokument (ATOM, og det dersens til OpenId)
+- HTML
+- http://bitworking.org/projects/atom/draft-ietf-atompub-protocol-14.html#appdocs
+- http://docs.oasis-open.org/xri/xrd/v1.0/xrd-1.0.html
 
 Hvad er den nemmeste måde at dumpe fejlresultatet fra et request? F.eks. ved not-found eller not-authorized.
 
 Test scenarie hvor der returneres "NoContent" og man forsøger at hente content (skal give null)
-
-Eksemplificering af hvordan man håndterer et service-dokument (ATOM, og det dersens til OpenId)
 
 - Demo how HTML + forms + url-encoded data can be auto-generated (a'la Eric)
   - Still missing a generic domain data embedding in HTML
@@ -78,6 +87,7 @@ Eksemplificering af hvordan man håndterer et service-dokument (ATOM, og det der
 
 Lots of Condition.Requries()...
 
+Kan Ramone håndtere nedarvning således at man kan bede om en "Part" men få en "Person" som nedarver fra Part?
 
 
 Rename
@@ -100,8 +110,8 @@ Before releasing:
   - Google weather
   - Facebook Graph
   - NerdDinner
-  - Twitter
   - Flickr
+  - OK: Twitter
 
 
 Release
@@ -120,6 +130,7 @@ Docs
     - Builds on extension methods for converting unknown formats to ILink
 - Tried to make it thread safe (almost no static values)
   - Do not share sessions, requests, responses
+- En relevant sætning "Consuming [WCF/other] web services".
 - OAuth1 + Basic authorization
 - OAuth1 cannot handle UrlEncoded post body
 - Credits for libraires
@@ -134,6 +145,8 @@ Docs
 - Response.Created() laver evt. GET på location
 - How to debug using Fiddler and local machine name (not "localhost"!)
 - Supported HTML hyper-media elements
+- Inspiration: http://codebetter.com/glennblock/2012/01/19/http-is-not-a-transport-protocol-http-is-not-rpc/
+- Deserialisering af UrlEncoded er ikke specielt godt supporteret.
 
 Serializer settings for OpenRasta
 
@@ -148,6 +161,7 @@ Serializer v2
 - Deserialize arrays and dictionaries, list
 - Serializer overloads that accepts streams and strings (not only readers)
 - Read/write byte[] codec (like stream and string)
+- Multiple values (for forms with multi-selects)
 
 Conditional Delete, Get, etc.
 

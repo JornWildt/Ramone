@@ -24,6 +24,8 @@ namespace Ramone.Tests.Server.Handlers
 
     public object Post(TestForm args)
     {
+      if (args.MultiSelect != null)
+        args.MultiSelectValue = string.Join(",", args.MultiSelect);
       return args;
     }
   }

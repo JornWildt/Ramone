@@ -4,6 +4,7 @@ using NUnit.Framework;
 using Ramone.HyperMedia;
 using Ramone.MediaTypes.Html;
 using Ramone.Tests.Common;
+using System.Collections.Generic;
 
 
 namespace Ramone.Tests.HyperMedia.Html
@@ -36,6 +37,8 @@ namespace Ramone.Tests.HyperMedia.Html
       Assert.AreEqual("2", result.Select);
       Assert.AreEqual("1b", result.Radio1);
       Assert.IsEmpty(result.Radio2);
+      //Assert.AreEqual("B,C", result.MultiSelectValue);
+      Assert.IsEmpty(result.Radio2);
     }
 
 
@@ -63,6 +66,7 @@ namespace Ramone.Tests.HyperMedia.Html
       Assert.AreEqual("1", result.Select);
       Assert.AreEqual("1a", result.Radio1);
       Assert.AreEqual("2b", result.Radio2);
+      //Assert.AreEqual("A,D", result.MultiSelectValue);
     }
 
 
@@ -71,6 +75,8 @@ namespace Ramone.Tests.HyperMedia.Html
     {
       // Arrange
       FormArgs args = new FormArgs();
+
+      //Session.SerializerSettings.
 
       // Act
       IKeyValueForm form = GetForm();
@@ -86,6 +92,7 @@ namespace Ramone.Tests.HyperMedia.Html
       Assert.AreEqual("2", result.Select);
       Assert.AreEqual("1b", result.Radio1);
       Assert.IsEmpty(result.Radio2);
+      //Assert.AreEqual("B,C", result.MultiSelectValue);
     }
 
 
@@ -102,6 +109,7 @@ namespace Ramone.Tests.HyperMedia.Html
         Select = "3",
         Radio1 = "1a",
         Radio2 = "2b"
+        //MultiSelect = new List<string> { "A", "D" }
       };
 
       // Act
@@ -118,15 +126,9 @@ namespace Ramone.Tests.HyperMedia.Html
       Assert.AreEqual("3", result.Select);
       Assert.AreEqual("1a", result.Radio1);
       Assert.AreEqual("2b", result.Radio2);
+      //Assert.AreEqual("A,D", result.MultiSelectValue);
     }
 
-
-    // Test with 
-    //   action[empty|relative|absolut]
-    //   encoding
-    //   different submit buttons
-
-    // WHat happens for forms with errors (repeated inputs for instance)
 
     [Test]
     public void WhenSubmittingWithoutNameItIncludesValuesFromFirstSubmitButton()

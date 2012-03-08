@@ -25,10 +25,19 @@
         </p>
         <p>
           <label for="Select">Select:</label>
-          <SELECT name="Select">
+          <SELECT name="Select" id="Select">
             <option value="1">One</option>
             <option value="2" selected>Two</option>
             <option value="3">Three</option>
+          </SELECT>
+        </p>
+        <p>
+          <label for="MultiSelect">MultiSelect:</label>
+          <SELECT name="MultiSelect" id="MultiSelect" multiple="multiple">
+            <option value="A">Aaa</option>
+            <option value="B" selected>Bbb</option>
+            <option value="C" selected="selected">Ccc</option>
+            <option value="D">Ddd</option>
           </SELECT>
         </p>
         <p>

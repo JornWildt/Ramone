@@ -57,22 +57,57 @@ namespace Ramone.MediaTypes.Html
 
     public RamoneResponse Submit(string button = null)
     {
-      RamoneResponse response = Session.Bind(Action, Values)
-                                       .ContentType(EncodingType)
-                                       .Execute(Method, GetSubmitData(button));
-      return response;
+      string oldFormat = Session.SerializerSettings.ArrayFormat;
+
+      try
+      {
+        Session.SerializerSettings.ArrayFormat = "{0}";
+        return Session.Bind(Action)
+                      .ContentType(EncodingType)
+                      .Execute(Method, GetSubmitData(button));
+      }
+      finally
+      {
+        Session.SerializerSettings.ArrayFormat = oldFormat;
+      }
     }
 
 
     public RamoneResponse<T> Submit<T>(string button = null) where T : class
     {
-      RamoneResponse<T> response = Session.Bind(Action)
-                                          .ContentType(EncodingType)
-                                          .Execute<T>(Method, GetSubmitData(button));
-      return response;
+      string oldFormat = Session.SerializerSettings.ArrayFormat;
+
+      try
+      {
+        Session.SerializerSettings.ArrayFormat = "{0}";
+        return Session.Bind(Action)
+                      .ContentType(EncodingType)
+                      .Execute<T>(Method, GetSubmitData(button));
+      }
+      finally
+      {
+        Session.SerializerSettings.ArrayFormat = oldFormat;
+      }
     }
 
     #endregion
+
+
+    //protected RamoneRequest CreateRequest(string button = null, out Hashtable data)
+    //{
+    //  string oldFormat = Session.SerializerSettings.ArrayFormat;
+
+    //  try
+    //  {
+    //    Session.SerializerSettings.ArrayFormat = "{0}";
+    //    return Session.Bind(Action)
+    //                  .ContentType(EncodingType);
+    //  }
+    //  finally
+    //  {
+    //    Session.SerializerSettings.ArrayFormat = oldFormat;
+    //  }
+    //}
 
 
     public Form(HtmlNode formNode, IRamoneSession session, Uri baseUrl)
@@ -148,12 +183,26 @@ namespace Ramone.MediaTypes.Html
         else if (inputNode.Name == "select")
         {
           string name = inputNode.GetAttributeValue("name", null);
+          //string multiple = inputNode.GetAttributeValue("multiple", null);
+          //List<object> multiValues = null;
+          //if (multiple != null)
+            //Values[name] = multiValues = new List<object>();
+
           foreach (HtmlNode optionNode in inputNode.SelectNodes(".//option") ?? Enumerable.Empty<HtmlNode>())
           {
             string value = optionNode.GetAttributeValue("value", null);
             string selected = optionNode.GetAttributeValue("selected", null);
             if (selected != null && value != null)
-              Values[name] = value;
+            {
+              //if (multiple == null)
+              //{
+                Values[name] = value;
+              //}
+              //else
+              //{
+              //  multiValues.Add(value);
+              //}
+            }
           }
         }
       }

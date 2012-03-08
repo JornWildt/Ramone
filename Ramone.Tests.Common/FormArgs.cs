@@ -1,4 +1,7 @@
-﻿namespace Ramone.Tests.Common
+﻿using System.Collections.Generic;
+
+
+namespace Ramone.Tests.Common
 {
   public class FormArgs
   {
@@ -10,6 +13,8 @@
     public string Select { get; set; }
     public string Radio1 { get; set; }
     public string Radio2 { get; set; }
+    public List<string> MultiSelect { get; set; }
+    public string MultiSelectValue { get; set; }
     public string Save { get; set; }
     public string Cancel { get; set; }
     public string Help { get; set; }
