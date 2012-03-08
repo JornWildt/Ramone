@@ -5,7 +5,7 @@
   <body>
     <h1>Create new blog item</h1>
     <div>
-      <form id="create" method="post" action="<%=Resource.ActionUrl %>" enctype="multipart/form-data">
+      <form id="create" method="post" <%= Resource.ActionUrl != null ? "action=\"" + Resource.ActionUrl + "\"" : "" %> enctype="multipart/form-data">
       <div>
         <p>
           <label for="InputText">InputText:</label>

@@ -34,6 +34,6 @@
 
     public const string BasicAuthPath = "basicauthentication.aspx";
 
-    public const string FormPath = "form/{actionMode}";
+    public const string FormPath = "form/{actionUrlMode}";
   }
 }

@@ -7,7 +7,7 @@ namespace Ramone.Tests.Server.Handlers
 {
   public class TestForm : FormArgs
   {
-    public Uri ActionUrl { get; set; }
+    public string ActionUrl { get; set; }
   }
 
 
@@ -15,9 +15,11 @@ namespace Ramone.Tests.Server.Handlers
   {
     public object Get(string actionUrlMode)
     {
-      Uri actionUrl = null;
+      string actionUrl = null;
       if (actionUrlMode == "absolute")
-        actionUrl = typeof(TestForm).CreateUri();
+        actionUrl = typeof(TestForm).CreateUri(new { actionUrlMode = actionUrlMode }).AbsoluteUri;
+      else if (actionUrlMode == "relative")
+        actionUrl = typeof(TestForm).CreateUri(new { actionUrlMode = actionUrlMode }).AbsolutePath;
 
       return new TestForm
       {
@@ -26,7 +28,7 @@ namespace Ramone.Tests.Server.Handlers
     }
 
 
-    public object Post(TestForm args)
+    public object Post(string actionUrlMode, TestForm args)
     {
       if (args.MultiSelect != null)
         args.MultiSelectValue = string.Join(",", args.MultiSelect);

@@ -93,23 +93,6 @@ namespace Ramone.MediaTypes.Html
     #endregion
 
 
-    //protected RamoneRequest CreateRequest(string button = null, out Hashtable data)
-    //{
-    //  string oldFormat = Session.SerializerSettings.ArrayFormat;
-
-    //  try
-    //  {
-    //    Session.SerializerSettings.ArrayFormat = "{0}";
-    //    return Session.Bind(Action)
-    //                  .ContentType(EncodingType);
-    //  }
-    //  finally
-    //  {
-    //    Session.SerializerSettings.ArrayFormat = oldFormat;
-    //  }
-    //}
-
-
     public Form(HtmlNode formNode, IRamoneSession session, Uri baseUrl)
     {
       Condition.Requires(formNode, "formNode").IsNotNull();
@@ -119,8 +102,7 @@ namespace Ramone.MediaTypes.Html
       if (!formNode.Name.Equals("form", StringComparison.OrdinalIgnoreCase))
         throw new ArgumentException(string.Format("Cannot create HTML form from '{0}' node.", formNode.Name));
 
-      // FIXME: needs response to get default URI if it is not supplied
-      Action = new Uri(formNode.GetAttributeValue("action", null));
+      Action = new Uri(baseUrl, formNode.GetAttributeValue("action", ""));
       Method = formNode.GetAttributeValue("method", "get");
       Session = session;
       BaseUrl = baseUrl;

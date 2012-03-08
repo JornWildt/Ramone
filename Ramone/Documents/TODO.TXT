@@ -2,33 +2,17 @@
 Version 1
 ---------
 
-What happens for forms with errors (repeated inputs for instance)
+What happens for forms with errors (repeated inputs for instance, missing value, missing name, invalid name, huge input values)
 
 Forms
-- Normal inputs (including default values - also for hidden inputs)
-  - <input>
-    - OK: text
-    - OK: password
-    - OK: checkbox
-      - NO: Multi select!
-    - OK: radio
-    - OK: hidden
-    - OK: submit(name/id)
-  - OK: Select
-  - OK: Textarea
-  - NO: button
-  - OK: file
-  - NO: image
+- UrlEncoded + Multifile
+- File upload with keyed / typed
+- ÆØÅ
+- Virker både Submit<T>() og Submit()
 - Der mangler temmeligt mange tests ...
-  - Empty (or relative) action attribute in form
   - Missing "value" and other attribs in various inputs/textarea etc.
   - Default values for enctype and accept
-  - OK: Files (multipart)
-  - OK: enctype (multipart, urlenc)
-  - OK: action
-  - OK: method
   - accept-charset
-
 
 Check/demo/test URL templates med OpenSearch
 

@@ -82,18 +82,5 @@ namespace Ramone.MediaTypes.Html
     {
       return new Form(node, response.Session, response.BaseUri);
     }
-
-
-    //internal static string GetAttribute(this HtmlNode node, string name)
-    //{
-    //  if (node == null)
-    //    return null;
-
-    //  HtmlAttribute a = node.Attributes[name];
-    //  if (a == null)
-    //    return null;
-
-    //  return a.Value;
-    //}
   }
 }

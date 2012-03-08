@@ -184,9 +184,41 @@ namespace Ramone.Tests.HyperMedia.Html
     }
 
 
-    IKeyValueForm GetForm()
+    [Test]
+    public void CanSubmitToRelativeActionUrl()
     {
-      RamoneRequest formRequest = Session.Bind(FormTemplate, new { actionUrlMode = "absolute" });
+      // Arrange
+      FormArgs args = new FormArgs();
+
+      // Act
+      IKeyValueForm form = GetForm("relative");
+      FormArgs result = form.Value(args).Submit<FormArgs>("Cancel").Body;
+
+      // Assert
+      Assert.IsNotNull(result);
+      Assert.AreEqual("Cancel", result.Cancel);
+    }
+
+
+    [Test]
+    public void WhenNoActionUrlIsSetItSubmitsToCurrentUrl()
+    {
+      // Arrange
+      FormArgs args = new FormArgs();
+
+      // Act
+      IKeyValueForm form = GetForm("empty");
+      FormArgs result = form.Value(args).Submit<FormArgs>("Cancel").Body;
+
+      // Assert
+      Assert.IsNotNull(result);
+      Assert.AreEqual("Cancel", result.Cancel);
+    }
+
+
+    IKeyValueForm GetForm(string actionUrlMode = "absolute")
+    {
+      RamoneRequest formRequest = Session.Bind(FormTemplate, new { actionUrlMode = actionUrlMode });
       RamoneResponse<HtmlDocument> response = formRequest.Get<HtmlDocument>();
       IKeyValueForm form = response.Body.DocumentNode.SelectNodes(@"//form").First().Form(response);
       return form;
