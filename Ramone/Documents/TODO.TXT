@@ -4,8 +4,6 @@ Version 1
 
 What happens for forms with errors (repeated inputs for instance)
 
-Serialisering generelt skal kunne håndtere multiple værdier for samme nøgle (List)
-
 Forms
 - Normal inputs (including default values - also for hidden inputs)
   - <input>
@@ -147,6 +145,7 @@ Docs
 - Supported HTML hyper-media elements
 - Inspiration: http://codebetter.com/glennblock/2012/01/19/http-is-not-a-transport-protocol-http-is-not-rpc/
 - Deserialisering af UrlEncoded er ikke specielt godt supporteret.
+- Multi-select er ikke understøttet
 
 Serializer settings for OpenRasta
 

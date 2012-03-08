@@ -186,7 +186,7 @@ namespace Ramone.Tests.HyperMedia.Html
 
     IKeyValueForm GetForm()
     {
-      RamoneRequest formRequest = Session.Bind(FormTemplate);
+      RamoneRequest formRequest = Session.Bind(FormTemplate, new { actionUrlMode = "absolute" });
       RamoneResponse<HtmlDocument> response = formRequest.Get<HtmlDocument>();
       IKeyValueForm form = response.Body.DocumentNode.SelectNodes(@"//form").First().Form(response);
       return form;

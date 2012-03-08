@@ -13,11 +13,15 @@ namespace Ramone.Tests.Server.Handlers
 
   public class FormHandler
   {
-    public object Get()
+    public object Get(string actionUrlMode)
     {
+      Uri actionUrl = null;
+      if (actionUrlMode == "absolute")
+        actionUrl = typeof(TestForm).CreateUri();
+
       return new TestForm
       {
-        ActionUrl = typeof(TestForm).CreateUri()
+        ActionUrl = actionUrl
       };
     }
 
