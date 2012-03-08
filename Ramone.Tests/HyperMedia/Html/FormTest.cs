@@ -20,10 +20,11 @@ namespace Ramone.Tests.HyperMedia.Html
 
 
     [Test]
-    public void WhenSubmittingFormItIncludesDefaultValues_Keyed()
+    public void WhenSubmittingFormItIncludesDefaultValues_Keyed(
+      [Values("multipart", "urlencoded")] string encType)
     {
       // Act
-      IKeyValueForm form = GetForm();
+      IKeyValueForm form = GetForm(encType: encType);
       form.Value("Unused", "---");
       FormArgs result = form.Submit<FormArgs>().Body;
 
@@ -38,15 +39,16 @@ namespace Ramone.Tests.HyperMedia.Html
       Assert.AreEqual("1b", result.Radio1);
       Assert.IsEmpty(result.Radio2);
       //Assert.AreEqual("B,C", result.MultiSelectValue);
-      Assert.IsEmpty(result.Radio2);
+      Assert.AreEqual(encType, result.EncType);
     }
 
 
     [Test]
-    public void WhenSubmittingFormItOverridesDefaultValues_Keyed()
+    public void WhenSubmittingFormItOverridesDefaultValues_Keyed(
+      [Values("multipart", "urlencoded")] string encType)
     {
       // Act
-      IKeyValueForm form = GetForm();
+      IKeyValueForm form = GetForm(encType: encType);
       form.Value("InputText", "abc");
       form.Value("InputPassword", "1234");
       form.Value("InputCheckbox", "not");
@@ -67,11 +69,13 @@ namespace Ramone.Tests.HyperMedia.Html
       Assert.AreEqual("1a", result.Radio1);
       Assert.AreEqual("2b", result.Radio2);
       //Assert.AreEqual("A,D", result.MultiSelectValue);
+      Assert.AreEqual(encType, result.EncType);
     }
 
 
     [Test]
-    public void WhenSubmittingFormItIncludesDefaultValues_Typed()
+    public void WhenSubmittingFormItIncludesDefaultValues_Typed(
+      [Values("multipart", "urlencoded")] string encType)
     {
       // Arrange
       FormArgs args = new FormArgs();
@@ -79,7 +83,7 @@ namespace Ramone.Tests.HyperMedia.Html
       //Session.SerializerSettings.
 
       // Act
-      IKeyValueForm form = GetForm();
+      IKeyValueForm form = GetForm(encType: encType);
       FormArgs result = form.Value(args).Submit<FormArgs>().Body;
 
       // Assert
@@ -93,11 +97,13 @@ namespace Ramone.Tests.HyperMedia.Html
       Assert.AreEqual("1b", result.Radio1);
       Assert.IsEmpty(result.Radio2);
       //Assert.AreEqual("B,C", result.MultiSelectValue);
+      Assert.AreEqual(encType, result.EncType);
     }
 
 
     [Test]
-    public void WhenSubmittingFormItOverridesDefaultValues_Typed()
+    public void WhenSubmittingFormItOverridesDefaultValues_Typed(
+      [Values("multipart", "urlencoded")] string encType)
     {
       // Arrange
       FormArgs args = new FormArgs
@@ -113,7 +119,7 @@ namespace Ramone.Tests.HyperMedia.Html
       };
 
       // Act
-      IKeyValueForm form = GetForm();
+      IKeyValueForm form = GetForm(encType: encType);
       FormArgs result = form.Value(args).Submit<FormArgs>().Body;
 
       // Assert
@@ -127,6 +133,7 @@ namespace Ramone.Tests.HyperMedia.Html
       Assert.AreEqual("1a", result.Radio1);
       Assert.AreEqual("2b", result.Radio2);
       //Assert.AreEqual("A,D", result.MultiSelectValue);
+      Assert.AreEqual(encType, result.EncType);
     }
 
 
@@ -216,9 +223,9 @@ namespace Ramone.Tests.HyperMedia.Html
     }
 
 
-    IKeyValueForm GetForm(string actionUrlMode = "absolute")
+    IKeyValueForm GetForm(string actionUrlMode = "absolute", string encType = "multipart")
     {
-      RamoneRequest formRequest = Session.Bind(FormTemplate, new { actionUrlMode = actionUrlMode });
+      RamoneRequest formRequest = Session.Bind(FormTemplate, new { actionUrlMode = actionUrlMode, encType = encType });
       RamoneResponse<HtmlDocument> response = formRequest.Get<HtmlDocument>();
       IKeyValueForm form = response.Body.DocumentNode.SelectNodes(@"//form").First().Form(response);
       return form;

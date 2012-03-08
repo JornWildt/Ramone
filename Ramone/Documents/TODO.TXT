@@ -2,10 +2,7 @@
 Version 1
 ---------
 
-What happens for forms with errors (repeated inputs for instance, missing value, missing name, invalid name, huge input values)
-
 Forms
-- UrlEncoded + Multifile
 - File upload with keyed / typed
 - ÆØÅ
 - Virker både Submit<T>() og Submit()
@@ -13,6 +10,23 @@ Forms
   - Missing "value" and other attribs in various inputs/textarea etc.
   - Default values for enctype and accept
   - accept-charset
+
+What happens for forms with errors (repeated inputs for instance, missing value, missing name, invalid name, huge input values)
+
+Hvorfor overføres tomme værdier? De burde være null og udelades
+
+  POST http://jw-pc261/f2-rudersdal-restservices-4.2-borgerhenvendelse/dossier-edit HTTP/1.1
+  User-Agent: Ramone/1.0
+  Accept: application/vnd.cbrain.f2+xml
+  Authorization: Basic U2Fnc2JlaGFuZGxlcjE6
+  Content-Type: application/x-www-form-urlencoded
+  Host: jw-pc261
+  Content-Length: 753
+  Expect: 100-continue
+  Connection: Keep-Alive
+
+  Type=Inbound&Title=A+new+dossier&Text=%3chtml%3e%3cbody%3eDet+er+strenge+tider+mine+venner.%3c%2fbody%3e%3c%2fhtml%3e&Sender.Contact=Birger+Brosa+%3cbirger%40brosa.se%3e&Sender.Name=&Sender.EMail=&Sender.PartyNo=&Sender.OrganizationNo=&Receivers%5b0%5d.Contact=Arn+Magnusson+%3cam%40brosa.se%3e&Receivers%5b0%5d.Name=&Receivers%5b0%5d.EMail=&Receivers%5b0%5d.PartyNo=&Receivers%5b0%5d.OrganizationNo=&CcReceivers%5b0%5d.Contact=Eskil+Magnusson+%3cem%40brosa.se%3e&CcReceivers%5b0%5d.Name=&CcReceivers%5b0%5d.EMail=&CcReceivers%5b0%5d.PartyNo=&CcReceivers%5b0%5d.OrganizationNo=&BccReceivers%5b0%5d.Contact=Cecilia+%3cc%40brosa.se%3e&BccReceivers%5b0%5d.Name=&BccReceivers%5b0%5d.EMail=&BccReceivers%5b0%5d.PartyNo=&BccReceivers%5b0%5d.OrganizationNo=
+
 
 Check/demo/test URL templates med OpenSearch
 
@@ -145,6 +159,7 @@ Serializer v2
 - Serializer overloads that accepts streams and strings (not only readers)
 - Read/write byte[] codec (like stream and string)
 - Multiple values (for forms with multi-selects)
+- Skal måske kunne specificere hvilke serialization settings der skal anvendes, når man sætter codecs op.
 
 Conditional Delete, Get, etc.
 

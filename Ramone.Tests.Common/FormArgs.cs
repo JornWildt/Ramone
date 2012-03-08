@@ -18,5 +18,6 @@ namespace Ramone.Tests.Common
     public string Save { get; set; }
     public string Cancel { get; set; }
     public string Help { get; set; }
+    public string EncType { get; set; }
   }
 }
