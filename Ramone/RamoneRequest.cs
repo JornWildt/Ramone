@@ -41,6 +41,7 @@ namespace Ramone
       BodyCodec = src.BodyCodec;
       BodyContentType = src.BodyContentType;
       AcceptHeader = src.AcceptHeader;
+      SubmitMethod = src.SubmitMethod;
       AdditionalHeaders = new Dictionary<string, string>(src.AdditionalHeaders);
     }
 
@@ -51,6 +52,8 @@ namespace Ramone
     #region Properties
 
     protected IRamoneSession Session { get; set; }
+
+    protected string SubmitMethod { get; set; }
 
     protected object BodyData { get; set; }
 
@@ -133,7 +136,15 @@ namespace Ramone
     }
 
 
-    protected void SetBody(object body)
+    public RamoneRequest Method(string method)
+    {
+      Condition.Requires(method, "method").IsNotNullOrEmpty();
+      SubmitMethod = method;
+      return this;
+    }
+
+
+    public RamoneRequest Body(object body)
     {
       ICodecManager codecManager = Session.Service.CodecManager;
       
@@ -154,6 +165,8 @@ namespace Ramone
       }
 
       BodyData = body;
+
+      return this;
     }
 
     #endregion
@@ -185,14 +198,14 @@ namespace Ramone
 
     public RamoneResponse<TResponse> Post<TResponse>(object body) where TResponse : class
     {
-      SetBody(body);
+      Body(body);
       return Request<TResponse>("POST");
     }
 
 
     public RamoneResponse Post(object body)
     {
-      SetBody(body);
+      Body(body);
       return Request("POST");
     }
 
@@ -211,14 +224,14 @@ namespace Ramone
 
     public RamoneResponse<TResponse> Put<TResponse>(object body) where TResponse : class
     {
-      SetBody(body);
+      Body(body);
       return Request<TResponse>("PUT");
     }
 
 
     public RamoneResponse Put(object body)
     {
-      SetBody(body);
+      Body(body);
       return Request("PUT");
     }
 
@@ -289,15 +302,31 @@ namespace Ramone
 
     public RamoneResponse<TResponse> Execute<TResponse>(string method, object body) where TResponse : class
     {
-      SetBody(body);
+      Body(body);
       return Request<TResponse>(method);
     }
 
 
     public RamoneResponse Execute(string method, object body)
     {
-      SetBody(body);
+      Body(body);
       return Request(method);
+    }
+
+
+    public RamoneResponse<TResponse> Submit<TResponse>() where TResponse : class
+    {
+      if (SubmitMethod == null)
+        throw new InvalidOperationException("Missing method for Submit(). Call Method() first.");
+      return Request<TResponse>(SubmitMethod);
+    }
+
+
+    public RamoneResponse Submit()
+    {
+      if (SubmitMethod == null)
+        throw new InvalidOperationException("Missing method for Submit(). Call Method() first.");
+      return Request(SubmitMethod);
     }
 
     #endregion

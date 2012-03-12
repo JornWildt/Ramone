@@ -22,6 +22,8 @@ namespace Ramone.MediaTypes.Html
 
     public Uri BaseUrl { get; set; }
 
+    public string ResponseCharset { get; protected set; }
+
 
     protected Hashtable Values { get; set; }
 
@@ -55,45 +57,21 @@ namespace Ramone.MediaTypes.Html
     }
 
 
-    public RamoneResponse Submit(string button = null)
+    public RamoneRequest Request(string button = null)
     {
-      string oldFormat = Session.SerializerSettings.ArrayFormat;
-
-      try
-      {
-        Session.SerializerSettings.ArrayFormat = "{0}";
-        return Session.Bind(Action)
-                      .ContentType(EncodingType)
-                      .Execute(Method, GetSubmitData(button));
-      }
-      finally
-      {
-        Session.SerializerSettings.ArrayFormat = oldFormat;
-      }
-    }
-
-
-    public RamoneResponse<T> Submit<T>(string button = null) where T : class
-    {
-      string oldFormat = Session.SerializerSettings.ArrayFormat;
-
-      try
-      {
-        Session.SerializerSettings.ArrayFormat = "{0}";
-        return Session.Bind(Action)
-                      .ContentType(EncodingType)
-                      .Execute<T>(Method, GetSubmitData(button));
-      }
-      finally
-      {
-        Session.SerializerSettings.ArrayFormat = oldFormat;
-      }
+      string charset = GetCharset();
+      RamoneRequest request = Session.Bind(Action)
+                              .ContentType(EncodingType)
+                              .Charset(charset)
+                              .Body(GetSubmitData(button))
+                              .Method(Method);
+      return request;
     }
 
     #endregion
 
 
-    public Form(HtmlNode formNode, IRamoneSession session, Uri baseUrl)
+    public Form(HtmlNode formNode, IRamoneSession session, Uri baseUrl, string charset)
     {
       Condition.Requires(formNode, "formNode").IsNotNull();
       Condition.Requires(session, "session").IsNotNull();
@@ -106,6 +84,7 @@ namespace Ramone.MediaTypes.Html
       Method = formNode.GetAttributeValue("method", "get");
       Session = session;
       BaseUrl = baseUrl;
+      ResponseCharset = charset;
 
       string enctype = formNode.GetAttributeValue("enctype", null);
       EncodingType = (enctype != null ? new MediaType(enctype) : MediaType.ApplicationFormUrlEncoded);
@@ -229,6 +208,16 @@ namespace Ramone.MediaTypes.Html
 
       if (submit != null)
         Values[submit.Name] = submit.Value;
+    }
+
+
+    protected string GetCharset()
+    {
+      if (ResponseCharset != null)
+        return ResponseCharset;
+      else if (Session.DefaultEncoding != null)
+        return Session.DefaultEncoding.WebName;
+      return null;
     }
 
 

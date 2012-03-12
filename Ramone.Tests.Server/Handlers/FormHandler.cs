@@ -14,27 +14,29 @@ namespace Ramone.Tests.Server.Handlers
 
   public class FormHandler
   {
-    public object Get(string actionUrlMode, string encType)
+    public object Get(string actionUrlMode, string encType, string charset)
     {
       string actionUrl = null;
       if (actionUrlMode == "absolute")
-        actionUrl = typeof(TestForm).CreateUri(new { actionUrlMode = actionUrlMode, encType = encType }).AbsoluteUri;
+        actionUrl = typeof(TestForm).CreateUri(new { actionUrlMode = actionUrlMode, encType = encType, charset = charset }).AbsoluteUri;
       else if (actionUrlMode == "relative")
-        actionUrl = typeof(TestForm).CreateUri(new { actionUrlMode = actionUrlMode, encType = encType }).AbsolutePath;
+        actionUrl = typeof(TestForm).CreateUri(new { actionUrlMode = actionUrlMode, encType = encType, charset = charset }).AbsolutePath;
 
       return new TestForm
       {
         ActionUrl = actionUrl,
-        EncType = (encType == "multipart" ? MediaType.MultipartFormData.FullType : MediaType.ApplicationFormUrlEncoded.FullType)
+        EncType = (encType == "multipart" ? MediaType.MultipartFormData.FullType : MediaType.ApplicationFormUrlEncoded.FullType),
+        Charset = charset
       };
     }
 
 
-    public object Post(string actionUrlMode, string encType, TestForm args)
+    public object Post(string actionUrlMode, string encType, string charset, TestForm args)
     {
       if (args.MultiSelect != null)
         args.MultiSelectValue = string.Join(",", args.MultiSelect);
       args.EncType = (HttpContext.Current.Request.ContentType.StartsWith(MediaType.MultipartFormData.FullType) ? "multipart" : "urlencoded");
+      args.Charset = HttpContext.Current.Request.ContentEncoding.WebName;
       return args;
     }
   }

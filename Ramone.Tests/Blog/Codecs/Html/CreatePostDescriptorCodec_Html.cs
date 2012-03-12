@@ -15,7 +15,9 @@ namespace Ramone.Tests.Blog.Codecs.Html
 
       Resources.CreatePostDescriptor descriptor = new CreatePostDescriptor
       {
-        Form = doc.SelectNodes(@"//form").First().Form(context.Session, new Uri(context.Response.ResponseUri.GetLeftPart(UriPartial.Path)))
+        Form = doc.SelectNodes(@"//form").First().Form(context.Session, 
+                                                       new Uri(context.Response.ResponseUri.GetLeftPart(UriPartial.Path)),
+                                                       context.Response.CharacterSet)
       };
 
       return descriptor;

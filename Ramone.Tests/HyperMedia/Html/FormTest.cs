@@ -26,7 +26,7 @@ namespace Ramone.Tests.HyperMedia.Html
       // Act
       IKeyValueForm form = GetForm(encType: encType);
       form.Value("Unused", "---");
-      FormArgs result = form.Submit<FormArgs>().Body;
+      FormArgs result = form.Request().Submit<FormArgs>().Body;
 
       // Assert
       Assert.IsNotNull(result);
@@ -56,7 +56,7 @@ namespace Ramone.Tests.HyperMedia.Html
       form.Value("Select", "1");
       form.Value("Radio1", "1a");
       form.Value("Radio2", "2b");
-      FormArgs result = form.Submit<FormArgs>().Body;
+      FormArgs result = form.Request().Submit<FormArgs>().Body;
 
       // Assert
       Assert.IsNotNull(result);
@@ -84,7 +84,7 @@ namespace Ramone.Tests.HyperMedia.Html
 
       // Act
       IKeyValueForm form = GetForm(encType: encType);
-      FormArgs result = form.Value(args).Submit<FormArgs>().Body;
+      FormArgs result = form.Value(args).Request().Submit<FormArgs>().Body;
 
       // Assert
       Assert.IsNotNull(result);
@@ -120,7 +120,7 @@ namespace Ramone.Tests.HyperMedia.Html
 
       // Act
       IKeyValueForm form = GetForm(encType: encType);
-      FormArgs result = form.Value(args).Submit<FormArgs>().Body;
+      FormArgs result = form.Value(args).Request().Submit<FormArgs>().Body;
 
       // Assert
       Assert.IsNotNull(result);
@@ -145,7 +145,7 @@ namespace Ramone.Tests.HyperMedia.Html
 
       // Act
       IKeyValueForm form = GetForm();
-      FormArgs result = form.Value(args).Submit<FormArgs>().Body;
+      FormArgs result = form.Value(args).Request().Submit<FormArgs>().Body;
 
       // Assert
       Assert.IsNotNull(result);
@@ -163,7 +163,7 @@ namespace Ramone.Tests.HyperMedia.Html
 
       // Act
       IKeyValueForm form = GetForm();
-      FormArgs result = form.Value(args).Submit<FormArgs>("Cancel").Body;
+      FormArgs result = form.Value(args).Request("Cancel").Submit<FormArgs>().Body;
 
       // Assert
       Assert.IsNotNull(result);
@@ -181,7 +181,7 @@ namespace Ramone.Tests.HyperMedia.Html
 
       // Act
       IKeyValueForm form = GetForm();
-      FormArgs result = form.Value(args).Submit<FormArgs>("#help-button").Body;
+      FormArgs result = form.Value(args).Request("#help-button").Submit<FormArgs>().Body;
 
       // Assert
       Assert.IsNotNull(result);
@@ -199,7 +199,7 @@ namespace Ramone.Tests.HyperMedia.Html
 
       // Act
       IKeyValueForm form = GetForm("relative");
-      FormArgs result = form.Value(args).Submit<FormArgs>("Cancel").Body;
+      FormArgs result = form.Value(args).Request("Cancel").Submit<FormArgs>().Body;
 
       // Assert
       Assert.IsNotNull(result);
@@ -215,7 +215,7 @@ namespace Ramone.Tests.HyperMedia.Html
 
       // Act
       IKeyValueForm form = GetForm("empty");
-      FormArgs result = form.Value(args).Submit<FormArgs>("Cancel").Body;
+      FormArgs result = form.Value(args).Request("Cancel").Submit<FormArgs>().Body;
 
       // Assert
       Assert.IsNotNull(result);
@@ -223,9 +223,30 @@ namespace Ramone.Tests.HyperMedia.Html
     }
 
 
-    IKeyValueForm GetForm(string actionUrlMode = "absolute", string encType = "multipart")
+    [Test]
+    public void WhenNoAcceptCharsetFoundItUsesCharsetFromPreviousResponse_Typed(
+      [Values("iso-8859-1", "utf-8")] string charset)
     {
-      RamoneRequest formRequest = Session.Bind(FormTemplate, new { actionUrlMode = actionUrlMode, encType = encType });
+      // Arrange
+      FormArgs args = new FormArgs
+      {
+        InputText = "ÆØÅüì"
+      };
+
+      // Act
+      IKeyValueForm form = GetForm(charset: charset);
+      FormArgs result = form.Value(args).Request().Submit<FormArgs>().Body;
+
+      // Assert
+      Assert.IsNotNull(result);
+      Assert.AreEqual("ÆØÅüì", result.InputText);
+      Assert.AreEqual(charset, result.Charset);
+    }
+
+
+    IKeyValueForm GetForm(string actionUrlMode = "absolute", string encType = "multipart", string charset = "iso-8859-1")
+    {
+      RamoneRequest formRequest = Session.Bind(FormTemplate, new { actionUrlMode = actionUrlMode, encType = encType, charset = charset });
       RamoneResponse<HtmlDocument> response = formRequest.Get<HtmlDocument>();
       IKeyValueForm form = response.Body.DocumentNode.SelectNodes(@"//form").First().Form(response);
       return form;

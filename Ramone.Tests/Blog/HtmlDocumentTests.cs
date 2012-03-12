@@ -143,7 +143,7 @@ namespace Ramone.Tests.Blog
       form.Value("Image", file);
 
       // - Submit the form
-      HtmlDocument createdBlogItem = form.Submit<HtmlDocument>().Created();
+      HtmlDocument createdBlogItem = form.Request().Submit<HtmlDocument>().Created();
 
       // Assert ...
       Assert.IsNotNull(createdBlogItem);

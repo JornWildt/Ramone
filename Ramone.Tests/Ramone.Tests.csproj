@@ -130,6 +130,7 @@
     <Compile Include="SessionTests.cs" />
     <Compile Include="SetupFixture.cs" />
     <Compile Include="MediaTypes\StreamCodecTests.cs" />
+    <Compile Include="SubmitTests.cs" />
     <Compile Include="TestHelper.cs" />
     <Compile Include="UserAgentTests.cs" />
     <Compile Include="Utility\FormUrlEncodingDeserializerTests.cs" />
