@@ -3,18 +3,17 @@ Version 1
 ---------
 
 Forms
-- Lad submit returnere request
-  - Request skal indholde "method" fra <form>
-  - Her efter "request.Go<T>()" eller "Submit<T>()".
 - Der mangler temmeligt mange tests ...
   - Missing "value" and other attribs in various inputs/textarea etc.
   - Default values for enctype and accept
   - accept-charset
 
-Manglende Body (ved f.eks. GET) og charset=xxx skal give en klientfejl før serverkald.
-  Content-Type: ; charset=iso-8859-1
-
-What happens for forms with errors (repeated inputs for instance, missing value, missing name, invalid name, huge input values)
+What happens for forms with errors
+- repeated inputs for instance
+- missing value
+- missing name
+- invalid name
+- huge input values
 
 Hvorfor overføres tomme værdier? De burde være null og udelades
 

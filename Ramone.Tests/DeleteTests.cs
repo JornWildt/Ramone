@@ -1,7 +1,7 @@
-﻿using System.ServiceModel.Syndication;
+﻿using System;
+using System.Net;
 using NUnit.Framework;
 using Ramone.Tests.Common.CMS;
-using System.Net;
 
 
 namespace Ramone.Tests
@@ -60,6 +60,18 @@ namespace Ramone.Tests
 
       // Assert
       Assert.AreEqual("Deleted, yup!", text);
+    }
+
+
+    [Test]
+    public void WhenSpecifyingCharsetForDeleteItThrows()
+    {
+      // Arrange
+      RamoneRequest dossierReq = Session.Bind(DossierTemplate, new { id = 8 });
+
+      // Act + Assert
+      AssertThrows<InvalidOperationException>(() => dossierReq.Charset("utf-8").Delete());
+      AssertThrows<InvalidOperationException>(() => dossierReq.Charset("utf-8").Delete<Dossier>());
     }
   }
 }

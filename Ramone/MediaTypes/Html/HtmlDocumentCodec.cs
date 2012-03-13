@@ -9,10 +9,6 @@ namespace Ramone.MediaTypes.Html
     protected override HtmlDocument ReadFrom(TextReader reader, ReaderContext context)
     {
       HtmlDocument doc = new HtmlDocument();
-
-      HtmlNode.ElementsFlags.Remove("form");
-      HtmlNode.ElementsFlags.Add("form", HtmlElementFlag.CanOverlap);
-
       doc.Load(reader);
       return doc;
     }

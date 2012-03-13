@@ -98,6 +98,7 @@
     <Compile Include="ExceptionHandlingTests.cs" />
     <Compile Include="GenericMethodTests.cs" />
     <Compile Include="HyperMedia\Html\FormTest.cs" />
+    <Compile Include="HyperMedia\Html\InvalidFormTests.cs" />
     <Compile Include="HyperMedia\LinkTests.cs" />
     <Compile Include="HyperMedia\Html\HtmlDocumentLinkTests.cs" />
     <Compile Include="MediaTypes\Atom\AtomTests.cs" />

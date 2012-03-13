@@ -1,7 +1,8 @@
-﻿using NUnit.Framework;
+﻿using System;
+using System.Collections.Generic;
+using NUnit.Framework;
 using Ramone.HyperMedia;
 using Ramone.Tests.Common.CMS;
-using System.Collections.Generic;
 
 
 namespace Ramone.Tests
@@ -149,6 +150,18 @@ namespace Ramone.Tests
 
       // Act
       RamoneResponse response = dossierReq.Get();
+    }
+
+
+    [Test]
+    public void WhenSpecifyingCharsetForGetItThrows()
+    {
+      // Arrange
+      RamoneRequest dossierReq = Session.Bind(DossierTemplate, new { id = 8 });
+
+      // Act + Assert
+      AssertThrows<InvalidOperationException>(() => dossierReq.Charset("utf-8").Get());
+      AssertThrows<InvalidOperationException>(() => dossierReq.Charset("utf-8").Get<Dossier>());
     }
 
 

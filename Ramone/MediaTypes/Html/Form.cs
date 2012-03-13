@@ -24,8 +24,8 @@ namespace Ramone.MediaTypes.Html
 
     public string ResponseCharset { get; protected set; }
 
+    public Hashtable Values { get; protected set; }
 
-    protected Hashtable Values { get; set; }
 
     protected List<SubmitElement> SubmitElements { get; set; }
 
@@ -138,31 +138,22 @@ namespace Ramone.MediaTypes.Html
         {
           string name = inputNode.GetAttributeValue("name", null);
           string value = inputNode.InnerText;
-          if (value != null)
+          if (value != null && name != null)
             Values[name] = value;
         }
         else if (inputNode.Name == "select")
         {
           string name = inputNode.GetAttributeValue("name", null);
-          //string multiple = inputNode.GetAttributeValue("multiple", null);
-          //List<object> multiValues = null;
-          //if (multiple != null)
-            //Values[name] = multiValues = new List<object>();
-
-          foreach (HtmlNode optionNode in inputNode.SelectNodes(".//option") ?? Enumerable.Empty<HtmlNode>())
+          if (name != null)
           {
-            string value = optionNode.GetAttributeValue("value", null);
-            string selected = optionNode.GetAttributeValue("selected", null);
-            if (selected != null && value != null)
+            foreach (HtmlNode optionNode in inputNode.SelectNodes(".//option") ?? Enumerable.Empty<HtmlNode>())
             {
-              //if (multiple == null)
-              //{
+              string value = optionNode.GetAttributeValue("value", null);
+              string selected = optionNode.GetAttributeValue("selected", null);
+              if (selected != null && value != null)
+              {
                 Values[name] = value;
-              //}
-              //else
-              //{
-              //  multiValues.Add(value);
-              //}
+              }
             }
           }
         }

@@ -32,6 +32,8 @@ namespace Ramone
     static RamoneConfiguration()
     {
       Reset();
+      HtmlNode.ElementsFlags.Remove("form");
+      HtmlNode.ElementsFlags.Add("form", HtmlElementFlag.CanOverlap);
     }
 
 

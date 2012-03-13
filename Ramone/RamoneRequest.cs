@@ -400,6 +400,9 @@ namespace Ramone
           interceptor.Value.Intercept(new RequestContext(request, Session));
         }
 
+        if (BodyCharacterSet != null && BodyData == null)
+          throw new InvalidOperationException("Request character set is not allowed when no body is supplied.");
+
         string charset = "";
         if (BodyCharacterSet != null)
           charset = "; charset=" + BodyCharacterSet;
