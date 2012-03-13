@@ -8,13 +8,6 @@ Forms
   - Default values for enctype and accept
   - accept-charset
 
-What happens for forms with errors
-- repeated inputs for instance
-- missing value
-- missing name
-- invalid name
-- huge input values
-
 Hvorfor overføres tomme værdier? De burde være null og udelades
 
   POST http://jw-pc261/f2-rudersdal-restservices-4.2-borgerhenvendelse/dossier-edit HTTP/1.1
