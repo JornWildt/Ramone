@@ -151,7 +151,7 @@ namespace Ramone.Tests.Utility
 
 
     [Test]
-    public void CanSerializeClassWithNullValues()
+    public void WhenSerializingClassWithNullValuesItIgnoresNullValues()
     {
       // Arrange
       var o = new
@@ -164,7 +164,7 @@ namespace Ramone.Tests.Utility
       string result = Serialize(o);
 
       // Assert
-      Assert.AreEqual("|B.x=|B.y=abc|A=", result);
+      Assert.AreEqual("|B.y=abc", result);
     }
 
 
@@ -260,7 +260,7 @@ namespace Ramone.Tests.Utility
       string result = Serialize(o);
 
       // Assert
-      Assert.AreEqual("|X=15|Y=Abc|IntArray[0]=1|IntArray[1]=2|SubC.SubC.SubC=|SubC.SubC.Data[0][w]=99|SubC.SubC.SubComplex=|SubC.Data[0]=5|SubC.Data[1]=Hello|SubC.SubComplex=|Dict[123]=abc|Date=2012-05-30T19:20:21", result);
+      Assert.AreEqual("|X=15|Y=Abc|IntArray[0]=1|IntArray[1]=2|SubC.SubC.Data[0][w]=99|SubC.Data[0]=5|SubC.Data[1]=Hello|Dict[123]=abc|Date=2012-05-30T19:20:21", result);
     }
 
 

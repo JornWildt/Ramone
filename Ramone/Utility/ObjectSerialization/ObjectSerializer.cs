@@ -70,8 +70,9 @@ namespace Ramone.Utility.ObjectSerialization
       }
 
       if (data == null)
-        SerializeSimpleValue(data, dataType, prefix);
-      else if (typeof(IDictionary).IsAssignableFrom(dataType))
+        return;
+
+      if (typeof(IDictionary).IsAssignableFrom(dataType))
         SerializeDictionary((IDictionary)data, dataType, prefix);
       else if (typeof(NameValueCollection).IsAssignableFrom(dataType))
         SerializeNameValueCollection((NameValueCollection)data, dataType, prefix);

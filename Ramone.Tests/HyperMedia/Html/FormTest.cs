@@ -37,7 +37,7 @@ namespace Ramone.Tests.HyperMedia.Html
       Assert.AreEqual("textarea", result.TextArea);
       Assert.AreEqual("2", result.Select);
       Assert.AreEqual("1b", result.Radio1);
-      Assert.IsEmpty(result.Radio2);
+      Assert.IsNull(result.Radio2);
       //Assert.AreEqual("B,C", result.MultiSelectValue);
       Assert.AreEqual(encType, result.EncType);
     }
@@ -95,7 +95,7 @@ namespace Ramone.Tests.HyperMedia.Html
       Assert.AreEqual("textarea", result.TextArea);
       Assert.AreEqual("2", result.Select);
       Assert.AreEqual("1b", result.Radio1);
-      Assert.IsEmpty(result.Radio2);
+      Assert.IsNull(result.Radio2);
       //Assert.AreEqual("B,C", result.MultiSelectValue);
       Assert.AreEqual(encType, result.EncType);
     }
@@ -150,8 +150,8 @@ namespace Ramone.Tests.HyperMedia.Html
       // Assert
       Assert.IsNotNull(result);
       Assert.AreEqual("Save", result.Save);
-      Assert.IsEmpty(result.Cancel);
-      Assert.IsEmpty(result.Help);
+      Assert.IsNull(result.Cancel);
+      Assert.IsNull(result.Help);
     }
 
 
@@ -167,9 +167,9 @@ namespace Ramone.Tests.HyperMedia.Html
 
       // Assert
       Assert.IsNotNull(result);
-      Assert.IsEmpty(result.Save);
+      Assert.IsNull(result.Save);
       Assert.AreEqual("Cancel", result.Cancel);
-      Assert.IsEmpty(result.Help);
+      Assert.IsNull(result.Help);
     }
 
 
@@ -185,8 +185,8 @@ namespace Ramone.Tests.HyperMedia.Html
 
       // Assert
       Assert.IsNotNull(result);
-      Assert.IsEmpty(result.Save);
-      Assert.IsEmpty(result.Cancel);
+      Assert.IsNull(result.Save);
+      Assert.IsNull(result.Cancel);
       Assert.AreEqual("Help", result.Help);
     }
 

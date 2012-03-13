@@ -105,6 +105,17 @@ namespace Ramone.Tests.Utility
     }
 
 
+    [Test]
+    public void WhenDataIsNullItIsNotSendAsEmptyString()
+    {
+      // Arrange
+      SimpleData d = new SimpleData { };
+
+      // Act
+      CheckSerialization("MyInt=0", d);
+    }
+
+
     protected void CheckSerialization(string expected, object data)
     {
       using (MemoryStream s = new MemoryStream())
