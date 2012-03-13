@@ -26,7 +26,7 @@ namespace Ramone.Tests.HyperMedia.Html
       // Act
       IKeyValueForm form = GetForm(encType: encType);
       form.Value("Unused", "---");
-      FormArgs result = form.Request().Submit<FormArgs>().Body;
+      FormArgs result = form.Bind().Submit<FormArgs>().Body;
 
       // Assert
       Assert.IsNotNull(result);
@@ -56,7 +56,7 @@ namespace Ramone.Tests.HyperMedia.Html
       form.Value("Select", "1");
       form.Value("Radio1", "1a");
       form.Value("Radio2", "2b");
-      FormArgs result = form.Request().Submit<FormArgs>().Body;
+      FormArgs result = form.Bind().Submit<FormArgs>().Body;
 
       // Assert
       Assert.IsNotNull(result);
@@ -84,7 +84,7 @@ namespace Ramone.Tests.HyperMedia.Html
 
       // Act
       IKeyValueForm form = GetForm(encType: encType);
-      FormArgs result = form.Value(args).Request().Submit<FormArgs>().Body;
+      FormArgs result = form.Value(args).Bind().Submit<FormArgs>().Body;
 
       // Assert
       Assert.IsNotNull(result);
@@ -120,7 +120,7 @@ namespace Ramone.Tests.HyperMedia.Html
 
       // Act
       IKeyValueForm form = GetForm(encType: encType);
-      FormArgs result = form.Value(args).Request().Submit<FormArgs>().Body;
+      FormArgs result = form.Value(args).Bind().Submit<FormArgs>().Body;
 
       // Assert
       Assert.IsNotNull(result);
@@ -145,7 +145,7 @@ namespace Ramone.Tests.HyperMedia.Html
 
       // Act
       IKeyValueForm form = GetForm();
-      FormArgs result = form.Value(args).Request().Submit<FormArgs>().Body;
+      FormArgs result = form.Value(args).Bind().Submit<FormArgs>().Body;
 
       // Assert
       Assert.IsNotNull(result);
@@ -163,7 +163,7 @@ namespace Ramone.Tests.HyperMedia.Html
 
       // Act
       IKeyValueForm form = GetForm();
-      FormArgs result = form.Value(args).Request("Cancel").Submit<FormArgs>().Body;
+      FormArgs result = form.Value(args).Bind("Cancel").Submit<FormArgs>().Body;
 
       // Assert
       Assert.IsNotNull(result);
@@ -181,7 +181,7 @@ namespace Ramone.Tests.HyperMedia.Html
 
       // Act
       IKeyValueForm form = GetForm();
-      FormArgs result = form.Value(args).Request("#help-button").Submit<FormArgs>().Body;
+      FormArgs result = form.Value(args).Bind("#help-button").Submit<FormArgs>().Body;
 
       // Assert
       Assert.IsNotNull(result);
@@ -199,7 +199,7 @@ namespace Ramone.Tests.HyperMedia.Html
 
       // Act
       IKeyValueForm form = GetForm("relative");
-      FormArgs result = form.Value(args).Request("Cancel").Submit<FormArgs>().Body;
+      FormArgs result = form.Value(args).Bind("Cancel").Submit<FormArgs>().Body;
 
       // Assert
       Assert.IsNotNull(result);
@@ -215,7 +215,7 @@ namespace Ramone.Tests.HyperMedia.Html
 
       // Act
       IKeyValueForm form = GetForm("empty");
-      FormArgs result = form.Value(args).Request("Cancel").Submit<FormArgs>().Body;
+      FormArgs result = form.Value(args).Bind("Cancel").Submit<FormArgs>().Body;
 
       // Assert
       Assert.IsNotNull(result);
@@ -235,7 +235,7 @@ namespace Ramone.Tests.HyperMedia.Html
 
       // Act
       IKeyValueForm form = GetForm(charset: charset);
-      FormArgs result = form.Value(args).Request().Submit<FormArgs>().Body;
+      FormArgs result = form.Value(args).Bind().Submit<FormArgs>().Body;
 
       // Assert
       Assert.IsNotNull(result);

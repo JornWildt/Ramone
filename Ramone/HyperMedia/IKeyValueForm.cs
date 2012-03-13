@@ -7,6 +7,6 @@ namespace Ramone.HyperMedia
   {
     IKeyValueForm Value(string key, object value);
     IKeyValueForm Value(object value);
-    RamoneRequest Request(string button = null);
+    RamoneRequest Bind(string button = null);
   }
 }

@@ -57,7 +57,7 @@ namespace Ramone.MediaTypes.Html
     }
 
 
-    public RamoneRequest Request(string button = null)
+    public RamoneRequest Bind(string button = null)
     {
       string charset = GetCharset();
       RamoneRequest request = Session.Bind(Action)
