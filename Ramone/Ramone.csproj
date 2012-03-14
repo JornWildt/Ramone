@@ -87,10 +87,13 @@
     <Compile Include="AuthorizationExtensions.cs" />
     <Compile Include="BindingExtensions.cs" />
     <Compile Include="CodecManagerExtensions.cs" />
+    <Compile Include="HyperMedia\LinkBase.cs" />
     <Compile Include="MediaTypes\Html\Anchor.cs" />
+    <Compile Include="MediaTypes\Html\HtmlFormExtensions.cs" />
     <Compile Include="MediaTypes\Html\Form.cs" />
     <Compile Include="HyperMedia\IKeyValueForm.cs" />
-    <Compile Include="MediaTypes\Html\HtmlExtensions.cs" />
+    <Compile Include="MediaTypes\Html\HtmlAnchorExtensions.cs" />
+    <Compile Include="MediaTypes\Html\HtmlLinkExtensions.cs" />
     <Compile Include="HyperMedia\HyperMediaExtensions.cs" />
     <Compile Include="HyperMedia\ILink.cs" />
     <Compile Include="MediaTypes\Atom\AtomLink.cs" />
@@ -104,6 +107,7 @@
     <Compile Include="MediaTypes\Atom\AtomConstants.cs" />
     <Compile Include="MediaTypes\FormUrlEncoded\FormUrlEncodedSerializerCodec.cs" />
     <Compile Include="MediaTypes\Html\HtmlDocumentCodec.cs" />
+    <Compile Include="MediaTypes\Html\Link.cs" />
     <Compile Include="MediaTypes\Json\ServiceStackJsonSerializerCodec.cs" />
     <Compile Include="MediaTypes\Json\JsonSerializerCodec.cs" />
     <Compile Include="MediaTypes\MultipartFormData\MultipartFormDataSerializerCodec.cs" />

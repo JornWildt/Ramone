@@ -1,7 +1,13 @@
 ﻿<%@ Import Namespace="Ramone.Tests.Server.Blog.Resources" %>
 <%@ Page Language="C#" Inherits="OpenRasta.Codecs.WebForms.ResourceView<BlogList>" %>
 <html>
-  <body>
+   <head profile="http://a9.com/-/spec/opensearch/1.1/">
+     <link rel="search"
+           type="application/opensearchdescription+xml" 
+           href="http://example.com/content-search.xml"
+           title="Content search" />
+   </head>
+   <body>
     <h1 class="blog-title"><%=Resource.Title %></h1>
     <p>Author: <a rel="author" href="<%=Resource.AuthorLink%>"><%=Resource.AuthorName%></a></p>
     <% foreach (BlogItem item in Resource.Items) { %>

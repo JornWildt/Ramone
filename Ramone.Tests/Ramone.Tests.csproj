@@ -88,6 +88,7 @@
     <Compile Include="Blog\Codecs\Html\CreatePostDescriptorCodec_Html.cs" />
     <Compile Include="Blog\Codecs\Html\PostCodec_Html.cs" />
     <Compile Include="Blog\HtmlDocumentTests.cs" />
+    <Compile Include="Blog\OpenSearchTest.cs" />
     <Compile Include="Blog\Resources\Author.cs" />
     <Compile Include="Blog\Resources\Blog.cs" />
     <Compile Include="Blog\Resources\CreatePostArgs.cs" />

@@ -2,10 +2,7 @@
 Version 1
 ---------
 
-Forms
-- Der mangler temmeligt mange tests ...
-  - Default values for enctype and accept
-  - accept-charset
+Media type på anchor
 
 Check/demo/test URL templates med OpenSearch
 
@@ -46,12 +43,18 @@ Ramone.HyperMedia
 - Make it possible to Follow() relative links.
 
 
+Forms
+- Der mangler temmeligt mange tests ...
+  - Default values for enctype and accept
+  - accept-charset
+
 Eksemplificering af hvordan man håndterer et service-dokument (ATOM, og det dersens til OpenId)
 - HTML
 - http://bitworking.org/projects/atom/draft-ietf-atompub-protocol-14.html#appdocs
 - http://docs.oasis-open.org/xri/xrd/v1.0/xrd-1.0.html
 
 Hvad er den nemmeste måde at dumpe fejlresultatet fra et request? F.eks. ved not-found eller not-authorized.
+- Test/demo!
 
 Test scenarie hvor der returneres "NoContent" og man forsøger at hente content (skal give null)
 

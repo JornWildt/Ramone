@@ -21,16 +21,6 @@ namespace Ramone.Tests.Blog
   [TestFixture]
   public class TypedHtmlTests : BlogTestHelper
   {
-    protected override void TestFixtureSetUp()
-    {
-      base.TestFixtureSetUp();
-      TestService.CodecManager.AddCodec<Resources.Blog, Codecs.Html.BlogCodec_Html>(MediaType.TextHtml);
-      TestService.CodecManager.AddCodec<Resources.Post, Codecs.Html.PostCodec_Html>(MediaType.TextHtml);
-      TestService.CodecManager.AddCodec<Resources.Author, Codecs.Html.AuthorCodec_Html>(MediaType.TextHtml);
-      TestService.CodecManager.AddCodec<Resources.CreatePostDescriptor, Codecs.Html.CreatePostDescriptorCodec_Html>(MediaType.TextHtml);
-    }
-
-
     [Test]
     public void CanLoadBlog()
     {

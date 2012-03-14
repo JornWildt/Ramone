@@ -7,5 +7,6 @@
     public const string BlogItemCreationPath = "blog/create";
     public const string AuthorPath = "blog/author/{id}";
     public const string ImagePath = "blog/image/{id}";
+    public const string SearchPath = "blog/search";
   }
 }

@@ -8,7 +8,7 @@ namespace Ramone.MediaTypes.Atom
   /// <summary>
   /// Represents an ATOM feed link.
   /// </summary>
-  /// <remarks>Is similar to .NET's built in SyndicationItem, but this one is serializable as a ATOM link.</remarks>
+  /// <remarks>Is similar to .NET's built in SyndicationItem, but this one is XML serializable as a ATOM link.</remarks>
   public class AtomLink : ILink
   {
     [XmlAttribute("href")]

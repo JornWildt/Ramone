@@ -1,12 +1,9 @@
-﻿using System.ServiceModel.Syndication;
-using System.Xml;
+﻿using System.Text;
 using NUnit.Framework;
-using Ramone.MediaTypes.Atom;
 using Ramone.MediaTypes.Xml;
 using Ramone.Tests.Codecs;
 using Ramone.Tests.Common;
 using Ramone.Tests.Common.CMS;
-using Ramone.MediaTypes.MultipartFormData;
 
 
 namespace Ramone.Tests
@@ -17,6 +14,9 @@ namespace Ramone.Tests
     [SetUp]
     public void Setup()
     {
+      TestHelper.TestService = RamoneConfiguration.NewService(TestHelper.BaseUrl);
+      TestHelper.TestService.DefaultEncoding = Encoding.GetEncoding("iso-8859-1");
+
       ICodecManager cm = TestHelper.TestService.CodecManager;
 
       cm.AddCodec<Dossier, XmlSerializerCodec>(CMSConstants.CMSMediaType);

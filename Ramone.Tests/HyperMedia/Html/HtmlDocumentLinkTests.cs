@@ -15,6 +15,15 @@ namespace Ramone.Tests.HyperMedia.Html
 
     string Html = @"
 <html>
+  <head>
+    <link rel=""search""
+          type=""application/opensearchdescription+xml"" 
+          href=""http://example.com""
+          title=""Content search"" />
+    <link rel=""stylesheet"" 
+          type=""text/css"" 
+          href=""mystyle.css"" />
+  </head>
   <body>
     <p>Hello World: <a href=""http://link1"" rel=""next"">Link no. 1</a></p>
     <a>A-Bomb!</a>
@@ -108,6 +117,71 @@ namespace Ramone.Tests.HyperMedia.Html
       Assert.AreEqual("http://link2", link2.HRef);
       Assert.AreEqual("Link no. 2", link2.Title);
       Assert.AreEqual("up", link2.RelationshipType);
+    }
+
+
+    [Test]
+    public void CanExtractHeadLinksFromHtmlDocument()
+    {
+      // Act
+      List<Link> links = HtmlDoc.Links().ToList();
+
+      // Assert
+      Assert.AreEqual(2, links.Count);
+
+      ILink l1 = links[0];
+      Assert.AreEqual("http://example.com", l1.HRef);
+      Assert.AreEqual("Content search", l1.Title);
+      Assert.AreEqual("search", l1.RelationshipType);
+      Assert.AreEqual("application/opensearchdescription+xml", l1.MediaType);
+    }
+
+
+    [Test]
+    public void CanExtractLinksFromNode()
+    {
+      // Act
+      List<Link> links = HtmlDoc.DocumentNode.SelectNodes("//head").First().Links().ToList();
+
+      // Assert
+      Assert.AreEqual(2, links.Count);
+
+      ILink l1 = links[0];
+      Assert.AreEqual("http://example.com", l1.HRef);
+      Assert.AreEqual("Content search", l1.Title);
+      Assert.AreEqual("search", l1.RelationshipType);
+      Assert.AreEqual("application/opensearchdescription+xml", l1.MediaType);
+    }
+
+
+    [Test]
+    public void CanExtractLinksFromNodes()
+    {
+      // Act
+      List<Link> links = HtmlDoc.DocumentNode.SelectNodes("//head").Links().ToList();
+
+      // Assert
+      Assert.AreEqual(2, links.Count);
+
+      ILink l1 = links[0];
+      Assert.AreEqual("http://example.com", l1.HRef);
+      Assert.AreEqual("Content search", l1.Title);
+      Assert.AreEqual("search", l1.RelationshipType);
+      Assert.AreEqual("application/opensearchdescription+xml", l1.MediaType);
+    }
+
+
+    [Test]
+    public void CanExtractLinkFromNode()
+    {
+      // Act
+      ILink link = HtmlDoc.DocumentNode.SelectNodes("//head/link").First().Link();
+
+      // Assert
+      Assert.AreEqual("http://example.com", link.HRef);
+      Assert.AreEqual("Content search", link.Title);
+      Assert.AreEqual("search", link.RelationshipType);
+      Assert.AreEqual("application/opensearchdescription+xml", link.MediaType);
     }
   }
 }

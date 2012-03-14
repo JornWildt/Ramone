@@ -5,14 +5,11 @@ using OpenRasta.Codecs;
 using OpenRasta.Configuration;
 using Ramone.Tests.Common;
 using Ramone.Tests.Common.CMS;
-using Ramone.Tests.Server.Blog.Codecs;
+using Ramone.Tests.Server.Blog;
 using Ramone.Tests.Server.Blog.Data;
-using Ramone.Tests.Server.Blog.Handlers;
-using Ramone.Tests.Server.Blog.Resources;
 using Ramone.Tests.Server.Codecs;
 using Ramone.Tests.Server.Codecs.CMS;
 using Ramone.Tests.Server.Handlers;
-using Ramone.Tests.Server.Handlers.Blog;
 using Ramone.Tests.Server.Handlers.CMS;
 
 
@@ -116,7 +113,7 @@ namespace Ramone.Tests.Server
                      .And.TranscodedBy<FormUrlencodedCodec>();
 
         ConfigureCMS();
-        ConfigureBlog();
+        BlogConfiguration.Configure();
       }
     }
 
@@ -146,35 +143,6 @@ namespace Ramone.Tests.Server
           .HandledBy<PartyHandler>()
           .TranscodedBy<PartyCodec>()
           .ForMediaType(CMSConstants.CMSMediaTypeId);
-    }
-
-
-    private void ConfigureBlog()
-    {
-      ResourceSpace.Has.ResourcesOfType<BlogList>()
-                   .AtUri(BlogConstants.BlogListPath)
-                   .HandledBy<BlogListHandler>()
-                   .RenderedByAspx("~/Blog/Views/List.aspx");
-      
-      ResourceSpace.Has.ResourcesOfType<BlogItem>()
-                   .AtUri(BlogConstants.BlogItemPath)
-                   .HandledBy<BlogItemHandler>()
-                   .RenderedByAspx("~/Blog/Views/Item.aspx");
-
-      ResourceSpace.Has.ResourcesOfType<BlogItemCreationDescriptor>()
-                   .AtUri(BlogConstants.BlogItemCreationPath)
-                   .HandledBy<BlogItemCreationDescriptorHandler>()
-                   .RenderedByAspx("~/Blog/Views/BlogItemCreationDescriptor.aspx");
-
-      ResourceSpace.Has.ResourcesOfType<Author>()
-                   .AtUri(BlogConstants.AuthorPath)
-                   .HandledBy<AuthorHandler>()
-                   .RenderedByAspx("~/Blog/Views/Author.aspx");
-
-      ResourceSpace.Has.ResourcesOfType<Image>()
-                   .AtUri(BlogConstants.ImagePath)
-                   .HandledBy<ImageHandler>()
-                   .TranscodedBy<ImageCodec>();
     }
   }
 }

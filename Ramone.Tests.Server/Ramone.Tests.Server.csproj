@@ -88,6 +88,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="basicauthentication.aspx" />
+    <Content Include="Blog\Views\Search.aspx" />
     <Content Include="errors.aspx" />
     <Content Include="default.aspx" />
     <Content Include="Blog\Views\Author.aspx" />
@@ -106,9 +107,12 @@
     <Compile Include="basicauthentication.aspx.designer.cs">
       <DependentUpon>basicauthentication.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Blog\BlogConfiguration.cs" />
     <Compile Include="Blog\Codecs\ImageCodec.cs" />
     <Compile Include="Blog\Data\ImageDB.cs" />
     <Compile Include="Blog\Handlers\ImageHandler.cs" />
+    <Compile Include="Blog\Handlers\SearchHandler.cs" />
+    <Compile Include="Blog\Resources\Search.cs" />
     <Compile Include="Codecs\AtomFeedCodec.cs" />
     <Compile Include="Codecs\AtomItemCodec.cs" />
     <Compile Include="Codecs\CatAsHtmlCodec.cs" />

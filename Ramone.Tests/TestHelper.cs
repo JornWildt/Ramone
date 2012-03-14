@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Text;
 using NUnit.Framework;
 using Ramone.Tests.Common;
 using Ramone.Tests.Common.CMS;
@@ -10,7 +9,7 @@ namespace Ramone.Tests
 {
   public class TestHelper
   {
-    protected static readonly Uri BaseUrl = new Uri("http://jorn-pc/ramone-testserver/");
+    public static readonly Uri BaseUrl = new Uri("http://jorn-pc/ramone-testserver/");
 
 
     protected static readonly UriTemplate DossierTemplate = new UriTemplate(CMSConstants.DossierPath);
@@ -64,14 +63,6 @@ namespace Ramone.Tests
     public static IRamoneService TestService { get; set; }
 
     protected IRamoneSession Session { get; set; }
-
-
-
-    static TestHelper()
-    {
-      TestService = RamoneConfiguration.NewService(BaseUrl);
-      TestService.DefaultEncoding = Encoding.GetEncoding("iso-8859-1");
-    }
 
 
     /// <summary>

@@ -7,7 +7,7 @@ using System;
 
 namespace Ramone.MediaTypes.Html
 {
-  public static class HtmlExtensions
+  public static class HtmlAnchorExtensions
   {
     /// <summary>
     /// Get all anchors in the HTML document as a sequence of ILink.
@@ -50,7 +50,7 @@ namespace Ramone.MediaTypes.Html
       if (nodes == null)
         return Enumerable.Empty<Anchor>();
 
-      var anchors = 
+      var anchors =
         from c in nodes
         from a in c.SelectNodes(".//a")
         select new Anchor(a.GetAttributeValue("href", null), a.GetAttributeValue("rel", null), null, a.InnerText);
@@ -69,18 +69,6 @@ namespace Ramone.MediaTypes.Html
       Condition.Requires(node, "node").IsNotNull();
 
       return new Anchor(node.GetAttributeValue("href", null), node.GetAttributeValue("rel", null), null, node.InnerText);
-    }
-
-
-    public static Form Form(this HtmlNode node, IRamoneSession session, Uri baseUri, string responseCharset)
-    {
-      return new Form(node, session, baseUri, responseCharset);
-    }
-
-
-    public static Form Form(this HtmlNode node, RamoneResponse response)
-    {
-      return new Form(node, response.Session, response.BaseUri, response.Response.CharacterSet);
     }
   }
 }
