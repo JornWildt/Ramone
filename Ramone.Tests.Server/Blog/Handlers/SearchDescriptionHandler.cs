@@ -3,11 +3,14 @@
 
 namespace Ramone.Tests.Server.Blog.Handlers
 {
-  public class SearchHandler
+  public class SearchDescriptionHandler
   {
     public object Get()
     {
-      return new Search();
+      return new SearchDescription
+      {
+        Template = ""
+      };
     }
   }
 }

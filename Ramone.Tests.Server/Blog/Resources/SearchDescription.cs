@@ -1,6 +1,6 @@
 ﻿namespace Ramone.Tests.Server.Blog.Resources
 {
-  public class Search
+  public class SearchDescription
   {
     public string Template { get; set; }
   }

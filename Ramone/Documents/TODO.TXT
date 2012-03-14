@@ -2,8 +2,6 @@
 Version 1
 ---------
 
-Media type på anchor
-
 Check/demo/test URL templates med OpenSearch
 
 Demo hvordan IKeyValueForm kan anvendes til blog-kommentarer direkte på blog-entry. 
@@ -23,6 +21,7 @@ Bliver bedst hvis demoen viser at den typede udgave er ligeglad med hvor form-de
   - Other types: ILink, IEnumerable<ILink>
   - Link header
 
+Links from HTTP header
 
 Better HTML extension methods:
   RamoneResponse<HtmlDocument> blog = blogRequest.Get<HtmlDocument>();
@@ -142,6 +141,8 @@ Serializer v2
 - Read/write byte[] codec (like stream and string)
 - Multiple values (for forms with multi-selects)
 - Skal måske kunne specificere hvilke serialization settings der skal anvendes, når man sætter codecs op.
+
+Noget tyder på at "rel" værdier kan være space-delimited (http://www.opensearch.org/Specifications/OpenSearch/1.1)
 
 Conditional Delete, Get, etc.
 

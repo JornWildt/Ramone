@@ -88,7 +88,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="basicauthentication.aspx" />
-    <Content Include="Blog\Views\Search.aspx" />
+    <Content Include="Blog\Views\SearchDescription.aspx" />
     <Content Include="errors.aspx" />
     <Content Include="default.aspx" />
     <Content Include="Blog\Views\Author.aspx" />
@@ -111,8 +111,8 @@
     <Compile Include="Blog\Codecs\ImageCodec.cs" />
     <Compile Include="Blog\Data\ImageDB.cs" />
     <Compile Include="Blog\Handlers\ImageHandler.cs" />
-    <Compile Include="Blog\Handlers\SearchHandler.cs" />
-    <Compile Include="Blog\Resources\Search.cs" />
+    <Compile Include="Blog\Handlers\SearchDescriptionHandler.cs" />
+    <Compile Include="Blog\Resources\SearchDescription.cs" />
     <Compile Include="Codecs\AtomFeedCodec.cs" />
     <Compile Include="Codecs\AtomItemCodec.cs" />
     <Compile Include="Codecs\CatAsHtmlCodec.cs" />

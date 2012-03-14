@@ -14,6 +14,7 @@ using Ramone.MediaTypes.MultipartFormData;
 using Ramone.MediaTypes.Xml;
 using Ramone.Utility.ObjectSerialization;
 using Ramone.Utility.ObjectSerialization.Formaters;
+using Ramone.MediaTypes.OpenSearch;
 
 
 namespace Ramone
@@ -107,6 +108,9 @@ namespace Ramone
 
       // Streams
       cm.AddCodec<Stream, StreamCodec>(new MediaType("*/*"));
+
+      // Open search
+      cm.AddXml<OpenSearchDescription>(new MediaType("application/opensearchdescription+xml"));
     }
 
 

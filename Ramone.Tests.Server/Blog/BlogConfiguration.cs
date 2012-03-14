@@ -36,10 +36,11 @@ namespace Ramone.Tests.Server.Blog
                    .HandledBy<ImageHandler>()
                    .TranscodedBy<ImageCodec>();
 
-      ResourceSpace.Has.ResourcesOfType<Search>()
-                   .AtUri(BlogConstants.SearchPath)
-                   .HandledBy<SearchHandler>()
-                   .RenderedByAspx("~/Blog/Views/Search.aspx");
+      ResourceSpace.Has.ResourcesOfType<SearchDescription>()
+                   .AtUri(BlogConstants.SearchDescriptionPath)
+                   .HandledBy<SearchDescriptionHandler>()
+                   .RenderedByAspx("~/Blog/Views/SearchDescription.aspx")
+                   .ForMediaType("application/opensearchdescription+xml");
     }
   }
 }

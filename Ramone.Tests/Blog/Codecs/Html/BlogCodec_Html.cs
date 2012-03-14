@@ -2,6 +2,7 @@
 using System.Linq;
 using HtmlAgilityPack;
 using Ramone.MediaTypes.Html;
+using Ramone.HyperMedia;
 
 
 namespace Ramone.Tests.Blog.Codecs.Html
@@ -28,7 +29,7 @@ namespace Ramone.Tests.Blog.Codecs.Html
         });
       }
 
-      List<Anchor> blogLinks = new List<Anchor>(doc.Anchors());
+      List<ILink> blogLinks = new List<ILink>(doc.Anchors().Cast<ILink>().Union(doc.Links()));
 
       Resources.Blog blog = new Resources.Blog()
       {

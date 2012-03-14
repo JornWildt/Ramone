@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using Ramone.HyperMedia;
+using Ramone.MediaTypes.OpenSearch;
+
 
 namespace Ramone.Tests.Blog
 {
@@ -31,7 +29,16 @@ namespace Ramone.Tests.Blog
       // Arrange
       RamoneRequest blogRequest = Session.Bind(BlogRootPath);
       Resources.Blog blog = blogRequest.Get<Resources.Blog>().Body;
+      ILink searchLink = blog.Links.Link("search", "application/opensearchdescription+xml");
 
+      // Act
+      OpenSearchDescription search = searchLink.Follow(Session).Get<OpenSearchDescription>().Body;
+
+      // Assert
+      Assert.AreEqual("Blog Search", search.ShortName);
+      Assert.AreEqual(1, search.Urls.Count);
+      ILinkTemplate l1 = search.Urls[0];
+      Assert.IsNotNull(l1);
     }
   }
 }

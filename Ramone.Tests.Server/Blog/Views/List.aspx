@@ -4,7 +4,7 @@
    <head profile="http://a9.com/-/spec/opensearch/1.1/">
      <link rel="search"
            type="application/opensearchdescription+xml" 
-           href="http://example.com/content-search.xml"
+           href="<%=Resource.SearchDescriptionLink%>"
            title="Content search" />
    </head>
    <body>

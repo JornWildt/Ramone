@@ -31,6 +31,7 @@ namespace Ramone.Tests.Server.Blog.Handlers
       list.AuthorName = author.Name;
       list.AuthorLink = typeof(Author).CreateUri(new { Id = author.Id });
       list.EditLink = typeof(BlogItemCreationDescriptor).CreateUri();
+      list.SearchDescriptionLink = typeof(SearchDescription).CreateUri();
 
       return list;
     }
