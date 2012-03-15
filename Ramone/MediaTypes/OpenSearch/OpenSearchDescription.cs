@@ -15,12 +15,12 @@ namespace Ramone.MediaTypes.OpenSearch
     public string Contact { get; set; }
 
     [XmlElement("Url")]
-    public List<LinkTemplate> Urls { get; set; }
+    public List<OpenSearchUrl> Urls { get; set; }
   }
 
  
 
-  public class LinkTemplate : ILinkTemplate
+  public class OpenSearchUrl : ILinkTemplate
   {
     [XmlAttribute("template")]
     public string Template { get; set; }
@@ -33,5 +33,11 @@ namespace Ramone.MediaTypes.OpenSearch
 
     [XmlIgnore()]
     public string Title { get; set; }
+
+
+    public OpenSearchUrl()
+    {
+      RelationshipType = "results";
+    }
   }
 }

@@ -21,7 +21,8 @@ namespace Ramone.HyperMedia
     /// <param name="rel"></param>
     /// <param name="mediaType"></param>
     /// <returns></returns>
-    public static ILink Select(this IEnumerable<ILink> links, string rel, string mediaType = null)
+    public static T Select<T>(this IEnumerable<T> links, string rel, string mediaType = null)
+      where T : ISelectable
     {
       Condition.Requires(links, "links").IsNotNull();
       Condition.Requires(rel, "rel").IsNotNull();

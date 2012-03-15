@@ -32,7 +32,7 @@ namespace Ramone.Tests.Blog
 
 
     [Test]
-    public void CanLoadSearchDescription()
+    public void CanLoadSearchDescriptionAndGetResultUrl()
     {
       // Arrange
       ILink searchLink = GetSearchLink();
@@ -46,7 +46,8 @@ namespace Ramone.Tests.Blog
       Assert.AreEqual("Searching for blogs.", search.Description);
       Assert.AreEqual("jw@fjeldgruppen.dk", search.Contact);
       Assert.AreEqual(1, search.Urls.Count);
-      ILinkTemplate l1 = search.Urls[0];
+
+      ILinkTemplate l1 = search.Urls.Select("results");
       Assert.IsNotNull(l1);
     }
 
@@ -59,7 +60,7 @@ namespace Ramone.Tests.Blog
 
       // Act
       ILinkTemplate searchTemplate = description.Urls[0];
-      SyndicationFeed result = searchTemplate.Bind(Session, new { searchTerms = "" }).Get<SyndicationFeed>().Body;
+      SyndicationFeed result = Session.Bind(searchTemplate, new { searchTerms = "" }).Get<SyndicationFeed>().Body;
 
       // Assert
       Assert.IsNotNull(result);

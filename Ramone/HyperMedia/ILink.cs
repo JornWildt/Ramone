@@ -1,12 +1,16 @@
 ﻿namespace Ramone.HyperMedia
 {
-  public interface ILink
+  public interface ISelectable
   {
-    string HRef { get; }
-
     string RelationshipType { get; }
 
     string MediaType { get; }
+  }
+
+
+  public interface ILink : ISelectable
+  {
+    string HRef { get; }
 
     string Title { get; }
   }

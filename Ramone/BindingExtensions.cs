@@ -76,7 +76,7 @@ namespace Ramone
 
     #region IUrlTemplate
 
-    public static RamoneRequest Bind(this ILinkTemplate link, IRamoneSession session, object parameters = null)
+    public static RamoneRequest Bind(this IRamoneSession session, ILinkTemplate link, object parameters = null)
     {
       Uri boundUrl = BindUri(session, link.Template, parameters);
       return session.Request(boundUrl);

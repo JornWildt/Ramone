@@ -35,7 +35,7 @@ namespace Ramone.Tests.HyperMedia
 
 
     [Test]
-    public void CanGetLinkFromLinkList()
+    public void CanSelectLinkFromLinkList()
     {
       // Act
       ILink l1a = Links.Select(Link1.RelationshipType);
@@ -102,21 +102,6 @@ namespace Ramone.Tests.HyperMedia
       Assert.AreEqual(Link3.HRef, r3.Url.AbsoluteUri);
       Assert.AreEqual(Link4.HRef, r4.Url.AbsoluteUri);
     }
-
-
-    //[Test]
-    //public void CanFollowSomethingHavingLinks()
-    //{
-    //  // Act
-    //  RamoneRequest r1 = MyResource.Follow(Session, Link1.RelationshipType);
-    //  RamoneRequest r2 = MyResource.Follow(Session, Link2.RelationshipType);
-
-    //  // Assert
-    //  Assert.IsNotNull(r1);
-    //  Assert.IsNotNull(21);
-    //  Assert.AreEqual(Link1.HRef, r1.Url.AbsoluteUri);
-    //  Assert.AreEqual(Link2.HRef, r2.Url.AbsoluteUri);
-    //}
 
 
     [Test]
