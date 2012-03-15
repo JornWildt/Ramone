@@ -3,6 +3,7 @@ using Ramone.Tests.Server.Blog.Codecs;
 using Ramone.Tests.Server.Blog.Handlers;
 using Ramone.Tests.Server.Blog.Resources;
 using Ramone.Tests.Server.Handlers.Blog;
+using Ramone.Tests.Server.Codecs;
 
 
 namespace Ramone.Tests.Server.Blog
@@ -41,6 +42,11 @@ namespace Ramone.Tests.Server.Blog
                    .HandledBy<SearchDescriptionHandler>()
                    .RenderedByAspx("~/Blog/Views/SearchDescription.aspx")
                    .ForMediaType("application/opensearchdescription+xml");
+
+      ResourceSpace.Has.ResourcesOfType<SearchResult>()
+                   .AtUri(BlogConstants.SearchResult)
+                   .HandledBy<SearchResultHandler>()
+                   .TranscodedBy<SearchResultCodec>();
     }
   }
 }

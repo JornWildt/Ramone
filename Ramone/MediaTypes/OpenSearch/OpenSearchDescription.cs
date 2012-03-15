@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Xml.Serialization;
+using Ramone.HyperMedia;
 
 
 namespace Ramone.MediaTypes.OpenSearch
@@ -20,18 +18,7 @@ namespace Ramone.MediaTypes.OpenSearch
     public List<LinkTemplate> Urls { get; set; }
   }
 
-  
-  public interface ILinkTemplate
-  {
-    string Template { get; }
-    
-    string RelationshipType { get; }
-
-    string MediaType { get; }
-
-    string Title { get; }
-  }
-
+ 
 
   public class LinkTemplate : ILinkTemplate
   {

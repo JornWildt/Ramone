@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using Ramone.Utility;
+using Ramone.HyperMedia;
 
 
 namespace Ramone
@@ -68,6 +69,17 @@ namespace Ramone
       UriTemplate template = new UriTemplate(url.GetComponents(UriComponents.PathAndQuery, UriFormat.Unescaped));
 
       return BindTemplate(baseUri, template, parameters);
+    }
+
+    #endregion
+
+
+    #region IUrlTemplate
+
+    public static RamoneRequest Bind(this ILinkTemplate link, IRamoneSession session, object parameters = null)
+    {
+      Uri boundUrl = BindUri(session, link.Template, parameters);
+      return session.Request(boundUrl);
     }
 
     #endregion

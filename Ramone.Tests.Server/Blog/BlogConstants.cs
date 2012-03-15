@@ -8,5 +8,6 @@
     public const string AuthorPath = "blog/author/{id}";
     public const string ImagePath = "blog/image/{id}";
     public const string SearchDescriptionPath = "blog/searchform";
+    public const string SearchResult = "blog/search?q={q}";
   }
 }

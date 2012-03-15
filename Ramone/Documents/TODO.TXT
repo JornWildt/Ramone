@@ -3,6 +3,7 @@ Version 1
 ---------
 
 Check/demo/test URL templates med OpenSearch
+- Absolut og relativ URL
 
 Demo hvordan IKeyValueForm kan anvendes til blog-kommentarer direkte på blog-entry. 
 Bliver bedst hvis demoen viser at den typede udgave er ligeglad med hvor form-def kommer fra.

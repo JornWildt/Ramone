@@ -4,6 +4,6 @@
   <ShortName>Blog Search</ShortName>
   <Description>Searching for blogs.</Description>
   <Contact>jw@fjeldgruppen.dk</Contact>
-  <Url type="application/rss+xml" 
-      template="<%=Resource.Template %>"/>
+  <Url type="application/atom+xml" 
+       template="<%=Resource.Template %>"/>
 </OpenSearchDescription>

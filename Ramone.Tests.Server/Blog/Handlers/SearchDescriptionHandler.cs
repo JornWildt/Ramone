@@ -1,4 +1,5 @@
-﻿using Ramone.Tests.Server.Blog.Resources;
+﻿using OpenRasta.Web;
+using Ramone.Tests.Server.Blog.Resources;
 
 
 namespace Ramone.Tests.Server.Blog.Handlers
@@ -9,7 +10,7 @@ namespace Ramone.Tests.Server.Blog.Handlers
     {
       return new SearchDescription
       {
-        Template = ""
+        Template = "blog/search?q={searchTerms}"
       };
     }
   }

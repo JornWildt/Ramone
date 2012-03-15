@@ -109,10 +109,13 @@
     </Compile>
     <Compile Include="Blog\BlogConfiguration.cs" />
     <Compile Include="Blog\Codecs\ImageCodec.cs" />
+    <Compile Include="Blog\Codecs\SearchResultCodec.cs" />
     <Compile Include="Blog\Data\ImageDB.cs" />
     <Compile Include="Blog\Handlers\ImageHandler.cs" />
     <Compile Include="Blog\Handlers\SearchDescriptionHandler.cs" />
+    <Compile Include="Blog\Handlers\SearchResultHandler.cs" />
     <Compile Include="Blog\Resources\SearchDescription.cs" />
+    <Compile Include="Blog\Resources\SearchResult.cs" />
     <Compile Include="Codecs\AtomFeedCodec.cs" />
     <Compile Include="Codecs\AtomItemCodec.cs" />
     <Compile Include="Codecs\CatAsHtmlCodec.cs" />
