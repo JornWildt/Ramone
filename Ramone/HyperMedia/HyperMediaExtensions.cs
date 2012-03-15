@@ -21,7 +21,7 @@ namespace Ramone.HyperMedia
     /// <param name="rel"></param>
     /// <param name="mediaType"></param>
     /// <returns></returns>
-    public static ILink Link(this IEnumerable<ILink> links, string rel, string mediaType = null)
+    public static ILink Select(this IEnumerable<ILink> links, string rel, string mediaType = null)
     {
       Condition.Requires(links, "links").IsNotNull();
       Condition.Requires(rel, "rel").IsNotNull();
@@ -74,7 +74,7 @@ namespace Ramone.HyperMedia
       Condition.Requires(session, "session").IsNotNull();
       Condition.Requires(rel, "rel").IsNotNull();
 
-      ILink link = links.Link(rel, mediaType);
+      ILink link = links.Select(rel, mediaType);
       if (link == null)
         return null;
 

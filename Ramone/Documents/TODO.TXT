@@ -5,6 +5,12 @@ Version 1
 Check/demo/test URL templates med OpenSearch
 - Absolut og relativ URL
 
+ILinkTemplate metoder
+- Select(linkRel, mediaType) : kan anvendes på OpenSearch URLs
+- Omdøbe Link(linkRel, mediaType) til Select(...)
+
+ILink.Follow() / ILinkTemplate.Bind()
+
 Demo hvordan IKeyValueForm kan anvendes til blog-kommentarer direkte på blog-entry. 
 Bliver bedst hvis demoen viser at den typede udgave er ligeglad med hvor form-def kommer fra.
 
@@ -15,6 +21,7 @@ Bliver bedst hvis demoen viser at den typede udgave er ligeglad med hvor form-de
       <atom:link href rel title>
   - Atom: SyndicationFeed/Item
       <atom:link href rel title>
+  - Open Search
   - Hal:
   - Json:
       links : [ { href : "...", rel : "..." } ]

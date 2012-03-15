@@ -56,7 +56,7 @@ namespace Ramone.Tests.Blog
       Resources.Blog blog = blogRequest.Get<Resources.Blog>().Body;
 
       // - Fetch author link
-      ILink authorLink = blog.Links.Link("author");
+      ILink authorLink = blog.Links.Select("author");
 
       // - Follow author link and get author data
       Resources.Author author = authorLink.Follow(Session).Get<Resources.Author>().Body;

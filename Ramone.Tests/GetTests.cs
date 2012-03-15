@@ -98,7 +98,7 @@ namespace Ramone.Tests
       Dossier dossier = dossierReq.Get<Dossier>().Body;
 
       // Act
-      ILink documentsLink = dossier.Links.Link(CMSConstants.DocumentsLinkRelType);
+      ILink documentsLink = dossier.Links.Select(CMSConstants.DocumentsLinkRelType);
 
       // Assert
       Assert.IsNotNull(documentsLink);

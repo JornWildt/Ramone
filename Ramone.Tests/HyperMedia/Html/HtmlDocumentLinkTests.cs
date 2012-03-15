@@ -87,8 +87,8 @@ namespace Ramone.Tests.HyperMedia.Html
     public void CanExtractLinkByRelationFromHtmlDocument()
     {
       // Act
-      ILink link1 = HtmlDoc.Anchors().Link("next");
-      ILink link2 = HtmlDoc.Anchors().Link("up");
+      ILink link1 = HtmlDoc.Anchors().Select("next");
+      ILink link2 = HtmlDoc.Anchors().Select("up");
 
       // Assert
       Assert.AreEqual("http://link1", link1.HRef);
@@ -108,8 +108,8 @@ namespace Ramone.Tests.HyperMedia.Html
       HtmlNode node = HtmlDoc.DocumentNode.SelectNodes(@"//div[@id=""set1""]").First();
 
       // Act
-      ILink link1 = node.Anchors().Link("next");
-      ILink link2 = node.Anchors().Link("up");
+      ILink link1 = node.Anchors().Select("next");
+      ILink link2 = node.Anchors().Select("up");
 
       // Assert
       Assert.IsNull(link1);

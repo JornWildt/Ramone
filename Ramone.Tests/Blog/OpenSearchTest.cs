@@ -1,12 +1,18 @@
 ﻿using System.Linq;
+using System.ServiceModel.Syndication;
 using NUnit.Framework;
 using Ramone.HyperMedia;
 using Ramone.MediaTypes.OpenSearch;
-using System.ServiceModel.Syndication;
 
 
 namespace Ramone.Tests.Blog
 {
+  /// <summary>
+  /// Test class illustrating the use of Link templates with Open Search.
+  /// </summary>
+  /// <remarks>The purpose of these tests is primarily to show how link templates can be
+  /// used with Ramone. The first media-type that came to my mind for that purpose was Open Search
+  /// and so it became a Open Search / Link Template demo.</remarks>
   [TestFixture]
   public class OpenSearchTests : BlogTestHelper
   {
@@ -16,11 +22,11 @@ namespace Ramone.Tests.Blog
       // Arrange
       RamoneRequest blogRequest = Session.Bind(BlogRootPath);
 
-      // Act
+      // Act - get blog resource and select Open Search link
       Resources.Blog blog = blogRequest.Get<Resources.Blog>().Body;
+      ILink searchLink = blog.Links.Select("search", "application/opensearchdescription+xml");
 
       // Assert
-      ILink searchLink = blog.Links.Link("search", "application/opensearchdescription+xml");
       Assert.IsNotNull(searchLink);
     }
 
@@ -31,7 +37,8 @@ namespace Ramone.Tests.Blog
       // Arrange
       ILink searchLink = GetSearchLink();
 
-      // Act
+      // Act - follow Open Search link and get search description document. 
+      // Ramone delivers codecs for Open Search.
       OpenSearchDescription search = searchLink.Follow(Session).Get<OpenSearchDescription>().Body;
 
       // Assert
@@ -66,7 +73,7 @@ namespace Ramone.Tests.Blog
     {
       RamoneRequest blogRequest = Session.Bind(BlogRootPath);
       Resources.Blog blog = blogRequest.Get<Resources.Blog>().Body;
-      ILink searchLink = blog.Links.Link("search", "application/opensearchdescription+xml");
+      ILink searchLink = blog.Links.Select("search", "application/opensearchdescription+xml");
       return searchLink;
     }
 

@@ -38,12 +38,12 @@ namespace Ramone.Tests.HyperMedia
     public void CanGetLinkFromLinkList()
     {
       // Act
-      ILink l1a = Links.Link(Link1.RelationshipType);
-      ILink l2a = Links.Link(Link2.RelationshipType);
-      ILink l1b = Links.Link(Link1.RelationshipType, "text/html");
-      ILink l2b = Links.Link(Link2.RelationshipType, "text/html");
-      ILink l3 = Links.Link(Link3.RelationshipType, "application/atom+xml");
-      ILink l4 = Links.Link(Link4.RelationshipType, "application/atom+xml");
+      ILink l1a = Links.Select(Link1.RelationshipType);
+      ILink l2a = Links.Select(Link2.RelationshipType);
+      ILink l1b = Links.Select(Link1.RelationshipType, "text/html");
+      ILink l2b = Links.Select(Link2.RelationshipType, "text/html");
+      ILink l3 = Links.Select(Link3.RelationshipType, "application/atom+xml");
+      ILink l4 = Links.Select(Link4.RelationshipType, "application/atom+xml");
 
       // Assert
       Assert.IsNotNull(l1a);
