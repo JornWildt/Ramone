@@ -5,6 +5,11 @@ using Ramone.HyperMedia;
 
 namespace Ramone.MediaTypes.OpenSearch
 {
+  /// <summary>
+  /// Representation of Open Search with XML markup attributes for XML serialization.
+  /// </summary>
+  /// <remarks>Does not contain the complete set of Open Search features. This is mostly used as
+  /// a proof of concept for link templates. Feel free to add more yourself ...</remarks>
   [XmlRoot(Namespace="http://a9.com/-/spec/opensearch/1.1/")]
   public class OpenSearchDescription
   {

@@ -45,8 +45,8 @@ namespace Ramone.Tests.Blog
       Assert.AreEqual("Blog Search", search.ShortName);
       Assert.AreEqual("Searching for blogs.", search.Description);
       Assert.AreEqual("jw@fjeldgruppen.dk", search.Contact);
-      Assert.AreEqual(1, search.Urls.Count);
 
+      Assert.AreEqual(1, search.Urls.Count);
       ILinkTemplate l1 = search.Urls.Select("results");
       Assert.IsNotNull(l1);
     }

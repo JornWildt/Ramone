@@ -138,6 +138,7 @@
     <Compile Include="UserAgentTests.cs" />
     <Compile Include="Utility\FormUrlEncodingDeserializerTests.cs" />
     <Compile Include="Utility\DictionaryConverterTests.cs" />
+    <Compile Include="Utility\LinkHeaderTests.cs" />
     <Compile Include="Utility\MultipartFormDataSerializerTests.cs" />
     <Compile Include="Utility\FormUrlEncodingSerializerTests.cs" />
     <Compile Include="Utility\ObjectSerializerFormaterTests.cs" />

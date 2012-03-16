@@ -172,6 +172,7 @@
     <Compile Include="Utility\ObjectSerialization\ObjectSerializer.cs" />
     <Compile Include="Utility\ObjectSerialization\ObjectSerializerFormaterManager.cs" />
     <Compile Include="Utility\ObjectSerialization\ObjectSerializerSettings.cs" />
+    <Compile Include="Utility\WebLinkParser.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Documents\TODO.TXT" />

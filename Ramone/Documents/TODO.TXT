@@ -2,61 +2,21 @@
 Version 1
 ---------
 
-Understøtte flere Open Search features
+Links from HTTP header
 
 Bind link templates
 - Absolut URL
 - Relativ URL
 - Session Base URL?
 
-Demo hvordan IKeyValueForm kan anvendes til blog-kommentarer direkte på blog-entry. 
-Bliver bedst hvis demoen viser at den typede udgave er ligeglad med hvor form-def kommer fra.
+Link rels non-case-sensitive?
 
-- Supported hyper-media types
-  - Html: HtmlDocument
-      <a href="" rel="">xxx</>
-  - Xml: XmlDocument ??? Can be Html, XHtml (namespace), Atom or other. Needs a media type.
-      <atom:link href rel title>
-  - Atom: SyndicationFeed/Item
-      <atom:link href rel title>
-  - Open Search
-  - Hal:
-  - Json:
-      links : [ { href : "...", rel : "..." } ]
-      _links : { relname : { href : "..." } }
-  - Other types: ILink, IEnumerable<ILink>
-  - Link header
-
-Links from HTTP header
-
-Better HTML extension methods:
-  RamoneResponse<HtmlDocument> blog = blogRequest.Get<HtmlDocument>();
-  ILink editLink = blog.SelectNode(@"//a[@rel=""edit""]").Anchor();
-  -> kan på snedig vis overføre blog-response til Anchor() (og Form() mf.)
-     husk at teste om base-url og response-charset følger med
-     kan også lede efter <head> der angiver base-url
-
-
-Ramone.HyperMedia
-- OK: Link selector med media-type
-- Tre forskellige koncepter på tværs af media-types (to "dimensioner": hyper-media / media-types)
-  - OK: ILink
-  - ILinkTemplate
-  - IForm
-- OK: Follow(ILink), 
-- Follow(ILinkTemplate, params)
-- Make it possible to Follow() relative links.
-
+Relative links/forms/templates
 
 Forms
 - Der mangler temmeligt mange tests ...
   - Default values for enctype and accept
   - accept-charset
-
-Eksemplificering af hvordan man håndterer et service-dokument (ATOM, og det dersens til OpenId)
-- HTML
-- http://bitworking.org/projects/atom/draft-ietf-atompub-protocol-14.html#appdocs
-- http://docs.oasis-open.org/xri/xrd/v1.0/xrd-1.0.html
 
 Hvad er den nemmeste måde at dumpe fejlresultatet fra et request? F.eks. ved not-found eller not-authorized.
 - Test/demo!
@@ -134,6 +94,11 @@ Docs
 
 Serializer settings for OpenRasta
 
+Eksemplificering af hvordan man håndterer et service-dokument (ATOM, og det dersens til OpenId)
+- HTML
+- http://bitworking.org/projects/atom/draft-ietf-atompub-protocol-14.html#appdocs
+- http://docs.oasis-open.org/xri/xrd/v1.0/xrd-1.0.html
+
 
 ---------
 Version 2
@@ -170,6 +135,9 @@ Skal kunne tage højde for
 Bemærk at den nuværende Follow(Session) ikke kan håndtere relative URL'er. Skal den kunne det?
 
 Support for quality "q" param in accept header and codec selector
+
+Demo hvordan IKeyValueForm kan anvendes til blog-kommentarer direkte på blog-entry. 
+Bliver bedst hvis demoen viser at den typede udgave er ligeglad med hvor form-def kommer fra.
 
 Compression
 - As some kind of "pipeline" contributor
