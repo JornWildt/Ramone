@@ -21,21 +21,19 @@ namespace Ramone.Utility
       Condition.Requires(header, "header").IsNotNull();
       string[] parts = header.Split(new char[] {'\''}, 3);
 
-      if (parts.Length != 3)
-        Error("Expected two single quotes delimiters", header);
+      string charset = (parts.Length == 3 ? parts[0] : null);
+      string language = (parts.Length == 3 ? parts[1] : null);
+      string content = parts[parts.Length - 1];
 
-      string charset = parts[0];
-      string language = parts[1];
-      string content = parts[2];
-
-      Encoding enc = Encoding.GetEncoding(charset);
-      return HttpUtility.UrlDecode(content, enc);
-    }
-
-
-    protected void Error(string msg, string header)
-    {
-      throw new FormatException(string.Format("Invalid extended header. {0} in '{1}'.", msg, header));
+      try
+      {
+        Encoding enc = Encoding.GetEncoding(charset);
+        return HttpUtility.UrlDecode(content, enc);
+      }
+      catch (Exception)
+      {
+        return content;
+      }
     }
   }
 }
