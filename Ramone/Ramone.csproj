@@ -155,6 +155,7 @@
     <Compile Include="Utility\HashtableConverter.cs" />
     <Compile Include="Utility\DictionaryConverterPropertyVisitor.cs" />
     <Compile Include="Utility\EchoStream.cs" />
+    <Compile Include="Utility\HeaderEncodingParser.cs" />
     <Compile Include="Utility\MediaTypeParser.cs" />
     <Compile Include="Utility\MessageDebugger.cs" />
     <Compile Include="Utility\MultipartFormDataPropertyVisitor.cs" />

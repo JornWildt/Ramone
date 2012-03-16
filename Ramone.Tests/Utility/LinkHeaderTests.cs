@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using NUnit.Framework;
 using Ramone.HyperMedia;
 using Ramone.Utility;
+using System.Text;
+using System.Web;
+
 
 namespace Ramone.Tests.Utility
 {
@@ -17,6 +17,8 @@ namespace Ramone.Tests.Utility
     string WebLinks2 = @"<http://example.com/TheBook/chapter3>; rel=""previous""; title=""Previous chapter""";
 
     string WebLinks3 = @"<http://example.com/TheBook/chapter5>";
+
+    string WebLinks4 = @"<http://example.com/TheBook/chapter6>; rel=""previous""; title*=""UTF-8'de'N%c3%a4chstes%20Kapitel""";
 
 
     [Test]
@@ -72,6 +74,22 @@ namespace Ramone.Tests.Utility
       Assert.AreEqual("http://example.com/TheBook/chapter5", l1.HRef);
       Assert.IsNull(l1.RelationshipType);
       Assert.IsNull(l1.Title);
+    }
+
+
+    [Test]
+    public void CanReadInternationalTitles()
+    {
+      // Act
+      IList<ILink> links = WebLinkParser.ParseLinks(WebLinks4);
+
+      // Assert
+      Assert.IsNotNull(links);
+      Assert.AreEqual(1, links.Count);
+
+      ILink l1 = links[0];
+      Assert.AreEqual("http://example.com/TheBook/chapter6", l1.HRef);
+      Assert.AreEqual("Nächstes Kapitel", l1.Title);
     }
   }
 }

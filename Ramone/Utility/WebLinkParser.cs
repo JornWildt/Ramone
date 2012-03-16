@@ -81,6 +81,8 @@ namespace Ramone.Utility
           rel = p.Value;
         else if (p.Key == "title")
           title = p.Value;
+        else if (p.Key == "title*")
+          title = p.Value;
         else if (p.Key == "type")
           type = p.Value;
       }
@@ -92,9 +94,10 @@ namespace Ramone.Utility
 
     protected KeyValuePair<string, string> ParseParameter()
     {
-      if (NextToken.Type != TokenType.Identifier)
+      if (NextToken.Type != TokenType.Identifier && NextToken.Type != TokenType.ExtendedIdentifier)
         Error(string.Format("Unexpected token '{0}' (expected an identifier)", NextToken.Type));
       string id = NextToken.Value;
+      bool isExtended = (NextToken.Type == TokenType.ExtendedIdentifier);
       GetNextToken();
 
       if (NextToken.Type != TokenType.Assignment)
@@ -104,6 +107,8 @@ namespace Ramone.Utility
       if (NextToken.Type != TokenType.String)
         Error(string.Format("Unexpected token '{0}' (expected an string)", NextToken.Type));
       string value = NextToken.Value;
+      if (isExtended)
+        value = HeaderEncodingParser.ParseExtendedHeader(value);
       GetNextToken();
 
       return new KeyValuePair<string, string>(id, value);
@@ -117,7 +122,7 @@ namespace Ramone.Utility
 
     protected Token NextToken { get; set; }
 
-    protected enum TokenType { Url, Semicolon, Comma, Assignment, Identifier, String, EOF }
+    protected enum TokenType { Url, Semicolon, Comma, Assignment, Identifier, ExtendedIdentifier, String, EOF }
 
     protected class Token
     {
@@ -163,7 +168,7 @@ namespace Ramone.Utility
           continue;
 
         if (Char.IsLetter(c.Value))
-          return new Token { Type = TokenType.Identifier, Value = ReadIdentifier(c.Value) };
+          return ReadIdentifier(c.Value);
 
         Error(string.Format("Unrecognized character '{0}'", c));
       }
@@ -206,7 +211,7 @@ namespace Ramone.Utility
     }
 
 
-    protected string ReadIdentifier(char c)
+    protected Token ReadIdentifier(char c)
     {
       string id = "" + c;
 
@@ -215,7 +220,15 @@ namespace Ramone.Utility
         id += InputString[InputPos++];
       }
 
-      return id;
+      if (InputString[InputPos] == '*')
+      {
+        InputPos++;
+        return new Token { Type = TokenType.ExtendedIdentifier, Value = id };
+      }
+      else
+      {
+        return new Token { Type = TokenType.Identifier, Value = id };
+      }
     }
 
 
