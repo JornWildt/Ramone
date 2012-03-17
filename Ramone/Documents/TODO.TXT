@@ -2,14 +2,16 @@
 Version 1
 ---------
 
+ILink
+- Multiple rel-values
+- Case insensitive rel-values
+
 Links from HTTP header
 
 Bind link templates
 - Absolut URL
 - Relativ URL
 - Session Base URL?
-
-Link rels non-case-sensitive?
 
 Relative links/forms/templates
 

@@ -9,19 +9,19 @@ namespace Ramone.Utility
 {
   public class WebLinkParser
   {
-    public static IList<ILink> ParseLinks(string links)
+    public static IList<IParameterizedLink> ParseLinks(string links)
     {
       WebLinkParser parser = new WebLinkParser();
       return parser.Parse(links);
     }
 
 
-    public IList<ILink> Parse(string linkHeader)
+    public IList<IParameterizedLink> Parse(string linkHeader)
     {
       InputString = linkHeader;
       InputPos = 0;
 
-      IList<ILink> links = new List<ILink>();
+      IList<IParameterizedLink> links = new List<IParameterizedLink>();
 
       do
       {
@@ -42,27 +42,7 @@ namespace Ramone.Utility
 
     #region Parser
 
-    class WebLink : LinkBase
-    {
-      public WebLink()
-      {
-      }
-
-
-      public WebLink(Uri href, string relationshipType, string mediaType, string title)
-        : this(href.ToString(), relationshipType, mediaType, title)
-      {
-      }
-
-
-      public WebLink(string href, string relationshipType, string mediaType, string title)
-        : base(href, relationshipType, mediaType, title)
-      {
-      }
-    }
-
-
-    protected ILink ParseLink()
+    protected WebLink ParseLink()
     {
       Condition.Requires(NextToken.Type, "CurrentToken.Type").IsEqualTo(TokenType.Url);
       string url = NextToken.Value;
@@ -80,8 +60,6 @@ namespace Ramone.Utility
         if (p.Key == "rel")
           rel = p.Value;
         else if (p.Key == "title")
-          title = p.Value;
-        else if (p.Key == "title*")
           title = p.Value;
         else if (p.Key == "type")
           type = p.Value;

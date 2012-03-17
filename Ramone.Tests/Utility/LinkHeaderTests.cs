@@ -11,21 +11,16 @@ namespace Ramone.Tests.Utility
   [TestFixture]
   public class LinkHeaderTests : TestHelper
   {
-    string WebLinks1 = @"<http://example.com/TheBook/chapter2>; rel=""previous""; title=""Previous chapter"", 
-  <http://example.com/TheBook/chapter4>; rel=""next""; title=""Next chapter""";
-
-    string WebLinks2 = @"<http://example.com/TheBook/chapter3>; rel=""previous""; title=""Previous chapter""";
-
-    string WebLinks3 = @"<http://example.com/TheBook/chapter5>";
-
-    string WebLinks4 = @"<http://example.com/TheBook/chapter6>; rel=""previous""; title*=""UTF-8'de'N%c3%a4chstes%20Kapitel""";
-
 
     [Test]
     public void CanReadMultipleWebLinks()
     {
+      // Arrange
+      string header = @"<http://example.com/TheBook/chapter2>; rel=""previous""; title=""Previous chapter"", 
+  <http://example.com/TheBook/chapter4>; rel=""next""; title=""Next chapter""";
+
       // Act
-      IList<ILink> links = WebLinkParser.ParseLinks(WebLinks1);
+      IList<IParameterizedLink> links = WebLinkParser.ParseLinks(header);
 
       // Assert
       Assert.IsNotNull(links);
@@ -46,8 +41,11 @@ namespace Ramone.Tests.Utility
     [Test]
     public void CanReadSingleWebLink()
     {
+      // Arrange
+      string header = @"<http://example.com/TheBook/chapter3>; rel=""previous""; title=""Previous chapter""";
+
       // Act
-      IList<ILink> links = WebLinkParser.ParseLinks(WebLinks2);
+      IList<IParameterizedLink> links = WebLinkParser.ParseLinks(header);
 
       // Assert
       Assert.IsNotNull(links);
@@ -63,8 +61,11 @@ namespace Ramone.Tests.Utility
     [Test]
     public void CanReadSingleUrl()
     {
+      // Arrange
+      string header = @"<http://example.com/TheBook/chapter5>";
+
       // Act
-      IList<ILink> links = WebLinkParser.ParseLinks(WebLinks3);
+      IList<IParameterizedLink> links = WebLinkParser.ParseLinks(header);
 
       // Assert
       Assert.IsNotNull(links);
@@ -80,8 +81,11 @@ namespace Ramone.Tests.Utility
     [Test]
     public void CanReadInternationalTitles()
     {
+      // Arrange
+      string header = @"<http://example.com/TheBook/chapter6>; rel=""previous""; title*=""UTF-8'de'N%c3%a4chstes%20Kapitel""";
+
       // Act
-      IList<ILink> links = WebLinkParser.ParseLinks(WebLinks4);
+      IList<IParameterizedLink> links = WebLinkParser.ParseLinks(header);
 
       // Assert
       Assert.IsNotNull(links);
