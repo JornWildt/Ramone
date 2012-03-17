@@ -95,5 +95,48 @@ namespace Ramone.Tests.Utility
       Assert.AreEqual("http://example.com/TheBook/chapter6", l1.HRef);
       Assert.AreEqual("Nächstes Kapitel", l1.Title);
     }
+
+
+    [Test]
+    public void WhenBothNormalAndIntlTitleExistsItSelectsInternational()
+    {
+      // Arrange
+      string header1 = @"<http://example.com/TheBook/chapter6>; rel=""previous""; title=""abc""; title*=""UTF-8'de'N%c3%a4chstes%20Kapitel""";
+      string header2 = @"<http://example.com/TheBook/chapter6>; rel=""previous""; title*=""UTF-8'de'N%c3%a4chstes%20Kapitel""; title=""abc""";
+
+      // Act
+      IList<IParameterizedLink> links1 = WebLinkParser.ParseLinks(header1);
+      IList<IParameterizedLink> links2 = WebLinkParser.ParseLinks(header2);
+
+      // Assert
+      Assert.IsNotNull(links1);
+      Assert.IsNotNull(links2);
+      Assert.AreEqual(1, links1.Count);
+      Assert.AreEqual(1, links2.Count);
+
+      ILink l1 = links1[0];
+      Assert.AreEqual("Nächstes Kapitel", l1.Title);
+
+      ILink l2 = links2[0];
+      Assert.AreEqual("Nächstes Kapitel", l2.Title);
+    }
+
+
+    [Test]
+    public void ItSelectsFirstTitleOnly()
+    {
+      // Arrange
+      string header1 = @"<http://example.com/TheBook/chapter6>; rel=""previous""; title=""abc""; title=""123""";
+
+      // Act
+      IList<IParameterizedLink> links1 = WebLinkParser.ParseLinks(header1);
+
+      // Assert
+      Assert.IsNotNull(links1);
+      Assert.AreEqual(1, links1.Count);
+
+      ILink l1 = links1[0];
+      Assert.AreEqual("abc", l1.Title);
+    }
   }
 }

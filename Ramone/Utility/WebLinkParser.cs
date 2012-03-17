@@ -48,6 +48,7 @@ namespace Ramone.Utility
       string url = NextToken.Value;
       string rel = null;
       string title = null;
+      string title_s = null;
       string type = null;
 
       GetNextToken();
@@ -55,27 +56,30 @@ namespace Ramone.Utility
       while (NextToken.Type == TokenType.Semicolon)
       {
         GetNextToken();
-        KeyValuePair<string, string> p = ParseParameter();
+        bool isExtended;
+        KeyValuePair<string, string> p = ParseParameter(out isExtended);
 
         if (p.Key == "rel")
           rel = p.Value;
-        else if (p.Key == "title")
+        else if (p.Key == "title" && title == null && !isExtended)
           title = p.Value;
+        else if (p.Key == "title" && title_s == null && isExtended)
+          title_s = p.Value;
         else if (p.Key == "type")
           type = p.Value;
       }
 
-      WebLink link = new WebLink(url, rel, type, title);
+      WebLink link = new WebLink(url, rel, type, title_s ?? title);
       return link;
     }
 
 
-    protected KeyValuePair<string, string> ParseParameter()
+    protected KeyValuePair<string, string> ParseParameter(out bool isExtended)
     {
       if (NextToken.Type != TokenType.Identifier && NextToken.Type != TokenType.ExtendedIdentifier)
         Error(string.Format("Unexpected token '{0}' (expected an identifier)", NextToken.Type));
       string id = NextToken.Value;
-      bool isExtended = (NextToken.Type == TokenType.ExtendedIdentifier);
+      isExtended = (NextToken.Type == TokenType.ExtendedIdentifier);
       GetNextToken();
 
       if (NextToken.Type != TokenType.Assignment)
