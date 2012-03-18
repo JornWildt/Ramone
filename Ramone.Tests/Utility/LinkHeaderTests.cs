@@ -138,5 +138,88 @@ namespace Ramone.Tests.Utility
       ILink l1 = links1[0];
       Assert.AreEqual("abc", l1.Title);
     }
+
+
+    [Test]
+    public void ItSelectsFirstRelOnly()
+    {
+      // Arrange
+      string header1 = @"<http://example.com/TheBook/chapter6>; rel=""previous""; rel=""next""; title=""Abc""";
+
+      // Act
+      IList<IParameterizedLink> links1 = WebLinkParser.ParseLinks(header1);
+
+      // Assert
+      Assert.IsNotNull(links1);
+      Assert.AreEqual(1, links1.Count);
+
+      ILink l1 = links1[0];
+      Assert.AreEqual("previous", l1.RelationshipType);
+    }
+
+
+    [Test]
+    public void CanReadTokenRels()
+    {
+      // Arrange
+      string header1 = @"<http://example.com/TheBook/chapter6>; rel=next-chap.ter; title=""Abc""";
+
+      // Act
+      IList<IParameterizedLink> links1 = WebLinkParser.ParseLinks(header1);
+
+      // Assert
+      Assert.IsNotNull(links1);
+      Assert.AreEqual(1, links1.Count);
+
+      ILink l1 = links1[0];
+      Assert.AreEqual("next-chap.ter", l1.RelationshipType);
+    }
+
+
+    [Test]
+    public void ItSkipsAttributesWithSyntaxErrors()
+    {
+      // Arrange
+      string header1 = @"<http://example.com/TheBook/chapter6>; x rel=next-chap.ter; title=""Abc"",
+  <http://example.com/TheBook/chapter1>; rel=""help""; title=""Xyz""";
+
+      // Act
+      IList<IParameterizedLink> links1 = WebLinkParser.ParseLinks(header1);
+
+      // Assert
+      Assert.IsNotNull(links1);
+      Assert.AreEqual(2, links1.Count);
+
+      ILink l1 = links1[0];
+      Assert.AreEqual("http://example.com/TheBook/chapter6", l1.HRef);
+      Assert.IsNull(l1.RelationshipType);
+      Assert.AreEqual("Abc", l1.Title);
+
+      ILink l2 = links1[1];
+      Assert.AreEqual("http://example.com/TheBook/chapter1", l2.HRef);
+      Assert.AreEqual("help", l2.RelationshipType);
+      Assert.AreEqual("Xyz", l2.Title);
+    }
+
+
+    [Test]
+    public void ItSkipsLinksWithSyntaxtErrors()
+    {
+      // Arrange
+      string header1 = @";<http://example.com/TheBook/chapter6> rel=next-chap.ter; title=""Abc"",
+  <http://example.com/TheBook/chapter1>; rel=""help""; title=""Xyz""";
+
+      // Act
+      IList<IParameterizedLink> links1 = WebLinkParser.ParseLinks(header1);
+
+      // Assert
+      Assert.IsNotNull(links1);
+      Assert.AreEqual(1, links1.Count);
+
+      ILink l1 = links1[0];
+      Assert.AreEqual("http://example.com/TheBook/chapter1", l1.HRef);
+      Assert.AreEqual("help", l1.RelationshipType);
+      Assert.AreEqual("Xyz", l1.Title);
+    }
   }
 }

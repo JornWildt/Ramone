@@ -23,18 +23,40 @@ namespace Ramone.Utility
 
       IList<IParameterizedLink> links = new List<IParameterizedLink>();
 
-      do
+      while (true)
       {
-        GetNextToken();
+        try
+        {
+          GetNextToken();
 
-        if (NextToken.Type == TokenType.Url)
-          links.Add(ParseLink());
-        else if (NextToken.Type == TokenType.EOF)
-          break;
-        else
-          Error(string.Format("Unexpected token '{0}' (expected URL)", NextToken.Type));
+          if (NextToken.Type == TokenType.Url)
+            links.Add(ParseLink());
+          else if (NextToken.Type == TokenType.EOF)
+            break;
+          else
+            Error(string.Format("Unexpected token '{0}' (expected URL)", NextToken.Type));
+
+          if (NextToken.Type == TokenType.Comma)
+            continue;
+          else if (NextToken.Type == TokenType.EOF)
+            break;
+          else
+            Error(string.Format("Unexpected token '{0}' (expected comma)", NextToken.Type));
+        }
+        catch (FormatException)
+        {
+          while (NextToken.Type != TokenType.Comma && NextToken.Type != TokenType.EOF)
+          {
+            try
+            {
+              GetNextToken();
+            }
+            catch (FormatException)
+            {
+            }
+          }
+        }
       }
-      while (NextToken.Type == TokenType.Comma);
 
       return links;
     }
@@ -55,18 +77,34 @@ namespace Ramone.Utility
 
       while (NextToken.Type == TokenType.Semicolon)
       {
-        GetNextToken();
-        bool isExtended;
-        KeyValuePair<string, string> p = ParseParameter(out isExtended);
+        try
+        {
+          GetNextToken();
+          bool isExtended;
+          KeyValuePair<string, string> p = ParseParameter(out isExtended);
 
-        if (p.Key == "rel")
-          rel = p.Value;
-        else if (p.Key == "title" && title == null && !isExtended)
-          title = p.Value;
-        else if (p.Key == "title" && title_s == null && isExtended)
-          title_s = p.Value;
-        else if (p.Key == "type")
-          type = p.Value;
+          if (p.Key == "rel" && rel == null)
+            rel = p.Value;
+          else if (p.Key == "title" && title == null && !isExtended)
+            title = p.Value;
+          else if (p.Key == "title" && title_s == null && isExtended)
+            title_s = p.Value;
+          else if (p.Key == "type" && type == null)
+            type = p.Value;
+        }
+        catch (FormatException)
+        {
+          while (NextToken.Type != TokenType.Semicolon && NextToken.Type != TokenType.Comma && NextToken.Type != TokenType.EOF)
+          {
+            try
+            {
+              GetNextToken();
+            }
+            catch (FormatException)
+            {
+            }
+          }
+        }
       }
 
       WebLink link = new WebLink(url, rel, type, title_s ?? title);
@@ -84,7 +122,15 @@ namespace Ramone.Utility
 
       if (NextToken.Type != TokenType.Assignment)
         Error(string.Format("Unexpected token '{0}' (expected an assignment)", NextToken.Type));
-      GetNextToken();
+
+      if (id == "rel")
+      {
+        GetNextStringOrRelType();
+      }
+      else
+      {
+        GetNextToken();
+      }
 
       if (NextToken.Type != TokenType.String)
         Error(string.Format("Unexpected token '{0}' (expected an string)", NextToken.Type));
@@ -122,6 +168,12 @@ namespace Ramone.Utility
     }
 
 
+    protected void GetNextStringOrRelType()
+    {
+      NextToken = ReadNextStringOrRelType();
+    }
+
+
     protected Token ReadToken()
     {
       while (true)
@@ -153,6 +205,26 @@ namespace Ramone.Utility
           return ReadIdentifier(c.Value);
 
         Error(string.Format("Unrecognized character '{0}'", c));
+      }
+    }
+
+
+    protected Token ReadNextStringOrRelType()
+    {
+      while (true)
+      {
+        char? c = ReadNextChar();
+
+        if (c == null)
+          return new Token { Type = TokenType.EOF };
+
+        if (c == '"')
+          return new Token { Type = TokenType.String, Value = ReadString() };
+
+        if (Char.IsLetter(c.Value))
+          return new Token { Type = TokenType.String, Value = ReadRelType(c.Value) };
+
+        Error(string.Format("Unrecognized character '{0}' for string or rel-type", c));
       }
     }
 
@@ -211,6 +283,19 @@ namespace Ramone.Utility
       {
         return new Token { Type = TokenType.Identifier, Value = id };
       }
+    }
+
+
+    protected string ReadRelType(char c)
+    {
+      string id = "" + c;
+
+      while (Char.IsLetterOrDigit(InputString[InputPos]) || InputString[InputPos] == '.' || InputString[InputPos] == '-')
+      {
+        id += InputString[InputPos++];
+      }
+
+      return id;
     }
 
 
