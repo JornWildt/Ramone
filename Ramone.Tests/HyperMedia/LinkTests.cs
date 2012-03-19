@@ -15,6 +15,8 @@ namespace Ramone.Tests.HyperMedia
     AtomLink Link2;
     AtomLink Link3;
     AtomLink Link4;
+    AtomLink Link5;
+    AtomLink Link6;
     AtomLinkList Links;
     Resource MyResource;
 
@@ -26,11 +28,15 @@ namespace Ramone.Tests.HyperMedia
       Link2 = new AtomLink("http://elfisk.dk/", "home", "text/html", "Jorns website");
       Link3 = new AtomLink("http://dr.dk/atom", "tv", "application/atom+xml", "Danish Television feed");
       Link4 = new AtomLink("http://elfisk.dk/atom", "home", "application/atom+xml", "Jorns website feed");
+      Link5 = new AtomLink("http://elfisk.dk/abc", "search previous first", "text/html", "Blah 1");
+      Link6 = new AtomLink("http://elfisk.dk/def", "search previous first", "application/atom+xml", "Blah 2");
       Links = new AtomLinkList();
       Links.Add(Link1);
       Links.Add(Link2);
       Links.Add(Link3);
       Links.Add(Link4);
+      Links.Add(Link5);
+      Links.Add(Link6);
       MyResource = new Resource { Links = Links };
     }
 
@@ -45,6 +51,14 @@ namespace Ramone.Tests.HyperMedia
       ILink l2b = Links.Select(Link2.RelationType, "text/html");
       ILink l3 = Links.Select(Link3.RelationType, "application/atom+xml");
       ILink l4 = Links.Select(Link4.RelationType, "application/atom+xml");
+      ILink l5a = Links.Select("search");
+      ILink l5b = Links.Select("previous");
+      ILink l5c = Links.Select("first");
+      ILink l5d = Links.Select("unused");
+      ILink l6a = Links.Select("previous", "application/atom+xml");
+      ILink l6b = Links.Select("first", "text/html");
+      ILink l6c = Links.Select("unused", "application/atom+xml");
+      ILink l6d = Links.Select("unused", "text/html");
 
       // Assert
       Assert.IsNotNull(l1a);
@@ -53,12 +67,24 @@ namespace Ramone.Tests.HyperMedia
       Assert.IsNotNull(l2b);
       Assert.IsNotNull(l3);
       Assert.IsNotNull(l4);
+      Assert.IsNotNull(l5a);
+      Assert.IsNotNull(l5b);
+      Assert.IsNotNull(l5c);
+      Assert.IsNull(l5d);
+      Assert.IsNotNull(l6a);
+      Assert.IsNotNull(l6b);
+      Assert.IsNull(l6c);
+      Assert.IsNull(l6d);
       Assert.AreEqual(Link1.HRef, l1a.HRef);
       Assert.AreEqual(Link2.HRef, l2a.HRef);
       Assert.AreEqual(Link1.HRef, l1b.HRef);
       Assert.AreEqual(Link2.HRef, l2b.HRef);
       Assert.AreEqual(Link3.HRef, l3.HRef);
       Assert.AreEqual(Link4.HRef, l4.HRef);
+      Assert.AreEqual(Link5.HRef, l5a.HRef);
+      Assert.AreEqual(Link6.HRef, l6a.HRef);
+      Assert.AreEqual(3, Link5.RelationTypes.Count());
+      Assert.AreEqual(3, Link6.RelationTypes.Count());
     }
 
 

@@ -2,8 +2,6 @@
 Version 1
 ---------
 
-Teste multi rel-types i enkelt link
-
 ILink
 - Multiple rel-values
 - Case insensitive rel-values
