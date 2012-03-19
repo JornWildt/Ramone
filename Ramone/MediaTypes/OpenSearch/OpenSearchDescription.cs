@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Xml.Serialization;
 using Ramone.HyperMedia;
+using System;
 
 
 namespace Ramone.MediaTypes.OpenSearch
@@ -25,16 +26,37 @@ namespace Ramone.MediaTypes.OpenSearch
 
  
 
-  public class OpenSearchUrl : ILinkTemplate
+  public class OpenSearchUrl : SelectableBase, ILinkTemplate
   {
+    #region Open Search URL elements
+
     [XmlAttribute("template")]
     public string Template { get; set; }
 
+
+    /// <summary>
+    /// Space separated relation types. For XML serialization.
+    /// </summary>
     [XmlAttribute("rel")]
-    public string RelationshipType { get; set; }
+    public string RelationType
+    {
+      get { return GetRelationType(); }
+      set { SetRelationType(value); }
+    }
+
+
+    [XmlIgnore()]
+    public IEnumerable<string> RelationTypes
+    {
+      get { return GetRelationTypes(); }
+    }
+
 
     [XmlAttribute("type")]
     public string MediaType { get; set; }
+
+    #endregion
+
 
     [XmlIgnore()]
     public string Title { get; set; }
@@ -42,7 +64,7 @@ namespace Ramone.MediaTypes.OpenSearch
 
     public OpenSearchUrl()
     {
-      RelationshipType = "results";
+      RelationType = "results";
     }
   }
 }

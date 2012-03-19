@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 
 namespace Ramone.HyperMedia
@@ -7,15 +8,28 @@ namespace Ramone.HyperMedia
   /// A generic implementation of ILink.
   /// </summary>
   /// <remarks>Not suitable for direct XML serialization since it has no XML markup attributes for any
-  /// known formats. Use <see cref="AtomLink"/> for XML serializable ATOM links.</remarks>
-  public abstract class LinkBase : ILink
+  /// known formats.</remarks>
+  public abstract class LinkBase : SelectableBase, ILink
   {
     public string HRef { get; private set; }
 
-    public string RelationshipType { get; private set; }
+    
+    public string RelationType
+    {
+      get { return GetRelationType(); }
+      set { SetRelationType(value); }
+    }
 
+    
+    public IEnumerable<string> RelationTypes
+    {
+      get { return GetRelationTypes(); }
+    }
+
+    
     public string MediaType { get; private set; }
 
+    
     public string Title { get; private set; }
 
 
@@ -33,7 +47,7 @@ namespace Ramone.HyperMedia
     public LinkBase(string href, string relationshipType, string mediaType, string title)
     {
       HRef = href;
-      RelationshipType = relationshipType;
+      RelationType = relationshipType;
       MediaType = mediaType;
       Title = title;
     }

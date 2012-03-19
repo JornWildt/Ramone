@@ -4,13 +4,31 @@ using System.Collections.Generic;
 
 namespace Ramone.HyperMedia
 {
-  public class WebLink : IParameterizedLink
+  public class WebLink : SelectableBase, IParameterizedLink
   {
-    public string RelationshipType
+    public string HRef
+    {
+      get { return Parameters["href"]; }
+      set { Parameters["href"] = value; }
+    }
+
+
+    public string RelationType
     {
       get { return Parameters["rel"]; }
-      set { Parameters["rel"] = value; }
+      set 
+      { 
+        SetRelationType(value); 
+        Parameters["rel"] = value; 
+      }
     }
+
+
+    public IEnumerable<string> RelationTypes
+    {
+      get { return GetRelationTypes(); }
+    }
+
 
     public string MediaType
     {
@@ -18,18 +36,14 @@ namespace Ramone.HyperMedia
       set { Parameters["type"] = value; }
     }
 
-    public string HRef
-    {
-      get { return Parameters["href"]; }
-      set { Parameters["href"] = value; }
-    }
-
+    
     public string Title
     {
       get { return Parameters["title"]; }
       set { Parameters["title"] = value; }
     }
 
+    
     public Dictionary<string, string> Parameters { get; protected set; }
 
 
@@ -39,8 +53,20 @@ namespace Ramone.HyperMedia
     }
 
 
-    public WebLink(Uri href, string relationshipType, string mediaType, string title)
-      : this(href.ToString(), relationshipType, mediaType, title)
+    public WebLink(Uri href, string relationType, string mediaType, string title)
+      : this(href.AbsoluteUri, relationType, mediaType, title)
+    {
+    }
+
+
+    public WebLink(Uri href, string relationType, MediaType mediaType, string title)
+      : this(href.AbsoluteUri, relationType, mediaType != null ? mediaType.FullType : null, title)
+    {
+    }
+
+
+    public WebLink(string href, string relationType, MediaType mediaType, string title)
+      : this(href, relationType, mediaType != null ? mediaType.FullType : null, title)
     {
     }
 
@@ -49,7 +75,7 @@ namespace Ramone.HyperMedia
     {
       Parameters = new Dictionary<string, string>();
       HRef = href;
-      RelationshipType = relationshipType;
+      RelationType = relationshipType;
       MediaType = mediaType;
       Title = title;
     }

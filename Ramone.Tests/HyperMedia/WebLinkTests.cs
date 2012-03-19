@@ -31,7 +31,7 @@ namespace Ramone.Tests.HyperMedia
       Assert.AreEqual("http://dr.dk", l1.Parameters["href"]);
       Assert.AreEqual("http://dr.dk", l1.HRef);
       Assert.AreEqual("abc", l1.Parameters["rel"]);
-      Assert.AreEqual("abc", l1.RelationshipType);
+      Assert.AreEqual("abc", l1.RelationType);
       Assert.AreEqual("app/x", l1.Parameters["type"]);
       Assert.AreEqual("app/x", l1.MediaType);
       Assert.AreEqual("hello", l1.Parameters["title"]);
@@ -55,7 +55,7 @@ namespace Ramone.Tests.HyperMedia
       Assert.AreEqual("http://svt.se", l1.Parameters["href"]);
       Assert.AreEqual("http://svt.se", l1.HRef);
       Assert.AreEqual("xyz", l1.Parameters["rel"]);
-      Assert.AreEqual("xyz", l1.RelationshipType);
+      Assert.AreEqual("xyz", l1.RelationType);
       Assert.AreEqual("app/y", l1.Parameters["type"]);
       Assert.AreEqual("app/y", l1.MediaType);
       Assert.AreEqual("bonsoir", l1.Parameters["title"]);

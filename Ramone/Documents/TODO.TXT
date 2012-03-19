@@ -2,11 +2,26 @@
 Version 1
 ---------
 
+Test serialization format of OpenSearch URL and AtomLink
+
+Teste multi rel-types i enkelt link
+
 ILink
 - Multiple rel-values
 - Case insensitive rel-values
 
-Links from HTTP header
+Overvej om OpenSearch skal i separat assembly
+
+Links from HTTP header (WebLinks)
+  link-param     = ( ( "rel" "=" relation-types )
+                 | ( "anchor" "=" <"> URI-Reference <"> )
+                 | ( "rev" "=" relation-types )
+                 | ( "hreflang" "=" Language-Tag )
+                 | ( "media" "=" ( MediaDesc | ( <"> MediaDesc <"> ) ) )
+                 | ( "title" "=" quoted-string )
+                 | ( "title*" "=" ext-value )
+                 | ( "type" "=" ( media-type | quoted-mt ) )
+                 | ( link-extension ) )
 
 Bind link templates
 - Absolut URL

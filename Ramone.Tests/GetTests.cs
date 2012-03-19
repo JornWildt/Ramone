@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using NUnit.Framework;
 using Ramone.HyperMedia;
 using Ramone.Tests.Common.CMS;
@@ -102,7 +103,7 @@ namespace Ramone.Tests
 
       // Assert
       Assert.IsNotNull(documentsLink);
-      Assert.AreEqual(CMSConstants.DocumentsLinkRelType, documentsLink.RelationshipType);
+      Assert.Contains(CMSConstants.DocumentsLinkRelType, documentsLink.RelationTypes.ToList());
     }
 
 

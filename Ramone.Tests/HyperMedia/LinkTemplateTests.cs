@@ -20,10 +20,10 @@ namespace Ramone.Tests.HyperMedia
     protected override void SetUp()
     {
       base.SetUp();
-      Url1 = new OpenSearchUrl { RelationshipType = "tv", MediaType = "text/html", Template = "http://search.com?q={searchTerms}" };
-      Url2 = new OpenSearchUrl { RelationshipType = "home", MediaType = "text/html", Template = "http://search.com?q={searchTerms}" };
-      Url3 = new OpenSearchUrl { RelationshipType = "tv", MediaType = "application/atom+xml", Template = "http://search.com?q={searchTerms}" };
-      Url4 = new OpenSearchUrl { RelationshipType = "home", MediaType = "application/atom+xml", Template = "http://search.com?q={searchTerms}" };
+      Url1 = new OpenSearchUrl { RelationType = "tv", MediaType = "text/html", Template = "http://search.com?q={searchTerms}" };
+      Url2 = new OpenSearchUrl { RelationType = "home", MediaType = "text/html", Template = "http://search.com?q={searchTerms}" };
+      Url3 = new OpenSearchUrl { RelationType = "tv", MediaType = "application/atom+xml", Template = "http://search.com?q={searchTerms}" };
+      Url4 = new OpenSearchUrl { RelationType = "home", MediaType = "application/atom+xml", Template = "http://search.com?q={searchTerms}" };
       Urls = new List<OpenSearchUrl>();
       Urls.Add(Url1);
       Urls.Add(Url2);
@@ -37,12 +37,12 @@ namespace Ramone.Tests.HyperMedia
     public void CanSelectTemplateFromLinkList()
     {
       // Act
-      ILinkTemplate l1a = Urls.Select(Url1.RelationshipType);
-      ILinkTemplate l2a = Urls.Select(Url2.RelationshipType);
-      ILinkTemplate l1b = Urls.Select(Url1.RelationshipType, "text/html");
-      ILinkTemplate l2b = Urls.Select(Url2.RelationshipType, "text/html");
-      ILinkTemplate l3 = Urls.Select(Url3.RelationshipType, "application/atom+xml");
-      ILinkTemplate l4 = Urls.Select(Url4.RelationshipType, "application/atom+xml");
+      ILinkTemplate l1a = Urls.Select(Url1.RelationType);
+      ILinkTemplate l2a = Urls.Select(Url2.RelationType);
+      ILinkTemplate l1b = Urls.Select(Url1.RelationType, "text/html");
+      ILinkTemplate l2b = Urls.Select(Url2.RelationType, "text/html");
+      ILinkTemplate l3 = Urls.Select(Url3.RelationType, "application/atom+xml");
+      ILinkTemplate l4 = Urls.Select(Url4.RelationType, "application/atom+xml");
 
       // Assert
       Assert.IsNotNull(l1a);
@@ -68,7 +68,7 @@ namespace Ramone.Tests.HyperMedia
                                    {
                                      Template = "http://search.com/?q={terms}",
                                      MediaType = "application/atom+xml",
-                                     RelationshipType = "results"
+                                     RelationType = "results"
                                    };
 
       // Act

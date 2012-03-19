@@ -39,7 +39,7 @@ namespace TwitterDemo
       if (Session.OAuth1IsAuthorized())
       {
         // I find this operation less annoying when testing - it doesn't spam my followers with test messages
-        UpdateUserName("Jønke");
+        //UpdateUserName("Jønke");
 
         //PostTweet_Dynamic();
         //PostTweet_Typed();

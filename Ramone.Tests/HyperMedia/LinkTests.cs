@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using System.Linq;
 using System.Xml.Serialization;
 using NUnit.Framework;
 using Ramone.HyperMedia;
@@ -38,12 +39,12 @@ namespace Ramone.Tests.HyperMedia
     public void CanSelectLinkFromLinkList()
     {
       // Act
-      ILink l1a = Links.Select(Link1.RelationshipType);
-      ILink l2a = Links.Select(Link2.RelationshipType);
-      ILink l1b = Links.Select(Link1.RelationshipType, "text/html");
-      ILink l2b = Links.Select(Link2.RelationshipType, "text/html");
-      ILink l3 = Links.Select(Link3.RelationshipType, "application/atom+xml");
-      ILink l4 = Links.Select(Link4.RelationshipType, "application/atom+xml");
+      ILink l1a = Links.Select(Link1.RelationType);
+      ILink l2a = Links.Select(Link2.RelationType);
+      ILink l1b = Links.Select(Link1.RelationType, "text/html");
+      ILink l2b = Links.Select(Link2.RelationType, "text/html");
+      ILink l3 = Links.Select(Link3.RelationType, "application/atom+xml");
+      ILink l4 = Links.Select(Link4.RelationType, "application/atom+xml");
 
       // Assert
       Assert.IsNotNull(l1a);
@@ -80,12 +81,12 @@ namespace Ramone.Tests.HyperMedia
     public void CanFollowFromLinkList()
     {
       // Act
-      RamoneRequest r1a = Links.Follow(Session, Link1.RelationshipType);
-      RamoneRequest r2a = Links.Follow(Session, Link2.RelationshipType);
-      RamoneRequest r1b = Links.Follow(Session, Link1.RelationshipType, Link1.MediaType);
-      RamoneRequest r2b = Links.Follow(Session, Link2.RelationshipType, Link2.MediaType);
-      RamoneRequest r3 = Links.Follow(Session, Link3.RelationshipType, Link3.MediaType);
-      RamoneRequest r4 = Links.Follow(Session, Link4.RelationshipType, Link4.MediaType);
+      RamoneRequest r1a = Links.Follow(Session, Link1.RelationTypes.First());
+      RamoneRequest r2a = Links.Follow(Session, Link2.RelationTypes.First());
+      RamoneRequest r1b = Links.Follow(Session, Link1.RelationTypes.First(), Link1.MediaType);
+      RamoneRequest r2b = Links.Follow(Session, Link2.RelationTypes.First(), Link2.MediaType);
+      RamoneRequest r3 = Links.Follow(Session, Link3.RelationTypes.First(), Link3.MediaType);
+      RamoneRequest r4 = Links.Follow(Session, Link4.RelationTypes.First(), Link4.MediaType);
 
 
       // Assert

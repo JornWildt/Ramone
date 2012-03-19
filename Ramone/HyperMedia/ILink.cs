@@ -1,8 +1,11 @@
-﻿namespace Ramone.HyperMedia
+﻿using System.Collections.Generic;
+
+
+namespace Ramone.HyperMedia
 {
   public interface ISelectable
   {
-    string RelationshipType { get; }
+    IEnumerable<string> RelationTypes { get; }
 
     string MediaType { get; }
   }
