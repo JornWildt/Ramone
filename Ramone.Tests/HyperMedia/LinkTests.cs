@@ -17,6 +17,7 @@ namespace Ramone.Tests.HyperMedia
     AtomLink Link4;
     AtomLink Link5;
     AtomLink Link6;
+    AtomLink Link7;
     AtomLinkList Links;
     Resource MyResource;
 
@@ -30,6 +31,7 @@ namespace Ramone.Tests.HyperMedia
       Link4 = new AtomLink("http://elfisk.dk/atom", "home", "application/atom+xml", "Jorns website feed");
       Link5 = new AtomLink("http://elfisk.dk/abc", "search previous first", "text/html", "Blah 1");
       Link6 = new AtomLink("http://elfisk.dk/def", "search previous first", "application/atom+xml", "Blah 2");
+      Link7 = new AtomLink("http://elfisk.dk/123", "UPPERCASE lowercase", "text/html", "Blah 3");
       Links = new AtomLinkList();
       Links.Add(Link1);
       Links.Add(Link2);
@@ -37,6 +39,7 @@ namespace Ramone.Tests.HyperMedia
       Links.Add(Link4);
       Links.Add(Link5);
       Links.Add(Link6);
+      Links.Add(Link7);
       MyResource = new Resource { Links = Links };
     }
 
@@ -51,6 +54,27 @@ namespace Ramone.Tests.HyperMedia
       ILink l2b = Links.Select(Link2.RelationType, "text/html");
       ILink l3 = Links.Select(Link3.RelationType, "application/atom+xml");
       ILink l4 = Links.Select(Link4.RelationType, "application/atom+xml");
+
+      // Assert
+      Assert.IsNotNull(l1a);
+      Assert.IsNotNull(l2a);
+      Assert.IsNotNull(l1b);
+      Assert.IsNotNull(l2b);
+      Assert.IsNotNull(l3);
+      Assert.IsNotNull(l4);
+      Assert.AreEqual(Link1.HRef, l1a.HRef);
+      Assert.AreEqual(Link2.HRef, l2a.HRef);
+      Assert.AreEqual(Link1.HRef, l1b.HRef);
+      Assert.AreEqual(Link2.HRef, l2b.HRef);
+      Assert.AreEqual(Link3.HRef, l3.HRef);
+      Assert.AreEqual(Link4.HRef, l4.HRef);
+    }
+
+
+    [Test]
+    public void CanSelectLinkFromMultiRelLinkList()
+    {
+      // Act
       ILink l5a = Links.Select("search");
       ILink l5b = Links.Select("previous");
       ILink l5c = Links.Select("first");
@@ -61,12 +85,6 @@ namespace Ramone.Tests.HyperMedia
       ILink l6d = Links.Select("unused", "text/html");
 
       // Assert
-      Assert.IsNotNull(l1a);
-      Assert.IsNotNull(l2a);
-      Assert.IsNotNull(l1b);
-      Assert.IsNotNull(l2b);
-      Assert.IsNotNull(l3);
-      Assert.IsNotNull(l4);
       Assert.IsNotNull(l5a);
       Assert.IsNotNull(l5b);
       Assert.IsNotNull(l5c);
@@ -75,16 +93,25 @@ namespace Ramone.Tests.HyperMedia
       Assert.IsNotNull(l6b);
       Assert.IsNull(l6c);
       Assert.IsNull(l6d);
-      Assert.AreEqual(Link1.HRef, l1a.HRef);
-      Assert.AreEqual(Link2.HRef, l2a.HRef);
-      Assert.AreEqual(Link1.HRef, l1b.HRef);
-      Assert.AreEqual(Link2.HRef, l2b.HRef);
-      Assert.AreEqual(Link3.HRef, l3.HRef);
-      Assert.AreEqual(Link4.HRef, l4.HRef);
       Assert.AreEqual(Link5.HRef, l5a.HRef);
       Assert.AreEqual(Link6.HRef, l6a.HRef);
       Assert.AreEqual(3, Link5.RelationTypes.Count());
       Assert.AreEqual(3, Link6.RelationTypes.Count());
+    }
+
+
+    [Test]
+    public void ItComparesCaseInsensitiveWhenLookingUpLink()
+    {
+      // Act
+      ILink l7a = Links.Select("UppERCase");
+      ILink l7b = Links.Select("LOWERcasE");
+
+      // Assert
+      Assert.IsNotNull(l7a);
+      Assert.IsNotNull(l7b);
+      Assert.AreEqual(Link7.HRef, l7a.HRef);
+      Assert.AreEqual(Link7.HRef, l7b.HRef);
     }
 
 

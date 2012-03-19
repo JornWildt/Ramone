@@ -27,7 +27,7 @@ namespace Ramone.HyperMedia
       Condition.Requires(links, "links").IsNotNull();
       Condition.Requires(rel, "rel").IsNotNull();
 
-      return links.Where(l => l.RelationTypes.Any(r => r == rel) && (mediaType == null || l.MediaType == mediaType)).FirstOrDefault();
+      return links.Where(l => l.RelationTypes.Any(r => string.Compare(r, rel, true) == 0) && (mediaType == null || l.MediaType == mediaType)).FirstOrDefault();
     }
 
 

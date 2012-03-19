@@ -2,22 +2,7 @@
 Version 1
 ---------
 
-ILink
-- Multiple rel-values
-- Case insensitive rel-values
-
 Overvej om OpenSearch skal i separat assembly
-
-Links from HTTP header (WebLinks)
-  link-param     = ( ( "rel" "=" relation-types )
-                 | ( "anchor" "=" <"> URI-Reference <"> )
-                 | ( "rev" "=" relation-types )
-                 | ( "hreflang" "=" Language-Tag )
-                 | ( "media" "=" ( MediaDesc | ( <"> MediaDesc <"> ) ) )
-                 | ( "title" "=" quoted-string )
-                 | ( "title*" "=" ext-value )
-                 | ( "type" "=" ( media-type | quoted-mt ) )
-                 | ( link-extension ) )
 
 Bind link templates
 - Absolut URL
@@ -104,6 +89,17 @@ Docs
 - Inspiration: http://codebetter.com/glennblock/2012/01/19/http-is-not-a-transport-protocol-http-is-not-rpc/
 - Deserialisering af UrlEncoded er ikke specielt godt supporteret.
 - Multi-select er ikke understøttet
+
+Links from HTTP header (WebLinks)
+  link-param     = ( ( "rel" "=" relation-types )
+                 | ( "anchor" "=" <"> URI-Reference <"> )
+                 | ( "rev" "=" relation-types )
+                 | ( "hreflang" "=" Language-Tag )
+                 | ( "media" "=" ( MediaDesc | ( <"> MediaDesc <"> ) ) )
+                 | ( "title" "=" quoted-string )
+                 | ( "title*" "=" ext-value )
+                 | ( "type" "=" ( media-type | quoted-mt ) )
+                 | ( link-extension ) )
 
 Serializer settings for OpenRasta
 
