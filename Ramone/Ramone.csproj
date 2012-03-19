@@ -116,7 +116,6 @@
     <Compile Include="MediaTypes\Json\ServiceStackJsonSerializerCodec.cs" />
     <Compile Include="MediaTypes\Json\JsonSerializerCodec.cs" />
     <Compile Include="MediaTypes\MultipartFormData\MultipartFormDataSerializerCodec.cs" />
-    <Compile Include="MediaTypes\OpenSearch\OpenSearchDescription.cs" />
     <Compile Include="MediaTypes\StreamCodec.cs" />
     <Compile Include="MediaTypes\StringCodec.cs" />
     <Compile Include="MediaTypes\TextCodecBase.cs" />

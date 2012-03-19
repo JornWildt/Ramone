@@ -4,6 +4,7 @@ using Ramone.MediaTypes.Xml;
 using Ramone.Tests.Codecs;
 using Ramone.Tests.Common;
 using Ramone.Tests.Common.CMS;
+using Ramone.MediaTypes;
 
 
 namespace Ramone.Tests
@@ -15,6 +16,8 @@ namespace Ramone.Tests
     public void Setup()
     {
       TestHelper.TestService = RamoneConfiguration.NewService(TestHelper.BaseUrl);
+      MediaTypesConfiguration.RegisterStandardCodecs(TestHelper.TestService.CodecManager);
+
       TestHelper.TestService.DefaultEncoding = Encoding.GetEncoding("iso-8859-1");
 
       ICodecManager cm = TestHelper.TestService.CodecManager;

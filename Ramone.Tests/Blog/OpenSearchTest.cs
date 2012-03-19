@@ -3,6 +3,7 @@ using System.ServiceModel.Syndication;
 using NUnit.Framework;
 using Ramone.HyperMedia;
 using Ramone.MediaTypes.OpenSearch;
+using Ramone.MediaTypes;
 
 
 namespace Ramone.Tests.Blog

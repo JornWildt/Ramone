@@ -2,8 +2,6 @@
 Version 1
 ---------
 
-Overvej om OpenSearch skal i separat assembly
-
 Bind link templates
 - Absolut URL
 - Relativ URL
