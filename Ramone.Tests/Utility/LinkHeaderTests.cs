@@ -176,6 +176,27 @@ namespace Ramone.Tests.Utility
 
 
     [Test]
+    public void CanReadLinksWithMultipleRelValues()
+    {
+      // Arrange
+      string header1 = @"<http://example.com/TheBook/chapter6>; rel=""next-chap.ter  prev   next""; title=""Abc""";
+
+      // Act
+      IList<IParameterizedLink> links1 = WebLinkParser.ParseLinks(header1);
+
+      // Assert
+      Assert.IsNotNull(links1);
+      Assert.AreEqual(1, links1.Count);
+
+      ILink l1 = links1[0];
+      Assert.AreEqual(3, l1.RelationTypes.Count());
+      Assert.Contains("next-chap.ter", l1.RelationTypes.ToList());
+      Assert.Contains("prev", l1.RelationTypes.ToList());
+      Assert.Contains("next", l1.RelationTypes.ToList());
+    }
+
+
+    [Test]
     public void ItSkipsAttributesWithSyntaxErrors()
     {
       // Arrange
