@@ -8,12 +8,6 @@ namespace Ramone.HyperMedia
 {
   public static class HyperMediaExtensions
   {
-    public static RamoneRequest Request(this IRamoneSession session, ILink link)
-    {
-      return new RamoneRequest(session, link.HRef);
-    }
-
-
     /// <summary>
     /// Select a link identified by link relation and optional media-type.
     /// </summary>
@@ -79,7 +73,7 @@ namespace Ramone.HyperMedia
       if (link == null)
         return null;
 
-      return session.Request(link);
+      return new RamoneRequest(session, link.HRef);
     }
   }
 }

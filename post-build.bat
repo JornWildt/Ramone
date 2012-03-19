@@ -5,3 +5,6 @@ xcopy Ramone*.dll ..\..\..\Binaries\ /S /I /R /Y
 xcopy Ramone*.pdb ..\..\..\Binaries\ /S /I /R /Y
 xcopy Ramone*.xml ..\..\..\Binaries\ /S /I /R /Y
 
+cd ..\..\..
+
+xcopy Ramone.MediaTypes\bin\Debug\Ramone.MediaTypes.* Binaries\ /S /I /R /Y
