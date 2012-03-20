@@ -26,6 +26,24 @@ namespace Ramone.HyperMedia
 
 
     /// <summary>
+    /// Select a link identified by link relation and optional media-type.
+    /// </summary>
+    /// <param name="links"></param>
+    /// <param name="rel"></param>
+    /// <param name="mediaType"></param>
+    /// <returns></returns>
+    public static T Select<T>(this IEnumerable<T> links, string rel, MediaType mediaType)
+      where T : ISelectable
+    {
+      return Select<T>(links, rel, mediaType != null ? mediaType.FullType : null);
+      //Condition.Requires(links, "links").IsNotNull();
+      //Condition.Requires(rel, "rel").IsNotNull();
+
+      //return links.Where(l => l.RelationTypes.Any(r => string.Compare(r, rel, true) == 0) && (mediaType == null || l.MediaType == mediaType.FullType)).FirstOrDefault();
+    }
+
+
+    /// <summary>
     /// Create request from link.
     /// </summary>
     /// <param name="link"></param>

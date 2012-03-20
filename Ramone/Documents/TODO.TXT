@@ -16,6 +16,9 @@ Bind templates
 - Relativ URL
 - TESTS
 
+Test
+- public static T Select<T>(this IEnumerable<T> links, string rel, MediaType mediaType = null)
+
 ISelectable
 - Anvendes MediaType value object
 
@@ -29,6 +32,9 @@ Forms
 - Der mangler temmeligt mange tests ...
   - Default values for enctype and accept
   - accept-charset
+
+Resource<ExtensionData> data = request.Get<ExtensionData>();
+- data.Body.Links ... kan man i stedet gøre "data.Links"?
 
 Hvad er den nemmeste måde at dumpe fejlresultatet fra et request? F.eks. ved not-found eller not-authorized.
 - Test/demo!
