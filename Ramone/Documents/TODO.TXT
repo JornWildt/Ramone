@@ -2,10 +2,6 @@
 Version 1
 ---------
 
-Bind links
-- TESTS
-  - Must work with NULL baseUrl
-
 Bind templates
 - Absolut URL
 - Relativ URL
@@ -42,6 +38,7 @@ Atom
 - Link extensions som for Html.
 - Relative URLs
 - Absolutte URLs
+- Must work with NULL baseUrl
 
 Before releasing:
 - Include a license
@@ -122,6 +119,8 @@ Eksemplificering af hvordan man håndterer et service-dokument (ATOM, og det der
 ---------
 Version 2
 ---------
+
+Upload/download progress indication
 
 - Demo how HTML + forms + url-encoded data can be auto-generated (a'la Eric)
   - Still missing a generic domain data embedding in HTML

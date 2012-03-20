@@ -73,5 +73,17 @@ namespace Ramone.Tests.HyperMedia
       Assert.AreEqual("http://dr.dk/xxx/yyy?z=1", l.Parameters["href"]);
       Assert.AreEqual("http://dr.dk/xxx/yyy?z=1", l.HRef.AbsoluteUri);
     }
+
+
+    [Test]
+    public void WhenBaseUrlIsNullItHandlesAbsoluteLinks()
+    {
+      // Act
+      WebLink l = new WebLink(null, "http://dr.dk", "abc", "app/x", "hello");
+
+      // Assert
+      Assert.AreEqual("http://dr.dk/", l.Parameters["href"]);
+      Assert.AreEqual("http://dr.dk/", l.HRef.AbsoluteUri);
+    }
   }
 }

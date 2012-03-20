@@ -16,7 +16,7 @@ namespace Ramone.MediaTypes.Html
     /// <returns></returns>
     public static IEnumerable<Anchor> Anchors(this HtmlDocument html, Resource response)
     {
-      return Anchors(html, response.BaseUri);
+      return Anchors(html, response != null ? response.BaseUri : null);
     }
 
 
@@ -38,7 +38,7 @@ namespace Ramone.MediaTypes.Html
     /// <returns></returns>
     public static IEnumerable<Anchor> Anchors(this HtmlNode node, Resource response)
     {
-      return Anchors(node, response.BaseUri);
+      return Anchors(node, response != null ? response.BaseUri : null);
     }
 
 
@@ -59,7 +59,7 @@ namespace Ramone.MediaTypes.Html
     /// <returns></returns>
     public static IEnumerable<Anchor> Anchors(this HtmlNodeCollection nodes, Resource response)
     {
-      return Anchors(nodes, response.BaseUri);
+      return Anchors(nodes, response != null ? response.BaseUri : null);
     }
 
 
@@ -84,7 +84,7 @@ namespace Ramone.MediaTypes.Html
     /// <returns></returns>
     public static Anchor Anchor(this HtmlNode node, Resource response)
     {
-      return Anchor(node, response.BaseUri);
+      return Anchor(node, response != null ? response.BaseUri : null);
     }
 
 

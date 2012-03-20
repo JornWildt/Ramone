@@ -10,6 +10,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documents", "Documents", "{2615491B-5415-4FFF-A79F-1735FCF5E4E6}"
 	ProjectSection(SolutionItems) = preProject
 		post-build.bat = post-build.bat
+		README.TXT = README.TXT
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ramone.Tests.Common", "Ramone.Tests.Common\Ramone.Tests.Common.csproj", "{DD3B040F-3D75-4C46-BB54-CD06F594F894}"

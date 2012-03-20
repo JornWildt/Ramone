@@ -44,6 +44,6 @@ CREDITS
 Thanks to the OpenRasta (openrasta.org) and Restfulie 
 (restfulie.caelum.com.br) projects for inspiration.
 
-Thanks to cBrain (www.cbrain.com) for invensting some hours in the project.
+Thanks to cBrain (www.cbrain.com) for investing some hours in the project.
 
 

@@ -136,6 +136,41 @@ namespace Ramone.Tests.HyperMedia.Html
 
 
     [Test]
+    public void WhenBaseUrlIsNullItHandlesAbsoluteAnchorLinks()
+    {
+      // Arrange
+      string html = @"
+<html>
+  <body>
+    <p>Hello World: <a href=""http://link1"" rel=""next"">Link no. 1</a></p>
+  </body>
+</html>";
+      HtmlDocument doc = new HtmlDocument();
+      doc.LoadHtml(html);
+
+      // Act
+      ILink l1 = doc.Anchors((Uri)null).Select("next");
+      ILink l2 = doc.Anchors((Resource)null).Select("next");
+      ILink l3 = doc.DocumentNode.Anchors((Uri)null).Select("next");
+      ILink l4 = doc.DocumentNode.Anchors((Resource)null).Select("next");
+      ILink l5 = doc.DocumentNode.SelectNodes("//*").Anchors((Uri)null).Select("next");
+      ILink l6 = doc.DocumentNode.SelectNodes("//*").Anchors((Resource)null).Select("next");
+      ILink l7 = doc.DocumentNode.SelectNodes("//a").First().Anchor((Uri)null);
+      ILink l8 = doc.DocumentNode.SelectNodes("//a").First().Anchor((Resource)null);
+
+      // Assert
+      Assert.AreEqual("http://link1/", l1.HRef.AbsoluteUri);
+      Assert.AreEqual("http://link1/", l2.HRef.AbsoluteUri);
+      Assert.AreEqual("http://link1/", l3.HRef.AbsoluteUri);
+      Assert.AreEqual("http://link1/", l4.HRef.AbsoluteUri);
+      Assert.AreEqual("http://link1/", l5.HRef.AbsoluteUri);
+      Assert.AreEqual("http://link1/", l6.HRef.AbsoluteUri);
+      Assert.AreEqual("http://link1/", l7.HRef.AbsoluteUri);
+      Assert.AreEqual("http://link1/", l8.HRef.AbsoluteUri);
+    }
+
+
+    [Test]
     public void CanExtractHeadLinksFromHtmlDocument()
     {
       // Act
@@ -212,6 +247,44 @@ namespace Ramone.Tests.HyperMedia.Html
       ILink l1 = links[1];
       Assert.AreEqual(new Uri(BaseUrl, "mystyle.css"), l1.HRef);
       Assert.Contains("stylesheet", l1.RelationTypes.ToList());
+    }
+
+
+    [Test]
+    public void WhenBaseUrlIsNullItHandlesAbsoluteHeadLinks()
+    {
+      // Arrange
+      string html = @"
+<html>
+  <head>
+    <link rel=""search""
+          type=""application/opensearchdescription+xml"" 
+          href=""http://example.com""
+          title=""Content search"" />
+  </head>
+</html>";
+      HtmlDocument doc = new HtmlDocument();
+      doc.LoadHtml(html);
+
+      // Act
+      ILink l1 = doc.Links((Uri)null).Select("search");
+      ILink l2 = doc.Links((Resource)null).Select("search");
+      ILink l3 = doc.DocumentNode.Links((Uri)null).Select("search");
+      ILink l4 = doc.DocumentNode.Links((Resource)null).Select("search");
+      ILink l5 = doc.DocumentNode.SelectNodes("//*").Links((Uri)null).Select("search");
+      ILink l6 = doc.DocumentNode.SelectNodes("//*").Links((Resource)null).Select("search");
+      ILink l7 = doc.DocumentNode.SelectNodes("//link").First().Link((Uri)null);
+      ILink l8 = doc.DocumentNode.SelectNodes("//link").First().Link((Resource)null);
+
+      // Assert
+      Assert.AreEqual("http://example.com/", l1.HRef.AbsoluteUri);
+      Assert.AreEqual("http://example.com/", l2.HRef.AbsoluteUri);
+      Assert.AreEqual("http://example.com/", l3.HRef.AbsoluteUri);
+      Assert.AreEqual("http://example.com/", l4.HRef.AbsoluteUri);
+      Assert.AreEqual("http://example.com/", l5.HRef.AbsoluteUri);
+      Assert.AreEqual("http://example.com/", l6.HRef.AbsoluteUri);
+      Assert.AreEqual("http://example.com/", l7.HRef.AbsoluteUri);
+      Assert.AreEqual("http://example.com/", l8.HRef.AbsoluteUri);
     }
   }
 }

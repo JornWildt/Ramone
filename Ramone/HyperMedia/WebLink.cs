@@ -54,13 +54,13 @@ namespace Ramone.HyperMedia
 
 
     public WebLink(Uri baseUrl, string href, string relationType, MediaType mediaType, string title)
-      : this(new Uri(baseUrl, href), relationType, mediaType != null ? mediaType.FullType : null, title)
+      : this(baseUrl, relationType, mediaType != null ? mediaType.FullType : null, title)
     {
     }
 
 
     public WebLink(Uri baseUrl, string href, string relationType, string mediaType, string title)
-      : this(new Uri(baseUrl, href), relationType, mediaType, title)
+      : this(baseUrl != null ? new Uri(baseUrl, href) : new Uri(href), relationType, mediaType, title)
     {
     }
 
