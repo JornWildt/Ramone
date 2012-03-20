@@ -28,8 +28,8 @@ namespace Ramone.Tests.HyperMedia
       WebLink l1 = new WebLink(new Uri("http://dr.dk"), "http://dr.dk", "abc", "app/x", "hello");
 
       // Assert
-      Assert.AreEqual("http://dr.dk", l1.Parameters["href"]);
-      Assert.AreEqual("http://dr.dk", l1.HRef);
+      Assert.AreEqual("http://dr.dk/", l1.Parameters["href"]);
+      Assert.AreEqual("http://dr.dk/", l1.HRef.AbsoluteUri);
       Assert.AreEqual("abc", l1.Parameters["rel"]);
       Assert.AreEqual("abc", l1.RelationType);
       Assert.AreEqual("app/x", l1.Parameters["type"]);
@@ -46,14 +46,14 @@ namespace Ramone.Tests.HyperMedia
       WebLink l1 = new WebLink();
 
       // Act
-      l1.Parameters["href"] = "http://svt.se";
+      l1.Parameters["href"] = "http://svt.se/";
       l1.Parameters["rel"] = "xyz";
       l1.Parameters["type"] = "app/y";
       l1.Parameters["title"] = "bonsoir";
 
       // Assert
-      Assert.AreEqual("http://svt.se", l1.Parameters["href"]);
-      Assert.AreEqual("http://svt.se", l1.HRef);
+      Assert.AreEqual("http://svt.se/", l1.Parameters["href"]);
+      Assert.AreEqual("http://svt.se/", l1.HRef.AbsoluteUri);
       Assert.AreEqual("xyz", l1.Parameters["rel"]);
       Assert.AreEqual("xyz", l1.RelationType);
       Assert.AreEqual("app/y", l1.Parameters["type"]);
