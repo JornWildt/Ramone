@@ -33,6 +33,7 @@ namespace Ramone.Tests.HyperMedia.Html
       <p><a href=""http://link2"" rel=""up"">Link no. 2</a></p>
       <a>B-Bomb!</a>
     </div>
+    <a href=""last-page.html"" rel=""last"">Next page</a>
   </body>
 </html>";
 
@@ -52,7 +53,7 @@ namespace Ramone.Tests.HyperMedia.Html
       List<Anchor> links = HtmlDoc.Anchors(BaseUrl).ToList();
 
       // Assert
-      Assert.AreEqual(4, links.Count);
+      Assert.AreEqual(5, links.Count);
 
       ILink l1 = links[0];
       Assert.AreEqual("http://link1/", l1.HRef.AbsoluteUri);
@@ -86,7 +87,7 @@ namespace Ramone.Tests.HyperMedia.Html
 
 
     [Test]
-    public void CanExtractLinkByRelationFromHtmlDocument()
+    public void CanExtractAnchorLinkByRelationFromHtmlDocument()
     {
       // Act
       ILink link1 = HtmlDoc.Anchors(BaseUrl).Select("next");
@@ -104,7 +105,7 @@ namespace Ramone.Tests.HyperMedia.Html
 
 
     [Test]
-    public void CanExtractLinkByRelationFromHtmlNode()
+    public void CanExtractAnchorLinkByRelationFromHtmlNode()
     {
       // Arrange (get sub-node)
       HtmlNode node = HtmlDoc.DocumentNode.SelectNodes(@"//div[@id=""set1""]").First();
@@ -119,6 +120,18 @@ namespace Ramone.Tests.HyperMedia.Html
       Assert.AreEqual("http://link2/", link2.HRef.AbsoluteUri);
       Assert.AreEqual("Link no. 2", link2.Title);
       Assert.Contains("up", link2.RelationTypes.ToList());
+    }
+
+
+    [Test]
+    public void ItIncludesBaseUrlWhenCreatingRelativeAnchorLinks()
+    {
+      // Act
+      ILink link1 = HtmlDoc.Anchors(BaseUrl).Select("last");
+
+      // Assert
+      Assert.AreEqual(new Uri(BaseUrl, "last-page.html"), link1.HRef);
+      Assert.Contains("last", link1.RelationTypes.ToList());
     }
 
 
@@ -140,7 +153,7 @@ namespace Ramone.Tests.HyperMedia.Html
 
 
     [Test]
-    public void CanExtractLinksFromNode()
+    public void CanExtractHeadLinksFromNode()
     {
       // Act
       List<Link> links = HtmlDoc.DocumentNode.SelectNodes("//head").First().Links(BaseUrl).ToList();
@@ -157,7 +170,7 @@ namespace Ramone.Tests.HyperMedia.Html
 
 
     [Test]
-    public void CanExtractLinksFromNodes()
+    public void CanExtractHeadLinksFromNodes()
     {
       // Act
       List<Link> links = HtmlDoc.DocumentNode.SelectNodes("//head").Links(BaseUrl).ToList();
@@ -174,7 +187,7 @@ namespace Ramone.Tests.HyperMedia.Html
 
 
     [Test]
-    public void CanExtractLinkFromNode()
+    public void CanExtractHeadLinkFromNode()
     {
       // Act
       ILink link = HtmlDoc.DocumentNode.SelectNodes("//head/link").First().Link(BaseUrl);
@@ -184,6 +197,21 @@ namespace Ramone.Tests.HyperMedia.Html
       Assert.AreEqual("Content search", link.Title);
       Assert.Contains("search", link.RelationTypes.ToList());
       Assert.AreEqual("application/opensearchdescription+xml", link.MediaType);
+    }
+
+
+    [Test]
+    public void ItIncludesBaseUrlWhenCreatingRelativeHeadLinks()
+    {
+      // Act
+      List<Link> links = HtmlDoc.Links(BaseUrl).ToList();
+
+      // Assert
+      Assert.AreEqual(2, links.Count);
+
+      ILink l1 = links[1];
+      Assert.AreEqual(new Uri(BaseUrl, "mystyle.css"), l1.HRef);
+      Assert.Contains("stylesheet", l1.RelationTypes.ToList());
     }
   }
 }

@@ -3,12 +3,7 @@ Version 1
 ---------
 
 Bind links
-- Absolut URL
-- Relativ URL
 - TESTS
-  - WebLink parser
-  - Html
-  - Atom
   - Must work with NULL baseUrl
 
 Bind templates
@@ -43,6 +38,10 @@ Test scenarie hvor der returneres "NoContent" og man forsøger at hente content 
 
 Kan Ramone håndtere nedarvning således at man kan bede om en "Part" men få en "Person" som nedarver fra Part?
 
+Atom
+- Link extensions som for Html.
+- Relative URLs
+- Absolutte URLs
 
 Before releasing:
 - Include a license

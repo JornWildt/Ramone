@@ -61,5 +61,17 @@ namespace Ramone.Tests.HyperMedia
       Assert.AreEqual("bonsoir", l1.Parameters["title"]);
       Assert.AreEqual("bonsoir", l1.Title);
     }
+
+
+    [Test]
+    public void ItDoesIncludeBaseUrlWhenCreatingRelativeLinks()
+    {
+      // Act
+      WebLink l = new WebLink(new Uri("http://dr.dk"), "/xxx/yyy?z=1", "abc", "app/x", "hello");
+
+      // Assert
+      Assert.AreEqual("http://dr.dk/xxx/yyy?z=1", l.Parameters["href"]);
+      Assert.AreEqual("http://dr.dk/xxx/yyy?z=1", l.HRef.AbsoluteUri);
+    }
   }
 }
