@@ -14,7 +14,7 @@ namespace Ramone.Tests.MediaTypes
       RamoneRequest fileReq = Session.Bind(FileTemplate);
 
       // Act
-      RamoneResponse<Stream> response = fileReq.Accept("application/octet-stream").Get<Stream>();
+      Resource<Stream> response = fileReq.Accept("application/octet-stream").Get<Stream>();
 
       // Assert
       Assert.AreEqual(12, response.ContentLength);
@@ -36,7 +36,7 @@ namespace Ramone.Tests.MediaTypes
       // Act
       using (MemoryStream s = new MemoryStream(new byte[] { 10,2,30,4 }))
       {
-        RamoneResponse<Stream> response =
+        Resource<Stream> response =
           fileReq.Accept("application/octet-stream").ContentType("application/octet-stream").Post<Stream>(s);
 
         // Assert

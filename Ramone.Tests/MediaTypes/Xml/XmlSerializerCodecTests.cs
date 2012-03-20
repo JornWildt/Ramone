@@ -14,7 +14,7 @@ namespace Ramone.Tests.MediaTypes.Xml
       UnregisteredClass data = new UnregisteredClass { Text = "Hello" };
       RamoneRequest request = Session.Bind(XmlEchoTemplate);
 
-      RamoneResponse<UnregisteredClass> response = request.Accept("application/xml").ContentType("application/xml").Post<UnregisteredClass>(data);
+      Resource<UnregisteredClass> response = request.Accept("application/xml").ContentType("application/xml").Post<UnregisteredClass>(data);
 
       Assert.AreEqual(data.Text, response.Body.Text);
     }
@@ -26,7 +26,7 @@ namespace Ramone.Tests.MediaTypes.Xml
       UnregisteredClass data = new UnregisteredClass { Text = "Hello" };
       RamoneRequest request = Session.Bind(XmlEchoTemplate);
 
-      RamoneResponse<UnregisteredClass> response = request.AsXml().AcceptXml().Post<UnregisteredClass>(data);
+      Resource<UnregisteredClass> response = request.AsXml().AcceptXml().Post<UnregisteredClass>(data);
 
       Assert.AreEqual(data.Text, response.Body.Text);
     }
@@ -38,7 +38,7 @@ namespace Ramone.Tests.MediaTypes.Xml
       RegisteredClass data = new RegisteredClass { Title = "The World" };
       RamoneRequest request = Session.Bind(XmlEchoTemplate);
 
-      RamoneResponse<RegisteredClass> response = request.Post<RegisteredClass>(data);
+      Resource<RegisteredClass> response = request.Post<RegisteredClass>(data);
 
       Assert.AreEqual(data.Title, response.Body.Title);
     }
@@ -50,7 +50,7 @@ namespace Ramone.Tests.MediaTypes.Xml
       RegisteredClass data = new RegisteredClass { Title = "The World", Date = DateTime.Now };
       RamoneRequest request = Session.Bind(XmlEchoTemplate);
 
-      RamoneResponse<RegisteredClass> response = request.Post<RegisteredClass>(data);
+      Resource<RegisteredClass> response = request.Post<RegisteredClass>(data);
 
       Assert.AreEqual(data.Title, response.Body.Title);
       Assert.AreEqual(data.Date, response.Body.Date);

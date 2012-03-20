@@ -34,7 +34,7 @@ namespace Ramone.Tests
       RamoneRequest dossierReq = Session.Bind(DossierTemplate, new { id = 8 });
 
       // Act
-      RamoneResponse response1 = dossierReq.Execute("GET");
+      Resource response1 = dossierReq.Execute("GET");
 
       // Make sure method is actually taken from parameter
       AssertThrows<WebException>(() => dossierReq.Execute("UNKNOWN"));
@@ -76,7 +76,7 @@ namespace Ramone.Tests
       RamoneRequest dossiersReq = Session.Request(DossiersUrl);
 
       // Act
-      RamoneResponse response = dossiersReq.Execute("POST", MyDossier);
+      Resource response = dossiersReq.Execute("POST", MyDossier);
       // Make sure method is actually taken from parameter
       AssertThrows<WebException>(() => dossiersReq.Execute("UNKNOWN", MyDossier));
 

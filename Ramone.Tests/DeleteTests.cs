@@ -23,7 +23,7 @@ namespace Ramone.Tests
     public void CanDeleteAndIgnoreReturnedBody()
     {
       // Act
-      RamoneResponse response = DossierReq.Delete();
+      Resource response = DossierReq.Delete();
 
       // Assert
       Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
@@ -34,7 +34,7 @@ namespace Ramone.Tests
     public void CanDeleteAndGetResult()
     {
       // Act
-      RamoneResponse<string> response = DossierReq.Delete<string>();
+      Resource<string> response = DossierReq.Delete<string>();
 
       // Assert
       Assert.AreEqual("Deleted, yup!", response.Body);

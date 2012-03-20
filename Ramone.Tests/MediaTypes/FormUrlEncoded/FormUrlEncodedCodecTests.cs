@@ -20,7 +20,7 @@ namespace Ramone.Tests.MediaTypes.FormUrlEncoded
       RamoneRequest formdataReq = Session.Bind(MultipartFormDataTemplate);
 
       // Act
-      RamoneResponse<string> response = formdataReq.Accept("text/plain").ContentType("application/x-www-form-urlencoded").Post<string>(data);
+      Resource<string> response = formdataReq.Accept("text/plain").ContentType("application/x-www-form-urlencoded").Post<string>(data);
 
       // Assert
       Assert.AreEqual("application/x-www-form-urlencoded", response.Headers["x-contenttype"]);
@@ -36,7 +36,7 @@ namespace Ramone.Tests.MediaTypes.FormUrlEncoded
       RamoneRequest formdataReq = Session.Bind(MultipartFormDataTemplate);
 
       // Act
-      RamoneResponse<string> response = formdataReq.Accept("text/plain").AsFormUrlEncoded().Post<string>(data);
+      Resource<string> response = formdataReq.Accept("text/plain").AsFormUrlEncoded().Post<string>(data);
 
       // Assert
       Assert.AreEqual("application/x-www-form-urlencoded", response.Headers["x-contenttype"]);
@@ -60,7 +60,7 @@ namespace Ramone.Tests.MediaTypes.FormUrlEncoded
       RamoneRequest formdataReq = Session.Bind(MultipartFormDataTemplate);
 
       // Act
-      RamoneResponse<string> response = formdataReq.Accept("text/plain").Post<string>(data);
+      Resource<string> response = formdataReq.Accept("text/plain").Post<string>(data);
 
       // Assert
       Assert.AreEqual("application/x-www-form-urlencoded", response.Headers["x-contenttype"]);
@@ -77,7 +77,7 @@ namespace Ramone.Tests.MediaTypes.FormUrlEncoded
       RamoneRequest formdataReq = Session.Bind(MultipartFormDataTemplate);
 
       // Act
-      RamoneResponse<string> response = formdataReq.Accept("text/plain")
+      Resource<string> response = formdataReq.Accept("text/plain")
                                                    .Charset(charset)
                                                    .AsFormUrlEncoded()
                                                    .Post<string>(data);
@@ -124,7 +124,7 @@ namespace Ramone.Tests.MediaTypes.FormUrlEncoded
       RamoneRequest request = Session.Bind(ComplexClassTemplate);
 
       // Act
-      RamoneResponse<string> response = request.Accept("text/plain")
+      Resource<string> response = request.Accept("text/plain")
                                                .AsFormUrlEncoded()
                                                .Post<string>(o);
 
@@ -141,7 +141,7 @@ namespace Ramone.Tests.MediaTypes.FormUrlEncoded
       RamoneRequest request = Session.Bind(FormUrlEncodedTemplate);
 
       // Act
-      RamoneResponse<FormUrlEncodedData> response = request.Accept("application/x-www-form-urlencoded").Get<FormUrlEncodedData>();
+      Resource<FormUrlEncodedData> response = request.Accept("application/x-www-form-urlencoded").Get<FormUrlEncodedData>();
       FormUrlEncodedData data = response.Body;
 
       // Assert
@@ -157,7 +157,7 @@ namespace Ramone.Tests.MediaTypes.FormUrlEncoded
       RamoneRequest request = Session.Bind(FormUrlEncodedTemplate);
 
       // Act
-      RamoneResponse<NameValueCollection> response = request.Accept("application/x-www-form-urlencoded").Get<NameValueCollection>();
+      Resource<NameValueCollection> response = request.Accept("application/x-www-form-urlencoded").Get<NameValueCollection>();
       NameValueCollection data = response.Body;
 
       // Assert

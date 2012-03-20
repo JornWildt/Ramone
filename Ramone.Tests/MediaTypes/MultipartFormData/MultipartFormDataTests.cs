@@ -20,7 +20,7 @@ namespace Ramone.Tests.MediaTypes.MultipartFormData
       RamoneRequest formdataReq = Session.Bind(MultipartFormDataTemplate);
 
       // Act
-      RamoneResponse<string> response = formdataReq.Accept("text/plain").ContentType("multipart/form-data").Post<string>(data);
+      Resource<string> response = formdataReq.Accept("text/plain").ContentType("multipart/form-data").Post<string>(data);
 
       // Assert
       Assert.IsTrue(response.Headers["x-contenttype"].StartsWith("multipart/form-data"));
@@ -36,7 +36,7 @@ namespace Ramone.Tests.MediaTypes.MultipartFormData
       RamoneRequest formdataReq = Session.Bind(MultipartFormDataTemplate);
 
       // Act
-      RamoneResponse<string> response = formdataReq.Accept("text/plain").AsMultipartFormData().Post<string>(data);
+      Resource<string> response = formdataReq.Accept("text/plain").AsMultipartFormData().Post<string>(data);
 
       // Assert
       Assert.IsTrue(response.Headers["x-contenttype"].StartsWith("multipart/form-data"));
@@ -62,7 +62,7 @@ namespace Ramone.Tests.MediaTypes.MultipartFormData
       RamoneRequest formdataReq = Session.Bind(MultipartFormDataFileTemplate);
 
       // Act
-      RamoneResponse<string> response = formdataReq.Accept("text/plain").ContentType("multipart/form-data").Post<string>(data);
+      Resource<string> response = formdataReq.Accept("text/plain").ContentType("multipart/form-data").Post<string>(data);
 
       // Assert
       Assert.IsTrue(response.Headers["x-contenttype"].StartsWith("multipart/form-data"));
@@ -79,7 +79,7 @@ namespace Ramone.Tests.MediaTypes.MultipartFormData
       RamoneRequest formdataReq = Session.Bind(MultipartFormDataFileTemplate);
 
       // Act
-      RamoneResponse<string> response = formdataReq.Accept("text/plain").ContentType("multipart/form-data").Post<string>(data);
+      Resource<string> response = formdataReq.Accept("text/plain").ContentType("multipart/form-data").Post<string>(data);
 
       // Assert
       Assert.IsTrue(response.Headers["x-contenttype"].StartsWith("multipart/form-data"));
@@ -96,7 +96,7 @@ namespace Ramone.Tests.MediaTypes.MultipartFormData
       RamoneRequest formdataReq = Session.Bind(MultipartFormDataFileTemplate);
 
       // Act
-      RamoneResponse<string> response = formdataReq.Accept("text/plain").ContentType("multipart/form-data").Post<string>(data);
+      Resource<string> response = formdataReq.Accept("text/plain").ContentType("multipart/form-data").Post<string>(data);
 
       // Assert
       Assert.IsTrue(response.Headers["x-contenttype"].StartsWith("multipart/form-data"));
@@ -112,7 +112,7 @@ namespace Ramone.Tests.MediaTypes.MultipartFormData
       RamoneRequest formdataReq = Session.Bind(MultipartFormDataTemplate);
 
       // Act
-      RamoneResponse<string> response = formdataReq.Accept("text/plain").ContentType("multipart/form-data").Post<string>(data);
+      Resource<string> response = formdataReq.Accept("text/plain").ContentType("multipart/form-data").Post<string>(data);
 
       // Assert
       Assert.IsTrue(response.Headers["x-contenttype"].StartsWith("multipart/form-data"));
@@ -130,7 +130,7 @@ namespace Ramone.Tests.MediaTypes.MultipartFormData
       RamoneRequest formdataReq = Session.Bind(MultipartFormDataTemplate);
 
       // Act
-      RamoneResponse<string> response = formdataReq.Accept("text/plain")
+      Resource<string> response = formdataReq.Accept("text/plain")
                                                    .AcceptCharset(charsetOut)
                                                    .Charset(charsetIn)
                                                    .ContentType("multipart/form-data")
@@ -178,7 +178,7 @@ namespace Ramone.Tests.MediaTypes.MultipartFormData
       RamoneRequest request = Session.Bind(ComplexClassTemplate);
 
       // Act
-      RamoneResponse<string> response = request.Accept("text/plain")
+      Resource<string> response = request.Accept("text/plain")
                                                .AsMultipartFormData()
                                                .Post<string>(o);
 

@@ -125,7 +125,7 @@ namespace Ramone.Tests.MediaTypes.Json
       UnregisteredClass data = new UnregisteredClass { Text = "Hello" };
       RamoneRequest request = Session.Bind(AnyEchoTemplate);
 
-      RamoneResponse<UnregisteredClass> response = request.Accept("application/json").ContentType("application/json").Post<UnregisteredClass>(data);
+      Resource<UnregisteredClass> response = request.Accept("application/json").ContentType("application/json").Post<UnregisteredClass>(data);
 
       Assert.AreEqual(data.Text, response.Body.Text);
     }
@@ -137,7 +137,7 @@ namespace Ramone.Tests.MediaTypes.Json
       UnregisteredClass data = new UnregisteredClass { Text = "Hello" };
       RamoneRequest request = Session.Bind(AnyEchoTemplate);
 
-      RamoneResponse<UnregisteredClass> response = request.AsJson().AcceptJson().Post<UnregisteredClass>(data);
+      Resource<UnregisteredClass> response = request.AsJson().AcceptJson().Post<UnregisteredClass>(data);
 
       Assert.AreEqual(data.Text, response.Body.Text);
     }

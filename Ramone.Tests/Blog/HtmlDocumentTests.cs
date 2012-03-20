@@ -58,7 +58,7 @@ namespace Ramone.Tests.Blog
       // Act ...
 
       // - GET blog
-      RamoneResponse<HtmlDocument> blog = blogRequest.Get<HtmlDocument>();
+      Resource<HtmlDocument> blog = blogRequest.Get<HtmlDocument>();
 
       // - Select first HTML anchor node with rel="author" as a anchor link
       //   This uses HtmlDocument specific extension methods to convert from anchor to ILink
@@ -86,7 +86,7 @@ namespace Ramone.Tests.Blog
       // Act ...
 
       // - GET blog
-      RamoneResponse<HtmlDocument> blog = blogRequest.Get<HtmlDocument>();
+      Resource<HtmlDocument> blog = blogRequest.Get<HtmlDocument>();
 
       // - Extract "post" nodes
       HtmlNodeCollection posts = blog.Body.DocumentNode.SelectNodes(@"//*[@class=""post""]");
@@ -125,13 +125,13 @@ namespace Ramone.Tests.Blog
       // Act ...
 
       // - GET blog
-      RamoneResponse<HtmlDocument> blog = blogRequest.Get<HtmlDocument>();
+      Resource<HtmlDocument> blog = blogRequest.Get<HtmlDocument>();
 
       // - Extract "edit" anchor
       ILink editLink = blog.Body.DocumentNode.SelectNodes(@"//a[@rel=""edit""]").First().Anchor(blog);
 
       // - GET form describing how to input
-      RamoneResponse<HtmlDocument> createDescriptor = editLink.Follow(Session).Get<HtmlDocument>();
+      Resource<HtmlDocument> createDescriptor = editLink.Follow(Session).Get<HtmlDocument>();
 
       // - Extract "create" form
       IKeyValueForm form = createDescriptor.Body.DocumentNode.SelectNodes(@"//form[@id=""create""]").First().Form(createDescriptor);

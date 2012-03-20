@@ -5,7 +5,7 @@ using Ramone.HyperMedia;
 
 namespace Ramone
 {
-  public class RamoneResponse
+  public class Resource
   {
     public HttpWebResponse Response { get; protected set; }
 
@@ -20,7 +20,7 @@ namespace Ramone
     public IRamoneSession Session { get; protected set; }
 
 
-    public RamoneResponse(HttpWebResponse response, IRamoneSession session)
+    public Resource(HttpWebResponse response, IRamoneSession session)
     {
       Response = response;
       try
@@ -95,16 +95,16 @@ namespace Ramone
   }
 
 
-  public class RamoneResponse<TBody> : RamoneResponse
+  public class Resource<TBody> : Resource
     where TBody : class
   {
-    public RamoneResponse(HttpWebResponse response, IRamoneSession session)
+    public Resource(HttpWebResponse response, IRamoneSession session)
       : base(response, session)
     {
     }
 
 
-    public RamoneResponse(RamoneResponse src)
+    public Resource(Resource src)
       : base(src.Response, src.Session)
     {
     }

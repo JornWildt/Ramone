@@ -174,7 +174,7 @@ namespace Ramone
 
     #region Standard methods
 
-    public RamoneResponse<TResponse> Get<TResponse>(string accept = null) where TResponse : class
+    public Resource<TResponse> Get<TResponse>(string accept = null) where TResponse : class
     {
       if (accept != null)
         Accept(accept);
@@ -182,7 +182,7 @@ namespace Ramone
     }
 
 
-    public RamoneResponse Get(string accept = null)
+    public Resource Get(string accept = null)
     {
       if (accept != null)
         Accept(accept);
@@ -190,59 +190,59 @@ namespace Ramone
     }
 
 
-    public RamoneResponse<TResponse> Post<TResponse>() where TResponse : class
+    public Resource<TResponse> Post<TResponse>() where TResponse : class
     {
       return Post<TResponse>(null);
     }
 
 
-    public RamoneResponse<TResponse> Post<TResponse>(object body) where TResponse : class
+    public Resource<TResponse> Post<TResponse>(object body) where TResponse : class
     {
       Body(body);
       return Request<TResponse>("POST");
     }
 
 
-    public RamoneResponse Post(object body)
+    public Resource Post(object body)
     {
       Body(body);
       return Request("POST");
     }
 
 
-    public RamoneResponse Post()
+    public Resource Post()
     {
       return Post(null);
     }
 
 
-    public RamoneResponse<TResponse> Put<TResponse>() where TResponse : class
+    public Resource<TResponse> Put<TResponse>() where TResponse : class
     {
       return Put<TResponse>(null);
     }
 
 
-    public RamoneResponse<TResponse> Put<TResponse>(object body) where TResponse : class
+    public Resource<TResponse> Put<TResponse>(object body) where TResponse : class
     {
       Body(body);
       return Request<TResponse>("PUT");
     }
 
 
-    public RamoneResponse Put(object body)
+    public Resource Put(object body)
     {
       Body(body);
       return Request("PUT");
     }
 
 
-    public RamoneResponse Put()
+    public Resource Put()
     {
       return Put(null);
     }
 
 
-    public RamoneResponse<TResponse> Delete<TResponse>(string accept = null) where TResponse : class
+    public Resource<TResponse> Delete<TResponse>(string accept = null) where TResponse : class
     {
       if (accept != null)
         Accept(accept);
@@ -250,7 +250,7 @@ namespace Ramone
     }
 
 
-    public RamoneResponse Delete(string accept = null)
+    public Resource Delete(string accept = null)
     {
       if (accept != null)
         Accept(accept);
@@ -258,13 +258,13 @@ namespace Ramone
     }
 
 
-    public RamoneResponse Head()
+    public Resource Head()
     {
       return Request("HEAD");
     }
 
 
-    public RamoneResponse<TResponse> Options<TResponse>(string accept = null) where TResponse : class
+    public Resource<TResponse> Options<TResponse>(string accept = null) where TResponse : class
     {
       if (accept != null)
         Accept(accept);
@@ -272,7 +272,7 @@ namespace Ramone
     }
 
 
-    public RamoneResponse Options(string accept = null)
+    public Resource Options(string accept = null)
     {
       if (accept != null)
         Accept(accept);
@@ -284,7 +284,7 @@ namespace Ramone
 
     #region Generic methods
 
-    public RamoneResponse<TResponse> Execute<TResponse>(string method, string accept = null) where TResponse : class
+    public Resource<TResponse> Execute<TResponse>(string method, string accept = null) where TResponse : class
     {
       if (accept != null)
         Accept(accept);
@@ -292,7 +292,7 @@ namespace Ramone
     }
 
 
-    public RamoneResponse Execute(string method, string accept = null)
+    public Resource Execute(string method, string accept = null)
     {
       if (accept != null)
         Accept(accept);
@@ -300,21 +300,21 @@ namespace Ramone
     }
 
 
-    public RamoneResponse<TResponse> Execute<TResponse>(string method, object body) where TResponse : class
+    public Resource<TResponse> Execute<TResponse>(string method, object body) where TResponse : class
     {
       Body(body);
       return Request<TResponse>(method);
     }
 
 
-    public RamoneResponse Execute(string method, object body)
+    public Resource Execute(string method, object body)
     {
       Body(body);
       return Request(method);
     }
 
 
-    public RamoneResponse<TResponse> Submit<TResponse>() where TResponse : class
+    public Resource<TResponse> Submit<TResponse>() where TResponse : class
     {
       if (SubmitMethod == null)
         throw new InvalidOperationException("Missing method for Submit(). Call Method() first.");
@@ -322,7 +322,7 @@ namespace Ramone
     }
 
 
-    public RamoneResponse Submit()
+    public Resource Submit()
     {
       if (SubmitMethod == null)
         throw new InvalidOperationException("Missing method for Submit(). Call Method() first.");
@@ -362,20 +362,20 @@ namespace Ramone
     }
 
 
-    protected RamoneResponse<TResponse> Request<TResponse>(string method, int retryLevel = 0) where TResponse : class
+    protected Resource<TResponse> Request<TResponse>(string method, int retryLevel = 0) where TResponse : class
     {
-      RamoneResponse r = Request(method, req => req.Accept = GetAcceptHeader(typeof(TResponse)), retryLevel);
-      return new RamoneResponse<TResponse>(r);
+      Resource r = Request(method, req => req.Accept = GetAcceptHeader(typeof(TResponse)), retryLevel);
+      return new Resource<TResponse>(r);
     }
 
 
-    protected RamoneResponse Request(string method, int retryLevel = 0)
+    protected Resource Request(string method, int retryLevel = 0)
     {
       return Request(method, req => req.Accept = GetAcceptHeader(null), retryLevel);
     }
 
 
-    protected RamoneResponse Request(string method, Action<HttpWebRequest> requestModifier, int retryLevel = 0)
+    protected Resource Request(string method, Action<HttpWebRequest> requestModifier, int retryLevel = 0)
     {
       if (retryLevel > 2)
         return null;
@@ -432,7 +432,7 @@ namespace Ramone
         }
 
         HttpWebResponse response = (HttpWebResponse)request.GetResponse();
-        return new RamoneResponse(response, Session);
+        return new Resource(response, Session);
       }
       catch (WebException ex)
       {
@@ -490,43 +490,43 @@ namespace Ramone
 
     #region Standard methods
 
-    public new RamoneResponse<TResponse> Get(string accept = null)
+    public new Resource<TResponse> Get(string accept = null)
     {
       return Get<TResponse>(accept);
     }
 
 
-    public new RamoneResponse<TResponse> Post(object body)
+    public new Resource<TResponse> Post(object body)
     {
       return Post<TResponse>(body);
     }
 
 
-    public new RamoneResponse<TResponse> Post()
+    public new Resource<TResponse> Post()
     {
       return Post<TResponse>();
     }
 
 
-    public new RamoneResponse<TResponse> Put(object body)
+    public new Resource<TResponse> Put(object body)
     {
       return Put<TResponse>(body);
     }
 
 
-    public new RamoneResponse<TResponse> Put()
+    public new Resource<TResponse> Put()
     {
       return Put<TResponse>();
     }
 
 
-    public RamoneResponse<TResponse> Delete()
+    public Resource<TResponse> Delete()
     {
       return Delete<TResponse>();
     }
 
 
-    public new RamoneResponse<TResponse> Options(string accept = null)
+    public new Resource<TResponse> Options(string accept = null)
     {
       return Options<TResponse>(accept);
     }
@@ -536,13 +536,13 @@ namespace Ramone
 
     #region Generic methods
 
-    public new RamoneResponse<TResponse> Execute(string method, string accept = null)
+    public new Resource<TResponse> Execute(string method, string accept = null)
     {
       return Execute<TResponse>(method, accept);
     }
 
 
-    public new RamoneResponse<TResponse> Execute(string method, object body)
+    public new Resource<TResponse> Execute(string method, object body)
     {
       return Execute<TResponse>(method, body);
     }

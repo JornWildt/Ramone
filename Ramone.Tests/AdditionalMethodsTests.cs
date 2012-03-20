@@ -14,7 +14,7 @@ namespace Ramone.Tests
       RamoneRequest dossierReq = Session.Bind(DossierTemplate, new { id = 8 });
 
       // Act
-      RamoneResponse response = dossierReq.Head();
+      Resource response = dossierReq.Head();
 
       // Assert
       Assert.IsNotNull(response);
@@ -29,7 +29,7 @@ namespace Ramone.Tests
       RamoneRequest dossierReq = Session.Bind(DossierTemplate, new { id = 8 });
 
       // Act
-      RamoneResponse response = dossierReq.Options();
+      Resource response = dossierReq.Options();
 
       // Assert
       Assert.IsNotNull(response);
@@ -44,9 +44,9 @@ namespace Ramone.Tests
       RamoneRequest dossierReq = Session.Bind(DossierTemplate, new { id = 8 });
 
       // Act
-      RamoneResponse<string> response1 = dossierReq.Options<string>();
-      RamoneResponse<string> response2 = dossierReq.Accept<string>().Options();
-      RamoneResponse response3 = dossierReq.Options("text/plain");
+      Resource<string> response1 = dossierReq.Options<string>();
+      Resource<string> response2 = dossierReq.Accept<string>().Options();
+      Resource response3 = dossierReq.Options("text/plain");
 
       // Assert
       Assert.IsNotNull(response1);

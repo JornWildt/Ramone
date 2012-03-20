@@ -20,7 +20,7 @@ namespace Ramone.Tests
       RamoneRequest request = Session.Request(DossiersUrl);
 
       // Act
-      RamoneResponse<Dossier> response = request.Post<Dossier>(dossier);
+      Resource<Dossier> response = request.Post<Dossier>(dossier);
       
       // Assert
       Uri createdDossierLocation = response.CreatedLocation();
@@ -45,7 +45,7 @@ namespace Ramone.Tests
       RamoneRequest request = Session.Request(DossiersUrl);
 
       // Act
-      RamoneResponse<Dossier> response = request.Post<Dossier>(dossier);
+      Resource<Dossier> response = request.Post<Dossier>(dossier);
 
       // Assert that server does as expected
       Uri createdDossierLocation = response.CreatedLocation();

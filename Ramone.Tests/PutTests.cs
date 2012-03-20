@@ -29,7 +29,7 @@ namespace Ramone.Tests
     public void CanPutAndIgnoreReturnedBody()
     {
       // Act
-      RamoneResponse response = DossierReq.Put(MyDossier);
+      Resource response = DossierReq.Put(MyDossier);
 
       // Assert
       Assert.IsNotNull(response);
@@ -40,7 +40,7 @@ namespace Ramone.Tests
     public void CanPutAndGetResult()
     {
       // Act
-      RamoneResponse<Dossier> response = DossierReq.Put<Dossier>(MyDossier);
+      Resource<Dossier> response = DossierReq.Put<Dossier>(MyDossier);
       Dossier newDossier = response.Body;
 
       // Assert
@@ -77,7 +77,7 @@ namespace Ramone.Tests
       RamoneRequest request = Session.Bind(AnyEchoTemplate);
 
       // Act
-      RamoneResponse<string> response = request.Accept("text/plain").ContentType("application/x-www-url-formencoded").Put<string>();
+      Resource<string> response = request.Accept("text/plain").ContentType("application/x-www-url-formencoded").Put<string>();
 
       // Assert
       Assert.AreEqual(null, response.Body);
@@ -91,7 +91,7 @@ namespace Ramone.Tests
       RamoneRequest request = Session.Bind(AnyEchoTemplate);
 
       // Act
-      RamoneResponse response = request.Accept("text/plain").ContentType("application/x-www-url-formencoded").Put();
+      Resource response = request.Accept("text/plain").ContentType("application/x-www-url-formencoded").Put();
 
       // Assert
       Assert.AreEqual(null, response.Body);

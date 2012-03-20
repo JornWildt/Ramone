@@ -113,7 +113,7 @@ namespace Ramone.Tests.Blog
       Resources.Blog blog = blogRequest.Get<Resources.Blog>().Body;
 
       // - Follow "edit" link and GET form describing how to input
-      RamoneResponse<Resources.CreatePostDescriptor> createDescriptorResponse 
+      Resource<Resources.CreatePostDescriptor> createDescriptorResponse 
         = blog.Links.Follow(Session, "edit").Get<Resources.CreatePostDescriptor>();
 
       // - Extract "create" form

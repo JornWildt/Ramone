@@ -20,9 +20,9 @@ namespace Ramone
     }
 
 
-    public static RamoneResponse<T> AsRamoneResponse<T>(this HttpWebResponse response, IRamoneSession session) where T : class
+    public static Resource<T> AsRamoneResponse<T>(this HttpWebResponse response, IRamoneSession session) where T : class
     {
-      return new RamoneResponse<T>(response, session);
+      return new Resource<T>(response, session);
     }
 
 

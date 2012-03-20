@@ -112,7 +112,7 @@ namespace Ramone.Tests
     {
       // Arrange
       RamoneRequest dossierReq = Session.Bind(DossierTemplate, new { id = 8 });
-      RamoneResponse<Dossier> response = dossierReq.Get<Dossier>();
+      Resource<Dossier> response = dossierReq.Get<Dossier>();
 
       // Act
       RamoneRequest documentsReq = response.Body.Links.Follow(Session, CMSConstants.DocumentsLinkRelType);
@@ -150,7 +150,7 @@ namespace Ramone.Tests
       RamoneRequest dossierReq = Session.Bind(DossierTemplate, new { id = 8 });
 
       // Act
-      RamoneResponse response = dossierReq.Get();
+      Resource response = dossierReq.Get();
     }
 
 

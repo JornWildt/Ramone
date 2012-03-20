@@ -34,7 +34,7 @@ namespace Ramone.Tests.MediaTypes.Xml
       RamoneRequest request = Session.Request(DossiersUrl);
 
       // Act
-      RamoneResponse<Dossier> response = request.ContentType("application/xml").Post<Dossier>(dossierDoc);
+      Resource<Dossier> response = request.ContentType("application/xml").Post<Dossier>(dossierDoc);
 
       // Assert
       Dossier createdDossier = response.Body;
@@ -76,7 +76,7 @@ namespace Ramone.Tests.MediaTypes.Xml
       RamoneRequest request = Session.Bind(EncodingTemplate, new { type = "xml" });
 
       // Act
-      RamoneResponse<XmlDocument> response = request.AcceptCharset(charsetOut)
+      Resource<XmlDocument> response = request.AcceptCharset(charsetOut)
                                                     .ContentType("application/xml")
                                                     .Charset(charsetIn)
                                                     .Post<XmlDocument>(doc);
