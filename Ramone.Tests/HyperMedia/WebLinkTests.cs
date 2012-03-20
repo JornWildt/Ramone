@@ -25,7 +25,7 @@ namespace Ramone.Tests.HyperMedia
     public void CanConstructWithParameters()
     {
       // Act
-      WebLink l1 = new WebLink("http://dr.dk", "abc", "app/x", "hello");
+      WebLink l1 = new WebLink(new Uri("http://dr.dk"), "http://dr.dk", "abc", "app/x", "hello");
 
       // Assert
       Assert.AreEqual("http://dr.dk", l1.Parameters["href"]);

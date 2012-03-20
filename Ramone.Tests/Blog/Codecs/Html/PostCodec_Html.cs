@@ -13,7 +13,7 @@ namespace Ramone.Tests.Blog.Codecs.Html
     {
       HtmlNode doc = html.DocumentNode;
 
-      List<Anchor> links = new List<Anchor>(doc.Anchors());
+      List<Anchor> links = new List<Anchor>(doc.Anchors(context.Response.ResponseUri));
 
       Post post = new Post
       {

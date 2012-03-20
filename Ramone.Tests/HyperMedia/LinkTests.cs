@@ -4,6 +4,7 @@ using System.Xml.Serialization;
 using NUnit.Framework;
 using Ramone.HyperMedia;
 using Ramone.MediaTypes.Atom;
+using System;
 
 
 namespace Ramone.Tests.HyperMedia
@@ -25,13 +26,14 @@ namespace Ramone.Tests.HyperMedia
     protected override void SetUp()
     {
       base.SetUp();
-      Link1 = new AtomLink("http://dr.dk/", "tv", "text/html", "Danish Television");
-      Link2 = new AtomLink("http://elfisk.dk/", "home", "text/html", "Jorns website");
-      Link3 = new AtomLink("http://dr.dk/atom", "tv", "application/atom+xml", "Danish Television feed");
-      Link4 = new AtomLink("http://elfisk.dk/atom", "home", "application/atom+xml", "Jorns website feed");
-      Link5 = new AtomLink("http://elfisk.dk/abc", "search previous first", "text/html", "Blah 1");
-      Link6 = new AtomLink("http://elfisk.dk/def", "search previous first", "application/atom+xml", "Blah 2");
-      Link7 = new AtomLink("http://elfisk.dk/123", "UPPERCASE lowercase", "text/html", "Blah 3");
+      Uri baseUrl = new Uri("http://unused");
+      Link1 = new AtomLink(baseUrl, "http://dr.dk/", "tv", "text/html", "Danish Television");
+      Link2 = new AtomLink(baseUrl, "http://elfisk.dk/", "home", "text/html", "Jorns website");
+      Link3 = new AtomLink(baseUrl, "http://dr.dk/atom", "tv", "application/atom+xml", "Danish Television feed");
+      Link4 = new AtomLink(baseUrl, "http://elfisk.dk/atom", "home", "application/atom+xml", "Jorns website feed");
+      Link5 = new AtomLink(baseUrl, "http://elfisk.dk/abc", "search previous first", "text/html", "Blah 1");
+      Link6 = new AtomLink(baseUrl, "http://elfisk.dk/def", "search previous first", "application/atom+xml", "Blah 2");
+      Link7 = new AtomLink(baseUrl, "http://elfisk.dk/123", "UPPERCASE lowercase", "text/html", "Blah 3");
       Links = new AtomLinkList();
       Links.Add(Link1);
       Links.Add(Link2);
@@ -119,7 +121,7 @@ namespace Ramone.Tests.HyperMedia
     public void CanFollowSimpleLink()
     {
       // Arrange
-      ILink link = new AtomLink("http://dr.dk/", "home", "text/html", "Danish Television");
+      ILink link = new AtomLink(new Uri("http://dr.dk"), "http://dr.dk/", "home", "text/html", "Danish Television");
 
       // Act
       RamoneRequest request = link.Follow(Session);

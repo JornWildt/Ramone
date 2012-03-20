@@ -16,12 +16,18 @@ namespace Ramone.MediaTypes.Html
     /// <returns></returns>
     public static IEnumerable<Link> Links(this HtmlDocument html, RamoneResponse response)
     {
+      return Links(html, response.BaseUri);
+    }
+
+
+    public static IEnumerable<Link> Links(this HtmlDocument html, Uri baseUrl)
+    {
       if (html == null)
         return Enumerable.Empty<Link>();
 
       return html.DocumentNode
                  .SelectNodes("//head/link")
-                 .Select(l => new Link(response.BaseUri, l.GetAttributeValue("href", null), l.GetAttributeValue("rel", null), l.GetAttributeValue("type", null), l.GetAttributeValue("title", null)));
+                 .Select(l => new Link(baseUrl, l.GetAttributeValue("href", null), l.GetAttributeValue("rel", null), l.GetAttributeValue("type", null), l.GetAttributeValue("title", null)));
     }
 
 
@@ -32,11 +38,17 @@ namespace Ramone.MediaTypes.Html
     /// <returns></returns>
     public static IEnumerable<Link> Links(this HtmlNode node, RamoneResponse response)
     {
+      return Links(node, response.BaseUri);
+    }
+
+
+    public static IEnumerable<Link> Links(this HtmlNode node, Uri baseUrl)
+    {
       if (node == null)
         return Enumerable.Empty<Link>();
 
       return node.SelectNodes(".//link")
-                 .Select(l => new Link(response.BaseUri, l.GetAttributeValue("href", null), l.GetAttributeValue("rel", null), l.GetAttributeValue("type", null), l.GetAttributeValue("title", null)));
+                 .Select(l => new Link(baseUrl, l.GetAttributeValue("href", null), l.GetAttributeValue("rel", null), l.GetAttributeValue("type", null), l.GetAttributeValue("title", null)));
     }
 
 
@@ -47,13 +59,19 @@ namespace Ramone.MediaTypes.Html
     /// <returns></returns>
     public static IEnumerable<Link> Links(this HtmlNodeCollection nodes, RamoneResponse response)
     {
+      return Links(nodes, response);
+    }
+
+
+    public static IEnumerable<Link> Links(this HtmlNodeCollection nodes, Uri baseUrl)
+    {
       if (nodes == null)
         return Enumerable.Empty<Link>();
 
       var links = 
         from n in nodes
         from l in n.SelectNodes(".//link")
-        select new Link(response.BaseUri, l.GetAttributeValue("href", null), l.GetAttributeValue("rel", null), l.GetAttributeValue("type", null), l.GetAttributeValue("title", null));
+        select new Link(baseUrl, l.GetAttributeValue("href", null), l.GetAttributeValue("rel", null), l.GetAttributeValue("type", null), l.GetAttributeValue("title", null));
 
       return links;
     }
@@ -66,9 +84,15 @@ namespace Ramone.MediaTypes.Html
     /// <returns></returns>
     public static Link Link(this HtmlNode node, RamoneResponse response)
     {
+      return Link(node, response.BaseUri);
+    }
+
+
+    public static Link Link(this HtmlNode node, Uri baseUrl)
+    {
       Condition.Requires(node, "node").IsNotNull();
 
-      return new Link(response.BaseUri, node.GetAttributeValue("href", null), node.GetAttributeValue("rel", null), node.GetAttributeValue("type", null), node.GetAttributeValue("title", null));
+      return new Link(baseUrl, node.GetAttributeValue("href", null), node.GetAttributeValue("rel", null), node.GetAttributeValue("type", null), node.GetAttributeValue("title", null));
     }
   }
 }

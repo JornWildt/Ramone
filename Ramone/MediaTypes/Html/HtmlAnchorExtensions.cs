@@ -16,12 +16,18 @@ namespace Ramone.MediaTypes.Html
     /// <returns></returns>
     public static IEnumerable<Anchor> Anchors(this HtmlDocument html, RamoneResponse response)
     {
+      return Anchors(html, response.BaseUri);
+    }
+
+
+    public static IEnumerable<Anchor> Anchors(this HtmlDocument html, Uri baseUrl)
+    {
       if (html == null)
         return Enumerable.Empty<Anchor>();
 
       return html.DocumentNode
                  .SelectNodes("//a")
-                 .Select(a => new Anchor(response.BaseUri, a.GetAttributeValue("href", null), a.GetAttributeValue("rel", null), null, a.InnerText));
+                 .Select(a => new Anchor(baseUrl, a.GetAttributeValue("href", null), a.GetAttributeValue("rel", null), (string)null, a.InnerText));
     }
 
 
@@ -32,11 +38,17 @@ namespace Ramone.MediaTypes.Html
     /// <returns></returns>
     public static IEnumerable<Anchor> Anchors(this HtmlNode node, RamoneResponse response)
     {
+      return Anchors(node, response.BaseUri);
+    }
+
+
+    public static IEnumerable<Anchor> Anchors(this HtmlNode node, Uri baseUrl)
+    {
       if (node == null)
         return Enumerable.Empty<Anchor>();
 
       return node.SelectNodes(".//a")
-                 .Select(a => new Anchor(response.BaseUri, a.GetAttributeValue("href", null), a.GetAttributeValue("rel", null), null, a.InnerText));
+                 .Select(a => new Anchor(baseUrl, a.GetAttributeValue("href", null), a.GetAttributeValue("rel", null), (string)null, a.InnerText));
     }
 
 
@@ -45,7 +57,13 @@ namespace Ramone.MediaTypes.Html
     /// </summary>
     /// <param name="nodes"></param>
     /// <returns></returns>
-    public static IEnumerable<Anchor> Anchors(this HtmlNodeCollection nodes)
+    public static IEnumerable<Anchor> Anchors(this HtmlNodeCollection nodes, RamoneResponse response)
+    {
+      return Anchors(nodes, response.BaseUri);
+    }
+
+
+    public static IEnumerable<Anchor> Anchors(this HtmlNodeCollection nodes, Uri baseUrl)
     {
       if (nodes == null)
         return Enumerable.Empty<Anchor>();
@@ -53,7 +71,7 @@ namespace Ramone.MediaTypes.Html
       var anchors =
         from c in nodes
         from a in c.SelectNodes(".//a")
-        select new Anchor(a.GetAttributeValue("href", null), a.GetAttributeValue("rel", null), null, a.InnerText);
+        select new Anchor(baseUrl, a.GetAttributeValue("href", null), a.GetAttributeValue("rel", null), (string)null, a.InnerText);
 
       return anchors;
     }
@@ -64,11 +82,17 @@ namespace Ramone.MediaTypes.Html
     /// </summary>
     /// <param name="node"></param>
     /// <returns></returns>
-    public static Anchor Anchor(this HtmlNode node)
+    public static Anchor Anchor(this HtmlNode node, RamoneResponse response)
+    {
+      return Anchor(node, response.BaseUri);
+    }
+
+
+    public static Anchor Anchor(this HtmlNode node, Uri baseUrl)
     {
       Condition.Requires(node, "node").IsNotNull();
 
-      return new Anchor(node.GetAttributeValue("href", null), node.GetAttributeValue("rel", null), null, node.InnerText);
+      return new Anchor(baseUrl, node.GetAttributeValue("href", null), node.GetAttributeValue("rel", null), (string)null, node.InnerText);
     }
   }
 }

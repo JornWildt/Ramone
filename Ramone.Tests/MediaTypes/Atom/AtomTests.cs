@@ -48,7 +48,7 @@ namespace Ramone.Tests.MediaTypes.Atom
     {
       // Arrange
       MyResource r = new MyResource();
-      r.Links.Add(new AtomLink("http://dr.dk", "test", "text/html", "DR"));
+      r.Links.Add(new AtomLink(new Uri("http://dr.dk"), "http://dr.dk", "test", "text/html", "DR"));
 
       // Act
       RamoneRequest request = r.Links.Follow(Session, "test");
@@ -70,7 +70,7 @@ namespace Ramone.Tests.MediaTypes.Atom
 
       XmlSerializer serializer = new XmlSerializer(typeof(MyResource));
       MyResource r = new MyResource();
-      r.Links.Add(new AtomLink("http://dr.dk", "test", "text/html", "DR"));
+      r.Links.Add(new AtomLink(new Uri("http://dr.dk"), "http://dr.dk", "test", "text/html", "DR"));
 
       // Act
       using (StringWriter w = new StringWriter())

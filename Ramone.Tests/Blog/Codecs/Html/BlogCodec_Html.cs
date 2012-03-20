@@ -19,7 +19,7 @@ namespace Ramone.Tests.Blog.Codecs.Html
       {
         HtmlNode title = postNode.SelectNodes(@".//*[@class=""post-title""]").First();
         HtmlNode content = postNode.SelectNodes(@".//*[@class=""post-content""]").First();
-        List<Anchor> links = new List<Anchor>(postNode.Anchors());
+        List<Anchor> links = new List<Anchor>(postNode.Anchors(context.Response.ResponseUri));
 
         posts.Add(new Resources.Blog.Post
         {
@@ -29,7 +29,7 @@ namespace Ramone.Tests.Blog.Codecs.Html
         });
       }
 
-      List<ILink> blogLinks = new List<ILink>(doc.Anchors().Cast<ILink>().Union(doc.Links()));
+      List<ILink> blogLinks = new List<ILink>(doc.Anchors(context.Response.ResponseUri).Cast<ILink>().Union(doc.Links(context.Response.ResponseUri)));
 
       Resources.Blog blog = new Resources.Blog()
       {

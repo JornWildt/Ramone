@@ -58,11 +58,11 @@ namespace Ramone.Tests.Blog
       // Act ...
 
       // - GET blog
-      HtmlDocument blog = blogRequest.Get<HtmlDocument>().Body;
+      RamoneResponse<HtmlDocument> blog = blogRequest.Get<HtmlDocument>();
 
       // - Select first HTML anchor node with rel="author" as a anchor link
       //   This uses HtmlDocument specific extension methods to convert from anchor to ILink
-      ILink authorLink = blog.DocumentNode.SelectNodes(@"//a[@rel=""author""]").First().Anchor();
+      ILink authorLink = blog.Body.DocumentNode.SelectNodes(@"//a[@rel=""author""]").First().Anchor(blog);
 
       // - Follow author link and get HTML document representing the author
       HtmlDocument author = authorLink.Follow(Session).Get<HtmlDocument>().Body;
@@ -86,19 +86,19 @@ namespace Ramone.Tests.Blog
       // Act ...
 
       // - GET blog
-      HtmlDocument blog = blogRequest.Get<HtmlDocument>().Body;
+      RamoneResponse<HtmlDocument> blog = blogRequest.Get<HtmlDocument>();
 
       // - Extract "post" nodes
-      HtmlNodeCollection posts = blog.DocumentNode.SelectNodes(@"//*[@class=""post""]");
+      HtmlNodeCollection posts = blog.Body.DocumentNode.SelectNodes(@"//*[@class=""post""]");
 
       foreach (HtmlNode listPost in posts)
       {
         // - Extract post link, follow and GET the post
-        ILink postLink = listPost.SelectNodes(@".//a[@rel=""self""]").First().Anchor();
+        ILink postLink = listPost.SelectNodes(@".//a[@rel=""self""]").First().Anchor(blog);
         HtmlDocument postItem = postLink.Follow(Session).Get<HtmlDocument>().Body;
 
         // - Extract author link from post
-        ILink authorLink = postItem.DocumentNode.SelectNodes(@".//a[@rel=""author""]").First().Anchor();
+        ILink authorLink = postItem.DocumentNode.SelectNodes(@".//a[@rel=""author""]").First().Anchor(blog);
 
         // - Follow author link and get HTML document representing the author
         HtmlDocument author = authorLink.Follow(Session).Get<HtmlDocument>().Body;
@@ -125,10 +125,10 @@ namespace Ramone.Tests.Blog
       // Act ...
 
       // - GET blog
-      HtmlDocument blog = blogRequest.Get<HtmlDocument>().Body;
+      RamoneResponse<HtmlDocument> blog = blogRequest.Get<HtmlDocument>();
 
       // - Extract "edit" anchor
-      ILink editLink = blog.DocumentNode.SelectNodes(@"//a[@rel=""edit""]").First().Anchor();
+      ILink editLink = blog.Body.DocumentNode.SelectNodes(@"//a[@rel=""edit""]").First().Anchor(blog);
 
       // - GET form describing how to input
       RamoneResponse<HtmlDocument> createDescriptor = editLink.Follow(Session).Get<HtmlDocument>();
