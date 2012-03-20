@@ -1,4 +1,4 @@
-﻿namespace Ramone.Tests.Server.Handlers.Blog
+﻿namespace Ramone.Tests.Server.Blog
 {
   public static class BlogConstants
   {
@@ -7,7 +7,8 @@
     public const string BlogItemCreationPath = "blog/create";
     public const string AuthorPath = "blog/author/{id}";
     public const string ImagePath = "blog/image/{id}";
-    public const string SearchDescriptionPath = "blog/searchform";
+    public const string SearchDescriptionSubPath = "searchform";
+    public const string SearchDescriptionPath = "blog/" + SearchDescriptionSubPath;
     public const string SearchResult = "blog/search?q={q}";
   }
 }

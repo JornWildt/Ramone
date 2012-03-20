@@ -14,14 +14,14 @@ namespace Ramone.MediaTypes.Html
     /// </summary>
     /// <param name="html"></param>
     /// <returns></returns>
-    public static IEnumerable<Anchor> Anchors(this HtmlDocument html)
+    public static IEnumerable<Anchor> Anchors(this HtmlDocument html, RamoneResponse response)
     {
       if (html == null)
         return Enumerable.Empty<Anchor>();
 
       return html.DocumentNode
                  .SelectNodes("//a")
-                 .Select(a => new Anchor(a.GetAttributeValue("href", null), a.GetAttributeValue("rel", null), null, a.InnerText));
+                 .Select(a => new Anchor(response.BaseUri, a.GetAttributeValue("href", null), a.GetAttributeValue("rel", null), null, a.InnerText));
     }
 
 
@@ -30,13 +30,13 @@ namespace Ramone.MediaTypes.Html
     /// </summary>
     /// <param name="node"></param>
     /// <returns></returns>
-    public static IEnumerable<Anchor> Anchors(this HtmlNode node)
+    public static IEnumerable<Anchor> Anchors(this HtmlNode node, RamoneResponse response)
     {
       if (node == null)
         return Enumerable.Empty<Anchor>();
 
       return node.SelectNodes(".//a")
-                 .Select(a => new Anchor(a.GetAttributeValue("href", null), a.GetAttributeValue("rel", null), null, a.InnerText));
+                 .Select(a => new Anchor(response.BaseUri, a.GetAttributeValue("href", null), a.GetAttributeValue("rel", null), null, a.InnerText));
     }
 
 

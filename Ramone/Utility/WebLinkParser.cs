@@ -1,23 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
-using Ramone.HyperMedia;
-using System.IO;
 using CuttingEdge.Conditions;
+using Ramone.HyperMedia;
 
 
 namespace Ramone.Utility
 {
   public class WebLinkParser
   {
-    public static IList<IParameterizedLink> ParseLinks(string links)
+    public static IList<IParameterizedLink> ParseLinks(Uri baseUrl, string linkHeader)
     {
       WebLinkParser parser = new WebLinkParser();
-      return parser.Parse(links);
+      return parser.Parse(baseUrl, linkHeader);
     }
 
 
-    public IList<IParameterizedLink> Parse(string linkHeader)
+    public Uri BaseUrl { get; protected set; }
+
+
+    public IList<IParameterizedLink> Parse(Uri baseUrl, string linkHeader)
     {
+      BaseUrl = baseUrl;
       InputString = linkHeader;
       InputPos = 0;
 
@@ -67,6 +70,7 @@ namespace Ramone.Utility
     protected WebLink ParseLink()
     {
       Condition.Requires(NextToken.Type, "CurrentToken.Type").IsEqualTo(TokenType.Url);
+
       string url = NextToken.Value;
       string rel = null;
       string title = null;
@@ -107,7 +111,7 @@ namespace Ramone.Utility
         }
       }
 
-      WebLink link = new WebLink(url, rel, type, title_s ?? title);
+      WebLink link = new WebLink(BaseUrl, url, rel, type, title_s ?? title);
       return link;
     }
 

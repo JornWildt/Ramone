@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 
 namespace Ramone.HyperMedia
@@ -13,7 +14,7 @@ namespace Ramone.HyperMedia
 
   public interface ILink : ISelectable
   {
-    string HRef { get; }
+    Uri HRef { get; }
 
     string Title { get; }
   }

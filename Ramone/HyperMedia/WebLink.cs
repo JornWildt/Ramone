@@ -6,10 +6,10 @@ namespace Ramone.HyperMedia
 {
   public class WebLink : SelectableBase, IParameterizedLink
   {
-    public string HRef
+    public Uri HRef
     {
-      get { return Parameters["href"]; }
-      set { Parameters["href"] = value; }
+      get { return Parameters["href"] != null ? new Uri(Parameters["href"]) : null; }
+      set { Parameters["href"] = value.AbsoluteUri; }
     }
 
 
@@ -53,25 +53,25 @@ namespace Ramone.HyperMedia
     }
 
 
-    public WebLink(Uri href, string relationType, string mediaType, string title)
-      : this(href.AbsoluteUri, relationType, mediaType, title)
+    public WebLink(Uri baseUrl, string href, string relationType, MediaType mediaType, string title)
+      : this(new Uri(baseUrl, href), relationType, mediaType != null ? mediaType.FullType : null, title)
+    {
+    }
+
+
+    public WebLink(Uri baseUrl, string href, string relationType, string mediaType, string title)
+      : this(new Uri(baseUrl, href), relationType, mediaType, title)
     {
     }
 
 
     public WebLink(Uri href, string relationType, MediaType mediaType, string title)
-      : this(href.AbsoluteUri, relationType, mediaType != null ? mediaType.FullType : null, title)
-    {
-    }
-
-
-    public WebLink(string href, string relationType, MediaType mediaType, string title)
       : this(href, relationType, mediaType != null ? mediaType.FullType : null, title)
     {
     }
 
 
-    public WebLink(string href, string relationshipType, string mediaType, string title)
+    public WebLink(Uri href, string relationshipType, string mediaType, string title)
     {
       Parameters = new Dictionary<string, string>();
       HRef = href;

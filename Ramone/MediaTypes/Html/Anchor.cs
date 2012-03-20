@@ -11,14 +11,26 @@ namespace Ramone.MediaTypes.Html
     }
 
 
-    public Anchor(Uri href, string relationshipType, string mediaType, string title)
-      : this(href.ToString(), relationshipType, mediaType, title)
+    public Anchor(Uri baseUrl, string href, string relationType, string mediaType, string title)
+      : this(new Uri(baseUrl, href), relationType, mediaType, title)
     {
     }
 
 
-    public Anchor(string href, string relationshipType, string mediaType, string title)
-      : base(href, relationshipType, mediaType, title)
+    public Anchor(Uri baseUrl, string href, string relationType, MediaType mediaType, string title)
+      : this(new Uri(baseUrl, href), relationType, mediaType != null ? mediaType.FullType : null, title)
+    {
+    }
+
+
+    public Anchor(Uri href, string relationType, string mediaType, string title)
+      : base(href, relationType, mediaType, title)
+    {
+    }
+
+
+    public Anchor(Uri href, string relationType, MediaType mediaType, string title)
+      : this(href, relationType, mediaType != null ? mediaType.FullType : null, title)
     {
     }
   }
