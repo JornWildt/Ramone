@@ -105,7 +105,7 @@ namespace TwitterDemo
       RamoneRequest request = Session.Bind(TwitterApi.UserTimeLinePath, new { screen_name = screenName, count = 2 });
 
       // GET response
-      RamoneResponse response = request.Get();
+      Resource response = request.Get();
 
       dynamic timeline = response.Body;
 
@@ -127,7 +127,7 @@ namespace TwitterDemo
       RamoneRequest request = Session.Bind(TwitterApi.UserTimeLinePath, new { screen_name = screenName, count = 2 });
 
       // GET statically typed response
-      RamoneResponse<Timeline> response = request.Get<Timeline>();
+      Resource<Timeline> response = request.Get<Timeline>();
 
       Timeline timeline = response.Body;
 
@@ -163,7 +163,7 @@ namespace TwitterDemo
     static void UpdateUserName(string name)
     {
       RamoneRequest request = Session.Bind(TwitterApi.UpdateProfilePath, new { name = name });
-      RamoneResponse response = request.Post();
+      Resource response = request.Post();
     }
 
 

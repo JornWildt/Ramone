@@ -53,7 +53,19 @@ namespace Ramone.MediaTypes.OpenSearch
 
 
     [XmlAttribute("type")]
-    public string MediaType { get; set; }
+    public string MediaTypeText
+    {
+      get { return GetMediaTypeText(); }
+      set { SetMediaType(value); }
+    }
+
+
+    [XmlIgnore]
+    public MediaType MediaType
+    {
+      get { return GetMediaType(); }
+      set { SetMediaType(value); }
+    }
 
     #endregion
 

@@ -33,7 +33,7 @@ namespace Ramone.Tests.HyperMedia
       Assert.AreEqual("abc", l1.Parameters["rel"]);
       Assert.AreEqual("abc", l1.RelationType);
       Assert.AreEqual("app/x", l1.Parameters["type"]);
-      Assert.AreEqual("app/x", l1.MediaType);
+      Assert.AreEqual("app/x", l1.MediaType.FullType);
       Assert.AreEqual("hello", l1.Parameters["title"]);
       Assert.AreEqual("hello", l1.Title);
     }
@@ -57,7 +57,7 @@ namespace Ramone.Tests.HyperMedia
       Assert.AreEqual("xyz", l1.Parameters["rel"]);
       Assert.AreEqual("xyz", l1.RelationType);
       Assert.AreEqual("app/y", l1.Parameters["type"]);
-      Assert.AreEqual("app/y", l1.MediaType);
+      Assert.AreEqual("app/y", l1.MediaType.FullType);
       Assert.AreEqual("bonsoir", l1.Parameters["title"]);
       Assert.AreEqual("bonsoir", l1.Title);
     }
