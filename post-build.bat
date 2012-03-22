@@ -8,3 +8,5 @@ xcopy Ramone*.xml ..\..\..\Binaries\ /S /I /R /Y
 cd ..\..\..
 
 xcopy Ramone.MediaTypes\bin\Debug\Ramone.MediaTypes.* Binaries\ /S /I /R /Y
+
+rem xxx
