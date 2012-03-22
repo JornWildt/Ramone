@@ -23,6 +23,8 @@ namespace Ramone.Tests.Server
 
     public class AnyEcho { public Stream S { get; set; } }
 
+    public class FileDownload { public string Content { get; set; } }
+
 
     public void Configure()
     {
@@ -111,6 +113,11 @@ namespace Ramone.Tests.Server
                      .HandledBy<FormHandler>()
                      .RenderedByAspx("~/Views/Form.aspx")
                      .And.TranscodedBy<FormUrlencodedCodec>();
+
+        ResourceSpace.Has.ResourcesOfType<FileDownload>()
+            .AtUri(Constants.FileDownloadPath)
+            .HandledBy<FileDownloadHandler>()
+            .TranscodedBy<FileDownloadCodec>();
 
         ConfigureCMS();
         BlogConfiguration.Configure();

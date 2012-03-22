@@ -1,7 +1,6 @@
 ﻿using System;
-using OpenRasta.Codecs;
-using OpenRasta.Web;
 using System.Web;
+using OpenRasta.Codecs;
 
 
 namespace Ramone.Tests.Server.Codecs

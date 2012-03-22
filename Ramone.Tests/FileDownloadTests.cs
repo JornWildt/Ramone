@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.IO;
 using NUnit.Framework;
+using Ramone.Utility;
 
 
 namespace Ramone.Tests
@@ -14,7 +12,17 @@ namespace Ramone.Tests
     public void CanDownloadFile()
     {
       // Arrange
-      //RamoneRequest request = Session.Bind(FileDownload
+      RamoneRequest request = Session.Bind(FileDownloadTemplate);
+
+      using (TempFile file = new TempFile())
+      {
+        // Act
+        request.Get().SaveToFile(file.Path);
+
+        // Assert
+        string s = File.ReadAllText(file.Path);
+        Assert.AreEqual("1234567890", s);
+      }
     }
   }
 }

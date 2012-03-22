@@ -87,6 +87,7 @@
     <Compile Include="AuthorizationExtensions.cs" />
     <Compile Include="BindingExtensions.cs" />
     <Compile Include="CodecManagerExtensions.cs" />
+    <Compile Include="FileExtensions.cs" />
     <Compile Include="HyperMedia\ILinkTemplate.cs" />
     <Compile Include="HyperMedia\IParameterizedLink.cs" />
     <Compile Include="HyperMedia\IParameters.cs" />
@@ -177,6 +178,7 @@
     <Compile Include="Utility\ObjectSerialization\ObjectSerializer.cs" />
     <Compile Include="Utility\ObjectSerialization\ObjectSerializerFormaterManager.cs" />
     <Compile Include="Utility\ObjectSerialization\ObjectSerializerSettings.cs" />
+    <Compile Include="Utility\TempFile.cs" />
     <Compile Include="Utility\WebLinkParser.cs" />
   </ItemGroup>
   <ItemGroup>
