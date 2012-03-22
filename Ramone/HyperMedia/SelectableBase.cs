@@ -30,12 +30,6 @@ namespace Ramone.HyperMedia
     }
 
 
-    //protected void SetMediaTypeText(string mediaType)
-    //{
-    //  _mediaType = new MediaType(mediaType);
-    //}
-
-
     protected MediaType GetMediaType()
     {
       return _mediaType;
@@ -44,7 +38,7 @@ namespace Ramone.HyperMedia
 
     protected string GetMediaTypeText()
     {
-      return _mediaType.FullType;
+      return _mediaType != null ? _mediaType.FullType : null;
     }
 
 

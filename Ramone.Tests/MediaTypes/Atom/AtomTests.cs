@@ -81,6 +81,28 @@ namespace Ramone.Tests.MediaTypes.Atom
     }
 
 
+    [Test]
+    public void CanSerializeAtomLinksWithMissingMediaTypeToCorrectFormat()
+    {
+      // Arrange
+      string correctXml = @"<link href=""http://dr.dk/"" rel=""test"" title=""DR"" xmlns=""http://www.w3.org/2005/Atom"" />";
+
+      XmlSerializer serializer = new XmlSerializer(typeof(MyResource));
+      MyResource r = new MyResource();
+      r.Links.Add(new AtomLink(new Uri("http://dr.dk"), "http://dr.dk", "test", null, "DR"));
+
+      // Act
+      using (StringWriter w = new StringWriter())
+      {
+        serializer.Serialize(w, r);
+
+        string xml = w.ToString();
+        Console.Write(xml);
+        Assert.IsTrue(xml.Contains(correctXml));
+      }
+    }
+
+
     public class MyResource
     {
       [XmlElement(ElementName="link", Namespace=AtomConstants.AtomNamespace)]

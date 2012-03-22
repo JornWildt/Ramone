@@ -4,6 +4,7 @@ using System.Text;
 using NUnit.Framework;
 using Ramone.IO;
 using Ramone.Utility;
+using Ramone.Utility.ObjectSerialization;
 
 
 namespace Ramone.Tests.Utility
@@ -65,6 +66,66 @@ Content-Type: text/plain; charset=utf-8
 Abc ÆØÅ
 --xyzq
 Content-Disposition: form-data; name=""MyFile""; filename=""data1.txt""
+
+Æüî´`'";
+
+        s.Seek(0, SeekOrigin.Begin);
+        using (StreamReader r = new StreamReader(s))
+        {
+          string result = r.ReadToEnd();
+          Assert.AreEqual(expected, result);
+        }
+      }
+    }
+
+
+    [Test]
+    public void CanSerializeFileWithInternationalCharactersInFilenameWhenSettingsAllowIt()
+    {
+      ObjectSerializerSettings settings = new ObjectSerializerSettings();
+      settings.EnableNonAsciiCharactersInMultipartFilenames = true;
+
+      using (MemoryStream s = new MemoryStream())
+      {
+        FileData data = new FileData
+        {
+          MyFile = new FileWithSpecialName("..\\..\\data1.txt", "Bøllefrø.txt")
+        };
+        new MultipartFormDataSerializer(typeof(FileData)).Serialize(s, data, Encoding.UTF8, "xyzq", settings);
+
+        string expected = @"
+--xyzq
+Content-Disposition: form-data; name=""MyFile""; filename=""Bxllefrx.txt""; filename*=UTF-8''B%c3%b8llefr%c3%b8.txt
+
+Æüî´`'";
+
+        s.Seek(0, SeekOrigin.Begin);
+        using (StreamReader r = new StreamReader(s))
+        {
+          string result = r.ReadToEnd();
+          Assert.AreEqual(expected, result);
+        }
+      }
+    }
+
+
+    [Test]
+    public void CannotSerializeFileWithInternationalCharactersInFilenameWhenSettingsDisallowIt()
+    {
+      ObjectSerializerSettings settings = new ObjectSerializerSettings();
+      settings.EnableNonAsciiCharactersInMultipartFilenames = false;
+
+      using (MemoryStream s = new MemoryStream())
+      {
+        FileData data = new FileData
+        {
+          MyFile = new FileWithSpecialName("..\\..\\data1.txt", "Bøllefrø.txt")
+        };
+        new MultipartFormDataSerializer(typeof(FileData)).Serialize(s, data, Encoding.UTF8, "xyzq", settings);
+
+        string expected = @"
+--xyzq
+Content-Disposition: form-data; name=""MyFile""; filename=""Bxllefrx.txt""
 
 Æüî´`'";
 

@@ -16,6 +16,8 @@ namespace Ramone.Utility.ObjectSerialization
     public char PropertySeparator { get; set; }
 
     public CultureInfo Culture { get; set; }
+
+    public bool EnableNonAsciiCharactersInMultipartFilenames { get; set; }
     
     public IObjectSerializerFormaterManager Formaters { get; set; }
 
@@ -41,6 +43,7 @@ namespace Ramone.Utility.ObjectSerialization
       PropertySeparator = src.PropertySeparator;
       Formaters = src.Formaters.Clone();
       Culture = (CultureInfo)src.Culture.Clone();
+      EnableNonAsciiCharactersInMultipartFilenames = src.EnableNonAsciiCharactersInMultipartFilenames;
     }
   }
 }

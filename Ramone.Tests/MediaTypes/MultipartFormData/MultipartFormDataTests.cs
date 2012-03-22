@@ -88,6 +88,42 @@ namespace Ramone.Tests.MediaTypes.MultipartFormData
 
 
     [Test]
+    public void CanPostMultipartFormDataWithSpecialFilenameUsingHashtable_ItMustReplaceSpecialCharsWithX()
+    {
+      // Arrange
+      IFile file = new FileWithSpecialName("..\\..\\data1.txt", "Bøllefrø.txt");
+      Hashtable data = new Hashtable();
+      data["DataFile"] = file;
+      data["Age"] = 10;
+      RamoneRequest formdataReq = Session.Bind(MultipartFormDataFileTemplate);
+
+      // Act
+      Resource<string> response = formdataReq.Accept("text/plain").ContentType("multipart/form-data").Post<string>(data);
+
+      // Assert
+      Assert.IsTrue(response.Headers["x-contenttype"].StartsWith("multipart/form-data"));
+      Assert.AreEqual("Bxllefrx.txt-text/plain-Æüî´`'-10", response.Body);
+    }
+
+
+    [Test]
+    public void CanPostMultipartFormDataWithSpecialFilename_ItMustReplaceSpecialCharsWithX()
+    {
+      // Arrange
+      IFile file = new FileWithSpecialName("..\\..\\data1.txt", "Bøllefrø.txt");
+      MultipartDataFile data = new MultipartDataFile { DataFile = file, Age = 10 };
+      RamoneRequest formdataReq = Session.Bind(MultipartFormDataFileTemplate);
+
+      // Act
+      Resource<string> response = formdataReq.Accept("text/plain").ContentType("multipart/form-data").Post<string>(data);
+
+      // Assert
+      Assert.IsTrue(response.Headers["x-contenttype"].StartsWith("multipart/form-data"));
+      Assert.AreEqual("Bxllefrx.txt-text/plain-Æüî´`'-10", response.Body);
+    }
+
+
+    [Test]
     public void CanPostMultipartFormDataWithBinaryFile()
     {
       // Arrange
