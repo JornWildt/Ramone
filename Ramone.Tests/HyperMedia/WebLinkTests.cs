@@ -85,5 +85,22 @@ namespace Ramone.Tests.HyperMedia
       Assert.AreEqual("http://dr.dk/", l.Parameters["href"]);
       Assert.AreEqual("http://dr.dk/", l.HRef.AbsoluteUri);
     }
+
+
+    [Test]
+    public void CanUseLinksForRelValues()
+    {
+      // Act
+      WebLink l1 = new WebLink(new Uri("http://dr.dk"), "http://elfisk.dk next http://example.com prev", "app/x", "hello");
+
+      // Assert
+      Assert.AreEqual("http://dr.dk/", l1.HRef.AbsoluteUri);
+      Assert.AreEqual("http://elfisk.dk next http://example.com prev", l1.RelationType);
+      Assert.AreEqual(4, l1.RelationTypes.Count());
+      Assert.Contains("http://elfisk.dk", l1.RelationTypes.ToList());
+      Assert.Contains("next", l1.RelationTypes.ToList());
+      Assert.Contains("prev", l1.RelationTypes.ToList());
+      Assert.Contains("http://example.com", l1.RelationTypes.ToList());
+    }
   }
 }

@@ -2,8 +2,6 @@
 Version 1
 ---------
 
-Teste URLs som rel-values i WebLink
-
 Direct file download (with content-disposition: attachment; filename="utf-8''da'æøå"
 
 Rename
