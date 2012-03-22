@@ -24,11 +24,38 @@ namespace Ramone.HyperMedia
     }
 
 
+    protected void SetMediaType(MediaType mediaType)
+    {
+      _mediaType = mediaType;
+    }
+
+
+    //protected void SetMediaTypeText(string mediaType)
+    //{
+    //  _mediaType = new MediaType(mediaType);
+    //}
+
+
+    protected MediaType GetMediaType()
+    {
+      return _mediaType;
+    }
+
+
+    protected string GetMediaTypeText()
+    {
+      return _mediaType.FullType;
+    }
+
+
+
     #region Internals
 
     private string _relationType;
 
     private List<string> _relationTypes = new List<string>();
+
+    private MediaType _mediaType;
 
     private void AssignRelationTypes(string rel)
     {

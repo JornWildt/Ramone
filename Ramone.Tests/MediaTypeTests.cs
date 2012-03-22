@@ -97,7 +97,7 @@ namespace Ramone.Tests
 
 
     [Test]
-    public void CanCompareAlsoCaseInsensitive()
+    public void ItComparesCaseInsensitive()
     {
       // Arrange
       MediaType m1 = new MediaType("x/y");
@@ -105,6 +105,28 @@ namespace Ramone.Tests
 
       // Assert
       Assert.IsTrue(m1 == m2);
+    }
+
+
+    [Test]
+    public void CanAssignMediaTypeFromString()
+    {
+      // Act
+      MediaType m = "app/x";
+
+      // Assert
+      Assert.AreEqual("app/x", m.FullType);
+    }
+
+
+    [Test]
+    public void WhenCreatingMediaTypeFromNullValueItReturnsValue()
+    {
+      // Act
+      MediaType m = MediaType.Create(null);
+
+      // Assert
+      Assert.IsNull(m);
     }
   }
 }

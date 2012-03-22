@@ -35,15 +35,27 @@ namespace Ramone.MediaTypes.Atom
     }
 
 
-    [XmlIgnore()]
+    [XmlIgnore]
     public IEnumerable<string> RelationTypes
     {
       get { return GetRelationTypes(); }
     }
 
-    
+
     [XmlAttribute("type")]
-    public string MediaType { get; set; }
+    public string MediaTypeText
+    {
+      get { return GetMediaTypeText(); }
+      set { SetMediaType(value); }
+    }
+
+
+    [XmlIgnore]
+    public MediaType MediaType
+    {
+      get { return GetMediaType(); }
+      set { SetMediaType(value); }
+    }
 
     
     [XmlAttribute("title")]
@@ -56,24 +68,12 @@ namespace Ramone.MediaTypes.Atom
 
 
     public AtomLink(Uri baseUrl, string href, string relationType, MediaType mediaType, string title)
-      : this(new Uri(baseUrl, href), relationType, mediaType != null ? mediaType.FullType : null, title)
-    {
-    }
-
-
-    public AtomLink(Uri baseUrl, string href, string relationType, string mediaType, string title)
       : this(new Uri(baseUrl, href), relationType, mediaType, title)
     {
     }
 
 
     public AtomLink(Uri href, string relationType, MediaType mediaType, string title)
-      : this(href, relationType, mediaType != null ? mediaType.FullType : null, title)
-    {
-    }
-
-
-    public AtomLink(Uri href, string relationType, string mediaType, string title)
     {
       HRef = href;
       RelationType = relationType;

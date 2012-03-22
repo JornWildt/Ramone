@@ -30,10 +30,14 @@ namespace Ramone.HyperMedia
     }
 
 
-    public string MediaType
+    public MediaType MediaType
     {
       get { return Parameters["type"]; }
-      set { Parameters["type"] = value; }
+      set 
+      { 
+        SetMediaType(value);
+        Parameters["type"] = (value != null ? value.FullType : null);
+      }
     }
 
     
@@ -54,24 +58,12 @@ namespace Ramone.HyperMedia
 
 
     public WebLink(Uri baseUrl, string href, string relationType, MediaType mediaType, string title)
-      : this(baseUrl, relationType, mediaType != null ? mediaType.FullType : null, title)
-    {
-    }
-
-
-    public WebLink(Uri baseUrl, string href, string relationType, string mediaType, string title)
       : this(baseUrl != null ? new Uri(baseUrl, href) : new Uri(href), relationType, mediaType, title)
     {
     }
 
 
-    public WebLink(Uri href, string relationType, MediaType mediaType, string title)
-      : this(href, relationType, mediaType != null ? mediaType.FullType : null, title)
-    {
-    }
-
-
-    public WebLink(Uri href, string relationshipType, string mediaType, string title)
+    public WebLink(Uri href, string relationshipType, MediaType mediaType, string title)
     {
       Parameters = new Dictionary<string, string>();
       HRef = href;

@@ -44,6 +44,23 @@ namespace Ramone
     public static readonly MediaType Wildcard = new MediaType("*/*");
 
 
+    /// <summary>
+    /// Create new instance of MediaType - returns null if input is null.
+    /// </summary>
+    /// <param name="mediaType"></param>
+    /// <returns></returns>
+    public static MediaType Create(string mediaType)
+    {
+      return mediaType != null ? new MediaType(mediaType) : null;
+    }
+
+
+    public static implicit operator MediaType(string mediaType)
+    {
+      return Create(mediaType);
+    }
+
+
     public MediaType()
     {
     }

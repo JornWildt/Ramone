@@ -33,7 +33,7 @@ namespace Ramone.Tests.HyperMedia
       Assert.AreEqual("abc", l1.Parameters["rel"]);
       Assert.AreEqual("abc", l1.RelationType);
       Assert.AreEqual("app/x", l1.Parameters["type"]);
-      Assert.AreEqual("app/x", l1.MediaType);
+      Assert.AreEqual("app/x", l1.MediaType.FullType);
       Assert.AreEqual("hello", l1.Parameters["title"]);
       Assert.AreEqual("hello", l1.Title);
     }
@@ -57,7 +57,7 @@ namespace Ramone.Tests.HyperMedia
       Assert.AreEqual("xyz", l1.Parameters["rel"]);
       Assert.AreEqual("xyz", l1.RelationType);
       Assert.AreEqual("app/y", l1.Parameters["type"]);
-      Assert.AreEqual("app/y", l1.MediaType);
+      Assert.AreEqual("app/y", l1.MediaType.FullType);
       Assert.AreEqual("bonsoir", l1.Parameters["title"]);
       Assert.AreEqual("bonsoir", l1.Title);
     }
@@ -84,6 +84,23 @@ namespace Ramone.Tests.HyperMedia
       // Assert
       Assert.AreEqual("http://dr.dk/", l.Parameters["href"]);
       Assert.AreEqual("http://dr.dk/", l.HRef.AbsoluteUri);
+    }
+
+
+    [Test]
+    public void CanUseLinksForRelValues()
+    {
+      // Act
+      WebLink l1 = new WebLink(new Uri("http://dr.dk"), "http://elfisk.dk next http://example.com prev", "app/x", "hello");
+
+      // Assert
+      Assert.AreEqual("http://dr.dk/", l1.HRef.AbsoluteUri);
+      Assert.AreEqual("http://elfisk.dk next http://example.com prev", l1.RelationType);
+      Assert.AreEqual(4, l1.RelationTypes.Count());
+      Assert.Contains("http://elfisk.dk", l1.RelationTypes.ToList());
+      Assert.Contains("next", l1.RelationTypes.ToList());
+      Assert.Contains("prev", l1.RelationTypes.ToList());
+      Assert.Contains("http://example.com", l1.RelationTypes.ToList());
     }
   }
 }

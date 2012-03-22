@@ -14,32 +14,15 @@ namespace Ramone.HyperMedia
     /// <param name="links"></param>
     /// <param name="rel"></param>
     /// <param name="mediaType"></param>
-    /// <returns></returns>
-    public static T Select<T>(this IEnumerable<T> links, string rel, string mediaType = null)
+    /// <returns>Selected link or null if none was found.</returns>
+    public static T Select<T>(this IEnumerable<T> links, string rel, MediaType mediaType = null)
       where T : ISelectable
     {
       Condition.Requires(links, "links").IsNotNull();
       Condition.Requires(rel, "rel").IsNotNull();
 
-      return links.Where(l => l.RelationTypes.Any(r => string.Compare(r, rel, true) == 0) && (mediaType == null || l.MediaType == mediaType)).FirstOrDefault();
-    }
-
-
-    /// <summary>
-    /// Select a link identified by link relation and optional media-type.
-    /// </summary>
-    /// <param name="links"></param>
-    /// <param name="rel"></param>
-    /// <param name="mediaType"></param>
-    /// <returns></returns>
-    public static T Select<T>(this IEnumerable<T> links, string rel, MediaType mediaType)
-      where T : ISelectable
-    {
-      return Select<T>(links, rel, mediaType != null ? mediaType.FullType : null);
-      //Condition.Requires(links, "links").IsNotNull();
-      //Condition.Requires(rel, "rel").IsNotNull();
-
-      //return links.Where(l => l.RelationTypes.Any(r => string.Compare(r, rel, true) == 0) && (mediaType == null || l.MediaType == mediaType.FullType)).FirstOrDefault();
+      return links.Where(l => l.RelationTypes.Any(r => string.Equals(r, rel, StringComparison.InvariantCultureIgnoreCase))
+                              && (mediaType == null || l.MediaType == mediaType)).FirstOrDefault();
     }
 
 
@@ -81,7 +64,7 @@ namespace Ramone.HyperMedia
     /// <param name="rel"></param>
     /// <param name="mediaType"></param>
     /// <returns></returns>
-    public static RamoneRequest Follow(this IEnumerable<ILink> links, IRamoneSession session, string rel, string mediaType = null)
+    public static RamoneRequest Follow(this IEnumerable<ILink> links, IRamoneSession session, string rel, MediaType mediaType = null)
     {
       Condition.Requires(links, "links").IsNotNull();
       Condition.Requires(session, "session").IsNotNull();

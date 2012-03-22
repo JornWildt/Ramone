@@ -26,8 +26,12 @@ namespace Ramone.HyperMedia
       get { return GetRelationTypes(); }
     }
 
-    
-    public string MediaType { get; private set; }
+
+    public MediaType MediaType
+    {
+      get { return GetMediaType(); }
+      set { SetMediaType(value); }
+    }
 
     
     public string Title { get; private set; }
@@ -38,25 +42,13 @@ namespace Ramone.HyperMedia
     }
 
 
-    public LinkBase(Uri baseUrl, string href, string relationType, string mediaType, string title)
-      : this(new Uri(baseUrl, href), relationType, mediaType, title)
-    {
-    }
-
-
     public LinkBase(Uri baseUrl, string href, string relationType, MediaType mediaType, string title)
-      : this(new Uri(baseUrl, href), relationType, mediaType != null ? mediaType.FullType : null, title)
+      : this(baseUrl != null ? new Uri(baseUrl, href) : new Uri(href), relationType, mediaType, title)
     {
     }
 
 
     public LinkBase(Uri href, string relationType, MediaType mediaType, string title)
-      : this(href, relationType, mediaType != null ? mediaType.FullType : null, title)
-    {
-    }
-
-
-    public LinkBase(Uri href, string relationType, string mediaType, string title)
     {
       HRef = href;
       RelationType = relationType;
