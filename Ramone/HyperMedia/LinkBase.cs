@@ -42,22 +42,10 @@ namespace Ramone.HyperMedia
     }
 
 
-    //public LinkBase(Uri baseUrl, string href, string relationType, string mediaType, string title)
-    //  : this(new Uri(baseUrl, href), relationType, MediaType.Create(mediaType), title)
-    //{
-    //}
-
-
     public LinkBase(Uri baseUrl, string href, string relationType, MediaType mediaType, string title)
       : this(baseUrl != null ? new Uri(baseUrl, href) : new Uri(href), relationType, mediaType, title)
     {
     }
-
-
-    //public LinkBase(Uri href, string relationType, string mediaType, string title)
-    //  : this(href, relationType, MediaType.Create(mediaType), title)
-    //{
-    //}
 
 
     public LinkBase(Uri href, string relationType, MediaType mediaType, string title)

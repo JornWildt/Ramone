@@ -14,22 +14,8 @@ namespace Ramone.HyperMedia
     /// <param name="links"></param>
     /// <param name="rel"></param>
     /// <param name="mediaType"></param>
-    /// <returns></returns>
-    public static T Select<T>(this IEnumerable<T> links, string rel, string mediaType = null)
-      where T : ISelectable
-    {
-      return Select<T>(links, rel, MediaType.Create(mediaType));
-    }
-
-
-    /// <summary>
-    /// Select a link identified by link relation and optional media-type.
-    /// </summary>
-    /// <param name="links"></param>
-    /// <param name="rel"></param>
-    /// <param name="mediaType"></param>
-    /// <returns></returns>
-    public static T Select<T>(this IEnumerable<T> links, string rel, MediaType mediaType)
+    /// <returns>Selected link or null if none was found.</returns>
+    public static T Select<T>(this IEnumerable<T> links, string rel, MediaType mediaType = null)
       where T : ISelectable
     {
       Condition.Requires(links, "links").IsNotNull();
@@ -67,20 +53,6 @@ namespace Ramone.HyperMedia
       Condition.Requires(session, "session").IsNotNull();
 
       return new RamoneRequest(session, url);
-    }
-
-
-    /// <summary>
-    /// Create request from link identified by link relation and optional media-type.
-    /// </summary>
-    /// <param name="links"></param>
-    /// <param name="session"></param>
-    /// <param name="rel"></param>
-    /// <param name="mediaType"></param>
-    /// <returns></returns>
-    public static RamoneRequest Follow(this IEnumerable<ILink> links, IRamoneSession session, string rel, string mediaType)
-    {
-      return Follow(links, session, rel, MediaType.Create(mediaType));
     }
 
 

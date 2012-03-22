@@ -17,21 +17,9 @@ namespace Ramone.MediaTypes.Html
     }
 
 
-    //public Link(Uri baseUrl, string href, string relationType, string mediaType, string title)
-    //  : this(baseUrl != null ? new Uri(baseUrl, href) : new Uri(href), relationType, mediaType, title)
-    //{
-    //}
-
-
     public Link(Uri href, string relationType, MediaType mediaType, string title)
       : base(href, relationType, mediaType, title)
     {
     }
-
-
-    //public Link(Uri href, string relationType, string mediaType, string title)
-    //  : base(href, relationType, mediaType, title)
-    //{
-    //}
   }
 }

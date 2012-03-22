@@ -31,6 +31,8 @@ Atom
 - Absolutte URLs
 - Must work with NULL baseUrl
 
+Testing Follow(...) with not-found rel-values.
+
 Before releasing:
 - Include a license
 - Version numbers

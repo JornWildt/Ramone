@@ -57,22 +57,10 @@ namespace Ramone.HyperMedia
     }
 
 
-    //public WebLink(Uri baseUrl, string href, string relationType, string mediaType, string title)
-    //  : this(baseUrl, relationType, new MediaType(mediaType), title)
-    //{
-    //}
-
-
     public WebLink(Uri baseUrl, string href, string relationType, MediaType mediaType, string title)
       : this(baseUrl != null ? new Uri(baseUrl, href) : new Uri(href), relationType, mediaType, title)
     {
     }
-
-
-    //public WebLink(Uri href, string relationType, string mediaType, string title)
-    //  : this(href, relationType, new MediaType(mediaType), title)
-    //{
-    //}
 
 
     public WebLink(Uri href, string relationshipType, MediaType mediaType, string title)

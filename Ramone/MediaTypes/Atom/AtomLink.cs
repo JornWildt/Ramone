@@ -73,18 +73,6 @@ namespace Ramone.MediaTypes.Atom
     }
 
 
-    //public AtomLink(Uri baseUrl, string href, string relationType, string mediaType, string title)
-    //  : this(new Uri(baseUrl, href), relationType, new MediaType(mediaType), title)
-    //{
-    //}
-
-
-    //public AtomLink(Uri href, string relationType, string mediaType, string title)
-    //  : this(href, relationType, new MediaType(mediaType), title)
-    //{
-    //}
-
-
     public AtomLink(Uri href, string relationType, MediaType mediaType, string title)
     {
       HRef = href;
