@@ -98,6 +98,7 @@
     <Compile Include="Blog\TypedHtmlTests.cs" />
     <Compile Include="DefaultContentTypeTests.cs" />
     <Compile Include="ExceptionHandlingTests.cs" />
+    <Compile Include="FileDownloadTests.cs" />
     <Compile Include="GenericMethodTests.cs" />
     <Compile Include="HyperMedia\LinkTemplateTests.cs" />
     <Compile Include="HyperMedia\Html\FormTest.cs" />

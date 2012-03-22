@@ -58,6 +58,8 @@ namespace Ramone.Tests
     protected static readonly Uri BasicAuthUrl = new Uri(BaseUrl, Constants.BasicAuthPath);
 
     protected static readonly UriTemplate FormTemplate = new UriTemplate(Constants.FormPath);
+
+    protected static readonly UriTemplate FileDownloadTemplate = new UriTemplate(Constants.FileDownloadPath);
     
 
     public static IRamoneService TestService { get; set; }

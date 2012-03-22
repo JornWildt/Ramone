@@ -29,6 +29,25 @@ Atom
 - Absolutte URLs
 - Must work with NULL baseUrl
 
+Anvende filename* i nedenstående
+
+  POST http://jw-pc261/f2-rudersdal-restservices-4.2-borgerhenvendelse/dossiers/377223/document-edit HTTP/1.1
+  User-Agent: Ramone/1.0
+  Authorization: Basic TGlzZSBOaWVsc2VuOg==
+  Content-Type: multipart/form-data; boundary=2ddcc789-fe11-453f-a5e5-b12fcec89f87
+  Host: jw-pc261
+  Content-Length: 76184
+  Expect: 100-continue
+
+
+  --2ddcc789-fe11-453f-a5e5-b12fcec89f87
+  Content-Disposition: form-data; name="File"; filename="Bjørneklo.jpg"
+  Content-Type: image/jpeg
+
+
+
+
+
 Testing Follow(...) with not-found rel-values.
 
 Before releasing:
@@ -112,6 +131,8 @@ Version 2
 ---------
 
 Upload/download progress indication
+
+Ramone: ide fra F2, HttpResponseFile for down+up-load (copy).
 
 - Demo how HTML + forms + url-encoded data can be auto-generated (a'la Eric)
   - Still missing a generic domain data embedding in HTML
