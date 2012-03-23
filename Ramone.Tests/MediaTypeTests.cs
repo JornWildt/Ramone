@@ -120,6 +120,34 @@ namespace Ramone.Tests
 
 
     [Test]
+    public void CanExplicitlyCastMediaTypeToString()
+    {
+      // Ararnge
+      MediaType mt = "app/x";
+
+      // Act
+      string m = (string)mt;
+
+      // Assert
+      Assert.AreEqual("app/x", m);
+    }
+
+
+    [Test]
+    public void CanExplicitlyCastNullMediaTypeToString()
+    {
+      // Ararnge
+      MediaType mt = null;
+
+      // Act
+      string m = (string)mt;
+
+      // Assert
+      Assert.IsNull(m);
+    }
+
+
+    [Test]
     public void WhenCreatingMediaTypeFromNullValueItReturnsValue()
     {
       // Act

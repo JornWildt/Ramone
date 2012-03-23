@@ -55,12 +55,6 @@ namespace Ramone
     }
 
 
-    public static implicit operator MediaType(string mediaType)
-    {
-      return Create(mediaType);
-    }
-
-
     public MediaType()
     {
     }
@@ -136,6 +130,18 @@ namespace Ramone
     public override int GetHashCode()
     {
       return FullType.GetHashCode();
+    }
+
+
+    public static implicit operator MediaType(string mediaType)
+    {
+      return Create(mediaType);
+    }
+
+
+    public static explicit operator string(MediaType mediaType)
+    {
+      return mediaType != null ? mediaType.FullType : null;
     }
 
 
