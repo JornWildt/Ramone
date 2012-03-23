@@ -6,9 +6,9 @@ using Ramone.Utility.ObjectSerialization;
 
 namespace Ramone
 {
-  public interface IRamoneSession : IHaveRequestInterceptors
+  public interface ISession : IHaveRequestInterceptors
   {
-    IRamoneService Service { get; }
+    IService Service { get; }
 
     CookieContainer Cookies { get; }
 

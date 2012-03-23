@@ -7,10 +7,10 @@ namespace Ramone
   {
     public HttpWebRequest Request { get; private set; }
 
-    public IRamoneSession Session { get; private set; }
+    public ISession Session { get; private set; }
 
 
-    public RequestContext(HttpWebRequest request, IRamoneSession session)
+    public RequestContext(HttpWebRequest request, ISession session)
     {
       Request = request;
       Session = session;

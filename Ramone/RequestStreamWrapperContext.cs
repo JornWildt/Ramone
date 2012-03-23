@@ -10,10 +10,10 @@ namespace Ramone
 
     public HttpWebRequest Request { get; private set; }
     
-    public IRamoneSession Session { get; private set; }
+    public ISession Session { get; private set; }
     
     
-    public RequestStreamWrapperContext(Stream requestStream, HttpWebRequest request, IRamoneSession session)
+    public RequestStreamWrapperContext(Stream requestStream, HttpWebRequest request, ISession session)
     {
       RequestStream = requestStream;
       Request = request;

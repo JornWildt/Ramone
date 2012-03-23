@@ -62,9 +62,9 @@ namespace Ramone.Tests
     protected static readonly UriTemplate FileDownloadTemplate = new UriTemplate(Constants.FileDownloadPath);
     
 
-    public static IRamoneService TestService { get; set; }
+    public static IService TestService { get; set; }
 
-    protected IRamoneSession Session { get; set; }
+    protected ISession Session { get; set; }
 
 
     /// <summary>

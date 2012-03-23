@@ -33,11 +33,11 @@ namespace Ramone.Tests
     public void CanAddAuthorizerToService()
     {
       // Arrange
-      IRamoneService service = RamoneConfiguration.NewService(BaseUrl);
+      IService service = RamoneConfiguration.NewService(BaseUrl);
 
       // Act
       service.BasicAuthentication("John", "magic");
-      IRamoneSession session = service.NewSession();
+      ISession session = service.NewSession();
       Response response = session.Request(BasicAuthUrl).Get();
 
       // Assert

@@ -6,11 +6,11 @@ using Ramone.Utility.ObjectSerialization;
 
 namespace Ramone.Implementation
 {
-  public class RamoneSession : IRamoneSession
+  public class RamoneSession : ISession
   {
     #region IRamoneSession Members
 
-    public IRamoneService Service { get; protected set; }
+    public IService Service { get; protected set; }
 
     public string UserAgent { get; set; }
     
@@ -33,7 +33,7 @@ namespace Ramone.Implementation
     #endregion
 
 
-    public RamoneSession(IRamoneService service)
+    public RamoneSession(IService service)
     {
       Service = service;
       UserAgent = service.UserAgent;

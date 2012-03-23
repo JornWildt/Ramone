@@ -5,7 +5,7 @@ using Ramone.Utility.ObjectSerialization;
 
 namespace Ramone
 {
-  public interface IRamoneService : IHaveRequestInterceptors
+  public interface IService : IHaveRequestInterceptors
   {
     ICodecManager CodecManager { get; }
 
@@ -23,6 +23,6 @@ namespace Ramone
 
     ObjectSerializerSettings SerializerSettings { get; set; }
 
-    IRamoneSession NewSession();
+    ISession NewSession();
   }
 }

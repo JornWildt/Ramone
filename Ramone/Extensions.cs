@@ -8,19 +8,19 @@ namespace Ramone
 {
   public static class Extensions
   {
-    public static Request Request(this IRamoneSession session, Uri url)
+    public static Request Request(this ISession session, Uri url)
     {
       return new Request(session, url);
     }
 
 
-    public static Request Request(this IRamoneSession session, string url)
+    public static Request Request(this ISession session, string url)
     {
       return new Request(session, url);
     }
 
 
-    public static Response<T> AsRamoneResponse<T>(this HttpWebResponse response, IRamoneSession session) where T : class
+    public static Response<T> AsRamoneResponse<T>(this HttpWebResponse response, ISession session) where T : class
     {
       return new Response<T>(response, session);
     }

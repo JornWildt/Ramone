@@ -17,10 +17,10 @@ namespace Ramone
 
     public Uri BaseUri { get { return new Uri(WebResponse.ResponseUri.GetLeftPart(UriPartial.Path)); } }
 
-    public IRamoneSession Session { get; protected set; }
+    public ISession Session { get; protected set; }
 
 
-    public Response(HttpWebResponse response, IRamoneSession session)
+    public Response(HttpWebResponse response, ISession session)
     {
       WebResponse = response;
       try
@@ -98,7 +98,7 @@ namespace Ramone
   public class Response<TBody> : Response
     where TBody : class
   {
-    public Response(HttpWebResponse response, IRamoneSession session)
+    public Response(HttpWebResponse response, ISession session)
       : base(response, session)
     {
     }

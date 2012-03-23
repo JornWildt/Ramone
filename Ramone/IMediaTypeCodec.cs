@@ -8,7 +8,7 @@ namespace Ramone
   {
     public Stream HttpStream { get; protected set; }
 
-    public IRamoneSession Session { get; protected set; }
+    public ISession Session { get; protected set; }
   }
 
 

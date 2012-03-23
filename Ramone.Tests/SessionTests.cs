@@ -12,21 +12,21 @@ namespace Ramone.Tests
   [TestFixture]
   public class SessionTests : TestHelper
   {
-    IRamoneService MySettings = RamoneConfiguration.NewService(BaseUrl);
+    IService MySettings = RamoneConfiguration.NewService(BaseUrl);
 
 
     [Test]
     public void WhenCreatingSessionItCopiesAllSimpleProperties()
     {
       // Arrange
-      IRamoneService service = RamoneConfiguration.NewService(BaseUrl);
+      IService service = RamoneConfiguration.NewService(BaseUrl);
       service.UserAgent = "Dummy";
       service.DefaultEncoding = Encoding.ASCII;
       service.DefaultRequestMediaType = new MediaType("X/1");
       service.DefaultResponseMediaType = new MediaType("Y/1");
 
       // Act
-      IRamoneSession session = service.NewSession();
+      ISession session = service.NewSession();
 
       // Assert
       Assert.AreEqual("Dummy", session.UserAgent);
@@ -41,17 +41,17 @@ namespace Ramone.Tests
     public void WhenCreatingSessionItClonesAuthorizationDispatcher()
     {
       // Arrange
-      IRamoneService service = RamoneConfiguration.NewService(BaseUrl);
+      IService service = RamoneConfiguration.NewService(BaseUrl);
 
       // Act
-      IRamoneSession session1 = service.NewSession();
+      ISession session1 = service.NewSession();
 
       service.AuthorizationDispatcher.Add("dummy1", new DummyHandler1());
       
-      IRamoneSession session2 = service.NewSession();
+      ISession session2 = service.NewSession();
       session2.AuthorizationDispatcher.Add("dummy2", new DummyHandler2());
 
-      IRamoneSession session3 = service.NewSession();
+      ISession session3 = service.NewSession();
 
       // Assert
       Assert.IsNull(session1.AuthorizationDispatcher.Get("dummy1"));
@@ -69,17 +69,17 @@ namespace Ramone.Tests
     public void WhenCreatingSessionItClonesInterceptors()
     {
       // Arrange
-      IRamoneService service = RamoneConfiguration.NewService(BaseUrl);
+      IService service = RamoneConfiguration.NewService(BaseUrl);
 
       // Act
-      IRamoneSession session1 = service.NewSession();
+      ISession session1 = service.NewSession();
 
       service.RequestInterceptors.Add(new DummyInterceptor1());
 
-      IRamoneSession session2 = service.NewSession();
+      ISession session2 = service.NewSession();
       session2.RequestInterceptors.Add(new DummyInterceptor2());
 
-      IRamoneSession session3 = service.NewSession();
+      ISession session3 = service.NewSession();
 
       // Assert
       Assert.AreEqual(0, session1.RequestInterceptors.Count());
@@ -94,7 +94,7 @@ namespace Ramone.Tests
     public void WhenCreatingSessionItClonesSerializerSettings()
     {
       // Arrange
-      IRamoneService service = RamoneConfiguration.NewService(BaseUrl);
+      IService service = RamoneConfiguration.NewService(BaseUrl);
       service.SerializerSettings.ArrayFormat = "A";
       service.SerializerSettings.DictionaryFormat = "B";
       service.SerializerSettings.PropertyFormat = "C";
@@ -104,7 +104,7 @@ namespace Ramone.Tests
       service.SerializerSettings.EnableNonAsciiCharactersInMultipartFilenames = true;
 
       // Act 1
-      IRamoneSession session = service.NewSession();
+      ISession session = service.NewSession();
 
       // Assert
       Assert.AreEqual("A", session.SerializerSettings.ArrayFormat);
@@ -147,7 +147,7 @@ namespace Ramone.Tests
     public void CanSkipUseOfService()
     {
       // Act
-      IRamoneSession session = RamoneConfiguration.NewSession(BaseUrl);
+      ISession session = RamoneConfiguration.NewSession(BaseUrl);
 
       // Assert
       Assert.IsNotNull(session.Service);

@@ -10,7 +10,7 @@ namespace Ramone
 
     public HttpWebRequest Request { get; protected set; }
 
-    public WriterContext(Stream s, object data, HttpWebRequest request, IRamoneSession session)
+    public WriterContext(Stream s, object data, HttpWebRequest request, ISession session)
     {
       HttpStream = s;
       Data = data;

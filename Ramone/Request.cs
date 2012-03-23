@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Net;
 using CuttingEdge.Conditions;
-using System.IO;
 
 
 namespace Ramone
@@ -14,7 +14,7 @@ namespace Ramone
 
     #region Constructors
 
-    public Request(IRamoneSession session, Uri url)
+    public Request(ISession session, Uri url)
     {
       Condition.Requires(session, "session").IsNotNull();
       Condition.Requires(url, "url").IsNotNull();
@@ -25,7 +25,7 @@ namespace Ramone
     }
 
 
-    public Request(IRamoneSession session, string url)
+    public Request(ISession session, string url)
       : this(session, new Uri(url))
     {
     }
@@ -51,7 +51,7 @@ namespace Ramone
 
     #region Properties
 
-    protected IRamoneSession Session { get; set; }
+    protected ISession Session { get; set; }
 
     protected string SubmitMethod { get; set; }
 

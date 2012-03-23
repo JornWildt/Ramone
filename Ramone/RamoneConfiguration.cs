@@ -46,9 +46,9 @@ namespace Ramone
     }
 
     
-    public static IRamoneService NewService(Uri baseUrl)
+    public static IService NewService(Uri baseUrl)
     {
-      IRamoneService service = new RamoneService(baseUrl)
+      IService service = new RamoneService(baseUrl)
       {
         UserAgent = UserAgent,
         DefaultEncoding = DefaultEncoding,
@@ -68,9 +68,9 @@ namespace Ramone
     /// started" scenarios. Any serious usage of Ramone should create and configure a specific service.</remarks>
     /// <param name="baseUrl">Base URL for implicit service.</param>
     /// <returns>A new session.</returns>
-    public static IRamoneSession NewSession(Uri baseUrl)
+    public static ISession NewSession(Uri baseUrl)
     {
-      IRamoneService service = NewService(baseUrl);
+      IService service = NewService(baseUrl);
       return service.NewSession();
     }
 

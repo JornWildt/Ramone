@@ -16,7 +16,7 @@ namespace Ramone.Tests
     public void HasExpectedDefaultSettings()
     {
       // Act
-      IRamoneService service = RamoneConfiguration.NewService(BaseUrl);
+      IService service = RamoneConfiguration.NewService(BaseUrl);
 
       // Assert
       Assert.AreEqual("Ramone/1.0", service.UserAgent);
@@ -33,7 +33,7 @@ namespace Ramone.Tests
     public void HasStandardCodec()
     {
       // Act
-      IRamoneService service = RamoneConfiguration.NewService(BaseUrl);
+      IService service = RamoneConfiguration.NewService(BaseUrl);
 
       // Assert (a few of them)
       Assert.IsNotNull(service.CodecManager.GetReader(typeof(XmlDocument), MediaType.ApplicationXml));
@@ -57,7 +57,7 @@ namespace Ramone.Tests
     {
       // Act
       RamoneConfiguration.UseStandardCodecs = false;
-      IRamoneService service = RamoneConfiguration.NewService(BaseUrl);
+      IService service = RamoneConfiguration.NewService(BaseUrl);
 
       // Assert (a few of them)
       AssertThrows<ArgumentException>(() => service.CodecManager.GetReader(typeof(XmlDocument), MediaType.ApplicationXml));
@@ -76,7 +76,7 @@ namespace Ramone.Tests
       RamoneConfiguration.SerializerSettings.DateTimeFormat = "O";
       RamoneConfiguration.SerializerSettings.Culture = CultureInfo.GetCultureInfo("da-DK");
 
-      IRamoneService service = RamoneConfiguration.NewService(BaseUrl);
+      IService service = RamoneConfiguration.NewService(BaseUrl);
 
       // Assert
       Assert.AreEqual("A", service.SerializerSettings.ArrayFormat);
@@ -94,7 +94,7 @@ namespace Ramone.Tests
       RamoneConfiguration.UserAgent = "Tester";
       RamoneConfiguration.DefaultEncoding = Encoding.ASCII;
       
-      IRamoneService service = RamoneConfiguration.NewService(BaseUrl);
+      IService service = RamoneConfiguration.NewService(BaseUrl);
 
       // Assert
       Assert.AreEqual("Tester", service.UserAgent);

@@ -31,7 +31,7 @@ namespace Ramone.MediaTypes.Html
 
     protected object AlternateValues { get; set; }
 
-    protected IRamoneSession Session { get; set; }
+    protected ISession Session { get; set; }
 
 
     #region IKeyValueForm Members
@@ -71,7 +71,7 @@ namespace Ramone.MediaTypes.Html
     #endregion
 
 
-    public Form(HtmlNode formNode, IRamoneSession session, Uri baseUrl, string charset)
+    public Form(HtmlNode formNode, ISession session, Uri baseUrl, string charset)
     {
       Condition.Requires(formNode, "formNode").IsNotNull();
       Condition.Requires(session, "session").IsNotNull();

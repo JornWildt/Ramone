@@ -5,7 +5,7 @@ using Ramone.Utility.ObjectSerialization;
 
 namespace Ramone.Implementation
 {
-  internal class RamoneService : IRamoneService
+  internal class RamoneService : IService
   {
     #region IRamoneService Members
 
@@ -28,7 +28,7 @@ namespace Ramone.Implementation
     public ObjectSerializerSettings SerializerSettings { get; set; }
 
 
-    public IRamoneSession NewSession()
+    public ISession NewSession()
     {
       return new RamoneSession(this);
     }

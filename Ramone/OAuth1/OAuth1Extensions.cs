@@ -7,7 +7,7 @@ namespace Ramone.OAuth1
 {
   public static class OAuth1Extensions
   {
-    public static void OAuth1Configure(this IRamoneSession session, OAuth1Settings settings)
+    public static void OAuth1Configure(this ISession session, OAuth1Settings settings)
     {
       // Ignore returned media types from servers when fetching request/access-tokens
       // (This is so silly: Twitter returning text/html when it is application/x-www-form-urlencoded.
@@ -24,14 +24,14 @@ namespace Ramone.OAuth1
     }
 
 
-    public static void OAuth1Logger(this IRamoneSession session, IOAuth1Logger logger)
+    public static void OAuth1Logger(this ISession session, IOAuth1Logger logger)
     {
       OAuth1RequestInterceptor interceptor = GetExistingInterceptor(session);
       interceptor.Logger = logger;
     }
 
 
-    public static OAuth1Token OAuth1GetRequestToken(this IRamoneSession session, bool rememberToken = true)
+    public static OAuth1Token OAuth1GetRequestToken(this ISession session, bool rememberToken = true)
     {
       OAuth1Settings settings = GetExistingSettings(session);
 
@@ -47,7 +47,7 @@ namespace Ramone.OAuth1
     }
 
 
-    public static OAuth1Token OAuth1GetAccessTokenFromRequestToken(this IRamoneSession session, string verifier, bool rememberToken = true)
+    public static OAuth1Token OAuth1GetAccessTokenFromRequestToken(this ISession session, string verifier, bool rememberToken = true)
     {
       OAuth1Settings settings = GetExistingSettings(session);
 
@@ -63,7 +63,7 @@ namespace Ramone.OAuth1
     }
 
 
-    public static void OAuth1SetAccessToken(this IRamoneSession session, OAuth1Token token, bool isAuthorized = false)
+    public static void OAuth1SetAccessToken(this ISession session, OAuth1Token token, bool isAuthorized = false)
     {
       OAuth1RequestInterceptor interceptor = GetExistingInterceptor(session);
       interceptor.SetAccessToken(token);
@@ -71,21 +71,21 @@ namespace Ramone.OAuth1
     }
 
 
-    public static bool OAuth1IsAuthorized(this IRamoneSession session)
+    public static bool OAuth1IsAuthorized(this ISession session)
     {
       OAuth1RequestInterceptor interceptor = GetExistingInterceptor(session);
       return interceptor.IsAuthorized;
     }
 
 
-    private static OAuth1Settings GetExistingSettings(IRamoneSession session)
+    private static OAuth1Settings GetExistingSettings(ISession session)
     {
       OAuth1RequestInterceptor interceptor = GetExistingInterceptor(session);
       return interceptor.Settings;
     }
 
 
-    private static OAuth1RequestInterceptor GetExistingInterceptor(IRamoneSession session)
+    private static OAuth1RequestInterceptor GetExistingInterceptor(ISession session)
     {
       OAuth1RequestInterceptor interceptor = session.RequestInterceptors.Find("OAuth") as OAuth1RequestInterceptor;
       if (interceptor == null)

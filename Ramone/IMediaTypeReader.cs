@@ -11,7 +11,7 @@ namespace Ramone
 
     public HttpWebResponse Response { get; protected set; }
 
-    public ReaderContext(Stream s, Type t, HttpWebResponse response, IRamoneSession session)
+    public ReaderContext(Stream s, Type t, HttpWebResponse response, ISession session)
     {
       HttpStream = s;
       DataType = t;
