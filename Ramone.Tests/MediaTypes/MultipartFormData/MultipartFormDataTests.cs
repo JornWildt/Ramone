@@ -20,7 +20,7 @@ namespace Ramone.Tests.MediaTypes.MultipartFormData
       Request formdataReq = Session.Bind(MultipartFormDataTemplate);
 
       // Act
-      Resource<string> response = formdataReq.Accept("text/plain").ContentType("multipart/form-data").Post<string>(data);
+      Response<string> response = formdataReq.Accept("text/plain").ContentType("multipart/form-data").Post<string>(data);
 
       // Assert
       Assert.IsTrue(response.Headers["x-contenttype"].StartsWith("multipart/form-data"));
@@ -36,7 +36,7 @@ namespace Ramone.Tests.MediaTypes.MultipartFormData
       Request formdataReq = Session.Bind(MultipartFormDataTemplate);
 
       // Act
-      Resource<string> response = formdataReq.Accept("text/plain").AsMultipartFormData().Post<string>(data);
+      Response<string> response = formdataReq.Accept("text/plain").AsMultipartFormData().Post<string>(data);
 
       // Assert
       Assert.IsTrue(response.Headers["x-contenttype"].StartsWith("multipart/form-data"));
@@ -62,7 +62,7 @@ namespace Ramone.Tests.MediaTypes.MultipartFormData
       Request formdataReq = Session.Bind(MultipartFormDataFileTemplate);
 
       // Act
-      Resource<string> response = formdataReq.Accept("text/plain").ContentType("multipart/form-data").Post<string>(data);
+      Response<string> response = formdataReq.Accept("text/plain").ContentType("multipart/form-data").Post<string>(data);
 
       // Assert
       Assert.IsTrue(response.Headers["x-contenttype"].StartsWith("multipart/form-data"));
@@ -79,7 +79,7 @@ namespace Ramone.Tests.MediaTypes.MultipartFormData
       Request formdataReq = Session.Bind(MultipartFormDataFileTemplate);
 
       // Act
-      Resource<string> response = formdataReq.Accept("text/plain").ContentType("multipart/form-data").Post<string>(data);
+      Response<string> response = formdataReq.Accept("text/plain").ContentType("multipart/form-data").Post<string>(data);
 
       // Assert
       Assert.IsTrue(response.Headers["x-contenttype"].StartsWith("multipart/form-data"));
@@ -98,7 +98,7 @@ namespace Ramone.Tests.MediaTypes.MultipartFormData
       Request formdataReq = Session.Bind(MultipartFormDataFileTemplate);
 
       // Act
-      Resource<string> response = formdataReq.Accept("text/plain").ContentType("multipart/form-data").Post<string>(data);
+      Response<string> response = formdataReq.Accept("text/plain").ContentType("multipart/form-data").Post<string>(data);
 
       // Assert
       Assert.IsTrue(response.Headers["x-contenttype"].StartsWith("multipart/form-data"));
@@ -115,7 +115,7 @@ namespace Ramone.Tests.MediaTypes.MultipartFormData
       Request formdataReq = Session.Bind(MultipartFormDataFileTemplate);
 
       // Act
-      Resource<string> response = formdataReq.Accept("text/plain").ContentType("multipart/form-data").Post<string>(data);
+      Response<string> response = formdataReq.Accept("text/plain").ContentType("multipart/form-data").Post<string>(data);
 
       // Assert
       Assert.IsTrue(response.Headers["x-contenttype"].StartsWith("multipart/form-data"));
@@ -132,7 +132,7 @@ namespace Ramone.Tests.MediaTypes.MultipartFormData
       Request formdataReq = Session.Bind(MultipartFormDataFileTemplate);
 
       // Act
-      Resource<string> response = formdataReq.Accept("text/plain").ContentType("multipart/form-data").Post<string>(data);
+      Response<string> response = formdataReq.Accept("text/plain").ContentType("multipart/form-data").Post<string>(data);
 
       // Assert
       Assert.IsTrue(response.Headers["x-contenttype"].StartsWith("multipart/form-data"));
@@ -148,7 +148,7 @@ namespace Ramone.Tests.MediaTypes.MultipartFormData
       Request formdataReq = Session.Bind(MultipartFormDataTemplate);
 
       // Act
-      Resource<string> response = formdataReq.Accept("text/plain").ContentType("multipart/form-data").Post<string>(data);
+      Response<string> response = formdataReq.Accept("text/plain").ContentType("multipart/form-data").Post<string>(data);
 
       // Assert
       Assert.IsTrue(response.Headers["x-contenttype"].StartsWith("multipart/form-data"));
@@ -166,7 +166,7 @@ namespace Ramone.Tests.MediaTypes.MultipartFormData
       Request formdataReq = Session.Bind(MultipartFormDataTemplate);
 
       // Act
-      Resource<string> response = formdataReq.Accept("text/plain")
+      Response<string> response = formdataReq.Accept("text/plain")
                                                    .AcceptCharset(charsetOut)
                                                    .Charset(charsetIn)
                                                    .ContentType("multipart/form-data")
@@ -214,7 +214,7 @@ namespace Ramone.Tests.MediaTypes.MultipartFormData
       Request request = Session.Bind(ComplexClassTemplate);
 
       // Act
-      Resource<string> response = request.Accept("text/plain")
+      Response<string> response = request.Accept("text/plain")
                                                .AsMultipartFormData()
                                                .Post<string>(o);
 

@@ -5,28 +5,28 @@ using Ramone.HyperMedia;
 
 namespace Ramone
 {
-  public class Resource
+  public class Response
   {
-    public HttpWebResponse Response { get; protected set; }
+    public HttpWebResponse WebResponse { get; protected set; }
 
     public MediaType ContentType { get; protected set; }
 
-    public long ContentLength { get { return Response.ContentLength; } }
+    public long ContentLength { get { return WebResponse.ContentLength; } }
 
-    public HttpStatusCode StatusCode { get { return Response.StatusCode; } }
+    public HttpStatusCode StatusCode { get { return WebResponse.StatusCode; } }
 
-    public Uri BaseUri { get { return new Uri(Response.ResponseUri.GetLeftPart(UriPartial.Path)); } }
+    public Uri BaseUri { get { return new Uri(WebResponse.ResponseUri.GetLeftPart(UriPartial.Path)); } }
 
     public IRamoneSession Session { get; protected set; }
 
 
-    public Resource(HttpWebResponse response, IRamoneSession session)
+    public Response(HttpWebResponse response, IRamoneSession session)
     {
-      Response = response;
+      WebResponse = response;
       try
       {
         // FIXME: TryParse
-        ContentType = new MediaType(Response.ContentType);
+        ContentType = new MediaType(WebResponse.ContentType);
       }
       catch (Exception)
       {
@@ -38,17 +38,17 @@ namespace Ramone
 
     public WebHeaderCollection Headers
     {
-      get { return Response.Headers; }
+      get { return WebResponse.Headers; }
     }
 
 
     public T Decode<T>() where T : class
     {
-      if (Response.ContentLength == 0 || ContentType == null || Response.StatusCode == HttpStatusCode.NoContent)
+      if (WebResponse.ContentLength == 0 || ContentType == null || WebResponse.StatusCode == HttpStatusCode.NoContent)
         return null;
 
       IMediaTypeReader reader = Session.Service.CodecManager.GetReader(typeof(T), ContentType).Codec;
-      ReaderContext context = new ReaderContext(Response.GetResponseStream(), typeof(T), Response, Session);
+      ReaderContext context = new ReaderContext(WebResponse.GetResponseStream(), typeof(T), WebResponse, Session);
       T result = (T)reader.ReadFrom(context);
       return result;
     }
@@ -65,28 +65,28 @@ namespace Ramone
 
     public Uri CreatedLocation()
     {
-      if (Response.StatusCode != HttpStatusCode.Created)
+      if (WebResponse.StatusCode != HttpStatusCode.Created)
         return null;
 
-      if (Response.Headers[HttpResponseHeader.Location] == null)
+      if (WebResponse.Headers[HttpResponseHeader.Location] == null)
         return null;
 
-      return new Uri(Response.Headers[HttpResponseHeader.Location]);
+      return new Uri(WebResponse.Headers[HttpResponseHeader.Location]);
     }
 
 
     public T Created<T>() where T : class
     {
-      if (Response.StatusCode != HttpStatusCode.Created)
+      if (WebResponse.StatusCode != HttpStatusCode.Created)
         return null;
 
       T body = Decode<T>();
       if (body == null)
       {
-        if (Response.Headers[HttpResponseHeader.Location] == null)
+        if (WebResponse.Headers[HttpResponseHeader.Location] == null)
           return null;
 
-        Request request = Session.Request(Response.Headers[HttpResponseHeader.Location]);
+        Request request = Session.Request(WebResponse.Headers[HttpResponseHeader.Location]);
         body = request.Get<T>().Body;
       }
 
@@ -95,17 +95,17 @@ namespace Ramone
   }
 
 
-  public class Resource<TBody> : Resource
+  public class Response<TBody> : Response
     where TBody : class
   {
-    public Resource(HttpWebResponse response, IRamoneSession session)
+    public Response(HttpWebResponse response, IRamoneSession session)
       : base(response, session)
     {
     }
 
 
-    public Resource(Resource src)
-      : base(src.Response, src.Session)
+    public Response(Response src)
+      : base(src.WebResponse, src.Session)
     {
     }
 

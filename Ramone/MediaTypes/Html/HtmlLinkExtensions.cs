@@ -14,7 +14,7 @@ namespace Ramone.MediaTypes.Html
     /// </summary>
     /// <param name="html"></param>
     /// <returns></returns>
-    public static IEnumerable<Link> Links(this HtmlDocument html, Resource response)
+    public static IEnumerable<Link> Links(this HtmlDocument html, Response response)
     {
       return Links(html, response != null ? response.BaseUri : null);
     }
@@ -36,7 +36,7 @@ namespace Ramone.MediaTypes.Html
     /// </summary>
     /// <param name="node"></param>
     /// <returns></returns>
-    public static IEnumerable<Link> Links(this HtmlNode node, Resource response)
+    public static IEnumerable<Link> Links(this HtmlNode node, Response response)
     {
       return Links(node, response != null ? response.BaseUri : null);
     }
@@ -57,7 +57,7 @@ namespace Ramone.MediaTypes.Html
     /// </summary>
     /// <param name="nodes"></param>
     /// <returns></returns>
-    public static IEnumerable<Link> Links(this HtmlNodeCollection nodes, Resource response)
+    public static IEnumerable<Link> Links(this HtmlNodeCollection nodes, Response response)
     {
       return Links(nodes, response != null ? response.BaseUri : null);
     }
@@ -82,7 +82,7 @@ namespace Ramone.MediaTypes.Html
     /// </summary>
     /// <param name="node"></param>
     /// <returns></returns>
-    public static Link Link(this HtmlNode node, Resource response)
+    public static Link Link(this HtmlNode node, Response response)
     {
       return Link(node, response != null ? response.BaseUri : null);
     }

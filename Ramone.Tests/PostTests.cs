@@ -27,7 +27,7 @@ namespace Ramone.Tests
     public void CanPostAndIgnoreReturnedBody()
     {
       // Act
-      Resource response = DossiersReq.Post(MyDossier);
+      Response response = DossiersReq.Post(MyDossier);
 
       // Assert
       Assert.IsNotNull(response);
@@ -38,7 +38,7 @@ namespace Ramone.Tests
     public void CanPostAndGetResult()
     {
       // Act
-      Resource<Dossier> response = DossiersReq.Post<Dossier>(MyDossier);
+      Response<Dossier> response = DossiersReq.Post<Dossier>(MyDossier);
       Dossier newDossier = response.Body;
 
       // Assert
@@ -75,7 +75,7 @@ namespace Ramone.Tests
       Request request = Session.Bind(AnyEchoTemplate);
 
       // Act
-      Resource<string> response = request.Accept("text/plain").ContentType("application/octet-stream").Post<string>();
+      Response<string> response = request.Accept("text/plain").ContentType("application/octet-stream").Post<string>();
       
       // Assert
       Assert.AreEqual(null, response.Body);
@@ -89,7 +89,7 @@ namespace Ramone.Tests
       Request request = Session.Bind(AnyEchoTemplate);
 
       // Act
-      Resource response = request.Accept("text/plain").ContentType("application/octet-stream").Post();
+      Response response = request.Accept("text/plain").ContentType("application/octet-stream").Post();
 
       // Assert
       Assert.AreEqual(null, response.Body);

@@ -15,9 +15,9 @@ namespace Ramone.MediaTypes.Html
     }
 
 
-    public static Form Form(this HtmlNode node, Resource response)
+    public static Form Form(this HtmlNode node, Response response)
     {
-      return new Form(node, response.Session, response.BaseUri, response.Response.CharacterSet);
+      return new Form(node, response.Session, response.BaseUri, response.WebResponse.CharacterSet);
     }
   }
 }

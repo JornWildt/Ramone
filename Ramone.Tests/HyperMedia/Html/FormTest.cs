@@ -247,7 +247,7 @@ namespace Ramone.Tests.HyperMedia.Html
     IKeyValueForm GetForm(string actionUrlMode = "absolute", string encType = "multipart", string charset = "iso-8859-1")
     {
       Request formRequest = Session.Bind(FormTemplate, new { actionUrlMode = actionUrlMode, encType = encType, charset = charset });
-      Resource<HtmlDocument> response = formRequest.Get<HtmlDocument>();
+      Response<HtmlDocument> response = formRequest.Get<HtmlDocument>();
       IKeyValueForm form = response.Body.DocumentNode.SelectNodes(@"//form").First().Form(response);
       return form;
     }

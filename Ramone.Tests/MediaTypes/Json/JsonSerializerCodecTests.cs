@@ -48,7 +48,7 @@ namespace Ramone.Tests.MediaTypes.Json
 
       // Assert
       Assert.IsNotNull(stuff);
-      Assert.AreEqual(charset, response.Response.Headers["X-accept-charset"]);
+      Assert.AreEqual(charset, response.WebResponse.Headers["X-accept-charset"]);
       Assert.AreEqual("ÆØÅúï´`'\"", stuff.Name);
     }
 
@@ -97,8 +97,8 @@ namespace Ramone.Tests.MediaTypes.Json
 
       // Assert
       Assert.IsNotNull(stuff);
-      Assert.AreEqual(charsetIn, response.Response.Headers["X-request-charset"]);
-      Assert.AreEqual(charsetOut, response.Response.Headers["X-accept-charset"]);
+      Assert.AreEqual(charsetIn, response.WebResponse.Headers["X-request-charset"]);
+      Assert.AreEqual(charsetOut, response.WebResponse.Headers["X-accept-charset"]);
       Assert.AreEqual("ÆØÅúï´`'\"", stuff.Name);
     }
 
@@ -125,7 +125,7 @@ namespace Ramone.Tests.MediaTypes.Json
       UnregisteredClass data = new UnregisteredClass { Text = "Hello" };
       Request request = Session.Bind(AnyEchoTemplate);
 
-      Resource<UnregisteredClass> response = request.Accept("application/json").ContentType("application/json").Post<UnregisteredClass>(data);
+      Response<UnregisteredClass> response = request.Accept("application/json").ContentType("application/json").Post<UnregisteredClass>(data);
 
       Assert.AreEqual(data.Text, response.Body.Text);
     }
@@ -137,7 +137,7 @@ namespace Ramone.Tests.MediaTypes.Json
       UnregisteredClass data = new UnregisteredClass { Text = "Hello" };
       Request request = Session.Bind(AnyEchoTemplate);
 
-      Resource<UnregisteredClass> response = request.AsJson().AcceptJson().Post<UnregisteredClass>(data);
+      Response<UnregisteredClass> response = request.AsJson().AcceptJson().Post<UnregisteredClass>(data);
 
       Assert.AreEqual(data.Text, response.Body.Text);
     }

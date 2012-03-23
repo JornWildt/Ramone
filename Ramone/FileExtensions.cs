@@ -5,11 +5,11 @@ namespace Ramone
 {
   public static class FileExtensions
   {
-    public static void SaveToFile(this Resource resource, string filename)
+    public static void SaveToFile(this Response resource, string filename)
     {
       using (Stream w = new FileStream(filename, FileMode.OpenOrCreate))
       {
-        resource.Response.GetResponseStream().CopyTo(w);
+        resource.WebResponse.GetResponseStream().CopyTo(w);
       }
     }
   }

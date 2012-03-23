@@ -150,13 +150,13 @@ namespace Ramone.Tests.HyperMedia.Html
 
       // Act
       ILink l1 = doc.Anchors((Uri)null).Select("next");
-      ILink l2 = doc.Anchors((Resource)null).Select("next");
+      ILink l2 = doc.Anchors((Response)null).Select("next");
       ILink l3 = doc.DocumentNode.Anchors((Uri)null).Select("next");
-      ILink l4 = doc.DocumentNode.Anchors((Resource)null).Select("next");
+      ILink l4 = doc.DocumentNode.Anchors((Response)null).Select("next");
       ILink l5 = doc.DocumentNode.SelectNodes("//*").Anchors((Uri)null).Select("next");
-      ILink l6 = doc.DocumentNode.SelectNodes("//*").Anchors((Resource)null).Select("next");
+      ILink l6 = doc.DocumentNode.SelectNodes("//*").Anchors((Response)null).Select("next");
       ILink l7 = doc.DocumentNode.SelectNodes("//a").First().Anchor((Uri)null);
-      ILink l8 = doc.DocumentNode.SelectNodes("//a").First().Anchor((Resource)null);
+      ILink l8 = doc.DocumentNode.SelectNodes("//a").First().Anchor((Response)null);
 
       // Assert
       Assert.AreEqual("http://link1/", l1.HRef.AbsoluteUri);
@@ -268,13 +268,13 @@ namespace Ramone.Tests.HyperMedia.Html
 
       // Act
       ILink l1 = doc.Links((Uri)null).Select("search");
-      ILink l2 = doc.Links((Resource)null).Select("search");
+      ILink l2 = doc.Links((Response)null).Select("search");
       ILink l3 = doc.DocumentNode.Links((Uri)null).Select("search");
-      ILink l4 = doc.DocumentNode.Links((Resource)null).Select("search");
+      ILink l4 = doc.DocumentNode.Links((Response)null).Select("search");
       ILink l5 = doc.DocumentNode.SelectNodes("//*").Links((Uri)null).Select("search");
-      ILink l6 = doc.DocumentNode.SelectNodes("//*").Links((Resource)null).Select("search");
+      ILink l6 = doc.DocumentNode.SelectNodes("//*").Links((Response)null).Select("search");
       ILink l7 = doc.DocumentNode.SelectNodes("//link").First().Link((Uri)null);
-      ILink l8 = doc.DocumentNode.SelectNodes("//link").First().Link((Resource)null);
+      ILink l8 = doc.DocumentNode.SelectNodes("//link").First().Link((Response)null);
 
       // Assert
       Assert.AreEqual("http://example.com/", l1.HRef.AbsoluteUri);

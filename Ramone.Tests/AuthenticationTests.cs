@@ -38,7 +38,7 @@ namespace Ramone.Tests
       // Act
       service.BasicAuthentication("John", "magic");
       IRamoneSession session = service.NewSession();
-      Resource response = session.Request(BasicAuthUrl).Get();
+      Response response = session.Request(BasicAuthUrl).Get();
 
       // Assert
       Assert.IsNotNull(response);
