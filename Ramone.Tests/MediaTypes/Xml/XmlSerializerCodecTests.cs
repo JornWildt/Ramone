@@ -12,7 +12,7 @@ namespace Ramone.Tests.MediaTypes.Xml
     public void CanPostUnregisteredType()
     {
       UnregisteredClass data = new UnregisteredClass { Text = "Hello" };
-      RamoneRequest request = Session.Bind(XmlEchoTemplate);
+      Request request = Session.Bind(XmlEchoTemplate);
 
       Resource<UnregisteredClass> response = request.Accept("application/xml").ContentType("application/xml").Post<UnregisteredClass>(data);
 
@@ -24,7 +24,7 @@ namespace Ramone.Tests.MediaTypes.Xml
     public void CanPostUnregisteredTypeWithShorthand()
     {
       UnregisteredClass data = new UnregisteredClass { Text = "Hello" };
-      RamoneRequest request = Session.Bind(XmlEchoTemplate);
+      Request request = Session.Bind(XmlEchoTemplate);
 
       Resource<UnregisteredClass> response = request.AsXml().AcceptXml().Post<UnregisteredClass>(data);
 
@@ -36,7 +36,7 @@ namespace Ramone.Tests.MediaTypes.Xml
     public void CanPostRegisteredType()
     {
       RegisteredClass data = new RegisteredClass { Title = "The World" };
-      RamoneRequest request = Session.Bind(XmlEchoTemplate);
+      Request request = Session.Bind(XmlEchoTemplate);
 
       Resource<RegisteredClass> response = request.Post<RegisteredClass>(data);
 
@@ -48,7 +48,7 @@ namespace Ramone.Tests.MediaTypes.Xml
     public void CanReadWriteDates()
     {
       RegisteredClass data = new RegisteredClass { Title = "The World", Date = DateTime.Now };
-      RamoneRequest request = Session.Bind(XmlEchoTemplate);
+      Request request = Session.Bind(XmlEchoTemplate);
 
       Resource<RegisteredClass> response = request.Post<RegisteredClass>(data);
 
@@ -61,8 +61,8 @@ namespace Ramone.Tests.MediaTypes.Xml
     public void CanLetServerEvolveByIgnoringUnknownProperties()
     {
       // Arrange
-      RamoneRequest dog1Request = Session.Bind(Dog1Template, new { name = "Fido" });
-      RamoneRequest dog2Request = Session.Bind(Dog2Template, new { name = "Hugo" });
+      Request dog1Request = Session.Bind(Dog1Template, new { name = "Fido" });
+      Request dog2Request = Session.Bind(Dog2Template, new { name = "Hugo" });
 
       // Act
       Dog1 d1a = dog1Request.Get<Dog1>().Body;

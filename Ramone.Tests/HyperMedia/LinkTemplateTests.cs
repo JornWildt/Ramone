@@ -72,7 +72,7 @@ namespace Ramone.Tests.HyperMedia
                                    };
 
       // Act
-      RamoneRequest request = Session.Bind(template, new { terms = "abc" });
+      Request request = Session.Bind(template, new { terms = "abc" });
 
       // Assert
       Assert.IsNotNull(request);

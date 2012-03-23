@@ -17,7 +17,7 @@ namespace Ramone.Tests.MediaTypes.FormUrlEncoded
     {
       // Arrange
       var data = new { Name = "Pete", Age = 10 }; // Matches "MultipartData" class
-      RamoneRequest formdataReq = Session.Bind(MultipartFormDataTemplate);
+      Request formdataReq = Session.Bind(MultipartFormDataTemplate);
 
       // Act
       Resource<string> response = formdataReq.Accept("text/plain").ContentType("application/x-www-form-urlencoded").Post<string>(data);
@@ -33,7 +33,7 @@ namespace Ramone.Tests.MediaTypes.FormUrlEncoded
     {
       // Arrange
       var data = new { Name = "Pete", Age = 10 }; // Matches "MultipartData" class
-      RamoneRequest formdataReq = Session.Bind(MultipartFormDataTemplate);
+      Request formdataReq = Session.Bind(MultipartFormDataTemplate);
 
       // Act
       Resource<string> response = formdataReq.Accept("text/plain").AsFormUrlEncoded().Post<string>(data);
@@ -57,7 +57,7 @@ namespace Ramone.Tests.MediaTypes.FormUrlEncoded
       // Arrange
       Session.Service.CodecManager.AddCodec<RegisteredData, FormUrlEncodedSerializerCodec>(MediaType.ApplicationFormUrlEncoded);
       RegisteredData data = new RegisteredData { Name = "Pete", Age = 10 };
-      RamoneRequest formdataReq = Session.Bind(MultipartFormDataTemplate);
+      Request formdataReq = Session.Bind(MultipartFormDataTemplate);
 
       // Act
       Resource<string> response = formdataReq.Accept("text/plain").Post<string>(data);
@@ -74,7 +74,7 @@ namespace Ramone.Tests.MediaTypes.FormUrlEncoded
       // Arrange
       string charset = "iso-8859-1";
       var data = new { Name = "ÆØÅüî", Age = 10 }; // Matches "MultipartData" class
-      RamoneRequest formdataReq = Session.Bind(MultipartFormDataTemplate);
+      Request formdataReq = Session.Bind(MultipartFormDataTemplate);
 
       // Act
       Resource<string> response = formdataReq.Accept("text/plain")
@@ -121,7 +121,7 @@ namespace Ramone.Tests.MediaTypes.FormUrlEncoded
         PropertyFormat = "{0}.{1}"
       };
 
-      RamoneRequest request = Session.Bind(ComplexClassTemplate);
+      Request request = Session.Bind(ComplexClassTemplate);
 
       // Act
       Resource<string> response = request.Accept("text/plain")
@@ -138,7 +138,7 @@ namespace Ramone.Tests.MediaTypes.FormUrlEncoded
     public void CanReadTyped()
     {
       // Arrange
-      RamoneRequest request = Session.Bind(FormUrlEncodedTemplate);
+      Request request = Session.Bind(FormUrlEncodedTemplate);
 
       // Act
       Resource<FormUrlEncodedData> response = request.Accept("application/x-www-form-urlencoded").Get<FormUrlEncodedData>();
@@ -154,7 +154,7 @@ namespace Ramone.Tests.MediaTypes.FormUrlEncoded
     public void CanReadNameValueCollection()
     {
       // Arrange
-      RamoneRequest request = Session.Bind(FormUrlEncodedTemplate);
+      Request request = Session.Bind(FormUrlEncodedTemplate);
 
       // Act
       Resource<NameValueCollection> response = request.Accept("application/x-www-form-urlencoded").Get<NameValueCollection>();

@@ -21,7 +21,7 @@ namespace Ramone.Tests.Blog
     public void CanGetSearchLinkFromBlog()
     {
       // Arrange
-      RamoneRequest blogRequest = Session.Bind(BlogRootPath);
+      Request blogRequest = Session.Bind(BlogRootPath);
 
       // Act - get blog resource and select Open Search link
       Resources.Blog blog = blogRequest.Get<Resources.Blog>().Body;
@@ -73,7 +73,7 @@ namespace Ramone.Tests.Blog
 
     ILink GetSearchLink()
     {
-      RamoneRequest blogRequest = Session.Bind(BlogRootPath);
+      Request blogRequest = Session.Bind(BlogRootPath);
       Resources.Blog blog = blogRequest.Get<Resources.Blog>().Body;
       ILink searchLink = blog.Links.Select("search", "application/opensearchdescription+xml");
       return searchLink;

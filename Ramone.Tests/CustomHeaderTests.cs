@@ -15,7 +15,7 @@ namespace Ramone.Tests
     public void CanAddCustomerHeader()
     {
       // Arrange
-      RamoneRequest request = Session.Request(HeaderListUrl);
+      Request request = Session.Request(HeaderListUrl);
 
       // Act
       HeaderList headers = request.Header("X-Ramone", "123").Get<HeaderList>().Body;

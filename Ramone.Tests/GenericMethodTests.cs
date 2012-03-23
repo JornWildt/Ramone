@@ -12,7 +12,7 @@ namespace Ramone.Tests
     public void CanExecuteGetWithGenericResult()
     {
       // Arrange
-      RamoneRequest dossierReq = Session.Bind(DossierTemplate, new { id = 8 });
+      Request dossierReq = Session.Bind(DossierTemplate, new { id = 8 });
 
       // Act
       Dossier dossier1 = dossierReq.Execute<Dossier>("GET").Body;
@@ -31,7 +31,7 @@ namespace Ramone.Tests
     public void CanExecuteGetWithNonGenericResult()
     {
       // Arrange
-      RamoneRequest dossierReq = Session.Bind(DossierTemplate, new { id = 8 });
+      Request dossierReq = Session.Bind(DossierTemplate, new { id = 8 });
 
       // Act
       Resource response1 = dossierReq.Execute("GET");
@@ -54,7 +54,7 @@ namespace Ramone.Tests
     public void CanExecutePostWithGenericResult()
     {
       // Arrange
-      RamoneRequest dossiersReq = Session.Request(DossiersUrl);
+      Request dossiersReq = Session.Request(DossiersUrl);
 
       // Act
       Dossier dossier1 = dossiersReq.Execute<Dossier>("POST", MyDossier).Body;
@@ -73,7 +73,7 @@ namespace Ramone.Tests
     public void CanExecutePostWithNonGenericResult()
     {
       // Arrange
-      RamoneRequest dossiersReq = Session.Request(DossiersUrl);
+      Request dossiersReq = Session.Request(DossiersUrl);
 
       // Act
       Resource response = dossiersReq.Execute("POST", MyDossier);

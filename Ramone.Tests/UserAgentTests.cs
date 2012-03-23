@@ -13,7 +13,7 @@ namespace Ramone.Tests
     {
       // Arrange
       Session.UserAgent = "AgentTest/007";
-      RamoneRequest req = Session.Request(HeaderListUrl);
+      Request req = Session.Request(HeaderListUrl);
 
       // Act
       HeaderList headers = req.Get<HeaderList>().Body;

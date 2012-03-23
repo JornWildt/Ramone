@@ -11,7 +11,7 @@ namespace Ramone
   {
     #region UriTemplate
 
-    public static RamoneRequest Bind(this IRamoneSession session, UriTemplate template, object parameters = null)
+    public static Request Bind(this IRamoneSession session, UriTemplate template, object parameters = null)
     {
       Uri url = BindUri(session, template, parameters);
       return session.Request(url);
@@ -28,7 +28,7 @@ namespace Ramone
 
     #region String template
 
-    public static RamoneRequest Bind(this IRamoneSession session, string url, object parameters = null)
+    public static Request Bind(this IRamoneSession session, string url, object parameters = null)
     {
       Uri boundUrl = BindUri(session, url, parameters);
       return session.Request(boundUrl);
@@ -56,7 +56,7 @@ namespace Ramone
 
     #region Uri as template
 
-    public static RamoneRequest Bind(this IRamoneSession session, Uri url, object parameters = null)
+    public static Request Bind(this IRamoneSession session, Uri url, object parameters = null)
     {
       Uri boundUrl = BindUri(session, url, parameters);
       return session.Request(boundUrl);
@@ -76,7 +76,7 @@ namespace Ramone
 
     #region IUrlTemplate
 
-    public static RamoneRequest Bind(this IRamoneSession session, ILinkTemplate link, object parameters = null)
+    public static Request Bind(this IRamoneSession session, ILinkTemplate link, object parameters = null)
     {
       Uri boundUrl = BindUri(session, link.Template, parameters);
       return session.Request(boundUrl);

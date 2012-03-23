@@ -9,7 +9,7 @@ namespace Ramone.Tests
   [TestFixture]
   public class DeleteTests : TestHelper
   {
-    RamoneRequest DossierReq;
+    Request DossierReq;
 
 
     protected override void SetUp()
@@ -67,7 +67,7 @@ namespace Ramone.Tests
     public void WhenSpecifyingCharsetForDeleteItThrows()
     {
       // Arrange
-      RamoneRequest dossierReq = Session.Bind(DossierTemplate, new { id = 8 });
+      Request dossierReq = Session.Bind(DossierTemplate, new { id = 8 });
 
       // Act + Assert
       AssertThrows<InvalidOperationException>(() => dossierReq.Charset("utf-8").Delete());

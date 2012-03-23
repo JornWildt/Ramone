@@ -17,7 +17,7 @@ namespace Ramone.Tests.MediaTypes.MultipartFormData
     {
       // Arrange
       MultipartData data = new MultipartData { Name = "Pete", Age = 10 };
-      RamoneRequest formdataReq = Session.Bind(MultipartFormDataTemplate);
+      Request formdataReq = Session.Bind(MultipartFormDataTemplate);
 
       // Act
       Resource<string> response = formdataReq.Accept("text/plain").ContentType("multipart/form-data").Post<string>(data);
@@ -33,7 +33,7 @@ namespace Ramone.Tests.MediaTypes.MultipartFormData
     {
       // Arrange
       MultipartData data = new MultipartData { Name = "Pete", Age = 10 };
-      RamoneRequest formdataReq = Session.Bind(MultipartFormDataTemplate);
+      Request formdataReq = Session.Bind(MultipartFormDataTemplate);
 
       // Act
       Resource<string> response = formdataReq.Accept("text/plain").AsMultipartFormData().Post<string>(data);
@@ -59,7 +59,7 @@ namespace Ramone.Tests.MediaTypes.MultipartFormData
       Hashtable data = new Hashtable();
       data["DataFile"] = file;
       data["Age"] = 10;
-      RamoneRequest formdataReq = Session.Bind(MultipartFormDataFileTemplate);
+      Request formdataReq = Session.Bind(MultipartFormDataFileTemplate);
 
       // Act
       Resource<string> response = formdataReq.Accept("text/plain").ContentType("multipart/form-data").Post<string>(data);
@@ -76,7 +76,7 @@ namespace Ramone.Tests.MediaTypes.MultipartFormData
       // Arrange
       IFile file = new File("..\\..\\data1.txt");
       MultipartDataFile data = new MultipartDataFile { DataFile = file, Age = 10 };
-      RamoneRequest formdataReq = Session.Bind(MultipartFormDataFileTemplate);
+      Request formdataReq = Session.Bind(MultipartFormDataFileTemplate);
 
       // Act
       Resource<string> response = formdataReq.Accept("text/plain").ContentType("multipart/form-data").Post<string>(data);
@@ -95,7 +95,7 @@ namespace Ramone.Tests.MediaTypes.MultipartFormData
       Hashtable data = new Hashtable();
       data["DataFile"] = file;
       data["Age"] = 10;
-      RamoneRequest formdataReq = Session.Bind(MultipartFormDataFileTemplate);
+      Request formdataReq = Session.Bind(MultipartFormDataFileTemplate);
 
       // Act
       Resource<string> response = formdataReq.Accept("text/plain").ContentType("multipart/form-data").Post<string>(data);
@@ -112,7 +112,7 @@ namespace Ramone.Tests.MediaTypes.MultipartFormData
       // Arrange
       IFile file = new FileWithSpecialName("..\\..\\data1.txt", "Bøllefrø.txt");
       MultipartDataFile data = new MultipartDataFile { DataFile = file, Age = 10 };
-      RamoneRequest formdataReq = Session.Bind(MultipartFormDataFileTemplate);
+      Request formdataReq = Session.Bind(MultipartFormDataFileTemplate);
 
       // Act
       Resource<string> response = formdataReq.Accept("text/plain").ContentType("multipart/form-data").Post<string>(data);
@@ -129,7 +129,7 @@ namespace Ramone.Tests.MediaTypes.MultipartFormData
       // Arrange
       IFile file = new File("..\\..\\data1.gif", "image/gif");
       MultipartDataFile data = new MultipartDataFile { DataFile = file, Age = 99 };
-      RamoneRequest formdataReq = Session.Bind(MultipartFormDataFileTemplate);
+      Request formdataReq = Session.Bind(MultipartFormDataFileTemplate);
 
       // Act
       Resource<string> response = formdataReq.Accept("text/plain").ContentType("multipart/form-data").Post<string>(data);
@@ -145,7 +145,7 @@ namespace Ramone.Tests.MediaTypes.MultipartFormData
     {
       // Arrange
       var data = new { Name = "Pete", Age = 10 };
-      RamoneRequest formdataReq = Session.Bind(MultipartFormDataTemplate);
+      Request formdataReq = Session.Bind(MultipartFormDataTemplate);
 
       // Act
       Resource<string> response = formdataReq.Accept("text/plain").ContentType("multipart/form-data").Post<string>(data);
@@ -163,7 +163,7 @@ namespace Ramone.Tests.MediaTypes.MultipartFormData
     {
       // Arrange
       MultipartData data = new MultipartData { Name = "ÆØÅüî", Age = 10 };
-      RamoneRequest formdataReq = Session.Bind(MultipartFormDataTemplate);
+      Request formdataReq = Session.Bind(MultipartFormDataTemplate);
 
       // Act
       Resource<string> response = formdataReq.Accept("text/plain")
@@ -211,7 +211,7 @@ namespace Ramone.Tests.MediaTypes.MultipartFormData
         PropertyFormat = "{0}.{1}"
       };
 
-      RamoneRequest request = Session.Bind(ComplexClassTemplate);
+      Request request = Session.Bind(ComplexClassTemplate);
 
       // Act
       Resource<string> response = request.Accept("text/plain")

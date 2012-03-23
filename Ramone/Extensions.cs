@@ -8,15 +8,15 @@ namespace Ramone
 {
   public static class Extensions
   {
-    public static RamoneRequest Request(this IRamoneSession session, Uri url)
+    public static Request Request(this IRamoneSession session, Uri url)
     {
-      return new RamoneRequest(session, url);
+      return new Request(session, url);
     }
 
 
-    public static RamoneRequest Request(this IRamoneSession session, string url)
+    public static Request Request(this IRamoneSession session, string url)
     {
-      return new RamoneRequest(session, url);
+      return new Request(session, url);
     }
 
 
@@ -36,37 +36,37 @@ namespace Ramone
     }
 
 
-    public static RamoneRequest AsXml(this RamoneRequest request)
+    public static Request AsXml(this Request request)
     {
       return request.ContentType(MediaType.ApplicationXml);
     }
 
 
-    public static RamoneRequest AcceptXml(this RamoneRequest request)
+    public static Request AcceptXml(this Request request)
     {
       return request.Accept(MediaType.ApplicationXml);
     }
 
 
-    public static RamoneRequest AsJson(this RamoneRequest request)
+    public static Request AsJson(this Request request)
     {
       return request.ContentType(MediaType.ApplicationJson);
     }
 
 
-    public static RamoneRequest AcceptJson(this RamoneRequest request)
+    public static Request AcceptJson(this Request request)
     {
       return request.Accept(MediaType.ApplicationJson);
     }
 
 
-    public static RamoneRequest AsFormUrlEncoded(this RamoneRequest request)
+    public static Request AsFormUrlEncoded(this Request request)
     {
       return request.ContentType(MediaType.ApplicationFormUrlEncoded);
     }
 
 
-    public static RamoneRequest AsMultipartFormData(this RamoneRequest request)
+    public static Request AsMultipartFormData(this Request request)
     {
       return request.ContentType("multipart/form-data");
     }

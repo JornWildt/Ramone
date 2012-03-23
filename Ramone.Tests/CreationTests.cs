@@ -17,7 +17,7 @@ namespace Ramone.Tests
         Title = "A new dossier"
       };
 
-      RamoneRequest request = Session.Request(DossiersUrl);
+      Request request = Session.Request(DossiersUrl);
 
       // Act
       Resource<Dossier> response = request.Post<Dossier>(dossier);
@@ -42,7 +42,7 @@ namespace Ramone.Tests
         Title = "Do not return body" // magic string!
       };
 
-      RamoneRequest request = Session.Request(DossiersUrl);
+      Request request = Session.Request(DossiersUrl);
 
       // Act
       Resource<Dossier> response = request.Post<Dossier>(dossier);

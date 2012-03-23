@@ -11,7 +11,7 @@ namespace Ramone.Tests.MediaTypes
     public void CanGetStream()
     {
       // Arrange
-      RamoneRequest fileReq = Session.Bind(FileTemplate);
+      Request fileReq = Session.Bind(FileTemplate);
 
       // Act
       Resource<Stream> response = fileReq.Accept("application/octet-stream").Get<Stream>();
@@ -31,7 +31,7 @@ namespace Ramone.Tests.MediaTypes
     public void CanPostStream()
     {
       // Arrange
-      RamoneRequest fileReq = Session.Bind(FileTemplate);
+      Request fileReq = Session.Bind(FileTemplate);
 
       // Act
       using (MemoryStream s = new MemoryStream(new byte[] { 10,2,30,4 }))

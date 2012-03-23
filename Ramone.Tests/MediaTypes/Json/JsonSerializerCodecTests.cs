@@ -21,7 +21,7 @@ namespace Ramone.Tests.MediaTypes.Json
     public void CanReadJson()
     {
       // Arrange
-      RamoneRequest req = Session.Bind(CatTemplate, new { name = "Ramstein" });
+      Request req = Session.Bind(CatTemplate, new { name = "Ramstein" });
 
       // Act
       Cat cat = req.Accept("application/json").Get<Cat>().Body;
@@ -37,7 +37,7 @@ namespace Ramone.Tests.MediaTypes.Json
       [Values("UTF-8", "Windows-1252", "iso-8859-1")] string charset)
     {
       // Arrange
-      RamoneRequest req = Session.Bind(EncodingTemplate, new { type = "json" });
+      Request req = Session.Bind(EncodingTemplate, new { type = "json" });
 
       // Act
       var response = req.AcceptCharset(charset)
@@ -60,7 +60,7 @@ namespace Ramone.Tests.MediaTypes.Json
       Cat cat = new Cat { Name = "Prince", DateOfBirth = DateTime.Now.ToUniversalTime() };
       cat.DateOfBirth = cat.DateOfBirth.AddTicks(-(cat.DateOfBirth.Ticks % TimeSpan.TicksPerSecond));
 
-      RamoneRequest request = Session.Bind(CatsTemplate);
+      Request request = Session.Bind(CatsTemplate);
 
       // Act
       Cat createdCat = request.Accept("application/json").ContentType("application/json").Post<Cat>(cat).Created();
@@ -84,7 +84,7 @@ namespace Ramone.Tests.MediaTypes.Json
       // Maybe one day the test shows a bug if a new library is used
 
       // Arrange
-      RamoneRequest req = Session.Bind(EncodingTemplate, new { type = "json" });
+      Request req = Session.Bind(EncodingTemplate, new { type = "json" });
       var data = new { Name = "ÆØÅúï´`'\"" };
 
       // Act
@@ -108,7 +108,7 @@ namespace Ramone.Tests.MediaTypes.Json
     {
       // Arrange
       Cat cat = new Cat { Name = "Prince" };
-      RamoneRequest request = Session.Bind(CatsTemplate);
+      Request request = Session.Bind(CatsTemplate);
 
       // Act
       Cat createdCat = request.AsJson().AcceptJson().Post<Cat>(cat).Created();
@@ -123,7 +123,7 @@ namespace Ramone.Tests.MediaTypes.Json
     public void CanPostUnregisteredType()
     {
       UnregisteredClass data = new UnregisteredClass { Text = "Hello" };
-      RamoneRequest request = Session.Bind(AnyEchoTemplate);
+      Request request = Session.Bind(AnyEchoTemplate);
 
       Resource<UnregisteredClass> response = request.Accept("application/json").ContentType("application/json").Post<UnregisteredClass>(data);
 
@@ -135,7 +135,7 @@ namespace Ramone.Tests.MediaTypes.Json
     public void CanPostUnregisteredTypeUsingShorthand()
     {
       UnregisteredClass data = new UnregisteredClass { Text = "Hello" };
-      RamoneRequest request = Session.Bind(AnyEchoTemplate);
+      Request request = Session.Bind(AnyEchoTemplate);
 
       Resource<UnregisteredClass> response = request.AsJson().AcceptJson().Post<UnregisteredClass>(data);
 
@@ -147,7 +147,7 @@ namespace Ramone.Tests.MediaTypes.Json
     public void CanReadJsonAsDynamic()
     {
       // Arrange
-      RamoneRequest req = Session.Bind(CatTemplate, new { name = "Ramstein" });
+      Request req = Session.Bind(CatTemplate, new { name = "Ramstein" });
 
       // Act
       dynamic cat = req.Accept("application/json").Get().Body;
@@ -163,7 +163,7 @@ namespace Ramone.Tests.MediaTypes.Json
     {
       // Arrange
       dynamic cat = new { Name = "Prince" };
-      RamoneRequest request = Session.Bind(CatsTemplate);
+      Request request = Session.Bind(CatsTemplate);
 
       // Act
       dynamic createdCat = request.AsJson().AcceptJson().Post(cat).Body;

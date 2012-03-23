@@ -11,7 +11,7 @@ namespace Ramone.Tests
     public void CanDoHead()
     {
       // Arrange
-      RamoneRequest dossierReq = Session.Bind(DossierTemplate, new { id = 8 });
+      Request dossierReq = Session.Bind(DossierTemplate, new { id = 8 });
 
       // Act
       Resource response = dossierReq.Head();
@@ -26,7 +26,7 @@ namespace Ramone.Tests
     public void CanDoOptions()
     {
       // Arrange
-      RamoneRequest dossierReq = Session.Bind(DossierTemplate, new { id = 8 });
+      Request dossierReq = Session.Bind(DossierTemplate, new { id = 8 });
 
       // Act
       Resource response = dossierReq.Options();
@@ -41,7 +41,7 @@ namespace Ramone.Tests
     public void CanDoOptionsWithBody()
     {
       // Arrange
-      RamoneRequest dossierReq = Session.Bind(DossierTemplate, new { id = 8 });
+      Request dossierReq = Session.Bind(DossierTemplate, new { id = 8 });
 
       // Act
       Resource<string> response1 = dossierReq.Options<string>();
@@ -67,7 +67,7 @@ namespace Ramone.Tests
       // Not sure if this actually sends the correct "OPTIONS * HTTP/1.1" ...
 
       // Arrange
-      RamoneRequest dossierReq = Session.Request(new Uri(Session.BaseUri, "*"));
+      Request dossierReq = Session.Request(new Uri(Session.BaseUri, "*"));
 
       // Assert
       Assert.AreEqual(Session.BaseUri + "*", dossierReq.Url.AbsoluteUri);

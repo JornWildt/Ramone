@@ -17,7 +17,7 @@ namespace Ramone.Tests.MediaTypes.Atom
     public void CanGetAtomFeed()
     {
       // Arrange
-      RamoneRequest feedReq = Session.Bind(AtomFeedTemplate, new { name = "Mamas feed" });
+      Request feedReq = Session.Bind(AtomFeedTemplate, new { name = "Mamas feed" });
 
       // Act
       SyndicationFeed feed = feedReq.Get<SyndicationFeed>().Body;
@@ -32,7 +32,7 @@ namespace Ramone.Tests.MediaTypes.Atom
     public void CanGetAtomItem()
     {
       // Arrange
-      RamoneRequest itemReq = Session.Bind(AtomItemTemplate, new { feedname = "Mamas feed", itemname = "No. 1" });
+      Request itemReq = Session.Bind(AtomItemTemplate, new { feedname = "Mamas feed", itemname = "No. 1" });
 
       // Act
       SyndicationItem item = itemReq.Get<SyndicationItem>().Body;
@@ -51,7 +51,7 @@ namespace Ramone.Tests.MediaTypes.Atom
       r.Links.Add(new AtomLink(new Uri("http://dr.dk"), "http://dr.dk", "test", "text/html", "DR"));
 
       // Act
-      RamoneRequest request = r.Links.Follow(Session, "test");
+      Request request = r.Links.Follow(Session, "test");
 
       // Assert
       Assert.IsNotNull(request);

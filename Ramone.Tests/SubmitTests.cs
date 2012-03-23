@@ -14,7 +14,7 @@ namespace Ramone.Tests
     public void CanRememberGetForNextSubmit_generic()
     {
       // Arrange
-      RamoneRequest dossierReq = Session.Bind(DossierTemplate, new { id = 8 });
+      Request dossierReq = Session.Bind(DossierTemplate, new { id = 8 });
 
       // Act
       Dossier dossier = dossierReq.Method("Get").Submit<Dossier>().Body;
@@ -28,7 +28,7 @@ namespace Ramone.Tests
     public void WhenNoMethodIsSetThenSubmitThrows_generic()
     {
       // Arrange
-      RamoneRequest dossierReq = Session.Bind(DossierTemplate, new { id = 8 });
+      Request dossierReq = Session.Bind(DossierTemplate, new { id = 8 });
 
       // Act
       AssertThrows<InvalidOperationException>(() => dossierReq.Submit<Dossier>());
@@ -39,7 +39,7 @@ namespace Ramone.Tests
     public void CanRememberGetForNextSubmit_untyped()
     {
       // Arrange
-      RamoneRequest dossierReq = Session.Bind(DossierTemplate, new { id = 8 });
+      Request dossierReq = Session.Bind(DossierTemplate, new { id = 8 });
 
       // Act
       Dossier dossier = dossierReq.Method("Get").Submit().Decode<Dossier>();
@@ -53,7 +53,7 @@ namespace Ramone.Tests
     public void WhenNoMethodIsSetThenSubmitThrows_untyped()
     {
       // Arrange
-      RamoneRequest dossierReq = Session.Bind(DossierTemplate, new { id = 8 });
+      Request dossierReq = Session.Bind(DossierTemplate, new { id = 8 });
 
       // Act
       AssertThrows<InvalidOperationException>(() => dossierReq.Submit());

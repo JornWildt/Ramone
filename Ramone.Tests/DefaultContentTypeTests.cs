@@ -12,7 +12,7 @@ namespace Ramone.Tests
     {
       // Arrange
       var cat = new { Name = "Prince" };
-      RamoneRequest request = Session.Bind(CatsTemplate);
+      Request request = Session.Bind(CatsTemplate);
 
       // Act
       AssertThrows<ArgumentException>(() => request.Post(cat));
@@ -31,7 +31,7 @@ namespace Ramone.Tests
     {
       // Arrange
       var cat = new { Name = "Prince" };
-      RamoneRequest request = Session.Bind(CatsTemplate);
+      Request request = Session.Bind(CatsTemplate);
 
       // Act
       AssertThrows<ArgumentException>(() => request.Post(cat));

@@ -13,7 +13,7 @@ namespace Ramone.Tests.MediaTypes.Xml
     public void CanReadXmlDocument()
     {
       // Arrange
-      RamoneRequest req = Session.Bind(DossierTemplate, new { id = 5 });
+      Request req = Session.Bind(DossierTemplate, new { id = 5 });
 
       // Act
       XmlDocument doc = req.Get<XmlDocument>().Body;
@@ -31,7 +31,7 @@ namespace Ramone.Tests.MediaTypes.Xml
       XmlDocument dossierDoc = new XmlDocument();
       dossierDoc.LoadXml("<Dossier><Title>My dossier</Title></Dossier>");
 
-      RamoneRequest request = Session.Request(DossiersUrl);
+      Request request = Session.Request(DossiersUrl);
 
       // Act
       Resource<Dossier> response = request.ContentType("application/xml").Post<Dossier>(dossierDoc);
@@ -49,7 +49,7 @@ namespace Ramone.Tests.MediaTypes.Xml
       [Values("UTF-8", "Windows-1252", "iso-8859-1")] string charset)
     {
       // Arrange
-      RamoneRequest req = Session.Bind(EncodingTemplate, new { type = "xml" });
+      Request req = Session.Bind(EncodingTemplate, new { type = "xml" });
 
       // Act
       var response = req.AcceptCharset(charset).Get<XmlDocument>();
@@ -73,7 +73,7 @@ namespace Ramone.Tests.MediaTypes.Xml
       XmlDocument doc = new XmlDocument();
       doc.LoadXml("<Text>ÆØÅüî</Text>");
 
-      RamoneRequest request = Session.Bind(EncodingTemplate, new { type = "xml" });
+      Request request = Session.Bind(EncodingTemplate, new { type = "xml" });
 
       // Act
       Resource<XmlDocument> response = request.AcceptCharset(charsetOut)

@@ -15,7 +15,7 @@ namespace Ramone.Tests
       Title = "A new dossier"
     };
 
-    RamoneRequest DossierReq;
+    Request DossierReq;
 
 
     protected override void SetUp()
@@ -74,7 +74,7 @@ namespace Ramone.Tests
     public void CanPutEmptyBody_Typed()
     {
       // Arrange
-      RamoneRequest request = Session.Bind(AnyEchoTemplate);
+      Request request = Session.Bind(AnyEchoTemplate);
 
       // Act
       Resource<string> response = request.Accept("text/plain").ContentType("application/x-www-url-formencoded").Put<string>();
@@ -88,7 +88,7 @@ namespace Ramone.Tests
     public void CanPutEmptyBody_Untyped()
     {
       // Arrange
-      RamoneRequest request = Session.Bind(AnyEchoTemplate);
+      Request request = Session.Bind(AnyEchoTemplate);
 
       // Act
       Resource response = request.Accept("text/plain").ContentType("application/x-www-url-formencoded").Put();

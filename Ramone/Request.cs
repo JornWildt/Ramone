@@ -7,14 +7,14 @@ using System.IO;
 
 namespace Ramone
 {
-  public class RamoneRequest
+  public class Request
   {
     public Uri Url { get; protected set; }
 
 
     #region Constructors
 
-    public RamoneRequest(IRamoneSession session, Uri url)
+    public Request(IRamoneSession session, Uri url)
     {
       Condition.Requires(session, "session").IsNotNull();
       Condition.Requires(url, "url").IsNotNull();
@@ -25,13 +25,13 @@ namespace Ramone
     }
 
 
-    public RamoneRequest(IRamoneSession session, string url)
+    public Request(IRamoneSession session, string url)
       : this(session, new Uri(url))
     {
     }
 
 
-    public RamoneRequest(RamoneRequest src)
+    public Request(Request src)
     {
       Condition.Requires(src, "src").IsNotNull();
 
@@ -74,20 +74,20 @@ namespace Ramone
 
     #region Setting up
 
-    public RamoneRequest ContentType(string contentType)
+    public Request ContentType(string contentType)
     {
       return ContentType(new MediaType(contentType));
     }
 
     
-    public RamoneRequest ContentType(MediaType contentType)
+    public Request ContentType(MediaType contentType)
     {
       BodyContentType = contentType;
       return this;
     }
 
 
-    public RamoneRequest Accept(MediaType accept)
+    public Request Accept(MediaType accept)
     {
       AcceptHeader = (accept != null ? accept.FullType : null);
       return this;
@@ -102,7 +102,7 @@ namespace Ramone
     }
 
 
-    public RamoneRequest Accept(string accept)
+    public Request Accept(string accept)
     {
       return Accept(new MediaType(accept));
     }
@@ -115,28 +115,28 @@ namespace Ramone
     }
 
 
-    public RamoneRequest AcceptCharset(string charset)
+    public Request AcceptCharset(string charset)
     {
       Header("Accept-Charset", charset);
       return this;
     }
 
 
-    public RamoneRequest Charset(string charset)
+    public Request Charset(string charset)
     {
       BodyCharacterSet = charset;
       return this;
     }
 
 
-    public RamoneRequest Header(string name, string value)
+    public Request Header(string name, string value)
     {
       AdditionalHeaders[name] = value;
       return this;
     }
 
 
-    public RamoneRequest Method(string method)
+    public Request Method(string method)
     {
       Condition.Requires(method, "method").IsNotNullOrEmpty();
       SubmitMethod = method;
@@ -144,7 +144,7 @@ namespace Ramone
     }
 
 
-    public RamoneRequest Body(object body)
+    public Request Body(object body)
     {
       ICodecManager codecManager = Session.Service.CodecManager;
       
@@ -178,7 +178,7 @@ namespace Ramone
     {
       if (accept != null)
         Accept(accept);
-      return Request<TResponse>("GET");
+      return DoRequest<TResponse>("GET");
     }
 
 
@@ -186,7 +186,7 @@ namespace Ramone
     {
       if (accept != null)
         Accept(accept);
-      return Request("GET");
+      return DoRequest("GET");
     }
 
 
@@ -199,14 +199,14 @@ namespace Ramone
     public Resource<TResponse> Post<TResponse>(object body) where TResponse : class
     {
       Body(body);
-      return Request<TResponse>("POST");
+      return DoRequest<TResponse>("POST");
     }
 
 
     public Resource Post(object body)
     {
       Body(body);
-      return Request("POST");
+      return DoRequest("POST");
     }
 
 
@@ -225,14 +225,14 @@ namespace Ramone
     public Resource<TResponse> Put<TResponse>(object body) where TResponse : class
     {
       Body(body);
-      return Request<TResponse>("PUT");
+      return DoRequest<TResponse>("PUT");
     }
 
 
     public Resource Put(object body)
     {
       Body(body);
-      return Request("PUT");
+      return DoRequest("PUT");
     }
 
 
@@ -246,7 +246,7 @@ namespace Ramone
     {
       if (accept != null)
         Accept(accept);
-      return Request<TResponse>("DELETE");
+      return DoRequest<TResponse>("DELETE");
     }
 
 
@@ -254,13 +254,13 @@ namespace Ramone
     {
       if (accept != null)
         Accept(accept);
-      return Request("DELETE");
+      return DoRequest("DELETE");
     }
 
 
     public Resource Head()
     {
-      return Request("HEAD");
+      return DoRequest("HEAD");
     }
 
 
@@ -268,7 +268,7 @@ namespace Ramone
     {
       if (accept != null)
         Accept(accept);
-      return Request<TResponse>("OPTIONS");
+      return DoRequest<TResponse>("OPTIONS");
     }
 
 
@@ -276,7 +276,7 @@ namespace Ramone
     {
       if (accept != null)
         Accept(accept);
-      return Request("OPTIONS");
+      return DoRequest("OPTIONS");
     }
 
     #endregion
@@ -288,7 +288,7 @@ namespace Ramone
     {
       if (accept != null)
         Accept(accept);
-      return Request<TResponse>(method);
+      return DoRequest<TResponse>(method);
     }
 
 
@@ -296,21 +296,21 @@ namespace Ramone
     {
       if (accept != null)
         Accept(accept);
-      return Request(method);
+      return DoRequest(method);
     }
 
 
     public Resource<TResponse> Execute<TResponse>(string method, object body) where TResponse : class
     {
       Body(body);
-      return Request<TResponse>(method);
+      return DoRequest<TResponse>(method);
     }
 
 
     public Resource Execute(string method, object body)
     {
       Body(body);
-      return Request(method);
+      return DoRequest(method);
     }
 
 
@@ -318,7 +318,7 @@ namespace Ramone
     {
       if (SubmitMethod == null)
         throw new InvalidOperationException("Missing method for Submit(). Call Method() first.");
-      return Request<TResponse>(SubmitMethod);
+      return DoRequest<TResponse>(SubmitMethod);
     }
 
 
@@ -326,7 +326,7 @@ namespace Ramone
     {
       if (SubmitMethod == null)
         throw new InvalidOperationException("Missing method for Submit(). Call Method() first.");
-      return Request(SubmitMethod);
+      return DoRequest(SubmitMethod);
     }
 
     #endregion
@@ -362,20 +362,20 @@ namespace Ramone
     }
 
 
-    protected Resource<TResponse> Request<TResponse>(string method, int retryLevel = 0) where TResponse : class
+    protected Resource<TResponse> DoRequest<TResponse>(string method, int retryLevel = 0) where TResponse : class
     {
-      Resource r = Request(method, req => req.Accept = GetAcceptHeader(typeof(TResponse)), retryLevel);
+      Resource r = DoRequest(method, req => req.Accept = GetAcceptHeader(typeof(TResponse)), retryLevel);
       return new Resource<TResponse>(r);
     }
 
 
-    protected Resource Request(string method, int retryLevel = 0)
+    protected Resource DoRequest(string method, int retryLevel = 0)
     {
-      return Request(method, req => req.Accept = GetAcceptHeader(null), retryLevel);
+      return DoRequest(method, req => req.Accept = GetAcceptHeader(null), retryLevel);
     }
 
 
-    protected Resource Request(string method, Action<HttpWebRequest> requestModifier, int retryLevel = 0)
+    protected Resource DoRequest(string method, Action<HttpWebRequest> requestModifier, int retryLevel = 0)
     {
       if (retryLevel > 2)
         return null;
@@ -445,7 +445,7 @@ namespace Ramone
             if (retryLevel == 0)
             {
               // Resend request one time if no exceptions are thrown
-              return Request(method, retryLevel+1);
+              return DoRequest(method, retryLevel+1);
             }
             else
               throw new NotAuthorizedException(response, ex);
@@ -479,10 +479,10 @@ namespace Ramone
   }
 
 
-  public class RamoneRequest<TResponse> : RamoneRequest
+  public class RamoneRequest<TResponse> : Request
     where TResponse : class
   {
-    public RamoneRequest(RamoneRequest src)
+    public RamoneRequest(Request src)
       : base(src)
     {
     }

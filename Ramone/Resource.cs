@@ -86,7 +86,7 @@ namespace Ramone
         if (Response.Headers[HttpResponseHeader.Location] == null)
           return null;
 
-        RamoneRequest request = Session.Request(Response.Headers[HttpResponseHeader.Location]);
+        Request request = Session.Request(Response.Headers[HttpResponseHeader.Location]);
         body = request.Get<T>().Body;
       }
 

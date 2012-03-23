@@ -12,7 +12,7 @@ namespace Ramone.Tests.MediaTypes.Html
     public void CanReadHtmlDocument()
     {
       // Arrange
-      RamoneRequest req = Session.Bind(PersonTemplate, new { name = "Petrea" });
+      Request req = Session.Bind(PersonTemplate, new { name = "Petrea" });
 
       // Act
       HtmlDocument doc = req.Get<HtmlDocument>().Body;
@@ -36,7 +36,7 @@ namespace Ramone.Tests.MediaTypes.Html
       [Values("UTF-8", "Windows-1252", "iso-8859-1")] string charset)
     {
       // Arrange
-      RamoneRequest req = Session.Bind(EncodingTemplate, new { type = "html" });
+      Request req = Session.Bind(EncodingTemplate, new { type = "html" });
 
       // Act
       var response = req.AcceptCharset(charset).Get<HtmlDocument>();

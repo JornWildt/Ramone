@@ -25,7 +25,7 @@ namespace Ramone.Tests.Blog
     public void CanLoadBlog()
     {
       // Arrange
-      RamoneRequest blogRequest = Session.Bind(BlogRootPath);
+      Request blogRequest = Session.Bind(BlogRootPath);
 
       // Act
       Resources.Blog blog = blogRequest.Get<Resources.Blog>().Body;
@@ -48,7 +48,7 @@ namespace Ramone.Tests.Blog
     public void CanFollowAuthorLinkFromBlog()
     {
       // Arrange
-      RamoneRequest blogRequest = Session.Bind(BlogRootPath);
+      Request blogRequest = Session.Bind(BlogRootPath);
 
       // Act ...
 
@@ -75,7 +75,7 @@ namespace Ramone.Tests.Blog
     {
       // Arrange
       HashSet<string> foundEMails = new HashSet<string>();
-      RamoneRequest blogRequest = Session.Bind(BlogRootPath);
+      Request blogRequest = Session.Bind(BlogRootPath);
 
       // Act ...
 
@@ -105,7 +105,7 @@ namespace Ramone.Tests.Blog
     public void CanAddNewBlogItemIncludingImage()
     {
       // Arrange
-      RamoneRequest blogRequest = Session.Bind(BlogRootPath);
+      Request blogRequest = Session.Bind(BlogRootPath);
 
       // Act ...
 

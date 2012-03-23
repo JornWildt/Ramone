@@ -124,7 +124,7 @@ namespace Ramone.Tests.HyperMedia
       ILink link = new AtomLink(new Uri("http://dr.dk"), "http://dr.dk/", "home", "text/html", "Danish Television");
 
       // Act
-      RamoneRequest request = link.Follow(Session);
+      Request request = link.Follow(Session);
 
       // Assert
       Assert.IsNotNull(request);
@@ -136,12 +136,12 @@ namespace Ramone.Tests.HyperMedia
     public void CanFollowFromLinkList()
     {
       // Act
-      RamoneRequest r1a = Links.Follow(Session, Link1.RelationTypes.First());
-      RamoneRequest r2a = Links.Follow(Session, Link2.RelationTypes.First());
-      RamoneRequest r1b = Links.Follow(Session, Link1.RelationTypes.First(), Link1.MediaType);
-      RamoneRequest r2b = Links.Follow(Session, Link2.RelationTypes.First(), Link2.MediaType);
-      RamoneRequest r3 = Links.Follow(Session, Link3.RelationTypes.First(), Link3.MediaType);
-      RamoneRequest r4 = Links.Follow(Session, Link4.RelationTypes.First(), Link4.MediaType);
+      Request r1a = Links.Follow(Session, Link1.RelationTypes.First());
+      Request r2a = Links.Follow(Session, Link2.RelationTypes.First());
+      Request r1b = Links.Follow(Session, Link1.RelationTypes.First(), Link1.MediaType);
+      Request r2b = Links.Follow(Session, Link2.RelationTypes.First(), Link2.MediaType);
+      Request r3 = Links.Follow(Session, Link3.RelationTypes.First(), Link3.MediaType);
+      Request r4 = Links.Follow(Session, Link4.RelationTypes.First(), Link4.MediaType);
 
 
       // Assert

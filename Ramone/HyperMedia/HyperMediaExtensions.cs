@@ -32,12 +32,12 @@ namespace Ramone.HyperMedia
     /// <param name="link"></param>
     /// <param name="session"></param>
     /// <returns></returns>
-    public static RamoneRequest Follow(this ILink link, IRamoneSession session)
+    public static Request Follow(this ILink link, IRamoneSession session)
     {
       Condition.Requires(link, "link").IsNotNull();
       Condition.Requires(session, "session").IsNotNull();
 
-      return new RamoneRequest(session, link.HRef);
+      return new Request(session, link.HRef);
     }
 
 
@@ -47,12 +47,12 @@ namespace Ramone.HyperMedia
     /// <param name="url"></param>
     /// <param name="session"></param>
     /// <returns></returns>
-    public static RamoneRequest Follow(this Uri url, IRamoneSession session)
+    public static Request Follow(this Uri url, IRamoneSession session)
     {
       Condition.Requires(url, "url").IsNotNull();
       Condition.Requires(session, "session").IsNotNull();
 
-      return new RamoneRequest(session, url);
+      return new Request(session, url);
     }
 
 
@@ -64,7 +64,7 @@ namespace Ramone.HyperMedia
     /// <param name="rel"></param>
     /// <param name="mediaType"></param>
     /// <returns></returns>
-    public static RamoneRequest Follow(this IEnumerable<ILink> links, IRamoneSession session, string rel, MediaType mediaType = null)
+    public static Request Follow(this IEnumerable<ILink> links, IRamoneSession session, string rel, MediaType mediaType = null)
     {
       Condition.Requires(links, "links").IsNotNull();
       Condition.Requires(session, "session").IsNotNull();
@@ -74,7 +74,7 @@ namespace Ramone.HyperMedia
       if (link == null)
         return null;
 
-      return new RamoneRequest(session, link.HRef);
+      return new Request(session, link.HRef);
     }
   }
 }

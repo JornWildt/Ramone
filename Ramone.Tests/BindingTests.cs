@@ -51,10 +51,10 @@ namespace Ramone.Tests
     public void CanBind_UriTemplate_Path()
     {
       // Act
-      RamoneRequest req1 = Session.Bind(UriTemplate_Path, ObjectParameters);
-      RamoneRequest req2 = Session.Bind(UriTemplate_Path, HashtableParameters);
-      RamoneRequest req3 = Session.Bind(UriTemplate_Path, DictionaryParameters);
-      RamoneRequest req4 = Session.Bind(UriTemplate_Path, NameValueCollectionParameters);
+      Request req1 = Session.Bind(UriTemplate_Path, ObjectParameters);
+      Request req2 = Session.Bind(UriTemplate_Path, HashtableParameters);
+      Request req3 = Session.Bind(UriTemplate_Path, DictionaryParameters);
+      Request req4 = Session.Bind(UriTemplate_Path, NameValueCollectionParameters);
 
       // Assert
       Assert.AreEqual(BaseUrl + "users/10?b=John&c=33", req1.Url.AbsoluteUri);
@@ -85,10 +85,10 @@ namespace Ramone.Tests
     public void CanBind_String_TemplatedPath()
     {
       // Act
-      RamoneRequest req1 = Session.Bind(String_TemplatedPath, ObjectParameters);
-      RamoneRequest req2 = Session.Bind(String_TemplatedPath, HashtableParameters);
-      RamoneRequest req3 = Session.Bind(String_TemplatedPath, DictionaryParameters);
-      RamoneRequest req4 = Session.Bind(String_TemplatedPath, NameValueCollectionParameters);
+      Request req1 = Session.Bind(String_TemplatedPath, ObjectParameters);
+      Request req2 = Session.Bind(String_TemplatedPath, HashtableParameters);
+      Request req3 = Session.Bind(String_TemplatedPath, DictionaryParameters);
+      Request req4 = Session.Bind(String_TemplatedPath, NameValueCollectionParameters);
 
       // Assert
       Assert.AreEqual(BaseUrl + "users/10?b=John&c=33", req1.Url.AbsoluteUri);
@@ -127,10 +127,10 @@ namespace Ramone.Tests
       // - Yes, otherwise we cannot "follow" any arbitrary link in the response.
 
       // Act
-      RamoneRequest req1 = Session.Bind(String_TemplatedUrl, ObjectParameters);
-      RamoneRequest req2 = Session.Bind(String_TemplatedUrl, HashtableParameters);
-      RamoneRequest req3 = Session.Bind(String_TemplatedUrl, DictionaryParameters);
-      RamoneRequest req4 = Session.Bind(String_TemplatedUrl, NameValueCollectionParameters);
+      Request req1 = Session.Bind(String_TemplatedUrl, ObjectParameters);
+      Request req2 = Session.Bind(String_TemplatedUrl, HashtableParameters);
+      Request req3 = Session.Bind(String_TemplatedUrl, DictionaryParameters);
+      Request req4 = Session.Bind(String_TemplatedUrl, NameValueCollectionParameters);
 
       // Assert
       Assert.AreEqual("http://home/users/10?b=John&c=33", req1.Url.AbsoluteUri);
@@ -167,10 +167,10 @@ namespace Ramone.Tests
       // - Yes, otherwise we cannot "follow" any arbitrary link in the response.
 
       // Act
-      RamoneRequest req1 = Session.Bind(Uri_TemplatedUrl, ObjectParameters);
-      RamoneRequest req2 = Session.Bind(Uri_TemplatedUrl, HashtableParameters);
-      RamoneRequest req3 = Session.Bind(Uri_TemplatedUrl, DictionaryParameters);
-      RamoneRequest req4 = Session.Bind(Uri_TemplatedUrl, NameValueCollectionParameters);
+      Request req1 = Session.Bind(Uri_TemplatedUrl, ObjectParameters);
+      Request req2 = Session.Bind(Uri_TemplatedUrl, HashtableParameters);
+      Request req3 = Session.Bind(Uri_TemplatedUrl, DictionaryParameters);
+      Request req4 = Session.Bind(Uri_TemplatedUrl, NameValueCollectionParameters);
 
       // Assert
       Assert.AreEqual("http://home/users/10?b=John&c=33", req1.Url.AbsoluteUri);
@@ -204,7 +204,7 @@ namespace Ramone.Tests
     public void CanBind_UriTemplate_NonTemplated()
     {
       // Act
-      RamoneRequest req = Session.Bind(new UriTemplate("/cats"));
+      Request req = Session.Bind(new UriTemplate("/cats"));
 
       // Assert
       Assert.AreEqual(BaseUrl + "cats", req.Url.AbsoluteUri);
@@ -215,7 +215,7 @@ namespace Ramone.Tests
     public void CanBind_String_NonTemplatedPath()
     {
       // Act
-      RamoneRequest req = Session.Bind("/cats");
+      Request req = Session.Bind("/cats");
 
       // Assert
       Assert.AreEqual(BaseUrl + "cats", req.Url.AbsoluteUri);
@@ -226,7 +226,7 @@ namespace Ramone.Tests
     public void CanBind_String_NonTemplatedAbsoluteUrl()
     {
       // Act
-      RamoneRequest req = Session.Bind("http://home/cats");
+      Request req = Session.Bind("http://home/cats");
 
       // Assert
       Assert.AreEqual("http://home/cats", req.Url.AbsoluteUri);
@@ -237,7 +237,7 @@ namespace Ramone.Tests
     public void CanBind_Uri_NonTemplated()
     {
       // Act
-      RamoneRequest req = Session.Bind(new Uri("http://dr.dk"));
+      Request req = Session.Bind(new Uri("http://dr.dk"));
 
       // Assert
       Assert.AreEqual("http://dr.dk/", req.Url.AbsoluteUri);
@@ -248,7 +248,7 @@ namespace Ramone.Tests
     public void CanBind_UriTemplate_WithEncoding()
     {
       // Act
-      RamoneRequest req = Session.Bind(new UriTemplate("set?name={name}"), new { name = "Jørn" });
+      Request req = Session.Bind(new UriTemplate("set?name={name}"), new { name = "Jørn" });
       Uri url = req.Url;
 
       // Assert

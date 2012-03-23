@@ -3,8 +3,9 @@ Version 1
 ---------
 
 Rename
-- RamoneRequest/RamoneResponse => Request/Response (Resource, Agent, other?)
+- RamoneRequest => Request
 - IRamoneSession/Service => ISession, IService
+- MediaType.FullType til "Type" eller "MediaType".
 
 Forms
 - Der mangler temmeligt mange tests ...

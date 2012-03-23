@@ -12,7 +12,7 @@ namespace Ramone.Tests.MediaTypes
     {
       // Arrange
       Session.DefaultEncoding = Encoding.UTF8;
-      RamoneRequest stringReq = Session.Bind(FileTemplate);
+      Request stringReq = Session.Bind(FileTemplate);
 
       // Act
       string s = stringReq.Accept("application/octet-stream").Get<string>().Body;
@@ -27,7 +27,7 @@ namespace Ramone.Tests.MediaTypes
     {
       // Arrange
       //Session.DefaultEncoding = Encoding.UTF8;
-      RamoneRequest stringReq = Session.Bind(CatTemplate, new { name = "Henry ÆØÅ" });
+      Request stringReq = Session.Bind(CatTemplate, new { name = "Henry ÆØÅ" });
 
       // Act
       string s = stringReq.AcceptJson().Get<string>().Body;

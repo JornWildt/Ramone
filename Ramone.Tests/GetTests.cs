@@ -15,7 +15,7 @@ namespace Ramone.Tests
     public void CanGetDossier()
     {
       // Arrange
-      RamoneRequest dossierReq = Session.Bind(DossierTemplate, new { id = 8 });
+      Request dossierReq = Session.Bind(DossierTemplate, new { id = 8 });
 
       // Act
       Dossier dossier = dossierReq.Get<Dossier>().Body;
@@ -33,7 +33,7 @@ namespace Ramone.Tests
       // Arrange
       Dictionary<string, string> p = new Dictionary<string, string>();
       p["id"] = "8";
-      RamoneRequest dossierReq = Session.Bind(DossierTemplate, p);
+      Request dossierReq = Session.Bind(DossierTemplate, p);
 
       // Act
       Dossier dossier = dossierReq.Get<Dossier>().Body;
@@ -49,7 +49,7 @@ namespace Ramone.Tests
     public void CanGetDocument()
     {
       // Arrange
-      RamoneRequest documentReq = Session.Bind(DocumentTemplate, new { id = 1 });
+      Request documentReq = Session.Bind(DocumentTemplate, new { id = 1 });
 
       // Act
       Document document = documentReq.Get<Document>().Body;
@@ -64,7 +64,7 @@ namespace Ramone.Tests
     public void CanGetDossierDocuments()
     {
       // Arrange
-      RamoneRequest dossierDocumentsReq = Session.Bind(DossierDocumentsTemplate, new { id = 8 });
+      Request dossierDocumentsReq = Session.Bind(DossierDocumentsTemplate, new { id = 8 });
 
       // Act
       DossierDocumentList documents = dossierDocumentsReq.Get<DossierDocumentList>().Body;
@@ -79,7 +79,7 @@ namespace Ramone.Tests
     public void CanGetParty()
     {
       // Arrange
-      RamoneRequest partyReq = Session.Bind(PartyTemplate, new { id = 12 });
+      Request partyReq = Session.Bind(PartyTemplate, new { id = 12 });
 
       // Act
       Party party = partyReq.Get<Party>().Body;
@@ -95,7 +95,7 @@ namespace Ramone.Tests
     public void CanGetDocumentLinksInDossier()
     {
       // Arrange
-      RamoneRequest dossierReq = Session.Bind(DossierTemplate, new { id = 8 });
+      Request dossierReq = Session.Bind(DossierTemplate, new { id = 8 });
       Dossier dossier = dossierReq.Get<Dossier>().Body;
 
       // Act
@@ -111,11 +111,11 @@ namespace Ramone.Tests
     public void CanFollowDocumentLinksInDossier()
     {
       // Arrange
-      RamoneRequest dossierReq = Session.Bind(DossierTemplate, new { id = 8 });
+      Request dossierReq = Session.Bind(DossierTemplate, new { id = 8 });
       Resource<Dossier> response = dossierReq.Get<Dossier>();
 
       // Act
-      RamoneRequest documentsReq = response.Body.Links.Follow(Session, CMSConstants.DocumentsLinkRelType);
+      Request documentsReq = response.Body.Links.Follow(Session, CMSConstants.DocumentsLinkRelType);
       DossierDocumentList documents = documentsReq.Get<DossierDocumentList>().Body;
 
       // Assert
@@ -128,7 +128,7 @@ namespace Ramone.Tests
     public void CanFollowLinksInGeneral()
     {
       // Arrange
-      RamoneRequest dossierReq = Session.Bind(DossierTemplate, new { id = 8 });
+      Request dossierReq = Session.Bind(DossierTemplate, new { id = 8 });
       Dossier dossier = dossierReq.Get<Dossier>().Body;
 
       // Act
@@ -147,7 +147,7 @@ namespace Ramone.Tests
     public void CanGetAndIgnoreReturnedBody()
     {
       // Arrange
-      RamoneRequest dossierReq = Session.Bind(DossierTemplate, new { id = 8 });
+      Request dossierReq = Session.Bind(DossierTemplate, new { id = 8 });
 
       // Act
       Resource response = dossierReq.Get();
@@ -158,7 +158,7 @@ namespace Ramone.Tests
     public void WhenSpecifyingCharsetForGetItThrows()
     {
       // Arrange
-      RamoneRequest dossierReq = Session.Bind(DossierTemplate, new { id = 8 });
+      Request dossierReq = Session.Bind(DossierTemplate, new { id = 8 });
 
       // Act + Assert
       AssertThrows<InvalidOperationException>(() => dossierReq.Charset("utf-8").Get());

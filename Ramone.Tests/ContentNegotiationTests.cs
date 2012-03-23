@@ -14,7 +14,7 @@ namespace Ramone.Tests
     public void CanGetCatUsingDefaultContentType()
     {
       // Arrange
-      RamoneRequest catReq = Session.Bind(CatTemplate, new { name = "Fiona" });
+      Request catReq = Session.Bind(CatTemplate, new { name = "Fiona" });
 
       // Act
       Cat c = catReq.Get<Cat>().Body;
@@ -28,7 +28,7 @@ namespace Ramone.Tests
     public void CanGetCatAsHtml()
     {
       // Arrange
-      RamoneRequest catReq = Session.Bind(CatTemplate, new { name = "Fiona" });
+      Request catReq = Session.Bind(CatTemplate, new { name = "Fiona" });
 
       // Act
       Cat c = catReq.Accept("text/html").Get<Cat>().Body;
@@ -42,7 +42,7 @@ namespace Ramone.Tests
     public void CanGetCatAsText()
     {
       // Arrange
-      RamoneRequest catReq = Session.Bind(CatTemplate, new { name = "Fiona" });
+      Request catReq = Session.Bind(CatTemplate, new { name = "Fiona" });
 
       // Act
       Cat c = catReq.Accept("text/plain").Get<Cat>().Body;
@@ -56,7 +56,7 @@ namespace Ramone.Tests
     public void CanGetCatAsTextWithShorthandNotation()
     {
       // Arrange
-      RamoneRequest catReq = Session.Bind(CatTemplate, new { name = "Fiona" });
+      Request catReq = Session.Bind(CatTemplate, new { name = "Fiona" });
 
       // Act
       Cat c = catReq.Get<Cat>("text/plain").Body;
@@ -70,7 +70,7 @@ namespace Ramone.Tests
     public void CanGetCatAsRawXml()
     {
       // Arrange
-      RamoneRequest catReq = Session.Bind(CatTemplate, new { name = "Fiona" });
+      Request catReq = Session.Bind(CatTemplate, new { name = "Fiona" });
 
       // Act
       XmlDocument c = catReq.Accept("application/xml").Get<XmlDocument>().Body;
@@ -88,7 +88,7 @@ namespace Ramone.Tests
     {
       // Arrange
       Cat c1 = new Cat { Name = "Monster Baby" };
-      RamoneRequest catReq = Session.Bind(CatTemplate, new { name = "Fiona" });
+      Request catReq = Session.Bind(CatTemplate, new { name = "Fiona" });
 
       // Act + Assert
       Cat c2 = catReq.Post<Cat>(c1).Body;
@@ -101,7 +101,7 @@ namespace Ramone.Tests
     {
       // Arrange
       Cat c = new Cat { Name = "Monster Baby" };
-      RamoneRequest catReq = Session.Bind(CatTemplate, new { name = "Fiona" });
+      Request catReq = Session.Bind(CatTemplate, new { name = "Fiona" });
 
       // Act + Assert
       catReq.ContentType("text/plain").Post<Cat>(c);
@@ -113,7 +113,7 @@ namespace Ramone.Tests
     {
       // Arrange
       Cat c = new Cat { Name = "Monster Baby" };
-      RamoneRequest catReq = Session.Bind(CatTemplate, new { name = "Fiona" });
+      Request catReq = Session.Bind(CatTemplate, new { name = "Fiona" });
 
       // Act + Assert
       catReq.ContentType("text/html").Post<Cat>(c);
@@ -124,7 +124,7 @@ namespace Ramone.Tests
     public void CanSpecifyAcceptAsGenericWithoutMediaType()
     {
       // Arrange
-      RamoneRequest dossierReq = Session.Bind(DossierTemplate, new { id = 8 });
+      Request dossierReq = Session.Bind(DossierTemplate, new { id = 8 });
 
       // Act
       Dossier dossier = dossierReq.Accept<Dossier>().Get().Body;
@@ -138,7 +138,7 @@ namespace Ramone.Tests
     public void CanSpecifyAcceptAsGenericWithMediaType()
     {
       // Arrange
-      RamoneRequest catReq = Session.Bind(CatTemplate, new { name = "Fiona" });
+      Request catReq = Session.Bind(CatTemplate, new { name = "Fiona" });
 
       // Act
       Cat c = catReq.Accept<Cat>("text/plain").Get().Body;

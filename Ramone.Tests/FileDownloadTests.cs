@@ -12,7 +12,7 @@ namespace Ramone.Tests
     public void CanDownloadFile()
     {
       // Arrange
-      RamoneRequest request = Session.Bind(FileDownloadTemplate);
+      Request request = Session.Bind(FileDownloadTemplate);
 
       using (TempFile file = new TempFile())
       {
