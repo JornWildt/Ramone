@@ -25,7 +25,7 @@ namespace Ramone.Tests.Server.Handlers
       return new TestForm
       {
         ActionUrl = actionUrl,
-        EncType = (encType == "multipart" ? MediaType.MultipartFormData.FullType : MediaType.ApplicationFormUrlEncoded.FullType),
+        EncType = (encType == "multipart" ? (string)MediaType.MultipartFormData : (string)MediaType.ApplicationFormUrlEncoded),
         Charset = charset
       };
     }
@@ -35,7 +35,7 @@ namespace Ramone.Tests.Server.Handlers
     {
       if (args.MultiSelect != null)
         args.MultiSelectValue = string.Join(",", args.MultiSelect);
-      args.EncType = (HttpContext.Current.Request.ContentType.StartsWith(MediaType.MultipartFormData.FullType) ? "multipart" : "urlencoded");
+      args.EncType = (HttpContext.Current.Request.ContentType.StartsWith((string)MediaType.MultipartFormData) ? "multipart" : "urlencoded");
       args.Charset = HttpContext.Current.Request.ContentEncoding.WebName;
       return args;
     }

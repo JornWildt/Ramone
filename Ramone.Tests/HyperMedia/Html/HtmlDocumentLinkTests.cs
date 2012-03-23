@@ -183,7 +183,7 @@ namespace Ramone.Tests.HyperMedia.Html
       Assert.AreEqual("http://example.com/", l1.HRef.AbsoluteUri);
       Assert.AreEqual("Content search", l1.Title);
       Assert.Contains("search", l1.RelationTypes.ToList());
-      Assert.AreEqual("application/opensearchdescription+xml", l1.MediaType.FullType);
+      Assert.AreEqual("application/opensearchdescription+xml", (string)l1.MediaType);
     }
 
 
@@ -200,7 +200,7 @@ namespace Ramone.Tests.HyperMedia.Html
       Assert.AreEqual("http://example.com/", l1.HRef.AbsoluteUri);
       Assert.AreEqual("Content search", l1.Title);
       Assert.Contains("search", l1.RelationTypes.ToList());
-      Assert.AreEqual("application/opensearchdescription+xml", l1.MediaType.FullType);
+      Assert.AreEqual("application/opensearchdescription+xml", (string)l1.MediaType);
     }
 
 
@@ -217,7 +217,7 @@ namespace Ramone.Tests.HyperMedia.Html
       Assert.AreEqual("http://example.com/", l1.HRef.AbsoluteUri);
       Assert.AreEqual("Content search", l1.Title);
       Assert.Contains("search", l1.RelationTypes.ToList());
-      Assert.AreEqual("application/opensearchdescription+xml", l1.MediaType.FullType);
+      Assert.AreEqual("application/opensearchdescription+xml", (string)l1.MediaType);
     }
 
 
@@ -231,7 +231,7 @@ namespace Ramone.Tests.HyperMedia.Html
       Assert.AreEqual("http://example.com/", link.HRef.AbsoluteUri);
       Assert.AreEqual("Content search", link.Title);
       Assert.Contains("search", link.RelationTypes.ToList());
-      Assert.AreEqual("application/opensearchdescription+xml", link.MediaType.FullType);
+      Assert.AreEqual("application/opensearchdescription+xml", (string)link.MediaType);
     }
 
 

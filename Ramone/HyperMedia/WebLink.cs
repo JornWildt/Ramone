@@ -36,7 +36,7 @@ namespace Ramone.HyperMedia
       set 
       { 
         SetMediaType(value);
-        Parameters["type"] = (value != null ? value.FullType : null);
+        Parameters["type"] = (value != null ? (string)value : null);
       }
     }
 

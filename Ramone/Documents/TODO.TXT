@@ -3,7 +3,6 @@ Version 1
 ---------
 
 Rename
-- IRamoneSession/Service => ISession, IService
 - MediaType.FullType til "Type" eller "MediaType".
 
 Forms

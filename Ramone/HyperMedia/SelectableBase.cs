@@ -38,7 +38,7 @@ namespace Ramone.HyperMedia
 
     protected string GetMediaTypeText()
     {
-      return _mediaType != null ? _mediaType.FullType : null;
+      return _mediaType != null ? (string)_mediaType : null;
     }
 
 

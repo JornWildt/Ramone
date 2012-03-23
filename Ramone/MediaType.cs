@@ -1,15 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using CuttingEdge.Conditions;
+
 
 namespace Ramone
 {
   public class MediaType
   {
-    public string FullType { get; private set; }
-
     public string TopLevelType { get; private set; }
 
     public string SubType { get; private set; }
@@ -42,6 +38,9 @@ namespace Ramone
     public static readonly MediaType ApplicationFormUrlEncoded = new MediaType("application/x-www-form-urlencoded");
 
     public static readonly MediaType Wildcard = new MediaType("*/*");
+
+
+    protected string FullType { get; private set; }
 
 
     /// <summary>
@@ -94,6 +93,12 @@ namespace Ramone
     }
 
 
+    public override string ToString()
+    {
+      return FullType;
+    }
+
+
     public bool Matches(string mediaType)
     {
       return Matches(new MediaType(mediaType));
@@ -107,12 +112,6 @@ namespace Ramone
 
       return       (IsTopLevelWildcard || t.IsTopLevelWildcard || TopLevelType.Equals(t.TopLevelType, StringComparison.OrdinalIgnoreCase))
                 && (IsSubTypeWildcard || t.IsSubTypeWildcard || SubType.Equals(t.SubType, StringComparison.OrdinalIgnoreCase));
-    }
-
-
-    public override string ToString()
-    {
-      return FullType;
     }
 
 

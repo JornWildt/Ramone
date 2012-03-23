@@ -17,7 +17,7 @@ namespace Ramone.Tests
       MediaType m = new MediaType("text/plain");
 
       // Assert
-      Assert.AreEqual("text/plain", m.FullType);
+      Assert.AreEqual("text/plain", (string)m);
       Assert.AreEqual("text", m.TopLevelType);
       Assert.AreEqual("plain", m.SubType);
     }
@@ -30,7 +30,7 @@ namespace Ramone.Tests
       MediaType m = new MediaType("text/plain; charset=utf-8");
 
       // Assert
-      Assert.AreEqual("text/plain", m.FullType);
+      Assert.AreEqual("text/plain", (string)m);
       Assert.AreEqual("text", m.TopLevelType);
       Assert.AreEqual("plain", m.SubType);
     }
@@ -44,14 +44,14 @@ namespace Ramone.Tests
       MediaType m2 = new MediaType("*/*");
 
       // Assert
-      Assert.AreEqual("text/*", m1.FullType);
+      Assert.AreEqual("text/*", (string)m1);
       Assert.AreEqual("text", m1.TopLevelType);
       Assert.AreEqual("*", m1.SubType);
       Assert.IsFalse(m1.IsTopLevelWildcard);
       Assert.IsTrue(m1.IsSubTypeWildcard);
       Assert.IsFalse(m1.IsWildcard);
 
-      Assert.AreEqual("*/*", m2.FullType);
+      Assert.AreEqual("*/*", (string)m2);
       Assert.AreEqual("*", m2.TopLevelType);
       Assert.AreEqual("*", m2.SubType);
       Assert.IsTrue(m2.IsTopLevelWildcard);
@@ -115,7 +115,7 @@ namespace Ramone.Tests
       MediaType m = "app/x";
 
       // Assert
-      Assert.AreEqual("app/x", m.FullType);
+      Assert.AreEqual("app/x", (string)m);
     }
 
 
