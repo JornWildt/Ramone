@@ -107,6 +107,7 @@
     <Compile Include="HyperMedia\LinkTests.cs" />
     <Compile Include="HyperMedia\Html\HtmlDocumentLinkTests.cs" />
     <Compile Include="HyperMedia\WebLinkTests.cs" />
+    <Compile Include="HyperMedia\LinkHeaderTests.cs" />
     <Compile Include="MediaTypes\Atom\AtomTests.cs" />
     <Compile Include="AuthenticationHandlerTests.cs" />
     <Compile Include="AuthenticationTests.cs" />

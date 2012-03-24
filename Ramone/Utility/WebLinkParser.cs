@@ -8,7 +8,7 @@ namespace Ramone.Utility
 {
   public class WebLinkParser
   {
-    public static IList<IParameterizedLink> ParseLinks(Uri baseUrl, string linkHeader)
+    public static IList<WebLink> ParseLinks(Uri baseUrl, string linkHeader)
     {
       WebLinkParser parser = new WebLinkParser();
       return parser.Parse(baseUrl, linkHeader);
@@ -18,13 +18,13 @@ namespace Ramone.Utility
     public Uri BaseUrl { get; protected set; }
 
 
-    public IList<IParameterizedLink> Parse(Uri baseUrl, string linkHeader)
+    public IList<WebLink> Parse(Uri baseUrl, string linkHeader)
     {
       BaseUrl = baseUrl;
       InputString = linkHeader;
       InputPos = 0;
 
-      IList<IParameterizedLink> links = new List<IParameterizedLink>();
+      IList<WebLink> links = new List<WebLink>();
 
       while (true)
       {

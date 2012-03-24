@@ -2,8 +2,7 @@
 Version 1
 ---------
 
-Rename
-- MediaType.FullType til "Type" eller "MediaType".
+ILink on Link header
 
 Forms
 - Der mangler temmeligt mange tests ...

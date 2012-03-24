@@ -37,5 +37,7 @@
     public const string FormPath = "form/{actionUrlMode}/{encType}/{charset}";
 
     public const string FileDownloadPath = "filedownload";
+
+    public const string LinkHeaderPath = "linkheader";
   }
 }

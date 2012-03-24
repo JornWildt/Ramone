@@ -20,7 +20,7 @@ namespace Ramone.Tests.Utility
   <http://example.com/TheBook/chapter4>; rel=""next""; title=""Next chapter""";
 
       // Act
-      IList<IParameterizedLink> links = WebLinkParser.ParseLinks(new Uri("http://example.com"), header);
+      IList<WebLink> links = WebLinkParser.ParseLinks(new Uri("http://example.com"), header);
 
       // Assert
       Assert.IsNotNull(links);
@@ -45,7 +45,7 @@ namespace Ramone.Tests.Utility
       string header = @"<http://example.com/TheBook/chapter3>; rel=""previous""; title=""Previous chapter""";
 
       // Act
-      IList<IParameterizedLink> links = WebLinkParser.ParseLinks(new Uri("http://example.com"), header);
+      IList<WebLink> links = WebLinkParser.ParseLinks(new Uri("http://example.com"), header);
 
       // Assert
       Assert.IsNotNull(links);
@@ -65,7 +65,7 @@ namespace Ramone.Tests.Utility
       string header = @"<http://example.com/TheBook/chapter5>";
 
       // Act
-      IList<IParameterizedLink> links = WebLinkParser.ParseLinks(new Uri("http://example.com"), header);
+      IList<WebLink> links = WebLinkParser.ParseLinks(new Uri("http://example.com"), header);
 
       // Assert
       Assert.IsNotNull(links);
@@ -85,7 +85,7 @@ namespace Ramone.Tests.Utility
       string header = @"<http://example.com/TheBook/chapter6>; rel=""previous""; title*=""UTF-8'de'N%c3%a4chstes%20Kapitel""";
 
       // Act
-      IList<IParameterizedLink> links = WebLinkParser.ParseLinks(new Uri("http://example.com"), header);
+      IList<WebLink> links = WebLinkParser.ParseLinks(new Uri("http://example.com"), header);
 
       // Assert
       Assert.IsNotNull(links);
@@ -105,8 +105,8 @@ namespace Ramone.Tests.Utility
       string header2 = @"<http://example.com/TheBook/chapter6>; rel=""previous""; title*=""UTF-8'de'N%c3%a4chstes%20Kapitel""; title=""abc""";
 
       // Act
-      IList<IParameterizedLink> links1 = WebLinkParser.ParseLinks(new Uri("http://example.com"), header1);
-      IList<IParameterizedLink> links2 = WebLinkParser.ParseLinks(new Uri("http://example.com"), header2);
+      IList<WebLink> links1 = WebLinkParser.ParseLinks(new Uri("http://example.com"), header1);
+      IList<WebLink> links2 = WebLinkParser.ParseLinks(new Uri("http://example.com"), header2);
 
       // Assert
       Assert.IsNotNull(links1);
@@ -129,7 +129,7 @@ namespace Ramone.Tests.Utility
       string header1 = @"<http://example.com/TheBook/chapter6>; rel=""previous""; title=""abc""; title=""123""";
 
       // Act
-      IList<IParameterizedLink> links1 = WebLinkParser.ParseLinks(new Uri("http://example.com"), header1);
+      IList<WebLink> links1 = WebLinkParser.ParseLinks(new Uri("http://example.com"), header1);
 
       // Assert
       Assert.IsNotNull(links1);
@@ -147,7 +147,7 @@ namespace Ramone.Tests.Utility
       string header1 = @"<http://example.com/TheBook/chapter6>; rel=""previous""; rel=""next""; title=""Abc""";
 
       // Act
-      IList<IParameterizedLink> links1 = WebLinkParser.ParseLinks(new Uri("http://example.com"), header1);
+      IList<WebLink> links1 = WebLinkParser.ParseLinks(new Uri("http://example.com"), header1);
 
       // Assert
       Assert.IsNotNull(links1);
@@ -165,7 +165,7 @@ namespace Ramone.Tests.Utility
       string header1 = @"<http://example.com/TheBook/chapter6>; rel=next-chap.ter; title=""Abc""";
 
       // Act
-      IList<IParameterizedLink> links1 = WebLinkParser.ParseLinks(new Uri("http://example.com"), header1);
+      IList<WebLink> links1 = WebLinkParser.ParseLinks(new Uri("http://example.com"), header1);
 
       // Assert
       Assert.IsNotNull(links1);
@@ -183,7 +183,7 @@ namespace Ramone.Tests.Utility
       string header1 = @"<http://example.com/TheBook/chapter6>; rel=""next-chap.ter  prev   next""; title=""Abc""";
 
       // Act
-      IList<IParameterizedLink> links1 = WebLinkParser.ParseLinks(new Uri("http://example.com"), header1);
+      IList<WebLink> links1 = WebLinkParser.ParseLinks(new Uri("http://example.com"), header1);
 
       // Assert
       Assert.IsNotNull(links1);
@@ -205,7 +205,7 @@ namespace Ramone.Tests.Utility
   <http://example.com/TheBook/chapter1>; rel=""help""; title=""Xyz""";
 
       // Act
-      IList<IParameterizedLink> links1 = WebLinkParser.ParseLinks(new Uri("http://example.com"), header1);
+      IList<WebLink> links1 = WebLinkParser.ParseLinks(new Uri("http://example.com"), header1);
 
       // Assert
       Assert.IsNotNull(links1);
@@ -231,7 +231,7 @@ namespace Ramone.Tests.Utility
   <http://example.com/TheBook/chapter1>; rel=""help""; title=""Xyz""";
 
       // Act
-      IList<IParameterizedLink> links1 = WebLinkParser.ParseLinks(new Uri("http://example.com"), header1);
+      IList<WebLink> links1 = WebLinkParser.ParseLinks(new Uri("http://example.com"), header1);
 
       // Assert
       Assert.IsNotNull(links1);

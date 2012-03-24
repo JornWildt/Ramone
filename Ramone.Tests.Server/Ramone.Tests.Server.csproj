@@ -133,6 +133,7 @@
     <Compile Include="Codecs\FormUrlencodedCodec.cs" />
     <Compile Include="Codecs\HeaderEchoCodec.cs" />
     <Compile Include="Codecs\JsonSerializerCodec.cs" />
+    <Compile Include="Codecs\LinkHeaderCodec.cs" />
     <Compile Include="Codecs\XmlCodecBase.cs" />
     <Compile Include="Codecs\XmlEchoCodec.cs" />
     <Compile Include="Codecs\XmlSerializerCodec.cs" />
@@ -171,6 +172,7 @@
     <Compile Include="Handlers\FormHandler.cs" />
     <Compile Include="Handlers\FormUrlEncodedHandler.cs" />
     <Compile Include="Handlers\HeaderEchoHandler.cs" />
+    <Compile Include="Handlers\LinkHeaderHandler.cs" />
     <Compile Include="Handlers\MultipartFormDataHandler.cs" />
     <Compile Include="Handlers\PersonHandler.cs" />
     <Compile Include="Handlers\TextNullHandler.cs" />

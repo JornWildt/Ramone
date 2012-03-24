@@ -95,6 +95,7 @@
     <Compile Include="HyperMedia\LinkBase.cs" />
     <Compile Include="HyperMedia\SelectableBase.cs" />
     <Compile Include="HyperMedia\WebLink.cs" />
+    <Compile Include="HyperMedia\WebLinkExtensions.cs" />
     <Compile Include="MediaTypes\Html\Anchor.cs" />
     <Compile Include="MediaTypes\Html\HtmlFormExtensions.cs" />
     <Compile Include="MediaTypes\Html\Form.cs" />

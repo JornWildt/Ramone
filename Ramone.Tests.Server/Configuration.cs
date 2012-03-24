@@ -25,6 +25,8 @@ namespace Ramone.Tests.Server
 
     public class FileDownload { public string Content { get; set; } }
 
+    public class LinkHeader { }
+
 
     public void Configure()
     {
@@ -118,6 +120,11 @@ namespace Ramone.Tests.Server
             .AtUri(Constants.FileDownloadPath)
             .HandledBy<FileDownloadHandler>()
             .TranscodedBy<FileDownloadCodec>();
+
+        ResourceSpace.Has.ResourcesOfType<LinkHeader>()
+            .AtUri(Constants.LinkHeaderPath)
+            .HandledBy<LinkHeaderHandler>()
+            .TranscodedBy<LinkHeaderCodec>();
 
         ConfigureCMS();
         BlogConfiguration.Configure();

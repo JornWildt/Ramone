@@ -60,6 +60,8 @@ namespace Ramone.Tests
     protected static readonly UriTemplate FormTemplate = new UriTemplate(Constants.FormPath);
 
     protected static readonly UriTemplate FileDownloadTemplate = new UriTemplate(Constants.FileDownloadPath);
+
+    protected static readonly UriTemplate LinkHeaderTemplate = new UriTemplate(Constants.LinkHeaderPath);
     
 
     public static IService TestService { get; set; }
