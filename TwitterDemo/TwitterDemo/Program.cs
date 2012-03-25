@@ -14,7 +14,7 @@ namespace TwitterDemo
 
   public class Program
   {
-    static IRamoneSession Session { get; set; }
+    static ISession Session { get; set; }
 
 
     // Put a screen name here for showing timeline
@@ -84,7 +84,7 @@ namespace TwitterDemo
 
       // Ask user to authorize use of the request token
       Console.WriteLine("Now opening a browser with autorization info. Please follow instructions there.");
-      RamoneRequest authorizationRequest = Session.Bind(TwitterApi.OAuthAuthorizePath, requestToken);
+      Request authorizationRequest = Session.Bind(TwitterApi.OAuthAuthorizePath, requestToken);
       Process.Start(authorizationRequest.Url.AbsoluteUri);
 
       Console.WriteLine("Please enter Twitter pincode: ");
@@ -102,10 +102,10 @@ namespace TwitterDemo
     static void ShowTimelineForScreenName_Dynamic(string screenName)
     {
       // Bind user-timeline template to supplied values
-      RamoneRequest request = Session.Bind(TwitterApi.UserTimeLinePath, new { screen_name = screenName, count = 2 });
+      Request request = Session.Bind(TwitterApi.UserTimeLinePath, new { screen_name = screenName, count = 2 });
 
       // GET response
-      Resource response = request.Get();
+      Response response = request.Get();
 
       dynamic timeline = response.Body;
 
@@ -124,10 +124,10 @@ namespace TwitterDemo
     static void ShowTimelineForScreenName_Typed(string screenName)
     {
       // Bind user-timeline template to supplied values
-      RamoneRequest request = Session.Bind(TwitterApi.UserTimeLinePath, new { screen_name = screenName, count = 2 });
+      Request request = Session.Bind(TwitterApi.UserTimeLinePath, new { screen_name = screenName, count = 2 });
 
       // GET statically typed response
-      Resource<Timeline> response = request.Get<Timeline>();
+      Response<Timeline> response = request.Get<Timeline>();
 
       Timeline timeline = response.Body;
 
@@ -162,8 +162,8 @@ namespace TwitterDemo
 
     static void UpdateUserName(string name)
     {
-      RamoneRequest request = Session.Bind(TwitterApi.UpdateProfilePath, new { name = name });
-      Resource response = request.Post();
+      Request request = Session.Bind(TwitterApi.UpdateProfilePath, new { name = name });
+      Response response = request.Post();
     }
 
 

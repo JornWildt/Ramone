@@ -2,49 +2,17 @@
 Version 1
 ---------
 
-ILink on Link header
-
-Forms
-- Der mangler temmeligt mange tests ...
-  - Default values for enctype and accept
-  - accept-charset
-
-Resource<ExtensionData> data = request.Get<ExtensionData>();
-- data.Body.Links ... kan man i stedet gøre "data.Links"?
-
-Hvad er den nemmeste måde at dumpe fejlresultatet fra et request? F.eks. ved not-found eller not-authorized.
-- Test/demo!
-
-Test scenarie hvor der returneres "NoContent" og man forsøger at hente content (skal give null)
-
-Kan Ramone håndtere nedarvning således at man kan bede om en "Part" men få en "Person" som nedarver fra Part?
-
 Atom
 - Link extensions som for Html.
 - Relative URLs
 - Absolutte URLs
 - Must work with NULL baseUrl
 
-Anvende filename* i nedenstående
-
-  POST http://jw-pc261/f2-rudersdal-restservices-4.2-borgerhenvendelse/dossiers/377223/document-edit HTTP/1.1
-  User-Agent: Ramone/1.0
-  Authorization: Basic TGlzZSBOaWVsc2VuOg==
-  Content-Type: multipart/form-data; boundary=2ddcc789-fe11-453f-a5e5-b12fcec89f87
-  Host: jw-pc261
-  Content-Length: 76184
-  Expect: 100-continue
-
-
-  --2ddcc789-fe11-453f-a5e5-b12fcec89f87
-  Content-Disposition: form-data; name="File"; filename="Bjørneklo.jpg"
-  Content-Type: image/jpeg
-
-
-
-
-
 Testing Follow(...) with not-found rel-values.
+
+Forms
+- Default values for enctype and accept
+- accept-charset
 
 Before releasing:
 - Include a license
