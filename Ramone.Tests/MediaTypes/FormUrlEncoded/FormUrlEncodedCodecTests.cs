@@ -78,9 +78,9 @@ namespace Ramone.Tests.MediaTypes.FormUrlEncoded
 
       // Act
       Response<string> response = formdataReq.Accept("text/plain")
-                                                   .Charset(charset)
-                                                   .AsFormUrlEncoded()
-                                                   .Post<string>(data);
+                                             .Charset(charset)
+                                             .AsFormUrlEncoded()
+                                             .Post<string>(data);
 
       // Assert
       Assert.AreEqual("application/x-www-form-urlencoded; charset="+charset, response.Headers["x-contenttype"]);

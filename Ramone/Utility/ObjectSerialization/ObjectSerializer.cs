@@ -175,16 +175,28 @@ namespace Ramone.Utility.ObjectSerialization
     protected void Evaluate(object classValue, Type t, IEnumerator propertyNames, string value)
     {
       string propertyName = (string)propertyNames.Current;
-      PropertyInfo property = t.GetProperty(propertyName);
 
-      if (property != null)
+      if (typeof(IDictionary).IsAssignableFrom(t))
       {
-        object propertyValue = EvaluateProperty(classValue, property, value);
-        property.SetValue(classValue, propertyValue, new object[] { });
-
-        if (propertyNames.MoveNext())
+        IDictionary d = (IDictionary)classValue;
+        if (d != null)
         {
-          Evaluate(propertyValue, property.PropertyType, propertyNames, value);
+          d[propertyName] = value;
+        }
+      }
+      else
+      {
+        PropertyInfo property = t.GetProperty(propertyName);
+
+        if (property != null)
+        {
+          object propertyValue = EvaluateProperty(classValue, property, value);
+          property.SetValue(classValue, propertyValue, new object[] { });
+
+          if (propertyNames.MoveNext())
+          {
+            Evaluate(propertyValue, property.PropertyType, propertyNames, value);
+          }
         }
       }
     }

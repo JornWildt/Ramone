@@ -66,6 +66,12 @@ namespace Ramone
     }
 
 
+    public static Request AcceptFormUrlEncoded(this Request request)
+    {
+      return request.Accept(MediaType.ApplicationFormUrlEncoded);
+    }
+
+
     public static Request AsMultipartFormData(this Request request)
     {
       return request.ContentType("multipart/form-data");

@@ -8,6 +8,12 @@ Atom
 - Absolutte URLs
 - Must work with NULL baseUrl
 
+Deserialization of dictionary, hashtable, lists and so on for form-urlencoded and multipart/formdata
+- Check charset
+    Content-Type: application/x-www-form-urlencoded;charset=UTF-8
+
+OAuth: new URL decoding/encoding
+
 Testing Follow(...) with not-found rel-values.
 
 Forms
@@ -19,6 +25,7 @@ Before releasing:
 - Version numbers
 - Komplet README (med korrekt casing)
   - Installation
+- Include jsonfx and other DLLs in the "Binaries" folder.
 - Demo 
   - Github
   - Ohloh
@@ -33,6 +40,10 @@ Before releasing:
   - Flickr
   - OK: Twitter
 
+Demo this flow:
+1) Get resource (do not deserialize yet)
+2) Inspect some addition HTTP header.
+3) Deserialize according to header.
 
 Release
 - Oprette release-branch

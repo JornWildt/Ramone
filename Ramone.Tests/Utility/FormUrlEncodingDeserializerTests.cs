@@ -112,6 +112,21 @@ namespace Ramone.Tests.Utility
     }
 
 
+    [Test]
+    public void CanDeserializeDictionaryStringString()
+    {
+      // Arrange
+      string s = "A=123&B=Qwerty";
+
+      // Act
+      Dictionary<string, string> data = Deserialize<Dictionary<string, string>>(s);
+
+      // Assert
+      Assert.AreEqual("123", data["A"]);
+      Assert.AreEqual("Qwerty", data["B"]);
+    }
+
+
     protected T Deserialize<T>(string s)
       where T : class
     {
