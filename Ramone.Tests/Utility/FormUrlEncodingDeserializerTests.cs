@@ -127,14 +127,33 @@ namespace Ramone.Tests.Utility
     }
 
 
-    protected T Deserialize<T>(string s)
+    [Test]
+    public void CanDeserializeInternationalCharacters(
+      [Values("UTF-8|MyInt=10&MyString=Abc+%c3%86%c3%98%c3%85%5e%c3%bc",
+              "Windows-1252|MyInt=10&MyString=Abc+%c6%d8%c5%5e%fc",
+              "iso-8859-1|MyInt=10&MyString=Abc+%c6%d8%c5%5e%fc")] string charsetData)
+    {
+      // Arrange
+      string[] elements = charsetData.Split('|');
+      string charset = elements[0];
+      string input = elements[1];
+
+      // Act
+      Dictionary<string, string> data = Deserialize<Dictionary<string, string>>(input, charset);
+
+      // Assert
+      Assert.AreEqual("Abc ÆØÅ^ü", data["MyString"]);
+    }
+
+
+    protected T Deserialize<T>(string s, string charset = null)
       where T : class
     {
       FormUrlEncodingSerializer serializer = new FormUrlEncodingSerializer(typeof(T));
 
       using (TextReader reader = new StringReader(s))
       {
-        T data = (T)serializer.Deserialize(reader);
+        T data = (T)serializer.Deserialize(reader, charset);
         return data;
       }
     }

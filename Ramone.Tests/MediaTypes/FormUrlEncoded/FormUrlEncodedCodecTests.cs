@@ -157,7 +157,7 @@ namespace Ramone.Tests.MediaTypes.FormUrlEncoded
       Request request = Session.Bind(FormUrlEncodedTemplate);
 
       // Act
-      Response<NameValueCollection> response = request.Accept("application/x-www-form-urlencoded").Get<NameValueCollection>();
+      Response<NameValueCollection> response = request.AcceptFormUrlEncoded().Get<NameValueCollection>();
       NameValueCollection data = response.Body;
 
       // Assert

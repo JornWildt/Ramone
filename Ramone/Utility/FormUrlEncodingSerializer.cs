@@ -4,6 +4,7 @@ using Ramone.Utility.ObjectSerialization;
 using System.Collections.Specialized;
 using System.Web;
 using CuttingEdge.Conditions;
+using System.Text;
 
 
 namespace Ramone.Utility
@@ -28,12 +29,20 @@ namespace Ramone.Utility
     }
 
 
-    public object Deserialize(TextReader reader)
+    /// <summary>
+    /// Deserialize form-urlencoded data from reader.
+    /// </summary>
+    /// <param name="reader">A TextReader for reading url-encoded string input.</param>
+    /// <param name="charset">Name of character set used to decode international characters after the 
+    /// form-urlencoded input has been decoded to a byte stream.</param>
+    /// <returns></returns>
+    public object Deserialize(TextReader reader, string charset = null)
     {
       Condition.Requires(reader, "reader").IsNotNull();
 
       string data = reader.ReadToEnd();
-      NameValueCollection values = HttpUtility.ParseQueryString(data);
+      Encoding enc = (charset != null ? Encoding.GetEncoding(charset) : Encoding.UTF8);
+      NameValueCollection values = HttpUtility.ParseQueryString(data, enc);
       return Serializer.Deserialize(values);
     }
   }
