@@ -3,10 +3,9 @@ Version 1
 ---------
 
 Atom
-- Link extensions som for Html.
-- Relative URLs
-- Absolutte URLs
 - Must work with NULL baseUrl
+- No need for BaseUrl
+- implicit conversion from SyndicationLink to AtomLink (and thus n need for .Links())
 
 Deserialization of dictionary, hashtable, lists and so on for form-urlencoded and multipart/formdata
 - Check charset

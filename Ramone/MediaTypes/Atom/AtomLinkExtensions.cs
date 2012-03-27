@@ -22,7 +22,7 @@ namespace Ramone.MediaTypes.Atom
       if (feed == null)
         return Enumerable.Empty<AtomLink>();
 
-      return feed.Links.Select(l => new AtomLink(l.Uri, l.RelationshipType, l.MediaType, l.Title));
+      return feed.Links.Links(baseUrl);
     }
 
 
@@ -40,7 +40,19 @@ namespace Ramone.MediaTypes.Atom
       if (item == null)
         return Enumerable.Empty<AtomLink>();
 
-      return item.Links.Select(l => new AtomLink(l.Uri, l.RelationshipType, l.MediaType, l.Title));
+      return item.Links.Links(baseUrl);
+    }
+
+
+    public static AtomLink Link(this SyndicationLink link, Uri baseUrl)
+    {
+      return new AtomLink(link.Uri, link.RelationshipType, link.MediaType, link.Title);
+    }
+
+
+    public static IEnumerable<AtomLink> Links(this IEnumerable<SyndicationLink> links, Uri baseUrl)
+    {
+      return links.Select(l => new AtomLink(l.Uri, l.RelationshipType, l.MediaType, l.Title));
     }
   }
 }

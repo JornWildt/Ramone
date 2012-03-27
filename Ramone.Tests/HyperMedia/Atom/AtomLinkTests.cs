@@ -59,5 +59,64 @@ namespace Ramone.Tests.HyperMedia.Atom
       Assert.AreEqual("http://link1/", l1.HRef.AbsoluteUri);
       Assert.IsNull(l1.Title);
     }
+
+
+    [Test]
+    public void CanGetAtomLinkFromSyndicationLink()
+    {
+      // Act
+      SyndicationLink slink = new SyndicationLink(new Uri("http://edit"), "edit", "Edit feed", "text/html", 0);
+      AtomLink link = slink.Link(BaseUrl);
+
+      // Assert
+      Assert.IsNotNull(link);
+
+      Assert.AreEqual("http://edit/", link.HRef.AbsoluteUri);
+      Assert.AreEqual("Edit feed", link.Title);
+      Assert.AreEqual("edit", link.RelationType);
+      Assert.AreEqual("text/html", (string)link.MediaType);
+    }
+
+
+    [Test]
+    public void CanGetAtomLinksFromSyndicationLinks()
+    {
+      // Act
+      List<AtomLink> links = Feed.Links.Links(BaseUrl).ToList();
+
+      // Assert
+      Assert.AreEqual(2, links.Count);
+
+      ILink l1 = links[0];
+      Assert.AreEqual("http://feed/", l1.HRef.AbsoluteUri);
+      Assert.IsNull(l1.Title);
+
+      ILink l2 = links[1];
+      Assert.AreEqual("http://edit/", l2.HRef.AbsoluteUri);
+      Assert.AreEqual("Edit feed", l2.Title);
+      Assert.Contains("edit", l2.RelationTypes.ToList());
+    }
+
+
+    [Test]
+    public void ItReturnsEmptyListForNullFeed()
+    {
+      // Act
+      List<AtomLink> links = ((SyndicationItem)null).Links(BaseUrl).ToList();
+
+      // Assert
+      Assert.IsNotNull(links);
+    }
+
+
+    [Test]
+    public void ItReturnsEmptyListForNullItem()
+    {
+      // Act
+      List<AtomLink> links = ((SyndicationItem)null).Links(BaseUrl).ToList();
+
+      // Assert
+      Assert.IsNotNull(links);
+    }
   }
 }
