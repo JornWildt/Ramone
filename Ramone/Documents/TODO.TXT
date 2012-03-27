@@ -2,11 +2,6 @@
 Version 1
 ---------
 
-Atom
-- Must work with NULL baseUrl
-- No need for BaseUrl
-- implicit conversion from SyndicationLink to AtomLink (and thus n need for .Links())
-
 Deserialization of dictionary, hashtable, lists and so on for form-urlencoded and multipart/formdata
 - Check charset
     Content-Type: application/x-www-form-urlencoded;charset=UTF-8

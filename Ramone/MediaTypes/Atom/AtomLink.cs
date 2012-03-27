@@ -81,11 +81,5 @@ namespace Ramone.MediaTypes.Atom
       MediaType = mediaType;
       Title = title;
     }
-
-
-    public static implicit operator AtomLink(SyndicationLink link)
-    {
-      return new AtomLink(link.Uri, link.RelationshipType, link.MediaType, link.Title);
-    }
   }
 }

@@ -30,7 +30,7 @@ namespace Ramone.Tests.HyperMedia.Atom
     public void CanGetLinksFromFeed()
     {
       // Act
-      List<AtomLink> links = Feed.Links(BaseUrl).ToList();
+      List<AtomLink> links = Feed.Links().ToList();
 
       // Assert
       Assert.AreEqual(2, links.Count);
@@ -50,7 +50,7 @@ namespace Ramone.Tests.HyperMedia.Atom
     public void CanGetLinksFromItem()
     {
       // Act
-      List<AtomLink> links = Feed.Items.First().Links(BaseUrl).ToList();
+      List<AtomLink> links = Feed.Items.First().Links().ToList();
 
       // Assert
       Assert.AreEqual(1, links.Count);
@@ -66,7 +66,7 @@ namespace Ramone.Tests.HyperMedia.Atom
     {
       // Act
       SyndicationLink slink = new SyndicationLink(new Uri("http://edit"), "edit", "Edit feed", "text/html", 0);
-      AtomLink link = slink.Link(BaseUrl);
+      AtomLink link = slink.Link();
 
       // Assert
       Assert.IsNotNull(link);
@@ -82,7 +82,7 @@ namespace Ramone.Tests.HyperMedia.Atom
     public void CanGetAtomLinksFromSyndicationLinks()
     {
       // Act
-      List<AtomLink> links = Feed.Links.Links(BaseUrl).ToList();
+      List<AtomLink> links = Feed.Links.Links().ToList();
 
       // Assert
       Assert.AreEqual(2, links.Count);
@@ -102,7 +102,7 @@ namespace Ramone.Tests.HyperMedia.Atom
     public void ItReturnsEmptyListForNullFeed()
     {
       // Act
-      List<AtomLink> links = ((SyndicationItem)null).Links(BaseUrl).ToList();
+      List<AtomLink> links = ((SyndicationItem)null).Links().ToList();
 
       // Assert
       Assert.IsNotNull(links);
@@ -113,27 +113,10 @@ namespace Ramone.Tests.HyperMedia.Atom
     public void ItReturnsEmptyListForNullItem()
     {
       // Act
-      List<AtomLink> links = ((SyndicationItem)null).Links(BaseUrl).ToList();
+      List<AtomLink> links = ((SyndicationItem)null).Links().ToList();
 
       // Assert
       Assert.IsNotNull(links);
-    }
-
-
-    [Test]
-    public void CanImplicitlyConvertSyndicationLinkToAtomLink()
-    {
-      // Act
-      SyndicationLink slink = new SyndicationLink(new Uri("http://edit"), "edit", "Edit feed", "text/html", 0);
-      AtomLink link = slink;
-
-      // Assert
-      Assert.IsNotNull(link);
-
-      Assert.AreEqual("http://edit/", link.HRef.AbsoluteUri);
-      Assert.AreEqual("Edit feed", link.Title);
-      Assert.AreEqual("edit", link.RelationType);
-      Assert.AreEqual("text/html", (string)link.MediaType);
     }
 
 
