@@ -118,5 +118,60 @@ namespace Ramone.Tests.HyperMedia.Atom
       // Assert
       Assert.IsNotNull(links);
     }
+
+
+    [Test]
+    public void CanImplicitlyConvertSyndicationLinkToAtomLink()
+    {
+      // Act
+      SyndicationLink slink = new SyndicationLink(new Uri("http://edit"), "edit", "Edit feed", "text/html", 0);
+      AtomLink link = slink;
+
+      // Assert
+      Assert.IsNotNull(link);
+
+      Assert.AreEqual("http://edit/", link.HRef.AbsoluteUri);
+      Assert.AreEqual("Edit feed", link.Title);
+      Assert.AreEqual("edit", link.RelationType);
+      Assert.AreEqual("text/html", (string)link.MediaType);
+    }
+
+
+    [Test]
+    public void CanSelectSyndicationLinks()
+    {
+      // Act
+      ILink link = Feed.Links.Select("edit");
+
+      // Assert
+      Assert.IsNotNull(link);
+      Assert.AreEqual("http://edit/", link.HRef.AbsoluteUri);
+      Assert.AreEqual("Edit feed", link.Title);
+      Assert.Contains("edit", link.RelationTypes.ToList());
+    }
+
+
+    [Test]
+    public void CanFollowSyndicationLink()
+    {
+      // Act
+      Request request = Feed.Links.First().Follow(Session);
+
+      // Assert
+      Assert.IsNotNull(request);
+      Assert.AreEqual("http://feed/", request.Url.AbsoluteUri);
+    }
+
+
+    [Test]
+    public void CanFollowSyndicationLinks()
+    {
+      // Act
+      Request request = Feed.Links.Follow(Session, "edit");
+
+      // Assert
+      Assert.IsNotNull(request);
+      Assert.AreEqual("http://edit/", request.Url.AbsoluteUri);
+    }
   }
 }

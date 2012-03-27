@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.ServiceModel.Syndication;
+using Ramone.HyperMedia;
+using CuttingEdge.Conditions;
 
 
 namespace Ramone.MediaTypes.Atom
@@ -53,6 +55,27 @@ namespace Ramone.MediaTypes.Atom
     public static IEnumerable<AtomLink> Links(this IEnumerable<SyndicationLink> links, Uri baseUrl)
     {
       return links.Select(l => new AtomLink(l.Uri, l.RelationshipType, l.MediaType, l.Title));
+    }
+
+
+    public static AtomLink Select(this IEnumerable<SyndicationLink> links, string rel, MediaType mediaType = null)
+    {
+      return links.Select(l => (AtomLink)l).Select(rel, mediaType);
+    }
+
+
+    public static Request Follow(this IEnumerable<SyndicationLink> links, ISession session, string rel, MediaType mediaType = null)
+    {
+      return links.Select(l => (AtomLink)l).Follow(session, rel, mediaType);
+    }
+
+
+    public static Request Follow(this SyndicationLink link, ISession session)
+    {
+      Condition.Requires(link, "link").IsNotNull();
+      Condition.Requires(session, "session").IsNotNull();
+
+      return new Request(session, link.Uri);
     }
   }
 }

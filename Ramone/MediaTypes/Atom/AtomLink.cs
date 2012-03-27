@@ -2,6 +2,7 @@
 using System.Xml.Serialization;
 using Ramone.HyperMedia;
 using System.Collections.Generic;
+using System.ServiceModel.Syndication;
 
 
 namespace Ramone.MediaTypes.Atom
@@ -79,6 +80,12 @@ namespace Ramone.MediaTypes.Atom
       RelationType = relationType;
       MediaType = mediaType;
       Title = title;
+    }
+
+
+    public static implicit operator AtomLink(SyndicationLink link)
+    {
+      return new AtomLink(link.Uri, link.RelationshipType, link.MediaType, link.Title);
     }
   }
 }
