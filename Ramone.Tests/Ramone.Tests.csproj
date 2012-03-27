@@ -101,6 +101,7 @@
     <Compile Include="FileDownloadTests.cs" />
     <Compile Include="FileWithSpecialName.cs" />
     <Compile Include="GenericMethodTests.cs" />
+    <Compile Include="HyperMedia\Atom\AtomLinkTests.cs" />
     <Compile Include="HyperMedia\LinkTemplateTests.cs" />
     <Compile Include="HyperMedia\Html\FormTest.cs" />
     <Compile Include="HyperMedia\Html\InvalidFormTests.cs" />
