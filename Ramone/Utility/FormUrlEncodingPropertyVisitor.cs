@@ -3,6 +3,7 @@ using System.IO;
 using System.Web;
 using Ramone.IO;
 using Ramone.Utility.ObjectSerialization;
+using System.Text;
 
 
 namespace Ramone.Utility
@@ -10,12 +11,14 @@ namespace Ramone.Utility
   public class FormUrlEncodingPropertyVisitor : IPropertyVisitor
   {
     protected TextWriter Writer;
+    protected Encoding Encoding;
     protected bool FirstValue = true;
 
 
-    public FormUrlEncodingPropertyVisitor(TextWriter writer)
+    public FormUrlEncodingPropertyVisitor(TextWriter writer, Encoding enc = null)
     {
       Writer = writer;
+      Encoding = enc ?? Encoding.UTF8;
     }
 
 
@@ -30,8 +33,9 @@ namespace Ramone.Utility
     {
       if (!FirstValue)
         Writer.Write("&");
-      string output = HttpUtility.UrlEncode(name, Writer.Encoding) + "=" + HttpUtility.UrlEncode(formatedValue, Writer.Encoding);
-      Writer.Write(output);
+      Writer.Write(HttpUtility.UrlEncode(name, Encoding));
+      Writer.Write("=");
+      Writer.Write(HttpUtility.UrlEncode(formatedValue, Encoding));
       FirstValue = false;
     }
 

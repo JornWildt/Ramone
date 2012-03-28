@@ -24,7 +24,8 @@ namespace Ramone.Utility
     {
       Condition.Requires(writer, "writer").IsNotNull();
 
-      FormUrlEncodingPropertyVisitor v = new FormUrlEncodingPropertyVisitor(writer);
+      Encoding enc = GetEncoding(settings);
+      FormUrlEncodingPropertyVisitor v = new FormUrlEncodingPropertyVisitor(writer, enc);
       Serializer.Serialize(data, v, settings);
     }
 
@@ -41,9 +42,15 @@ namespace Ramone.Utility
       Condition.Requires(reader, "reader").IsNotNull();
 
       string data = reader.ReadToEnd();
-      Encoding enc = (settings != null ? settings.Charset ?? Encoding.UTF8 : Encoding.UTF8);
+      Encoding enc = GetEncoding(settings);
       NameValueCollection values = HttpUtility.ParseQueryString(data, enc);
-      return Serializer.Deserialize(values);
+      return Serializer.Deserialize(values, settings);
+    }
+
+
+    Encoding GetEncoding(ObjectSerializerSettings settings)
+    {
+      return (settings != null ? settings.Encoding ?? Encoding.UTF8 : Encoding.UTF8);
     }
   }
 }

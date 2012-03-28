@@ -22,7 +22,7 @@ namespace Ramone.Utility.ObjectSerialization
     
     public IObjectSerializerFormaterManager Formaters { get; set; }
 
-    public Encoding Charset { get; set; }
+    public Encoding Encoding { get; set; }
 
 
     public ObjectSerializerSettings()

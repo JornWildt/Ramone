@@ -19,7 +19,7 @@ namespace Ramone.MediaTypes.FormUrlEncoded
     protected override object ReadFrom(TextReader reader, ReaderContext context)
     {
       FormUrlEncodingSerializer Serializer = new FormUrlEncodingSerializer(context.DataType);
-      return Serializer.Deserialize(reader);
+      return Serializer.Deserialize(reader, context.Session.SerializerSettings);
     }
   }
 }

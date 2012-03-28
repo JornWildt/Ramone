@@ -156,7 +156,7 @@ namespace Ramone.Tests.Utility
       using (TextReader reader = new StringReader(s))
       {
         Encoding enc = (charset != null ? Encoding.GetEncoding(charset) : null);
-        T data = (T)serializer.Deserialize(reader, new ObjectSerializerSettings { Charset = enc });
+        T data = (T)serializer.Deserialize(reader, new ObjectSerializerSettings { Encoding = enc });
         return data;
       }
     }
