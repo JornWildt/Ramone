@@ -101,6 +101,7 @@ namespace Ramone.Tests
       service.SerializerSettings.DateTimeFormat = "O";
       service.SerializerSettings.Formaters.AddFormater(typeof(SomeClass1), new SomeClass1Formater());
       service.SerializerSettings.Culture = CultureInfo.GetCultureInfo("da-DK");
+      service.SerializerSettings.Encoding = Encoding.ASCII;
       service.SerializerSettings.EnableNonAsciiCharactersInMultipartFilenames = true;
 
       // Act 1
@@ -112,6 +113,7 @@ namespace Ramone.Tests
       Assert.AreEqual("C", session.SerializerSettings.PropertyFormat);
       Assert.AreEqual("O", session.SerializerSettings.DateTimeFormat);
       Assert.AreEqual("da-DK", session.SerializerSettings.Culture.Name);
+      Assert.AreEqual(Encoding.ASCII, session.SerializerSettings.Encoding);
       Assert.IsTrue(session.SerializerSettings.EnableNonAsciiCharactersInMultipartFilenames);
       
       // Act 2
@@ -121,6 +123,7 @@ namespace Ramone.Tests
       session.SerializerSettings.DateTimeFormat = "R";
       session.SerializerSettings.Formaters.AddFormater(typeof(SomeClass2), new SomeClass2Formater());
       session.SerializerSettings.Culture = CultureInfo.GetCultureInfo("pt-BR");
+      session.SerializerSettings.Encoding = Encoding.Unicode;
       session.SerializerSettings.EnableNonAsciiCharactersInMultipartFilenames = false;
 
       // Assert
@@ -129,12 +132,14 @@ namespace Ramone.Tests
       Assert.AreEqual("C2", session.SerializerSettings.PropertyFormat);
       Assert.AreEqual("R", session.SerializerSettings.DateTimeFormat);
       Assert.AreEqual("pt-BR", session.SerializerSettings.Culture.Name);
+      Assert.AreEqual(Encoding.Unicode, session.SerializerSettings.Encoding);
       Assert.IsFalse(session.SerializerSettings.EnableNonAsciiCharactersInMultipartFilenames);
       Assert.AreEqual("A", service.SerializerSettings.ArrayFormat);
       Assert.AreEqual("B", service.SerializerSettings.DictionaryFormat);
       Assert.AreEqual("C", service.SerializerSettings.PropertyFormat);
       Assert.AreEqual("O", service.SerializerSettings.DateTimeFormat);
       Assert.AreEqual("da-DK", service.SerializerSettings.Culture.Name);
+      Assert.AreEqual(Encoding.ASCII, service.SerializerSettings.Encoding);
       Assert.IsTrue(service.SerializerSettings.EnableNonAsciiCharactersInMultipartFilenames);
       Assert.IsNotNull(session.SerializerSettings.Formaters.GetFormater(typeof(SomeClass1)));
       Assert.IsNotNull(session.SerializerSettings.Formaters.GetFormater(typeof(SomeClass2)));

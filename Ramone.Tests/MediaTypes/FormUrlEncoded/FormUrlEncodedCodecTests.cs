@@ -5,6 +5,7 @@ using Ramone.MediaTypes.FormUrlEncoded;
 using Ramone.Tests.Common;
 using Ramone.Utility.ObjectSerialization;
 using System.Collections.Specialized;
+using System.Text;
 
 
 namespace Ramone.Tests.MediaTypes.FormUrlEncoded
@@ -72,18 +73,16 @@ namespace Ramone.Tests.MediaTypes.FormUrlEncoded
     public void CanPostFormUrlEncodedWithEncoding()
     {
       // Arrange
-      string charset = "iso-8859-1";
+      Session.SerializerSettings.Encoding = Encoding.GetEncoding("iso-8859-1");
       var data = new { Name = "ÆØÅüî", Age = 10 }; // Matches "MultipartData" class
       Request formdataReq = Session.Bind(MultipartFormDataTemplate);
 
       // Act
       Response<string> response = formdataReq.Accept("text/plain")
-                                             .Charset(charset)
                                              .AsFormUrlEncoded()
                                              .Post<string>(data);
 
       // Assert
-      Assert.AreEqual("application/x-www-form-urlencoded; charset="+charset, response.Headers["x-contenttype"]);
       Assert.AreNotEqual("ÆØÅüî-10", response.Body, "What a hack: OpenRasta always assume UTF-8, so if body is not identical to the expected it must mean that it was actually send in non-UTF-8!");
     }
 
@@ -174,6 +173,8 @@ namespace Ramone.Tests.MediaTypes.FormUrlEncoded
     {
       // Arrange
       Request request = Session.Bind(FormUrlEncodedTemplate, new { mode = "intl" });
+
+      Session.SerializerSettings.Encoding = Encoding.GetEncoding(charset);
 
       // Act
       Response<FormUrlEncodedData> response = request.Accept("application/x-www-form-urlencoded")

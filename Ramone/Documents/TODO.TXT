@@ -3,10 +3,6 @@ Version 1
 ---------
 
 Deserialization of dictionary, hashtable, lists and so on for form-urlencoded and multipart/formdata
-- Check charset
-    Content-Type: application/x-www-form-urlencoded;charset=UTF-8
-
-Teste charset i objsersettings
 
 OAuth: new URL decoding/encoding
 

@@ -5,6 +5,7 @@ using System.Text;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Collections;
+using Ramone.Utility.ObjectSerialization;
 
 
 namespace Ramone.Tests.Utility
@@ -23,14 +24,15 @@ namespace Ramone.Tests.Utility
       string expected = elements[1];
 
       using (MemoryStream s = new MemoryStream())
-      using (StreamWriter w = new StreamWriter(s, Encoding.GetEncoding(charset)))
+      using (StreamWriter w = new StreamWriter(s))
       {
         SimpleData data = new SimpleData
         {
           MyInt = 10,
           MyString = "Abc ÆØÅ^ü"
         };
-        new FormUrlEncodingSerializer(typeof(SimpleData)).Serialize(w, data);
+        ObjectSerializerSettings settings = new ObjectSerializerSettings { Encoding = Encoding.GetEncoding(charset) };
+        new FormUrlEncodingSerializer(typeof(SimpleData)).Serialize(w, data, settings);
 
         w.Flush();
         s.Seek(0, SeekOrigin.Begin);
