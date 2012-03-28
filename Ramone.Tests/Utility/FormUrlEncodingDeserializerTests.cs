@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using NUnit.Framework;
 using Ramone.Utility;
+using Ramone.Utility.ObjectSerialization;
+using System.Text;
 
 
 namespace Ramone.Tests.Utility
@@ -153,7 +155,8 @@ namespace Ramone.Tests.Utility
 
       using (TextReader reader = new StringReader(s))
       {
-        T data = (T)serializer.Deserialize(reader, charset);
+        Encoding enc = (charset != null ? Encoding.GetEncoding(charset) : null);
+        T data = (T)serializer.Deserialize(reader, new ObjectSerializerSettings { Charset = enc });
         return data;
       }
     }

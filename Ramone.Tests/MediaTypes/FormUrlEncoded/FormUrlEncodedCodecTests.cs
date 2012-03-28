@@ -138,10 +138,11 @@ namespace Ramone.Tests.MediaTypes.FormUrlEncoded
     public void CanReadTyped()
     {
       // Arrange
-      Request request = Session.Bind(FormUrlEncodedTemplate);
+      Request request = Session.Bind(FormUrlEncodedTemplate, new { mode = "x" });
 
       // Act
-      Response<FormUrlEncodedData> response = request.Accept("application/x-www-form-urlencoded").Get<FormUrlEncodedData>();
+      Response<FormUrlEncodedData> response = request.Accept("application/x-www-form-urlencoded")
+                                                     .Get<FormUrlEncodedData>();
       FormUrlEncodedData data = response.Body;
 
       // Assert
@@ -154,7 +155,7 @@ namespace Ramone.Tests.MediaTypes.FormUrlEncoded
     public void CanReadNameValueCollection()
     {
       // Arrange
-      Request request = Session.Bind(FormUrlEncodedTemplate);
+      Request request = Session.Bind(FormUrlEncodedTemplate, new { mode = "x" });
 
       // Act
       Response<NameValueCollection> response = request.AcceptFormUrlEncoded().Get<NameValueCollection>();
@@ -163,7 +164,26 @@ namespace Ramone.Tests.MediaTypes.FormUrlEncoded
       // Assert
       Assert.AreEqual("Abc", data["Title"]);
       Assert.AreEqual("15", data["Age"]);
-      Assert.AreEqual("Grethe", data["SubData.Name"]);
+      Assert.AreEqual("Grete", data["SubData.Name"]);
+    }
+
+
+    [Test]
+    public void CanReadTypedInternationalCharacters(
+      [Values("UTF-8", "iso-8859-1")] string charset)
+    {
+      // Arrange
+      Request request = Session.Bind(FormUrlEncodedTemplate, new { mode = "intl" });
+
+      // Act
+      Response<FormUrlEncodedData> response = request.Accept("application/x-www-form-urlencoded")
+                                                     .AcceptCharset(charset)
+                                                     .Get<FormUrlEncodedData>();
+      FormUrlEncodedData data = response.Body;
+
+      // Assert
+      Assert.AreEqual("ÆØÅ", data.Title);
+      Assert.AreEqual("Güntør", data.SubData.Name);
     }
   }
 }

@@ -5,13 +5,13 @@ namespace Ramone.Tests.Server.Handlers
 {
   public class FormUrlEncodedHandler
   {
-    public object Get()
+    public object Get(string mode = null)
     {
       return new FormUrlEncodedData
       {
-        Title = "Abc",
+        Title = (mode == "intl" ? "ÆØÅ" : "Abc"),
         Age = 15,
-        SubData = new FormUrlEncodedSubData { Name = "Grethe" }
+        SubData = new FormUrlEncodedSubData { Name = (mode == "intl" ? "Güntør" : "Grete") }
       };
     }
   }

@@ -1,4 +1,5 @@
 ﻿using System.Globalization;
+using System.Text;
 
 
 namespace Ramone.Utility.ObjectSerialization
@@ -20,6 +21,8 @@ namespace Ramone.Utility.ObjectSerialization
     public bool EnableNonAsciiCharactersInMultipartFilenames { get; set; }
     
     public IObjectSerializerFormaterManager Formaters { get; set; }
+
+    public Encoding Charset { get; set; }
 
 
     public ObjectSerializerSettings()

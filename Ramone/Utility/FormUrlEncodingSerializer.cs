@@ -36,12 +36,12 @@ namespace Ramone.Utility
     /// <param name="charset">Name of character set used to decode international characters after the 
     /// form-urlencoded input has been decoded to a byte stream.</param>
     /// <returns></returns>
-    public object Deserialize(TextReader reader, string charset = null)
+    public object Deserialize(TextReader reader, ObjectSerializerSettings settings = null)
     {
       Condition.Requires(reader, "reader").IsNotNull();
 
       string data = reader.ReadToEnd();
-      Encoding enc = (charset != null ? Encoding.GetEncoding(charset) : Encoding.UTF8);
+      Encoding enc = (settings != null ? settings.Charset ?? Encoding.UTF8 : Encoding.UTF8);
       NameValueCollection values = HttpUtility.ParseQueryString(data, enc);
       return Serializer.Deserialize(values);
     }

@@ -167,10 +167,10 @@ namespace Ramone.Tests.MediaTypes.MultipartFormData
 
       // Act
       Response<string> response = formdataReq.Accept("text/plain")
-                                                   .AcceptCharset(charsetOut)
-                                                   .Charset(charsetIn)
-                                                   .ContentType("multipart/form-data")
-                                                   .Post<string>(data);
+                                             .AcceptCharset(charsetOut)
+                                             .Charset(charsetIn)
+                                             .ContentType("multipart/form-data")
+                                             .Post<string>(data);
 
       // Assert
       Assert.IsTrue(response.Headers["x-contenttype"].StartsWith("multipart/form-data"));
