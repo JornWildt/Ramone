@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections;
-using System.Reflection;
+using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.Reflection;
 using Ramone.IO;
 
 
@@ -183,13 +184,58 @@ namespace Ramone.Utility.ObjectSerialization
         {
           if (propertyNames.MoveNext())
           {
-            Hashtable nextD = new Hashtable();
-            d[propertyName] = nextD;
-            Evaluate(nextD, typeof(Hashtable), propertyNames, value);
+            if (!d.ContainsKey(propertyName))
+            {
+              Hashtable nextD = new Hashtable();
+              d[propertyName] = nextD;
+            }
+            Evaluate(d[propertyName], typeof(Hashtable), propertyNames, value);
           }
           else
           {
             d[propertyName] = value;
+          }
+        }
+      }
+      else if (typeof(NameValueCollection).IsAssignableFrom(t))
+      {
+        NameValueCollection d = (NameValueCollection)classValue;
+        if (d != null)
+        {
+          string fullName = propertyName;
+          while (propertyNames.MoveNext())
+            fullName += Settings.PropertySeparator + (string)propertyNames.Current;
+          d[fullName] = value;
+        }
+      }
+      else if (t.IsGenericType && t.GetGenericTypeDefinition() == typeof(Dictionary<,>))
+      //else if (typeof(Dictionary<,>).IsAssignableFrom(t))
+      {
+        Type[] dictionaryArgTypes = t.GetGenericArguments();
+        bool isSimpleType;
+        object p = EvaluateProperty(classValue, dictionaryArgTypes[1], () => ((IDictionary)classValue)[propertyName], value, out isSimpleType);
+
+        if (isSimpleType)
+        {
+          string fullName = propertyName;
+          while (propertyNames.MoveNext())
+            fullName += Settings.PropertySeparator + (string)propertyNames.Current;
+          ((IDictionary)classValue)[fullName] = p;
+        }
+        else
+        {
+          IDictionary d = (IDictionary)classValue;
+          if (propertyNames.MoveNext())
+          {
+            if (!d.Contains(propertyName))
+            {
+              d[propertyName] = p;
+            }
+            Evaluate(d[propertyName], dictionaryArgTypes[1], propertyNames, value);
+          }
+          else
+          {
+            d[propertyName] = p;
           }
         }
       }
@@ -207,7 +253,8 @@ namespace Ramone.Utility.ObjectSerialization
 
         if (property != null)
         {
-          object propertyValue = EvaluateProperty(classValue, property, value);
+          bool IsSimpleType;
+          object propertyValue = EvaluateProperty(classValue, property.PropertyType, () => property.GetValue(classValue, new object[] { }), value, out IsSimpleType);
           property.SetValue(classValue, propertyValue, new object[] { });
 
           if (propertyNames.MoveNext())
@@ -219,51 +266,53 @@ namespace Ramone.Utility.ObjectSerialization
     }
 
 
-    protected object EvaluateProperty(object classValue, PropertyInfo property, string value)
+    protected object EvaluateProperty(object classValue, Type propertyType, Func<object> propertyAccessor, string value, out bool IsSimpleType)
     {
-      if (property.PropertyType == typeof(int))
+      IsSimpleType = true;
+      if (propertyType == typeof(int))
       {
         int i;
         int.TryParse(value, out i);
         return i;
       }
-      else if (property.PropertyType == typeof(DateTime))
+      else if (propertyType == typeof(DateTime))
       {
         DateTime d;
         DateTime.TryParse(value, out d);
         return d;
       }
-      else if (property.PropertyType == typeof(float))
+      else if (propertyType == typeof(float))
       {
         float f;
         float.TryParse(value, System.Globalization.NumberStyles.Float, Settings.Culture.NumberFormat, out f);
         return f;
       }
-      else if (property.PropertyType == typeof(double))
+      else if (propertyType == typeof(double))
       {
         Double d;
         double.TryParse(value, System.Globalization.NumberStyles.Float, Settings.Culture.NumberFormat, out d);
         return d;
       }
-      else if (property.PropertyType == typeof(decimal))
+      else if (propertyType == typeof(decimal))
       {
         Decimal d;
         Decimal.TryParse(value, System.Globalization.NumberStyles.Float, Settings.Culture.NumberFormat, out d);
         return d;
       }
-      else if (property.PropertyType == typeof(string))
+      else if (propertyType == typeof(string))
       {
         return value;
       }
       else
       {
-        object propertyValue = property.GetValue(classValue, new object[] { });
+        object propertyValue = propertyAccessor();
 
         if (propertyValue == null)
         {
-          propertyValue = Activator.CreateInstance(property.PropertyType);
+          propertyValue = Activator.CreateInstance(propertyType);
         }
 
+        IsSimpleType = false;
         return propertyValue;
       }
     }

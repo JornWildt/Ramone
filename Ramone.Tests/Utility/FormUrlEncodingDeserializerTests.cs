@@ -183,7 +183,19 @@ namespace Ramone.Tests.Utility
     public void CanDeserializeNestedTypedDataWithCollections()
     {
       // Arrange
-      string s = "MyHashtable.A.X.1=1&MyHashtable.A.Y.2=Q&";
+      string s = @"
+MyDictionaryStringNested.A.MyNameValueCollection.Z=30&
+MyDictionaryStringNested.X.MyInt=10&
+MyDictionaryStringNested.Y.MyInt=20&
+MyDictionaryStringString.X=1&
+MyDictionaryStringString.Y=2&
+MyDictionaryStringString.X.Q=3&
+MyNameValueCollection.K1.K2=5&
+MyNameValueCollection.K1.K3=6&
+MyNameValueCollection.K1=7&
+MyNameValueCollection.X=8&
+MyHashtable.A.X.1=1&
+MyHashtable.A.Y.2=Q";
 
       // Act
       NestedDataWithDictionaries data = Deserialize<NestedDataWithDictionaries>(s);
@@ -192,7 +204,38 @@ namespace Ramone.Tests.Utility
       Assert.IsInstanceOf<Hashtable>(data.MyHashtable["A"]);
       Hashtable a = (Hashtable)data.MyHashtable["A"];
       Assert.AreEqual("1", ((Hashtable)a["X"])["1"]);
-      Assert.AreEqual("q", ((Hashtable)a["Y"])["2"]);
+      Assert.AreEqual("Q", ((Hashtable)a["Y"])["2"]);
+      
+      Assert.IsInstanceOf<NameValueCollection>(data.MyNameValueCollection);
+      Assert.AreEqual("5", data.MyNameValueCollection["K1.K2"]);
+      Assert.AreEqual("6", data.MyNameValueCollection["K1.K3"]);
+      Assert.AreEqual("7", data.MyNameValueCollection["K1"]);
+      Assert.AreEqual("8", data.MyNameValueCollection["X"]);
+
+      Assert.IsNotNull(data.MyDictionaryStringString);
+      Assert.AreEqual("1", data.MyDictionaryStringString["X"]);
+      Assert.AreEqual("2", data.MyDictionaryStringString["Y"]);
+      Assert.AreEqual("3", data.MyDictionaryStringString["X.Q"]);
+
+      Assert.IsNotNull(data.MyDictionaryStringNested);
+      Assert.IsNotNull(data.MyDictionaryStringNested["X"]);
+      Assert.AreEqual(10, data.MyDictionaryStringNested["X"].MyInt);
+      Assert.AreEqual(20, data.MyDictionaryStringNested["Y"].MyInt);
+      Assert.AreEqual("30", data.MyDictionaryStringNested["A"].MyNameValueCollection["Z"]);
+    }
+
+
+    [Test]
+    public void CanHandleEmptyExpression()
+    {
+      // Arrange
+      string s = "MyHashtable.A=1&";
+
+      // Act
+      NestedDataWithDictionaries data = Deserialize<NestedDataWithDictionaries>(s);
+
+      // Assert
+      Assert.AreEqual("1", data.MyHashtable["A"]);
     }
 
 
@@ -219,6 +262,8 @@ namespace Ramone.Tests.Utility
       where T : class
     {
       FormUrlEncodingSerializer serializer = new FormUrlEncodingSerializer(typeof(T));
+      s = s.Replace("\r", "");
+      s = s.Replace("\n", "");
 
       using (TextReader reader = new StringReader(s))
       {
@@ -252,6 +297,8 @@ namespace Ramone.Tests.Utility
       public int MyInt { get; set; }
       public Hashtable MyHashtable { get; set; }
       public NameValueCollection MyNameValueCollection { get; set; }
+      public Dictionary<string, string> MyDictionaryStringString { get; set; }
+      public Dictionary<string, NestedDataWithDictionaries> MyDictionaryStringNested { get; set; }
     }
 
 
