@@ -11,15 +11,15 @@ namespace Ramone.MediaTypes.FormUrlEncoded
       if (item == null)
         return;
 
-      FormUrlEncodingSerializer Serializer = new FormUrlEncodingSerializer(item.GetType());
-      Serializer.Serialize(writer, item, context.Session.SerializerSettings);
+      FormUrlEncodingSerializer serializer = new FormUrlEncodingSerializer(item.GetType());
+      serializer.Serialize(writer, item, context.Session.SerializerSettings);
     }
 
 
     protected override object ReadFrom(TextReader reader, ReaderContext context)
     {
-      FormUrlEncodingSerializer Serializer = new FormUrlEncodingSerializer(context.DataType);
-      return Serializer.Deserialize(reader, context.Session.SerializerSettings);
+      FormUrlEncodingSerializer serializer = new FormUrlEncodingSerializer(context.DataType);
+      return serializer.Deserialize(reader, context.Session.SerializerSettings);
     }
   }
 }

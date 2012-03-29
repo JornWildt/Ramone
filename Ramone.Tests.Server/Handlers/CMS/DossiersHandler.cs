@@ -54,6 +54,12 @@ namespace Ramone.Tests.Server.Handlers.CMS
     }
 
 
+    public object Patch(long id, string title = null)
+    {
+      return (title ?? "<null>") + ": ok";
+    }
+
+
     public OperationResult Delete(long id)
     {
       return new OperationResult.OK("Deleted, yup!");

@@ -1,6 +1,4 @@
-﻿using Ramone.Tests.Common;
-using OpenRasta.Web;
-using System.IO;
+﻿using System.IO;
 
 
 namespace Ramone.Tests.Server.Handlers
@@ -20,6 +18,12 @@ namespace Ramone.Tests.Server.Handlers
 
 
     public object Put()
+    {
+      return null;
+    }
+
+
+    public object Patch()
     {
       return null;
     }

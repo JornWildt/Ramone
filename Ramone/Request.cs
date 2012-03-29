@@ -279,6 +279,32 @@ namespace Ramone
       return DoRequest("OPTIONS");
     }
 
+
+    public Response<TResponse> Patch<TResponse>() where TResponse : class
+    {
+      return Patch<TResponse>(null);
+    }
+
+
+    public Response<TResponse> Patch<TResponse>(object body) where TResponse : class
+    {
+      Body(body);
+      return DoRequest<TResponse>("PATCH");
+    }
+
+
+    public Response Patch(object body)
+    {
+      Body(body);
+      return DoRequest("PATCH");
+    }
+
+
+    public Response Patch()
+    {
+      return Patch(null);
+    }
+
     #endregion
 
 
@@ -529,6 +555,18 @@ namespace Ramone
     public new Response<TResponse> Options(string accept = null)
     {
       return Options<TResponse>(accept);
+    }
+
+
+    public new Response<TResponse> Patch(object body)
+    {
+      return Patch<TResponse>(body);
+    }
+
+
+    public new Response<TResponse> Patch()
+    {
+      return Patch<TResponse>();
     }
 
     #endregion
