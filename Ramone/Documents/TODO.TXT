@@ -70,6 +70,7 @@ Docs
 - Supported HTML hyper-media elements
 - Inspiration: http://codebetter.com/glennblock/2012/01/19/http-is-not-a-transport-protocol-http-is-not-rpc/
 - Deserialisering af UrlEncoded er ikke specielt godt supporteret.
+  - Bemærk evt. forskel på hashtable og namevaluecollection (hashtable ene understøtter nestede attributter)
 - Multi-select er ikke understøttet
 
 Links from HTTP header (WebLinks)
@@ -96,6 +97,8 @@ Eksemplificering af hvordan man håndterer et service-dokument (ATOM, og det der
 ---------
 Version 2
 ---------
+
+(til info mo OpenRasta: public ICommunicationContext CommunicationContext { get; set; } )
 
 Upload/download progress indication
 

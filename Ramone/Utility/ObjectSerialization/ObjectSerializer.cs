@@ -176,7 +176,24 @@ namespace Ramone.Utility.ObjectSerialization
     {
       string propertyName = (string)propertyNames.Current;
 
-      if (typeof(IDictionary).IsAssignableFrom(t))
+      if (typeof(Hashtable).IsAssignableFrom(t))
+      {
+        Hashtable d = (Hashtable)classValue;
+        if (d != null)
+        {
+          if (propertyNames.MoveNext())
+          {
+            Hashtable nextD = new Hashtable();
+            d[propertyName] = nextD;
+            Evaluate(nextD, typeof(Hashtable), propertyNames, value);
+          }
+          else
+          {
+            d[propertyName] = value;
+          }
+        }
+      }
+      else if (typeof(IDictionary).IsAssignableFrom(t))
       {
         IDictionary d = (IDictionary)classValue;
         if (d != null)

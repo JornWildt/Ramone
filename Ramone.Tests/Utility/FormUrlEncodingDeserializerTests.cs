@@ -5,6 +5,8 @@ using NUnit.Framework;
 using Ramone.Utility;
 using Ramone.Utility.ObjectSerialization;
 using System.Text;
+using System.Collections;
+using System.Collections.Specialized;
 
 
 namespace Ramone.Tests.Utility
@@ -128,6 +130,71 @@ namespace Ramone.Tests.Utility
       Assert.AreEqual("Qwerty", data["B"]);
     }
 
+    // TEST strong type with inner collections of the various types
+
+    [Test]
+    public void CanDeserializeHashtable()
+    {
+      // Arrange
+      string s = "A=123&B=Qwerty";
+
+      // Act
+      Hashtable data = Deserialize<Hashtable>(s);
+
+      // Assert
+      Assert.AreEqual("123", data["A"]);
+      Assert.AreEqual("Qwerty", data["B"]);
+    }
+
+
+    [Test]
+    public void CanDeserializeNestedHashtable()
+    {
+      // Arrange
+      string s = "A.x=123&B.y=Qwerty";
+
+      // Act
+      Hashtable data = Deserialize<Hashtable>(s);
+
+      // Assert
+      Assert.IsInstanceOf<Hashtable>(data["A"]);
+      Assert.AreEqual("123", ((Hashtable)data["A"])["x"]);
+      Assert.AreEqual("Qwerty", ((Hashtable)data["B"])["y"]);
+    }
+
+
+    [Test]
+    public void WhenDeserializingNameValueCollectionItDoesNotHandleNesting()
+      // => Use this to keep name formating in response
+    {
+      // Arrange
+      string s = "A.x=123&B.y=Qwerty";
+
+      // Act
+      NameValueCollection data = Deserialize<NameValueCollection>(s);
+
+      // Assert
+      Assert.AreEqual("123", data["A.x"]);
+      Assert.AreEqual("Qwerty", data["B.y"]);
+    }
+
+
+    [Test]
+    public void CanDeserializeNestedTypedDataWithCollections()
+    {
+      // Arrange
+      string s = "MyHashtable.A.X.1=1&MyHashtable.A.Y.2=Q&";
+
+      // Act
+      NestedDataWithDictionaries data = Deserialize<NestedDataWithDictionaries>(s);
+
+      // Assert
+      Assert.IsInstanceOf<Hashtable>(data.MyHashtable["A"]);
+      Hashtable a = (Hashtable)data.MyHashtable["A"];
+      Assert.AreEqual("1", ((Hashtable)a["X"])["1"]);
+      Assert.AreEqual("q", ((Hashtable)a["Y"])["2"]);
+    }
+
 
     [Test]
     public void CanDeserializeInternationalCharacters(
@@ -177,6 +244,14 @@ namespace Ramone.Tests.Utility
     {
       public int MyInt { get; set; }
       public SimpleData Simple { get; set; }
+    }
+
+
+    public class NestedDataWithDictionaries
+    {
+      public int MyInt { get; set; }
+      public Hashtable MyHashtable { get; set; }
+      public NameValueCollection MyNameValueCollection { get; set; }
     }
 
 
