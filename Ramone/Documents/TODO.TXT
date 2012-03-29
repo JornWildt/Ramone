@@ -2,12 +2,6 @@
 Version 1
 ---------
 
-Deserialization of dictionary, hashtable, lists and so on for form-urlencoded and multipart/formdata
-
-OAuth: new URL decoding/encoding
-
-Testing Follow(...) with not-found rel-values.
-
 Forms
 - Default values for enctype and accept
 - accept-charset
@@ -97,6 +91,8 @@ Eksemplificering af hvordan man håndterer et service-dokument (ATOM, og det der
 ---------
 Version 2
 ---------
+
+Deserialization of dictionary, hashtable, lists and so on for form-urlencoded and multipart/formdata
 
 (til info mo OpenRasta: public ICommunicationContext CommunicationContext { get; set; } )
 
