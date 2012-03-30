@@ -11,6 +11,7 @@ namespace Ramone.Tests.Server.Codecs
   [MediaType("text/html")]
   [MediaType("application/xml")]
   [MediaType("application/json")]
+  [MediaType("text/plain")]
   public class EncodingCodec : OpenRasta.Codecs.IMediaTypeWriter, OpenRasta.Codecs.IMediaTypeReader
   {
     #region IMediaTypeReader Members
@@ -45,6 +46,8 @@ namespace Ramone.Tests.Server.Codecs
       EncodingData data = (EncodingData)entity;
 
       string charset = context.Request.Headers["Accept-Charset"];
+      if (charset == null)
+        charset = "UTF-8";
       context.Response.Headers.Add("X-accept-charset", charset);
       context.Response.Headers.Add("Content-Type", "text/html: charset=" + charset);
       Encoding enc = Encoding.GetEncoding(charset);

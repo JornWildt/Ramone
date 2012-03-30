@@ -158,8 +158,8 @@ namespace Ramone.Tests.MediaTypes.MultipartFormData
 
     [Test]
     public void CanPostSimpleMultipartFormDataWithEncoding(
-      [Values("UTF-8", "Windows-1252", "iso-8859-1")] string charsetIn,
-      [Values("UTF-8", "Windows-1252", "iso-8859-1")] string charsetOut)
+      [Values("UTF-8", "iso-8859-1")] string charsetIn,
+      [Values("UTF-8", "iso-8859-1")] string charsetOut)
     {
       // Arrange
       MultipartData data = new MultipartData { Name = "ÆØÅüî", Age = 10 };
@@ -168,12 +168,13 @@ namespace Ramone.Tests.MediaTypes.MultipartFormData
       // Act
       Response<string> response = formdataReq.Accept("text/plain")
                                              .AcceptCharset(charsetOut)
-                                             .Charset(charsetIn)
+                                             .CodecParameter("Charset", charsetIn)
                                              .ContentType("multipart/form-data")
                                              .Post<string>(data);
 
       // Assert
       Assert.IsTrue(response.Headers["x-contenttype"].StartsWith("multipart/form-data"));
+      Assert.AreEqual(charsetOut, response.Headers["x-accept-charset"]);
       Assert.AreEqual("ÆØÅüî-10", response.Body);
     }
 

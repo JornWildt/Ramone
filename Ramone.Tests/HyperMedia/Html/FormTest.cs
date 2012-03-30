@@ -4,7 +4,6 @@ using NUnit.Framework;
 using Ramone.HyperMedia;
 using Ramone.MediaTypes.Html;
 using Ramone.Tests.Common;
-using System.Collections.Generic;
 
 
 namespace Ramone.Tests.HyperMedia.Html

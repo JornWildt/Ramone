@@ -22,6 +22,7 @@ namespace Ramone
       Session = session;
       Url = url;
       AdditionalHeaders = new Dictionary<string, string>();
+      CodecParameters = new Dictionary<string, string>();
     }
 
 
@@ -43,6 +44,7 @@ namespace Ramone
       AcceptHeader = src.AcceptHeader;
       SubmitMethod = src.SubmitMethod;
       AdditionalHeaders = new Dictionary<string, string>(src.AdditionalHeaders);
+      CodecParameters = new Dictionary<string, string>();
     }
 
     #endregion
@@ -68,6 +70,8 @@ namespace Ramone
     protected string AcceptHeader { get; set; }
 
     protected Dictionary<string, string> AdditionalHeaders { get; set; }
+
+    protected Dictionary<string, string> CodecParameters { get; set; }
 
     #endregion
 
@@ -165,6 +169,16 @@ namespace Ramone
       }
 
       BodyData = body;
+
+      return this;
+    }
+
+
+    public Request CodecParameter(string key, string value)
+    {
+      Condition.Requires(key, "key").IsNotNull();
+
+      CodecParameters[key] = value;
 
       return this;
     }

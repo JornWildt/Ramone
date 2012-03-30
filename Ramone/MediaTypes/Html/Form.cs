@@ -62,7 +62,6 @@ namespace Ramone.MediaTypes.Html
       string charset = GetCharset();
       Request request = Session.Bind(Action)
                               .ContentType(EncodingType)
-                              .Charset(charset)
                               .Body(GetSubmitData(button))
                               .Method(Method);
       return request;
@@ -71,6 +70,13 @@ namespace Ramone.MediaTypes.Html
     #endregion
 
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="formNode"></param>
+    /// <param name="session"></param>
+    /// <param name="baseUrl"></param>
+    /// <param name="charset">The character set used in the previoius response (from which the form originates).</param>
     public Form(HtmlNode formNode, ISession session, Uri baseUrl, string charset)
     {
       Condition.Requires(formNode, "formNode").IsNotNull();
@@ -89,8 +95,7 @@ namespace Ramone.MediaTypes.Html
       string enctype = formNode.GetAttributeValue("enctype", null);
       EncodingType = (enctype != null ? new MediaType(enctype) : MediaType.ApplicationFormUrlEncoded);
 
-      // FIXME: needs response in order to get default charset
-      AcceptCharset = formNode.GetAttributeValue("accept-charset", "UNKNOWN");
+      AcceptCharset = formNode.GetAttributeValue("accept-charset", null);
 
       Values = new Hashtable();
       SubmitElements = new List<SubmitElement>();
@@ -204,6 +209,8 @@ namespace Ramone.MediaTypes.Html
 
     protected string GetCharset()
     {
+      if (AcceptCharset != null)
+        return AcceptCharset;
       if (ResponseCharset != null)
         return ResponseCharset;
       else if (Session.DefaultEncoding != null)

@@ -12,11 +12,17 @@ namespace Ramone.Tests.Server.Handlers
 {
   public class MultipartFormDataHandler
   {
+    public ICommunicationContext CommunicationContext { get; set; }
+
+
     [HttpOperation(ForUriName = "SimpleData")]
     public object Post(MultipartData data)
     {
-      HttpContext.Current.Response.Headers["X-contenttype"] = HttpContext.Current.Request.Headers["Content-Type"];
-      return string.Format("{0}-{1}", data.Name, data.Age);
+      CommunicationContext.Response.Headers["X-contenttype"] = CommunicationContext.Request.Headers["Content-Type"];
+      return new EncodingData
+      {
+        Data = string.Format("{0}-{1}", data.Name, data.Age)
+      };
     }
 
 

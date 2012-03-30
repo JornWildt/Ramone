@@ -82,7 +82,8 @@ namespace Ramone.Tests.Server
         ResourceSpace.Has.ResourcesOfType<MultipartData>()
             .AtUri(Constants.MultipartFormDataPath).Named("SimpleData")
             .And.AtUri(Constants.MultipartFormDataFilePath).Named("FileData")
-            .HandledBy<MultipartFormDataHandler>();
+            .HandledBy<MultipartFormDataHandler>()
+            .TranscodedBy<EncodingCodec>();
 
         ResourceSpace.Has.ResourcesOfType<FormUrlEncodedData>()
             .AtUri(Constants.FormUrlEncodedPath)
