@@ -66,7 +66,7 @@ namespace Ramone.Tests.MediaTypes.MultipartFormData
 
       // Assert
       Assert.IsTrue(response.Headers["x-contenttype"].StartsWith("multipart/form-data"));
-      Assert.AreEqual("data1.txt-text/plain-Æüî´`'-10", response.Body);
+      Assert.AreEqual("data1.txt-text/plain-w4bDvMOuwrRgJw==-10", response.Body);
     }
 
 
@@ -79,11 +79,13 @@ namespace Ramone.Tests.MediaTypes.MultipartFormData
       Request formdataReq = Session.Bind(MultipartFormDataFileTemplate);
 
       // Act
-      Response<string> response = formdataReq.Accept("text/plain").ContentType("multipart/form-data").Post<string>(data);
+      Response<string> response = formdataReq.Accept("text/plain")
+                                             .ContentType("multipart/form-data")
+                                             .Post<string>(data);
 
       // Assert
       Assert.IsTrue(response.Headers["x-contenttype"].StartsWith("multipart/form-data"));
-      Assert.AreEqual("data1.txt-text/plain-Æüî´`'-10", response.Body);
+      Assert.AreEqual("data1.txt-text/plain-w4bDvMOuwrRgJw==-10", response.Body);
     }
 
 
@@ -102,7 +104,7 @@ namespace Ramone.Tests.MediaTypes.MultipartFormData
 
       // Assert
       Assert.IsTrue(response.Headers["x-contenttype"].StartsWith("multipart/form-data"));
-      Assert.AreEqual("Bxllefrx.txt-text/plain-Æüî´`'-10", response.Body);
+      Assert.AreEqual("Bxllefrx.txt-text/plain-w4bDvMOuwrRgJw==-10", response.Body);
     }
 
 
@@ -119,7 +121,7 @@ namespace Ramone.Tests.MediaTypes.MultipartFormData
 
       // Assert
       Assert.IsTrue(response.Headers["x-contenttype"].StartsWith("multipart/form-data"));
-      Assert.AreEqual("Bxllefrx.txt-text/plain-Æüî´`'-10", response.Body);
+      Assert.AreEqual("Bxllefrx.txt-text/plain-w4bDvMOuwrRgJw==-10", response.Body);
     }
 
 
@@ -136,7 +138,7 @@ namespace Ramone.Tests.MediaTypes.MultipartFormData
 
       // Assert
       Assert.IsTrue(response.Headers["x-contenttype"].StartsWith("multipart/form-data"));
-      Assert.AreEqual("data1.gif-image/gif-GIF89a-99", response.Body);
+      Assert.AreEqual("data1.gif-image/gif-R0lGODlhAgACAA==-99", response.Body);
     }
 
 
@@ -164,6 +166,9 @@ namespace Ramone.Tests.MediaTypes.MultipartFormData
       // Arrange
       MultipartData data = new MultipartData { Name = "ÆØÅüî", Age = 10 };
       Request formdataReq = Session.Bind(MultipartFormDataTemplate);
+      
+      // NOTE: I haven't found a way to test what encoding it actually uses for the post data, 
+      // so that must be inspected using Fiddler :-(
 
       // Act
       Response<string> response = formdataReq.Accept("text/plain")

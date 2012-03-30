@@ -36,11 +36,6 @@ namespace Ramone.Tests
       cm.AddCodec<HeaderList, XmlSerializerCodec>(MediaType.ApplicationXml);
 
       cm.AddCodec<RegisteredClass, XmlSerializerCodec>(MediaType.ApplicationXml);
-
-      // FIXME: not needed any more, can just be removed
-      cm.AddCodec<string, TextCodec>(MediaType.TextPlain);
-      cm.AddCodec<string, TextCodec>(MediaType.TextHtml);
-      cm.AddCodec<string, TextCodec>(MediaType.TextXml);
     }
   }
 }

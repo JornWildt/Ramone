@@ -48,9 +48,10 @@ namespace Ramone.Tests.Server.Codecs
       string charset = context.Request.Headers["Accept-Charset"];
       if (charset == null)
         charset = "UTF-8";
-      context.Response.Headers.Add("X-accept-charset", charset);
-      context.Response.Headers.Add("Content-Type", "text/html: charset=" + charset);
+      response.Headers.Add("X-accept-charset", charset);
       Encoding enc = Encoding.GetEncoding(charset);
+
+      response.ContentType = new OpenRasta.Web.MediaType(response.ContentType.MediaType + "; charset=" + charset);
 
       using (StreamWriter writer = new StreamWriter(response.Stream, enc))
       {

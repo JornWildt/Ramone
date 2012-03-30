@@ -39,7 +39,7 @@ namespace Ramone.Tests.MediaTypes.Html
       Request req = Session.Bind(EncodingTemplate, new { type = "html" });
 
       // Act
-      var response = req.AcceptCharset(charset).Get<HtmlDocument>();
+      var response = req.AcceptCharset(charset).Accept("text/html").Get<HtmlDocument>();
       HtmlDocument doc = response.Body;
 
       // Assert

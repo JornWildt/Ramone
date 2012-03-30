@@ -132,7 +132,6 @@
     <Compile Include="OAuth1\OAuth1HelperTests.cs" />
     <Compile Include="PostTests.cs" />
     <Compile Include="PutTests.cs" />
-    <Compile Include="Codecs\TextCodec.cs" />
     <Compile Include="CreationTests.cs" />
     <Compile Include="GetTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

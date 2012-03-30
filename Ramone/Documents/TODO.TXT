@@ -6,6 +6,15 @@ Forms
 - Default values for enctype and accept
 - accept-charset
 
+Multipart
+  Content-Transfer-Encoding: binary
+
+Case insensitive additional headers og codec params (Namevaluecoll)
+
+Lazy load directory<> in Request
+
+More randomness in multipart boundary
+
 Before releasing:
 - Include a license
 - Version numbers

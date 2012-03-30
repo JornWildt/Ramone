@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.IO;
 using System.Net;
 using CuttingEdge.Conditions;
@@ -21,8 +22,8 @@ namespace Ramone
 
       Session = session;
       Url = url;
-      AdditionalHeaders = new Dictionary<string, string>();
-      CodecParameters = new Dictionary<string, string>();
+      AdditionalHeaders = new NameValueCollection();
+      CodecParameters = new NameValueCollection();
     }
 
 
@@ -43,8 +44,8 @@ namespace Ramone
       BodyContentType = src.BodyContentType;
       AcceptHeader = src.AcceptHeader;
       SubmitMethod = src.SubmitMethod;
-      AdditionalHeaders = new Dictionary<string, string>(src.AdditionalHeaders);
-      CodecParameters = new Dictionary<string, string>();
+      AdditionalHeaders = new NameValueCollection(src.AdditionalHeaders);
+      CodecParameters = new NameValueCollection();
     }
 
     #endregion
@@ -69,9 +70,9 @@ namespace Ramone
 
     protected string AcceptHeader { get; set; }
 
-    protected Dictionary<string, string> AdditionalHeaders { get; set; }
+    protected NameValueCollection AdditionalHeaders { get; set; }
 
-    protected Dictionary<string, string> CodecParameters { get; set; }
+    protected NameValueCollection CodecParameters { get; set; }
 
     #endregion
 
@@ -429,8 +430,7 @@ namespace Ramone
         request.CookieContainer = Session.Cookies;
         request.UserAgent = Session.UserAgent;
 
-        foreach (KeyValuePair<string, string> h in AdditionalHeaders)
-          request.Headers[h.Key] = h.Value;
+        request.Headers.Add(AdditionalHeaders);
 
         if (requestModifier != null)
           requestModifier(request);
@@ -463,7 +463,7 @@ namespace Ramone
             if (interceptor.Value is IRequestStreamWrapper)
               requestStream = ((IRequestStreamWrapper)interceptor.Value).Wrap(new RequestStreamWrapperContext(requestStream, request, Session));
 
-          BodyCodec.WriteTo(new WriterContext(requestStream, BodyData, request, Session));
+          BodyCodec.WriteTo(new WriterContext(requestStream, BodyData, request, Session, CodecParameters));
           request.GetRequestStream().Close();
         }
         else

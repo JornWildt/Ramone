@@ -30,11 +30,11 @@ namespace Ramone.Tests.Server.Handlers
     public object Post(MultipartDataFile data)
     {
       HttpContext.Current.Response.Headers["X-contenttype"] = HttpContext.Current.Request.Headers["Content-Type"];
-      using (TextReader r = new StreamReader(data.DataFile.OpenStream()))
-      {
-        string content = r.ReadToEnd().Substring(0, 6); // Get substring in order to fetch "GIF89a" from binary GIF file
-        return string.Format("{0}-{1}-{2}-{3}", data.DataFile.FileName, data.DataFile.ContentType, content, data.Age);
-      }
+      byte[] rawData = new byte[50];
+      int length = data.DataFile.OpenStream().Read(rawData, 0, 10);
+
+      string base64Data = Convert.ToBase64String(rawData, 0, length);
+      return string.Format("{0}-{1}-{2}-{3}", data.DataFile.FileName, data.DataFile.ContentType, base64Data, data.Age);
     }
 
 
