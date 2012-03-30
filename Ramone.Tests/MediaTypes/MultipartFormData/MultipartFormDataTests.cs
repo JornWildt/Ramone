@@ -185,6 +185,24 @@ namespace Ramone.Tests.MediaTypes.MultipartFormData
 
 
     [Test]
+    public void WhenSpecifyingCharsetForCodecItUsesIt()
+    {
+      // Arrange
+      MultipartData data = new MultipartData { Name = "ÆØÅüî", Age = 10 };
+      Request formdataReq = Session.Bind(MultipartFormDataTemplate);
+
+      // Act + Assert (throws because it tries to use non-existing charset)
+      // - Not the best test ever, I know ...
+      AssertThrows<ArgumentException>(() =>
+        formdataReq.Accept("text/plain")
+                   .CodecParameter("Charset", "NON-EXISTING")
+                   .ContentType("multipart/form-data")
+                   .Post<string>(data),
+        ex => ex.Message.Contains("NON-EXISTING"));
+    }
+
+
+    [Test]
     public void CanPostComplexClass()
     {
       // Arrange

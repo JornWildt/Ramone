@@ -184,6 +184,14 @@ namespace Ramone
       return this;
     }
 
+
+    public string CodecParameter(string key)
+    {
+      Condition.Requires(key, "key").IsNotNull();
+
+      return CodecParameters[key];
+    }
+
     #endregion
 
 
@@ -355,6 +363,11 @@ namespace Ramone
     }
 
 
+    /// <summary>
+    /// Submit request using previously registered method.
+    /// </summary>
+    /// <typeparam name="TResponse"></typeparam>
+    /// <returns></returns>
     public Response<TResponse> Submit<TResponse>() where TResponse : class
     {
       if (SubmitMethod == null)
@@ -363,6 +376,10 @@ namespace Ramone
     }
 
 
+    /// <summary>
+    /// Submit request using previously registered method.
+    /// </summary>
+    /// <returns></returns>
     public Response Submit()
     {
       if (SubmitMethod == null)

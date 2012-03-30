@@ -223,8 +223,8 @@ namespace Ramone.Tests.HyperMedia.Html
 
 
     [Test]
-    public void WhenNoAcceptCharsetFoundItUsesCharsetFromPreviousResponse_Typed(
-      [Values("iso-8859-1", "utf-8")] string charset)
+    public void ItEitherUsesAcceptCharsetFromFormOrDefaultCharsetWhenSubmitting_Typed(
+      [Values("iso-8859-1", "utf-8", "unused")] string charset)
     {
       // Arrange
       FormArgs args = new FormArgs
@@ -234,17 +234,21 @@ namespace Ramone.Tests.HyperMedia.Html
 
       // Act
       IKeyValueForm form = GetForm(charset: charset);
-      FormArgs result = form.Value(args).Bind().Submit<FormArgs>().Body;
+      Request submitRequest = form.Value(args).Bind();
+      FormArgs result = submitRequest.Submit<FormArgs>().Body;
 
       // Assert
+      if (charset == "unused")
+        charset = Session.DefaultEncoding.WebName;
+      Assert.AreEqual(charset, submitRequest.CodecParameter("Charset"));
       Assert.IsNotNull(result);
       Assert.AreEqual("ÆØÅüì", result.InputText);
-      Assert.AreEqual(charset, result.Charset);
     }
 
 
     IKeyValueForm GetForm(string actionUrlMode = "absolute", string encType = "multipart", string charset = "iso-8859-1")
     {
+      // Pass charset to form creator such that it can insert "accept-charset" in the form.
       Request formRequest = Session.Bind(FormTemplate, new { actionUrlMode = actionUrlMode, encType = encType, charset = charset });
       Response<HtmlDocument> response = formRequest.Get<HtmlDocument>();
       IKeyValueForm form = response.Body.DocumentNode.SelectNodes(@"//form").First().Form(response);

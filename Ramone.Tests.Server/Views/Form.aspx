@@ -8,6 +8,7 @@
       <form id="create" 
             method="post" 
             <%= Resource.ActionUrl != null ? "action=\"" + Resource.ActionUrl + "\"" : "" %> 
+            <%= Resource.Charset != "unused" ? "accept-charset=\"" + Resource.Charset + "\"" : "" %> 
             enctype="<%=Resource.EncType%>">
       <div>
         <p>

@@ -64,6 +64,9 @@ namespace Ramone.MediaTypes.Html
                               .ContentType(EncodingType)
                               .Body(GetSubmitData(button))
                               .Method(Method);
+      if (charset != null)
+        request.CodecParameter("Charset", charset);
+
       return request;
     }
 
@@ -211,8 +214,6 @@ namespace Ramone.MediaTypes.Html
     {
       if (AcceptCharset != null)
         return AcceptCharset;
-      if (ResponseCharset != null)
-        return ResponseCharset;
       else if (Session.DefaultEncoding != null)
         return Session.DefaultEncoding.WebName;
       return null;

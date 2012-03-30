@@ -36,7 +36,6 @@ namespace Ramone.Tests.Server.Handlers
       if (args.MultiSelect != null)
         args.MultiSelectValue = string.Join(",", args.MultiSelect);
       args.EncType = (HttpContext.Current.Request.ContentType.StartsWith((string)MediaType.MultipartFormData) ? "multipart" : "urlencoded");
-      args.Charset = HttpContext.Current.Request.ContentEncoding.WebName;
       return args;
     }
   }
