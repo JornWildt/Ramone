@@ -46,4 +46,22 @@ Thanks to the OpenRasta (openrasta.org) and Restfulie
 
 Thanks to cBrain (www.cbrain.com) for investing some hours in the project.
 
+Ramone includes distributions of:
 
+  JsonFx.Net
+    Source: https://github.com/jsonfx/jsonfx
+    licens (MIT): http://www.opensource.org/licenses/MIT
+
+  Html Agility Pack
+    Source: http://htmlagilitypack.codeplex.com/
+    License (Ms-PL): http://htmlagilitypack.codeplex.com/license
+
+  Cutting Edge Conditions
+    Source: http://conditions.codeplex.com/
+    License (MIT): http://conditions.codeplex.com/license
+
+
+LICENSE
+-------
+Ramone is distributed under the MIT License: http://www.opensource.org/licenses/MIT
+A copy of this license is included in the file LICENSE.TXT.

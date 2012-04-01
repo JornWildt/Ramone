@@ -2,34 +2,15 @@
 Version 1
 ---------
 
-Lazy load directory<> in Request
-
 More randomness in multipart boundary
 
+Factories for creating request/response objects - for extending those classes.
+
 Before releasing:
-- Include a license
 - Version numbers
 - Komplet README (med korrekt casing)
   - Installation
 - Include jsonfx and other DLLs in the "Binaries" folder.
-- Demo 
-  - Github
-  - Ohloh
-  - Google pages
-  - Dropbox
-  - ITunes search
-  - del.icio.us
-  - YouTube
-  - Google weather
-  - Facebook Graph
-  - NerdDinner
-  - Flickr
-  - OK: Twitter
-
-Demo this flow:
-1) Get resource (do not deserialize yet)
-2) Inspect some addition HTTP header.
-3) Deserialize according to header.
 
 Release
 - Oprette release-branch
@@ -67,18 +48,24 @@ Docs
   - Bemærk evt. forskel på hashtable og namevaluecollection (hashtable ene understøtter nestede attributter)
 - Multi-select er ikke understøttet
 
-Links from HTTP header (WebLinks)
-  link-param     = OK: ( ( "rel" "=" relation-types )
-                 | NO: ( "anchor" "=" <"> URI-Reference <"> )
-                 | NO: ( "rev" "=" relation-types )
-                 | NO: ( "hreflang" "=" Language-Tag )
-                 | ( "media" "=" ( MediaDesc | ( <"> MediaDesc <"> ) ) )
-                 | OK: ( "title" "=" quoted-string )
-                 | OK: ( "title*" "=" ext-value )
-                 | ( "type" "=" ( media-type | quoted-mt ) )
-                 | ( link-extension ) )
+Demo 
+- Github
+- Ohloh
+- Google pages
+- Dropbox
+- ITunes search
+- del.icio.us
+- YouTube
+- Google weather
+- Facebook Graph
+- NerdDinner
+- Flickr
+- OK: Twitter
 
-Lots of Condition.Requries()...
+Demo this flow:
+1) Get resource (do not deserialize yet)
+2) Inspect some addition HTTP header.
+3) Deserialize according to header.
 
 Serializer settings for OpenRasta
 
@@ -91,6 +78,23 @@ Eksemplificering af hvordan man håndterer et service-dokument (ATOM, og det der
 ---------
 Version 2
 ---------
+
+Error handling: exceptions or status codes or both?
+
+Links from HTTP header (WebLinks)
+  link-param     = OK: ( ( "rel" "=" relation-types )
+                 | NO: ( "anchor" "=" <"> URI-Reference <"> )
+                 | NO: ( "rev" "=" relation-types )
+                 | NO: ( "hreflang" "=" Language-Tag )
+                 | ( "media" "=" ( MediaDesc | ( <"> MediaDesc <"> ) ) )
+                 | OK: ( "title" "=" quoted-string )
+                 | OK: ( "title*" "=" ext-value )
+                 | ( "type" "=" ( media-type | quoted-mt ) )
+                 | ( link-extension ) )
+
+Seems like there's a lot of JSON stuff that needs support (JSON-LD/linked data?)
+
+Lazy load NameValueCollections in Request
 
 Deserialization of dictionary, hashtable, lists and so on for form-urlencoded and multipart/formdata
 
