@@ -30,5 +30,5 @@ the wire format:
 
 The downside of codes is that you have to write a few more pieces of boiler-
 plate code to create and register the codecs. You also have to implement the
-client side representation of the resources as specific class. But in the end
+client side representation of the resources as a specific class. But in the end
 it all pays off, in my opinion, and yields more readable and maintainable code.

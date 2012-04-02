@@ -2,9 +2,7 @@
 Version 1
 ---------
 
-More randomness in multipart boundary
-
-Factories for creating request/response objects - for extending those classes.
+Remove that Ramone.MediaTypes assembly (it is not needed since it referrences no extra libs)
 
 Before releasing:
 - Version numbers
@@ -79,6 +77,10 @@ Eksemplificering af hvordan man håndterer et service-dokument (ATOM, og det der
 Version 2
 ---------
 
+More randomness in multipart boundary
+
+Factories for creating request/response objects - for extending those classes.
+
 Error handling: exceptions or status codes or both?
 
 Links from HTTP header (WebLinks)
@@ -93,6 +95,8 @@ Links from HTTP header (WebLinks)
                  | ( link-extension ) )
 
 Seems like there's a lot of JSON stuff that needs support (JSON-LD/linked data?)
+
+URL based authentication like Flickr does it (?api_key=xxx).
 
 Lazy load NameValueCollections in Request
 
