@@ -46,7 +46,6 @@ Not much so far. There's a few blog posts:
 SIMILAR PROJECTS
 ----------------
 - RestSharp http://restsharp.org/
-- Ramone https://github.com/JornWildt/Ramone (Disclaimer: my project)
 - RestFulie http://restfulie.caelum.com.br/
 - RESTAgent http://restagent.codeplex.com/
 - Dynamic REST https://github.com/Huddle/dynamicrest
