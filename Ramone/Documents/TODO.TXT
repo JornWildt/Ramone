@@ -2,7 +2,15 @@
 Version 1
 ---------
 
+Check http://www.bizcoder.com/index.php/2012/01/09/httpclient-it-lives-and-it-is-glorious/
+
 Remove that Ramone.MediaTypes assembly (it is not needed since it referrences no extra libs)
+
+Tillad[-ikke] follow-redirects
+- Inkludér interceptors
+
+Google søgning bør optimeres for: c# consume rest/web service/api
+- Husk at Google viser de første X tegn på en side (hvis andet ikke passer bedre).
 
 Before releasing:
 - Version numbers
