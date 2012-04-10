@@ -426,30 +426,31 @@ namespace Ramone
 
     protected Response<TResponse> DoRequest<TResponse>(string method, int retryLevel = 0) where TResponse : class
     {
-      Response r = DoRequest(method, req => req.Accept = GetAcceptHeader(typeof(TResponse)), retryLevel);
+      Response r = DoRequest(Url, method, req => req.Accept = GetAcceptHeader(typeof(TResponse)), retryLevel);
       return new Response<TResponse>(r);
     }
 
 
     protected Response DoRequest(string method, int retryLevel = 0)
     {
-      return DoRequest(method, req => req.Accept = GetAcceptHeader(null), retryLevel);
+      return DoRequest(Url, method, req => req.Accept = GetAcceptHeader(null), retryLevel);
     }
 
 
-    protected Response DoRequest(string method, Action<HttpWebRequest> requestModifier, int retryLevel = 0)
+    protected Response DoRequest(Uri url, string method, Action<HttpWebRequest> requestModifier, int retryLevel = 0)
     {
-      if (retryLevel > 2)
-        return null;
+      //if (retryLevel > 2)
+      //  return null;
 
       try
       {
-        HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Url);
+        HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
 
         // Set headers and similar before writing to stream
         request.Method = method;
         request.CookieContainer = Session.Cookies;
         request.UserAgent = Session.UserAgent;
+        request.AllowAutoRedirect = false;
 
         request.Headers.Add(AdditionalHeaders);
 
@@ -493,6 +494,19 @@ namespace Ramone
         }
 
         HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+
+        // Handle redirects
+        if (300 <= (int)response.StatusCode && (int)response.StatusCode <= 399)
+        {
+          int allowedRedirectCount = Session.GetAllowedRedirects((int)response.StatusCode);
+          if (retryLevel < allowedRedirectCount)
+          {
+            if (response.StatusCode == HttpStatusCode.SeeOther)
+              method = "GET";
+            return DoRequest(response.LocationAsUri(), method, requestModifier, retryLevel + 1);
+          }
+        }
+
         return new Response(response, Session);
       }
       catch (WebException ex)
@@ -506,7 +520,7 @@ namespace Ramone
             if (retryLevel == 0)
             {
               // Resend request one time if no exceptions are thrown
-              return DoRequest(method, retryLevel+1);
+              return DoRequest(url, method, requestModifier, retryLevel + 1);
             }
             else
               throw new NotAuthorizedException(response, ex);

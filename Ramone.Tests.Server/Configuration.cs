@@ -127,6 +127,12 @@ namespace Ramone.Tests.Server
             .HandledBy<LinkHeaderHandler>()
             .TranscodedBy<LinkHeaderCodec>();
 
+        ResourceSpace.Has.ResourcesOfType<RedirectArgs>()
+            .AtUri(Constants.RedirectPath)
+            .HandledBy<RedirectHandler>()
+            .TranscodedBy<FormUrlencodedCodec>();
+            //.TranscodedBy<LinkHeaderCodec>();
+
         ConfigureCMS();
         BlogConfiguration.Configure();
       }

@@ -2,6 +2,12 @@
 Version 1
 ---------
 
+Session => service copy of redirect values
+- setting redirect count on request
+- Setting redirect count for all response codes
+
+Fjern "accept" parameter til Request metoder
+
 Check http://www.bizcoder.com/index.php/2012/01/09/httpclient-it-lives-and-it-is-glorious/
 
 Remove that Ramone.MediaTypes assembly (it is not needed since it referrences no extra libs)

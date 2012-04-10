@@ -175,6 +175,7 @@
     <Compile Include="Handlers\LinkHeaderHandler.cs" />
     <Compile Include="Handlers\MultipartFormDataHandler.cs" />
     <Compile Include="Handlers\PersonHandler.cs" />
+    <Compile Include="Handlers\RedirectHandler.cs" />
     <Compile Include="Handlers\TextNullHandler.cs" />
     <Compile Include="Handlers\FeedHandler.cs" />
     <Compile Include="Handlers\TextHandler.cs" />
