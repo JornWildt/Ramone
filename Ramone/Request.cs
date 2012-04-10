@@ -163,6 +163,10 @@ namespace Ramone
           BodyContentType = writer.MediaType;
         BodyCodec = writer.Codec;
       }
+      else if (BodyContentType == null)
+      {
+        BodyContentType = MediaType.ApplicationFormUrlEncoded;
+      }
 
       if (BodyContentType.Matches("multipart/form-data"))
       {

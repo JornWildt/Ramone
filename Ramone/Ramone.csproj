@@ -61,9 +61,6 @@
     <Reference Include="JsonFx">
       <HintPath>..\Libraries\JsonFx.dll</HintPath>
     </Reference>
-    <Reference Include="ServiceStack.Text">
-      <HintPath>..\Libraries\ServiceStack.Text.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -117,7 +114,6 @@
     <Compile Include="MediaTypes\FormUrlEncoded\FormUrlEncodedSerializerCodec.cs" />
     <Compile Include="MediaTypes\Html\HtmlDocumentCodec.cs" />
     <Compile Include="MediaTypes\Html\Link.cs" />
-    <Compile Include="MediaTypes\Json\ServiceStackJsonSerializerCodec.cs" />
     <Compile Include="MediaTypes\Json\JsonSerializerCodec.cs" />
     <Compile Include="MediaTypes\MultipartFormData\MultipartFormDataSerializerCodec.cs" />
     <Compile Include="MediaTypes\StreamCodec.cs" />

@@ -83,6 +83,22 @@ namespace Ramone.Tests
 
 
     [Test]
+    public void CanPostEmptyBodyWhenNoDefaultMediaTypeIsSpecified_Typed()
+    {
+      // Arrange
+      Session.DefaultRequestMediaType = null;
+      Session.DefaultResponseMediaType = null;
+      Request request = Session.Bind(AnyEchoTemplate);
+
+      // Act
+      Response<string> response = request.Post<string>();
+
+      // Assert
+      Assert.AreEqual(null, response.Body);
+    }
+
+
+    [Test]
     public void CanPostEmptyBody_Untyped()
     {
       // Arrange
@@ -90,6 +106,22 @@ namespace Ramone.Tests
 
       // Act
       Response response = request.Accept("text/plain").ContentType("application/octet-stream").Post();
+
+      // Assert
+      Assert.AreEqual(null, response.Body);
+    }
+
+
+    [Test]
+    public void CanPostEmptyBodyWhenNoDefaultMediaTypeIsSpecified_Untyped()
+    {
+      // Arrange
+      Session.DefaultRequestMediaType = null;
+      Session.DefaultResponseMediaType = null;
+      Request request = Session.Bind(AnyEchoTemplate);
+
+      // Act
+      Response response = request.Post();
 
       // Assert
       Assert.AreEqual(null, response.Body);
