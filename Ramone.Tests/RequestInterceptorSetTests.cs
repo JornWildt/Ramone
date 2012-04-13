@@ -70,9 +70,13 @@ namespace Ramone.Tests
     {
       #region IRequestInterceptor Members
 
-      public void Intercept(RequestContext context)
+      public void HeadersReady(RequestContext context)
       {
         throw new NotImplementedException();
+      }
+
+      public void DataSent(RequestContext context)
+      {
       }
 
       #endregion

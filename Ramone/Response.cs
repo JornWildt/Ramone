@@ -15,12 +15,16 @@ namespace Ramone
 
     public HttpStatusCode StatusCode { get { return WebResponse.StatusCode; } }
 
+    public Uri Location { get { return WebResponse.LocationAsUri(); } }
+
     public Uri BaseUri { get { return new Uri(WebResponse.ResponseUri.GetLeftPart(UriPartial.Path)); } }
+
+    public int RedirectCount { get; protected set; }
 
     public ISession Session { get; protected set; }
 
 
-    public Response(HttpWebResponse response, ISession session)
+    public Response(HttpWebResponse response, ISession session, int retryCount)
     {
       WebResponse = response;
       try
@@ -33,6 +37,7 @@ namespace Ramone
         ContentType = null;
       }
       Session = session;
+      RedirectCount = retryCount;
     }
 
 
@@ -63,15 +68,18 @@ namespace Ramone
     }
 
 
-    public Uri CreatedLocation()
+    public Uri CreatedLocation
     {
-      if (WebResponse.StatusCode != HttpStatusCode.Created)
-        return null;
+      get
+      {
+        if (WebResponse.StatusCode != HttpStatusCode.Created)
+          return null;
 
-      if (WebResponse.Headers[HttpResponseHeader.Location] == null)
-        return null;
+        if (WebResponse.Headers[HttpResponseHeader.Location] == null)
+          return null;
 
-      return new Uri(WebResponse.Headers[HttpResponseHeader.Location]);
+        return new Uri(WebResponse.Headers[HttpResponseHeader.Location]);
+      }
     }
 
 
@@ -98,14 +106,14 @@ namespace Ramone
   public class Response<TBody> : Response
     where TBody : class
   {
-    public Response(HttpWebResponse response, ISession session)
-      : base(response, session)
+    public Response(HttpWebResponse response, ISession session, int retryCount)
+      : base(response, session, retryCount)
     {
     }
 
 
-    public Response(Response src)
-      : base(src.WebResponse, src.Session)
+    public Response(Response src, int retryCount)
+      : base(src.WebResponse, src.Session, retryCount)
     {
     }
 

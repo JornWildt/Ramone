@@ -2,9 +2,13 @@
 Version 1
 ---------
 
-Session => service copy of redirect values
+Redirects
+- Session => service copy of redirect values
 - setting redirect count on request
 - Setting redirect count for all response codes
+- Callback on redirects
+
+Settings for default media type for empty data body
 
 Fjern "accept" parameter til Request metoder
 

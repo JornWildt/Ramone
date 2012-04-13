@@ -22,7 +22,7 @@ namespace Ramone
 
     public static Response<T> AsRamoneResponse<T>(this HttpWebResponse response, ISession session) where T : class
     {
-      return new Response<T>(response, session);
+      return new Response<T>(response, session, 0);
     }
 
 

@@ -26,7 +26,8 @@ namespace Ramone.Tests
       Response<RedirectArgs> resp = req.Execute<RedirectArgs>(method);
 
       // Assert
-      Assert.AreEqual(5, resp.Body.Count, "Must have been redirected 5 times (server max.).");
+      Assert.AreEqual(5, resp.Body.Count, "Must have been redirected 4 times (server max.).");
+      Assert.AreEqual(4, resp.RedirectCount);
       Assert.AreEqual("GET", resp.Body.Method);
     }
 
@@ -67,7 +68,9 @@ namespace Ramone.Tests
 
         // Assert
         Assert.AreEqual(3, resp1.Body.Count, "Must have been redirected 2 times as specified.");
+        Assert.AreEqual(2, resp1.RedirectCount);
         Assert.AreEqual(1, resp2.Body.Count, "Must not redirect other codes.");
+        Assert.AreEqual(0, resp2.RedirectCount);
       }
     }
 
@@ -114,9 +117,13 @@ namespace Ramone.Tests
 
     class RequestInterceptor : IRequestInterceptor
     {
-      public void Intercept(RequestContext context)
+      public void HeadersReady(RequestContext context)
       {
         ++InterceptorCount;
+      }
+
+      public void DataSent(RequestContext context)
+      {
       }
     }
 
