@@ -475,7 +475,6 @@ namespace Ramone
 
           request.ContentType = BodyContentType + charset + boundary;
 
-
           foreach (KeyValuePair<string, IRequestInterceptor> interceptor in Session.RequestInterceptors)
           {
             interceptor.Value.HeadersReady(new RequestContext(request, Session));
@@ -494,11 +493,13 @@ namespace Ramone
           else
           {
             request.ContentLength = 0;
-
-            foreach (KeyValuePair<string, IRequestInterceptor> interceptor in Session.RequestInterceptors)
-            {
-              interceptor.Value.HeadersReady(new RequestContext(request, Session));
-            }
+          }
+        }
+        else
+        {
+          foreach (KeyValuePair<string, IRequestInterceptor> interceptor in Session.RequestInterceptors)
+          {
+            interceptor.Value.HeadersReady(new RequestContext(request, Session));
           }
         }
 
@@ -520,7 +521,10 @@ namespace Ramone
               method = "GET";
               includeBody = false;
             }
-            return DoRequest(response.LocationAsUri(), method, includeBody, requestModifier, retryLevel + 1);
+            Uri location = response.LocationAsUri();
+            if (location == null)
+              throw new InvalidOperationException(string.Format("No redirect location supplied in {0} response from {1}.", (int)response.StatusCode, request.RequestUri));
+            return DoRequest(location, method, includeBody, requestModifier, retryLevel + 1);
           }
         }
 
