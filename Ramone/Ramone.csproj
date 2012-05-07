@@ -89,7 +89,6 @@
     <Compile Include="CodecManagerExtensions.cs" />
     <Compile Include="FileExtensions.cs" />
     <Compile Include="HyperMedia\ILinkTemplate.cs" />
-    <Compile Include="HyperMedia\IParameterizedLink.cs" />
     <Compile Include="HyperMedia\IParameters.cs" />
     <Compile Include="HyperMedia\ISelectable.cs" />
     <Compile Include="HyperMedia\LinkBase.cs" />

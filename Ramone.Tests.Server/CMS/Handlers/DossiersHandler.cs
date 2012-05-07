@@ -4,7 +4,7 @@ using Ramone.MediaTypes.Atom;
 using Ramone.Tests.Common.CMS;
 
 
-namespace Ramone.Tests.Server.Handlers.CMS
+namespace Ramone.Tests.Server.CMS.Handlers
 {
   public class DossiersHandler
   {

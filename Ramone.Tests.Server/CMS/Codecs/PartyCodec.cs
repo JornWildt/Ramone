@@ -2,9 +2,10 @@ using System.Xml;
 using System.Xml.Serialization;
 using OpenRasta.Codecs;
 using Ramone.Tests.Common.CMS;
+using Ramone.Tests.Server.Codecs;
 
 
-namespace Ramone.Tests.Server.Codecs.CMS
+namespace Ramone.Tests.Server.CMS.Codecs
 {
   [MediaType(CMSConstants.CMSMediaTypeId)]
   [MediaType("application/xml")]

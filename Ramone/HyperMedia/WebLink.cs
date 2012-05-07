@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Ramone.HyperMedia
 {
-  public class WebLink : SelectableBase, IParameterizedLink
+  public class WebLink : SelectableBase, IParameters, ILink
   {
     public Uri HRef
     {

@@ -1,7 +1,7 @@
 ﻿using Ramone.Tests.Common.CMS;
 
 
-namespace Ramone.Tests.Server.Handlers.CMS
+namespace Ramone.Tests.Server.CMS.Handlers
 {
   public class DossierDocumentsHandler
   {

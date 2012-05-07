@@ -2,15 +2,27 @@
 Version 1
 ---------
 
+Overvej at inkludere Session i ILink (ligesom at det er underforstået i forms)
+- Så skal Follow() bygges ind i Link (eller Session skal gøres kendt)
+- Alternativt kan Follow også findes i en version som tager en Session.
+- ILink virker vist ikke på relative links i dag?
+- Kan yderligere afhjælpes med IHaveResponse og en utility som kan traversere alle properties
+  og sætte response på dem.
+
+Fjern accept param på request metoder (get, post etc.)
+
+Fejlhåndtering for
+
+  Deltager d = ...
+  Request rq = d.Links.Select(”afmeld”) <-- Hvad hvis denne ikke findes?
+                      .Follow(Session);
+
+  --> throw new NavigationException("Could not locate expected link 'afmeld'.")
+
+
 Check http://www.bizcoder.com/index.php/2012/01/09/httpclient-it-lives-and-it-is-glorious/
 
 Remove that Ramone.MediaTypes assembly (it is not needed since it referrences no extra libs)
-
-Tillad[-ikke] follow-redirects
-- Inkludér interceptors
-
-Google søgning bør optimeres for: c# consume rest/web service/api
-- Husk at Google viser de første X tegn på en side (hvis andet ikke passer bedre).
 
 Before releasing:
 - Version numbers
@@ -84,6 +96,20 @@ Eksemplificering af hvordan man håndterer et service-dokument (ATOM, og det der
 ---------
 Version 2
 ---------
+
+Being able to request more than one internal representation.
+- Something like giving a list of types, let the client do the conneg and return exactly one of the types
+  - Could be done with a callback dispatcher to a list of handler functions.
+    - And that could also support async handling
+
+    Response r = req.Get(); // No type
+    r.Handle<Type1>(typedResponse1 => ... do stuff ...)
+    r.Handle<Type2>(typedResponse2 => ... do stuff ...)
+
+    eller
+     
+    r.Handle(new Handler<Type1>(typedResponse1 => ... do stuff ...),
+             new Handler<Type2>(typedResponse2 => ... do stuff ...));
 
 More randomness in multipart boundary
 
