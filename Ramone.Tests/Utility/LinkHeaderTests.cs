@@ -27,12 +27,12 @@ namespace Ramone.Tests.Utility
       Assert.AreEqual(2, links.Count);
 
       ILink l1 = links[0];
-      Assert.AreEqual("http://example.com/TheBook/chapter2", l1.HRef.AbsoluteUri);
+      Assert.AreEqual("http://example.com/TheBook/chapter2", l1.HRef);
       Assert.Contains("previous", l1.RelationTypes.ToList());
       Assert.AreEqual("Previous chapter", l1.Title);
 
       ILink l2 = links[1];
-      Assert.AreEqual("http://example.com/TheBook/chapter4", l2.HRef.AbsoluteUri);
+      Assert.AreEqual("http://example.com/TheBook/chapter4", l2.HRef);
       Assert.Contains("next", l2.RelationTypes.ToList());
       Assert.AreEqual("Next chapter", l2.Title);
     }
@@ -52,7 +52,7 @@ namespace Ramone.Tests.Utility
       Assert.AreEqual(1, links.Count);
 
       ILink l1 = links[0];
-      Assert.AreEqual("http://example.com/TheBook/chapter3", l1.HRef.AbsoluteUri);
+      Assert.AreEqual("http://example.com/TheBook/chapter3", l1.HRef);
       Assert.Contains("previous", l1.RelationTypes.ToList());
       Assert.AreEqual("Previous chapter", l1.Title);
     }
@@ -72,7 +72,7 @@ namespace Ramone.Tests.Utility
       Assert.AreEqual(1, links.Count);
 
       ILink l1 = links[0];
-      Assert.AreEqual("http://example.com/TheBook/chapter5", l1.HRef.AbsoluteUri);
+      Assert.AreEqual("http://example.com/TheBook/chapter5", l1.HRef);
       Assert.AreEqual(0, l1.RelationTypes.Count());
       Assert.IsNull(l1.Title);
     }
@@ -92,7 +92,7 @@ namespace Ramone.Tests.Utility
       Assert.AreEqual(1, links.Count);
 
       ILink l1 = links[0];
-      Assert.AreEqual("http://example.com/TheBook/chapter6", l1.HRef.AbsoluteUri);
+      Assert.AreEqual("http://example.com/TheBook/chapter6", l1.HRef);
       Assert.AreEqual("Nächstes Kapitel", l1.Title);
     }
 
@@ -212,12 +212,12 @@ namespace Ramone.Tests.Utility
       Assert.AreEqual(2, links1.Count);
 
       ILink l1 = links1[0];
-      Assert.AreEqual("http://example.com/TheBook/chapter6", l1.HRef.AbsoluteUri);
+      Assert.AreEqual("http://example.com/TheBook/chapter6", l1.HRef);
       Assert.AreEqual(0, l1.RelationTypes.Count());
       Assert.AreEqual("Abc", l1.Title);
 
       ILink l2 = links1[1];
-      Assert.AreEqual("http://example.com/TheBook/chapter1", l2.HRef.AbsoluteUri);
+      Assert.AreEqual("http://example.com/TheBook/chapter1", l2.HRef);
       Assert.Contains("help", l2.RelationTypes.ToList());
       Assert.AreEqual("Xyz", l2.Title);
     }
@@ -238,7 +238,7 @@ namespace Ramone.Tests.Utility
       Assert.AreEqual(1, links1.Count);
 
       ILink l1 = links1[0];
-      Assert.AreEqual("http://example.com/TheBook/chapter1", l1.HRef.AbsoluteUri);
+      Assert.AreEqual("http://example.com/TheBook/chapter1", l1.HRef);
       Assert.Contains("help", l1.RelationTypes.ToList());
       Assert.AreEqual("Xyz", l1.Title);
     }

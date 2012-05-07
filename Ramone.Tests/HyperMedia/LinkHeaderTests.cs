@@ -21,8 +21,8 @@ namespace Ramone.Tests.HyperMedia
       // Assert
       List<WebLink> links = response.Links().ToList();
       Assert.AreEqual(2, links.Count);
-      Assert.AreEqual("http://example.com/TheBook/chapter2", links[0].HRef.AbsoluteUri);
-      Assert.AreEqual("http://example.com/TheBook/chapter4", links[1].HRef.AbsoluteUri);
+      Assert.AreEqual("http://example.com/TheBook/chapter2", links[0].HRef);
+      Assert.AreEqual("http://example.com/TheBook/chapter4", links[1].HRef);
     }
 
 

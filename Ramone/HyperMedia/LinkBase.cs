@@ -11,7 +11,7 @@ namespace Ramone.HyperMedia
   /// known formats.</remarks>
   public abstract class LinkBase : SelectableBase, ILink
   {
-    public Uri HRef { get; private set; }
+    public string HRef { get; private set; }
 
     
     public string RelationType
@@ -42,13 +42,41 @@ namespace Ramone.HyperMedia
     }
 
 
+    /// <summary>
+    /// Create link from absolute URI.
+    /// </summary>
+    /// <param name="href"></param>
+    /// <param name="relationType"></param>
+    /// <param name="mediaType"></param>
+    /// <param name="title"></param>
+    public LinkBase(Uri href, string relationType, MediaType mediaType, string title)
+      : this(href.AbsoluteUri, relationType, mediaType, title)
+    {
+    }
+
+
+    /// <summary>
+    /// Create link from base URI and path.
+    /// </summary>
+    /// <param name="baseUrl">Base URI - can be null</param>
+    /// <param name="href"></param>
+    /// <param name="relationType"></param>
+    /// <param name="mediaType"></param>
+    /// <param name="title"></param>
     public LinkBase(Uri baseUrl, string href, string relationType, MediaType mediaType, string title)
       : this(baseUrl != null ? new Uri(baseUrl, href) : new Uri(href), relationType, mediaType, title)
     {
     }
 
 
-    public LinkBase(Uri href, string relationType, MediaType mediaType, string title)
+    /// <summary>
+    /// Create link from relative path or absolute URI.
+    /// </summary>
+    /// <param name="href"></param>
+    /// <param name="relationType"></param>
+    /// <param name="mediaType"></param>
+    /// <param name="title"></param>
+    public LinkBase(string href, string relationType, MediaType mediaType, string title)
     {
       HRef = href;
       RelationType = relationType;

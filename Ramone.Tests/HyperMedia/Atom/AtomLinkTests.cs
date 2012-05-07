@@ -36,11 +36,11 @@ namespace Ramone.Tests.HyperMedia.Atom
       Assert.AreEqual(2, links.Count);
 
       ILink l1 = links[0];
-      Assert.AreEqual("http://feed/", l1.HRef.AbsoluteUri);
+      Assert.AreEqual("http://feed/", l1.HRef);
       Assert.IsNull(l1.Title);
 
       ILink l2 = links[1];
-      Assert.AreEqual("http://edit/", l2.HRef.AbsoluteUri);
+      Assert.AreEqual("http://edit/", l2.HRef);
       Assert.AreEqual("Edit feed", l2.Title);
       Assert.Contains("edit", l2.RelationTypes.ToList());
     }
@@ -56,7 +56,7 @@ namespace Ramone.Tests.HyperMedia.Atom
       Assert.AreEqual(1, links.Count);
 
       ILink l1 = links[0];
-      Assert.AreEqual("http://link1/", l1.HRef.AbsoluteUri);
+      Assert.AreEqual("http://link1/", l1.HRef);
       Assert.IsNull(l1.Title);
     }
 
@@ -71,7 +71,7 @@ namespace Ramone.Tests.HyperMedia.Atom
       // Assert
       Assert.IsNotNull(link);
 
-      Assert.AreEqual("http://edit/", link.HRef.AbsoluteUri);
+      Assert.AreEqual("http://edit/", link.HRef);
       Assert.AreEqual("Edit feed", link.Title);
       Assert.AreEqual("edit", link.RelationType);
       Assert.AreEqual("text/html", (string)link.MediaType);
@@ -88,11 +88,11 @@ namespace Ramone.Tests.HyperMedia.Atom
       Assert.AreEqual(2, links.Count);
 
       ILink l1 = links[0];
-      Assert.AreEqual("http://feed/", l1.HRef.AbsoluteUri);
+      Assert.AreEqual("http://feed/", l1.HRef);
       Assert.IsNull(l1.Title);
 
       ILink l2 = links[1];
-      Assert.AreEqual("http://edit/", l2.HRef.AbsoluteUri);
+      Assert.AreEqual("http://edit/", l2.HRef);
       Assert.AreEqual("Edit feed", l2.Title);
       Assert.Contains("edit", l2.RelationTypes.ToList());
     }
@@ -128,7 +128,7 @@ namespace Ramone.Tests.HyperMedia.Atom
 
       // Assert
       Assert.IsNotNull(link);
-      Assert.AreEqual("http://edit/", link.HRef.AbsoluteUri);
+      Assert.AreEqual("http://edit/", link.HRef);
       Assert.AreEqual("Edit feed", link.Title);
       Assert.Contains("edit", link.RelationTypes.ToList());
     }

@@ -13,16 +13,8 @@ namespace Ramone.MediaTypes.Atom
   /// <remarks>Is similar to .NET's built in SyndicationItem, but this one is XML serializable as a ATOM link.</remarks>
   public class AtomLink : SelectableBase, ILink
   {
-    [XmlIgnore()]
-    public Uri HRef { get; set; }
-
-
     [XmlAttribute("href")]
-    public string HRefText
-    {
-      get { return HRef != null ? HRef.AbsoluteUri : null; }
-      set { HRef = new Uri(value); }
-    }
+    public string HRef { get; set; }
 
 
     /// <summary>
@@ -68,13 +60,41 @@ namespace Ramone.MediaTypes.Atom
     }
 
 
-    public AtomLink(Uri baseUrl, string href, string relationType, MediaType mediaType, string title)
-      : this(new Uri(baseUrl, href), relationType, mediaType, title)
+    /// <summary>
+    /// Create ATOM link from absolute URI.
+    /// </summary>
+    /// <param name="href"></param>
+    /// <param name="relationType"></param>
+    /// <param name="mediaType"></param>
+    /// <param name="title"></param>
+    public AtomLink(Uri href, string relationType, MediaType mediaType, string title)
+      : this(href.AbsoluteUri, relationType, mediaType, title)
     {
     }
 
 
-    public AtomLink(Uri href, string relationType, MediaType mediaType, string title)
+    /// <summary>
+    /// Create ATOM link from base URI and path.
+    /// </summary>
+    /// <param name="baseUrl">Base URI - can be null</param>
+    /// <param name="href"></param>
+    /// <param name="relationType"></param>
+    /// <param name="mediaType"></param>
+    /// <param name="title"></param>
+    public AtomLink(Uri baseUrl, string href, string relationType, MediaType mediaType, string title)
+      : this(baseUrl != null ? new Uri(baseUrl, href) : new Uri(href), relationType, mediaType, title)
+    {
+    }
+
+
+    /// <summary>
+    /// Create ATOM link from relative path or absolute URI.
+    /// </summary>
+    /// <param name="href"></param>
+    /// <param name="relationType"></param>
+    /// <param name="mediaType"></param>
+    /// <param name="title"></param>
+    public AtomLink(string href, string relationType, MediaType mediaType, string title)
     {
       HRef = href;
       RelationType = relationType;
