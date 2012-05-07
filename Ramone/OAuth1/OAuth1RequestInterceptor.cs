@@ -27,7 +27,7 @@ namespace Ramone.OAuth1
 
     #region IRequestInterceptor Members
 
-    public void Intercept(RequestContext context)
+    public void HeadersReady(RequestContext context)
     {
       SignatureHelper o = new SignatureHelper(Settings, Logger);
       HttpWebRequest request = context.Request;
@@ -80,6 +80,11 @@ namespace Ramone.OAuth1
       Log("Authorization header: " + auth);
 
       request.Headers["Authorization"] = auth;
+    }
+
+    
+    public void DataSent(RequestContext context)
+    {
     }
 
     #endregion IRequestInterceptor Members

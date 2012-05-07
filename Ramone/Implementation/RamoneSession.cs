@@ -2,6 +2,7 @@
 using System.Net;
 using System.Text;
 using Ramone.Utility.ObjectSerialization;
+using System.Collections.Generic;
 
 
 namespace Ramone.Implementation
@@ -30,7 +31,27 @@ namespace Ramone.Implementation
 
     public ObjectSerializerSettings SerializerSettings { get; set; }
 
+
+    public void SetAllowedRedirects(int responseCode, int redirectCount)
+    {
+      AllowedRedirectsMap[responseCode] = redirectCount;
+    }
+
+
+    public int GetAllowedRedirects(int responseCode)
+    {
+      if (AllowedRedirectsMap.ContainsKey(responseCode))
+        return AllowedRedirectsMap[responseCode];
+      if (responseCode == 303)
+        return 10;
+      else
+        return 0;
+    }
+
     #endregion
+
+
+    protected Dictionary<int, int> AllowedRedirectsMap { get; set; }
 
 
     public RamoneSession(IService service)
@@ -45,6 +66,7 @@ namespace Ramone.Implementation
       AuthorizationDispatcher = service.AuthorizationDispatcher.Clone();
       RequestInterceptors = service.RequestInterceptors.Clone();
       SerializerSettings = new ObjectSerializerSettings(service.SerializerSettings);
+      AllowedRedirectsMap = new Dictionary<int, int>();
     }
   }
 }

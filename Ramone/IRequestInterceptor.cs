@@ -5,6 +5,7 @@ namespace Ramone
 {
   public interface IRequestInterceptor
   {
-    void Intercept(RequestContext context);
+    void HeadersReady(RequestContext context);
+    void DataSent(RequestContext context);
   }
 }

@@ -8,10 +8,23 @@ Overvej at inkludere Session i ILink (ligesom at det er underforstået i forms)
 - ILink virker vist ikke på relative links i dag?
 - Kan yderligere afhjælpes med IHaveResponse og en utility som kan traversere alle properties
   og sætte response på dem.
+Redirects
+- Session => service copy of redirect values
+- setting redirect count on request
+- Setting redirect count for all response codes
+- Callback on redirects
+
+Settings for default media type for empty data body
+
+Fjern "accept" parameter til Request metoder
+
+Check http://www.bizcoder.com/index.php/2012/01/09/httpclient-it-lives-and-it-is-glorious/
 
 Fjern accept param på request metoder (get, post etc.)
 
 Fejlhåndtering for
+Tillad[-ikke] follow-redirects
+- Inkludér interceptors
 
   Deltager d = ...
   Request rq = d.Links.Select(”afmeld”) <-- Hvad hvis denne ikke findes?

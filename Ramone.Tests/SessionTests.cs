@@ -181,7 +181,11 @@ namespace Ramone.Tests
 
     class DummyInterceptor1 : IRequestInterceptor
     {
-      public void Intercept(RequestContext context)
+      public void HeadersReady(RequestContext context)
+      {
+      }
+
+      public void DataSent(RequestContext context)
       {
       }
     }
@@ -189,7 +193,11 @@ namespace Ramone.Tests
 
     class DummyInterceptor2 : IRequestInterceptor
     {
-      public void Intercept(RequestContext context)
+      public void HeadersReady(RequestContext context)
+      {
+      }
+
+      public void DataSent(RequestContext context)
       {
       }
     }

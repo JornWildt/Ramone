@@ -52,6 +52,7 @@
     <Compile Include="FormArgs.cs" />
     <Compile Include="FormUrlEncodedData.cs" />
     <Compile Include="ObjectToStringPropertyVisitor.cs" />
+    <Compile Include="RedirectArgs.cs" />
     <Compile Include="RegisteredClass.cs" />
     <Compile Include="Dog.cs" />
     <Compile Include="EncodingData.cs" />

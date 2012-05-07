@@ -39,5 +39,7 @@
     public const string FileDownloadPath = "filedownload";
 
     public const string LinkHeaderPath = "linkheader";
+
+    public const string RedirectPath = "redirect/{code}/{count}";
   }
 }

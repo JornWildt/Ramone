@@ -23,7 +23,7 @@ namespace Ramone.Tests
       Response<Dossier> response = request.Post<Dossier>(dossier);
       
       // Assert
-      Uri createdDossierLocation = response.CreatedLocation();
+      Uri createdDossierLocation = response.CreatedLocation;
       Dossier createdDossier = response.Body;
 
       Assert.IsNotNull(createdDossierLocation);
@@ -48,7 +48,7 @@ namespace Ramone.Tests
       Response<Dossier> response = request.Post<Dossier>(dossier);
 
       // Assert that server does as expected
-      Uri createdDossierLocation = response.CreatedLocation();
+      Uri createdDossierLocation = response.CreatedLocation;
       Dossier createdDossier = response.Body;
 
       Assert.IsNotNull(createdDossierLocation);

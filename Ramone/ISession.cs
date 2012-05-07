@@ -25,5 +25,9 @@ namespace Ramone
     IAuthorizationDispatcher AuthorizationDispatcher { get; }
 
     ObjectSerializerSettings SerializerSettings { get; set; }
+
+    void SetAllowedRedirects(int responseCode, int redirectCount);
+
+    int GetAllowedRedirects(int responseCode);
   }
 }
