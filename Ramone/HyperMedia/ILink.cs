@@ -9,4 +9,10 @@ namespace Ramone.HyperMedia
 
     string Title { get; }
   }
+
+
+  public interface ISessionLink : ILink
+  {
+    ISession Session { get; }
+  }
 }

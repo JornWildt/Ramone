@@ -92,6 +92,8 @@
     <Compile Include="HyperMedia\SelectableBase.cs" />
     <Compile Include="HyperMedia\WebLink.cs" />
     <Compile Include="HyperMedia\WebLinkExtensions.cs" />
+    <Compile Include="IContextContainer.cs" />
+    <Compile Include="IHaveContext.cs" />
     <Compile Include="MediaTypes\Atom\AtomLinkExtensions.cs" />
     <Compile Include="MediaTypes\Html\Anchor.cs" />
     <Compile Include="MediaTypes\Html\HtmlFormExtensions.cs" />
@@ -153,6 +155,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RequestContext.cs" />
     <Compile Include="RequestStreamWrapperContext.cs" />
+    <Compile Include="Utility\ContextRegistrator.cs" />
     <Compile Include="Utility\HashtableConverterPropertyVisitor.cs" />
     <Compile Include="Utility\HashtableConverter.cs" />
     <Compile Include="Utility\DictionaryConverterPropertyVisitor.cs" />

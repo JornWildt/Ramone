@@ -4,7 +4,7 @@ using Ramone.MediaTypes.Atom;
 
 namespace Ramone.Tests.Common.CMS
 {
-  public class Dossier
+  public class Dossier : IContextContainer
   {
     public long Id { get; set; }
     

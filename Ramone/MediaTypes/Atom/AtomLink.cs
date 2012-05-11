@@ -11,7 +11,7 @@ namespace Ramone.MediaTypes.Atom
   /// Represents an ATOM feed link.
   /// </summary>
   /// <remarks>Is similar to .NET's built in SyndicationItem, but this one is XML serializable as a ATOM link.</remarks>
-  public class AtomLink : SelectableBase, ILink
+  public class AtomLink : SelectableBase, ISessionLink, IHaveContext
   {
     [XmlAttribute("href")]
     public string HRef { get; set; }
@@ -53,6 +53,10 @@ namespace Ramone.MediaTypes.Atom
     
     [XmlAttribute("title")]
     public string Title { get; set; }
+
+
+    [XmlIgnore]
+    public ISession Session { get; set; }
 
 
     public AtomLink()
@@ -101,5 +105,16 @@ namespace Ramone.MediaTypes.Atom
       MediaType = mediaType;
       Title = title;
     }
+
+    #region IHaveContext Members
+
+    public void RegisterContext(ISession session, Uri baseUrl)
+    {
+      if (HRef != null)
+        HRef = new Uri(baseUrl, HRef).AbsoluteUri;
+      Session = session;
+    }
+
+    #endregion
   }
 }

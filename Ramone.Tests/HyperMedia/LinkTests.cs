@@ -1,10 +1,10 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Linq;
 using System.Xml.Serialization;
 using NUnit.Framework;
 using Ramone.HyperMedia;
 using Ramone.MediaTypes.Atom;
-using System;
 
 
 namespace Ramone.Tests.HyperMedia

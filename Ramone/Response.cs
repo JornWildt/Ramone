@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Net;
-using Ramone.HyperMedia;
+using Ramone.Utility;
 
 
 namespace Ramone
@@ -55,6 +55,7 @@ namespace Ramone
       IMediaTypeReader reader = Session.Service.CodecManager.GetReader(typeof(T), ContentType).Codec;
       ReaderContext context = new ReaderContext(WebResponse.GetResponseStream(), typeof(T), WebResponse, Session);
       T result = (T)reader.ReadFrom(context);
+      ContextRegistrator.RegisterContext(Session, BaseUri, result);
       return result;
     }
 

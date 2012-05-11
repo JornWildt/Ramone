@@ -108,45 +108,6 @@ namespace Ramone.Tests
 
 
     [Test]
-    public void CanFollowDocumentLinksInDossier()
-    {
-      // Arrange
-      Request dossierReq = Session.Bind(DossierTemplate, new { id = 8 });
-      Response<Dossier> dossierRsp = dossierReq.Get<Dossier>();
-      Dossier dossier = dossierReq.Get<Dossier>().Body;
-
-      // Act
-      //Request documentsReq = dossier.Links.Select(CMSConstants.DocumentsLinkRelType).Follow();
-      Request documentsReq = dossierRsp.Follow(dossierRsp.Body.Links.Select(CMSConstants.DocumentsLinkRelType));
-      //Request documentsReq = dossierRsp.Body.Links.Follow(Session, CMSConstants.DocumentsLinkRelType);
-      DossierDocumentList documents = documentsReq.Get<DossierDocumentList>().Body;
-
-      // Assert
-      Assert.IsNotNull(documents);
-      Assert.AreEqual(2, documents.Count);
-    }
-
-
-    [Test]
-    public void CanFollowLinksInGeneral()
-    {
-      // Arrange
-      Request dossierReq = Session.Bind(DossierTemplate, new { id = 8 });
-      Dossier dossier = dossierReq.Get<Dossier>().Body;
-
-      // Act
-      DossierDocumentList documents1 = dossier.Links.Select(CMSConstants.DocumentsLinkRelType).Follow(Session).Get<DossierDocumentList>().Body;
-      DossierDocumentList documents2 = dossier.Links.Select(CMSConstants.DocumentsLinkRelType).Follow(Session).Get<DossierDocumentList>().Body;
-
-      // Assert
-      Assert.IsNotNull(documents1);
-      Assert.IsNotNull(documents2);
-      Assert.AreEqual(2, documents1.Count);
-      Assert.AreEqual(2, documents2.Count);
-    }
-
-
-    [Test]
     public void CanGetAndIgnoreReturnedBody()
     {
       // Arrange

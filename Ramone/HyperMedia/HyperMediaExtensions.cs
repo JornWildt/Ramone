@@ -27,7 +27,7 @@ namespace Ramone.HyperMedia
 
 
     /// <summary>
-    /// Create request from link.
+    /// Create request from link and specific session.
     /// </summary>
     /// <param name="link"></param>
     /// <param name="session"></param>
@@ -41,6 +41,12 @@ namespace Ramone.HyperMedia
     }
 
 
+    /// <summary>
+    /// Create request from link, apply base URL from specific response and use session from same response.
+    /// </summary>
+    /// <param name="response"></param>
+    /// <param name="link"></param>
+    /// <returns></returns>
     public static Request Follow(this Response response, ILink link)
     {
       Condition.Requires(response, "response").IsNotNull();
@@ -51,7 +57,20 @@ namespace Ramone.HyperMedia
 
 
     /// <summary>
-    /// Create request from URI.
+    /// Create request from absolute link containing its own session reference.
+    /// </summary>
+    /// <param name="link"></param>
+    /// <returns></returns>
+    public static Request Follow(this ISessionLink link)
+    {
+      Condition.Requires(link, "link").IsNotNull();
+
+      return new Request(link.Session, link.HRef);
+    }
+
+
+    /// <summary>
+    /// Create request from URI and specific session.
     /// </summary>
     /// <param name="url"></param>
     /// <param name="session"></param>
