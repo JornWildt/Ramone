@@ -43,20 +43,20 @@ namespace Ramone.Tests.MediaTypes.Atom
     }
 
 
-    [Test]
-    public void CanFollowAtomLinkList()
-    {
-      // Arrange
-      MyResource r = new MyResource();
-      r.Links.Add(new AtomLink(new Uri("http://dr.dk"), "http://dr.dk", "test", "text/html", "DR"));
+    //[Test]
+    //public void CanFollowAtomLinkList()
+    //{
+    //  // Arrange
+    //  MyResource r = new MyResource();
+    //  r.Links.Add(new AtomLink(new Uri("http://dr.dk"), "http://dr.dk", "test", "text/html", "DR"));
 
-      // Act
-      Request request = r.Links.Follow(Session, "test");
+    //  // Act
+    //  Request request = r.Links.Follow(Session, "test");
 
-      // Assert
-      Assert.IsNotNull(request);
-      Assert.AreEqual("http://dr.dk/", request.Url.AbsoluteUri);
-    }
+    //  // Assert
+    //  Assert.IsNotNull(request);
+    //  Assert.AreEqual("http://dr.dk/", request.Url.AbsoluteUri);
+    //}
 
 
     [Test]

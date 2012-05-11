@@ -8,6 +8,9 @@ namespace Ramone.Tests.Server.CMS.Handlers
 {
   public class DossiersHandler
   {
+    public ICommunicationContext Context { get; set; }
+
+
     public Dossier Get(long id)
     {
       Party party = new PartyHandler().Get(19);
@@ -18,7 +21,8 @@ namespace Ramone.Tests.Server.CMS.Handlers
         Title = string.Format("Dossier no. {0}", id),
         Links = new AtomLinkList
         {
-          new AtomLink(typeof(DossierDocumentList).CreateUri(new { id = id }), CMSConstants.DocumentsLinkRelType, CMSConstants.CMSMediaTypeId, "Documents"),
+          //new AtomLink(typeof(DossierDocumentList).CreateUri(new { id = id }), CMSConstants.DocumentsLinkRelType, CMSConstants.CMSMediaTypeId, "Documents"),
+          new AtomLink("documents", CMSConstants.DocumentsLinkRelType, CMSConstants.CMSMediaTypeId, "Documents"),
           new AtomLink(party.CreateUri(), CMSConstants.PartyLinkRelType, CMSConstants.CMSMediaTypeId, party.FullName)
         }
       };

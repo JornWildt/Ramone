@@ -52,10 +52,10 @@ namespace Ramone.MediaTypes.Atom
     }
 
 
-    public static Request Follow(this IEnumerable<SyndicationLink> links, ISession session, string rel, MediaType mediaType = null)
-    {
-      return links.Select(l => l.Link()).Follow(session, rel, mediaType);
-    }
+    //public static Request Follow(this IEnumerable<SyndicationLink> links, ISession session, string rel, MediaType mediaType = null)
+    //{
+    //  return links.Select(l => l.Link()).Follow(session, rel, mediaType);
+    //}
 
 
     public static Request Follow(this SyndicationLink link, ISession session)

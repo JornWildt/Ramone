@@ -41,6 +41,15 @@ namespace Ramone.HyperMedia
     }
 
 
+    public static Request Follow(this Response response, ILink link)
+    {
+      Condition.Requires(response, "response").IsNotNull();
+      Condition.Requires(link, "link").IsNotNull();
+
+      return new Request(response.Session, new Uri(response.BaseUri, link.HRef));
+    }
+
+
     /// <summary>
     /// Create request from URI.
     /// </summary>
@@ -64,17 +73,19 @@ namespace Ramone.HyperMedia
     /// <param name="rel"></param>
     /// <param name="mediaType"></param>
     /// <returns></returns>
-    public static Request Follow(this IEnumerable<ILink> links, ISession session, string rel, MediaType mediaType = null)
-    {
-      Condition.Requires(links, "links").IsNotNull();
-      Condition.Requires(session, "session").IsNotNull();
-      Condition.Requires(rel, "rel").IsNotNull();
+    //public static Request Follow(this IEnumerable<ILink> links, ISession session, string rel, MediaType mediaType = null)
+    //{
+    //  Condition.Requires(links, "links").IsNotNull();
+    //  Condition.Requires(session, "session").IsNotNull();
+    //  Condition.Requires(rel, "rel").IsNotNull();
 
-      ILink link = links.Select(rel, mediaType);
-      if (link == null)
-        return null;
+    //  ILink link = links.Select(rel, mediaType);
+    //  if (link == null)
+    //    return null;
 
-      return new Request(session, link.HRef);
-    }
+    //  return new Request(session, link.HRef);
+    //}
+
+  
   }
 }

@@ -2,12 +2,19 @@
 Version 1
 ---------
 
-Overvej at inkludere Session i ILink (ligesom at det er underforstået i forms)
+En URI kan også være relativ
+- Så kan Href måske være en URI alligevel i ILink?
+
+Fjerne ISession fra forms creation (og indsæt i submit eller lign)
+
+NEJ: Overvej at inkludere Session i ILink (ligesom at det er underforstået i forms)
 - Så skal Follow() bygges ind i Link (eller Session skal gøres kendt)
 - Alternativt kan Follow også findes i en version som tager en Session.
 - ILink virker vist ikke på relative links i dag?
 - Kan yderligere afhjælpes med IHaveResponse og en utility som kan traversere alle properties
   og sætte response på dem.
+
+
 Redirects
 - Session => service copy of redirect values
 - setting redirect count on request

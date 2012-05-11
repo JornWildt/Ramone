@@ -439,9 +439,6 @@ namespace Ramone
 
     protected Response DoRequest(Uri url, string method, bool includeBody, Action<HttpWebRequest> requestModifier, int retryLevel = 0)
     {
-      //if (retryLevel > 2)
-      //  return null;
-
       try
       {
         HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);

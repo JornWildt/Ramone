@@ -112,10 +112,13 @@ namespace Ramone.Tests
     {
       // Arrange
       Request dossierReq = Session.Bind(DossierTemplate, new { id = 8 });
-      Response<Dossier> response = dossierReq.Get<Dossier>();
+      Response<Dossier> dossierRsp = dossierReq.Get<Dossier>();
+      Dossier dossier = dossierReq.Get<Dossier>().Body;
 
       // Act
-      Request documentsReq = response.Body.Links.Follow(Session, CMSConstants.DocumentsLinkRelType);
+      //Request documentsReq = dossier.Links.Select(CMSConstants.DocumentsLinkRelType).Follow();
+      Request documentsReq = dossierRsp.Follow(dossierRsp.Body.Links.Select(CMSConstants.DocumentsLinkRelType));
+      //Request documentsReq = dossierRsp.Body.Links.Follow(Session, CMSConstants.DocumentsLinkRelType);
       DossierDocumentList documents = documentsReq.Get<DossierDocumentList>().Body;
 
       // Assert
@@ -132,8 +135,8 @@ namespace Ramone.Tests
       Dossier dossier = dossierReq.Get<Dossier>().Body;
 
       // Act
-      DossierDocumentList documents1 = dossier.Links.Follow(Session, CMSConstants.DocumentsLinkRelType).Get<DossierDocumentList>().Body;
-      DossierDocumentList documents2 = dossier.Links.Follow(Session, CMSConstants.DocumentsLinkRelType).Get<DossierDocumentList>().Body;
+      DossierDocumentList documents1 = dossier.Links.Select(CMSConstants.DocumentsLinkRelType).Follow(Session).Get<DossierDocumentList>().Body;
+      DossierDocumentList documents2 = dossier.Links.Select(CMSConstants.DocumentsLinkRelType).Follow(Session).Get<DossierDocumentList>().Body;
 
       // Assert
       Assert.IsNotNull(documents1);

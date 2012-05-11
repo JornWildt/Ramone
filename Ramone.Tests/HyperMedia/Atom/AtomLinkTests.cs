@@ -146,15 +146,15 @@ namespace Ramone.Tests.HyperMedia.Atom
     }
 
 
-    [Test]
-    public void CanFollowSyndicationLinks()
-    {
-      // Act
-      Request request = Feed.Links.Follow(Session, "edit");
+    //[Test]
+    //public void CanFollowSyndicationLinks()
+    //{
+    //  // Act
+    //  Request request = Feed.Links.Follow(Session, "edit");
 
-      // Assert
-      Assert.IsNotNull(request);
-      Assert.AreEqual("http://edit/", request.Url.AbsoluteUri);
-    }
+    //  // Assert
+    //  Assert.IsNotNull(request);
+    //  Assert.AreEqual("http://edit/", request.Url.AbsoluteUri);
+    //}
   }
 }

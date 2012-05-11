@@ -132,32 +132,32 @@ namespace Ramone.Tests.HyperMedia
     }
 
 
-    [Test]
-    public void CanFollowFromLinkList()
-    {
-      // Act
-      Request r1a = Links.Follow(Session, Link1.RelationTypes.First());
-      Request r2a = Links.Follow(Session, Link2.RelationTypes.First());
-      Request r1b = Links.Follow(Session, Link1.RelationTypes.First(), Link1.MediaType);
-      Request r2b = Links.Follow(Session, Link2.RelationTypes.First(), Link2.MediaType);
-      Request r3 = Links.Follow(Session, Link3.RelationTypes.First(), Link3.MediaType);
-      Request r4 = Links.Follow(Session, Link4.RelationTypes.First(), Link4.MediaType);
+    //[Test]
+    //public void CanFollowFromLinkList()
+    //{
+    //  // Act
+    //  Request r1a = Links.Follow(Session, Link1.RelationTypes.First());
+    //  Request r2a = Links.Follow(Session, Link2.RelationTypes.First());
+    //  Request r1b = Links.Follow(Session, Link1.RelationTypes.First(), Link1.MediaType);
+    //  Request r2b = Links.Follow(Session, Link2.RelationTypes.First(), Link2.MediaType);
+    //  Request r3 = Links.Follow(Session, Link3.RelationTypes.First(), Link3.MediaType);
+    //  Request r4 = Links.Follow(Session, Link4.RelationTypes.First(), Link4.MediaType);
 
 
-      // Assert
-      Assert.IsNotNull(r1a);
-      Assert.IsNotNull(r2a);
-      Assert.IsNotNull(r1b);
-      Assert.IsNotNull(r2b);
-      Assert.IsNotNull(r3);
-      Assert.IsNotNull(r4);
-      Assert.AreEqual(Link1.HRef, r1a.Url.AbsoluteUri);
-      Assert.AreEqual(Link2.HRef, r2a.Url.AbsoluteUri);
-      Assert.AreEqual(Link1.HRef, r1b.Url.AbsoluteUri);
-      Assert.AreEqual(Link2.HRef, r2b.Url.AbsoluteUri);
-      Assert.AreEqual(Link3.HRef, r3.Url.AbsoluteUri);
-      Assert.AreEqual(Link4.HRef, r4.Url.AbsoluteUri);
-    }
+    //  // Assert
+    //  Assert.IsNotNull(r1a);
+    //  Assert.IsNotNull(r2a);
+    //  Assert.IsNotNull(r1b);
+    //  Assert.IsNotNull(r2b);
+    //  Assert.IsNotNull(r3);
+    //  Assert.IsNotNull(r4);
+    //  Assert.AreEqual(Link1.HRef, r1a.Url.AbsoluteUri);
+    //  Assert.AreEqual(Link2.HRef, r2a.Url.AbsoluteUri);
+    //  Assert.AreEqual(Link1.HRef, r1b.Url.AbsoluteUri);
+    //  Assert.AreEqual(Link2.HRef, r2b.Url.AbsoluteUri);
+    //  Assert.AreEqual(Link3.HRef, r3.Url.AbsoluteUri);
+    //  Assert.AreEqual(Link4.HRef, r4.Url.AbsoluteUri);
+    //}
 
 
     [Test]

@@ -85,10 +85,10 @@ namespace Ramone.Tests.Blog
       foreach (Resources.Blog.Post post in blog.Posts)
       {
         // - GET post
-        Resources.Post fullPost = post.Links.Follow(Session, "self").Get<Resources.Post>().Body;
+        Resources.Post fullPost = post.Links.Select("self").Follow(Session).Get<Resources.Post>().Body;
 
         // - Follow author link
-        Resources.Author author = fullPost.Links.Follow(Session, "author").Get<Resources.Author>().Body;
+        Resources.Author author = fullPost.Links.Select("author").Follow(Session).Get<Resources.Author>().Body;
 
         // - Register e-mail
         foundEMails.Add(author.EMail);
@@ -114,7 +114,7 @@ namespace Ramone.Tests.Blog
 
       // - Follow "edit" link and GET form describing how to input
       Response<Resources.CreatePostDescriptor> createDescriptor
-        = blog.Links.Follow(Session, "edit").Get<Resources.CreatePostDescriptor>();
+        = blog.Links.Select("edit").Follow(Session).Get<Resources.CreatePostDescriptor>();
 
       // - Extract "create" form
       IKeyValueForm form = createDescriptor.Body.Form;

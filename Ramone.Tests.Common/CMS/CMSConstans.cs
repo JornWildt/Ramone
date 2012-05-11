@@ -2,7 +2,8 @@
 {
   public static class CMSConstants
   {
-    public const string DossierPath = "cms/dossiers/{id}";
+    // Note: trailing slash enables relative path to documents
+    public const string DossierPath = "cms/dossiers/{id}/";
     public const string DossierDocumentsPath = "cms/dossiers/{id}/documents";
     public const string DossiersPath = "cms/dossiers";
 
