@@ -21,8 +21,13 @@ namespace Ramone.HyperMedia
       Condition.Requires(links, "links").IsNotNull();
       Condition.Requires(rel, "rel").IsNotNull();
 
-      return links.Where(l => l.RelationTypes.Any(r => string.Equals(r, rel, StringComparison.InvariantCultureIgnoreCase))
-                              && (mediaType == null || l.MediaType == mediaType)).FirstOrDefault();
+      T result =  links.Where(l => l.RelationTypes.Any(r => string.Equals(r, rel, StringComparison.InvariantCultureIgnoreCase))
+                                                       && (mediaType == null || l.MediaType == mediaType)).FirstOrDefault();
+
+      if (result == null)
+        throw new SelectFailed(string.Format("No {0} found matching rel='{1}' and mediaType='{2}'.", typeof(T), rel, mediaType));
+
+      return result;
     }
 
 
@@ -82,29 +87,5 @@ namespace Ramone.HyperMedia
 
       return new Request(session, url);
     }
-
-
-    /// <summary>
-    /// Create request from link identified by link relation and optional media-type.
-    /// </summary>
-    /// <param name="links"></param>
-    /// <param name="session"></param>
-    /// <param name="rel"></param>
-    /// <param name="mediaType"></param>
-    /// <returns></returns>
-    //public static Request Follow(this IEnumerable<ILink> links, ISession session, string rel, MediaType mediaType = null)
-    //{
-    //  Condition.Requires(links, "links").IsNotNull();
-    //  Condition.Requires(session, "session").IsNotNull();
-    //  Condition.Requires(rel, "rel").IsNotNull();
-
-    //  ILink link = links.Select(rel, mediaType);
-    //  if (link == null)
-    //    return null;
-
-    //  return new Request(session, link.HRef);
-    //}
-
-  
   }
 }

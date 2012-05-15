@@ -80,27 +80,29 @@ namespace Ramone.Tests.HyperMedia
       ILink l5a = Links.Select("search");
       ILink l5b = Links.Select("previous");
       ILink l5c = Links.Select("first");
-      ILink l5d = Links.Select("unused");
       ILink l6a = Links.Select("previous", "application/atom+xml");
       ILink l6b = Links.Select("first", "text/html");
-      ILink l6c = Links.Select("unused", "application/atom+xml");
-      ILink l6d = Links.Select("unused", "text/html");
 
       // Assert
       Assert.IsNotNull(l5a);
       Assert.IsNotNull(l5b);
       Assert.IsNotNull(l5c);
-      Assert.IsNull(l5d);
       Assert.IsNotNull(l6a);
       Assert.IsNotNull(l6b);
-      Assert.IsNull(l6c);
-      Assert.IsNull(l6d);
       Assert.AreEqual(Link5.HRef, l5a.HRef);
       Assert.AreEqual(Link6.HRef, l6a.HRef);
       Assert.AreEqual(3, Link5.RelationTypes.Count());
       Assert.AreEqual(3, Link6.RelationTypes.Count());
     }
 
+
+    [Test]
+    public void WhenSelectingUnknownLinksItThrowsSelectFailed()
+    {
+      AssertThrows<SelectFailed>(() => Links.Select("unused"));
+      AssertThrows<SelectFailed>(() => Links.Select("unused", "application/atom+xml"));
+      AssertThrows<SelectFailed>(() => Links.Select("unused", "text/html"));
+    }
 
     [Test]
     public void ItComparesCaseInsensitiveWhenLookingUpLink()

@@ -2,20 +2,9 @@
 Version 1
 ---------
 
-En URI kan også være relativ
-- Så kan Href måske være en URI alligevel i ILink?
-
 Fejlhåndtering for
 Tillad[-ikke] follow-redirects
 - Inkludér interceptors
-
-  Deltager d = ...
-  Request rq = d.Links.Select(”afmeld”) <-- Hvad hvis denne ikke findes?
-                      .Follow(Session);
-
-  --> throw new NavigationException("Could not locate expected link 'afmeld'.")
-
-
 
 Redirects
 - Session => service copy of redirect values

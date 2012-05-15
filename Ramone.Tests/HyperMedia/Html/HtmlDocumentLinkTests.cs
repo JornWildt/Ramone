@@ -111,15 +111,23 @@ namespace Ramone.Tests.HyperMedia.Html
       HtmlNode node = HtmlDoc.DocumentNode.SelectNodes(@"//div[@id=""set1""]").First();
 
       // Act
-      ILink link1 = node.Anchors(BaseUrl).Select("next");
-      ILink link2 = node.Anchors(BaseUrl).Select("up");
+      ILink link = node.Anchors(BaseUrl).Select("up");
 
       // Assert
-      Assert.IsNull(link1);
+      Assert.AreEqual("http://link2/", link.HRef.AbsoluteUri);
+      Assert.AreEqual("Link no. 2", link.Title);
+      Assert.Contains("up", link.RelationTypes.ToList());
+    }
 
-      Assert.AreEqual("http://link2/", link2.HRef.AbsoluteUri);
-      Assert.AreEqual("Link no. 2", link2.Title);
-      Assert.Contains("up", link2.RelationTypes.ToList());
+
+    [Test]
+    public void WhenSelectingUnknownLinksItThrowsSelectFailed()
+    {
+      // Arrange (get sub-node)
+      HtmlNode node = HtmlDoc.DocumentNode.SelectNodes(@"//div[@id=""set1""]").First();
+
+      // Act + Assert
+      AssertThrows<SelectFailed>(() => node.Anchors(BaseUrl).Select("next"));
     }
 
 
