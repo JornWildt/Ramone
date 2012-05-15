@@ -5,30 +5,6 @@ Version 1
 En URI kan også være relativ
 - Så kan Href måske være en URI alligevel i ILink?
 
-Fjerne ISession fra forms creation (og indsæt i submit eller lign)
-
-NEJ: Overvej at inkludere Session i ILink (ligesom at det er underforstået i forms)
-- Så skal Follow() bygges ind i Link (eller Session skal gøres kendt)
-- Alternativt kan Follow også findes i en version som tager en Session.
-- ILink virker vist ikke på relative links i dag?
-- Kan yderligere afhjælpes med IHaveResponse og en utility som kan traversere alle properties
-  og sætte response på dem.
-
-
-Redirects
-- Session => service copy of redirect values
-- setting redirect count on request
-- Setting redirect count for all response codes
-- Callback on redirects
-
-Settings for default media type for empty data body
-
-Fjern "accept" parameter til Request metoder
-
-Check http://www.bizcoder.com/index.php/2012/01/09/httpclient-it-lives-and-it-is-glorious/
-
-Fjern accept param på request metoder (get, post etc.)
-
 Fejlhåndtering for
 Tillad[-ikke] follow-redirects
 - Inkludér interceptors
@@ -40,7 +16,15 @@ Tillad[-ikke] follow-redirects
   --> throw new NavigationException("Could not locate expected link 'afmeld'.")
 
 
-Check http://www.bizcoder.com/index.php/2012/01/09/httpclient-it-lives-and-it-is-glorious/
+
+Redirects
+- Session => service copy of redirect values
+
+Settings for default media type for empty data body
+
+Fjern "accept" parameter til Request metoder
+
+Fjern accept param på request metoder (get, post etc.)
 
 Remove that Ramone.MediaTypes assembly (it is not needed since it referrences no extra libs)
 
@@ -70,6 +54,10 @@ Docs
 - OAuth1 + Basic authorization
 - OAuth1 cannot handle UrlEncoded post body
 - Credits for libraires
+- Forskellige former for codec anvendels
+  - Rå HtmlDocument / XmlDocument / HalDocument
+    - Hvorfra man kan lave .Anchor(...).Follow() mm.
+
 - Alle Get/Post etc. operationer er uden sideeffekter i RamoneRequest. 
   Altså kan RamoneRequest genbruges flere gange. Eller hvad ...
 - Go through REST reciepes and show how its done in Ramone
@@ -136,6 +124,11 @@ More randomness in multipart boundary
 Factories for creating request/response objects - for extending those classes.
 
 Error handling: exceptions or status codes or both?
+
+Redirects
+- Callback on redirects
+
+Keeping connections open for some time.
 
 Links from HTTP header (WebLinks)
   link-param     = OK: ( ( "rel" "=" relation-types )
