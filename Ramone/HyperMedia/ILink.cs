@@ -5,7 +5,7 @@ namespace Ramone.HyperMedia
 {
   public interface ILink : ISelectable
   {
-    string HRef { get; }
+    Uri HRef { get; }
 
     string Title { get; }
   }

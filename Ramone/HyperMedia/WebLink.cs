@@ -6,10 +6,10 @@ namespace Ramone.HyperMedia
 {
   public class WebLink : SelectableBase, IParameters, ILink
   {
-    public string HRef
+    public Uri HRef
     {
-      get { return Parameters["href"]; }
-      set { Parameters["href"] = value; }
+      get { return Parameters["href"] != null ? new Uri(Parameters["href"], UriKind.RelativeOrAbsolute) : null; }
+      set { Parameters["href"] = value.AbsoluteUri; }
     }
 
 
@@ -65,8 +65,12 @@ namespace Ramone.HyperMedia
     /// <param name="mediaType"></param>
     /// <param name="title"></param>
     public WebLink(Uri href, string relationType, MediaType mediaType, string title)
-      : this(href.AbsoluteUri, relationType, mediaType, title)
+      : this()
     {
+      HRef = href;
+      RelationType = relationType;
+      MediaType = mediaType;
+      Title = title;
     }
 
 
@@ -88,16 +92,12 @@ namespace Ramone.HyperMedia
     /// Create web link from relative path or absolute URI.
     /// </summary>
     /// <param name="href"></param>
-    /// <param name="relationshipType"></param>
+    /// <param name="relationType"></param>
     /// <param name="mediaType"></param>
     /// <param name="title"></param>
-    public WebLink(string href, string relationshipType, MediaType mediaType, string title)
+    public WebLink(string href, string relationType, MediaType mediaType, string title)
+      : this(new Uri(href, UriKind.RelativeOrAbsolute), relationType, mediaType, title)
     {
-      Parameters = new Dictionary<string, string>();
-      HRef = href;
-      RelationType = relationshipType;
-      MediaType = mediaType;
-      Title = title;
     }
   }
 }

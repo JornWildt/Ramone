@@ -11,7 +11,7 @@ namespace Ramone.HyperMedia
   /// known formats.</remarks>
   public abstract class LinkBase : SelectableBase, ILink
   {
-    public string HRef { get; private set; }
+    public Uri HRef { get; private set; }
 
     
     public string RelationType
@@ -50,8 +50,11 @@ namespace Ramone.HyperMedia
     /// <param name="mediaType"></param>
     /// <param name="title"></param>
     public LinkBase(Uri href, string relationType, MediaType mediaType, string title)
-      : this(href.AbsoluteUri, relationType, mediaType, title)
     {
+      HRef = href;
+      RelationType = relationType;
+      MediaType = mediaType;
+      Title = title;
     }
 
 
@@ -77,11 +80,8 @@ namespace Ramone.HyperMedia
     /// <param name="mediaType"></param>
     /// <param name="title"></param>
     public LinkBase(string href, string relationType, MediaType mediaType, string title)
+      : this(new Uri(href, UriKind.RelativeOrAbsolute), relationType, mediaType, title)
     {
-      HRef = href;
-      RelationType = relationType;
-      MediaType = mediaType;
-      Title = title;
     }
   }
 }

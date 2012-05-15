@@ -29,7 +29,7 @@ namespace Ramone.Tests.HyperMedia
 
       // Assert
       Assert.AreEqual("http://dr.dk/", l1.Parameters["href"]);
-      Assert.AreEqual("http://dr.dk/", l1.HRef);
+      Assert.AreEqual("http://dr.dk/", l1.HRef.AbsoluteUri);
       Assert.AreEqual("abc", l1.Parameters["rel"]);
       Assert.AreEqual("abc", l1.RelationType);
       Assert.AreEqual("app/x", l1.Parameters["type"]);
@@ -53,7 +53,7 @@ namespace Ramone.Tests.HyperMedia
 
       // Assert
       Assert.AreEqual("http://svt.se/", l1.Parameters["href"]);
-      Assert.AreEqual("http://svt.se/", l1.HRef);
+      Assert.AreEqual("http://svt.se/", l1.HRef.AbsoluteUri);
       Assert.AreEqual("xyz", l1.Parameters["rel"]);
       Assert.AreEqual("xyz", l1.RelationType);
       Assert.AreEqual("app/y", l1.Parameters["type"]);
@@ -71,7 +71,7 @@ namespace Ramone.Tests.HyperMedia
 
       // Assert
       Assert.AreEqual("http://dr.dk/xxx/yyy?z=1", l.Parameters["href"]);
-      Assert.AreEqual("http://dr.dk/xxx/yyy?z=1", l.HRef);
+      Assert.AreEqual("http://dr.dk/xxx/yyy?z=1", l.HRef.AbsoluteUri);
     }
 
 
@@ -83,7 +83,7 @@ namespace Ramone.Tests.HyperMedia
 
       // Assert
       Assert.AreEqual("http://dr.dk/", l.Parameters["href"]);
-      Assert.AreEqual("http://dr.dk/", l.HRef);
+      Assert.AreEqual("http://dr.dk/", l.HRef.AbsoluteUri);
     }
 
 
@@ -94,7 +94,7 @@ namespace Ramone.Tests.HyperMedia
       WebLink l1 = new WebLink(new Uri("http://dr.dk"), "http://elfisk.dk next http://example.com prev", "app/x", "hello");
 
       // Assert
-      Assert.AreEqual("http://dr.dk/", l1.HRef);
+      Assert.AreEqual("http://dr.dk/", l1.HRef.AbsoluteUri);
       Assert.AreEqual("http://elfisk.dk next http://example.com prev", l1.RelationType);
       Assert.AreEqual(4, l1.RelationTypes.Count());
       Assert.Contains("http://elfisk.dk", l1.RelationTypes.ToList());

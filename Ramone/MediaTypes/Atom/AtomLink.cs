@@ -13,8 +13,16 @@ namespace Ramone.MediaTypes.Atom
   /// <remarks>Is similar to .NET's built in SyndicationItem, but this one is XML serializable as a ATOM link.</remarks>
   public class AtomLink : SelectableBase, ISessionLink, IHaveContext
   {
+    [XmlIgnore()]
+    public Uri HRef { get; set; }
+
+
     [XmlAttribute("href")]
-    public string HRef { get; set; }
+    public string HRefText
+    {
+      get { return HRef != null ? HRef.ToString() : null; }
+      set { HRef = new Uri(value, UriKind.RelativeOrAbsolute); }
+    }
 
 
     /// <summary>
@@ -65,15 +73,18 @@ namespace Ramone.MediaTypes.Atom
 
 
     /// <summary>
-    /// Create ATOM link from absolute URI.
+    /// Create ATOM link from absolute or relative URI.
     /// </summary>
     /// <param name="href"></param>
     /// <param name="relationType"></param>
     /// <param name="mediaType"></param>
     /// <param name="title"></param>
     public AtomLink(Uri href, string relationType, MediaType mediaType, string title)
-      : this(href.AbsoluteUri, relationType, mediaType, title)
     {
+      HRef = href;
+      RelationType = relationType;
+      MediaType = mediaType;
+      Title = title;
     }
 
 
@@ -99,11 +110,8 @@ namespace Ramone.MediaTypes.Atom
     /// <param name="mediaType"></param>
     /// <param name="title"></param>
     public AtomLink(string href, string relationType, MediaType mediaType, string title)
+      : this(new Uri(href, UriKind.RelativeOrAbsolute), relationType, mediaType, title)
     {
-      HRef = href;
-      RelationType = relationType;
-      MediaType = mediaType;
-      Title = title;
     }
 
     #region IHaveContext Members
@@ -111,7 +119,7 @@ namespace Ramone.MediaTypes.Atom
     public void RegisterContext(ISession session, Uri baseUrl)
     {
       if (HRef != null)
-        HRef = new Uri(baseUrl, HRef).AbsoluteUri;
+        HRef = new Uri(baseUrl, HRef);
       Session = session;
     }
 
