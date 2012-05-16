@@ -59,7 +59,7 @@ namespace Ramone.Tests
       Request catReq = Session.Bind(CatTemplate, new { name = "Fiona" });
 
       // Act
-      Cat c = catReq.Get<Cat>("text/plain").Body;
+      Cat c = catReq.Accept("text/plain").Get<Cat>().Body;
 
       // Assert
       Assert.AreEqual("Fiona", c.Name);

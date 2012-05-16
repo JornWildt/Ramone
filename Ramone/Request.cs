@@ -201,18 +201,14 @@ namespace Ramone
 
     #region Standard methods
 
-    public Response<TResponse> Get<TResponse>(string accept = null) where TResponse : class
+    public Response<TResponse> Get<TResponse>() where TResponse : class
     {
-      if (accept != null)
-        Accept(accept);
       return DoRequest<TResponse>("GET");
     }
 
 
-    public Response Get(string accept = null)
+    public Response Get()
     {
-      if (accept != null)
-        Accept(accept);
       return DoRequest("GET");
     }
 
@@ -269,18 +265,14 @@ namespace Ramone
     }
 
 
-    public Response<TResponse> Delete<TResponse>(string accept = null) where TResponse : class
+    public Response<TResponse> Delete<TResponse>() where TResponse : class
     {
-      if (accept != null)
-        Accept(accept);
       return DoRequest<TResponse>("DELETE");
     }
 
 
-    public Response Delete(string accept = null)
+    public Response Delete()
     {
-      if (accept != null)
-        Accept(accept);
       return DoRequest("DELETE");
     }
 
@@ -291,18 +283,14 @@ namespace Ramone
     }
 
 
-    public Response<TResponse> Options<TResponse>(string accept = null) where TResponse : class
+    public Response<TResponse> Options<TResponse>() where TResponse : class
     {
-      if (accept != null)
-        Accept(accept);
       return DoRequest<TResponse>("OPTIONS");
     }
 
 
-    public Response Options(string accept = null)
+    public Response Options()
     {
-      if (accept != null)
-        Accept(accept);
       return DoRequest("OPTIONS");
     }
 
@@ -337,18 +325,14 @@ namespace Ramone
 
     #region Generic methods
 
-    public Response<TResponse> Execute<TResponse>(string method, string accept = null) where TResponse : class
+    public Response<TResponse> Execute<TResponse>(string method) where TResponse : class
     {
-      if (accept != null)
-        Accept(accept);
       return DoRequest<TResponse>(method);
     }
 
 
-    public Response Execute(string method, string accept = null)
+    public Response Execute(string method)
     {
-      if (accept != null)
-        Accept(accept);
       return DoRequest(method);
     }
 
@@ -583,9 +567,9 @@ namespace Ramone
 
     #region Standard methods
 
-    public new Response<TResponse> Get(string accept = null)
+    public new Response<TResponse> Get()
     {
-      return Get<TResponse>(accept);
+      return Get<TResponse>();
     }
 
 
@@ -613,15 +597,15 @@ namespace Ramone
     }
 
 
-    public Response<TResponse> Delete()
+    public new Response<TResponse> Delete()
     {
       return Delete<TResponse>();
     }
 
 
-    public new Response<TResponse> Options(string accept = null)
+    public new Response<TResponse> Options()
     {
-      return Options<TResponse>(accept);
+      return Options<TResponse>();
     }
 
 
@@ -641,9 +625,9 @@ namespace Ramone
 
     #region Generic methods
 
-    public new Response<TResponse> Execute(string method, string accept = null)
+    public new Response<TResponse> Execute(string method)
     {
-      return Execute<TResponse>(method, accept);
+      return Execute<TResponse>(method);
     }
 
 

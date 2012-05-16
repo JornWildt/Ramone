@@ -2,15 +2,6 @@
 Version 1
 ---------
 
-Redirects
-- Session => service copy of redirect values
-
-Settings for default media type for empty data body
-
-Fjern "accept" parameter til Request metoder
-
-Fjern accept param på request metoder (get, post etc.)
-
 Remove that Ramone.MediaTypes assembly (it is not needed since it referrences no extra libs)
 
 Before releasing:

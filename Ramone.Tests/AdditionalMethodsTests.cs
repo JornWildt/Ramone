@@ -46,7 +46,7 @@ namespace Ramone.Tests
       // Act
       Response<string> response1 = dossierReq.Options<string>();
       Response<string> response2 = dossierReq.Accept<string>().Options();
-      Response response3 = dossierReq.Options("text/plain");
+      Response response3 = dossierReq.Accept("text/plain").Options();
 
       // Assert
       Assert.IsNotNull(response1);
