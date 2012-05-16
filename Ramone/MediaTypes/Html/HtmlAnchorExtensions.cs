@@ -13,6 +13,8 @@ namespace Ramone.MediaTypes.Html
     /// Get all anchors in the HTML document as a sequence of ILink.
     /// </summary>
     /// <param name="html"></param>
+    /// <param name="response">The response from which the html originates. 
+    /// The response information is used to convert relative links to absolute links.</param>
     /// <returns></returns>
     public static IEnumerable<Anchor> Anchors(this HtmlDocument html, Response response)
     {
@@ -35,6 +37,8 @@ namespace Ramone.MediaTypes.Html
     /// Get all anchors in the HTML sub-document as a sequence of ILink.
     /// </summary>
     /// <param name="node"></param>
+    /// <param name="response">The response from which the html originates. 
+    /// The response information is used to convert relative links to absolute links.</param>
     /// <returns></returns>
     public static IEnumerable<Anchor> Anchors(this HtmlNode node, Response response)
     {
@@ -56,6 +60,8 @@ namespace Ramone.MediaTypes.Html
     /// Get all anchors, in all HTML sub-documents, as a sequence of ILink.
     /// </summary>
     /// <param name="nodes"></param>
+    /// <param name="response">The response from which the html originates. 
+    /// The response information is used to convert relative links to absolute links.</param>
     /// <returns></returns>
     public static IEnumerable<Anchor> Anchors(this HtmlNodeCollection nodes, Response response)
     {
@@ -81,6 +87,8 @@ namespace Ramone.MediaTypes.Html
     /// Convert a single HTML node to ILink, assuming the node represents a anchor.
     /// </summary>
     /// <param name="node"></param>
+    /// <param name="response">The response from which the html originates. 
+    /// The response information is used to convert relative links to absolute links.</param>
     /// <returns></returns>
     public static Anchor Anchor(this HtmlNode node, Response response)
     {

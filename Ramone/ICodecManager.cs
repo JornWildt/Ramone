@@ -14,7 +14,7 @@ namespace Ramone
     /// Add codec for any CLR type
     /// </summary>
     /// <param name="mediaType"></param>
-    /// <param name="codec"></param>
+    /// <typeparam name="TCodec"></typeparam>
     void AddCodec<TCodec>(MediaType mediaType) where TCodec : IMediaTypeCodec;
     void AddCodec(MediaType mediaType, Type codecType);
 

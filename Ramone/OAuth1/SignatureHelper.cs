@@ -73,9 +73,13 @@ namespace Ramone.OAuth1
     /// <param name="url">The full url that needs to be signed including its non OAuth url parameters</param>
     /// <param name="consumerKey">The consumer key</param>        
     /// <param name="token">The token, if available. If not available pass null or an empty string</param>
-    /// <param name="tokenSecret">The token secret, if available. If not available pass null or an empty string</param>
+    /// <param name="callback">OAuth callback value.</param>
     /// <param name="httpMethod">The http method used. Must be a valid HTTP method verb (POST,GET,PUT, etc)</param>
-    /// <param name="signatureType">The signature type. To use the default values use <see cref="OAuthBase.SignatureTypes">OAuthBase.SignatureTypes</see>.</param>
+    /// <param name="signatureType">The signature type. To use the default values use <see cref="SignatureTypes">OAuthBase.SignatureTypes</see>.</param>
+    /// <param name="nonce"></param>
+    /// <param name="normalizedRequestParameters"></param>
+    /// <param name="normalizedUrl"></param>
+    /// <param name="timeStamp"></param>
     /// <returns>The signature base</returns>
     public string GenerateSignatureBase(Uri url, string consumerKey, string callback, string token, string httpMethod, string timeStamp, string nonce, string signatureType, out string normalizedUrl, out string normalizedRequestParameters)
     {
@@ -140,6 +144,11 @@ namespace Ramone.OAuth1
     /// <param name="tokenSecret">The token secret, if available. If not available pass null or an empty string</param>
     /// <param name="httpMethod">The http method used. Must be a valid HTTP method verb (POST,GET,PUT, etc)</param>
     /// <param name="signatureType">The type of signature to use</param>
+    /// <param name="callback"></param>
+    /// <param name="nonce"></param>
+    /// <param name="normalizedRequestParameters"></param>
+    /// <param name="normalizedUrl"></param>
+    /// <param name="timeStamp"></param>
     /// <returns>A base64 string of the hash value</returns>
     public string GenerateSignature(Uri url, string consumerKey, string consumerSecret, string callback, string token, string tokenSecret, string httpMethod, string timeStamp, string nonce, SignatureTypes signatureType, out string normalizedUrl, out string normalizedRequestParameters)
     {

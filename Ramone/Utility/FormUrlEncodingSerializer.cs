@@ -34,8 +34,7 @@ namespace Ramone.Utility
     /// Deserialize form-urlencoded data from reader.
     /// </summary>
     /// <param name="reader">A TextReader for reading url-encoded string input.</param>
-    /// <param name="charset">Name of character set used to decode international characters after the 
-    /// form-urlencoded input has been decoded to a byte stream.</param>
+    /// <param name="settings">Settings for deserialization.</param>
     /// <returns></returns>
     public object Deserialize(TextReader reader, ObjectSerializerSettings settings = null)
     {

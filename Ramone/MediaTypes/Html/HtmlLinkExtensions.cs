@@ -13,6 +13,8 @@ namespace Ramone.MediaTypes.Html
     /// Get all header links in the HTML document as a sequence of ILink.
     /// </summary>
     /// <param name="html"></param>
+    /// <param name="response">The response from which the html originates. 
+    /// The response information is used to convert relative links to absolute links.</param>
     /// <returns></returns>
     public static IEnumerable<Link> Links(this HtmlDocument html, Response response)
     {
@@ -35,6 +37,8 @@ namespace Ramone.MediaTypes.Html
     /// Get all links in the HTML sub-document as a sequence of ILink.
     /// </summary>
     /// <param name="node"></param>
+    /// <param name="response">The response from which the html originates. 
+    /// The response information is used to convert relative links to absolute links.</param>
     /// <returns></returns>
     public static IEnumerable<Link> Links(this HtmlNode node, Response response)
     {
@@ -55,7 +59,9 @@ namespace Ramone.MediaTypes.Html
     /// <summary>
     /// Get all links, in all HTML sub-documents, as a sequence of ILink.
     /// </summary>
-    /// <param name="nodes"></param>
+    /// <param name="nodes">HtmlNode collection to search for link elements.</param>
+    /// <param name="response">The response from which the html originates. 
+    /// The response information is used to convert relative links to absolute links.</param>
     /// <returns></returns>
     public static IEnumerable<Link> Links(this HtmlNodeCollection nodes, Response response)
     {
@@ -81,6 +87,8 @@ namespace Ramone.MediaTypes.Html
     /// Convert a single HTML node to ILink, assuming the node represents a link.
     /// </summary>
     /// <param name="node"></param>
+    /// <param name="response">The response from which the html originates. 
+    /// The response information is used to convert relative links to absolute links.</param>
     /// <returns></returns>
     public static Link Link(this HtmlNode node, Response response)
     {

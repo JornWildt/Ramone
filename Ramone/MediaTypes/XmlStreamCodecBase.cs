@@ -11,7 +11,6 @@ namespace Ramone.MediaTypes
   /// <summary>
   /// Base for a type-checked codec which will only serialize objects of type TEntity
   /// </summary>
-  /// <typeparam name="TEntity">The type of the entity.</typeparam>
   public abstract class XmlStreamCodecBase : IMediaTypeWriter, IMediaTypeReader
   {
     #region Ramone.IMediaTypeReader Members
