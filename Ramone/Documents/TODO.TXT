@@ -2,8 +2,6 @@
 Version 1
 ---------
 
-Remove that Ramone.MediaTypes assembly (it is not needed since it referrences no extra libs)
-
 Before releasing:
 - Version numbers
 - Komplet README (med korrekt casing)
