@@ -154,10 +154,6 @@
     <Compile Include="Utility\ObjectSerializerTests.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Ramone.MediaTypes\Ramone.MediaTypes.csproj">
-      <Project>{56B679C9-451B-4294-B8AE-2FA2B420A900}</Project>
-      <Name>Ramone.MediaTypes</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Ramone.Tests.Common\Ramone.Tests.Common.csproj">
       <Project>{DD3B040F-3D75-4C46-BB54-CD06F594F894}</Project>
       <Name>Ramone.Tests.Common</Name>
