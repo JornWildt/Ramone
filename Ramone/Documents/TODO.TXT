@@ -6,7 +6,6 @@ Before releasing:
 - Version numbers
 - Komplet README (med korrekt casing)
   - Installation
-- Include jsonfx and other DLLs in the "Binaries" folder.
 
 Release
 - Oprette release-branch
