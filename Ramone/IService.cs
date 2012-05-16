@@ -23,6 +23,12 @@ namespace Ramone
 
     ObjectSerializerSettings SerializerSettings { get; set; }
 
+    void SetAllowedRedirects(int responseCode, int redirectCount);
+
+    int GetAllowedRedirects(int responseCode);
+
+    void CopyRedirect(ISession session);
+
     ISession NewSession();
   }
 }

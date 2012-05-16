@@ -66,6 +66,30 @@ namespace Ramone.Tests
 
 
     [Test]
+    public void WhenCreatingSessionItClonesRedirectSettings()
+    {
+      // Arrange
+      IService service = RamoneConfiguration.NewService(BaseUrl);
+
+      // Act
+      ISession session1 = service.NewSession();
+
+      service.SetAllowedRedirects(300, 11);
+
+      ISession session2 = service.NewSession();
+      session2.SetAllowedRedirects(301, 7);
+
+      ISession session3 = service.NewSession();
+
+      // Assert
+      Assert.AreEqual(11, service.GetAllowedRedirects(300));
+      Assert.AreEqual(0, session1.GetAllowedRedirects(300));
+      Assert.AreEqual(11, session2.GetAllowedRedirects(300));
+      Assert.AreEqual(7, session2.GetAllowedRedirects(301));
+    }
+
+
+    [Test]
     public void WhenCreatingSessionItClonesInterceptors()
     {
       // Arrange

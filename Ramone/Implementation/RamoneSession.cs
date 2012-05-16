@@ -67,6 +67,7 @@ namespace Ramone.Implementation
       RequestInterceptors = service.RequestInterceptors.Clone();
       SerializerSettings = new ObjectSerializerSettings(service.SerializerSettings);
       AllowedRedirectsMap = new Dictionary<int, int>();
+      service.CopyRedirect(this);
     }
   }
 }

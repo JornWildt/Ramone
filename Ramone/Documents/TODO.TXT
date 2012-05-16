@@ -2,10 +2,6 @@
 Version 1
 ---------
 
-Fejlhåndtering for
-Tillad[-ikke] follow-redirects
-- Inkludér interceptors
-
 Redirects
 - Session => service copy of redirect values
 
