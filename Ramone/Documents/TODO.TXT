@@ -59,6 +59,8 @@ Serializer settings for OpenRasta
 
 Eksemplificering af hvordan man håndterer et service-dokument (ATOM, og det dersens til OpenId)
 - HTML
+- JSON home
+- HAL
 - http://bitworking.org/projects/atom/draft-ietf-atompub-protocol-14.html#appdocs
 - http://docs.oasis-open.org/xri/xrd/v1.0/xrd-1.0.html
 
