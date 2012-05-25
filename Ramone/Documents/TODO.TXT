@@ -57,7 +57,9 @@ Demo this flow:
 
 Serializer settings for OpenRasta
 
-Eksemplificering af hvordan man håndterer et service-dokument (ATOM, og det dersens til OpenId)
+Eksemplificering af hvordan man håndterer et service-dokument
+- Atom
+- Yadis
 - HTML
 - JSON home
 - HAL
@@ -83,6 +85,12 @@ Release
 ---------
 Version 2
 ---------
+
+New URL template format support (RFC????)
+
+rel namespace prefix for select(...)
+- inkl. det tomme prefix.
+- Så kan man registrere "http://blah#" som "bl" og skrive Select("bl:stuff").
 
 Being able to request more than one internal representation.
 - Something like giving a list of types, let the client do the conneg and return exactly one of the types

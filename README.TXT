@@ -37,7 +37,7 @@ In its most simple form you can transfer an object like this:
 Hyper media elements for linking resources together can be added with objects
 that implement ILink (such as the built-in AtomLink):
 
-  class Cat : IContextContainer
+  class Cat
   {
     public string Name { get; set; }
     public DateTime Born { get; set; }
@@ -64,7 +64,7 @@ Jørn Wildt
 
 DOCUMENTATION
 -------------
-Not much so far. There's a few blog posts:
+Not much so far. There's a few blog posts though:
 
   Consuming Web APIs in C# with Ramone
   http://soabits.blogspot.com/2012/04/consuming-web-apis-in-c-with-ramone.html
@@ -74,6 +74,29 @@ Not much so far. There's a few blog posts:
 
   Ramone: Consuming Hyper-Media REST Services in C#
   http://soabits.blogspot.com/2012/04/ramone-consuming-hyper-media-rest.html
+
+
+USING
+-----
+To use Ramone in a .NET project you must first reference the Ramone.dll
+assembly. This assembly contains both the core Ramone code as well as supporting
+libraries (JsonFx, HtmlAgilityPack and more).
+
+If you already have the supporting libraries in your code base then you should
+reference Ramone.Core.dll which contains only the core Ramone code.
+
+
+BUILDING
+--------
+Here is how to build Ramone from scratch:
+
+1) Download the source from GitHub (https://github.com/JornWildt/Ramone).
+2) Open "Ramone.sln" and build the whole project.
+   - This builds the core Ramone.dll and additional test projects
+3) Merge Ramone.dll and supporting libraries into one dll.
+   a) Install ilmerge.exe from Microsoft.
+   b) Fix ilmerge path in post-build.bat.
+   c) Run post-build.bat.
 
 
 SIMILAR PROJECTS
