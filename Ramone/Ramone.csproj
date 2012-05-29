@@ -93,7 +93,7 @@
     <Compile Include="HyperMedia\ISelectable.cs" />
     <Compile Include="HyperMedia\LinkBase.cs" />
     <Compile Include="HyperMedia\SelectableBase.cs" />
-    <Compile Include="HyperMedia\SelectFailed.cs" />
+    <Compile Include="HyperMedia\SelectFailedException.cs" />
     <Compile Include="HyperMedia\WebLink.cs" />
     <Compile Include="HyperMedia\WebLinkExtensions.cs" />
     <Compile Include="IContextContainer.cs" />

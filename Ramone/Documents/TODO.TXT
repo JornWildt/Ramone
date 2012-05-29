@@ -106,6 +106,15 @@ Being able to request more than one internal representation.
     r.Handle(new Handler<Type1>(typedResponse1 => ... do stuff ...),
              new Handler<Type2>(typedResponse2 => ... do stuff ...));
 
+  - Men ... det kræver man kan give multiple media types, så typerne skal angives FØR GET!
+
+    Request r = Url.Bind(Session)
+                   .Accept<Type1>(typedResponse1 => ... do stuff ...)
+                   .Accept<Type2>(typedResponse2 => ... do stuff ...)
+                   .GetAsync();
+
+
+
 More randomness in multipart boundary
 
 Factories for creating request/response objects - for extending those classes.
