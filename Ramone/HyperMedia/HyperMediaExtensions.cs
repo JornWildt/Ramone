@@ -25,7 +25,7 @@ namespace Ramone.HyperMedia
                                                        && (mediaType == null || l.MediaType == mediaType)).FirstOrDefault();
 
       if (result == null)
-        throw new SelectFailed(string.Format("No {0} found matching rel='{1}' and mediaType='{2}'.", typeof(T), rel, mediaType));
+        throw new SelectFailedException(string.Format("No {0} found matching rel='{1}' and mediaType='{2}'.", typeof(T), rel, mediaType));
 
       return result;
     }
