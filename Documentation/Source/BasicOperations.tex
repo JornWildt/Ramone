@@ -1,0 +1,44 @@
+\chapter{Getting started}
+
+\section{The very first GET of a ressource}
+
+The simplest possible operation we can do with Ramone is a GET of a resource 
+from a well known URL and then decode that resource into a client side object.
+
+As an example we can GET the Twitter timeline for user JornWildt:
+
+\lstset{style=sharpc}
+\begin{lstlisting}
+      // All interaction with Ramone goes through a session
+      ISession session
+        = RamoneConfiguration.NewSession(new Uri("https://api.twitter.com"));
+
+      // Fixed URL to timeline of JornWildt
+      string url = "/1/statuses/user_timeline.json?screen_name=JornWildt";
+
+      // Create a Ramone request by binding variables to a URI template
+      Request request = session.Bind(url);
+
+      // GET response from Twitter
+      Response response = request.Get();
+
+      // Extract payload as a C# dynamic created from the JSON response
+      dynamic timeline = response.Body;
+
+      // Write response to console ...
+      Console.WriteLine("This is the timeline for JornWildt:");
+      foreach (dynamic tweet in timeline)
+        Console.WriteLine("* {0}.", tweet.text);
+\end{lstlisting}
+
+
+
+
+\section{Universal Resource Identifiers}
+
+Ramone depends on System.Uri for resource identification and adds no additional semantics to them.
+
+
+\section{URI Templates}
+
+Ramone depends on System.UriTemplate for URI templates. 

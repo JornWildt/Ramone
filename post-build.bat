@@ -6,3 +6,5 @@ xcopy Ramone*.pdb ..\..\..\Binaries\ /S /I /R /Y
 rem xcopy Ramone*.xml ..\..\..\Binaries\ /S /I /R /Y
 
 cd ..\..\..
+
+copy Documentation\Source\Ramone.pdf Documentation\Ramone.pdf 

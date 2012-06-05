@@ -1,0 +1,29 @@
+\documentclass[11pt]{book}
+\usepackage[latin1]{inputenc}
+\usepackage{listings}
+\usepackage{xcolor}
+
+\title{Ramone}
+\author{Jørn Wildt}
+
+\lstdefinestyle{sharpc}{
+  language=[Sharp]C,
+  frame=lr, 
+  rulecolor=\color{blue!80!black},
+  basicstyle=\footnotesize,
+  stringstyle=\color{blue},
+  commentstyle=\color{olive},
+  keywordstyle=\bfseries,
+  columns=fullflexible}
+
+\begin{document}
+\maketitle
+
+\include{Introduction}
+\include{BasicOperations}
+%\include{SupportedMediaTypes}
+%\include{Codecs}
+%\include{HyperMedia}
+%\include{Authentication}
+
+\end{document}
