@@ -5,7 +5,7 @@ using Ramone.Utility;
 
 namespace Ramone
 {
-  public class Response
+  public class Response : IDisposable
   {
     public HttpWebResponse WebResponse { get; protected set; }
 
@@ -101,6 +101,11 @@ namespace Ramone
 
       return body;
     }
+
+      public void Dispose()
+      {
+          this.WebResponse.Close();
+      }
   }
 
 
