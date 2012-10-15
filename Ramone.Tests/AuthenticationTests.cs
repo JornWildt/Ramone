@@ -15,8 +15,8 @@ namespace Ramone.Tests
     public void WhenAuthorizationCodeIsSendItWorks()
     {
       Session.RequestInterceptors.Add("WhenAuthorizationCodeIsSendItWorks", new BasicAuthorizationInterceptor("John", "magic"));
-      string result = Session.Request(BasicAuthUrl).Get<string>().Body;
-      Assert.IsNotNull(result);
+      using (var respone = Session.Request(BasicAuthUrl).Get<string>())
+        Assert.IsNotNull(respone.Body);
     }
 
 
@@ -24,8 +24,8 @@ namespace Ramone.Tests
     public void CanAddAuthorizerToSession()
     {
       Session.BasicAuthentication("John", "magic");
-      string result = Session.Request(BasicAuthUrl).Get<string>().Body;
-      Assert.IsNotNull(result);
+      using (var respone = Session.Request(BasicAuthUrl).Get<string>())
+        Assert.IsNotNull(respone.Body);
     }
 
 
@@ -38,10 +38,11 @@ namespace Ramone.Tests
       // Act
       service.BasicAuthentication("John", "magic");
       ISession session = service.NewSession();
-      Response response = session.Request(BasicAuthUrl).Get();
-
-      // Assert
-      Assert.IsNotNull(response);
+      using (Response response = session.Request(BasicAuthUrl).Get())
+      {
+        // Assert
+        Assert.IsNotNull(response);
+      }
     }
 
 
@@ -54,8 +55,8 @@ namespace Ramone.Tests
       // Then we assign a authorization handler - and now we gain access
       Session.AuthorizationDispatcher.Add("basic", new BasicAuthorizationHandler());
 
-      string result = Session.Request(BasicAuthUrl).Get<string>().Body;
-      Assert.IsNotNull(result);
+      using (var response = Session.Request(BasicAuthUrl).Get<string>())
+        Assert.IsNotNull(response.Body);
     }
 
 

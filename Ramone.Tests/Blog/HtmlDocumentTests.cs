@@ -31,21 +31,22 @@ namespace Ramone.Tests.Blog
       Request blogRequest = Session.Bind(BlogRootPath);
 
       // Act ...
-      HtmlDocument blog = blogRequest.Get<HtmlDocument>().Body;
+      using (var blog = blogRequest.Get<HtmlDocument>())
+      {
+        // Extract post entries from the HTML
+        HtmlNodeCollection posts = blog.Body.DocumentNode.SelectNodes(@"//div[@class=""post""]");
 
-      // Extract post entries from the HTML
-      HtmlNodeCollection posts = blog.DocumentNode.SelectNodes(@"//div[@class=""post""]");
+        // Assert ...
+        Assert.AreEqual(2, posts.Count);
 
-      // Assert ...
-      Assert.AreEqual(2, posts.Count);
-
-      // - Check content of first post
-      HtmlNode post1 = posts[0];
-      Assert.IsNotNull(post1);
-      HtmlNode post1Title = post1.SelectNodes(@".//*[@class=""post-title""]").First();
-      HtmlNode post1Content = post1.SelectNodes(@".//*[@class=""post-content""]").First();
-      Assert.AreEqual("Hot summer", post1Title.InnerText);
-      Assert.AreEqual("It is a hot summer this year.", post1Content.InnerText);
+        // - Check content of first post
+        HtmlNode post1 = posts[0];
+        Assert.IsNotNull(post1);
+        HtmlNode post1Title = post1.SelectNodes(@".//*[@class=""post-title""]").First();
+        HtmlNode post1Content = post1.SelectNodes(@".//*[@class=""post-content""]").First();
+        Assert.AreEqual("Hot summer", post1Title.InnerText);
+        Assert.AreEqual("It is a hot summer this year.", post1Content.InnerText);
+      }
     }
 
 
@@ -58,21 +59,23 @@ namespace Ramone.Tests.Blog
       // Act ...
 
       // - GET blog
-      Response<HtmlDocument> blog = blogRequest.Get<HtmlDocument>();
+      using (var blog = blogRequest.Get<HtmlDocument>())
+      {
+        // - Select first HTML anchor node with rel="author" as a anchor link
+        //   This uses HtmlDocument specific extension methods to convert from anchor to ILink
+        ILink authorLink = blog.Body.DocumentNode.SelectNodes(@"//a[@rel=""author""]").First().Anchor(blog);
 
-      // - Select first HTML anchor node with rel="author" as a anchor link
-      //   This uses HtmlDocument specific extension methods to convert from anchor to ILink
-      ILink authorLink = blog.Body.DocumentNode.SelectNodes(@"//a[@rel=""author""]").First().Anchor(blog);
+        // - Follow author link and get HTML document representing the author
+        using (var author = authorLink.Follow(Session).Get<HtmlDocument>())
+        {
+          // Assert ...
+          Assert.IsNotNull(author);
 
-      // - Follow author link and get HTML document representing the author
-      HtmlDocument author = authorLink.Follow(Session).Get<HtmlDocument>().Body;
-
-      // Assert ...
-      Assert.IsNotNull(author);
-
-      // - Check e-mail of author
-      HtmlNode email = author.DocumentNode.SelectNodes(@"//a[@rel=""email""]").First();
-      Assert.AreEqual("pp@ramonerest.dk", email.Attributes["href"].Value);
+          // - Check e-mail of author
+          HtmlNode email = author.Body.DocumentNode.SelectNodes(@"//a[@rel=""email""]").First();
+          Assert.AreEqual("pp@ramonerest.dk", email.Attributes["href"].Value);
+        }
+      }
     }
 
 
@@ -86,33 +89,36 @@ namespace Ramone.Tests.Blog
       // Act ...
 
       // - GET blog
-      Response<HtmlDocument> blog = blogRequest.Get<HtmlDocument>();
-
-      // - Extract "post" nodes
-      HtmlNodeCollection posts = blog.Body.DocumentNode.SelectNodes(@"//*[@class=""post""]");
-
-      foreach (HtmlNode listPost in posts)
+      using (var blog = blogRequest.Get<HtmlDocument>())
       {
-        // - Extract post link, follow and GET the post
-        ILink postLink = listPost.SelectNodes(@".//a[@rel=""self""]").First().Anchor(blog);
-        HtmlDocument postItem = postLink.Follow(Session).Get<HtmlDocument>().Body;
+        // - Extract "post" nodes
+        HtmlNodeCollection posts = blog.Body.DocumentNode.SelectNodes(@"//*[@class=""post""]");
 
-        // - Extract author link from post
-        ILink authorLink = postItem.DocumentNode.SelectNodes(@".//a[@rel=""author""]").First().Anchor(blog);
+        foreach (HtmlNode listPost in posts)
+        {
+          // - Extract post link, follow and GET the post
+          ILink postLink = listPost.SelectNodes(@".//a[@rel=""self""]").First().Anchor(blog);
+          using (var postItem = postLink.Follow(Session).Get<HtmlDocument>())
+          {
+            // - Extract author link from post
+            ILink authorLink = postItem.Body.DocumentNode.SelectNodes(@".//a[@rel=""author""]").First().Anchor(blog);
 
-        // - Follow author link and get HTML document representing the author
-        HtmlDocument author = authorLink.Follow(Session).Get<HtmlDocument>().Body;
+            // - Follow author link and get HTML document representing the author
+            using (var author = authorLink.Follow(Session).Get<HtmlDocument>())
+            {
+              // - Get e-mail of author
+              HtmlNode email = author.Body.DocumentNode.SelectNodes(@"//a[@rel=""email""]").First();
 
-        // - Get e-mail of author
-        HtmlNode email = author.DocumentNode.SelectNodes(@"//a[@rel=""email""]").First();
+              foundEMails.Add(email.Attributes["href"].Value);
+            }
+          }
+        }
 
-        foundEMails.Add(email.Attributes["href"].Value);
+        // Assert ...
+        Assert.AreEqual(2, foundEMails.Count);
+        Assert.IsTrue(foundEMails.Contains("bb@ramonerest.dk"));
+        Assert.IsTrue(foundEMails.Contains("cc@ramonerest.dk"));
       }
-
-      // Assert ...
-      Assert.AreEqual(2, foundEMails.Count);
-      Assert.IsTrue(foundEMails.Contains("bb@ramonerest.dk"));
-      Assert.IsTrue(foundEMails.Contains("cc@ramonerest.dk"));
     }
 
 
@@ -125,32 +131,35 @@ namespace Ramone.Tests.Blog
       // Act ...
 
       // - GET blog
-      Response<HtmlDocument> blog = blogRequest.Get<HtmlDocument>();
+      using (var blog = blogRequest.Get<HtmlDocument>())
+      {
+        // - Extract "edit" anchor
+        ILink editLink = blog.Body.DocumentNode.SelectNodes(@"//a[@rel=""edit""]").First().Anchor(blog);
 
-      // - Extract "edit" anchor
-      ILink editLink = blog.Body.DocumentNode.SelectNodes(@"//a[@rel=""edit""]").First().Anchor(blog);
+        // - GET form describing how to input
+        using (Response<HtmlDocument> createDescriptor = editLink.Follow(Session).Get<HtmlDocument>())
+        {
+          // - Extract "create" form
+          IKeyValueForm form = createDescriptor.Body.DocumentNode.SelectNodes(@"//form[@id=""create""]").First().Form(createDescriptor);
 
-      // - GET form describing how to input
-      Response<HtmlDocument> createDescriptor = editLink.Follow(Session).Get<HtmlDocument>();
+          // - Populate form inputs
+          IFile file = new File("..\\..\\data1.gif", "image/gif");
+          form.Value("Title", "New item");
+          form.Value("Text", "Yaj!");
+          form.Value("Image", file);
 
-      // - Extract "create" form
-      IKeyValueForm form = createDescriptor.Body.DocumentNode.SelectNodes(@"//form[@id=""create""]").First().Form(createDescriptor);
-
-      // - Populate form inputs
-      IFile file = new File("..\\..\\data1.gif", "image/gif");
-      form.Value("Title", "New item");
-      form.Value("Text", "Yaj!");
-      form.Value("Image", file);
-
-      // - Submit the form
-      HtmlDocument createdBlogItem = form.Bind().Submit<HtmlDocument>().Created();
-
-      // Assert ...
-      Assert.IsNotNull(createdBlogItem);
-      HtmlNode postTitle = createdBlogItem.DocumentNode.SelectNodes(@"//*[@class=""post-title""]").First();
-      HtmlNode postContent = createdBlogItem.DocumentNode.SelectNodes(@"//*[@class=""post-content""]").First();
-      Assert.AreEqual("New item", postTitle.InnerText);
-      Assert.AreEqual("Yaj!", postContent.InnerText);
+          // - Submit the form
+          using (var createdBlogItem = form.Bind().Submit<HtmlDocument>())
+          {
+            // Assert ...
+            Assert.IsNotNull(createdBlogItem);
+            HtmlNode postTitle = createdBlogItem.Body.DocumentNode.SelectNodes(@"//*[@class=""post-title""]").First();
+            HtmlNode postContent = createdBlogItem.Body.DocumentNode.SelectNodes(@"//*[@class=""post-content""]").First();
+            Assert.AreEqual("New item", postTitle.InnerText);
+            Assert.AreEqual("Yaj!", postContent.InnerText);
+          }
+        }
+      }
     }
   }
 }

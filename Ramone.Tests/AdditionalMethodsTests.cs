@@ -14,11 +14,12 @@ namespace Ramone.Tests
       Request dossierReq = Session.Bind(DossierTemplate, new { id = 8 });
 
       // Act
-      Response response = dossierReq.Head();
-
-      // Assert
-      Assert.IsNotNull(response);
-      Assert.AreEqual("1", response.Headers["X-ExtraHeader"]);
+      using (Response response = dossierReq.Head())
+      {
+        // Assert
+        Assert.IsNotNull(response);
+        Assert.AreEqual("1", response.Headers["X-ExtraHeader"]);
+      }
     }
 
 
@@ -29,11 +30,12 @@ namespace Ramone.Tests
       Request dossierReq = Session.Bind(DossierTemplate, new { id = 8 });
 
       // Act
-      Response response = dossierReq.Options();
-
-      // Assert
-      Assert.IsNotNull(response);
-      Assert.AreEqual("2", response.Headers["X-ExtraHeader"]);
+      using (Response response = dossierReq.Options())
+      {
+        // Assert
+        Assert.IsNotNull(response);
+        Assert.AreEqual("2", response.Headers["X-ExtraHeader"]);
+      }
     }
 
 
@@ -44,20 +46,21 @@ namespace Ramone.Tests
       Request dossierReq = Session.Bind(DossierTemplate, new { id = 8 });
 
       // Act
-      Response<string> response1 = dossierReq.Options<string>();
-      Response<string> response2 = dossierReq.Accept<string>().Options();
-      Response response3 = dossierReq.Accept("text/plain").Options();
-
-      // Assert
-      Assert.IsNotNull(response1);
-      Assert.IsNotNull(response2);
-      Assert.IsNotNull(response3);
-      Assert.AreEqual("2", response1.Headers["X-ExtraHeader"]);
-      Assert.AreEqual("2", response2.Headers["X-ExtraHeader"]);
-      Assert.AreEqual("2", response3.Headers["X-ExtraHeader"]);
-      Assert.AreEqual("Yes", response1.Body);
-      Assert.AreEqual("Yes", response2.Body);
-      Assert.AreEqual("Yes", response3.Decode<string>());
+      using (Response<string> response1 = dossierReq.Options<string>())
+      using (Response<string> response2 = dossierReq.Accept<string>().Options())
+      using (Response response3 = dossierReq.Accept("text/plain").Options())
+      {
+        // Assert
+        Assert.IsNotNull(response1);
+        Assert.IsNotNull(response2);
+        Assert.IsNotNull(response3);
+        Assert.AreEqual("2", response1.Headers["X-ExtraHeader"]);
+        Assert.AreEqual("2", response2.Headers["X-ExtraHeader"]);
+        Assert.AreEqual("2", response3.Headers["X-ExtraHeader"]);
+        Assert.AreEqual("Yes", response1.Body);
+        Assert.AreEqual("Yes", response2.Body);
+        Assert.AreEqual("Yes", response3.Decode<string>());
+      }
     }
 
 

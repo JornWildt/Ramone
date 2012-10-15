@@ -27,7 +27,7 @@
 
       // Clear the in-memory database
       Request blogRequest = Session.Bind(BlogRootPath);
-      blogRequest.Delete();
+      blogRequest.Delete().Dispose();
     }
   }
 }

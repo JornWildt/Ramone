@@ -23,12 +23,13 @@ namespace Ramone.Tests
       Request req = Session.Bind(RedirectTemplate, new { code = responseCode, count = 1 });
 
       // Act
-      Response<RedirectArgs> resp = req.Execute<RedirectArgs>(method);
-
-      // Assert
-      Assert.AreEqual(5, resp.Body.Count, "Must have been redirected 4 times (server max.).");
-      Assert.AreEqual(4, resp.RedirectCount);
-      Assert.AreEqual("GET", resp.Body.Method);
+      using (Response<RedirectArgs> resp = req.Execute<RedirectArgs>(method))
+      {
+        // Assert
+        Assert.AreEqual(5, resp.Body.Count, "Must have been redirected 4 times (server max.).");
+        Assert.AreEqual(4, resp.RedirectCount);
+        Assert.AreEqual("GET", resp.Body.Method);
+      }
     }
 
 
@@ -41,10 +42,11 @@ namespace Ramone.Tests
       Request req = Session.Bind(RedirectTemplate, new { code = responseCode, count = 1 });
       
       // Act
-      Response<RedirectArgs> resp = req.Execute<RedirectArgs>(method);
-
-      // Assert
-      Assert.AreEqual(1, resp.Body.Count);
+      using (Response<RedirectArgs> resp = req.Execute<RedirectArgs>(method))
+      {
+        // Assert
+        Assert.AreEqual(1, resp.Body.Count);
+      }
     }
 
 
@@ -63,14 +65,15 @@ namespace Ramone.Tests
         Session.SetAllowedRedirects(responseCode1, 2);
 
         // Act
-        Response<RedirectArgs> resp1 = req1.Execute<RedirectArgs>(method);
-        Response<RedirectArgs> resp2 = req2.Execute<RedirectArgs>(method);
-
-        // Assert
-        Assert.AreEqual(3, resp1.Body.Count, "Must have been redirected 2 times as specified.");
-        Assert.AreEqual(2, resp1.RedirectCount);
-        Assert.AreEqual(1, resp2.Body.Count, "Must not redirect other codes.");
-        Assert.AreEqual(0, resp2.RedirectCount);
+        using (Response<RedirectArgs> resp1 = req1.Execute<RedirectArgs>(method))
+        using (Response<RedirectArgs> resp2 = req2.Execute<RedirectArgs>(method))
+        {
+          // Assert
+          Assert.AreEqual(3, resp1.Body.Count, "Must have been redirected 2 times as specified.");
+          Assert.AreEqual(2, resp1.RedirectCount);
+          Assert.AreEqual(1, resp2.Body.Count, "Must not redirect other codes.");
+          Assert.AreEqual(0, resp2.RedirectCount);
+        }
       }
     }
 
@@ -85,11 +88,12 @@ namespace Ramone.Tests
       Session.SetAllowedRedirects(responseCode, 0);
 
       // Act
-      Response<RedirectArgs> resp = req.Execute<RedirectArgs>(method);
-
-      // Assert
-      Assert.AreEqual(1, resp.Body.Count);
-      Assert.AreEqual(responseCode, (int)resp.WebResponse.StatusCode);
+      using (Response<RedirectArgs> resp = req.Execute<RedirectArgs>(method))
+      {
+        // Assert
+        Assert.AreEqual(1, resp.Body.Count);
+        Assert.AreEqual(responseCode, (int)resp.WebResponse.StatusCode);
+      }
     }
 
 
@@ -105,10 +109,11 @@ namespace Ramone.Tests
       InterceptorCount = 0;
 
       // Act
-      Response<RedirectArgs> resp = req.Execute<RedirectArgs>(method);
-
-      // Assert
-      Assert.AreEqual(5, InterceptorCount);
+      using (Response<RedirectArgs> resp = req.Execute<RedirectArgs>(method))
+      {
+        // Assert
+        Assert.AreEqual(5, InterceptorCount);
+      }
     }
 
 

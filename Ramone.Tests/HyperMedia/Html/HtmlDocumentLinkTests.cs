@@ -127,7 +127,7 @@ namespace Ramone.Tests.HyperMedia.Html
       HtmlNode node = HtmlDoc.DocumentNode.SelectNodes(@"//div[@id=""set1""]").First();
 
       // Act + Assert
-      AssertThrows<SelectFailed>(() => node.Anchors(BaseUrl).Select("next"));
+      AssertThrows<SelectFailedException>(() => node.Anchors(BaseUrl).Select("next"));
     }
 
 

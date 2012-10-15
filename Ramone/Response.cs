@@ -23,8 +23,10 @@ namespace Ramone
 
     public ISession Session { get; protected set; }
 
+    public Guid? ConnectionId { get; protected set; }
 
-    public Response(HttpWebResponse response, ISession session, int retryCount)
+
+    public Response(HttpWebResponse response, ISession session, int retryCount, Guid? connectionId = null)
     {
       WebResponse = response;
       try
@@ -38,6 +40,7 @@ namespace Ramone
       }
       Session = session;
       RedirectCount = retryCount;
+      ConnectionId = connectionId;
     }
 
 
@@ -96,30 +99,34 @@ namespace Ramone
           return null;
 
         Request request = Session.Request(WebResponse.Headers[HttpResponseHeader.Location]);
-        body = request.Get<T>().Body;
+        using (var response = request.Get<T>())
+          body = response.Body;
       }
 
       return body;
     }
 
-      public void Dispose()
-      {
-          this.WebResponse.Close();
-      }
+    
+    public void Dispose()
+    {
+      WebResponse.Close();
+      if (ConnectionId != null)
+        ConnectionStatistics.DiscardConnection(ConnectionId.Value);
+    }
   }
 
 
   public class Response<TBody> : Response
     where TBody : class
   {
-    public Response(HttpWebResponse response, ISession session, int retryCount)
-      : base(response, session, retryCount)
+    public Response(HttpWebResponse response, ISession session, int retryCount, Guid? id = null)
+      : base(response, session, retryCount, id)
     {
     }
 
 
     public Response(Response src, int retryCount)
-      : base(src.WebResponse, src.Session, retryCount)
+      : base(src.WebResponse, src.Session, retryCount, src.ConnectionId)
     {
     }
 

@@ -490,26 +490,43 @@ namespace Ramone
         }
 
         HttpWebResponse response = (HttpWebResponse)request.GetResponse();
-
-        // Handle redirects
-        if (300 <= (int)response.StatusCode && (int)response.StatusCode <= 399)
+        Guid? connectionId = null;
+        try
         {
-          int allowedRedirectCount = Session.GetAllowedRedirects((int)response.StatusCode);
-          if (retryLevel < allowedRedirectCount)
-          {
-            if (response.StatusCode == HttpStatusCode.SeeOther)
-            {
-              method = "GET";
-              includeBody = false;
-            }
-            Uri location = response.LocationAsUri();
-            if (location == null)
-              throw new InvalidOperationException(string.Format("No redirect location supplied in {0} response from {1}.", (int)response.StatusCode, request.RequestUri));
-            return DoRequest(location, method, includeBody, requestModifier, retryLevel + 1);
-          }
-        }
+          connectionId = ConnectionStatistics.RegisterConnection(response);
 
-        return new Response(response, Session, retryLevel);
+          // Handle redirects
+          if (300 <= (int)response.StatusCode && (int)response.StatusCode <= 399)
+          {
+            int allowedRedirectCount = Session.GetAllowedRedirects((int)response.StatusCode);
+            if (retryLevel < allowedRedirectCount)
+            {
+              if (response.StatusCode == HttpStatusCode.SeeOther)
+              {
+                method = "GET";
+                includeBody = false;
+              }
+              Uri location = response.LocationAsUri();
+              if (location == null)
+                throw new InvalidOperationException(string.Format("No redirect location supplied in {0} response from {1}.", (int)response.StatusCode, request.RequestUri));
+
+              response.Close();
+              if (connectionId != null)
+                ConnectionStatistics.DiscardConnection(connectionId.Value);
+              
+              return DoRequest(location, method, includeBody, requestModifier, retryLevel + 1);
+            }
+          }
+
+          return new Response(response, Session, retryLevel, connectionId);
+        }
+        catch (Exception)
+        {
+          response.Close();
+          if (connectionId != null)
+            ConnectionStatistics.DiscardConnection(connectionId.Value);
+          throw;
+        }
       }
       catch (WebException ex)
       {

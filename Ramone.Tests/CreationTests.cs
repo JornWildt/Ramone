@@ -20,16 +20,17 @@ namespace Ramone.Tests
       Request request = Session.Request(DossiersUrl);
 
       // Act
-      Response<Dossier> response = request.Post<Dossier>(dossier);
-      
-      // Assert
-      Uri createdDossierLocation = response.CreatedLocation;
-      Dossier createdDossier = response.Body;
+      using (Response<Dossier> response = request.Post<Dossier>(dossier))
+      {
+        // Assert
+        Uri createdDossierLocation = response.CreatedLocation;
+        Dossier createdDossier = response.Body;
 
-      Assert.IsNotNull(createdDossierLocation);
-      Assert.IsNotNull(createdDossier);
-      Assert.AreEqual("A new dossier", createdDossier.Title);
-      Assert.AreEqual(999, createdDossier.Id);
+        Assert.IsNotNull(createdDossierLocation);
+        Assert.IsNotNull(createdDossier);
+        Assert.AreEqual("A new dossier", createdDossier.Title);
+        Assert.AreEqual(999, createdDossier.Id);
+      }
     }
 
 
@@ -45,18 +46,19 @@ namespace Ramone.Tests
       Request request = Session.Request(DossiersUrl);
 
       // Act
-      Response<Dossier> response = request.Post<Dossier>(dossier);
+      using (Response<Dossier> response = request.Post<Dossier>(dossier))
+      {
+        // Assert that server does as expected
+        Uri createdDossierLocation = response.CreatedLocation;
+        Dossier createdDossier = response.Body;
 
-      // Assert that server does as expected
-      Uri createdDossierLocation = response.CreatedLocation;
-      Dossier createdDossier = response.Body;
+        Assert.IsNotNull(createdDossierLocation);
+        Assert.Null(createdDossier);
 
-      Assert.IsNotNull(createdDossierLocation);
-      Assert.Null(createdDossier);
-
-      // Assert that client does as expected
-      createdDossier = response.Created();
-      Assert.IsNotNull(createdDossier);
+        // Assert that client does as expected
+        createdDossier = response.Created();
+        Assert.IsNotNull(createdDossier);
+      }
     }
   }
 }

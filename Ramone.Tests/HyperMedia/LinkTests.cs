@@ -99,9 +99,9 @@ namespace Ramone.Tests.HyperMedia
     [Test]
     public void WhenSelectingUnknownLinksItThrowsSelectFailed()
     {
-      AssertThrows<SelectFailed>(() => Links.Select("unused"));
-      AssertThrows<SelectFailed>(() => Links.Select("unused", "application/atom+xml"));
-      AssertThrows<SelectFailed>(() => Links.Select("unused", "text/html"));
+      AssertThrows<SelectFailedException>(() => Links.Select("unused"));
+      AssertThrows<SelectFailedException>(() => Links.Select("unused", "application/atom+xml"));
+      AssertThrows<SelectFailedException>(() => Links.Select("unused", "text/html"));
     }
 
     [Test]

@@ -87,6 +87,7 @@
     <Compile Include="AuthorizationExtensions.cs" />
     <Compile Include="BindingExtensions.cs" />
     <Compile Include="CodecManagerExtensions.cs" />
+    <Compile Include="ConnectionStatistics.cs" />
     <Compile Include="FileExtensions.cs" />
     <Compile Include="HyperMedia\ILinkTemplate.cs" />
     <Compile Include="HyperMedia\IParameters.cs" />
