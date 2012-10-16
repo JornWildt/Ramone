@@ -18,10 +18,13 @@ namespace Ramone.Tests
       Request request = Session.Request(HeaderListUrl);
 
       // Act
-      HeaderList headers = request.Header("X-Ramone", "123").Get<HeaderList>().Body;
+      using (var r = request.Header("X-Ramone", "123").Get<HeaderList>())
+      {
+        HeaderList headers = r.Body;
 
-      // Assert
-      Assert.IsTrue(headers.Any(h => h == "X-Ramone: 123"), "Must contain customer header");
+        // Assert
+        Assert.IsTrue(headers.Any(h => h == "X-Ramone: 123"), "Must contain customer header");
+      }
     }
   }
 }

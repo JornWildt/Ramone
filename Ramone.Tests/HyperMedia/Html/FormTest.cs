@@ -25,20 +25,23 @@ namespace Ramone.Tests.HyperMedia.Html
       // Act
       IKeyValueForm form = GetForm(encType: encType);
       form.Value("Unused", "---");
-      FormArgs result = form.Bind().Submit<FormArgs>().Body;
+      using (var r = form.Bind().Submit<FormArgs>())
+      {
+        FormArgs result = r.Body;
 
-      // Assert
-      Assert.IsNotNull(result);
-      Assert.AreEqual("text", result.InputText);
-      Assert.AreEqual("password", result.InputPassword);
-      Assert.AreEqual("checkbox", result.InputCheckbox);
-      Assert.AreEqual("hidden", result.InputHidden);
-      Assert.AreEqual("textarea", result.TextArea);
-      Assert.AreEqual("2", result.Select);
-      Assert.AreEqual("1b", result.Radio1);
-      Assert.IsNull(result.Radio2);
-      //Assert.AreEqual("B,C", result.MultiSelectValue);
-      Assert.AreEqual(encType, result.EncType);
+        // Assert
+        Assert.IsNotNull(result);
+        Assert.AreEqual("text", result.InputText);
+        Assert.AreEqual("password", result.InputPassword);
+        Assert.AreEqual("checkbox", result.InputCheckbox);
+        Assert.AreEqual("hidden", result.InputHidden);
+        Assert.AreEqual("textarea", result.TextArea);
+        Assert.AreEqual("2", result.Select);
+        Assert.AreEqual("1b", result.Radio1);
+        Assert.IsNull(result.Radio2);
+        //Assert.AreEqual("B,C", result.MultiSelectValue);
+        Assert.AreEqual(encType, result.EncType);
+      }
     }
 
 
@@ -55,20 +58,23 @@ namespace Ramone.Tests.HyperMedia.Html
       form.Value("Select", "1");
       form.Value("Radio1", "1a");
       form.Value("Radio2", "2b");
-      FormArgs result = form.Bind().Submit<FormArgs>().Body;
+      using (var r = form.Bind().Submit<FormArgs>())
+      {
+        FormArgs result = r.Body;
 
-      // Assert
-      Assert.IsNotNull(result);
-      Assert.AreEqual("abc", result.InputText);
-      Assert.AreEqual("1234", result.InputPassword);
-      Assert.AreEqual("not", result.InputCheckbox);
-      Assert.AreEqual("hidden", result.InputHidden);
-      Assert.AreEqual("qwe", result.TextArea);
-      Assert.AreEqual("1", result.Select);
-      Assert.AreEqual("1a", result.Radio1);
-      Assert.AreEqual("2b", result.Radio2);
-      //Assert.AreEqual("A,D", result.MultiSelectValue);
-      Assert.AreEqual(encType, result.EncType);
+        // Assert
+        Assert.IsNotNull(result);
+        Assert.AreEqual("abc", result.InputText);
+        Assert.AreEqual("1234", result.InputPassword);
+        Assert.AreEqual("not", result.InputCheckbox);
+        Assert.AreEqual("hidden", result.InputHidden);
+        Assert.AreEqual("qwe", result.TextArea);
+        Assert.AreEqual("1", result.Select);
+        Assert.AreEqual("1a", result.Radio1);
+        Assert.AreEqual("2b", result.Radio2);
+        //Assert.AreEqual("A,D", result.MultiSelectValue);
+        Assert.AreEqual(encType, result.EncType);
+      }
     }
 
 
@@ -83,20 +89,23 @@ namespace Ramone.Tests.HyperMedia.Html
 
       // Act
       IKeyValueForm form = GetForm(encType: encType);
-      FormArgs result = form.Value(args).Bind().Submit<FormArgs>().Body;
+      using (var r = form.Value(args).Bind().Submit<FormArgs>())
+      {
+        FormArgs result = r.Body;
 
-      // Assert
-      Assert.IsNotNull(result);
-      Assert.AreEqual("text", result.InputText);
-      Assert.AreEqual("password", result.InputPassword);
-      Assert.AreEqual("checkbox", result.InputCheckbox);
-      Assert.AreEqual("hidden", result.InputHidden);
-      Assert.AreEqual("textarea", result.TextArea);
-      Assert.AreEqual("2", result.Select);
-      Assert.AreEqual("1b", result.Radio1);
-      Assert.IsNull(result.Radio2);
-      //Assert.AreEqual("B,C", result.MultiSelectValue);
-      Assert.AreEqual(encType, result.EncType);
+        // Assert
+        Assert.IsNotNull(result);
+        Assert.AreEqual("text", result.InputText);
+        Assert.AreEqual("password", result.InputPassword);
+        Assert.AreEqual("checkbox", result.InputCheckbox);
+        Assert.AreEqual("hidden", result.InputHidden);
+        Assert.AreEqual("textarea", result.TextArea);
+        Assert.AreEqual("2", result.Select);
+        Assert.AreEqual("1b", result.Radio1);
+        Assert.IsNull(result.Radio2);
+        //Assert.AreEqual("B,C", result.MultiSelectValue);
+        Assert.AreEqual(encType, result.EncType);
+      }
     }
 
 
@@ -119,20 +128,23 @@ namespace Ramone.Tests.HyperMedia.Html
 
       // Act
       IKeyValueForm form = GetForm(encType: encType);
-      FormArgs result = form.Value(args).Bind().Submit<FormArgs>().Body;
+      using (var r = form.Value(args).Bind().Submit<FormArgs>())
+      {
+        FormArgs result = r.Body;
 
-      // Assert
-      Assert.IsNotNull(result);
-      Assert.AreEqual("abc", result.InputText);
-      Assert.AreEqual("1234", result.InputPassword);
-      Assert.AreEqual("not", result.InputCheckbox);
-      Assert.AreEqual("hidden", result.InputHidden);
-      Assert.AreEqual("qwe", result.TextArea);
-      Assert.AreEqual("3", result.Select);
-      Assert.AreEqual("1a", result.Radio1);
-      Assert.AreEqual("2b", result.Radio2);
-      //Assert.AreEqual("A,D", result.MultiSelectValue);
-      Assert.AreEqual(encType, result.EncType);
+        // Assert
+        Assert.IsNotNull(result);
+        Assert.AreEqual("abc", result.InputText);
+        Assert.AreEqual("1234", result.InputPassword);
+        Assert.AreEqual("not", result.InputCheckbox);
+        Assert.AreEqual("hidden", result.InputHidden);
+        Assert.AreEqual("qwe", result.TextArea);
+        Assert.AreEqual("3", result.Select);
+        Assert.AreEqual("1a", result.Radio1);
+        Assert.AreEqual("2b", result.Radio2);
+        //Assert.AreEqual("A,D", result.MultiSelectValue);
+        Assert.AreEqual(encType, result.EncType);
+      }
     }
 
 
@@ -144,13 +156,16 @@ namespace Ramone.Tests.HyperMedia.Html
 
       // Act
       IKeyValueForm form = GetForm();
-      FormArgs result = form.Value(args).Bind().Submit<FormArgs>().Body;
+      using (var r = form.Value(args).Bind().Submit<FormArgs>())
+      {
+        FormArgs result = r.Body;
 
-      // Assert
-      Assert.IsNotNull(result);
-      Assert.AreEqual("Save", result.Save);
-      Assert.IsNull(result.Cancel);
-      Assert.IsNull(result.Help);
+        // Assert
+        Assert.IsNotNull(result);
+        Assert.AreEqual("Save", result.Save);
+        Assert.IsNull(result.Cancel);
+        Assert.IsNull(result.Help);
+      }
     }
 
 
@@ -162,13 +177,16 @@ namespace Ramone.Tests.HyperMedia.Html
 
       // Act
       IKeyValueForm form = GetForm();
-      FormArgs result = form.Value(args).Bind("Cancel").Submit<FormArgs>().Body;
+      using (var r = form.Value(args).Bind("Cancel").Submit<FormArgs>())
+      {
+        FormArgs result = r.Body;
 
-      // Assert
-      Assert.IsNotNull(result);
-      Assert.IsNull(result.Save);
-      Assert.AreEqual("Cancel", result.Cancel);
-      Assert.IsNull(result.Help);
+        // Assert
+        Assert.IsNotNull(result);
+        Assert.IsNull(result.Save);
+        Assert.AreEqual("Cancel", result.Cancel);
+        Assert.IsNull(result.Help);
+      }
     }
 
 
@@ -180,13 +198,16 @@ namespace Ramone.Tests.HyperMedia.Html
 
       // Act
       IKeyValueForm form = GetForm();
-      FormArgs result = form.Value(args).Bind("#help-button").Submit<FormArgs>().Body;
+      using (var r = form.Value(args).Bind("#help-button").Submit<FormArgs>())
+      {
+        FormArgs result = r.Body;
 
-      // Assert
-      Assert.IsNotNull(result);
-      Assert.IsNull(result.Save);
-      Assert.IsNull(result.Cancel);
-      Assert.AreEqual("Help", result.Help);
+        // Assert
+        Assert.IsNotNull(result);
+        Assert.IsNull(result.Save);
+        Assert.IsNull(result.Cancel);
+        Assert.AreEqual("Help", result.Help);
+      }
     }
 
 
@@ -198,11 +219,14 @@ namespace Ramone.Tests.HyperMedia.Html
 
       // Act
       IKeyValueForm form = GetForm("relative");
-      FormArgs result = form.Value(args).Bind("Cancel").Submit<FormArgs>().Body;
+      using (var r = form.Value(args).Bind("Cancel").Submit<FormArgs>())
+      {
+        FormArgs result = r.Body;
 
-      // Assert
-      Assert.IsNotNull(result);
-      Assert.AreEqual("Cancel", result.Cancel);
+        // Assert
+        Assert.IsNotNull(result);
+        Assert.AreEqual("Cancel", result.Cancel);
+      }
     }
 
 
@@ -214,11 +238,14 @@ namespace Ramone.Tests.HyperMedia.Html
 
       // Act
       IKeyValueForm form = GetForm("empty");
-      FormArgs result = form.Value(args).Bind("Cancel").Submit<FormArgs>().Body;
+      using (var r = form.Value(args).Bind("Cancel").Submit<FormArgs>())
+      {
+        FormArgs result = r.Body;
 
-      // Assert
-      Assert.IsNotNull(result);
-      Assert.AreEqual("Cancel", result.Cancel);
+        // Assert
+        Assert.IsNotNull(result);
+        Assert.AreEqual("Cancel", result.Cancel);
+      }
     }
 
 
@@ -235,14 +262,17 @@ namespace Ramone.Tests.HyperMedia.Html
       // Act
       IKeyValueForm form = GetForm(charset: charset);
       Request submitRequest = form.Value(args).Bind();
-      FormArgs result = submitRequest.Submit<FormArgs>().Body;
+      using (var r = submitRequest.Submit<FormArgs>())
+      {
+        FormArgs result = r.Body;
 
-      // Assert
-      if (charset == "unused")
-        charset = Session.DefaultEncoding.WebName;
-      Assert.AreEqual(charset, submitRequest.CodecParameter("Charset"));
-      Assert.IsNotNull(result);
-      Assert.AreEqual("ÆØÅüì", result.InputText);
+        // Assert
+        if (charset == "unused")
+          charset = Session.DefaultEncoding.WebName;
+        Assert.AreEqual(charset, submitRequest.CodecParameter("Charset"));
+        Assert.IsNotNull(result);
+        Assert.AreEqual("ÆØÅüì", result.InputText);
+      }
     }
 
 
@@ -250,9 +280,11 @@ namespace Ramone.Tests.HyperMedia.Html
     {
       // Pass charset to form creator such that it can insert "accept-charset" in the form.
       Request formRequest = Session.Bind(FormTemplate, new { actionUrlMode = actionUrlMode, encType = encType, charset = charset });
-      Response<HtmlDocument> response = formRequest.Get<HtmlDocument>();
-      IKeyValueForm form = response.Body.DocumentNode.SelectNodes(@"//form").First().Form(response);
-      return form;
+      using (Response<HtmlDocument> response = formRequest.Get<HtmlDocument>())
+      {
+        IKeyValueForm form = response.Body.DocumentNode.SelectNodes(@"//form").First().Form(response);
+        return form;
+      }
     }
   }
 }

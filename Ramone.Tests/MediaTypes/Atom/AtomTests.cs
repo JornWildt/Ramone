@@ -20,11 +20,12 @@ namespace Ramone.Tests.MediaTypes.Atom
       Request feedReq = Session.Bind(AtomFeedTemplate, new { name = "Mamas feed" });
 
       // Act
-      SyndicationFeed feed = feedReq.Get<SyndicationFeed>().Body;
-
-      // Assert
-      Assert.IsNotNull(feed);
-      Assert.AreEqual("Mamas feed", feed.Title.Text);
+      using (var feed = feedReq.Get<SyndicationFeed>())
+      {
+        // Assert
+        Assert.IsNotNull(feed.Body);
+        Assert.AreEqual("Mamas feed", feed.Body.Title.Text);
+      }
     }
 
 
@@ -35,28 +36,13 @@ namespace Ramone.Tests.MediaTypes.Atom
       Request itemReq = Session.Bind(AtomItemTemplate, new { feedname = "Mamas feed", itemname = "No. 1" });
 
       // Act
-      SyndicationItem item = itemReq.Get<SyndicationItem>().Body;
-
-      // Assert
-      Assert.IsNotNull(item);
-      Assert.AreEqual("No. 1", item.Title.Text);
+      using (var item = itemReq.Get<SyndicationItem>())
+      {
+        // Assert
+        Assert.IsNotNull(item);
+        Assert.AreEqual("No. 1", item.Body.Title.Text);
+      }
     }
-
-
-    //[Test]
-    //public void CanFollowAtomLinkList()
-    //{
-    //  // Arrange
-    //  MyResource r = new MyResource();
-    //  r.Links.Add(new AtomLink(new Uri("http://dr.dk"), "http://dr.dk", "test", "text/html", "DR"));
-
-    //  // Act
-    //  Request request = r.Links.Follow(Session, "test");
-
-    //  // Assert
-    //  Assert.IsNotNull(request);
-    //  Assert.AreEqual("http://dr.dk/", request.Url.AbsoluteUri);
-    //}
 
 
     [Test]

@@ -28,19 +28,22 @@ namespace Ramone.Tests.Blog
       Request blogRequest = Session.Bind(BlogRootPath);
 
       // Act
-      Resources.Blog blog = blogRequest.Get<Resources.Blog>().Body;
+      using (var response = blogRequest.Get<Resources.Blog>())
+      {
+        Resources.Blog blog = response.Body;
 
-      // Assert ...
-      Assert.IsNotNull(blog);
-      Assert.AreEqual("A mixed blog", blog.Title);
-      Assert.IsNotNull(blog.Posts);
-      Assert.AreEqual(2, blog.Posts.Count);
+        // Assert ...
+        Assert.IsNotNull(blog);
+        Assert.AreEqual("A mixed blog", blog.Title);
+        Assert.IsNotNull(blog.Posts);
+        Assert.AreEqual(2, blog.Posts.Count);
 
-      // - Check content of first post
-      Resources.Blog.Post post1 = blog.Posts[0];
-      Assert.IsNotNull(post1);
-      Assert.AreEqual("Hot summer", post1.Title);
-      Assert.AreEqual("It is a hot summer this year.", post1.Text);
+        // - Check content of first post
+        Resources.Blog.Post post1 = blog.Posts[0];
+        Assert.IsNotNull(post1);
+        Assert.AreEqual("Hot summer", post1.Title);
+        Assert.AreEqual("It is a hot summer this year.", post1.Text);
+      }
     }
 
 
@@ -53,20 +56,24 @@ namespace Ramone.Tests.Blog
       // Act ...
 
       // - GET blog
-      Resources.Blog blog = blogRequest.Get<Resources.Blog>().Body;
+      using (var response = blogRequest.Get<Resources.Blog>())
+      {
+        Resources.Blog blog = response.Body;
 
-      // - Fetch author link
-      ILink authorLink = blog.Links.Select("author");
+        // - Fetch author link
+        ILink authorLink = blog.Links.Select("author");
 
-      // - Follow author link and get author data
-      Resources.Author author = authorLink.Follow(Session).Get<Resources.Author>().Body;
+        // - Follow author link and get author data
+        using (var author = authorLink.Follow(Session).Get<Resources.Author>())
+        {
+          // Assert ...
+          Assert.IsNotNull(author.Body);
 
-      // Assert ...
-      Assert.IsNotNull(author);
-
-      // - Check e-mail of author
-      Assert.AreEqual("Pete Peterson", author.Name);
-      Assert.AreEqual("pp@ramonerest.dk", author.EMail);
+          // - Check e-mail of author
+          Assert.AreEqual("Pete Peterson", author.Body.Name);
+          Assert.AreEqual("pp@ramonerest.dk", author.Body.EMail);
+        }
+      }
     }
 
 
@@ -80,24 +87,28 @@ namespace Ramone.Tests.Blog
       // Act ...
 
       // - GET blog
-      Resources.Blog blog = blogRequest.Get<Resources.Blog>().Body;
-
-      foreach (Resources.Blog.Post post in blog.Posts)
+      using (var r = blogRequest.Get<Resources.Blog>())
       {
-        // - GET post
-        Resources.Post fullPost = post.Links.Select("self").Follow(Session).Get<Resources.Post>().Body;
+        Resources.Blog blog = r.Body;
+        foreach (Resources.Blog.Post post in blog.Posts)
+        {
+          // - GET post
+          using (var fullPost = post.Links.Select("self").Follow(Session).Get<Resources.Post>())
+          {
+            // - Follow author link
+            using (var author = fullPost.Body.Links.Select("author").Follow(Session).Get<Resources.Author>())
+            {
+              // - Register e-mail
+              foundEMails.Add(author.Body.EMail);
+            }
+          }
+        }
 
-        // - Follow author link
-        Resources.Author author = fullPost.Links.Select("author").Follow(Session).Get<Resources.Author>().Body;
-
-        // - Register e-mail
-        foundEMails.Add(author.EMail);
+        // Assert ...
+        Assert.AreEqual(2, foundEMails.Count);
+        Assert.IsTrue(foundEMails.Contains("bb@ramonerest.dk"));
+        Assert.IsTrue(foundEMails.Contains("cc@ramonerest.dk"));
       }
-
-      // Assert ...
-      Assert.AreEqual(2, foundEMails.Count);
-      Assert.IsTrue(foundEMails.Contains("bb@ramonerest.dk"));
-      Assert.IsTrue(foundEMails.Contains("cc@ramonerest.dk"));
     }
 
 
@@ -110,31 +121,38 @@ namespace Ramone.Tests.Blog
       // Act ...
 
       // - GET blog
-      Resources.Blog blog = blogRequest.Get<Resources.Blog>().Body;
-
-      // - Follow "edit" link and GET form describing how to input
-      Response<Resources.CreatePostDescriptor> createDescriptor
-        = blog.Links.Select("edit").Follow(Session).Get<Resources.CreatePostDescriptor>();
-
-      // - Extract "create" form
-      IKeyValueForm form = createDescriptor.Body.Form;
-
-      // - Populate form inputs
-      Resources.CreatePostArgs args = new Resources.CreatePostArgs
+      using (var r = blogRequest.Get<Resources.Blog>())
       {
-        Title = "New item",
-        Text = "Yaj!",
-        Image = new File("..\\..\\data1.gif", "image/gif")
-      };
-      form.Value(args);
+        Resources.Blog blog = r.Body;
 
-      // - Submit the form
-      Resources.Post createdPost = form.Bind().Submit<Resources.Post>().Created();
+        // - Follow "edit" link and GET form describing how to input
+        using (Response<Resources.CreatePostDescriptor> createDescriptor
+               = blog.Links.Select("edit").Follow(Session).Get<Resources.CreatePostDescriptor>())
+        {
+          // - Extract "create" form
+          IKeyValueForm form = createDescriptor.Body.Form;
 
-      // Assert ...
-      Assert.IsNotNull(createdPost);
-      Assert.AreEqual("New item", createdPost.Title);
-      Assert.AreEqual("Yaj!", createdPost.Text);
+          // - Populate form inputs
+          Resources.CreatePostArgs args = new Resources.CreatePostArgs
+          {
+            Title = "New item",
+            Text = "Yaj!",
+            Image = new File("..\\..\\data1.gif", "image/gif")
+          };
+          form.Value(args);
+
+          // - Submit the form
+          using (var r2 = form.Bind().Submit<Resources.Post>())
+          {
+            Resources.Post createdPost = r2.Body;
+
+            // Assert ...
+            Assert.IsNotNull(createdPost);
+            Assert.AreEqual("New item", createdPost.Title);
+            Assert.AreEqual("Yaj!", createdPost.Text);
+          }
+        }
+      }
     }
   }
 }

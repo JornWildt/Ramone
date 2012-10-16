@@ -17,11 +17,14 @@ namespace Ramone.Tests
       using (TempFile file = new TempFile())
       {
         // Act
-        request.Get().SaveToFile(file.Path);
+        using (var r = request.Get())
+        {
+          r.SaveToFile(file.Path);
 
-        // Assert
-        string s = File.ReadAllText(file.Path);
-        Assert.AreEqual("1234567890", s);
+          // Assert
+          string s = File.ReadAllText(file.Path);
+          Assert.AreEqual("1234567890", s);
+        }
       }
     }
   }

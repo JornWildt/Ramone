@@ -18,12 +18,13 @@ namespace Ramone.Tests
       Request dossierReq = Session.Bind(DossierTemplate, new { id = 8 });
 
       // Act
-      Dossier dossier = dossierReq.Get<Dossier>().Body;
-
-      // Assert
-      Assert.AreEqual(8, dossier.Id);
-      Assert.AreEqual("Dossier no. 8", dossier.Title);
-      Assert.IsNotNull(dossier.Links);
+      using (var dossier = dossierReq.Get<Dossier>())
+      {
+        // Assert
+        Assert.AreEqual(8, dossier.Body.Id);
+        Assert.AreEqual("Dossier no. 8", dossier.Body.Title);
+        Assert.IsNotNull(dossier.Body.Links);
+      }
     }
 
 
@@ -36,12 +37,13 @@ namespace Ramone.Tests
       Request dossierReq = Session.Bind(DossierTemplate, p);
 
       // Act
-      Dossier dossier = dossierReq.Get<Dossier>().Body;
-
-      // Assert
-      Assert.AreEqual(8, dossier.Id);
-      Assert.AreEqual("Dossier no. 8", dossier.Title);
-      Assert.IsNotNull(dossier.Links);
+      using (var dossier = dossierReq.Get<Dossier>())
+      {
+        // Assert
+        Assert.AreEqual(8, dossier.Body.Id);
+        Assert.AreEqual("Dossier no. 8", dossier.Body.Title);
+        Assert.IsNotNull(dossier.Body.Links);
+      }
     }
 
 
@@ -52,11 +54,12 @@ namespace Ramone.Tests
       Request documentReq = Session.Bind(DocumentTemplate, new { id = 1 });
 
       // Act
-      Document document = documentReq.Get<Document>().Body;
-
-      // Assert
-      Assert.AreEqual(1, document.Id);
-      Assert.AreEqual("Document no. 1", document.Title);
+      using (var document = documentReq.Get<Document>())
+      {
+        // Assert
+        Assert.AreEqual(1, document.Body.Id);
+        Assert.AreEqual("Document no. 1", document.Body.Title);
+      }
     }
 
 
@@ -67,11 +70,12 @@ namespace Ramone.Tests
       Request dossierDocumentsReq = Session.Bind(DossierDocumentsTemplate, new { id = 8 });
 
       // Act
-      DossierDocumentList documents = dossierDocumentsReq.Get<DossierDocumentList>().Body;
-
-      // Assert
-      Assert.IsNotNull(documents);
-      Assert.AreEqual(2, documents.Count);
+      using (var documents = dossierDocumentsReq.Get<DossierDocumentList>())
+      {
+        // Assert
+        Assert.IsNotNull(documents.Body);
+        Assert.AreEqual(2, documents.Body.Count);
+      }
     }
 
 
@@ -82,12 +86,13 @@ namespace Ramone.Tests
       Request partyReq = Session.Bind(PartyTemplate, new { id = 12 });
 
       // Act
-      Party party = partyReq.Get<Party>().Body;
-
-      // Assert
-      Assert.AreEqual(12, party.Id);
-      Assert.AreEqual("Bart-12", party.FullName);
-      Assert.AreEqual("bart-12@foo.bar", party.EMail);
+      using (var party = partyReq.Get<Party>())
+      {
+        // Assert
+        Assert.AreEqual(12, party.Body.Id);
+        Assert.AreEqual("Bart-12", party.Body.FullName);
+        Assert.AreEqual("bart-12@foo.bar", party.Body.EMail);
+      }
     }
 
 
@@ -96,14 +101,17 @@ namespace Ramone.Tests
     {
       // Arrange
       Request dossierReq = Session.Bind(DossierTemplate, new { id = 8 });
-      Dossier dossier = dossierReq.Get<Dossier>().Body;
+      using (var r = dossierReq.Get<Dossier>())
+      {
+        Dossier dossier = r.Body;
 
-      // Act
-      ILink documentsLink = dossier.Links.Select(CMSConstants.DocumentsLinkRelType);
+        // Act
+        ILink documentsLink = dossier.Links.Select(CMSConstants.DocumentsLinkRelType);
 
-      // Assert
-      Assert.IsNotNull(documentsLink);
-      Assert.Contains(CMSConstants.DocumentsLinkRelType, documentsLink.RelationTypes.ToList());
+        // Assert
+        Assert.IsNotNull(documentsLink);
+        Assert.Contains(CMSConstants.DocumentsLinkRelType, documentsLink.RelationTypes.ToList());
+      }
     }
 
 
@@ -114,7 +122,7 @@ namespace Ramone.Tests
       Request dossierReq = Session.Bind(DossierTemplate, new { id = 8 });
 
       // Act
-      Response response = dossierReq.Get();
+      dossierReq.Get().Dispose();
     }
 
 
@@ -128,50 +136,5 @@ namespace Ramone.Tests
       AssertThrows<InvalidOperationException>(() => dossierReq.Charset("utf-8").Get());
       AssertThrows<InvalidOperationException>(() => dossierReq.Charset("utf-8").Get<Dossier>());
     }
-
-
-#if false
-    [Test]
-    public void CanGetSimpleAtomFeed()
-    {
-      RamoneResponse<SyndicationFeed> response = FeedEndPoint.Get<SyndicationFeed>(new { feed = "Petes" });
-      Assert.AreEqual("Petes", response.Body.Title.Text);
-    }
-
-
-    [Test]
-    public void CanGetSimpleAtomFeedThroughExplicitBinding()
-    {
-      RamoneResponse<SyndicationFeed> response = FeedEndPoint.Bind(new { feed = "Petes" })
-                                                            .Get<SyndicationFeed>();
-      Assert.AreEqual("Petes", response.Body.Title.Text);
-    }
-
-
-    [Test]
-    public void CanGetStringEvenWhenMultipleCodecsExistsAsLongAsAMediaTypeIsReturned()
-    {
-      string result = TextEndPoint.Get<string>().Body;
-      Assert.AreEqual("plain text", result);
-    }
-
-
-    [Test]
-    public void WhenRequestingMissingResourceItThrowsNotFound()
-    {
-      AssertThrows<RamoneException>(
-        () => FeedEndPoint.Get<SyndicationFeed>(new { feed = "Unknown" }),
-        (e) => e.Response.StatusCode == HttpStatusCode.NotFound);
-    }
-
-
-    [Test]
-    public void WhenRequestingUnsupportedMediaTypeItThrowsUnsupportedMediaType()
-    {
-      AssertThrows<RamoneException>(
-        () => FeedEndPoint.Get<string>(new { feed = "Petes" }),
-        (e) => e.Response.StatusCode == HttpStatusCode.NotAcceptable);
-    }
-#endif
   }
 }

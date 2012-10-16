@@ -23,10 +23,11 @@ namespace Ramone.Tests
     public void CanDeleteAndIgnoreReturnedBody()
     {
       // Act
-      Response response = DossierReq.Delete();
-
-      // Assert
-      Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+      using (Response response = DossierReq.Delete())
+      {
+        // Assert
+        Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+      }
     }
 
 
@@ -34,10 +35,11 @@ namespace Ramone.Tests
     public void CanDeleteAndGetResult()
     {
       // Act
-      Response<string> response = DossierReq.Delete<string>();
-
-      // Assert
-      Assert.AreEqual("Deleted, yup!", response.Body);
+      using (Response<string> response = DossierReq.Delete<string>())
+      {
+        // Assert
+        Assert.AreEqual("Deleted, yup!", response.Body);
+      }
     }
 
 
@@ -45,10 +47,11 @@ namespace Ramone.Tests
     public void CanDeleteAndGetResultWithAccept()
     {
       // Act
-      string text = DossierReq.Accept<string>().Delete().Body;
-
-      // Assert
-      Assert.AreEqual("Deleted, yup!", text);
+      using (var r = DossierReq.Accept<string>().Delete())
+      {
+        // Assert
+        Assert.AreEqual("Deleted, yup!", r.Body);
+      }
     }
 
 
@@ -56,10 +59,11 @@ namespace Ramone.Tests
     public void CanDeleteAndGetResultWithAcceptMediaType()
     {
       // Act
-      string text = DossierReq.Accept<string>("text/plain").Delete().Body;
-
-      // Assert
-      Assert.AreEqual("Deleted, yup!", text);
+      using (var r = DossierReq.Accept<string>("text/plain").Delete())
+      {
+        // Assert
+        Assert.AreEqual("Deleted, yup!", r.Body);
+      }
     }
 
 

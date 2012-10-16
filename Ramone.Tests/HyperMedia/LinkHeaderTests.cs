@@ -16,13 +16,14 @@ namespace Ramone.Tests.HyperMedia
       Request request = Session.Bind(LinkHeaderTemplate);
 
       // Act
-      Response response = request.Get();
-
-      // Assert
-      List<WebLink> links = response.Links().ToList();
-      Assert.AreEqual(2, links.Count);
-      Assert.AreEqual("http://example.com/TheBook/chapter2", links[0].HRef.AbsoluteUri);
-      Assert.AreEqual("http://example.com/TheBook/chapter4", links[1].HRef.AbsoluteUri);
+      using (Response response = request.Get())
+      {
+        // Assert
+        List<WebLink> links = response.Links().ToList();
+        Assert.AreEqual(2, links.Count);
+        Assert.AreEqual("http://example.com/TheBook/chapter2", links[0].HRef.AbsoluteUri);
+        Assert.AreEqual("http://example.com/TheBook/chapter4", links[1].HRef.AbsoluteUri);
+      }
     }
 
 
@@ -33,12 +34,13 @@ namespace Ramone.Tests.HyperMedia
       Request request = Session.Bind(CatTemplate, new { name = "Alex" });
 
       // Act
-      Response response = request.Get();
-
-      // Assert
-      List<WebLink> links = response.Links().ToList();
-      Assert.IsNotNull(links);
-      Assert.AreEqual(0, links.Count);
+      using (Response response = request.Get())
+      {
+        // Assert
+        List<WebLink> links = response.Links().ToList();
+        Assert.IsNotNull(links);
+        Assert.AreEqual(0, links.Count);
+      }
     }
   }
 }

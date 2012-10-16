@@ -21,11 +21,12 @@ namespace Ramone.Tests.MediaTypes.FormUrlEncoded
       Request formdataReq = Session.Bind(MultipartFormDataTemplate);
 
       // Act
-      Response<string> response = formdataReq.Accept("text/plain").ContentType("application/x-www-form-urlencoded").Post<string>(data);
-
-      // Assert
-      Assert.AreEqual("application/x-www-form-urlencoded", response.Headers["x-contenttype"]);
-      Assert.AreEqual("Pete-10", response.Body);
+      using (Response<string> response = formdataReq.Accept("text/plain").ContentType("application/x-www-form-urlencoded").Post<string>(data))
+      {
+        // Assert
+        Assert.AreEqual("application/x-www-form-urlencoded", response.Headers["x-contenttype"]);
+        Assert.AreEqual("Pete-10", response.Body);
+      }
     }
 
 
@@ -37,11 +38,12 @@ namespace Ramone.Tests.MediaTypes.FormUrlEncoded
       Request formdataReq = Session.Bind(MultipartFormDataTemplate);
 
       // Act
-      Response<string> response = formdataReq.Accept("text/plain").AsFormUrlEncoded().Post<string>(data);
-
-      // Assert
-      Assert.AreEqual("application/x-www-form-urlencoded", response.Headers["x-contenttype"]);
-      Assert.AreEqual("Pete-10", response.Body);
+      using (Response<string> response = formdataReq.Accept("text/plain").AsFormUrlEncoded().Post<string>(data))
+      {
+        // Assert
+        Assert.AreEqual("application/x-www-form-urlencoded", response.Headers["x-contenttype"]);
+        Assert.AreEqual("Pete-10", response.Body);
+      }
     }
 
     
@@ -61,11 +63,12 @@ namespace Ramone.Tests.MediaTypes.FormUrlEncoded
       Request formdataReq = Session.Bind(MultipartFormDataTemplate);
 
       // Act
-      Response<string> response = formdataReq.Accept("text/plain").Post<string>(data);
-
-      // Assert
-      Assert.AreEqual("application/x-www-form-urlencoded", response.Headers["x-contenttype"]);
-      Assert.AreEqual("Pete-10", response.Body);
+      using (Response<string> response = formdataReq.Accept("text/plain").Post<string>(data))
+      {
+        // Assert
+        Assert.AreEqual("application/x-www-form-urlencoded", response.Headers["x-contenttype"]);
+        Assert.AreEqual("Pete-10", response.Body);
+      }
     }
 
 
@@ -78,12 +81,13 @@ namespace Ramone.Tests.MediaTypes.FormUrlEncoded
       Request formdataReq = Session.Bind(MultipartFormDataTemplate);
 
       // Act
-      Response<string> response = formdataReq.Accept("text/plain")
-                                             .AsFormUrlEncoded()
-                                             .Post<string>(data);
-
-      // Assert
-      Assert.AreNotEqual("ÆØÅüî-10", response.Body, "What a hack: OpenRasta always assume UTF-8, so if body is not identical to the expected it must mean that it was actually send in non-UTF-8!");
+      using (Response<string> response = formdataReq.Accept("text/plain")
+                                                    .AsFormUrlEncoded()
+                                                    .Post<string>(data))
+      {
+        // Assert
+        Assert.AreNotEqual("ÆØÅüî-10", response.Body, "What a hack: OpenRasta always assume UTF-8, so if body is not identical to the expected it must mean that it was actually send in non-UTF-8!");
+      }
     }
 
 
@@ -123,13 +127,14 @@ namespace Ramone.Tests.MediaTypes.FormUrlEncoded
       Request request = Session.Bind(ComplexClassTemplate);
 
       // Act
-      Response<string> response = request.Accept("text/plain")
-                                               .AsFormUrlEncoded()
-                                               .Post<string>(o);
-
-      // Assert
-      Console.WriteLine(response.Body);
-      Assert.AreEqual("|X=15|Y=Abc|IntArray[0]=1|IntArray[1]=2|SubC.SubC.Data[0]=Benny|SubC.Data[0]=Brian|Dict[abc]=123|Dict[qwe]=xyz|Date=2012-10-30T12:13:14|Dou=15.234|GID="+g.ToString(), response.Body);
+      using (Response<string> response = request.Accept("text/plain")
+                                                .AsFormUrlEncoded()
+                                                .Post<string>(o))
+      {
+        // Assert
+        Console.WriteLine(response.Body);
+        Assert.AreEqual("|X=15|Y=Abc|IntArray[0]=1|IntArray[1]=2|SubC.SubC.Data[0]=Benny|SubC.Data[0]=Brian|Dict[abc]=123|Dict[qwe]=xyz|Date=2012-10-30T12:13:14|Dou=15.234|GID=" + g.ToString(), response.Body);
+      }
     }
 
 
@@ -140,13 +145,15 @@ namespace Ramone.Tests.MediaTypes.FormUrlEncoded
       Request request = Session.Bind(FormUrlEncodedTemplate, new { mode = "x" });
 
       // Act
-      Response<FormUrlEncodedData> response = request.Accept("application/x-www-form-urlencoded")
-                                                     .Get<FormUrlEncodedData>();
-      FormUrlEncodedData data = response.Body;
+      using (Response<FormUrlEncodedData> response = request.Accept("application/x-www-form-urlencoded")
+                                                            .Get<FormUrlEncodedData>())
+      {
+        FormUrlEncodedData data = response.Body;
 
-      // Assert
-      Assert.AreEqual("Abc", data.Title);
-      Assert.AreEqual(15, data.Age);
+        // Assert
+        Assert.AreEqual("Abc", data.Title);
+        Assert.AreEqual(15, data.Age);
+      }
     }
 
 
@@ -157,13 +164,15 @@ namespace Ramone.Tests.MediaTypes.FormUrlEncoded
       Request request = Session.Bind(FormUrlEncodedTemplate, new { mode = "x" });
 
       // Act
-      Response<NameValueCollection> response = request.AcceptFormUrlEncoded().Get<NameValueCollection>();
-      NameValueCollection data = response.Body;
+      using (Response<NameValueCollection> response = request.AcceptFormUrlEncoded().Get<NameValueCollection>())
+      {
+        NameValueCollection data = response.Body;
 
-      // Assert
-      Assert.AreEqual("Abc", data["Title"]);
-      Assert.AreEqual("15", data["Age"]);
-      Assert.AreEqual("Grete", data["SubData.Name"]);
+        // Assert
+        Assert.AreEqual("Abc", data["Title"]);
+        Assert.AreEqual("15", data["Age"]);
+        Assert.AreEqual("Grete", data["SubData.Name"]);
+      }
     }
 
 
@@ -177,14 +186,16 @@ namespace Ramone.Tests.MediaTypes.FormUrlEncoded
       Session.SerializerSettings.Encoding = Encoding.GetEncoding(charset);
 
       // Act
-      Response<FormUrlEncodedData> response = request.Accept("application/x-www-form-urlencoded")
-                                                     .AcceptCharset(charset)
-                                                     .Get<FormUrlEncodedData>();
-      FormUrlEncodedData data = response.Body;
+      using (Response<FormUrlEncodedData> response = request.Accept("application/x-www-form-urlencoded")
+                                                            .AcceptCharset(charset)
+                                                            .Get<FormUrlEncodedData>())
+      {
+        FormUrlEncodedData data = response.Body;
 
-      // Assert
-      Assert.AreEqual("ÆØÅ", data.Title);
-      Assert.AreEqual("Güntør", data.SubData.Name);
+        // Assert
+        Assert.AreEqual("ÆØÅ", data.Title);
+        Assert.AreEqual("Güntør", data.SubData.Name);
+      }
     }
   }
 }

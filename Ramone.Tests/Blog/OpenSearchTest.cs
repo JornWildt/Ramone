@@ -24,11 +24,13 @@ namespace Ramone.Tests.Blog
       Request blogRequest = Session.Bind(BlogRootPath);
 
       // Act - get blog resource and select Open Search link
-      Resources.Blog blog = blogRequest.Get<Resources.Blog>().Body;
-      ILink searchLink = blog.Links.Select("search", "application/opensearchdescription+xml");
+      using (var blog = blogRequest.Get<Resources.Blog>())
+      {
+        ILink searchLink = blog.Body.Links.Select("search", "application/opensearchdescription+xml");
 
-      // Assert
-      Assert.IsNotNull(searchLink);
+        // Assert
+        Assert.IsNotNull(searchLink);
+      }
     }
 
 
@@ -40,16 +42,19 @@ namespace Ramone.Tests.Blog
 
       // Act - follow Open Search link and get search description document. 
       // Ramone delivers codecs for Open Search.
-      OpenSearchDescription search = searchLink.Follow(Session).Get<OpenSearchDescription>().Body;
+      using (var response = searchLink.Follow(Session).Get<OpenSearchDescription>())
+      {
+        OpenSearchDescription search = response.Body;
 
-      // Assert
-      Assert.AreEqual("Blog Search", search.ShortName);
-      Assert.AreEqual("Searching for blogs.", search.Description);
-      Assert.AreEqual("jw@fjeldgruppen.dk", search.Contact);
+        // Assert
+        Assert.AreEqual("Blog Search", search.ShortName);
+        Assert.AreEqual("Searching for blogs.", search.Description);
+        Assert.AreEqual("jw@fjeldgruppen.dk", search.Contact);
 
-      Assert.AreEqual(1, search.Urls.Count);
-      ILinkTemplate l1 = search.Urls.Select("results");
-      Assert.IsNotNull(l1);
+        Assert.AreEqual(1, search.Urls.Count);
+        ILinkTemplate l1 = search.Urls.Select("results");
+        Assert.IsNotNull(l1);
+      }
     }
 
 
@@ -61,30 +66,35 @@ namespace Ramone.Tests.Blog
 
       // Act
       ILinkTemplate searchTemplate = description.Urls[0];
-      SyndicationFeed result = Session.Bind(searchTemplate, new { searchTerms = "" }).Get<SyndicationFeed>().Body;
+      using (var response = Session.Bind(searchTemplate, new { searchTerms = "" }).Get<SyndicationFeed>())
+      {
+        SyndicationFeed result = response.Body;
 
-      // Assert
-      Assert.IsNotNull(result);
-      Assert.AreEqual(1, result.Items.Count());
-      SyndicationItem i1 = result.Items.First();
-      Assert.AreEqual("Result 1", ((TextSyndicationContent)i1.Title).Text);
+        // Assert
+        Assert.IsNotNull(result);
+        Assert.AreEqual(1, result.Items.Count());
+        SyndicationItem i1 = result.Items.First();
+        Assert.AreEqual("Result 1", ((TextSyndicationContent)i1.Title).Text);
+      }
     }
 
 
     ILink GetSearchLink()
     {
       Request blogRequest = Session.Bind(BlogRootPath);
-      Resources.Blog blog = blogRequest.Get<Resources.Blog>().Body;
-      ILink searchLink = blog.Links.Select("search", "application/opensearchdescription+xml");
-      return searchLink;
+      using (var blog = blogRequest.Get<Resources.Blog>())
+      {
+        ILink searchLink = blog.Body.Links.Select("search", "application/opensearchdescription+xml");
+        return searchLink;
+      }
     }
 
 
     OpenSearchDescription GetSearchDescription()
     {
       ILink searchLink = GetSearchLink();
-      OpenSearchDescription search = searchLink.Follow(Session).Get<OpenSearchDescription>().Body;
-      return search;
+      using (var search = searchLink.Follow(Session).Get<OpenSearchDescription>())
+        return search.Body;
     }
   }
 }

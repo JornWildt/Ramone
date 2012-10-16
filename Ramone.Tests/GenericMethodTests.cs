@@ -15,15 +15,16 @@ namespace Ramone.Tests
       Request dossierReq = Session.Bind(DossierTemplate, new { id = 8 });
 
       // Act
-      Dossier dossier1 = dossierReq.Execute<Dossier>("GET").Body;
-      Dossier dossier2 = dossierReq.Accept<Dossier>().Execute("GET").Body;
+      using (var dossier1 = dossierReq.Execute<Dossier>("GET"))
+      using (var dossier2 = dossierReq.Accept<Dossier>().Execute("GET"))
+      {
+        // Make sure method is actually taken from parameter
+        AssertThrows<WebException>(() => dossierReq.Execute<Dossier>("UNKNOWN"));
 
-      // Make sure method is actually taken from parameter
-      AssertThrows<WebException>(() => dossierReq.Execute<Dossier>("UNKNOWN"));
-
-      // Assert
-      Assert.AreEqual(8, dossier1.Id);
-      Assert.AreEqual(8, dossier2.Id);
+        // Assert
+        Assert.AreEqual(8, dossier1.Body.Id);
+        Assert.AreEqual(8, dossier2.Body.Id);
+      }
     }
 
 
@@ -34,13 +35,14 @@ namespace Ramone.Tests
       Request dossierReq = Session.Bind(DossierTemplate, new { id = 8 });
 
       // Act
-      Response response1 = dossierReq.Execute("GET");
+      using (Response response1 = dossierReq.Execute("GET"))
+      {
+        // Make sure method is actually taken from parameter
+        AssertThrows<WebException>(() => dossierReq.Execute("UNKNOWN"));
 
-      // Make sure method is actually taken from parameter
-      AssertThrows<WebException>(() => dossierReq.Execute("UNKNOWN"));
-
-      // Assert
-      Assert.AreEqual(8, response1.Decode<Dossier>().Id);
+        // Assert
+        Assert.AreEqual(8, response1.Decode<Dossier>().Id);
+      }
     }
 
 
@@ -57,15 +59,19 @@ namespace Ramone.Tests
       Request dossiersReq = Session.Request(DossiersUrl);
 
       // Act
-      Dossier dossier1 = dossiersReq.Execute<Dossier>("POST", MyDossier).Body;
-      Dossier dossier2 = dossiersReq.Accept<Dossier>().Execute("POST", MyDossier).Body;
+      using (var r1 = dossiersReq.Execute<Dossier>("POST", MyDossier))
+      using (var r2 = dossiersReq.Accept<Dossier>().Execute("POST", MyDossier))
+      {
+        Dossier dossier1 = r1.Body;
+        Dossier dossier2 = r2.Body;
 
-      // Make sure method is actually taken from parameter
-      AssertThrows<WebException>(() => dossiersReq.Execute<Dossier>("UNKNOWN", MyDossier));
+        // Make sure method is actually taken from parameter
+        AssertThrows<WebException>(() => dossiersReq.Execute<Dossier>("UNKNOWN", MyDossier));
 
-      // Assert
-      Assert.AreEqual(999, dossier1.Id);
-      Assert.AreEqual(999, dossier2.Id);
+        // Assert
+        Assert.AreEqual(999, dossier1.Id);
+        Assert.AreEqual(999, dossier2.Id);
+      }
     }
 
 
@@ -76,12 +82,14 @@ namespace Ramone.Tests
       Request dossiersReq = Session.Request(DossiersUrl);
 
       // Act
-      Response response = dossiersReq.Execute("POST", MyDossier);
-      // Make sure method is actually taken from parameter
-      AssertThrows<WebException>(() => dossiersReq.Execute("UNKNOWN", MyDossier));
+      using (Response response = dossiersReq.Execute("POST", MyDossier))
+      {
+        // Make sure method is actually taken from parameter
+        AssertThrows<WebException>(() => dossiersReq.Execute("UNKNOWN", MyDossier));
 
-      // Assert
-      Assert.AreEqual(999, response.Decode<Dossier>().Id);
+        // Assert
+        Assert.AreEqual(999, response.Decode<Dossier>().Id);
+      }
     }
   }
 }

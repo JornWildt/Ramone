@@ -18,11 +18,12 @@ namespace Ramone.Tests
       AssertThrows<ArgumentException>(() => request.Post(cat));
       Session.DefaultRequestMediaType = MediaType.ApplicationJson;
       Session.DefaultResponseMediaType = MediaType.ApplicationJson;
-      dynamic response = request.Post(cat);
-
-      // Assert
-      Assert.IsNotNull(response);
-      Assert.AreEqual("Prince", response.Body.Name);
+      using (dynamic response = request.Post(cat))
+      {
+        // Assert
+        Assert.IsNotNull(response);
+        Assert.AreEqual("Prince", response.Body.Name);
+      }
     }
 
 
@@ -37,11 +38,12 @@ namespace Ramone.Tests
       AssertThrows<ArgumentException>(() => request.Post(cat));
       Session.DefaultRequestMediaType = MediaType.MultipartFormData;
       Session.DefaultResponseMediaType = MediaType.TextPlain;
-      var response = request.Post<string>(cat);
-
-      // Assert
-      Assert.IsNotNull(response);
-      Assert.AreEqual("Prince", response.Body);
+      using (var response = request.Post<string>(cat))
+      {
+        // Assert
+        Assert.IsNotNull(response);
+        Assert.AreEqual("Prince", response.Body);
+      }
     }
   }
 }

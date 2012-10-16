@@ -17,10 +17,11 @@ namespace Ramone.Tests
       Request catReq = Session.Bind(CatTemplate, new { name = "Fiona" });
 
       // Act
-      Cat c = catReq.Get<Cat>().Body;
-
-      // Assert
-      Assert.AreEqual("Fiona", c.Name);
+      using (var c = catReq.Get<Cat>())
+      {
+        // Assert
+        Assert.AreEqual("Fiona", c.Body.Name);
+      }
     }
 
 
@@ -31,10 +32,11 @@ namespace Ramone.Tests
       Request catReq = Session.Bind(CatTemplate, new { name = "Fiona" });
 
       // Act
-      Cat c = catReq.Accept("text/html").Get<Cat>().Body;
-
-      // Assert
-      Assert.AreEqual("<html><body><p>Fiona</p></body></html>", c.Name);
+      using (var c = catReq.Accept("text/html").Get<Cat>())
+      {
+        // Assert
+        Assert.AreEqual("<html><body><p>Fiona</p></body></html>", c.Body.Name);
+      }
     }
 
 
@@ -45,10 +47,11 @@ namespace Ramone.Tests
       Request catReq = Session.Bind(CatTemplate, new { name = "Fiona" });
 
       // Act
-      Cat c = catReq.Accept("text/plain").Get<Cat>().Body;
-
-      // Assert
-      Assert.AreEqual("Fiona", c.Name);
+      using (var c = catReq.Accept("text/plain").Get<Cat>())
+      {
+        // Assert
+        Assert.AreEqual("Fiona", c.Body.Name);
+      }
     }
 
 
@@ -59,10 +62,11 @@ namespace Ramone.Tests
       Request catReq = Session.Bind(CatTemplate, new { name = "Fiona" });
 
       // Act
-      Cat c = catReq.Accept("text/plain").Get<Cat>().Body;
-
-      // Assert
-      Assert.AreEqual("Fiona", c.Name);
+      using (var c = catReq.Accept("text/plain").Get<Cat>())
+      {
+        // Assert
+        Assert.AreEqual("Fiona", c.Body.Name);
+      }
     }
 
 
@@ -73,13 +77,16 @@ namespace Ramone.Tests
       Request catReq = Session.Bind(CatTemplate, new { name = "Fiona" });
 
       // Act
-      XmlDocument c = catReq.Accept("application/xml").Get<XmlDocument>().Body;
+      using (var r = catReq.Accept("application/xml").Get<XmlDocument>())
+      {
+        XmlDocument c = r.Body;
 
-      // Assert
-      Assert.IsNotNull(c);
-      XmlNode nameNode = c.SelectSingleNode("//Cat/Name");
-      Assert.IsNotNull(nameNode);
-      Assert.AreEqual("Fiona", nameNode.InnerText);
+        // Assert
+        Assert.IsNotNull(c);
+        XmlNode nameNode = c.SelectSingleNode("//Cat/Name");
+        Assert.IsNotNull(nameNode);
+        Assert.AreEqual("Fiona", nameNode.InnerText);
+      }
     }
 
 
@@ -91,8 +98,8 @@ namespace Ramone.Tests
       Request catReq = Session.Bind(CatTemplate, new { name = "Fiona" });
 
       // Act + Assert
-      Cat c2 = catReq.Post<Cat>(c1).Body;
-      Assert.AreEqual("Fiona", c2.Name);
+      using (var c2 = catReq.Post<Cat>(c1))
+        Assert.AreEqual("Fiona", c2.Body.Name);
     }
 
 
@@ -104,7 +111,7 @@ namespace Ramone.Tests
       Request catReq = Session.Bind(CatTemplate, new { name = "Fiona" });
 
       // Act + Assert
-      catReq.ContentType("text/plain").Post<Cat>(c);
+      catReq.ContentType("text/plain").Post<Cat>(c).Dispose();
     }
 
 
@@ -116,7 +123,7 @@ namespace Ramone.Tests
       Request catReq = Session.Bind(CatTemplate, new { name = "Fiona" });
 
       // Act + Assert
-      catReq.ContentType("text/html").Post<Cat>(c);
+      catReq.ContentType("text/html").Post<Cat>(c).Dispose();
     }
 
 
@@ -127,10 +134,11 @@ namespace Ramone.Tests
       Request dossierReq = Session.Bind(DossierTemplate, new { id = 8 });
 
       // Act
-      Dossier dossier = dossierReq.Accept<Dossier>().Get().Body;
-
-      // Assert
-      Assert.IsNotNull(dossier);
+      using (var dossier = dossierReq.Accept<Dossier>().Get())
+      {
+        // Assert
+        Assert.IsNotNull(dossier.Body);
+      }
     }
 
 
@@ -141,10 +149,11 @@ namespace Ramone.Tests
       Request catReq = Session.Bind(CatTemplate, new { name = "Fiona" });
 
       // Act
-      Cat c = catReq.Accept<Cat>("text/plain").Get().Body;
-
-      // Assert
-      Assert.IsNotNull(c);
+      using (var c = catReq.Accept<Cat>("text/plain").Get())
+      {
+        // Assert
+        Assert.IsNotNull(c.Body);
+      }
     }
 
 

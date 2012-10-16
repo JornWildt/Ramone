@@ -13,15 +13,21 @@ namespace Ramone.Tests.HyperMedia
     {
       // Arrange
       Request dossierReq = Session.Bind(DossierTemplate, new { id = 8 });
-      Dossier dossier = dossierReq.Get<Dossier>().Body;
+      using (var r = dossierReq.Get<Dossier>())
+      {
+        Dossier dossier = r.Body;
 
-      // Act
-      Request documentsReq = dossier.Links.Select(CMSConstants.DocumentsLinkRelType).Follow();
-      DossierDocumentList documents = documentsReq.Get<DossierDocumentList>().Body;
+        // Act
+        Request documentsReq = dossier.Links.Select(CMSConstants.DocumentsLinkRelType).Follow();
+        using (var r2 = documentsReq.Get<DossierDocumentList>())
+        {
+          DossierDocumentList documents = r2.Body;
 
-      // Assert
-      Assert.IsNotNull(documents);
-      Assert.AreEqual(2, documents.Count);
+          // Assert
+          Assert.IsNotNull(documents);
+          Assert.AreEqual(2, documents.Count);
+        }
+      }
     }
 
 
@@ -30,14 +36,20 @@ namespace Ramone.Tests.HyperMedia
     {
       // Arrange
       Request dossierReq = Session.Bind(DossierTemplate, new { id = 8 });
-      Dossier dossier = dossierReq.Get<Dossier>().Body;
+      using (var r = dossierReq.Get<Dossier>())
+      {
+        Dossier dossier = r.Body;
 
-      // Act
-      DossierDocumentList documents1 = dossier.Links.Select(CMSConstants.DocumentsLinkRelType).Follow(Session).Get<DossierDocumentList>().Body;
+        // Act
+        using (var r2 = dossier.Links.Select(CMSConstants.DocumentsLinkRelType).Follow(Session).Get<DossierDocumentList>())
+        {
+          DossierDocumentList documents1 = r2.Body;
 
-      // Assert
-      Assert.IsNotNull(documents1);
-      Assert.AreEqual(2, documents1.Count);
+          // Assert
+          Assert.IsNotNull(documents1);
+          Assert.AreEqual(2, documents1.Count);
+        }
+      }
     }
   }
 }
