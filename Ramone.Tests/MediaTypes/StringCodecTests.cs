@@ -15,10 +15,11 @@ namespace Ramone.Tests.MediaTypes
       Request stringReq = Session.Bind(FileTemplate);
 
       // Act
-      string s = stringReq.Accept("application/octet-stream").Get<string>().Body;
-
-      // Assert
-      Assert.AreEqual("Hello ÆØÅ", s);
+      using (var s = stringReq.Accept("application/octet-stream").Get<string>())
+      {
+        // Assert
+        Assert.AreEqual("Hello ÆØÅ", s.Body);
+      }
     }
     
     
@@ -30,10 +31,11 @@ namespace Ramone.Tests.MediaTypes
       Request stringReq = Session.Bind(CatTemplate, new { name = "Henry ÆØÅ" });
 
       // Act
-      string s = stringReq.AcceptJson().Get<string>().Body;
-
-      // Assert
-      Assert.AreEqual("{\"Name\":\"Henry \\u00C6\\u00D8\\u00C5\",\"DateOfBirth\":\"2012-11-24T09:11:13.000\"}", s);
+      using (var s = stringReq.AcceptJson().Get<string>())
+      {
+        // Assert
+        Assert.AreEqual("{\"Name\":\"Henry \\u00C6\\u00D8\\u00C5\",\"DateOfBirth\":\"2012-11-24T09:11:13.000\"}", s.Body);
+      }
     }
   }
 }

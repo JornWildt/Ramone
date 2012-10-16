@@ -14,9 +14,10 @@ namespace Ramone.Tests.MediaTypes.Xml
       UnregisteredClass data = new UnregisteredClass { Text = "Hello" };
       Request request = Session.Bind(XmlEchoTemplate);
 
-      Response<UnregisteredClass> response = request.Accept("application/xml").ContentType("application/xml").Post<UnregisteredClass>(data);
-
-      Assert.AreEqual(data.Text, response.Body.Text);
+      using (Response<UnregisteredClass> response = request.Accept("application/xml").ContentType("application/xml").Post<UnregisteredClass>(data))
+      {
+        Assert.AreEqual(data.Text, response.Body.Text);
+      }
     }
 
 
@@ -26,9 +27,10 @@ namespace Ramone.Tests.MediaTypes.Xml
       UnregisteredClass data = new UnregisteredClass { Text = "Hello" };
       Request request = Session.Bind(XmlEchoTemplate);
 
-      Response<UnregisteredClass> response = request.AsXml().AcceptXml().Post<UnregisteredClass>(data);
-
-      Assert.AreEqual(data.Text, response.Body.Text);
+      using (Response<UnregisteredClass> response = request.AsXml().AcceptXml().Post<UnregisteredClass>(data))
+      {
+        Assert.AreEqual(data.Text, response.Body.Text);
+      }
     }
 
 
@@ -38,9 +40,10 @@ namespace Ramone.Tests.MediaTypes.Xml
       RegisteredClass data = new RegisteredClass { Title = "The World" };
       Request request = Session.Bind(XmlEchoTemplate);
 
-      Response<RegisteredClass> response = request.Post<RegisteredClass>(data);
-
-      Assert.AreEqual(data.Title, response.Body.Title);
+      using (Response<RegisteredClass> response = request.Post<RegisteredClass>(data))
+      {
+        Assert.AreEqual(data.Title, response.Body.Title);
+      }
     }
 
 
@@ -50,10 +53,11 @@ namespace Ramone.Tests.MediaTypes.Xml
       RegisteredClass data = new RegisteredClass { Title = "The World", Date = DateTime.Now };
       Request request = Session.Bind(XmlEchoTemplate);
 
-      Response<RegisteredClass> response = request.Post<RegisteredClass>(data);
-
-      Assert.AreEqual(data.Title, response.Body.Title);
-      Assert.AreEqual(data.Date, response.Body.Date);
+      using (Response<RegisteredClass> response = request.Post<RegisteredClass>(data))
+      {
+        Assert.AreEqual(data.Title, response.Body.Title);
+        Assert.AreEqual(data.Date, response.Body.Date);
+      }
     }
 
 
@@ -65,18 +69,19 @@ namespace Ramone.Tests.MediaTypes.Xml
       Request dog2Request = Session.Bind(Dog2Template, new { name = "Hugo" });
 
       // Act
-      Dog1 d1a = dog1Request.Get<Dog1>().Body;
-      Dog1 d1b = dog2Request.Get<Dog1>().Body;
-      Dog2 d2 = dog2Request.Get<Dog2>().Body;
-
-      // Assert
-      Assert.IsNotNull(d1a);
-      Assert.AreEqual("Fido", d1a.Name);
-      Assert.IsNotNull(d1b);
-      Assert.AreEqual("Hugo", d1b.Name);
-      Assert.IsNotNull(d2);
-      Assert.AreEqual("Hugo", d2.Name);
-      Assert.AreEqual(25, d2.Weight);
+      using (var d1a = dog1Request.Get<Dog1>())
+      using (var d1b = dog2Request.Get<Dog1>())
+      using (var d2 = dog2Request.Get<Dog2>())
+      {
+        // Assert
+        Assert.IsNotNull(d1a.Body);
+        Assert.AreEqual("Fido", d1a.Body.Name);
+        Assert.IsNotNull(d1b.Body);
+        Assert.AreEqual("Hugo", d1b.Body.Name);
+        Assert.IsNotNull(d2.Body);
+        Assert.AreEqual("Hugo", d2.Body.Name);
+        Assert.AreEqual(25, d2.Body.Weight);
+      }
     }
   }
 }

@@ -20,10 +20,11 @@ namespace Ramone.Tests
     public void CanPatchUntyped()
     {
       // Act
-      Response response = DossierReq.AsFormUrlEncoded().Patch(new { title = "Duh" });
-
-      // Assert
-      Assert.AreEqual("Duh: ok", response.Decode<string>());
+      using (Response response = DossierReq.AsFormUrlEncoded().Patch(new { title = "Duh" }))
+      {
+        // Assert
+        Assert.AreEqual("Duh: ok", response.Decode<string>());
+      }
     }
 
 
@@ -31,10 +32,11 @@ namespace Ramone.Tests
     public void CanPatchAndGetResult()
     {
       // Act
-      Response<string> response = DossierReq.AsFormUrlEncoded().Patch<string>(new { title = "Duh" });
-
-      // Assert
-      Assert.AreEqual("Duh: ok", response.Body);
+      using (Response<string> response = DossierReq.AsFormUrlEncoded().Patch<string>(new { title = "Duh" }))
+      {
+        // Assert
+        Assert.AreEqual("Duh: ok", response.Body);
+      }
     }
 
 
@@ -42,10 +44,11 @@ namespace Ramone.Tests
     public void CanPatchAndGetResultWithAccept()
     {
       // Act
-      string title = DossierReq.AsFormUrlEncoded().Accept<string>().Patch(new { title = "Duh" }).Body;
-
-      // Assert
-      Assert.AreEqual("Duh: ok", title);
+      using (var title = DossierReq.AsFormUrlEncoded().Accept<string>().Patch(new { title = "Duh" }))
+      {
+        // Assert
+        Assert.AreEqual("Duh: ok", title.Body);
+      }
     }
 
 
@@ -53,10 +56,11 @@ namespace Ramone.Tests
     public void CanPatchAndGetResultWithAcceptMediaType()
     {
       // Act
-      string title = DossierReq.AsFormUrlEncoded().Accept<string>("text/plain").Patch(new { title = "Duh" }).Body;
-
-      // Assert
-      Assert.AreEqual("Duh: ok", title);
+      using (var title = DossierReq.AsFormUrlEncoded().Accept<string>("text/plain").Patch(new { title = "Duh" }))
+      {
+        // Assert
+        Assert.AreEqual("Duh: ok", title.Body);
+      }
     }
 
 
@@ -67,10 +71,11 @@ namespace Ramone.Tests
       Request request = Session.Bind(AnyEchoTemplate);
 
       // Act
-      Response<string> response = request.Accept("text/plain").ContentType("application/x-www-url-formencoded").Patch<string>();
-
-      // Assert
-      Assert.AreEqual(null, response.Body);
+      using (Response<string> response = request.Accept("text/plain").ContentType("application/x-www-url-formencoded").Patch<string>())
+      {
+        // Assert
+        Assert.AreEqual(null, response.Body);
+      }
     }
 
 
@@ -81,10 +86,11 @@ namespace Ramone.Tests
       Request request = Session.Bind(AnyEchoTemplate);
 
       // Act
-      Response response = request.Accept("text/plain").ContentType("application/x-www-url-formencoded").Patch();
-
-      // Assert
-      Assert.AreEqual(null, response.Body);
+      using (Response response = request.Accept("text/plain").ContentType("application/x-www-url-formencoded").Patch())
+      {
+        // Assert
+        Assert.AreEqual(null, response.Body);
+      }
     }
   }
 }

@@ -17,10 +17,11 @@ namespace Ramone.Tests
       Request dossierReq = Session.Bind(DossierTemplate, new { id = 8 });
 
       // Act
-      Dossier dossier = dossierReq.Method("Get").Submit<Dossier>().Body;
-
-      // Assert
-      Assert.AreEqual(8, dossier.Id);
+      using (var dossier = dossierReq.Method("Get").Submit<Dossier>())
+      {
+        // Assert
+        Assert.AreEqual(8, dossier.Body.Id);
+      }
     }
 
 
@@ -42,10 +43,13 @@ namespace Ramone.Tests
       Request dossierReq = Session.Bind(DossierTemplate, new { id = 8 });
 
       // Act
-      Dossier dossier = dossierReq.Method("Get").Submit().Decode<Dossier>();
+      using (var r = dossierReq.Method("Get").Submit())
+      {
+        Dossier dossier = r.Decode<Dossier>();
 
-      // Assert
-      Assert.AreEqual(8, dossier.Id);
+        // Assert
+        Assert.AreEqual(8, dossier.Id);
+      }
     }
 
 

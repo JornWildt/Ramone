@@ -15,19 +15,22 @@ namespace Ramone.Tests.MediaTypes.Html
       Request req = Session.Bind(PersonTemplate, new { name = "Petrea" });
 
       // Act
-      HtmlDocument doc = req.Get<HtmlDocument>().Body;
+      using (var r = req.Get<HtmlDocument>())
+      {
+        HtmlDocument doc = r.Body;
 
-      // Assert
-      HtmlNode personNode = doc.DocumentNode.SelectSingleNode("//*[@class=\"Person\"]");
-      Assert.IsNotNull(personNode);
+        // Assert
+        HtmlNode personNode = doc.DocumentNode.SelectSingleNode("//*[@class=\"Person\"]");
+        Assert.IsNotNull(personNode);
 
-      HtmlNode nameNode = personNode.SelectSingleNode("//*[@class=\"Name\"]");
-      Assert.IsNotNull(nameNode);
-      Assert.AreEqual("Petrea", nameNode.InnerText);
+        HtmlNode nameNode = personNode.SelectSingleNode("//*[@class=\"Name\"]");
+        Assert.IsNotNull(nameNode);
+        Assert.AreEqual("Petrea", nameNode.InnerText);
 
-      HtmlNode addressNode = personNode.SelectSingleNode("//*[@class=\"Address\"]");
-      Assert.IsNotNull(addressNode);
-      Assert.AreEqual("At home", addressNode.InnerText);
+        HtmlNode addressNode = personNode.SelectSingleNode("//*[@class=\"Address\"]");
+        Assert.IsNotNull(addressNode);
+        Assert.AreEqual("At home", addressNode.InnerText);
+      }
     }
 
 
@@ -39,15 +42,17 @@ namespace Ramone.Tests.MediaTypes.Html
       Request req = Session.Bind(EncodingTemplate, new { type = "html" });
 
       // Act
-      var response = req.AcceptCharset(charset).Accept("text/html").Get<HtmlDocument>();
-      HtmlDocument doc = response.Body;
+      using (var response = req.AcceptCharset(charset).Accept("text/html").Get<HtmlDocument>())
+      {
+        HtmlDocument doc = response.Body;
 
-      // Assert
-      HtmlNode nameNode = doc.DocumentNode.SelectSingleNode("/html/body");
-      Assert.IsNotNull(nameNode);
+        // Assert
+        HtmlNode nameNode = doc.DocumentNode.SelectSingleNode("/html/body");
+        Assert.IsNotNull(nameNode);
 
-      Assert.AreEqual(charset, response.WebResponse.Headers["X-accept-charset"]);
-      Assert.AreEqual("ÆØÅúï´`'", nameNode.InnerText);
+        Assert.AreEqual(charset, response.WebResponse.Headers["X-accept-charset"]);
+        Assert.AreEqual("ÆØÅúï´`'", nameNode.InnerText);
+      }
     }
   }
 }

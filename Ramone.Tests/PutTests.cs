@@ -29,10 +29,11 @@ namespace Ramone.Tests
     public void CanPutAndIgnoreReturnedBody()
     {
       // Act
-      Response response = DossierReq.Put(MyDossier);
-
-      // Assert
-      Assert.IsNotNull(response);
+      using (Response response = DossierReq.Put(MyDossier))
+      {
+        // Assert
+        Assert.IsNotNull(response);
+      }
     }
 
 
@@ -40,11 +41,13 @@ namespace Ramone.Tests
     public void CanPutAndGetResult()
     {
       // Act
-      Response<Dossier> response = DossierReq.Put<Dossier>(MyDossier);
-      Dossier newDossier = response.Body;
+      using (Response<Dossier> response = DossierReq.Put<Dossier>(MyDossier))
+      {
+        Dossier newDossier = response.Body;
 
-      // Assert
-      Assert.IsNotNull(newDossier);
+        // Assert
+        Assert.IsNotNull(newDossier);
+      }
     }
 
 
@@ -52,10 +55,11 @@ namespace Ramone.Tests
     public void CanPutAndGetResultWithAccept()
     {
       // Act
-      Dossier newDossier = DossierReq.Accept<Dossier>().Put(MyDossier).Body;
-
-      // Assert
-      Assert.IsNotNull(newDossier);
+      using (var newDossier = DossierReq.Accept<Dossier>().Put(MyDossier))
+      {
+        // Assert
+        Assert.IsNotNull(newDossier.Body);
+      }
     }
 
 
@@ -63,10 +67,11 @@ namespace Ramone.Tests
     public void CanPutAndGetResultWithAcceptMediaType()
     {
       // Act
-      Dossier newDossier = DossierReq.Accept<Dossier>(CMSConstants.CMSMediaType).Put(MyDossier).Body;
-
-      // Assert
-      Assert.IsNotNull(newDossier);
+      using (var newDossier = DossierReq.Accept<Dossier>(CMSConstants.CMSMediaType).Put(MyDossier))
+      {
+        // Assert
+        Assert.IsNotNull(newDossier.Body);
+      }
     }
 
 
@@ -77,10 +82,11 @@ namespace Ramone.Tests
       Request request = Session.Bind(AnyEchoTemplate);
 
       // Act
-      Response<string> response = request.Accept("text/plain").ContentType("application/x-www-url-formencoded").Put<string>();
-
-      // Assert
-      Assert.AreEqual(null, response.Body);
+      using (Response<string> response = request.Accept("text/plain").ContentType("application/x-www-url-formencoded").Put<string>())
+      {
+        // Assert
+        Assert.AreEqual(null, response.Body);
+      }
     }
 
 
@@ -91,10 +97,11 @@ namespace Ramone.Tests
       Request request = Session.Bind(AnyEchoTemplate);
 
       // Act
-      Response response = request.Accept("text/plain").ContentType("application/x-www-url-formencoded").Put();
-
-      // Assert
-      Assert.AreEqual(null, response.Body);
+      using (Response response = request.Accept("text/plain").ContentType("application/x-www-url-formencoded").Put())
+      {
+        // Assert
+        Assert.IsNull(response.Body);
+      }
     }
   }
 }

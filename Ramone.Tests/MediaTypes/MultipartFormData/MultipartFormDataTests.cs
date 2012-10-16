@@ -20,11 +20,12 @@ namespace Ramone.Tests.MediaTypes.MultipartFormData
       Request formdataReq = Session.Bind(MultipartFormDataTemplate);
 
       // Act
-      Response<string> response = formdataReq.Accept("text/plain").ContentType("multipart/form-data").Post<string>(data);
-
-      // Assert
-      Assert.IsTrue(response.Headers["x-contenttype"].StartsWith("multipart/form-data"));
-      Assert.AreEqual("Pete-10", response.Body);
+      using (Response<string> response = formdataReq.Accept("text/plain").ContentType("multipart/form-data").Post<string>(data))
+      {
+        // Assert
+        Assert.IsTrue(response.Headers["x-contenttype"].StartsWith("multipart/form-data"));
+        Assert.AreEqual("Pete-10", response.Body);
+      }
     }
 
 
@@ -36,11 +37,12 @@ namespace Ramone.Tests.MediaTypes.MultipartFormData
       Request formdataReq = Session.Bind(MultipartFormDataTemplate);
 
       // Act
-      Response<string> response = formdataReq.Accept("text/plain").AsMultipartFormData().Post<string>(data);
-
-      // Assert
-      Assert.IsTrue(response.Headers["x-contenttype"].StartsWith("multipart/form-data"));
-      Assert.AreEqual("Pete-10", response.Body);
+      using (Response<string> response = formdataReq.Accept("text/plain").AsMultipartFormData().Post<string>(data))
+      {
+        // Assert
+        Assert.IsTrue(response.Headers["x-contenttype"].StartsWith("multipart/form-data"));
+        Assert.AreEqual("Pete-10", response.Body);
+      }
     }
 
 
@@ -62,11 +64,12 @@ namespace Ramone.Tests.MediaTypes.MultipartFormData
       Request formdataReq = Session.Bind(MultipartFormDataFileTemplate);
 
       // Act
-      Response<string> response = formdataReq.Accept("text/plain").ContentType("multipart/form-data").Post<string>(data);
-
-      // Assert
-      Assert.IsTrue(response.Headers["x-contenttype"].StartsWith("multipart/form-data"));
-      Assert.AreEqual("data1.txt-text/plain-w4bDvMOuwrRgJw==-10", response.Body);
+      using (Response<string> response = formdataReq.Accept("text/plain").ContentType("multipart/form-data").Post<string>(data))
+      {
+        // Assert
+        Assert.IsTrue(response.Headers["x-contenttype"].StartsWith("multipart/form-data"));
+        Assert.AreEqual("data1.txt-text/plain-w4bDvMOuwrRgJw==-10", response.Body);
+      }
     }
 
 
@@ -79,13 +82,14 @@ namespace Ramone.Tests.MediaTypes.MultipartFormData
       Request formdataReq = Session.Bind(MultipartFormDataFileTemplate);
 
       // Act
-      Response<string> response = formdataReq.Accept("text/plain")
-                                             .ContentType("multipart/form-data")
-                                             .Post<string>(data);
-
-      // Assert
-      Assert.IsTrue(response.Headers["x-contenttype"].StartsWith("multipart/form-data"));
-      Assert.AreEqual("data1.txt-text/plain-w4bDvMOuwrRgJw==-10", response.Body);
+      using (Response<string> response = formdataReq.Accept("text/plain")
+                                                    .ContentType("multipart/form-data")
+                                                    .Post<string>(data))
+      {
+        // Assert
+        Assert.IsTrue(response.Headers["x-contenttype"].StartsWith("multipart/form-data"));
+        Assert.AreEqual("data1.txt-text/plain-w4bDvMOuwrRgJw==-10", response.Body);
+      }
     }
 
 
@@ -100,11 +104,12 @@ namespace Ramone.Tests.MediaTypes.MultipartFormData
       Request formdataReq = Session.Bind(MultipartFormDataFileTemplate);
 
       // Act
-      Response<string> response = formdataReq.Accept("text/plain").ContentType("multipart/form-data").Post<string>(data);
-
-      // Assert
-      Assert.IsTrue(response.Headers["x-contenttype"].StartsWith("multipart/form-data"));
-      Assert.AreEqual("Bxllefrx.txt-text/plain-w4bDvMOuwrRgJw==-10", response.Body);
+      using (Response<string> response = formdataReq.Accept("text/plain").ContentType("multipart/form-data").Post<string>(data))
+      {
+        // Assert
+        Assert.IsTrue(response.Headers["x-contenttype"].StartsWith("multipart/form-data"));
+        Assert.AreEqual("Bxllefrx.txt-text/plain-w4bDvMOuwrRgJw==-10", response.Body);
+      }
     }
 
 
@@ -117,11 +122,12 @@ namespace Ramone.Tests.MediaTypes.MultipartFormData
       Request formdataReq = Session.Bind(MultipartFormDataFileTemplate);
 
       // Act
-      Response<string> response = formdataReq.Accept("text/plain").ContentType("multipart/form-data").Post<string>(data);
-
-      // Assert
-      Assert.IsTrue(response.Headers["x-contenttype"].StartsWith("multipart/form-data"));
-      Assert.AreEqual("Bxllefrx.txt-text/plain-w4bDvMOuwrRgJw==-10", response.Body);
+      using (Response<string> response = formdataReq.Accept("text/plain").ContentType("multipart/form-data").Post<string>(data))
+      {
+        // Assert
+        Assert.IsTrue(response.Headers["x-contenttype"].StartsWith("multipart/form-data"));
+        Assert.AreEqual("Bxllefrx.txt-text/plain-w4bDvMOuwrRgJw==-10", response.Body);
+      }
     }
 
 
@@ -134,11 +140,12 @@ namespace Ramone.Tests.MediaTypes.MultipartFormData
       Request formdataReq = Session.Bind(MultipartFormDataFileTemplate);
 
       // Act
-      Response<string> response = formdataReq.Accept("text/plain").ContentType("multipart/form-data").Post<string>(data);
-
-      // Assert
-      Assert.IsTrue(response.Headers["x-contenttype"].StartsWith("multipart/form-data"));
-      Assert.AreEqual("data1.gif-image/gif-R0lGODlhAgACAA==-99", response.Body);
+      using (Response<string> response = formdataReq.Accept("text/plain").ContentType("multipart/form-data").Post<string>(data))
+      {
+        // Assert
+        Assert.IsTrue(response.Headers["x-contenttype"].StartsWith("multipart/form-data"));
+        Assert.AreEqual("data1.gif-image/gif-R0lGODlhAgACAA==-99", response.Body);
+      }
     }
 
 
@@ -150,11 +157,12 @@ namespace Ramone.Tests.MediaTypes.MultipartFormData
       Request formdataReq = Session.Bind(MultipartFormDataTemplate);
 
       // Act
-      Response<string> response = formdataReq.Accept("text/plain").ContentType("multipart/form-data").Post<string>(data);
-
-      // Assert
-      Assert.IsTrue(response.Headers["x-contenttype"].StartsWith("multipart/form-data"));
-      Assert.AreEqual("Pete-10", response.Body);
+      using (Response<string> response = formdataReq.Accept("text/plain").ContentType("multipart/form-data").Post<string>(data))
+      {
+        // Assert
+        Assert.IsTrue(response.Headers["x-contenttype"].StartsWith("multipart/form-data"));
+        Assert.AreEqual("Pete-10", response.Body);
+      }
     }
 
 
@@ -171,16 +179,17 @@ namespace Ramone.Tests.MediaTypes.MultipartFormData
       // so that must be inspected using Fiddler :-(
 
       // Act
-      Response<string> response = formdataReq.Accept("text/plain")
-                                             .AcceptCharset(charsetOut)
-                                             .CodecParameter("Charset", charsetIn)
-                                             .ContentType("multipart/form-data")
-                                             .Post<string>(data);
-
-      // Assert
-      Assert.IsTrue(response.Headers["x-contenttype"].StartsWith("multipart/form-data"));
-      Assert.AreEqual(charsetOut, response.Headers["x-accept-charset"]);
-      Assert.AreEqual("ÆØÅüî-10", response.Body);
+      using (Response<string> response = formdataReq.Accept("text/plain")
+                                                    .AcceptCharset(charsetOut)
+                                                    .CodecParameter("Charset", charsetIn)
+                                                    .ContentType("multipart/form-data")
+                                                    .Post<string>(data))
+      {
+        // Assert
+        Assert.IsTrue(response.Headers["x-contenttype"].StartsWith("multipart/form-data"));
+        Assert.AreEqual(charsetOut, response.Headers["x-accept-charset"]);
+        Assert.AreEqual("ÆØÅüî-10", response.Body);
+      }
     }
 
 
@@ -238,13 +247,14 @@ namespace Ramone.Tests.MediaTypes.MultipartFormData
       Request request = Session.Bind(ComplexClassTemplate);
 
       // Act
-      Response<string> response = request.Accept("text/plain")
+      using (Response<string> response = request.Accept("text/plain")
                                                .AsMultipartFormData()
-                                               .Post<string>(o);
-
-      // Assert
-      Console.WriteLine(response.Body);
-      Assert.AreEqual("|X=15|Y=Abc|IntArray[0]=1|IntArray[1]=2|SubC.SubC.Data[0]=Benny|SubC.Data[0]=Brian|Dict[abc]=123|Dict[qwe]=xyz|Date=2012-10-30T12:13:14|Dou=15.234|GID="+g.ToString(), response.Body);
+                                               .Post<string>(o))
+      {
+        // Assert
+        Console.WriteLine(response.Body);
+        Assert.AreEqual("|X=15|Y=Abc|IntArray[0]=1|IntArray[1]=2|SubC.SubC.Data[0]=Benny|SubC.Data[0]=Brian|Dict[abc]=123|Dict[qwe]=xyz|Date=2012-10-30T12:13:14|Dou=15.234|GID=" + g.ToString(), response.Body);
+      }
     }
   }
 }

@@ -27,10 +27,11 @@ namespace Ramone.Tests
     public void CanPostAndIgnoreReturnedBody()
     {
       // Act
-      Response response = DossiersReq.Post(MyDossier);
-
-      // Assert
-      Assert.IsNotNull(response);
+      using (Response response = DossiersReq.Post(MyDossier))
+      {
+        // Assert
+        Assert.IsNotNull(response);
+      }
     }
 
 
@@ -38,11 +39,13 @@ namespace Ramone.Tests
     public void CanPostAndGetResult()
     {
       // Act
-      Response<Dossier> response = DossiersReq.Post<Dossier>(MyDossier);
-      Dossier newDossier = response.Body;
+      using (Response<Dossier> response = DossiersReq.Post<Dossier>(MyDossier))
+      {
+        Dossier newDossier = response.Body;
 
-      // Assert
-      Assert.IsNotNull(newDossier);
+        // Assert
+        Assert.IsNotNull(newDossier);
+      }
     }
 
 
@@ -50,10 +53,11 @@ namespace Ramone.Tests
     public void CanPostAndGetResultWithAccept()
     {
       // Act
-      Dossier newDossier = DossiersReq.Accept<Dossier>().Post(MyDossier).Body;
-
-      // Assert
-      Assert.IsNotNull(newDossier);
+      using (var newDossier = DossiersReq.Accept<Dossier>().Post(MyDossier))
+      {
+        // Assert
+        Assert.IsNotNull(newDossier.Body);
+      }
     }
 
 
@@ -61,10 +65,11 @@ namespace Ramone.Tests
     public void CanPostAndGetResultWithAcceptMediaType()
     {
       // Act
-      Dossier newDossier = DossiersReq.Accept<Dossier>(CMSConstants.CMSMediaType).Post(MyDossier).Body;
-
-      // Assert
-      Assert.IsNotNull(newDossier);
+      using (var newDossier = DossiersReq.Accept<Dossier>(CMSConstants.CMSMediaType).Post(MyDossier))
+      {
+        // Assert
+        Assert.IsNotNull(newDossier.Body);
+      }
     }
 
 
@@ -75,10 +80,11 @@ namespace Ramone.Tests
       Request request = Session.Bind(AnyEchoTemplate);
 
       // Act
-      Response<string> response = request.Accept("text/plain").ContentType("application/octet-stream").Post<string>();
-      
-      // Assert
-      Assert.AreEqual(null, response.Body);
+      using (Response<string> response = request.Accept("text/plain").ContentType("application/octet-stream").Post<string>())
+      {
+        // Assert
+        Assert.AreEqual(null, response.Body);
+      }
     }
 
 
@@ -91,10 +97,11 @@ namespace Ramone.Tests
       Request request = Session.Bind(AnyEchoTemplate);
 
       // Act
-      Response<string> response = request.Post<string>();
-
-      // Assert
-      Assert.AreEqual(null, response.Body);
+      using (Response<string> response = request.Post<string>())
+      {
+        // Assert
+        Assert.AreEqual(null, response.Body);
+      }
     }
 
 
@@ -105,10 +112,11 @@ namespace Ramone.Tests
       Request request = Session.Bind(AnyEchoTemplate);
 
       // Act
-      Response response = request.Accept("text/plain").ContentType("application/octet-stream").Post();
-
-      // Assert
-      Assert.AreEqual(null, response.Body);
+      using (Response response = request.Accept("text/plain").ContentType("application/octet-stream").Post())
+      {
+        // Assert
+        Assert.AreEqual(null, response.Body);
+      }
     }
 
 
@@ -121,10 +129,11 @@ namespace Ramone.Tests
       Request request = Session.Bind(AnyEchoTemplate);
 
       // Act
-      Response response = request.Post();
-
-      // Assert
-      Assert.AreEqual(null, response.Body);
+      using (Response response = request.Post())
+      {
+        // Assert
+        Assert.AreEqual(null, response.Body);
+      }
     }
   }
 }

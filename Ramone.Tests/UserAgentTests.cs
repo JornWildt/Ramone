@@ -16,11 +16,14 @@ namespace Ramone.Tests
       Request req = Session.Request(HeaderListUrl);
 
       // Act
-      HeaderList headers = req.Get<HeaderList>().Body;
+      using (var r = req.Get<HeaderList>())
+      {
+        HeaderList headers = r.Body;
 
-      // Assert
-      Assert.IsNotNull(headers);
-      Assert.IsTrue(headers.Exists(h => h == "User-Agent: AgentTest/007"));
+        // Assert
+        Assert.IsNotNull(headers);
+        Assert.IsTrue(headers.Exists(h => h == "User-Agent: AgentTest/007"));
+      }
     }
   }
 }

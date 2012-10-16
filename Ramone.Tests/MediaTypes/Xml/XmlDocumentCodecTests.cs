@@ -16,11 +16,14 @@ namespace Ramone.Tests.MediaTypes.Xml
       Request req = Session.Bind(DossierTemplate, new { id = 5 });
 
       // Act
-      XmlDocument doc = req.Get<XmlDocument>().Body;
+      using (var r = req.Get<XmlDocument>())
+      {
+        XmlDocument doc = r.Body;
 
-      // Assert
-      Assert.IsNotNull(doc.SelectSingleNode("//Dossier"));
-      Assert.AreEqual("5", doc.SelectSingleNode("//Dossier/Id").InnerText);
+        // Assert
+        Assert.IsNotNull(doc.SelectSingleNode("//Dossier"));
+        Assert.AreEqual("5", doc.SelectSingleNode("//Dossier/Id").InnerText);
+      }
     }
 
 
@@ -34,13 +37,14 @@ namespace Ramone.Tests.MediaTypes.Xml
       Request request = Session.Request(DossiersUrl);
 
       // Act
-      Response<Dossier> response = request.ContentType("application/xml").Post<Dossier>(dossierDoc);
+      using (Response<Dossier> response = request.ContentType("application/xml").Post<Dossier>(dossierDoc))
+      {
+        // Assert
+        Dossier createdDossier = response.Body;
 
-      // Assert
-      Dossier createdDossier = response.Body;
-
-      Assert.IsNotNull(createdDossier);
-      Assert.AreEqual("My dossier", createdDossier.Title);
+        Assert.IsNotNull(createdDossier);
+        Assert.AreEqual("My dossier", createdDossier.Title);
+      }
     }
 
 
@@ -52,15 +56,17 @@ namespace Ramone.Tests.MediaTypes.Xml
       Request req = Session.Bind(EncodingTemplate, new { type = "xml" });
 
       // Act
-      var response = req.AcceptCharset(charset).Get<XmlDocument>();
-      XmlDocument doc = response.Body;
+      using (var response = req.AcceptCharset(charset).Get<XmlDocument>())
+      {
+        XmlDocument doc = response.Body;
 
-      // Assert
-      XmlNode nameNode = doc.SelectSingleNode("/html/body");
-      Assert.IsNotNull(nameNode);
+        // Assert
+        XmlNode nameNode = doc.SelectSingleNode("/html/body");
+        Assert.IsNotNull(nameNode);
 
-      Assert.AreEqual(charset, response.WebResponse.Headers["X-accept-charset"]);
-      Assert.AreEqual("ÆØÅúï´`'", nameNode.InnerText);
+        Assert.AreEqual(charset, response.WebResponse.Headers["X-accept-charset"]);
+        Assert.AreEqual("ÆØÅúï´`'", nameNode.InnerText);
+      }
     }
 
 
@@ -76,21 +82,22 @@ namespace Ramone.Tests.MediaTypes.Xml
       Request request = Session.Bind(EncodingTemplate, new { type = "xml" });
 
       // Act
-      Response<XmlDocument> response = request.AcceptCharset(charsetOut)
-                                                    .ContentType("application/xml")
-                                                    .Charset(charsetIn)
-                                                    .Post<XmlDocument>(doc);
+      using (Response<XmlDocument> response = request.AcceptCharset(charsetOut)
+                                                      .ContentType("application/xml")
+                                                      .Charset(charsetIn)
+                                                      .Post<XmlDocument>(doc))
+      {
+        // Assert
+        XmlDocument result = response.Body;
 
-      // Assert
-      XmlDocument result = response.Body;
+        Assert.IsNotNull(result);
+        XmlNode textNode = result.SelectSingleNode("/Text");
+        Assert.IsNotNull(textNode);
 
-      Assert.IsNotNull(result);
-      XmlNode textNode = result.SelectSingleNode("/Text");
-      Assert.IsNotNull(textNode);
-
-      Assert.AreEqual(charsetIn, response.WebResponse.Headers["X-request-charset"]);
-      Assert.AreEqual(charsetOut, response.WebResponse.Headers["X-accept-charset"]);
-      Assert.AreEqual("ÆØÅüî", textNode.InnerText);
+        Assert.AreEqual(charsetIn, response.WebResponse.Headers["X-request-charset"]);
+        Assert.AreEqual(charsetOut, response.WebResponse.Headers["X-accept-charset"]);
+        Assert.AreEqual("ÆØÅüî", textNode.InnerText);
+      }
     }
   }
 }

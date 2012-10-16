@@ -10,13 +10,6 @@ namespace Ramone.Tests.MediaTypes.Json
   [TestFixture]
   public class JsonSerializerCodecTests : TestHelper
   {
-    protected override void TestFixtureSetUp()
-    {
-      base.TestFixtureSetUp();
-      //TestService.CodecManager.AddCodec<Cat>("application/json", new JsonSerializerCodec<Cat>());
-    }
-
-
     [Test]
     public void CanReadJson()
     {
@@ -24,11 +17,12 @@ namespace Ramone.Tests.MediaTypes.Json
       Request req = Session.Bind(CatTemplate, new { name = "Ramstein" });
 
       // Act
-      Cat cat = req.Accept("application/json").Get<Cat>().Body;
-
-      // Assert
-      Assert.IsNotNull(cat);
-      Assert.AreEqual("Ramstein", cat.Name);
+      using (var cat = req.Accept("application/json").Get<Cat>())
+      {
+        // Assert
+        Assert.IsNotNull(cat.Body);
+        Assert.AreEqual("Ramstein", cat.Body.Name);
+      }
     }
 
 
@@ -40,16 +34,18 @@ namespace Ramone.Tests.MediaTypes.Json
       Request req = Session.Bind(EncodingTemplate, new { type = "json" });
 
       // Act
-      var response = req.AcceptCharset(charset)
-                        .AsJson()
-                        .AcceptJson()
-                        .Get();
-      dynamic stuff = response.Body;
+      using (var response = req.AcceptCharset(charset)
+                               .AsJson()
+                               .AcceptJson()
+                               .Get())
+      {
+        dynamic stuff = response.Body;
 
-      // Assert
-      Assert.IsNotNull(stuff);
-      Assert.AreEqual(charset, response.WebResponse.Headers["X-accept-charset"]);
-      Assert.AreEqual("ÆØÅúï´`'\"", stuff.Name);
+        // Assert
+        Assert.IsNotNull(stuff);
+        Assert.AreEqual(charset, response.WebResponse.Headers["X-accept-charset"]);
+        Assert.AreEqual("ÆØÅúï´`'\"", stuff.Name);
+      }
     }
 
 
@@ -63,12 +59,15 @@ namespace Ramone.Tests.MediaTypes.Json
       Request request = Session.Bind(CatsTemplate);
 
       // Act
-      Cat createdCat = request.Accept("application/json").ContentType("application/json").Post<Cat>(cat).Created();
+      using (var r = request.Accept("application/json").ContentType("application/json").Post<Cat>(cat))
+      {
+        Cat createdCat = r.Created();
 
-      // Assert
-      Assert.IsNotNull(createdCat);
-      Assert.AreEqual("Prince", createdCat.Name);
-      Assert.AreEqual(cat.DateOfBirth, createdCat.DateOfBirth);
+        // Assert
+        Assert.IsNotNull(createdCat);
+        Assert.AreEqual("Prince", createdCat.Name);
+        Assert.AreEqual(cat.DateOfBirth, createdCat.DateOfBirth);
+      }
     }
 
 
@@ -88,18 +87,20 @@ namespace Ramone.Tests.MediaTypes.Json
       var data = new { Name = "ÆØÅúï´`'\"" };
 
       // Act
-      var response = req.Charset(charsetIn)
-                        .AcceptCharset(charsetOut)
-                        .AsJson()
-                        .AcceptJson()
-                        .Post(data);
-      dynamic stuff = response.Body;
+      using (var response = req.Charset(charsetIn)
+                               .AcceptCharset(charsetOut)
+                               .AsJson()
+                               .AcceptJson()
+                               .Post(data))
+      {
+        dynamic stuff = response.Body;
 
-      // Assert
-      Assert.IsNotNull(stuff);
-      Assert.AreEqual(charsetIn, response.WebResponse.Headers["X-request-charset"]);
-      Assert.AreEqual(charsetOut, response.WebResponse.Headers["X-accept-charset"]);
-      Assert.AreEqual("ÆØÅúï´`'\"", stuff.Name);
+        // Assert
+        Assert.IsNotNull(stuff);
+        Assert.AreEqual(charsetIn, response.WebResponse.Headers["X-request-charset"]);
+        Assert.AreEqual(charsetOut, response.WebResponse.Headers["X-accept-charset"]);
+        Assert.AreEqual("ÆØÅúï´`'\"", stuff.Name);
+      }
     }
 
 
@@ -111,11 +112,14 @@ namespace Ramone.Tests.MediaTypes.Json
       Request request = Session.Bind(CatsTemplate);
 
       // Act
-      Cat createdCat = request.AsJson().AcceptJson().Post<Cat>(cat).Created();
+      using (var r = request.AsJson().AcceptJson().Post<Cat>(cat))
+      {
+        Cat createdCat = r.Created();
 
-      // Assert
-      Assert.IsNotNull(createdCat);
-      Assert.AreEqual("Prince", createdCat.Name);
+        // Assert
+        Assert.IsNotNull(createdCat);
+        Assert.AreEqual("Prince", createdCat.Name);
+      }
     }
 
 
@@ -125,9 +129,10 @@ namespace Ramone.Tests.MediaTypes.Json
       UnregisteredClass data = new UnregisteredClass { Text = "Hello" };
       Request request = Session.Bind(AnyEchoTemplate);
 
-      Response<UnregisteredClass> response = request.Accept("application/json").ContentType("application/json").Post<UnregisteredClass>(data);
-
-      Assert.AreEqual(data.Text, response.Body.Text);
+      using (Response<UnregisteredClass> response = request.Accept("application/json").ContentType("application/json").Post<UnregisteredClass>(data))
+      {
+        Assert.AreEqual(data.Text, response.Body.Text);
+      }
     }
 
 
@@ -137,9 +142,10 @@ namespace Ramone.Tests.MediaTypes.Json
       UnregisteredClass data = new UnregisteredClass { Text = "Hello" };
       Request request = Session.Bind(AnyEchoTemplate);
 
-      Response<UnregisteredClass> response = request.AsJson().AcceptJson().Post<UnregisteredClass>(data);
-
-      Assert.AreEqual(data.Text, response.Body.Text);
+      using (Response<UnregisteredClass> response = request.AsJson().AcceptJson().Post<UnregisteredClass>(data))
+      {
+        Assert.AreEqual(data.Text, response.Body.Text);
+      }
     }
 
 
@@ -150,11 +156,14 @@ namespace Ramone.Tests.MediaTypes.Json
       Request req = Session.Bind(CatTemplate, new { name = "Ramstein" });
 
       // Act
-      dynamic cat = req.Accept("application/json").Get().Body;
+      using (var r = req.Accept("application/json").Get())
+      {
+        dynamic cat = r.Body;
 
-      // Assert
-      Assert.IsNotNull(cat);
-      Assert.AreEqual("Ramstein", cat.Name);
+        // Assert
+        Assert.IsNotNull(cat);
+        Assert.AreEqual("Ramstein", cat.Name);
+      }
     }
 
 
@@ -166,11 +175,14 @@ namespace Ramone.Tests.MediaTypes.Json
       Request request = Session.Bind(CatsTemplate);
 
       // Act
-      dynamic createdCat = request.AsJson().AcceptJson().Post(cat).Body;
+      using (var r = request.AsJson().AcceptJson().Post(cat))
+      {
+        dynamic createdCat = r.Body;
 
-      // Assert
-      Assert.IsNotNull(createdCat);
-      Assert.AreEqual("Prince", createdCat.Name);
+        // Assert
+        Assert.IsNotNull(createdCat);
+        Assert.AreEqual("Prince", createdCat.Name);
+      }
     }
   }
 }
