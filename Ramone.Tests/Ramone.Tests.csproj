@@ -56,6 +56,10 @@
     <Reference Include="HtmlAgilityPack">
       <HintPath>..\Libraries\HtmlAgilityPack.dll</HintPath>
     </Reference>
+    <Reference Include="JsonFx, Version=2.0.1106.2515, Culture=neutral, PublicKeyToken=315052dd637f8a52, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Libraries\JsonFx.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="nunit.framework, Version=2.5.2.9222, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -97,6 +101,7 @@
     <Compile Include="Blog\Resources\Post.cs" />
     <Compile Include="Blog\TypedHtmlTests.cs" />
     <Compile Include="HyperMedia\FollowTests.cs" />
+    <Compile Include="MediaTypes\JsonPatch\JsonPatchTests.cs" />
     <Compile Include="PatchTests.cs" />
     <Compile Include="DefaultContentTypeTests.cs" />
     <Compile Include="ExceptionHandlingTests.cs" />
@@ -144,6 +149,7 @@
     <Compile Include="SubmitTests.cs" />
     <Compile Include="TestHelper.cs" />
     <Compile Include="UserAgentTests.cs" />
+    <Compile Include="Utility\JsonPointerHelperTests.cs" />
     <Compile Include="Utility\FormUrlEncodingDeserializerTests.cs" />
     <Compile Include="Utility\DictionaryConverterTests.cs" />
     <Compile Include="Utility\HeaderEncodingParserTests.cs" />

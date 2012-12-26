@@ -120,6 +120,7 @@
     <Compile Include="MediaTypes\FormUrlEncoded\FormUrlEncodedSerializerCodec.cs" />
     <Compile Include="MediaTypes\Html\HtmlDocumentCodec.cs" />
     <Compile Include="MediaTypes\Html\Link.cs" />
+    <Compile Include="MediaTypes\JsonPatch\JsonPatchDocument.cs" />
     <Compile Include="MediaTypes\Json\JsonSerializerCodec.cs" />
     <Compile Include="MediaTypes\MultipartFormData\MultipartFormDataSerializerCodec.cs" />
     <Compile Include="MediaTypes\OpenSearch\OpenSearchDescription.cs" />
@@ -162,6 +163,7 @@
     <Compile Include="RequestContext.cs" />
     <Compile Include="RequestStreamWrapperContext.cs" />
     <Compile Include="Utility\ContextRegistrator.cs" />
+    <Compile Include="Utility\JsonPointerHelper.cs" />
     <Compile Include="Utility\HashtableConverterPropertyVisitor.cs" />
     <Compile Include="Utility\HashtableConverter.cs" />
     <Compile Include="Utility\DictionaryConverterPropertyVisitor.cs" />
