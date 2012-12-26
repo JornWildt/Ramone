@@ -56,6 +56,29 @@ namespace Ramone.Tests.MediaTypes.JsonPatch
 
 
     [Test]
+    public void CanGenerateTypedReplaceWithObjectValue()
+    {
+      // Arrange
+      BugReport.Party party = new BugReport.Party { Name = "John" };
+      JsonPatchDocument<BugReport> patch = new JsonPatchDocument<BugReport>();
+
+      // Act
+      patch.Replace(r => r.Responsible, party);
+
+      // Assert
+      dynamic operations = patch.Operations;
+      Assert.IsNotNull(operations);
+      Assert.AreEqual(1, operations.Count);
+      Assert.AreEqual("replace", operations[0].op);
+      Assert.AreEqual("/Responsible", operations[0].path);
+      Assert.AreEqual(party, operations[0].value);
+
+      // Not the best way to test, but some how we need to know that it generates good JSON
+      Assert.AreEqual(@"[{""value"":{""Name"":""John"",""Id"":0},""op"":""replace"",""path"":""/Responsible""}]", patch.ToString());
+    }
+
+
+    [Test]
     public void CanGenerateRemove()
     {
       // Arrange
