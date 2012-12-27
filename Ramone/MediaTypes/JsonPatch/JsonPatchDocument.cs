@@ -22,9 +22,15 @@ namespace Ramone.MediaTypes.JsonPatch
     }
 
 
+    public void Add<P>(string path, P value)
+    {
+      OperationList.Add(new PatchValueOperation { op = "add", path = path, value = value });
+    }
+
+
     public void Replace<P>(string path, P value)
     {
-      OperationList.Add(new PatchReplaceOperation { op = "replace", path = path, value = value });
+      OperationList.Add(new PatchValueOperation { op = "replace", path = path, value = value });
     }
 
 
@@ -66,10 +72,17 @@ namespace Ramone.MediaTypes.JsonPatch
     private JsonPointerHelper<TDocument> PathHelper = new JsonPointerHelper<TDocument>("/");
 
 
-    public void Replace<TProperty>(Expression<Func<TDocument, TProperty>> path, TProperty value)
+    public void Add<TProperty>(Expression<Func<TDocument, TProperty>> path, object value)
     {
       string spath = "/" + PathHelper.GetPath(path);
-      OperationList.Add(new PatchReplaceOperation { op = "replace", path = spath, value = value });
+      OperationList.Add(new PatchValueOperation { op = "add", path = spath, value = value });
+    }
+
+
+    public void Replace<TProperty>(Expression<Func<TDocument, TProperty>> path, object value)
+    {
+      string spath = "/" + PathHelper.GetPath(path);
+      OperationList.Add(new PatchValueOperation { op = "replace", path = spath, value = value });
     }
 
 
@@ -89,7 +102,7 @@ namespace Ramone.MediaTypes.JsonPatch
   }
 
 
-  public class PatchReplaceOperation : PatchOperation
+  public class PatchValueOperation : PatchOperation
   {
     public object value { get; set; }
   }
