@@ -22,21 +22,39 @@ namespace Ramone.MediaTypes.JsonPatch
     }
 
 
-    public void Add<P>(string path, P value)
+    public void Add(string path, object value)
     {
       OperationList.Add(new PatchValueOperation { op = "add", path = path, value = value });
-    }
-
-
-    public void Replace<P>(string path, P value)
-    {
-      OperationList.Add(new PatchValueOperation { op = "replace", path = path, value = value });
     }
 
 
     public void Remove(string path)
     {
       OperationList.Add(new PatchOperation { op = "remove", path = path });
+    }
+
+
+    public void Replace(string path, object value)
+    {
+      OperationList.Add(new PatchValueOperation { op = "replace", path = path, value = value });
+    }
+
+
+    public void Move(string from, string path)
+    {
+      OperationList.Add(new PatchFromOperation { op = "move", from = from, path = path });
+    }
+
+
+    public void Copy(string from, string path)
+    {
+      OperationList.Add(new PatchFromOperation { op = "copy", from = from, path = path });
+    }
+
+
+    public void Test(string path, object value)
+    {
+      OperationList.Add(new PatchValueOperation { op = "test", path = path, value = value });
     }
 
 
@@ -75,21 +93,44 @@ namespace Ramone.MediaTypes.JsonPatch
     public void Add<TProperty>(Expression<Func<TDocument, TProperty>> path, object value)
     {
       string spath = "/" + PathHelper.GetPath(path);
-      OperationList.Add(new PatchValueOperation { op = "add", path = spath, value = value });
+      Add(spath, value);
     }
 
 
     public void Replace<TProperty>(Expression<Func<TDocument, TProperty>> path, object value)
     {
       string spath = "/" + PathHelper.GetPath(path);
-      OperationList.Add(new PatchValueOperation { op = "replace", path = spath, value = value });
+      Replace(spath, value);
     }
 
 
     public void Remove<TProperty>(Expression<Func<TDocument, TProperty>> path)
     {
       string spath = "/" + PathHelper.GetPath(path);
-      OperationList.Add(new PatchOperation { op = "remove", path = spath });
+      Remove(spath);
+    }
+
+
+    public void Move<TProperty>(Expression<Func<TDocument, TProperty>> from, Expression<Func<TDocument, TProperty>> path)
+    {
+      string sfrom = "/" + PathHelper.GetPath(from);
+      string spath = "/" + PathHelper.GetPath(path);
+      Move(sfrom, spath);
+    }
+
+
+    public void Copy<TProperty>(Expression<Func<TDocument, TProperty>> from, Expression<Func<TDocument, TProperty>> path)
+    {
+      string sfrom = "/" + PathHelper.GetPath(from);
+      string spath = "/" + PathHelper.GetPath(path);
+      Copy(sfrom, spath);
+    }
+
+
+    public void Test<TProperty>(Expression<Func<TDocument, TProperty>> path, object value)
+    {
+      string spath = "/" + PathHelper.GetPath(path);
+      Test(spath, value);
     }
   }
 
@@ -105,5 +146,11 @@ namespace Ramone.MediaTypes.JsonPatch
   public class PatchValueOperation : PatchOperation
   {
     public object value { get; set; }
+  }
+
+
+  public class PatchFromOperation : PatchOperation
+  {
+    public string from { get; set; }
   }
 }
