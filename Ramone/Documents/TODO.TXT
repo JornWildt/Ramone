@@ -2,6 +2,13 @@
 Version 1
 ---------
 
+Patch
+- JsonPointer for arrays, hashtables, dictionaries
+- Test and implement codec
+- Slette console.write fra JsonPointerHelper
+- "Server side" patch iterator/callback
+
+Jenkins build
 
 Docs
 - Ramone 
@@ -19,7 +26,6 @@ Docs
 - Forskellige former for codec anvendels
   - Rå HtmlDocument / XmlDocument / HalDocument
     - Hvorfra man kan lave .Anchor(...).Follow() mm.
-
 - Alle Get/Post etc. operationer er uden sideeffekter i RamoneRequest. 
   Altså kan RamoneRequest genbruges flere gange. Eller hvad ...
 - Go through REST reciepes and show how its done in Ramone

@@ -10,7 +10,7 @@ namespace Ramone.Utility
     private string Separator;
 
 
-    public JsonPointerHelper(string separator)
+    public JsonPointerHelper(string separator = "/")
     {
       Separator = separator;
     }
@@ -18,18 +18,18 @@ namespace Ramone.Utility
 
     public string GetPath<TProperty>(Expression<Func<TObject, TProperty>> expr)
     {
-      return GetPath(expr.Body);
+      return GetPath(expr.Body, true);
     }
 
 
-    private string GetPath(Expression expr)
+    private string GetPath(Expression expr, bool firstTime)
     {
       Console.WriteLine(expr.GetType());
       Console.WriteLine(expr.NodeType);
       if (expr.NodeType == ExpressionType.MemberAccess)
       {
         MemberExpression m = expr as MemberExpression;
-        string left = GetPath(m.Expression);
+        string left = GetPath(m.Expression, false);
         if (left != null)
           return left + Separator + m.Member.Name;
         else
@@ -38,7 +38,7 @@ namespace Ramone.Utility
       else if (expr.NodeType == ExpressionType.Call)
       {
         MethodCallExpression m = (MethodCallExpression)expr;
-        string left = GetPath(m.Object);
+        string left = GetPath(m.Object, false);
         if (left != null)
           return left + Separator + GetIndexerInvocation(m.Arguments[0]);
         else
@@ -47,11 +47,16 @@ namespace Ramone.Utility
       else if (expr.NodeType == ExpressionType.ArrayIndex)
       {
         BinaryExpression b = (BinaryExpression)expr;
-        string left = GetPath(b.Left);
+        string left = GetPath(b.Left, false);
         if (left != null)
           return left + Separator + b.Right.ToString();
         else
           return b.Right.ToString();
+      }
+      else if (expr.NodeType == ExpressionType.Parameter)
+      {
+        // Fits "x => x" (the whole document which is "" as JSON pointer)
+        return firstTime ? "" : null;
       }
       else
         return null;
