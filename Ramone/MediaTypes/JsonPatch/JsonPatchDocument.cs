@@ -1,64 +1,68 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Runtime.Serialization;
 using System.IO;
-using JsonFx.Json;
 using System.Linq.Expressions;
+using JsonFx.Json;
 using Ramone.Utility;
+
 
 namespace Ramone.MediaTypes.JsonPatch
 {
+  /// <summary>
+  /// Represents a JSON patch document.
+  /// </summary>
+  /// <remarks>Create an instance and add operations using the Add/Remove/etc. methods. Then write the JSON document
+  /// to any stream using Write() or print it using ToString().
+  /// See http://tools.ietf.org/html/draft-ietf-appsawg-json-patch-08 for information about JSON patch.
+  /// </remarks>
   public class JsonPatchDocument
   {
-    protected List<PatchOperation> OperationList { get; set; }
+    protected List<Operation> OperationList { get; set; }
 
 
     public JsonPatchDocument()
     {
-      OperationList = new List<PatchOperation>();
+      OperationList = new List<Operation>();
     }
 
 
     public void Add(string path, object value)
     {
-      OperationList.Add(new PatchValueOperation { op = "add", path = path, value = value });
+      OperationList.Add(new ValueOperation { op = "add", path = path, value = value });
     }
 
 
     public void Remove(string path)
     {
-      OperationList.Add(new PatchOperation { op = "remove", path = path });
+      OperationList.Add(new Operation { op = "remove", path = path });
     }
 
 
     public void Replace(string path, object value)
     {
-      OperationList.Add(new PatchValueOperation { op = "replace", path = path, value = value });
+      OperationList.Add(new ValueOperation { op = "replace", path = path, value = value });
     }
 
 
     public void Move(string from, string path)
     {
-      OperationList.Add(new PatchFromOperation { op = "move", from = from, path = path });
+      OperationList.Add(new FromOperation { op = "move", from = from, path = path });
     }
 
 
     public void Copy(string from, string path)
     {
-      OperationList.Add(new PatchFromOperation { op = "copy", from = from, path = path });
+      OperationList.Add(new FromOperation { op = "copy", from = from, path = path });
     }
 
 
     public void Test(string path, object value)
     {
-      OperationList.Add(new PatchValueOperation { op = "test", path = path, value = value });
+      OperationList.Add(new ValueOperation { op = "test", path = path, value = value });
     }
 
 
-    public List<PatchOperation> Operations
+    public List<Operation> Operations
     {
       get
       {
@@ -67,7 +71,7 @@ namespace Ramone.MediaTypes.JsonPatch
     }
 
 
-    public void WriteDocument(TextWriter w)
+    public void Write(TextWriter w)
     {
       JsonWriter jsw = new JsonWriter();
       jsw.Write(Operations, w);
@@ -78,9 +82,29 @@ namespace Ramone.MediaTypes.JsonPatch
     {
       using (TextWriter w = new StringWriter())
       {
-        WriteDocument(w);
+        Write(w);
         return w.ToString();
       }
+    }
+
+
+    public class Operation
+    {
+      public string op { get; set; }
+
+      public string path { get; set; }
+    }
+
+
+    public class ValueOperation : Operation
+    {
+      public object value { get; set; }
+    }
+
+
+    public class FromOperation : Operation
+    {
+      public string from { get; set; }
     }
   }
 
@@ -132,25 +156,5 @@ namespace Ramone.MediaTypes.JsonPatch
       string spath = "/" + PathHelper.GetPath(path);
       Test(spath, value);
     }
-  }
-
-
-  public class PatchOperation
-  {
-    public string op { get; set; }
-    
-    public string path { get; set; }
-  }
-
-
-  public class PatchValueOperation : PatchOperation
-  {
-    public object value { get; set; }
-  }
-
-
-  public class PatchFromOperation : PatchOperation
-  {
-    public string from { get; set; }
   }
 }

@@ -3,8 +3,8 @@ Version 1
 ---------
 
 Patch
-- JsonPointer for arrays, hashtables, dictionaries
-- Test and implement codec
+- Inline code docs
+- Test and implement Ramone codec
 - Slette console.write fra JsonPointerHelper
 - "Server side" patch iterator/callback
 
