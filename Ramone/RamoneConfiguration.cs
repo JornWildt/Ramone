@@ -15,6 +15,7 @@ using Ramone.MediaTypes.OpenSearch;
 using Ramone.MediaTypes.Xml;
 using Ramone.Utility.ObjectSerialization;
 using Ramone.Utility.ObjectSerialization.Formaters;
+using Ramone.MediaTypes.JsonPatch;
 
 
 namespace Ramone
@@ -111,6 +112,9 @@ namespace Ramone
 
       // Open search
       cm.AddXml<OpenSearchDescription>(new MediaType("application/opensearchdescription+xml"));
+
+      // Json patch
+      cm.AddCodec<JsonPatchDocument, JsonPatchDocumentCodec>(new MediaType("application/json-patch"));
     }
 
 

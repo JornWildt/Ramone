@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq.Expressions;
 using JsonFx.Json;
 using Ramone.Utility;
+using System.Collections;
 
 
 namespace Ramone.MediaTypes.JsonPatch
@@ -78,6 +79,29 @@ namespace Ramone.MediaTypes.JsonPatch
     }
 
 
+    public static JsonPatchDocument Read(TextReader r)
+    {
+      JsonPatchDocument patch = new JsonPatchDocument();
+
+      JsonReader jsr = new JsonReader();
+      CompleteOperation[] operations = jsr.Read<CompleteOperation[]>(r);
+      foreach (CompleteOperation operation in operations)
+      {
+        switch (operation.op)
+        {
+          case "add":
+            patch.Add(operation.path, operation.value);
+            break;
+          case "remove":
+            patch.Remove(operation.path);
+            break;
+        }
+      }
+
+      return patch;
+    }
+
+
     public override string ToString()
     {
       using (TextWriter w = new StringWriter())
@@ -104,6 +128,15 @@ namespace Ramone.MediaTypes.JsonPatch
 
     public class FromOperation : Operation
     {
+      public string from { get; set; }
+    }
+
+
+    protected class CompleteOperation
+    {
+      public string op { get; set; }
+      public string path { get; set; }
+      public object value { get; set; }
       public string from { get; set; }
     }
   }

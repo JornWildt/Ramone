@@ -3,6 +3,7 @@ using System.ServiceModel.Syndication;
 using System.Xml;
 using OpenRasta.Codecs;
 using OpenRasta.Configuration;
+using Ramone.MediaTypes.JsonPatch;
 using Ramone.Tests.Common;
 using Ramone.Tests.Server.Blog;
 using Ramone.Tests.Server.Blog.Data;
@@ -24,6 +25,8 @@ namespace Ramone.Tests.Server
     public class FileDownload { public string Content { get; set; } }
 
     public class LinkHeader { }
+
+    public class Patch { }
 
 
     public void Configure()
@@ -124,6 +127,11 @@ namespace Ramone.Tests.Server
             .AtUri(Constants.LinkHeaderPath)
             .HandledBy<LinkHeaderHandler>()
             .TranscodedBy<LinkHeaderCodec>();
+
+        ResourceSpace.Has.ResourcesOfType<JsonPatchDocument>()
+            .AtUri(Constants.PatchPath)
+            .HandledBy<PatchHandler>()
+            .TranscodedBy<Ramone.Tests.Server.Codecs.JsonPatchDocumentCodec>().ForMediaType("application/json-patch");
 
         CMSConfiguration.Configure();
         ResourceSpace.Has.ResourcesOfType<RedirectArgs>()

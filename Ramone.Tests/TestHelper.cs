@@ -64,6 +64,8 @@ namespace Ramone.Tests
     protected static readonly UriTemplate LinkHeaderTemplate = new UriTemplate(Constants.LinkHeaderPath);
 
     protected static readonly UriTemplate RedirectTemplate = new UriTemplate(Constants.RedirectPath);
+
+    protected static readonly UriTemplate PatchTemplate = new UriTemplate(Constants.PatchPath);
     
 
     public static IService TestService { get; set; }

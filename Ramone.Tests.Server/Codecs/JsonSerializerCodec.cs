@@ -17,7 +17,7 @@ namespace Ramone.Tests.Server.Codecs
     }
 
 
-    public void WriteTo(object entity, IHttpEntity response, string[] codecParameters)
+    public virtual void WriteTo(object entity, IHttpEntity response, string[] codecParameters)
     {
       var item = entity as TEntity;
       if (item == null)
@@ -31,7 +31,7 @@ namespace Ramone.Tests.Server.Codecs
     }
 
 
-    public object ReadFrom(IHttpEntity request, OpenRasta.TypeSystem.IType destinationType, string destinationName)
+    public virtual object ReadFrom(IHttpEntity request, OpenRasta.TypeSystem.IType destinationType, string destinationName)
     {
       using (var reader = new StreamReader(request.Stream))
       {

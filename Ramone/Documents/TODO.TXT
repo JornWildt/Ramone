@@ -3,8 +3,9 @@ Version 1
 ---------
 
 Patch
-- Inline code docs
 - Test and implement Ramone codec
+- Test multiple operations in one document
+- Error handling in JsonPatchDocument.Read() ... how to handle incorrect patch formats?
 - Slette console.write fra JsonPointerHelper
 - "Server side" patch iterator/callback
 

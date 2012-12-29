@@ -64,6 +64,7 @@
     <Reference Include="JsonFx">
       <HintPath>..\Libraries\JsonFx.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -121,6 +122,7 @@
     <Compile Include="MediaTypes\Html\HtmlDocumentCodec.cs" />
     <Compile Include="MediaTypes\Html\Link.cs" />
     <Compile Include="MediaTypes\JsonPatch\JsonPatchDocument.cs" />
+    <Compile Include="MediaTypes\JsonPatch\JsonPatchDocumentCodec.cs" />
     <Compile Include="MediaTypes\Json\JsonSerializerCodec.cs" />
     <Compile Include="MediaTypes\MultipartFormData\MultipartFormDataSerializerCodec.cs" />
     <Compile Include="MediaTypes\OpenSearch\OpenSearchDescription.cs" />
