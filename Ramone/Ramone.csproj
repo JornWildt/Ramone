@@ -123,6 +123,7 @@
     <Compile Include="MediaTypes\Html\Link.cs" />
     <Compile Include="MediaTypes\JsonPatch\JsonPatchDocument.cs" />
     <Compile Include="MediaTypes\JsonPatch\JsonPatchDocumentCodec.cs" />
+    <Compile Include="MediaTypes\JsonPatch\JsonPatchParserException.cs" />
     <Compile Include="MediaTypes\Json\JsonSerializerCodec.cs" />
     <Compile Include="MediaTypes\MultipartFormData\MultipartFormDataSerializerCodec.cs" />
     <Compile Include="MediaTypes\OpenSearch\OpenSearchDescription.cs" />

@@ -17,7 +17,7 @@ namespace Ramone.MediaTypes.JsonPatch
 
     protected override JsonPatchDocument ReadFrom(TextReader reader, ReaderContext context)
     {
-      throw new NotImplementedException();
+      return JsonPatchDocument.Read(reader);
     }
   }
 }

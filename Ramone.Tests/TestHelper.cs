@@ -167,7 +167,10 @@ namespace Ramone.Tests
       catch (System.Exception ex)
       {
         if (ex.GetType() == typeof(Exception))
+        {
+          Console.WriteLine("Got expected exception with message: {0}", ex.Message);
           return;
+        }
 
         Console.WriteLine(ex.ToString());
         Assert.Fail(String.Format("Expected {0}, got {1} saying: {2}", typeof(Exception), ex.GetType(), ex.Message));
@@ -198,6 +201,7 @@ namespace Ramone.Tests
           Assert.Fail(string.Format("Exception {0} failed verification. Got message: {1}", typeof(ExT), ex.Message));
         }
 
+        Console.WriteLine("Got expected exception with message: {0}", ex.Message);
         return;
       }
 

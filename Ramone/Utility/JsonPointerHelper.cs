@@ -24,8 +24,6 @@ namespace Ramone.Utility
 
     private string GetPath(Expression expr, bool firstTime)
     {
-      Console.WriteLine(expr.GetType());
-      Console.WriteLine(expr.NodeType);
       if (expr.NodeType == ExpressionType.MemberAccess)
       {
         MemberExpression m = expr as MemberExpression;

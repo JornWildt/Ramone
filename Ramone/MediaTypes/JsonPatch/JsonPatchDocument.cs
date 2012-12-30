@@ -5,6 +5,8 @@ using System.Linq.Expressions;
 using JsonFx.Json;
 using Ramone.Utility;
 using System.Collections;
+using CuttingEdge.Conditions;
+using JsonFx.Serialization;
 
 
 namespace Ramone.MediaTypes.JsonPatch
@@ -29,36 +31,44 @@ namespace Ramone.MediaTypes.JsonPatch
 
     public void Add(string path, object value)
     {
+      Condition.Requires(path, "path").IsNotNull();
       OperationList.Add(new ValueOperation { op = "add", path = path, value = value });
     }
 
 
     public void Remove(string path)
     {
+      Condition.Requires(path, "path").IsNotNull();
       OperationList.Add(new Operation { op = "remove", path = path });
     }
 
 
     public void Replace(string path, object value)
     {
+      Condition.Requires(path, "path").IsNotNull();
       OperationList.Add(new ValueOperation { op = "replace", path = path, value = value });
     }
 
 
     public void Move(string from, string path)
     {
+      Condition.Requires(from, "from").IsNotNull();
+      Condition.Requires(path, "path").IsNotNull();
       OperationList.Add(new FromOperation { op = "move", from = from, path = path });
     }
 
 
     public void Copy(string from, string path)
     {
+      Condition.Requires(from, "from").IsNotNull();
+      Condition.Requires(path, "path").IsNotNull();
       OperationList.Add(new FromOperation { op = "copy", from = from, path = path });
     }
 
 
     public void Test(string path, object value)
     {
+      Condition.Requires(path, "path").IsNotNull();
       OperationList.Add(new ValueOperation { op = "test", path = path, value = value });
     }
 
@@ -84,17 +94,47 @@ namespace Ramone.MediaTypes.JsonPatch
       JsonPatchDocument patch = new JsonPatchDocument();
 
       JsonReader jsr = new JsonReader();
-      CompleteOperation[] operations = jsr.Read<CompleteOperation[]>(r);
+      CompleteOperation[] operations = null;
+      try
+      {
+        operations = jsr.Read<CompleteOperation[]>(r);
+      }
+      catch (DeserializationException ex)
+      {
+        throw new JsonPatchParserException(ex.Message, ex);
+      }
+
       foreach (CompleteOperation operation in operations)
       {
-        switch (operation.op)
+        try
         {
-          case "add":
-            patch.Add(operation.path, operation.value);
-            break;
-          case "remove":
-            patch.Remove(operation.path);
-            break;
+          switch (operation.op)
+          {
+            case "add":
+              patch.Add(operation.path, operation.value);
+              break;
+            case "remove":
+              patch.Remove(operation.path);
+              break;
+            case "replace":
+              patch.Replace(operation.path, operation.value);
+              break;
+            case "move":
+              patch.Move(operation.from, operation.path);
+              break;
+            case "copy":
+              patch.Copy(operation.from, operation.path);
+              break;
+            case "test":
+              patch.Test(operation.path, operation.value);
+              break;
+            case null:
+              throw new JsonPatchParserException("No 'op' property found.");
+          }
+        }
+        catch (ArgumentNullException ex)
+        {
+          throw new JsonPatchParserException(string.Format("Missing parameter '{0}' for op:'{1}'.", ex.ParamName, operation.op), ex);
         }
       }
 
