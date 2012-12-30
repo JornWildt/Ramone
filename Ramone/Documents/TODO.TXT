@@ -3,7 +3,10 @@ Version 1
 ---------
 
 Patch
-- "Server side" patch iterator/callback
+- Manual
+- Check op på de officielle tests
+- Indføre i F2
+- Blog
 
 Jenkins build
 

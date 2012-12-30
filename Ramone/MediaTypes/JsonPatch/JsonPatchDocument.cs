@@ -15,7 +15,8 @@ namespace Ramone.MediaTypes.JsonPatch
   /// Represents a JSON patch document.
   /// </summary>
   /// <remarks>Create an instance and add operations using the Add/Remove/etc. methods. Then write the JSON document
-  /// to any stream using Write() or print it using ToString().
+  /// to any stream using Write() or print it using ToString(). Or use Read() to read a complete JSON document from
+  /// a TextReader.
   /// See http://tools.ietf.org/html/draft-ietf-appsawg-json-patch-08 for information about JSON patch.
   /// </remarks>
   public class JsonPatchDocument
@@ -142,6 +143,15 @@ namespace Ramone.MediaTypes.JsonPatch
     }
 
 
+    public void Apply(IJsonPatchDocumentVisitor visitor)
+    {
+      foreach (Operation op in Operations)
+      {
+        op.Apply(visitor);
+      }
+    }
+
+
     public override string ToString()
     {
       using (TextWriter w = new StringWriter())
@@ -152,26 +162,56 @@ namespace Ramone.MediaTypes.JsonPatch
     }
 
 
+    /// <summary>
+    /// For writing patch documents.
+    /// </summary>
     public class Operation
     {
       public string op { get; set; }
 
       public string path { get; set; }
+
+      public virtual void Apply(IJsonPatchDocumentVisitor visitor)
+      {
+        if (op == "remove")
+          visitor.Remove(path);
+      }
     }
 
 
     public class ValueOperation : Operation
     {
       public object value { get; set; }
+
+      public override void Apply(IJsonPatchDocumentVisitor visitor)
+      {
+        if (op == "add")
+          visitor.Add(path, value);
+        else if (op == "replace")
+          visitor.Replace(path, value);
+        else if (op == "test")
+          visitor.Test(path, value);
+      }
     }
 
 
     public class FromOperation : Operation
     {
       public string from { get; set; }
+
+      public override void Apply(IJsonPatchDocumentVisitor visitor)
+      {
+        if (op == "copy")
+          visitor.Copy(from, path);
+        else if (op == "move")
+          visitor.Move(from, path);
+      }
     }
 
 
+    /// <summary>
+    /// For reading patch documents.
+    /// </summary>
     protected class CompleteOperation
     {
       public string op { get; set; }

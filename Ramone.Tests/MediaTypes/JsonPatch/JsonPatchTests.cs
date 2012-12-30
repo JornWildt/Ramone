@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
+using System.IO;
 using NUnit.Framework;
 using Ramone.MediaTypes.JsonPatch;
-using System.IO;
-using JsonFx.Serialization;
 
 
 namespace Ramone.Tests.MediaTypes.JsonPatch
