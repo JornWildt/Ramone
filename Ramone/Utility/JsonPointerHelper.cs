@@ -18,7 +18,7 @@ namespace Ramone.Utility
 
     public string GetPath<TProperty>(Expression<Func<TObject, TProperty>> expr)
     {
-      return GetPath(expr.Body, true);
+      return Separator + GetPath(expr.Body, true);
     }
 
 

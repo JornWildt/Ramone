@@ -149,6 +149,7 @@ namespace Ramone.MediaTypes.JsonPatch
       {
         op.Apply(visitor);
       }
+      visitor.Complete();
     }
 
 
@@ -229,44 +230,44 @@ namespace Ramone.MediaTypes.JsonPatch
 
     public void Add<TProperty>(Expression<Func<TDocument, TProperty>> path, object value)
     {
-      string spath = "/" + PathHelper.GetPath(path);
+      string spath = PathHelper.GetPath(path);
       Add(spath, value);
     }
 
 
     public void Replace<TProperty>(Expression<Func<TDocument, TProperty>> path, object value)
     {
-      string spath = "/" + PathHelper.GetPath(path);
+      string spath = PathHelper.GetPath(path);
       Replace(spath, value);
     }
 
 
     public void Remove<TProperty>(Expression<Func<TDocument, TProperty>> path)
     {
-      string spath = "/" + PathHelper.GetPath(path);
+      string spath = PathHelper.GetPath(path);
       Remove(spath);
     }
 
 
     public void Move<TProperty>(Expression<Func<TDocument, TProperty>> from, Expression<Func<TDocument, TProperty>> path)
     {
-      string sfrom = "/" + PathHelper.GetPath(from);
-      string spath = "/" + PathHelper.GetPath(path);
+      string sfrom = PathHelper.GetPath(from);
+      string spath = PathHelper.GetPath(path);
       Move(sfrom, spath);
     }
 
 
     public void Copy<TProperty>(Expression<Func<TDocument, TProperty>> from, Expression<Func<TDocument, TProperty>> path)
     {
-      string sfrom = "/" + PathHelper.GetPath(from);
-      string spath = "/" + PathHelper.GetPath(path);
+      string sfrom = PathHelper.GetPath(from);
+      string spath = PathHelper.GetPath(path);
       Copy(sfrom, spath);
     }
 
 
     public void Test<TProperty>(Expression<Func<TDocument, TProperty>> path, object value)
     {
-      string spath = "/" + PathHelper.GetPath(path);
+      string spath = PathHelper.GetPath(path);
       Test(spath, value);
     }
   }

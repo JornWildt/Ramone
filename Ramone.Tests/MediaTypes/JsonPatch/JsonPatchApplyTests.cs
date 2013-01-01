@@ -28,6 +28,7 @@ namespace Ramone.Tests.MediaTypes.JsonPatch
 
       // Assert
       Assert.AreEqual(doc.ToString(), callback.newDoc.ToString());
+      Assert.IsTrue(callback.IsComplete, "Apply() method must call Complete.");
     }
   }
 
@@ -35,6 +36,7 @@ namespace Ramone.Tests.MediaTypes.JsonPatch
   internal class PatchVisitor : JsonPatchDocumentVisitor
   {
     public JsonPatchDocument newDoc = new JsonPatchDocument();
+    public bool IsComplete = false;
 
     public override void Add(string path, object value)
     {
@@ -64,6 +66,11 @@ namespace Ramone.Tests.MediaTypes.JsonPatch
     public override void Test(string path, object value)
     {
       newDoc.Test(path, value);
+    }
+
+    public override void Complete()
+    {
+      IsComplete = true;
     }
   }
 }

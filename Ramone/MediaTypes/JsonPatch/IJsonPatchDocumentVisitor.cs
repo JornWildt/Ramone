@@ -8,5 +8,6 @@
     void Move(string from, string path);
     void Copy(string from, string path);
     void Test(string path, object value);
+    void Complete();
   }
 }

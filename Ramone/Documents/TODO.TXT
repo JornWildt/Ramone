@@ -2,11 +2,24 @@
 Version 1
 ---------
 
+Mail om partial PUT
+
 Patch
+- Visitor
 - Manual
 - Check op på de officielle tests
 - Indføre i F2
 - Blog
+
+Forbedre denne konstruktion:
+
+        if (path == pointer.GetPath(c => c.Title))
+        {
+
+        }
+
+
+Flytte diverse dims fra Xyperico.Net til Ramone?
 
 Jenkins build
 

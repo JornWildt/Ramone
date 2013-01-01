@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Linq.Expressions;
 
 namespace Ramone.MediaTypes.JsonPatch
 {
@@ -30,6 +31,10 @@ namespace Ramone.MediaTypes.JsonPatch
     }
 
     public virtual void Test(string path, object value)
+    {
+    }
+
+    public virtual void Complete()
     {
     }
 
