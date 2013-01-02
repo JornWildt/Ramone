@@ -56,6 +56,11 @@ namespace Ramone.Utility
         // Fits "x => x" (the whole document which is "" as JSON pointer)
         return firstTime ? "" : null;
       }
+      else if (expr.NodeType == ExpressionType.Convert)
+      {
+        // Ignore conversions
+        return GetPath(((UnaryExpression)expr).Operand, false);
+      }
       else
         return null;
     }
