@@ -30,6 +30,23 @@ namespace Ramone.Tests.MediaTypes.JsonPatch
       Assert.AreEqual(doc.ToString(), callback.newDoc.ToString());
       Assert.IsTrue(callback.IsComplete, "Apply() method must call Complete.");
     }
+
+
+    [Test]
+    public void CanUseIfMatchInVisitor()
+    {
+      // Arrange
+      JsonPatchDocument doc = new JsonPatchDocument();
+      doc.Add("/Id", 10);
+
+      TypedPatchVisitor callback = new TypedPatchVisitor();
+
+      // Act
+      doc.Apply(callback);
+
+      // Assert
+      Assert.AreEqual("/Id => 10", callback.Result);
+    }
   }
 
 
@@ -73,4 +90,17 @@ namespace Ramone.Tests.MediaTypes.JsonPatch
       IsComplete = true;
     }
   }
+
+
+  internal class TypedPatchVisitor : JsonPatchDocumentVisitor<BugReport>
+  {
+    public string Result = null;
+
+    public override void Add(string path, object value)
+    {
+      IfMatch<int>(r => r.Id, path, value,
+        v => Result = string.Format("{0} => {1}", path, v));
+    }
+  }
+
 }
