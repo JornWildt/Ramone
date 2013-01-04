@@ -59,7 +59,7 @@ Ramone with the punk band "The Ramones" if that suits you better :-)
 
 Happy hacking.
 
-Jørn Wildt
+Jï¿½rn Wildt
 
 
 DOCUMENTATION
@@ -74,6 +74,9 @@ Not much so far. There's a few blog posts though:
 
   Ramone: Consuming Hyper-Media REST Services in C#
   http://soabits.blogspot.com/2012/04/ramone-consuming-hyper-media-rest.html
+
+  JSON-Patch support in Ramone 
+  http://soabits.blogspot.dk/2013/01/json-patch-support-in-ramone.html
 
 
 USING
