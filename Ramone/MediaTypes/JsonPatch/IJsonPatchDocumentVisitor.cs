@@ -2,12 +2,12 @@
 {
   public interface IJsonPatchDocumentVisitor
   {
-    void Add(string path, object value);
-    void Remove(string path);
-    void Replace(string path, object value);
-    void Move(string from, string path);
-    void Copy(string from, string path);
-    void Test(string path, object value);
+    bool Add(string path, object value);
+    bool Remove(string path);
+    bool Replace(string path, object value);
+    bool Move(string from, string path);
+    bool Copy(string from, string path);
+    bool Test(string path, object value);
     void Complete();
   }
 }

@@ -39,7 +39,7 @@ namespace Ramone.Tests.MediaTypes.JsonPatch
       JsonPatchDocument doc = new JsonPatchDocument();
       doc.Add("/Id", 10);
 
-      TypedPatchVisitor callback = new TypedPatchVisitor();
+      BugReportPatchVisitor callback = new BugReportPatchVisitor();
 
       // Act
       doc.Apply(callback);
@@ -47,6 +47,43 @@ namespace Ramone.Tests.MediaTypes.JsonPatch
       // Assert
       Assert.AreEqual("/Id => 10", callback.Result);
     }
+
+
+    [Test]
+    public void CanChainIfMatchInVisitor()
+    {
+      // Arrange
+      JsonPatchDocument doc = new JsonPatchDocument();
+      doc.Add("/Id", 10);
+      doc.Add("/Title", "Abc");
+
+      BugReportChainedPatchVisitor callback = new BugReportChainedPatchVisitor();
+
+      // Act
+      doc.Apply(callback);
+
+      // Assert
+      Assert.AreEqual("/Id => 10|/Title => Abc|", callback.Result);
+    }
+
+
+    [Test]
+    public void DefaultPatchVisitorFailsOnUnknownPaths()
+    {
+      // Arrange
+      JsonPatchDocument doc = new JsonPatchDocument();
+      doc.Add("/XxxUnknown", 10);
+
+      EmptyPatchVisitor callback = new EmptyPatchVisitor();
+
+      // Act + Assert
+      AssertThrows<JsonPatchParserException>(() => doc.Apply(callback));
+    }
+  }
+
+
+  internal class EmptyPatchVisitor : JsonPatchDocumentVisitor
+  {
   }
 
 
@@ -55,34 +92,40 @@ namespace Ramone.Tests.MediaTypes.JsonPatch
     public JsonPatchDocument newDoc = new JsonPatchDocument();
     public bool IsComplete = false;
 
-    public override void Add(string path, object value)
+    public override bool Add(string path, object value)
     {
       newDoc.Add(path, value);
+      return true;
     }
 
-    public override void Remove(string path)
+    public override bool Remove(string path)
     {
       newDoc.Remove(path);
+      return true;
     }
 
-    public override void Replace(string path, object value)
+    public override bool Replace(string path, object value)
     {
       newDoc.Replace(path, value);
+      return true;
     }
 
-    public override void Copy(string from, string path)
+    public override bool Copy(string from, string path)
     {
       newDoc.Copy(from, path);
+      return true;
     }
 
-    public override void Move(string from, string path)
+    public override bool Move(string from, string path)
     {
       newDoc.Move(from, path);
+      return true;
     }
 
-    public override void Test(string path, object value)
+    public override bool Test(string path, object value)
     {
       newDoc.Test(path, value);
+      return true;
     }
 
     public override void Complete()
@@ -92,15 +135,31 @@ namespace Ramone.Tests.MediaTypes.JsonPatch
   }
 
 
-  internal class TypedPatchVisitor : JsonPatchDocumentVisitor<BugReport>
+
+  internal class BugReportPatchVisitor : JsonPatchDocumentVisitor<BugReport>
   {
     public string Result = null;
 
-    public override void Add(string path, object value)
+    public override bool Add(string path, object value)
     {
-      IfMatch<int>(r => r.Id, path, value,
-        v => Result = string.Format("{0} => {1}", path, v));
+      return 
+        IfMatch<int>(r => r.Id, path, value,
+          v => Result = string.Format("{0} => {1}", path, v));
     }
   }
 
+
+  internal class BugReportChainedPatchVisitor : JsonPatchDocumentVisitor<BugReport>
+  {
+    public string Result = null;
+
+    public override bool Add(string path, object value)
+    {
+      return
+        IfMatch<int>(r => r.Id, path, value,
+          v => Result += string.Format("{0} => {1}|", path, v))
+        || IfMatch<string>(r => r.Title, path, value,
+          v => Result += string.Format("{0} => {1}|", path, v));
+    }
+  }
 }

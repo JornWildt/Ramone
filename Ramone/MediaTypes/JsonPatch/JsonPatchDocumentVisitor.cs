@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Linq.Expressions;
 using Ramone.Utility;
+
 
 namespace Ramone.MediaTypes.JsonPatch
 {
@@ -11,28 +9,34 @@ namespace Ramone.MediaTypes.JsonPatch
   {
     #region IJsonPatchDocumentVisitor Members
 
-    public virtual void Add(string path, object value)
+    public virtual bool Add(string path, object value)
     {
+      return false;
     }
 
-    public virtual void Remove(string path)
+    public virtual bool Remove(string path)
     {
+      return false;
     }
 
-    public virtual void Replace(string path, object value)
+    public virtual bool Replace(string path, object value)
     {
+      return false;
     }
 
-    public virtual void Move(string from, string path)
+    public virtual bool Move(string from, string path)
     {
+      return false;
     }
 
-    public virtual void Copy(string from, string path)
+    public virtual bool Copy(string from, string path)
     {
+      return false;
     }
 
-    public virtual void Test(string path, object value)
+    public virtual bool Test(string path, object value)
     {
+      return false;
     }
 
     public virtual void Complete()
@@ -57,7 +61,8 @@ namespace Ramone.MediaTypes.JsonPatch
     /// <param name="path"></param>
     /// <param name="value"></param>
     /// <param name="a"></param>
-    public void IfMatch<TValue>(Expression<Func<TDocument, object>> expr, string path, object value, Action<TValue> a)
+    /// <returns>True indicating a match - or false if not matching.</returns>
+    public bool IfMatch<TValue>(Expression<Func<TDocument, object>> expr, string path, object value, Action<TValue> a)
     {
       if (JsonPointer.GetPath(expr) == path)
       {
@@ -65,7 +70,10 @@ namespace Ramone.MediaTypes.JsonPatch
           a((TValue)value);
         else
           throw new JsonPatchParserException(string.Format("Unable to convert '{0}' to {1} (got {2}).", path, typeof(TValue), value.GetType()));
+        return true;
       }
+
+      return false;
     }
   }
 }

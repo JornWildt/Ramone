@@ -174,8 +174,11 @@ namespace Ramone.MediaTypes.JsonPatch
 
       public virtual void Apply(IJsonPatchDocumentVisitor visitor)
       {
+        bool ok = false;
         if (op == "remove")
-          visitor.Remove(path);
+          ok = visitor.Remove(path);
+        if (!ok)
+          throw new JsonPatchParserException(string.Format("Unsupported patch operation '{0}' on path '{1}'.", op, path));
       }
     }
 
@@ -186,12 +189,15 @@ namespace Ramone.MediaTypes.JsonPatch
 
       public override void Apply(IJsonPatchDocumentVisitor visitor)
       {
+        bool ok = false;
         if (op == "add")
-          visitor.Add(path, value);
+          ok = visitor.Add(path, value);
         else if (op == "replace")
-          visitor.Replace(path, value);
+          ok = visitor.Replace(path, value);
         else if (op == "test")
-          visitor.Test(path, value);
+          ok = visitor.Test(path, value);
+        if (!ok)
+          throw new JsonPatchParserException(string.Format("Unsupport patch operation '{0}' on path '{1}'.", op, path));
       }
     }
 
@@ -202,16 +208,19 @@ namespace Ramone.MediaTypes.JsonPatch
 
       public override void Apply(IJsonPatchDocumentVisitor visitor)
       {
+        bool ok = false;
         if (op == "copy")
-          visitor.Copy(from, path);
+          ok = visitor.Copy(from, path);
         else if (op == "move")
-          visitor.Move(from, path);
+          ok = visitor.Move(from, path);
+        if (!ok)
+          throw new JsonPatchParserException(string.Format("Unsupport patch operation '{0}' on path '{1}' from '{2}'.", op, path, from));
       }
     }
 
 
     /// <summary>
-    /// For reading patch documents.
+    /// For reading patch documents (and turning them into "Operation" classes).
     /// </summary>
     protected class CompleteOperation
     {
