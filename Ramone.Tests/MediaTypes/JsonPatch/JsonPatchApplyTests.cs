@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.IO;
+﻿using System;
 using NUnit.Framework;
 using Ramone.MediaTypes.JsonPatch;
 
@@ -79,6 +78,20 @@ namespace Ramone.Tests.MediaTypes.JsonPatch
       // Act + Assert
       AssertThrows<JsonPatchParserException>(() => doc.Apply(callback));
     }
+
+
+    [Test]
+    public void IfMatchHandlesNullValues()
+    {
+      // Arrange
+      JsonPatchDocument doc = new JsonPatchDocument();
+      doc.Add("/Created", null);
+
+      BugReportPatchVisitor callback = new BugReportPatchVisitor();
+
+      // Act + Assert
+      AssertThrows<JsonPatchParserException>(() => doc.Apply(callback));
+    }
   }
 
 
@@ -144,6 +157,9 @@ namespace Ramone.Tests.MediaTypes.JsonPatch
     {
       return 
         IfMatch<int>(r => r.Id, path, value,
+          v => Result = string.Format("{0} => {1}", path, v))
+      ||
+        IfMatch<DateTime>(r => r.Created, path, value,
           v => Result = string.Format("{0} => {1}", path, v));
     }
   }

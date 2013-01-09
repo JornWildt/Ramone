@@ -85,6 +85,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AdditionalMethodsTests.cs" />
+    <Compile Include="AsyncTests.cs" />
     <Compile Include="BindingTests.cs" />
     <Compile Include="Blog\BlogTestHelper.cs" />
     <Compile Include="Blog\Codecs\Html\AuthorCodec_Html.cs" />

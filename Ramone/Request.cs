@@ -408,6 +408,12 @@ namespace Ramone
     }
 
 
+    public AsyncRequest Async(Action<Response> handler)
+    {
+      return new AsyncRequest(this, handler);
+    }
+
+
     protected Response<TResponse> DoRequest<TResponse>(string method, int retryLevel = 0) where TResponse : class
     {
       Response r = DoRequest(Url, method, true, req => req.Accept = GetAcceptHeader(typeof(TResponse)), retryLevel);
@@ -421,73 +427,11 @@ namespace Ramone
     }
 
 
-    protected Response DoRequest(Uri url, string method, bool includeBody, Action<HttpWebRequest> requestModifier, int retryLevel = 0)
+    protected virtual Response DoRequest(Uri url, string method, bool includeBody, Action<HttpWebRequest> requestModifier, int retryLevel = 0)
     {
       try
       {
-        HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
-
-        // Set headers and similar before writing to stream
-        request.Method = method;
-        request.CookieContainer = Session.Cookies;
-        request.UserAgent = Session.UserAgent;
-        request.AllowAutoRedirect = false;
-
-        request.Headers.Add(AdditionalHeaders);
-
-        if (requestModifier != null)
-          requestModifier(request);
-
-        if (includeBody)
-        {
-          if (BodyCharacterSet != null && BodyData == null)
-            throw new InvalidOperationException("Request character set is not allowed when no body is supplied.");
-
-          string charset = "";
-          if (BodyCharacterSet != null)
-            charset = "; charset=" + BodyCharacterSet;
-
-          string boundary = "";
-          if (BodyBoundary != null && BodyCodec != null)
-          {
-            boundary = "; boundary=" + BodyBoundary;
-            BodyCodec.CodecArgument = BodyBoundary;
-          }
-
-          request.ContentType = BodyContentType + charset + boundary;
-
-          foreach (KeyValuePair<string, IRequestInterceptor> interceptor in Session.RequestInterceptors)
-          {
-            interceptor.Value.HeadersReady(new RequestContext(request, Session));
-          }
-
-          if (BodyData != null)
-          {
-            Stream requestStream = request.GetRequestStream();
-            foreach (KeyValuePair<string, IRequestInterceptor> interceptor in Session.RequestInterceptors)
-              if (interceptor.Value is IRequestStreamWrapper)
-                requestStream = ((IRequestStreamWrapper)interceptor.Value).Wrap(new RequestStreamWrapperContext(requestStream, request, Session));
-
-            BodyCodec.WriteTo(new WriterContext(requestStream, BodyData, request, Session, CodecParameters));
-            request.GetRequestStream().Close();
-          }
-          else
-          {
-            request.ContentLength = 0;
-          }
-        }
-        else
-        {
-          foreach (KeyValuePair<string, IRequestInterceptor> interceptor in Session.RequestInterceptors)
-          {
-            interceptor.Value.HeadersReady(new RequestContext(request, Session));
-          }
-        }
-
-        foreach (KeyValuePair<string, IRequestInterceptor> interceptor in Session.RequestInterceptors)
-        {
-          interceptor.Value.DataSent(new RequestContext(request, Session));
-        }
+        HttpWebRequest request = SetupRequest(url, method, includeBody, requestModifier);
 
         HttpWebResponse response = (HttpWebResponse)request.GetResponse();
         Guid? connectionId = null;
@@ -513,7 +457,7 @@ namespace Ramone
               response.Close();
               if (connectionId != null)
                 ConnectionStatistics.DiscardConnection(connectionId.Value);
-              
+
               return DoRequest(location, method, includeBody, requestModifier, retryLevel + 1);
             }
           }
@@ -552,6 +496,76 @@ namespace Ramone
           throw;
         }
       }
+    }
+
+
+    protected HttpWebRequest SetupRequest(Uri url, string method, bool includeBody, Action<HttpWebRequest> requestModifier)
+    {
+      HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
+
+      // Set headers and similar before writing to stream
+      request.Method = method;
+      request.CookieContainer = Session.Cookies;
+      request.UserAgent = Session.UserAgent;
+      request.AllowAutoRedirect = false;
+
+      request.Headers.Add(AdditionalHeaders);
+
+      if (requestModifier != null)
+        requestModifier(request);
+
+      if (includeBody)
+      {
+        if (BodyCharacterSet != null && BodyData == null)
+          throw new InvalidOperationException("Request character set is not allowed when no body is supplied.");
+
+        string charset = "";
+        if (BodyCharacterSet != null)
+          charset = "; charset=" + BodyCharacterSet;
+
+        string boundary = "";
+        if (BodyBoundary != null && BodyCodec != null)
+        {
+          boundary = "; boundary=" + BodyBoundary;
+          BodyCodec.CodecArgument = BodyBoundary;
+        }
+
+        request.ContentType = BodyContentType + charset + boundary;
+
+        foreach (KeyValuePair<string, IRequestInterceptor> interceptor in Session.RequestInterceptors)
+        {
+          interceptor.Value.HeadersReady(new RequestContext(request, Session));
+        }
+
+        if (BodyData != null)
+        {
+          Stream requestStream = request.GetRequestStream();
+          foreach (KeyValuePair<string, IRequestInterceptor> interceptor in Session.RequestInterceptors)
+            if (interceptor.Value is IRequestStreamWrapper)
+              requestStream = ((IRequestStreamWrapper)interceptor.Value).Wrap(new RequestStreamWrapperContext(requestStream, request, Session));
+
+          BodyCodec.WriteTo(new WriterContext(requestStream, BodyData, request, Session, CodecParameters));
+          request.GetRequestStream().Close();
+        }
+        else
+        {
+          request.ContentLength = 0;
+        }
+      }
+      else
+      {
+        foreach (KeyValuePair<string, IRequestInterceptor> interceptor in Session.RequestInterceptors)
+        {
+          interceptor.Value.HeadersReady(new RequestContext(request, Session));
+        }
+      }
+
+      foreach (KeyValuePair<string, IRequestInterceptor> interceptor in Session.RequestInterceptors)
+      {
+        interceptor.Value.DataSent(new RequestContext(request, Session));
+      }
+
+      return request;
     }
 
 
