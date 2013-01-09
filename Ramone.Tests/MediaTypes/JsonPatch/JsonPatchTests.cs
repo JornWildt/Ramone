@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using NUnit.Framework;
 using Ramone.MediaTypes.JsonPatch;
@@ -412,6 +413,7 @@ namespace Ramone.Tests.MediaTypes.JsonPatch
     public StatusType Status { get; set; }
     public Party Responsible { get; set; }
     public List<Party> RelatedParties { get; set; }
+    public DateTime Created { get; set; }
 
     public class Party
     {

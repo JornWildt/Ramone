@@ -69,7 +69,7 @@ namespace Ramone.MediaTypes.JsonPatch
         if (value is TValue)
           a((TValue)value);
         else
-          throw new JsonPatchParserException(string.Format("Unable to convert '{0}' to {1} (got {2}).", path, typeof(TValue), value.GetType()));
+          throw new JsonPatchParserException(string.Format("Unable to convert '{0}' to {1} (got {2}).", path, typeof(TValue), (value != null ? value.GetType().ToString() : "null")));
         return true;
       }
 
