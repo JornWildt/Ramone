@@ -3,6 +3,7 @@ using NUnit.Framework;
 using Ramone.Tests.Common;
 using Ramone.Tests.Common.CMS;
 using Ramone.Utility.ObjectSerialization;
+using System.Threading;
 
 
 namespace Ramone.Tests
@@ -215,6 +216,19 @@ namespace Ramone.Tests
       ObjectToStringPropertyVisitor visitor = new ObjectToStringPropertyVisitor();
       serializer.Serialize(data, visitor, settings);
       return visitor.Result;
+    }
+
+
+    protected void TestAsync(Action<AutoResetEvent> asyncBlock)
+    {
+      AutoResetEvent handle = new AutoResetEvent(false);
+
+      asyncBlock(handle);
+
+      // Wait for request to complete
+      bool signalReceived = handle.WaitOne(TimeSpan.FromSeconds(10));
+
+      Assert.IsTrue(signalReceived, "Timeout in async handler");
     }
   }
 }

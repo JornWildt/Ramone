@@ -201,121 +201,121 @@ namespace Ramone
 
     #region Standard methods
 
-    public Response<TResponse> Get<TResponse>() where TResponse : class
+    public virtual Response<TResponse> Get<TResponse>() where TResponse : class
     {
       return DoRequest<TResponse>("GET");
     }
 
 
-    public Response Get()
+    public virtual Response Get()
     {
       return DoRequest("GET");
     }
 
 
-    public Response<TResponse> Post<TResponse>() where TResponse : class
+    public virtual Response<TResponse> Post<TResponse>() where TResponse : class
     {
       return Post<TResponse>(null);
     }
 
 
-    public Response<TResponse> Post<TResponse>(object body) where TResponse : class
+    public virtual Response<TResponse> Post<TResponse>(object body) where TResponse : class
     {
       Body(body);
       return DoRequest<TResponse>("POST");
     }
 
 
-    public Response Post(object body)
+    public virtual Response Post(object body)
     {
       Body(body);
       return DoRequest("POST");
     }
 
 
-    public Response Post()
+    public virtual Response Post()
     {
       return Post(null);
     }
 
 
-    public Response<TResponse> Put<TResponse>() where TResponse : class
+    public virtual Response<TResponse> Put<TResponse>() where TResponse : class
     {
       return Put<TResponse>(null);
     }
 
 
-    public Response<TResponse> Put<TResponse>(object body) where TResponse : class
+    public virtual Response<TResponse> Put<TResponse>(object body) where TResponse : class
     {
       Body(body);
       return DoRequest<TResponse>("PUT");
     }
 
 
-    public Response Put(object body)
+    public virtual Response Put(object body)
     {
       Body(body);
       return DoRequest("PUT");
     }
 
 
-    public Response Put()
+    public virtual Response Put()
     {
       return Put(null);
     }
 
 
-    public Response<TResponse> Delete<TResponse>() where TResponse : class
+    public virtual Response<TResponse> Delete<TResponse>() where TResponse : class
     {
       return DoRequest<TResponse>("DELETE");
     }
 
 
-    public Response Delete()
+    public virtual Response Delete()
     {
       return DoRequest("DELETE");
     }
 
 
-    public Response Head()
+    public virtual Response Head()
     {
       return DoRequest("HEAD");
     }
 
 
-    public Response<TResponse> Options<TResponse>() where TResponse : class
+    public virtual Response<TResponse> Options<TResponse>() where TResponse : class
     {
       return DoRequest<TResponse>("OPTIONS");
     }
 
 
-    public Response Options()
+    public virtual Response Options()
     {
       return DoRequest("OPTIONS");
     }
 
 
-    public Response<TResponse> Patch<TResponse>() where TResponse : class
+    public virtual Response<TResponse> Patch<TResponse>() where TResponse : class
     {
       return Patch<TResponse>(null);
     }
 
 
-    public Response<TResponse> Patch<TResponse>(object body) where TResponse : class
+    public virtual Response<TResponse> Patch<TResponse>(object body) where TResponse : class
     {
       Body(body);
       return DoRequest<TResponse>("PATCH");
     }
 
 
-    public Response Patch(object body)
+    public virtual Response Patch(object body)
     {
       Body(body);
       return DoRequest("PATCH");
     }
 
 
-    public Response Patch()
+    public virtual Response Patch()
     {
       return Patch(null);
     }
@@ -325,26 +325,26 @@ namespace Ramone
 
     #region Generic methods
 
-    public Response<TResponse> Execute<TResponse>(string method) where TResponse : class
+    public virtual Response<TResponse> Execute<TResponse>(string method) where TResponse : class
     {
       return DoRequest<TResponse>(method);
     }
 
 
-    public Response Execute(string method)
+    public virtual Response Execute(string method)
     {
       return DoRequest(method);
     }
 
 
-    public Response<TResponse> Execute<TResponse>(string method, object body) where TResponse : class
+    public virtual Response<TResponse> Execute<TResponse>(string method, object body) where TResponse : class
     {
       Body(body);
       return DoRequest<TResponse>(method);
     }
 
 
-    public Response Execute(string method, object body)
+    public virtual Response Execute(string method, object body)
     {
       Body(body);
       return DoRequest(method);
@@ -356,7 +356,7 @@ namespace Ramone
     /// </summary>
     /// <typeparam name="TResponse"></typeparam>
     /// <returns></returns>
-    public Response<TResponse> Submit<TResponse>() where TResponse : class
+    public virtual Response<TResponse> Submit<TResponse>() where TResponse : class
     {
       if (SubmitMethod == null)
         throw new InvalidOperationException("Missing method for Submit(). Call Method() first.");
@@ -368,7 +368,7 @@ namespace Ramone
     /// Submit request using previously registered method.
     /// </summary>
     /// <returns></returns>
-    public Response Submit()
+    public virtual Response Submit()
     {
       if (SubmitMethod == null)
         throw new InvalidOperationException("Missing method for Submit(). Call Method() first.");
@@ -408,9 +408,9 @@ namespace Ramone
     }
 
 
-    public AsyncRequest Async(Action<Response> handler)
+    public AsyncRequest Async()
     {
-      return new AsyncRequest(this, handler);
+      return new AsyncRequest(this);
     }
 
 

@@ -29,6 +29,26 @@ namespace Ramone.Tests
 
 
     [Test]
+    public void CanGetDossier_Async()
+    {
+      // Arrange
+      Request dossierReq = Session.Bind(DossierTemplate, new { id = 8 });
+
+      TestAsync(wh =>
+      {
+        // Act
+        dossierReq.Async().Get<Dossier>(dossier =>
+        {
+          Assert.AreEqual(8, dossier.Body.Id);
+          Assert.AreEqual("Dossier no. 8", dossier.Body.Title);
+          Assert.IsNotNull(dossier.Body.Links);
+          wh.Set();
+        });
+      });
+    }
+
+
+    [Test]
     public void CanGetDossierWithDictionaryParams()
     {
       // Arrange

@@ -50,6 +50,24 @@ namespace Ramone.Tests
 
 
     [Test]
+    public void CanPostAndGetResult_Async()
+    {
+      TestAsync(wh =>
+      {
+        // Act
+        DossiersReq.Async().Post<Dossier>(MyDossier, response =>
+        {
+          Dossier newDossier = response.Body;
+
+          // Assert
+          Assert.IsNotNull(newDossier);
+          wh.Set();
+        });
+      });
+    }
+
+
+    [Test]
     public void CanPostAndGetResultWithAccept()
     {
       // Act
