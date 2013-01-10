@@ -10,7 +10,7 @@ namespace Ramone.Tests
   public class AsyncTests : TestHelper
   {
     [Test]
-    // As imple test to verify that we got something right (mostly while modeling the API)
+    // As simple test to verify that we got something right (mostly while modeling the API)
     public void CanDoAsyncRequest()
     {
       // Arrange
@@ -20,10 +20,11 @@ namespace Ramone.Tests
       TestAsync(wh =>
       {
         // Act
-        request.Async().Get(r => 
+        request.Async()
+               .OnComplete(() => wh.Set())
+               .Get(r => 
         { 
           ok = true; 
-          wh.Set(); 
         });
       });
 

@@ -8,6 +8,8 @@ namespace Ramone
   {
     private Action<Response> ResponseCallback { get; set; }
 
+    private Action CompleteAction { get; set; }
+
     public AsyncRequest(Request r)
       : base(r)
     {
@@ -58,6 +60,51 @@ namespace Ramone
       ResponseCallback = callback;
       DoRequest("POST");
     }
+
+
+    public void Put<TResponse>(Action<Response<TResponse>> callback) where TResponse : class
+    {
+      ResponseCallback = (r => callback(new Response<TResponse>(r, 0)));
+      DoRequest("PUT");
+    }
+
+
+    public void Put(Action<Response> callback)
+    {
+      ResponseCallback = callback;
+      DoRequest("PUT");
+    }
+
+
+    public void Put<TResponse>(object body, Action<Response<TResponse>> callback) where TResponse : class
+    {
+      Body(body);
+      ResponseCallback = (r => callback(new Response<TResponse>(r, 0)));
+      DoRequest("PUT");
+    }
+
+
+    public void Put(object body, Action<Response> callback)
+    {
+      Body(body);
+      ResponseCallback = callback;
+      DoRequest("PUT");
+    }
+
+
+    public void Delete<TResponse>(Action<Response<TResponse>> callback) where TResponse : class
+    {
+      ResponseCallback = (r => callback(new Response<TResponse>(r, 0)));
+      DoRequest("DELETE");
+    }
+
+
+    public void Delete(Action<Response> callback)
+    {
+      ResponseCallback = callback;
+      DoRequest("DELETE");
+    }
+
 
     #endregion Standard methods
 
@@ -181,18 +228,64 @@ namespace Ramone
 
     #endregion
 
+
+    public AsyncRequest OnComplete(Action completeAction)
+    {
+      CompleteAction = completeAction;
+      return this;
+    }
+
+
     protected override Response DoRequest(Uri url, string method, bool includeBody, Action<HttpWebRequest> requestModifier, int retryLevel = 0)
     {
       HttpWebRequest request = SetupRequest(url, method, includeBody, requestModifier);
-      request.BeginGetResponse(HandleResponse, request);
+      AsynState state = new AsynState
+      {
+        IncludeBody = includeBody,
+        Method = method,
+        RequestModifier = requestModifier,
+        RetryLevel = retryLevel,
+        Url = url,
+        Request = request
+      };
+      request.BeginGetResponse(HandleResponse, state);
       return null;
     }
 
 
     private void HandleResponse(IAsyncResult result)
     {
-      HttpWebResponse response = (result.AsyncState as HttpWebRequest).EndGetResponse(result) as HttpWebResponse;
-      ResponseCallback(new Response(response, Session, 0));
+      AsynState state = (AsynState)result.AsyncState;
+
+      try
+      {
+        HttpWebResponse response = state.Request.EndGetResponse(result) as HttpWebResponse;
+        using (Response r = HandleResponse(response, state.Method, state.IncludeBody, state.RequestModifier, state.RetryLevel))
+        {
+          ResponseCallback(r);
+        }
+
+        if (CompleteAction != null)
+          CompleteAction();
+      }
+      catch (WebException ex)
+      {
+        Response response = HandleWebException(ex, state.Url, state.Method, state.IncludeBody, state.RequestModifier, state.RetryLevel);
+        if (response == null)
+          throw;
+        ResponseCallback(response);
+      }
+    }
+
+
+    private class AsynState
+    {
+      public Uri Url { get; set; }
+      public string Method { get; set; }
+      public bool IncludeBody { get; set; }
+      public Action<HttpWebRequest> RequestModifier { get; set; }
+      public int RetryLevel { get; set; }
+      public HttpWebRequest Request { get; set; }
     }
   }
 }

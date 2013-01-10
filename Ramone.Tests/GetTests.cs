@@ -29,7 +29,7 @@ namespace Ramone.Tests
 
 
     [Test]
-    public void CanGetDossier_Async()
+    public void CanGetDossier_Typed_Async()
     {
       // Arrange
       Request dossierReq = Session.Bind(DossierTemplate, new { id = 8 });
@@ -42,6 +42,27 @@ namespace Ramone.Tests
           Assert.AreEqual(8, dossier.Body.Id);
           Assert.AreEqual("Dossier no. 8", dossier.Body.Title);
           Assert.IsNotNull(dossier.Body.Links);
+          wh.Set();
+        });
+      });
+    }
+
+
+    [Test]
+    public void CanGetDossier_Untyped_Async()
+    {
+      // Arrange
+      Request dossierReq = Session.Bind(DossierTemplate, new { id = 8 });
+
+      TestAsync(wh =>
+      {
+        // Act
+        dossierReq.Async().Get(response =>
+        {
+          Dossier dossier = response.Decode<Dossier>();
+          Assert.AreEqual(8, dossier.Id);
+          Assert.AreEqual("Dossier no. 8", dossier.Title);
+          Assert.IsNotNull(dossier.Links);
           wh.Set();
         });
       });

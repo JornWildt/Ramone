@@ -101,8 +101,29 @@ namespace Ramone.Tests
       using (Response<string> response = request.Accept("text/plain").ContentType("application/octet-stream").Post<string>())
       {
         // Assert
-        Assert.AreEqual(null, response.Body);
+        Assert.IsNull(response.Body);
       }
+    }
+
+
+    [Test]
+    public void CanPostEmptyBody_Typed_Async()
+    {
+      // Arrange
+      Request request = Session.Bind(AnyEchoTemplate);
+
+      TestAsync(wh =>
+      {
+        // Act
+        request.Accept("text/plain").ContentType("application/octet-stream").Async()
+          .OnComplete(() => wh.Set())
+          .Post<string>(
+          r =>
+          {
+            // Assert
+            Assert.IsNull(r.Body);
+          });
+      });
     }
 
 
@@ -118,7 +139,7 @@ namespace Ramone.Tests
       using (Response<string> response = request.Post<string>())
       {
         // Assert
-        Assert.AreEqual(null, response.Body);
+        Assert.IsNull(response.Body);
       }
     }
 
@@ -133,8 +154,29 @@ namespace Ramone.Tests
       using (Response response = request.Accept("text/plain").ContentType("application/octet-stream").Post())
       {
         // Assert
-        Assert.AreEqual(null, response.Body);
+        Assert.IsNull(response.Body);
       }
+    }
+
+
+    [Test]
+    public void CanPostEmptyBody_Untyped_Async()
+    {
+      // Arrange
+      Request request = Session.Bind(AnyEchoTemplate);
+
+      TestAsync(wh =>
+      {
+        // Act
+        request.Accept("text/plain").ContentType("application/octet-stream").Async()
+          .OnComplete(() => wh.Set())
+          .Post(
+          r =>
+          {
+            // Assert
+            Assert.IsNull(r.Body);
+          });
+      });
     }
 
 
@@ -150,7 +192,7 @@ namespace Ramone.Tests
       using (Response response = request.Post())
       {
         // Assert
-        Assert.AreEqual(null, response.Body);
+        Assert.IsNull(response.Body);
       }
     }
   }

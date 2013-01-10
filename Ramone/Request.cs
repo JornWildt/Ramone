@@ -432,69 +432,15 @@ namespace Ramone
       try
       {
         HttpWebRequest request = SetupRequest(url, method, includeBody, requestModifier);
-
         HttpWebResponse response = (HttpWebResponse)request.GetResponse();
-        Guid? connectionId = null;
-        try
-        {
-          connectionId = ConnectionStatistics.RegisterConnection(response);
-
-          // Handle redirects
-          if (300 <= (int)response.StatusCode && (int)response.StatusCode <= 399)
-          {
-            int allowedRedirectCount = Session.GetAllowedRedirects((int)response.StatusCode);
-            if (retryLevel < allowedRedirectCount)
-            {
-              if (response.StatusCode == HttpStatusCode.SeeOther)
-              {
-                method = "GET";
-                includeBody = false;
-              }
-              Uri location = response.LocationAsUri();
-              if (location == null)
-                throw new InvalidOperationException(string.Format("No redirect location supplied in {0} response from {1}.", (int)response.StatusCode, request.RequestUri));
-
-              response.Close();
-              if (connectionId != null)
-                ConnectionStatistics.DiscardConnection(connectionId.Value);
-
-              return DoRequest(location, method, includeBody, requestModifier, retryLevel + 1);
-            }
-          }
-
-          return new Response(response, Session, retryLevel, connectionId);
-        }
-        catch (Exception)
-        {
-          response.Close();
-          if (connectionId != null)
-            ConnectionStatistics.DiscardConnection(connectionId.Value);
-          throw;
-        }
+        return HandleResponse(response, method, includeBody, requestModifier, retryLevel);
       }
       catch (WebException ex)
       {
-        HttpWebResponse response = ex.Response as HttpWebResponse;
-        if (response != null)
-        {
-          if (response.StatusCode == HttpStatusCode.Unauthorized)
-          {
-            HandleUnauthorized(response, ex);
-            if (retryLevel == 0)
-            {
-              // Resend request one time if no exceptions are thrown
-              return DoRequest(url, method, includeBody, requestModifier, retryLevel + 1);
-            }
-            else
-              throw new NotAuthorizedException(response, ex);
-          }
-          else
-            throw;
-        }
-        else
-        {
+        Response r = HandleWebException(ex, url, method, includeBody, requestModifier, retryLevel);
+        if (r == null)
           throw;
-        }
+        return r;
       }
     }
 
@@ -566,6 +512,72 @@ namespace Ramone
       }
 
       return request;
+    }
+
+
+    protected Response HandleResponse(HttpWebResponse response, string method, bool includeBody, Action<HttpWebRequest> requestModifier, int retryLevel = 0)
+    {
+      Guid? connectionId = null;
+      try
+      {
+        connectionId = ConnectionStatistics.RegisterConnection(response);
+
+        // Handle redirects
+        if (300 <= (int)response.StatusCode && (int)response.StatusCode <= 399)
+        {
+          int allowedRedirectCount = Session.GetAllowedRedirects((int)response.StatusCode);
+          if (retryLevel < allowedRedirectCount)
+          {
+            if (response.StatusCode == HttpStatusCode.SeeOther)
+            {
+              method = "GET";
+              includeBody = false;
+            }
+            Uri location = response.LocationAsUri();
+            if (location == null)
+              throw new InvalidOperationException(string.Format("No redirect location supplied in {0} response from {1}.", (int)response.StatusCode, response.ResponseUri));
+
+            response.Close();
+            if (connectionId != null)
+              ConnectionStatistics.DiscardConnection(connectionId.Value);
+
+            return DoRequest(location, method, includeBody, requestModifier, retryLevel + 1);
+          }
+        }
+
+        return new Response(response, Session, retryLevel, connectionId);
+      }
+      catch (Exception)
+      {
+        response.Close();
+        if (connectionId != null)
+          ConnectionStatistics.DiscardConnection(connectionId.Value);
+        throw;
+      }
+    }
+
+
+    protected Response HandleWebException(WebException ex, Uri url, string method, bool includeBody, Action<HttpWebRequest> requestModifier, int retryLevel)
+    {
+      HttpWebResponse response = ex.Response as HttpWebResponse;
+      if (response != null)
+      {
+        if (response.StatusCode == HttpStatusCode.Unauthorized)
+        {
+          // This either throws or returns with success
+          HandleUnauthorized(response, ex);
+
+          if (retryLevel == 0)
+          {
+            // Resend request one time if no exceptions are thrown
+            return DoRequest(url, method, includeBody, requestModifier, retryLevel + 1);
+          }
+          else
+            throw new NotAuthorizedException(response, ex);
+        }
+      }
+
+      return null;
     }
 
 

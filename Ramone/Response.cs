@@ -109,7 +109,8 @@ namespace Ramone
     
     public void Dispose()
     {
-      WebResponse.Close();
+      if (WebResponse != null)
+        WebResponse.Close();
       if (ConnectionId != null)
         ConnectionStatistics.DiscardConnection(ConnectionId.Value);
     }

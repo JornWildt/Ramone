@@ -44,6 +44,42 @@ namespace Ramone.Tests
 
 
     [Test]
+    public void CanDeleteAndGetResult_Typed_Async()
+    {
+      TestAsync(wh =>
+      {
+        // Act
+        DossierReq.Async()
+          .OnComplete(() => wh.Set())
+          .Delete<string>(
+          r =>
+          {
+            // Assert
+            Assert.AreEqual("Deleted, yup!", r.Body);
+          });
+      });
+    }
+
+
+    [Test]
+    public void CanDeleteAndGetResult_Untyped_Async()
+    {
+      TestAsync(wh =>
+      {
+        // Act
+        DossierReq.Async()
+          .OnComplete(() => wh.Set())
+          .Delete(
+          r =>
+          {
+            // Assert
+            Assert.AreEqual("Deleted, yup!", r.Decode<string>());
+          });
+      });
+    }
+
+
+    [Test]
     public void CanDeleteAndGetResultWithAccept()
     {
       // Act

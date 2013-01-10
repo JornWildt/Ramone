@@ -52,6 +52,24 @@ namespace Ramone.Tests
 
 
     [Test]
+    public void CanPutAndGetResult_Async()
+    {
+      TestAsync(wh =>
+      {
+        // Act
+        DossierReq.Async().Put<Dossier>(MyDossier, response =>
+        {
+          Dossier newDossier = response.Body;
+
+          // Assert
+          Assert.IsNotNull(newDossier);
+          wh.Set();
+        });
+      });
+    }
+
+
+    [Test]
     public void CanPutAndGetResultWithAccept()
     {
       // Act
@@ -85,8 +103,29 @@ namespace Ramone.Tests
       using (Response<string> response = request.Accept("text/plain").ContentType("application/x-www-url-formencoded").Put<string>())
       {
         // Assert
-        Assert.AreEqual(null, response.Body);
+        Assert.IsNull(response.Body);
       }
+    }
+
+
+    [Test]
+    public void CanPutEmptyBody_Typed_Async()
+    {
+      // Arrange
+      Request request = Session.Bind(AnyEchoTemplate);
+
+      TestAsync(wh =>
+      {
+        // Act
+        request.Accept("text/plain").ContentType("application/octet-stream").Async()
+          .OnComplete(() => wh.Set())
+          .Put<string>(
+          r =>
+          {
+            // Assert
+            Assert.IsNull(r.Body);
+          });
+      });
     }
 
 
@@ -102,6 +141,27 @@ namespace Ramone.Tests
         // Assert
         Assert.IsNull(response.Body);
       }
+    }
+
+
+    [Test]
+    public void CanPutEmptyBody_Untyped_Async()
+    {
+      // Arrange
+      Request request = Session.Bind(AnyEchoTemplate);
+
+      TestAsync(wh =>
+      {
+        // Act
+        request.Accept("text/plain").ContentType("application/octet-stream").Async()
+          .OnComplete(() => wh.Set())
+          .Put(
+          r =>
+          {
+            // Assert
+            Assert.IsNull(r.Body);
+          });
+      });
     }
   }
 }
