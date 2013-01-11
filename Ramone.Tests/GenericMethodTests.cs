@@ -29,6 +29,26 @@ namespace Ramone.Tests
 
 
     [Test]
+    public void CanExecuteGetWithGenericResult_Async()
+    {
+      // Arrange
+      Request dossierReq = Session.Bind(DossierTemplate, new { id = 8 });
+
+      TestAsync(wh =>
+      {
+        // Act
+        dossierReq.Async()
+          .OnComplete(() => wh.Set())
+          .Execute<Dossier>("GET", response =>
+        {
+          // Assert
+          Assert.AreEqual(8, response.Body.Id);
+        });
+      });
+    }
+
+
+    [Test]
     public void CanExecuteGetWithNonGenericResult()
     {
       // Arrange
@@ -43,6 +63,26 @@ namespace Ramone.Tests
         // Assert
         Assert.AreEqual(8, response1.Decode<Dossier>().Id);
       }
+    }
+
+
+    [Test]
+    public void CanExecuteGetWithNonGenericResult_Async()
+    {
+      // Arrange
+      Request dossierReq = Session.Bind(DossierTemplate, new { id = 8 });
+
+      TestAsync(wh =>
+      {
+        // Act
+        dossierReq.Async()
+          .OnComplete(() => wh.Set())
+          .Execute("GET", response =>
+          {
+            // Assert
+            Assert.AreEqual(8, response.Decode<Dossier>().Id);
+          });
+      });
     }
 
 
@@ -76,6 +116,26 @@ namespace Ramone.Tests
 
 
     [Test]
+    public void CanExecutePostWithGenericResult_Async()
+    {
+      // Arrange
+      Request dossiersReq = Session.Request(DossiersUrl);
+
+      TestAsync(wh =>
+      {
+        // Act
+        dossiersReq.Async()
+          .OnComplete(() => wh.Set())
+          .Execute<Dossier>("POST", MyDossier, response =>
+          {
+            // Assert
+            Assert.AreEqual(999, response.Body.Id);
+          });
+      });
+    }
+
+
+    [Test]
     public void CanExecutePostWithNonGenericResult()
     {
       // Arrange
@@ -90,6 +150,26 @@ namespace Ramone.Tests
         // Assert
         Assert.AreEqual(999, response.Decode<Dossier>().Id);
       }
+    }
+
+
+    [Test]
+    public void CanExecutePostWithNonGenericResult_Async()
+    {
+      // Arrange
+      Request dossiersReq = Session.Request(DossiersUrl);
+
+      TestAsync(wh =>
+      {
+        // Act
+        dossiersReq.Async()
+          .OnComplete(() => wh.Set())
+          .Execute("POST", MyDossier, response =>
+          {
+            // Assert
+            Assert.AreEqual(999, response.Decode<Dossier>().Id);
+          });
+      });
     }
   }
 }

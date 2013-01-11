@@ -145,7 +145,42 @@ namespace Ramone
 
     #endregion Standard methods
 
-    
+
+    #region Generic methods
+
+    public void Execute<TResponse>(string method, Action<Response<TResponse>> callback) where TResponse : class
+    {
+      ResponseCallback = (r => callback(new Response<TResponse>(r, 0)));
+      DoRequest(method);
+    }
+
+
+    public void Execute(string method, Action<Response> callback)
+    {
+      ResponseCallback = callback;
+      DoRequest(method);
+    }
+
+
+    public void Execute<TResponse>(string method, object body, Action<Response<TResponse>> callback) where TResponse : class
+    {
+      Body(body);
+      ResponseCallback = (r => callback(new Response<TResponse>(r, 0)));
+      DoRequest(method);
+    }
+
+
+    public void Execute(string method, object body, Action<Response> callback)
+    {
+      Body(body);
+      ResponseCallback = callback;
+      DoRequest(method);
+    }
+
+
+    #endregion
+
+
     #region Disable standard methods from base class
 
     public override Response Get()
