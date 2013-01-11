@@ -16,7 +16,7 @@ namespace Ramone.Tests.MediaTypes.MultipartFormData
     public void CanPostSimpleMultipartFormData()
     {
       // Arrange
-      MultipartData data = new MultipartData { Name = "Pete", Age = 10 };
+      MultipartData data = new MultipartData { Name = "Pete", Age = 10, Active = true };
       Request formdataReq = Session.Bind(MultipartFormDataTemplate);
 
       // Act
@@ -24,7 +24,7 @@ namespace Ramone.Tests.MediaTypes.MultipartFormData
       {
         // Assert
         Assert.IsTrue(response.Headers["x-contenttype"].StartsWith("multipart/form-data"));
-        Assert.AreEqual("Pete-10", response.Body);
+        Assert.AreEqual("Pete-10-True", response.Body);
       }
     }
 
@@ -33,7 +33,7 @@ namespace Ramone.Tests.MediaTypes.MultipartFormData
     public void CanPostSimpleMultipartFormDataUsingShorthand()
     {
       // Arrange
-      MultipartData data = new MultipartData { Name = "Pete", Age = 10 };
+      MultipartData data = new MultipartData { Name = "Pete", Age = 10, Active = false };
       Request formdataReq = Session.Bind(MultipartFormDataTemplate);
 
       // Act
@@ -41,7 +41,7 @@ namespace Ramone.Tests.MediaTypes.MultipartFormData
       {
         // Assert
         Assert.IsTrue(response.Headers["x-contenttype"].StartsWith("multipart/form-data"));
-        Assert.AreEqual("Pete-10", response.Body);
+        Assert.AreEqual("Pete-10-False", response.Body);
       }
     }
 
@@ -153,7 +153,7 @@ namespace Ramone.Tests.MediaTypes.MultipartFormData
     public void CanPostSMultipartFormDataFromAnonymousTypes()
     {
       // Arrange
-      var data = new { Name = "Pete", Age = 10 };
+      var data = new { Name = "Pete", Age = 10, Active = false };
       Request formdataReq = Session.Bind(MultipartFormDataTemplate);
 
       // Act
@@ -161,7 +161,7 @@ namespace Ramone.Tests.MediaTypes.MultipartFormData
       {
         // Assert
         Assert.IsTrue(response.Headers["x-contenttype"].StartsWith("multipart/form-data"));
-        Assert.AreEqual("Pete-10", response.Body);
+        Assert.AreEqual("Pete-10-False", response.Body);
       }
     }
 
@@ -172,7 +172,7 @@ namespace Ramone.Tests.MediaTypes.MultipartFormData
       [Values("UTF-8", "iso-8859-1")] string charsetOut)
     {
       // Arrange
-      MultipartData data = new MultipartData { Name = "ÆØÅüî", Age = 10 };
+      MultipartData data = new MultipartData { Name = "ÆØÅüî", Age = 10, Active = true };
       Request formdataReq = Session.Bind(MultipartFormDataTemplate);
       
       // NOTE: I haven't found a way to test what encoding it actually uses for the post data, 
@@ -188,7 +188,7 @@ namespace Ramone.Tests.MediaTypes.MultipartFormData
         // Assert
         Assert.IsTrue(response.Headers["x-contenttype"].StartsWith("multipart/form-data"));
         Assert.AreEqual(charsetOut, response.Headers["x-accept-charset"]);
-        Assert.AreEqual("ÆØÅüî-10", response.Body);
+        Assert.AreEqual("ÆØÅüî-10-True", response.Body);
       }
     }
 

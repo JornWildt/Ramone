@@ -29,10 +29,10 @@ namespace Ramone.Tests.Utility
 
       Assert.AreEqual("10", d1["A"]);
       Assert.AreEqual("Train", d1["B"]);
-      Assert.AreEqual("True", d1["C"]);
+      Assert.AreEqual("true", d1["C"]);
       Assert.AreEqual("10", d2["X"]);
       Assert.AreEqual("Train", d2["Y"]);
-      Assert.AreEqual("True", d2["Z"]);
+      Assert.AreEqual("true", d2["Z"]);
     }
 
 

@@ -21,7 +21,7 @@ namespace Ramone.Tests.Server.Handlers
       CommunicationContext.Response.Headers["X-contenttype"] = CommunicationContext.Request.Headers["Content-Type"];
       return new EncodingData
       {
-        Data = string.Format("{0}-{1}", data.Name, data.Age)
+        Data = string.Format("{0}-{1}-{2}", data.Name, data.Age, data.Active)
       };
     }
 

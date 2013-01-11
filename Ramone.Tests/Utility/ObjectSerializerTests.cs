@@ -27,7 +27,7 @@ namespace Ramone.Tests.Utility
       string result = Serialize(o);
 
       // Assert
-      Assert.AreEqual("|A=10|B=Train|C=True", result);
+      Assert.AreEqual("|A=10|B=Train|C=true", result);
     }
 
 
@@ -65,7 +65,7 @@ namespace Ramone.Tests.Utility
       string result = Serialize(o);
 
       // Assert
-      Assert.AreEqual("|A=10|B[X]=100|B[K]=True", result);
+      Assert.AreEqual("|A=10|B[X]=100|B[K]=true", result);
     }
 
 

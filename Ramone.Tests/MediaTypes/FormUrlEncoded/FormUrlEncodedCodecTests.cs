@@ -17,7 +17,7 @@ namespace Ramone.Tests.MediaTypes.FormUrlEncoded
     public void CanPostUnregisteredFormUrlEncoded()
     {
       // Arrange
-      var data = new { Name = "Pete", Age = 10 }; // Matches "MultipartData" class
+      var data = new { Name = "Pete", Age = 10, Active = "false" }; // Matches "MultipartData" class
       Request formdataReq = Session.Bind(MultipartFormDataTemplate);
 
       // Act
@@ -25,7 +25,7 @@ namespace Ramone.Tests.MediaTypes.FormUrlEncoded
       {
         // Assert
         Assert.AreEqual("application/x-www-form-urlencoded", response.Headers["x-contenttype"]);
-        Assert.AreEqual("Pete-10", response.Body);
+        Assert.AreEqual("Pete-10-False", response.Body);
       }
     }
 
@@ -34,7 +34,7 @@ namespace Ramone.Tests.MediaTypes.FormUrlEncoded
     public void CanPostUnregisteredFormUrlEncodedUsingShorthand()
     {
       // Arrange
-      var data = new { Name = "Pete", Age = 10 }; // Matches "MultipartData" class
+      var data = new { Name = "Pete", Age = 10, Active = true }; // Matches "MultipartData" class
       Request formdataReq = Session.Bind(MultipartFormDataTemplate);
 
       // Act
@@ -42,7 +42,7 @@ namespace Ramone.Tests.MediaTypes.FormUrlEncoded
       {
         // Assert
         Assert.AreEqual("application/x-www-form-urlencoded", response.Headers["x-contenttype"]);
-        Assert.AreEqual("Pete-10", response.Body);
+        Assert.AreEqual("Pete-10-True", response.Body);
       }
     }
 
@@ -51,6 +51,7 @@ namespace Ramone.Tests.MediaTypes.FormUrlEncoded
     {
       public string Name { get; set; }
       public int Age { get; set; }
+      public bool Active { get; set; }
     }
 
 
@@ -59,7 +60,7 @@ namespace Ramone.Tests.MediaTypes.FormUrlEncoded
     {
       // Arrange
       Session.Service.CodecManager.AddCodec<RegisteredData, FormUrlEncodedSerializerCodec>(MediaType.ApplicationFormUrlEncoded);
-      RegisteredData data = new RegisteredData { Name = "Pete", Age = 10 };
+      RegisteredData data = new RegisteredData { Name = "Pete", Age = 10, Active = false };
       Request formdataReq = Session.Bind(MultipartFormDataTemplate);
 
       // Act
@@ -67,7 +68,7 @@ namespace Ramone.Tests.MediaTypes.FormUrlEncoded
       {
         // Assert
         Assert.AreEqual("application/x-www-form-urlencoded", response.Headers["x-contenttype"]);
-        Assert.AreEqual("Pete-10", response.Body);
+        Assert.AreEqual("Pete-10-False", response.Body);
       }
     }
 

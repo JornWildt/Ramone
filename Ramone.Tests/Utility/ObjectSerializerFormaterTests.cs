@@ -41,7 +41,7 @@ namespace Ramone.Tests.Utility
       string result = Serialize(o, settings);
 
       // Assert
-      Assert.AreEqual("|Bool=False|Date=2012-10-12T15:14:13|Url=http://dr.dk/", result);
+      Assert.AreEqual("|Bool=false|Date=2012-10-12T15:14:13|Url=http://dr.dk/", result);
     }
 
 

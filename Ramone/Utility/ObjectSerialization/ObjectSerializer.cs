@@ -101,6 +101,8 @@ namespace Ramone.Utility.ObjectSerialization
       string formatedValue = "";
       if (data is DateTime)
         formatedValue = ((DateTime)data).ToString(Settings.DateTimeFormat);
+      else if (data is bool)
+        formatedValue = ((bool)data) ? Settings.BoolTrueFormat : Settings.BoolFalseFormat;
       else if (data is decimal)
         formatedValue = ((decimal)data).ToString(Settings.Culture.NumberFormat);
       else if (data is float)
