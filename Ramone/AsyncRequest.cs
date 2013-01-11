@@ -106,6 +106,43 @@ namespace Ramone
     }
 
 
+    public void Patch<TResponse>(object body, Action<Response<TResponse>> callback) where TResponse : class
+    {
+      Body(body);
+      ResponseCallback = (r => callback(new Response<TResponse>(r, 0)));
+      DoRequest("PATCH");
+    }
+
+
+    public void Patch(object body, Action<Response> callback)
+    {
+      Body(body);
+      ResponseCallback = callback;
+      DoRequest("Patch");
+    }
+
+
+    public void Head(Action<Response> callback)
+    {
+      ResponseCallback = callback;
+      DoRequest("HEAD");
+    }
+
+
+    public void Options<TResponse>(Action<Response<TResponse>> callback) where TResponse : class
+    {
+      ResponseCallback = (r => callback(new Response<TResponse>(r, 0)));
+      DoRequest("OPTIONS");
+    }
+
+
+    public void Options(Action<Response> callback)
+    {
+      ResponseCallback = callback;
+      DoRequest("OPTIONS");
+    }
+
+
     #endregion Standard methods
 
     

@@ -24,6 +24,26 @@ namespace Ramone.Tests
 
 
     [Test]
+    public void CanDoHead_Async()
+    {
+      // Arrange
+      Request dossierReq = Session.Bind(DossierTemplate, new { id = 8 });
+
+      TestAsync(wh =>
+      {
+        // Act
+        dossierReq.Async()
+          .OnComplete(() => wh.Set())
+          .Head(response =>
+          {
+            // Assert
+            Assert.AreEqual("1", response.Headers["X-ExtraHeader"]);
+          });
+      });
+    }
+
+
+    [Test]
     public void CanDoOptions()
     {
       // Arrange
@@ -36,6 +56,26 @@ namespace Ramone.Tests
         Assert.IsNotNull(response);
         Assert.AreEqual("2", response.Headers["X-ExtraHeader"]);
       }
+    }
+
+
+    [Test]
+    public void CanDoOptions_Async()
+    {
+      // Arrange
+      Request dossierReq = Session.Bind(DossierTemplate, new { id = 8 });
+
+      TestAsync(wh =>
+      {
+        // Act
+        dossierReq.Async()
+          .OnComplete(() => wh.Set())
+          .Options(response =>
+          {
+            // Assert
+            Assert.AreEqual("2", response.Headers["X-ExtraHeader"]);
+          });
+      });
     }
 
 
@@ -65,15 +105,23 @@ namespace Ramone.Tests
 
 
     [Test]
-    public void CanDoOptionsWithStarPath()
+    public void CanDoOptionsWithBody_Async()
     {
-      // Not sure if this actually sends the correct "OPTIONS * HTTP/1.1" ...
-
       // Arrange
-      Request dossierReq = Session.Request(new Uri(Session.BaseUri, "*"));
+      Request dossierReq = Session.Bind(DossierTemplate, new { id = 8 });
 
-      // Assert
-      Assert.AreEqual(Session.BaseUri + "*", dossierReq.Url.AbsoluteUri);
+      TestAsync(wh =>
+      {
+        // Act
+        dossierReq.Async()
+          .OnComplete(() => wh.Set())
+          .Options<string>(response =>
+          {
+            // Assert
+            Assert.AreEqual("2", response.Headers["X-ExtraHeader"]);
+            Assert.AreEqual("Yes", response.Body);
+          });
+      });
     }
   }
 }

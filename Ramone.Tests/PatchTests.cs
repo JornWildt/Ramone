@@ -17,7 +17,7 @@ namespace Ramone.Tests
 
 
     [Test]
-    public void CanPatchUntyped()
+    public void CanPatch_Untyped()
     {
       // Act
       using (Response response = DossierReq.AsFormUrlEncoded().Patch(new { title = "Duh" }))
@@ -29,7 +29,23 @@ namespace Ramone.Tests
 
 
     [Test]
-    public void CanPatchAndGetResult()
+    public void CanPatch_Untyped_Async()
+    {
+      TestAsync(wh =>
+      {
+        // Act
+        DossierReq.AsFormUrlEncoded().Async().Patch(new { title = "Duh" }, response =>
+        {
+          // Assert
+          Assert.AreEqual("Duh: ok", response.Decode<string>());
+          wh.Set();
+        });
+      });
+    }
+
+
+    [Test]
+    public void CanPatchAndGetResult_Typed()
     {
       // Act
       using (Response<string> response = DossierReq.AsFormUrlEncoded().Patch<string>(new { title = "Duh" }))
@@ -37,6 +53,22 @@ namespace Ramone.Tests
         // Assert
         Assert.AreEqual("Duh: ok", response.Body);
       }
+    }
+
+
+    [Test]
+    public void CanPatchAndGetResult_Typed_Async()
+    {
+      TestAsync(wh =>
+      {
+        // Act
+        DossierReq.AsFormUrlEncoded().Async().Patch<string>(new { title = "Duh" }, response =>
+        {
+          // Assert
+          Assert.AreEqual("Duh: ok", response.Body);
+          wh.Set();
+        });
+      });
     }
 
 
@@ -60,36 +92,6 @@ namespace Ramone.Tests
       {
         // Assert
         Assert.AreEqual("Duh: ok", title.Body);
-      }
-    }
-
-
-    [Test]
-    public void CanPatchEmptyBody_Typed()
-    {
-      // Arrange
-      Request request = Session.Bind(AnyEchoTemplate);
-
-      // Act
-      using (Response<string> response = request.Accept("text/plain").ContentType("application/x-www-url-formencoded").Patch<string>())
-      {
-        // Assert
-        Assert.AreEqual(null, response.Body);
-      }
-    }
-
-
-    [Test]
-    public void CanPatchEmptyBody_Untyped()
-    {
-      // Arrange
-      Request request = Session.Bind(AnyEchoTemplate);
-
-      // Act
-      using (Response response = request.Accept("text/plain").ContentType("application/x-www-url-formencoded").Patch())
-      {
-        // Assert
-        Assert.AreEqual(null, response.Body);
       }
     }
   }
