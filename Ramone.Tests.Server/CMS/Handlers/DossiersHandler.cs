@@ -15,6 +15,8 @@ namespace Ramone.Tests.Server.CMS.Handlers
     {
       Party party = new PartyHandler().Get(19);
 
+      //System.Threading.Thread.Sleep(10000);
+
       return new Dossier
       {
         Id = id,
@@ -36,6 +38,8 @@ namespace Ramone.Tests.Server.CMS.Handlers
         Id = 999,
         Title = dossier.Title
       };
+
+      //System.Threading.Thread.Sleep(10000);
 
       if (dossier.Title == "Do not return body")
         d = null;

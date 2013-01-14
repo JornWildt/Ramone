@@ -1,12 +1,13 @@
 ﻿using System;
 using System.IO;
 using JsonFx.Json;
+using OpenRasta.Codecs;
 using OpenRasta.Web;
-using JsonFx.Serialization;
 
 
 namespace Ramone.Tests.Server.Codecs
 {
+  [MediaType("application/json")]
   public class JsonSerializerCodec<TEntity> : OpenRasta.Codecs.IMediaTypeWriter, OpenRasta.Codecs.IMediaTypeReader
     where TEntity : class
   {

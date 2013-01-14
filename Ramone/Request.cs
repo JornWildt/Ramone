@@ -432,6 +432,7 @@ namespace Ramone
       try
       {
         HttpWebRequest request = SetupRequest(url, method, includeBody, requestModifier);
+        ApplyDataSentInterceptors(request);
         HttpWebResponse response = (HttpWebResponse)request.GetResponse();
         return HandleResponse(response, method, includeBody, requestModifier, retryLevel);
       }
@@ -485,13 +486,7 @@ namespace Ramone
 
         if (BodyData != null)
         {
-          Stream requestStream = request.GetRequestStream();
-          foreach (KeyValuePair<string, IRequestInterceptor> interceptor in Session.RequestInterceptors)
-            if (interceptor.Value is IRequestStreamWrapper)
-              requestStream = ((IRequestStreamWrapper)interceptor.Value).Wrap(new RequestStreamWrapperContext(requestStream, request, Session));
-
-          BodyCodec.WriteTo(new WriterContext(requestStream, BodyData, request, Session, CodecParameters));
-          request.GetRequestStream().Close();
+          WriteBody(request);
         }
         else
         {
@@ -506,12 +501,28 @@ namespace Ramone
         }
       }
 
+      return request;
+    }
+
+
+    protected virtual void WriteBody(HttpWebRequest request)
+    {
+      Stream requestStream = request.GetRequestStream();
+      foreach (KeyValuePair<string, IRequestInterceptor> interceptor in Session.RequestInterceptors)
+        if (interceptor.Value is IRequestStreamWrapper)
+          requestStream = ((IRequestStreamWrapper)interceptor.Value).Wrap(new RequestStreamWrapperContext(requestStream, request, Session));
+
+      BodyCodec.WriteTo(new WriterContext(requestStream, BodyData, request, Session, CodecParameters));
+      request.GetRequestStream().Close();
+    }
+
+
+    protected virtual void ApplyDataSentInterceptors(HttpWebRequest request)
+    {
       foreach (KeyValuePair<string, IRequestInterceptor> interceptor in Session.RequestInterceptors)
       {
         interceptor.Value.DataSent(new RequestContext(request, Session));
       }
-
-      return request;
     }
 
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Net;
+using System.IO;
 
 
 namespace Ramone
@@ -311,6 +312,7 @@ namespace Ramone
     protected override Response DoRequest(Uri url, string method, bool includeBody, Action<HttpWebRequest> requestModifier, int retryLevel = 0)
     {
       HttpWebRequest request = SetupRequest(url, method, includeBody, requestModifier);
+
       AsynState state = new AsynState
       {
         IncludeBody = includeBody,
@@ -320,8 +322,21 @@ namespace Ramone
         Url = url,
         Request = request
       };
+
+      //FIXME ApplyDataSentInterceptors(request);
+
+      request.BeginGetRequestStream(HandleWriteBody, state);
+
       request.BeginGetResponse(HandleResponse, state);
       return null;
+    }
+
+
+    private void HandleWriteBody(IAsyncResult result)
+    {
+      AsynState state = (AsynState)result.AsyncState;
+
+      Stream requestStream = state.Request.EndGetRequestStream(result);
     }
 
 

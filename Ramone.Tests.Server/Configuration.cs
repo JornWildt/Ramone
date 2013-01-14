@@ -10,6 +10,7 @@ using Ramone.Tests.Server.Blog.Data;
 using Ramone.Tests.Server.CMS;
 using Ramone.Tests.Server.Codecs;
 using Ramone.Tests.Server.Handlers;
+using Ramone.Tests.Server.OAuth2;
 
 
 namespace Ramone.Tests.Server
@@ -141,6 +142,7 @@ namespace Ramone.Tests.Server
             //.TranscodedBy<LinkHeaderCodec>();
 
         BlogConfiguration.Configure();
+        OAuth2Configuration.Configure();
       }
     }
   }

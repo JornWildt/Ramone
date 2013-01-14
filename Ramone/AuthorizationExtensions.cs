@@ -1,4 +1,6 @@
-﻿using Ramone.AuthorizationInterceptors;
+﻿using System;
+using System.Text;
+using Ramone.AuthorizationInterceptors;
 
 
 namespace Ramone
@@ -8,6 +10,14 @@ namespace Ramone
     public static void BasicAuthentication(this IHaveRequestInterceptors interceptorOwner, string username, string password)
     {
       interceptorOwner.RequestInterceptors.Add(new BasicAuthorizationInterceptor(username, password));
+    }
+
+
+    public static Request BasicAuthentication(this Request request, string username, string password)
+    {
+      string token = Convert.ToBase64String(Encoding.ASCII.GetBytes(username + ":" + password));
+      request.Header("Authorization", "BASIC " + token);
+      return request;
     }
   }
 }

@@ -183,6 +183,9 @@
     <Compile Include="Handlers\FeedHandler.cs" />
     <Compile Include="Handlers\TextHandler.cs" />
     <Compile Include="Handlers\XmlEchoHandler.cs" />
+    <Compile Include="OAuth2\ArgumentClasses.cs" />
+    <Compile Include="OAuth2\Handlers\OAuth2TokenEndpointHandler.cs" />
+    <Compile Include="OAuth2\OAuth2Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />

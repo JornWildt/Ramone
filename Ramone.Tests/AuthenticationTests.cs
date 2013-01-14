@@ -47,6 +47,18 @@ namespace Ramone.Tests
 
 
     [Test]
+    public void CanAddAuthorizerToRequest()
+    {
+      // Act
+      using (Response response = Session.Request(BasicAuthUrl).BasicAuthentication("John", "magic").Get())
+      {
+        // Assert
+        Assert.IsNotNull(response);
+      }
+    }
+
+
+    [Test]
     public void WhenAskedForAuthorizationAndAnsweredItGetsAccess()
     {
       // Throws first time
