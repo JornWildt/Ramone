@@ -30,47 +30,53 @@ namespace Ramone.MediaTypes.JsonPatch
     }
 
 
-    public void Add(string path, object value)
+    public JsonPatchDocument Add(string path, object value)
     {
       Condition.Requires(path, "path").IsNotNull();
       OperationList.Add(new ValueOperation { op = "add", path = path, value = value });
+      return this;
     }
 
 
-    public void Remove(string path)
+    public JsonPatchDocument Remove(string path)
     {
       Condition.Requires(path, "path").IsNotNull();
       OperationList.Add(new Operation { op = "remove", path = path });
+      return this;
     }
 
 
-    public void Replace(string path, object value)
+    public JsonPatchDocument Replace(string path, object value)
     {
       Condition.Requires(path, "path").IsNotNull();
       OperationList.Add(new ValueOperation { op = "replace", path = path, value = value });
+      return this;
     }
 
 
-    public void Move(string from, string path)
+    public JsonPatchDocument Move(string from, string path)
     {
       Condition.Requires(from, "from").IsNotNull();
       Condition.Requires(path, "path").IsNotNull();
       OperationList.Add(new FromOperation { op = "move", from = from, path = path });
+      return this;
     }
 
 
-    public void Copy(string from, string path)
+    public JsonPatchDocument Copy(string from, string path)
     {
       Condition.Requires(from, "from").IsNotNull();
       Condition.Requires(path, "path").IsNotNull();
       OperationList.Add(new FromOperation { op = "copy", from = from, path = path });
+      return this;
     }
 
 
-    public void Test(string path, object value)
+    public JsonPatchDocument Test(string path, object value)
     {
       Condition.Requires(path, "path").IsNotNull();
       OperationList.Add(new ValueOperation { op = "test", path = path, value = value });
+      return this;
     }
 
 
@@ -237,47 +243,47 @@ namespace Ramone.MediaTypes.JsonPatch
     private JsonPointerHelper<TDocument> PathHelper = new JsonPointerHelper<TDocument>("/");
 
 
-    public void Add<TProperty>(Expression<Func<TDocument, TProperty>> path, object value)
+    public JsonPatchDocument<TDocument> Add<TProperty>(Expression<Func<TDocument, TProperty>> path, object value)
     {
       string spath = PathHelper.GetPath(path);
-      Add(spath, value);
+      return (JsonPatchDocument<TDocument>)Add(spath, value);
     }
 
 
-    public void Replace<TProperty>(Expression<Func<TDocument, TProperty>> path, object value)
+    public JsonPatchDocument<TDocument> Replace<TProperty>(Expression<Func<TDocument, TProperty>> path, object value)
     {
       string spath = PathHelper.GetPath(path);
-      Replace(spath, value);
+      return (JsonPatchDocument<TDocument>)Replace(spath, value);
     }
 
 
-    public void Remove<TProperty>(Expression<Func<TDocument, TProperty>> path)
+    public JsonPatchDocument<TDocument> Remove<TProperty>(Expression<Func<TDocument, TProperty>> path)
     {
       string spath = PathHelper.GetPath(path);
-      Remove(spath);
+      return (JsonPatchDocument<TDocument>)Remove(spath);
     }
 
 
-    public void Move<TProperty>(Expression<Func<TDocument, TProperty>> from, Expression<Func<TDocument, TProperty>> path)
+    public JsonPatchDocument<TDocument> Move<TProperty>(Expression<Func<TDocument, TProperty>> from, Expression<Func<TDocument, TProperty>> path)
     {
       string sfrom = PathHelper.GetPath(from);
       string spath = PathHelper.GetPath(path);
-      Move(sfrom, spath);
+      return (JsonPatchDocument<TDocument>)Move(sfrom, spath);
     }
 
 
-    public void Copy<TProperty>(Expression<Func<TDocument, TProperty>> from, Expression<Func<TDocument, TProperty>> path)
+    public JsonPatchDocument<TDocument> Copy<TProperty>(Expression<Func<TDocument, TProperty>> from, Expression<Func<TDocument, TProperty>> path)
     {
       string sfrom = PathHelper.GetPath(from);
       string spath = PathHelper.GetPath(path);
-      Copy(sfrom, spath);
+      return (JsonPatchDocument<TDocument>)Copy(sfrom, spath);
     }
 
 
-    public void Test<TProperty>(Expression<Func<TDocument, TProperty>> path, object value)
+    public JsonPatchDocument<TDocument> Test<TProperty>(Expression<Func<TDocument, TProperty>> path, object value)
     {
       string spath = PathHelper.GetPath(path);
-      Test(spath, value);
+      return (JsonPatchDocument<TDocument>)Test(spath, value);
     }
   }
 }
