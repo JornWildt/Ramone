@@ -13,6 +13,7 @@ namespace Ramone.Tests
     protected override void SetUp()
     {
       base.SetUp();
+      CountingAuthorizationHandler.Count = 0;
       Session.AuthorizationDispatcher.Add("basic", new CountingAuthorizationHandler());
     }
 
@@ -21,6 +22,24 @@ namespace Ramone.Tests
     public void WhenNoAuthorizationCodeIsSendItAsksForAuthorization()
     {
       AssertThrows<NotAuthorizedException>(() => Session.Request(BasicAuthUrl).Get<string>());
+      // Will get called twice since it does not try to fix the access problem
+      Assert.AreEqual(2, CountingAuthorizationHandler.Count);
+    }
+
+
+    [Test]
+    public void WhenNoAuthorizationCodeIsSendItAsksForAuthorization_async()
+    {
+      TestAsync(wh =>
+      {
+        Session.Request(BasicAuthUrl).Async()
+          .OnComplete(() => wh.Set())
+          .Get<string>(r =>
+          {
+          });
+      });
+
+      //AssertThrows<NotAuthorizedException>(() => ;
       // Will get called twice since it does not try to fix the access problem
       Assert.AreEqual(2, CountingAuthorizationHandler.Count);
     }

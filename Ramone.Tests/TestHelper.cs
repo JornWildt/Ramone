@@ -10,7 +10,7 @@ namespace Ramone.Tests
 {
   public class TestHelper
   {
-    public static readonly Uri BaseUrl = new Uri("http://localhost/ramone-testserver/");
+    public static readonly Uri BaseUrl = new Uri("http://jorn-pc/ramone-testserver/");
 
 
     protected static readonly UriTemplate DossierTemplate = new UriTemplate(CMSConstants.DossierPath);
@@ -226,7 +226,7 @@ namespace Ramone.Tests
       asyncBlock(handle);
 
       // Wait for request to complete
-      bool signalReceived = handle.WaitOne(TimeSpan.FromSeconds(10));
+      bool signalReceived = handle.WaitOne(TimeSpan.FromSeconds(100));
 
       Assert.IsTrue(signalReceived, "Timeout in async handler");
     }
