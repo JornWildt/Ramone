@@ -297,6 +297,46 @@ namespace Ramone.Tests.MediaTypes.JsonPatch
 
 
     [Test]
+    public void CanChainWithFluentInterface()
+    {
+      // Arrange
+      JsonPatchDocument patch = new JsonPatchDocument();
+
+      // Act
+      patch.Test("Title", "TestValue")
+           .Replace("Description", "...")
+           .Add("RelatedParties", "")
+           .Remove("Responsible")
+           .Copy("Title", "AnotherTitle")
+           .Move("Title", "AnotherTitle");
+
+      Assert.AreEqual(6, patch.Operations.Count);
+      Assert.AreEqual("test", patch.Operations[0].op);
+      Assert.AreEqual("move", patch.Operations[5].op);
+    }
+
+
+    [Test]
+    public void CanChainWithFluentInterface_typed()
+    {
+      // Arrange
+      JsonPatchDocument<BugReport> patch = new JsonPatchDocument<BugReport>();
+
+      // Act
+      patch.Test(r => r.Title, "TestValue")
+           .Replace(r => r.Description, "...")
+           .Add(r => r.RelatedParties, "")
+           .Remove(r => r.Responsible)
+           .Copy(r => r.Title, r => r.AnotherTitle)
+           .Move(r => r.Title, r => r.AnotherTitle);
+
+      Assert.AreEqual(6, patch.Operations.Count);
+      Assert.AreEqual("test", patch.Operations[0].op);
+      Assert.AreEqual("move", patch.Operations[5].op);
+    }
+
+
+    [Test]
     public void CanReadFromReader()
     {
       // Arrange
