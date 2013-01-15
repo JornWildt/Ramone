@@ -20,7 +20,7 @@ namespace Ramone.Tests.Server.OAuth2.Handlers
 
       if (request.grant_type == "password")
       {
-        if (request.username == OAuth2Constants.Username && request.password == OAuth2Constants.UserPassword)
+        if (request.username == OAuth2TestConstants.Username && request.password == OAuth2TestConstants.UserPassword)
         {
           return new OAuth2AccessTokenResponse
           {
@@ -51,7 +51,7 @@ namespace Ramone.Tests.Server.OAuth2.Handlers
             string login = loginAndPassword[0];
             string password = loginAndPassword[1];
 
-            if (login == OAuth2Constants.ClientID && password == OAuth2Constants.ClientPassword)
+            if (login == OAuth2TestConstants.ClientID && password == OAuth2TestConstants.ClientPassword)
               return null;
           }
         }

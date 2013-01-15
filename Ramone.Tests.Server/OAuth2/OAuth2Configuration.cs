@@ -11,7 +11,7 @@ namespace Ramone.Tests.Server.OAuth2
     public static void Configure()
     {
       ResourceSpace.Has.ResourcesOfType<OAuth2AccessTokenResponse>()
-          .AtUri(OAuth2Constants.TokenEndpointPath)
+          .AtUri(OAuth2TestConstants.TokenEndpointPath)
           .HandledBy<OAuth2TokenEndpointHandler>()
           .TranscodedBy<JsonSerializerCodec<OAuth2AccessTokenResponse>>();
 

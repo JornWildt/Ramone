@@ -432,6 +432,7 @@ namespace Ramone
       try
       {
         HttpWebRequest request = SetupRequest(url, method, includeBody, requestModifier);
+        WriteBody(null, request);
         ApplyDataSentInterceptors(request);
         HttpWebResponse response = (HttpWebResponse)request.GetResponse();
         return HandleResponse(response, method, includeBody, requestModifier, retryLevel);
@@ -461,11 +462,11 @@ namespace Ramone
       if (requestModifier != null)
         requestModifier(request);
 
-      if (includeBody)
-      {
-        if (BodyCharacterSet != null && BodyData == null)
-          throw new InvalidOperationException("Request character set is not allowed when no body is supplied.");
+      if (includeBody && BodyCharacterSet != null && BodyData == null)
+        throw new InvalidOperationException("Request character set is not allowed when no body is supplied.");
 
+      if (includeBody && BodyData != null)
+      {
         string charset = "";
         if (BodyCharacterSet != null)
           charset = "; charset=" + BodyCharacterSet;
@@ -478,42 +479,46 @@ namespace Ramone
         }
 
         request.ContentType = BodyContentType + charset + boundary;
-
-        foreach (KeyValuePair<string, IRequestInterceptor> interceptor in Session.RequestInterceptors)
-        {
-          interceptor.Value.HeadersReady(new RequestContext(request, Session));
-        }
-
-        if (BodyData != null)
-        {
-          WriteBody(request);
-        }
-        else
-        {
-          request.ContentLength = 0;
-        }
       }
       else
       {
-        foreach (KeyValuePair<string, IRequestInterceptor> interceptor in Session.RequestInterceptors)
-        {
-          interceptor.Value.HeadersReady(new RequestContext(request, Session));
-        }
+        request.ContentLength = 0;
       }
 
       return request;
     }
 
 
-    protected virtual void WriteBody(HttpWebRequest request)
+    protected virtual void WriteBody(Stream requestStream, HttpWebRequest request)
     {
-      Stream requestStream = request.GetRequestStream();
-      foreach (KeyValuePair<string, IRequestInterceptor> interceptor in Session.RequestInterceptors)
-        if (interceptor.Value is IRequestStreamWrapper)
-          requestStream = ((IRequestStreamWrapper)interceptor.Value).Wrap(new RequestStreamWrapperContext(requestStream, request, Session));
+      if (BodyData != null)
+      {
+        // Do not call GetRequestStream unless there is any request data
+        if (requestStream == null)
+          requestStream = request.GetRequestStream();
 
-      BodyCodec.WriteTo(new WriterContext(requestStream, BodyData, request, Session, CodecParameters));
-      request.GetRequestStream().Close();
+        ApplyHeadersReadyInterceptors(request);
+
+        foreach (KeyValuePair<string, IRequestInterceptor> interceptor in Session.RequestInterceptors)
+          if (interceptor.Value is IRequestStreamWrapper)
+            requestStream = ((IRequestStreamWrapper)interceptor.Value).Wrap(new RequestStreamWrapperContext(requestStream, request, Session));
+
+        BodyCodec.WriteTo(new WriterContext(requestStream, BodyData, request, Session, CodecParameters));
+        request.GetRequestStream().Close();
+      }
+      else
+      {
+        ApplyHeadersReadyInterceptors(request);
+      }
+    }
+
+
+    protected void ApplyHeadersReadyInterceptors(HttpWebRequest request)
+    {
+      foreach (KeyValuePair<string, IRequestInterceptor> interceptor in Session.RequestInterceptors)
+      {
+        interceptor.Value.HeadersReady(new RequestContext(request, Session));
+      }
     }
 
 

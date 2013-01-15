@@ -226,7 +226,7 @@ namespace Ramone.Tests
       asyncBlock(handle);
 
       // Wait for request to complete
-      bool signalReceived = handle.WaitOne(TimeSpan.FromSeconds(100));
+      bool signalReceived = handle.WaitOne(TimeSpan.FromSeconds(10));
 
       Assert.IsTrue(signalReceived, "Timeout in async handler");
     }

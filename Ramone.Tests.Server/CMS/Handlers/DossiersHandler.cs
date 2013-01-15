@@ -15,8 +15,6 @@ namespace Ramone.Tests.Server.CMS.Handlers
     {
       Party party = new PartyHandler().Get(19);
 
-      //System.Threading.Thread.Sleep(10000);
-
       return new Dossier
       {
         Id = id,

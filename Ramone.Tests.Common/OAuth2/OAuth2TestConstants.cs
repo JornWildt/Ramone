@@ -1,6 +1,6 @@
 ﻿namespace Ramone.Tests.Common.OAuth2
 {
-  public static class OAuth2Constants
+  public static class OAuth2TestConstants
   {
     public const string ClientID = "ClientX";
     public const string ClientPassword = "C123";

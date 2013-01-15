@@ -155,8 +155,7 @@ namespace Ramone.Tests
         // Act
         request.Accept("text/plain").ContentType("application/octet-stream").Async()
           .OnComplete(() => wh.Set())
-          .Put(
-          r =>
+          .Put(r =>
           {
             // Assert
             Assert.IsNull(r.Body);

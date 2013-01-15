@@ -302,7 +302,7 @@ namespace Ramone
     #endregion
 
 
-    public AsyncRequest OnComplete(Action completeAction)
+    public virtual AsyncRequest OnComplete(Action completeAction)
     {
       CompleteAction = completeAction;
       return this;
@@ -324,19 +324,31 @@ namespace Ramone
       };
 
       //FIXME ApplyDataSentInterceptors(request);
+      // FIXME what is includeBody doing?
 
-      request.BeginGetRequestStream(HandleWriteBody, state);
+      if (includeBody && BodyData != null)
+      {
+        request.BeginGetRequestStream(HandleGetRequestStream, state);
+      }
+      else
+      {
+        request.BeginGetResponse(HandleResponse, state);
+      }
 
-      request.BeginGetResponse(HandleResponse, state);
       return null;
     }
 
 
-    private void HandleWriteBody(IAsyncResult result)
+    private void HandleGetRequestStream(IAsyncResult result)
     {
       AsynState state = (AsynState)result.AsyncState;
 
-      Stream requestStream = state.Request.EndGetRequestStream(result);
+      using (Stream requestStream = state.Request.EndGetRequestStream(result))
+      {
+        WriteBody(requestStream, state.Request);
+      }
+
+      state.Request.BeginGetResponse(HandleResponse, state);
     }
 
 

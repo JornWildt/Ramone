@@ -27,6 +27,7 @@ namespace Ramone.Tests
     }
 
 
+#if false
     [Test]
     public void WhenNoAuthorizationCodeIsSendItAsksForAuthorization_async()
     {
@@ -43,7 +44,7 @@ namespace Ramone.Tests
       // Will get called twice since it does not try to fix the access problem
       Assert.AreEqual(2, CountingAuthorizationHandler.Count);
     }
-
+#endif
 
     public class CountingAuthorizationHandler : IAuthorizationHandler
     {
