@@ -44,25 +44,7 @@ namespace Ramone.Tests.MediaTypes.JsonPatch
       doc.Apply(callback);
 
       // Assert
-      Assert.AreEqual("/Id => 10", callback.Result);
-    }
-
-
-    [Test]
-    public void CanChainIfMatchInVisitor()
-    {
-      // Arrange
-      JsonPatchDocument doc = new JsonPatchDocument();
-      doc.Add("/Id", 10);
-      doc.Add("/Title", "Abc");
-
-      BugReportChainedPatchVisitor callback = new BugReportChainedPatchVisitor();
-
-      // Act
-      doc.Apply(callback);
-
-      // Assert
-      Assert.AreEqual("/Id => 10|/Title => Abc|", callback.Result);
+      Assert.AreEqual("/Id => 10|", callback.Result);
     }
 
 
@@ -81,7 +63,7 @@ namespace Ramone.Tests.MediaTypes.JsonPatch
 
 
     [Test]
-    public void IfMatchHandlesNullValues()
+    public void IfMatchHandlesNullValuesForNonNullable()
     {
       // Arrange
       JsonPatchDocument doc = new JsonPatchDocument();
@@ -91,6 +73,24 @@ namespace Ramone.Tests.MediaTypes.JsonPatch
 
       // Act + Assert
       AssertThrows<JsonPatchParserException>(() => doc.Apply(callback));
+    }
+
+
+    [Test]
+    public void IfMatchHandlesNullValuesForNullable()
+    {
+      // Arrange
+      JsonPatchDocument doc = new JsonPatchDocument();
+      doc.Add("/Responsible", null);
+      doc.Add("/Title", null);
+
+      BugReportPatchVisitor callback = new BugReportPatchVisitor();
+
+      // Act
+      doc.Apply(callback);
+
+      // Assert
+      Assert.AreEqual("/Responsible => |/Title => |", callback.Result);
     }
   }
 
@@ -151,30 +151,21 @@ namespace Ramone.Tests.MediaTypes.JsonPatch
 
   internal class BugReportPatchVisitor : JsonPatchDocumentVisitor<BugReport>
   {
-    public string Result = null;
+    public string Result = "";
 
     public override bool Add(string path, object value)
     {
       return 
         IfMatch<int>(r => r.Id, path, value,
-          v => Result = string.Format("{0} => {1}", path, v))
+          v => Result += string.Format("{0} => {1}|", path, v))
       ||
         IfMatch<DateTime>(r => r.Created, path, value,
-          v => Result = string.Format("{0} => {1}", path, v));
-    }
-  }
-
-
-  internal class BugReportChainedPatchVisitor : JsonPatchDocumentVisitor<BugReport>
-  {
-    public string Result = null;
-
-    public override bool Add(string path, object value)
-    {
-      return
-        IfMatch<int>(r => r.Id, path, value,
           v => Result += string.Format("{0} => {1}|", path, v))
-        || IfMatch<string>(r => r.Title, path, value,
+      ||
+        IfMatch<dynamic>(r => r.Responsible, path, value,
+          v => Result += string.Format("{0} => {1}|", path, v))
+      ||
+        IfMatch<string>(r => r.Title, path, value,
           v => Result += string.Format("{0} => {1}|", path, v));
     }
   }
