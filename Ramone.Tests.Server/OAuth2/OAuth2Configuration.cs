@@ -15,6 +15,11 @@ namespace Ramone.Tests.Server.OAuth2
           .HandledBy<OAuth2TokenEndpointHandler>()
           .TranscodedBy<JsonSerializerCodec<OAuth2AccessTokenResponse>>();
 
+      ResourceSpace.Has.ResourcesOfType<ProtectedResource>()
+          .AtUri(OAuth2TestConstants.ProtectedResourcePath)
+          .HandledBy<ProtectedResourceHandler>()
+          .TranscodedBy<JsonSerializerCodec<ProtectedResource>>();
+
       ResourceSpace.Has.ResourcesOfType<OAuth2Error>()
         .WithoutUri.TranscodedBy<JsonSerializerCodec<OAuth2Error>>();
     }

@@ -24,7 +24,7 @@ namespace Ramone.Tests.Server.OAuth2.Handlers
         {
           return new OAuth2AccessTokenResponse
           {
-            access_token = "1234xyz",
+            access_token = OAuth2TestConstants.CreatedAccessToken,
             token_type = "bearer"
           };
         }

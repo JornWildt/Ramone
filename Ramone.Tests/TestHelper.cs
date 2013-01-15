@@ -193,7 +193,7 @@ namespace Ramone.Tests
         if (ex.GetType() != typeof(ExT))
         {
           Console.WriteLine(ex.ToString());
-          Assert.Fail(String.Format("Expected {0}, got {1} saying: {2]", typeof(ExT), ex.GetType(), ex.Message));
+          Assert.Fail(String.Format("Expected {0}, got {1} saying: {2}", typeof(ExT), ex.GetType(), ex.Message));
         }
 
         if (!exceptionVerifier((ExT)ex))

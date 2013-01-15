@@ -53,6 +53,7 @@
     <Compile Include="FormArgs.cs" />
     <Compile Include="FormUrlEncodedData.cs" />
     <Compile Include="OAuth2\OAuth2TestConstants.cs" />
+    <Compile Include="OAuth2\ProtectedResource.cs" />
     <Compile Include="ObjectToStringPropertyVisitor.cs" />
     <Compile Include="RedirectArgs.cs" />
     <Compile Include="RegisteredClass.cs" />

@@ -7,7 +7,7 @@ namespace Ramone.OAuth1
 {
   public static class OAuth1Extensions
   {
-    public static void OAuth1Configure(this ISession session, OAuth1Settings settings)
+    public static ISession OAuth1Configure(this ISession session, OAuth1Settings settings)
     {
       // Ignore returned media types from servers when fetching request/access-tokens
       // (This is so silly: Twitter returning text/html when it is application/x-www-form-urlencoded.
@@ -21,13 +21,17 @@ namespace Ramone.OAuth1
       Condition.Requires(settings.AccessTokenUrl, "settings.AccessTokenUrl").IsNotNull();
 
       session.RequestInterceptors.Add("OAuth1", new OAuth1RequestInterceptor(settings));
+
+      return session;
     }
 
 
-    public static void OAuth1Logger(this ISession session, IOAuth1Logger logger)
+    public static ISession OAuth1Logger(this ISession session, IOAuth1Logger logger)
     {
       OAuth1RequestInterceptor interceptor = GetExistingInterceptor(session);
       interceptor.Logger = logger;
+
+      return session;
     }
 
 
@@ -63,11 +67,12 @@ namespace Ramone.OAuth1
     }
 
 
-    public static void OAuth1SetAccessToken(this ISession session, OAuth1Token token, bool isAuthorized = false)
+    public static ISession OAuth1SetAccessToken(this ISession session, OAuth1Token token, bool isAuthorized = false)
     {
       OAuth1RequestInterceptor interceptor = GetExistingInterceptor(session);
       interceptor.SetAccessToken(token);
       interceptor.IsAuthorized = isAuthorized;
+      return session;
     }
 
 
@@ -87,7 +92,7 @@ namespace Ramone.OAuth1
 
     private static OAuth1RequestInterceptor GetExistingInterceptor(ISession session)
     {
-      OAuth1RequestInterceptor interceptor = session.RequestInterceptors.Find("OAuth") as OAuth1RequestInterceptor;
+      OAuth1RequestInterceptor interceptor = session.RequestInterceptors.Find("OAuth1") as OAuth1RequestInterceptor;
       if (interceptor == null)
         throw new InvalidOperationException("Could not locate OAuth request interceptor. Did you call Session.OAuth1Configure()?");
       return interceptor;

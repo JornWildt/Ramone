@@ -20,6 +20,12 @@ namespace Ramone
       : base(message, ex)
     {
     }
+
+
+    public RamoneException(string message)
+      : base(message)
+    {
+    }
   }
 
 
