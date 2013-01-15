@@ -31,6 +31,8 @@ namespace Ramone.Implementation
 
     public ObjectSerializerSettings SerializerSettings { get; set; }
 
+    public IDictionary<string, object> Items { get; protected set; }
+
 
     public void SetAllowedRedirects(int responseCode, int redirectCount)
     {
@@ -68,6 +70,7 @@ namespace Ramone.Implementation
       SerializerSettings = new ObjectSerializerSettings(service.SerializerSettings);
       AllowedRedirectsMap = new Dictionary<int, int>();
       service.CopyRedirect(this);
+      Items = new Dictionary<string, object>(service.Items);
     }
   }
 }

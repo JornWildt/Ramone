@@ -147,6 +147,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RedirectTests.cs" />
     <Compile Include="RequestInterceptorSetTests.cs" />
+    <Compile Include="ServiceTests.cs" />
     <Compile Include="SessionTests.cs" />
     <Compile Include="SetupFixture.cs" />
     <Compile Include="MediaTypes\StreamCodecTests.cs" />

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Text;
 using Ramone.Utility.ObjectSerialization;
 
@@ -30,5 +31,7 @@ namespace Ramone
     void CopyRedirect(ISession session);
 
     ISession NewSession();
+
+    IDictionary<string, object> Items { get; }
   }
 }

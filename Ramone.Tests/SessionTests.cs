@@ -185,6 +185,21 @@ namespace Ramone.Tests
     }
 
 
+    [Test]
+    public void CanSetAndGetSessionItems()
+    {
+      // Arrange
+      ISession session = RamoneConfiguration.NewSession(BaseUrl);
+
+      // Act
+      session.Items["X"] = 1234;
+      int x = (int)session.Items["X"];
+
+      // Assert
+      Assert.AreEqual(1234, x);
+    }
+
+
     class DummyHandler1 : IAuthorizationHandler
     {
       public bool HandleAuthorizationRequest(AuthorizationContext context)

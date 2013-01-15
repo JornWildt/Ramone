@@ -28,6 +28,8 @@ namespace Ramone.Implementation
 
     public ObjectSerializerSettings SerializerSettings { get; set; }
 
+    public IDictionary<string, object> Items { get; protected set; }
+
 
     public ISession NewSession()
     {
@@ -75,6 +77,7 @@ namespace Ramone.Implementation
       RequestInterceptors = new RequestInterceptorSet();
       SerializerSettings = new ObjectSerializerSettings();
       AllowedRedirectsMap = new Dictionary<int, int>();
+      Items = new Dictionary<string, object>();
     }
   }
 }

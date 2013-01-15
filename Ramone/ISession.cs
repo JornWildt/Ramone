@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Text;
 using Ramone.Utility.ObjectSerialization;
@@ -29,5 +30,7 @@ namespace Ramone
     void SetAllowedRedirects(int responseCode, int redirectCount);
 
     int GetAllowedRedirects(int responseCode);
+
+    IDictionary<string, object> Items { get; }
   }
 }

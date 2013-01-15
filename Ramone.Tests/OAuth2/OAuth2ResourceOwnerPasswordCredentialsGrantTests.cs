@@ -41,7 +41,7 @@ namespace Ramone.Tests.OAuth2
         ClientSecret = OAuth2TestConstants.ClientPassword
       };
 
-      Session.OAuth2Configure(settings)
+      //Session.OAuth2Configure(settings)
 
       Request request = Session.Bind(OAuth2TestConstants.TokenEndpointPath)
                                .BasicAuthentication(OAuth2TestConstants.ClientID, OAuth2TestConstants.ClientPassword)
