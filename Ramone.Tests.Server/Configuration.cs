@@ -134,12 +134,17 @@ namespace Ramone.Tests.Server
             .HandledBy<PatchHandler>()
             .TranscodedBy<Ramone.Tests.Server.Codecs.JsonPatchDocumentCodec>().ForMediaType("application/json-patch");
 
+
+        ResourceSpace.Has.ResourcesOfType<SlowResource>()
+            .AtUri(Constants.SlowPath)
+            .HandledBy<SlowHandler>()
+            .TranscodedBy<JsonSerializerCodec<SlowResource>>();
+
         CMSConfiguration.Configure();
         ResourceSpace.Has.ResourcesOfType<RedirectArgs>()
             .AtUri(Constants.RedirectPath)
             .HandledBy<RedirectHandler>()
             .TranscodedBy<FormUrlencodedCodec>();
-            //.TranscodedBy<LinkHeaderCodec>();
 
         BlogConfiguration.Configure();
         OAuth2Configuration.Configure();

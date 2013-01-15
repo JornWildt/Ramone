@@ -37,8 +37,6 @@ namespace Ramone.Tests.Server.CMS.Handlers
         Title = dossier.Title
       };
 
-      //System.Threading.Thread.Sleep(10000);
-
       if (dossier.Title == "Do not return body")
         d = null;
 

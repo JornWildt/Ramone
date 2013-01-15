@@ -1,6 +1,8 @@
 ﻿using System.ServiceModel.Syndication;
 using NUnit.Framework;
 using Ramone.Tests.Common.CMS;
+using Ramone.Tests.Common;
+using System;
 
 
 namespace Ramone.Tests
@@ -50,20 +52,69 @@ namespace Ramone.Tests
 
 
     [Test]
-    public void CanPostAndGetResult_Async()
+    public void WhenPostingEmptyDataAsyncTheRequestIsInFactAsync_Async()
     {
+      // Arrange
+      Request request = Session.Bind(Constants.SlowPath);
+      TimeSpan asyncTime = TimeSpan.MaxValue;
+      TimeSpan syncTime = TimeSpan.MinValue;
+      SlowResource result = null;
+
       TestAsync(wh =>
       {
-        // Act
-        DossiersReq.Async().Post<Dossier>(MyDossier, response =>
-        {
-          Dossier newDossier = response.Body;
+        DateTime t1 = DateTime.Now;
 
-          // Assert
-          Assert.IsNotNull(newDossier);
-          wh.Set();
-        });
+        // Act
+        request.Async()
+          .OnComplete(() => wh.Set())
+          .Post(response =>
+          {
+            syncTime = DateTime.Now - t1;
+            result = response.Decode<SlowResource>();
+          });
+
+        asyncTime = DateTime.Now - t1;
       });
+
+      // Assert
+      Assert.IsNotNull(result);
+      Assert.AreEqual(4, result.Time);
+      Assert.Greater(syncTime, TimeSpan.FromSeconds(3), "Request takes at least 4 seconds - 3 should be a safe test");
+      Assert.Less(asyncTime, TimeSpan.FromSeconds(1), "Async should be instantaneous - 1 second should be safe");
+    }
+
+
+    [Test]
+    public void WhenPostingAsyncTheRequestIsInFactAsync_Async()
+    {
+      // Arrange
+      Request request = Session.Bind(Constants.SlowPath).AsJson();
+      TimeSpan asyncTime = TimeSpan.MaxValue;
+      TimeSpan syncTime = TimeSpan.MinValue;
+      SlowResource input = new SlowResource { Time = 10 };
+      SlowResource result = null;
+
+      TestAsync(wh =>
+      {
+        DateTime t1 = DateTime.Now;
+
+        // Act
+        request.Async()
+          .OnComplete(() => wh.Set())
+          .Post<SlowResource>(input, response =>
+          {
+            syncTime = DateTime.Now - t1;
+            result = response.Body;
+          });
+
+        asyncTime = DateTime.Now - t1;
+      });
+
+      // Assert
+      Assert.IsNotNull(result);
+      Assert.AreEqual(input.Time, result.Time);
+      Assert.Greater(syncTime, TimeSpan.FromSeconds(3), "Request takes at least 4 seconds - 3 should be a safe test");
+      Assert.Less(asyncTime, TimeSpan.FromSeconds(1), "Async should be instantaneous - 1 second should be safe");
     }
 
 

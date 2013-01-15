@@ -4,6 +4,7 @@ using System.Linq;
 using NUnit.Framework;
 using Ramone.HyperMedia;
 using Ramone.Tests.Common.CMS;
+using Ramone.Tests.Common;
 
 
 namespace Ramone.Tests
@@ -25,6 +26,39 @@ namespace Ramone.Tests
         Assert.AreEqual("Dossier no. 8", dossier.Body.Title);
         Assert.IsNotNull(dossier.Body.Links);
       }
+    }
+
+
+    [Test]
+    public void WhenGettingAsyncTheRequestIsInFactAsync()
+    {
+      // Arrange
+      Request request = Session.Bind(Constants.SlowPath);
+      TimeSpan asyncTime = TimeSpan.MaxValue;
+      TimeSpan syncTime = TimeSpan.MinValue;
+      SlowResource result = null;
+
+      TestAsync(wh =>
+      {
+        DateTime t1 = DateTime.Now;
+
+        // Act
+        request.Async()
+          .OnComplete(() => wh.Set())
+          .Get(response =>
+          {
+            syncTime = DateTime.Now - t1;
+            result = response.Decode<SlowResource>();
+          });
+
+        asyncTime = DateTime.Now - t1;
+      });
+
+      // Assert
+      Assert.IsNotNull(result);
+      Assert.AreEqual(4, result.Time);
+      Assert.Greater(syncTime, TimeSpan.FromSeconds(3), "Request takes at least 4 seconds - 3 should be a safe test");
+      Assert.Less(asyncTime, TimeSpan.FromSeconds(1), "Async should be instantaneous - 1 second should be safe");
     }
 
 

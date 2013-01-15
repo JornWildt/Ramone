@@ -43,5 +43,7 @@
     public const string RedirectPath = "redirect/{code}/{count}";
 
     public const string PatchPath = "patch";
+
+    public const string SlowPath = "slow";
   }
 }
