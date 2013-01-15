@@ -345,7 +345,7 @@ namespace Ramone
 
       using (Stream requestStream = state.Request.EndGetRequestStream(result))
       {
-        WriteBody(requestStream, state.Request);
+        WriteBody(requestStream, state.Request, state.IncludeBody);
       }
 
       state.Request.BeginGetResponse(HandleResponse, state);

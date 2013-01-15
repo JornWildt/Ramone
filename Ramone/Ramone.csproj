@@ -141,6 +141,7 @@
     <Compile Include="OAuth1\OAuth1Extensions.cs" />
     <Compile Include="OAuth1\OAuth1RequestInterceptor.cs" />
     <Compile Include="OAuth1\QueryParameter.cs" />
+    <Compile Include="OAuth2\OAuth2Extensions.cs" />
     <Compile Include="OAuth2\OAuth2Settings.cs" />
     <Compile Include="RamoneConfiguration.cs" />
     <Compile Include="Extensions.cs" />

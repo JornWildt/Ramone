@@ -20,7 +20,7 @@ namespace Ramone.OAuth1
       Condition.Requires(settings.AuthorizeUrl, "settings.AuthorizeUrl").IsNotNull();
       Condition.Requires(settings.AccessTokenUrl, "settings.AccessTokenUrl").IsNotNull();
 
-      session.RequestInterceptors.Add("OAuth", new OAuth1RequestInterceptor(settings));
+      session.RequestInterceptors.Add("OAuth1", new OAuth1RequestInterceptor(settings));
     }
 
 

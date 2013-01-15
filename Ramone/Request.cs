@@ -432,7 +432,7 @@ namespace Ramone
       try
       {
         HttpWebRequest request = SetupRequest(url, method, includeBody, requestModifier);
-        WriteBody(null, request);
+        WriteBody(null, request, includeBody);
         ApplyDataSentInterceptors(request);
         HttpWebResponse response = (HttpWebResponse)request.GetResponse();
         return HandleResponse(response, method, includeBody, requestModifier, retryLevel);
@@ -489,9 +489,9 @@ namespace Ramone
     }
 
 
-    protected virtual void WriteBody(Stream requestStream, HttpWebRequest request)
+    protected virtual void WriteBody(Stream requestStream, HttpWebRequest request, bool includeBody)
     {
-      if (BodyData != null)
+      if (BodyData != null && includeBody)
       {
         // Do not call GetRequestStream unless there is any request data
         if (requestStream == null)

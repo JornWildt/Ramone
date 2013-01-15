@@ -24,6 +24,12 @@ namespace Ramone.Tests.Server.Handlers
     }
 
 
+    public object Put(int code, int count)
+    {
+      return Process(code, count, "PUT");
+    }
+
+
     private object Process(int code, int count, string method)
     {
       if (count == 5)

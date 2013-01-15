@@ -17,13 +17,14 @@ namespace Ramone.Tests
     [Test]
     public void ByDefaultItFollowsRedirectsFor303WithGET(
       [Values(303)] int responseCode,
-      [Values("GET", "POST")] string method)
+      [Values("GET", "POST", "PUT")] string method)
     {
       // Arrange
       Request req = Session.Bind(RedirectTemplate, new { code = responseCode, count = 1 });
+      object payload = new { X = "10" };
 
       // Act
-      using (Response<RedirectArgs> resp = req.Execute<RedirectArgs>(method))
+      using (Response<RedirectArgs> resp = (method == "GET" ? req.Execute<RedirectArgs>(method) : req.AsFormUrlEncoded().Execute<RedirectArgs>(method, payload)))
       {
         // Assert
         Assert.AreEqual(5, resp.Body.Count, "Must have been redirected 4 times (server max.).");
