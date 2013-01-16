@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.Specialized;
 using Ramone.Utility;
 using Ramone.HyperMedia;
+using CuttingEdge.Conditions;
 
 
 namespace Ramone
@@ -58,6 +59,8 @@ namespace Ramone
 
     public static Request Bind(this ISession session, Uri url, object parameters = null)
     {
+      Condition.Requires(url, "url").IsNotNull();
+
       Uri boundUrl = BindUri(session, url, parameters);
       return session.Request(boundUrl);
     }
@@ -65,6 +68,8 @@ namespace Ramone
 
     public static Uri BindUri(this ISession session, Uri url, object parameters = null)
     {
+      Condition.Requires(url, "url").IsNotNull();
+
       Uri baseUri = new Uri(url.GetComponents(UriComponents.SchemeAndServer, UriFormat.Unescaped));
       UriTemplate template = new UriTemplate(url.GetComponents(UriComponents.PathAndQuery, UriFormat.Unescaped));
 
@@ -87,6 +92,8 @@ namespace Ramone
 
     private static Uri BindTemplate(Uri baseUri, UriTemplate template, object parameters = null)
     {
+      Condition.Requires(template, "template").IsNotNull();
+
       if (parameters == null)
       {
         Dictionary<string, string> emptyParameters = new Dictionary<string, string>();

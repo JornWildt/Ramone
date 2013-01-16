@@ -1,10 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Ramone;
 using System.IO;
+using Ramone;
 using Ramone.OAuth2;
+using System.Net;
+using System.Diagnostics;
+
 
 namespace GoogleDemo
 {
@@ -14,14 +14,39 @@ namespace GoogleDemo
 
     static void Main(string[] args)
     {
-      Setup();
+      try
+      {
+        Setup();
+        AuthorizeGoogleAccess_UsingOutOfBandPincode();
+      }
+      catch (Ramone.NotAuthorizedException ex)
+      {
+        WebException wex = (WebException)ex.InnerException;
+        using (TextReader reader = new StreamReader(((HttpWebResponse)wex.Response).GetResponseStream()))
+        {
+          string content = reader.ReadToEnd();
+          File.WriteAllText("c:\\tmp\\google-output.html", content);
+          Console.WriteLine(content);
+          Console.ReadKey();
+        }
+      }
+      catch (WebException ex)
+      {
+        using (TextReader reader = new StreamReader(((HttpWebResponse)ex.Response).GetResponseStream()))
+        {
+          string content = reader.ReadToEnd();
+          File.WriteAllText("c:\\tmp\\google-output.html", content);
+          Console.WriteLine(content);
+          Console.ReadKey();
+        }
+      }
     }
 
 
     static void Setup()
     {
       // Create new session with implicit service
-      Session = RamoneConfiguration.NewSession(new Uri("http://api.google.com"));
+      Session = RamoneConfiguration.NewSession(new Uri("https://www.googleapis.com/oauth2/v1"));
 
       //// Set default request/response media-types to UrlEncoded/JSON for Google.
       //// This saves us the hassle of specifying codecs for all the Google resource types (Tweet, Timeline, User etc.)
@@ -39,26 +64,34 @@ namespace GoogleDemo
       OAuth2Settings settings = new OAuth2Settings
       {
         AuthorizationEndpoint = new Uri("https://accounts.google.com/o/oauth2/auth"),
+        TokenEndpoint = new Uri("https://accounts.google.com/o/oauth2/token"),
         ClientID = keys.ClientId,
-        ClientSecret = keys.ClientSecret
+        ClientSecret = keys.ClientSecret,
+        RedirectUri = new Uri("urn:ietf:wg:oauth:2.0:oob")
       };
       Session.OAuth2_Configure(settings);
 
       // Get temporary credentials from Google (authorization code) and remember it internally
-      OAuth2AuthorizationCodeResponse codeResponse = Session.OAuth2_GetAuthorize();
+      OAuth2AuthorizationRedirect redirectResponse = Session.OAuth2_AuthorizeWithRedirect("https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile");
 
       // Ask user to authorize use of the request token
       Console.WriteLine("Now opening a browser with autorization info. Please follow instructions there.");
-      Request authorizationRequest = Session.Bind(GoogleApi.OAuthAuthorizePath, requestToken);
-      Process.Start(authorizationRequest.Url.AbsoluteUri);
+      Process.Start(redirectResponse.Location.AbsoluteUri);
 
-      Console.WriteLine("Please enter Google pincode: ");
-      string pincode = Console.ReadLine();
+      Console.WriteLine("Please enter Google authorization code: ");
+      string authorizationCode = Console.ReadLine();
 
-      if (!string.IsNullOrWhiteSpace(pincode))
+      if (!string.IsNullOrWhiteSpace(authorizationCode))
       {
         // Get access credentials from Google
-        Session.OAuth2GetAccessTokenFromRequestToken(pincode);
+        OAuth2AccessTokenResponse token = Session.OAuth2_GetAccessTokenFromAuthorizationCode(authorizationCode);
+
+        using (var response = Session.Bind("userinfo").AcceptJson().Get<dynamic>())
+        {
+          var body = response.Body;
+          Console.WriteLine("User name: " + body.name);
+          Console.WriteLine("E-mail: " + body.email);
+        }
       }
     }
 

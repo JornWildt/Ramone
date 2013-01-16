@@ -10,5 +10,7 @@ namespace Ramone.OAuth2
     public Uri RedirectUri { get; set; }
     public string ClientID { get; set; }
     public string ClientSecret { get; set; }
+
+    public bool UseBasicAuthenticationForClient { get; set; }
   }
 }
