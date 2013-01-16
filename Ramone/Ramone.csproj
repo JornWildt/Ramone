@@ -143,6 +143,7 @@
     <Compile Include="OAuth1\QueryParameter.cs" />
     <Compile Include="OAuth2\BearerTokenRequestInterceptor.cs" />
     <Compile Include="OAuth2\OAuth2AccessTokenResponse.cs" />
+    <Compile Include="OAuth2\OAuth2AuthorizationCodeResponse.cs" />
     <Compile Include="OAuth2\OAuth2Extensions.cs" />
     <Compile Include="OAuth2\OAuth2Settings.cs" />
     <Compile Include="RamoneConfiguration.cs" />
@@ -172,6 +173,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RequestContext.cs" />
     <Compile Include="RequestStreamWrapperContext.cs" />
+    <Compile Include="UriExtensions.cs" />
     <Compile Include="Utility\ContextRegistrator.cs" />
     <Compile Include="Utility\JsonPointerHelper.cs" />
     <Compile Include="Utility\HashtableConverterPropertyVisitor.cs" />

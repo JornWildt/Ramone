@@ -7,6 +7,7 @@ namespace Ramone.OAuth2
   {
     public Uri AuthorizationEndpoint { get; set; }
     public Uri TokenEndpoint { get; set; }
+    public Uri RedirectUri { get; set; }
     public string ClientID { get; set; }
     public string ClientSecret { get; set; }
   }

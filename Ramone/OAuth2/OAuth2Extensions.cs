@@ -1,5 +1,6 @@
 ﻿using CuttingEdge.Conditions;
 using System;
+using System.Collections.Specialized;
 
 
 namespace Ramone.OAuth2
@@ -16,6 +17,50 @@ namespace Ramone.OAuth2
       session.Items[OAuth2SettingsKey] = settings;
 
       return session;
+    }
+
+
+    public static OAuth2AuthorizationCodeResponse OAuth2_Authorize(this ISession session, string scope = null)
+    {
+      OAuth2Settings settings = GetSettings(session);
+
+      NameValueCollection queryString = System.Web.HttpUtility.ParseQueryString(settings.AuthorizationEndpoint.Query);
+
+      queryString["response_type"] = "code";
+      queryString["client_id"] = settings.ClientID;
+      queryString["redirect_uri"] = settings.RedirectUri.ToString();
+      queryString["scope"] = scope;
+      queryString["state"] = "1234";
+
+      string q = queryString.ToString();
+
+      Request request = session.Bind(settings.AuthorizationEndpoint)
+                               .AsFormUrlEncoded();
+
+
+
+      //var tokenRequest = new
+      //{
+      //  response_type = "code",
+      //  client_id = settings.ClientID,
+      //  redirect_uri = settings.RedirectUri,
+      //  scope = scope,
+      //  state = "123456"
+      //};
+
+      //using (var response = request.Post<OAuth2AccessTokenResponse>(tokenRequest))
+      //{
+      //  OAuth2AccessTokenResponse accessToken = response.Body;
+      //  if (string.Equals(accessToken.token_type, "bearer", StringComparison.InvariantCultureIgnoreCase))
+      //  {
+      //    session.RequestInterceptors.Add("Bearer", new BearerTokenRequestInterceptor(accessToken.access_token));
+      //    return accessToken;
+      //  }
+      //  else
+      //    throw new RamoneException(string.Format("Unknown access token type '{0}' (expected 'bearer')", accessToken.token_type));
+      //}
+
+      return null;
     }
 
 
