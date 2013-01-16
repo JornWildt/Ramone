@@ -2,8 +2,7 @@
 {
   public class OAuth2AuthorizationCodeResponse
   {
-    public string response_tye { get; set; }
-    public string client_id { get; set; }
-    public int redirect_uri { get; set; }
+    public string code { get; set; }
+    public string state { get; set; }
   }
 }

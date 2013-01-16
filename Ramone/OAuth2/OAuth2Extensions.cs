@@ -1,6 +1,8 @@
 ﻿using CuttingEdge.Conditions;
 using System;
 using System.Collections.Specialized;
+using System.Web;
+using System.Diagnostics;
 
 
 namespace Ramone.OAuth2
@@ -20,70 +22,83 @@ namespace Ramone.OAuth2
     }
 
 
-    public static OAuth2AuthorizationCodeResponse OAuth2_Authorize(this ISession session, string scope = null)
+    public static OAuth2AuthorizationRedirect OAuth2_AuthorizeWithRedirect(this ISession session, string scope = null)
     {
       OAuth2Settings settings = GetSettings(session);
 
-      NameValueCollection queryString = System.Web.HttpUtility.ParseQueryString(settings.AuthorizationEndpoint.Query);
+      var codeRequestArgs = new
+      {
+        response_type = "code",
+        client_id = settings.ClientID,
+        redirect_uri = settings.RedirectUri.ToString(),
+        scope = scope,
+        state = "123456" // FIXME : see http://tools.ietf.org/html/rfc6749#section-10.12
+      };
 
-      queryString["response_type"] = "code";
-      queryString["client_id"] = settings.ClientID;
-      queryString["redirect_uri"] = settings.RedirectUri.ToString();
-      queryString["scope"] = scope;
-      queryString["state"] = "1234";
+      using (var response = session.Bind(settings.AuthorizationEndpoint.AddQueryParameters(codeRequestArgs)).Get())
+      {
+        return new OAuth2AuthorizationRedirect { Location = response.Location };
+      }
+    }
 
-      string q = queryString.ToString();
+    // FIXME: how to, automaticall, decode redirect response (when possible)?
+    //NameValueCollection responseQuery = HttpUtility.ParseQueryString(response.Location.Query);
+    //return new OAuth2AuthorizationCodeResponse
+    //{
+    //  code = responseQuery["code"],
+    //  state = responseQuery["state"]
+    //};
 
-      Request request = session.Bind(settings.AuthorizationEndpoint)
-                               .AsFormUrlEncoded();
+    // FIXME: handle additional access token parameters
 
+    public static OAuth2AccessTokenResponse OAuth2_GetAccessTokenFromAuthorizationCode(this ISession session, string authorizationCode)
+    {
+      OAuth2Settings settings = GetSettings(session);
 
+      NameValueCollection tokenRequestArgs = new NameValueCollection();
+      tokenRequestArgs["grant_type"] = "authorization_code";
+      tokenRequestArgs["code"] = authorizationCode;
+      tokenRequestArgs["redirect_uri"] = settings.RedirectUri.ToString();
+      tokenRequestArgs["client_id"] = settings.ClientID;
 
-      //var tokenRequest = new
-      //{
-      //  response_type = "code",
-      //  client_id = settings.ClientID,
-      //  redirect_uri = settings.RedirectUri,
-      //  scope = scope,
-      //  state = "123456"
-      //};
+      if (!settings.UseBasicAuthenticationForClient)
+        tokenRequestArgs["client_secret"] = settings.ClientSecret;
 
-      //using (var response = request.Post<OAuth2AccessTokenResponse>(tokenRequest))
-      //{
-      //  OAuth2AccessTokenResponse accessToken = response.Body;
-      //  if (string.Equals(accessToken.token_type, "bearer", StringComparison.InvariantCultureIgnoreCase))
-      //  {
-      //    session.RequestInterceptors.Add("Bearer", new BearerTokenRequestInterceptor(accessToken.access_token));
-      //    return accessToken;
-      //  }
-      //  else
-      //    throw new RamoneException(string.Format("Unknown access token type '{0}' (expected 'bearer')", accessToken.token_type));
-      //}
-
-      return null;
+      return GetAccessToken(session, tokenRequestArgs);
     }
 
 
-    public static OAuth2AccessTokenResponse OAuth2_GetAccessTokenUsing_ResourceOwnerPasswordCredentialsGrant(
+    public static OAuth2AccessTokenResponse OAuth2_GetAccessTokenFromResourceOwnerUsernamePassword(
       this ISession session,
       string ownerUserName, 
       string ownerPassword)
     {
       OAuth2Settings settings = GetSettings(session);
 
+      NameValueCollection tokenRequestArgs = new NameValueCollection();
+      tokenRequestArgs["grant_type"] = "password";
+      tokenRequestArgs["username"] = ownerUserName;
+      tokenRequestArgs["password"] = ownerPassword;
+
+      if (!settings.UseBasicAuthenticationForClient)
+        tokenRequestArgs["client_secret"] = settings.ClientSecret;
+
+      return GetAccessToken(session, tokenRequestArgs);
+    }
+
+
+    private static OAuth2AccessTokenResponse GetAccessToken(ISession session, object args)
+    {
+      OAuth2Settings settings = GetSettings(session);
+
       Request request = session.Bind(settings.TokenEndpoint)
-                               .BasicAuthentication(settings.ClientID, settings.ClientSecret)
                                .AsFormUrlEncoded()
                                .AcceptJson();
 
-      var tokenRequest = new
-      {
-        grant_type = "password",
-        username = ownerUserName,
-        password = ownerPassword
-      };
+      if (settings.UseBasicAuthenticationForClient)
+        request = request.BasicAuthentication(settings.ClientID, settings.ClientSecret);
 
-      using (var response = request.Post<OAuth2AccessTokenResponse>(tokenRequest))
+      using (var response = request.Post<OAuth2AccessTokenResponse>(args))
       {
         OAuth2AccessTokenResponse accessToken = response.Body;
         if (string.Equals(accessToken.token_type, "bearer", StringComparison.InvariantCultureIgnoreCase))

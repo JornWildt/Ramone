@@ -14,7 +14,7 @@ namespace Ramone.Tests.Server.OAuth2.Handlers
       if (CommunicationContext.Request.Headers.ContainsKey("Authorization"))
       {
         string auth = CommunicationContext.Request.Headers["Authorization"];
-        if (auth == "BEARER " + OAuth2TestConstants.CreatedAccessToken)
+        if (auth == "Bearer " + OAuth2TestConstants.CreatedAccessToken)
         {
           return new ProtectedResource { Title = "Got it" };
         }

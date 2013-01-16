@@ -19,7 +19,7 @@ namespace Ramone.OAuth2
     public void HeadersReady(RequestContext context)
     {
       HttpWebRequest request = context.Request;
-      request.Headers["Authorization"] = "BEARER " + Token;
+      request.Headers["Authorization"] = "Bearer " + Token;
     }
 
 

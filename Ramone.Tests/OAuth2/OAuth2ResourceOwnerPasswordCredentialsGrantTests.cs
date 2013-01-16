@@ -37,7 +37,7 @@ namespace Ramone.Tests.OAuth2
     {
       OAuth2AccessTokenResponse token = 
         Session.OAuth2_Configure(GetSettings())
-               .OAuth2_GetAccessTokenUsing_ResourceOwnerPasswordCredentialsGrant(OAuth2TestConstants.Username, OAuth2TestConstants.UserPassword);
+               .OAuth2_GetAccessTokenFromResourceOwnerUsernamePassword(OAuth2TestConstants.Username, OAuth2TestConstants.UserPassword);
 
       Assert.IsNotNull(token);
       Assert.IsNotNullOrEmpty(token.access_token);
@@ -54,7 +54,7 @@ namespace Ramone.Tests.OAuth2
 
       // Act
       Session.OAuth2_Configure(GetSettings())
-              .OAuth2_GetAccessTokenUsing_ResourceOwnerPasswordCredentialsGrant(OAuth2TestConstants.Username, OAuth2TestConstants.UserPassword);
+              .OAuth2_GetAccessTokenFromResourceOwnerUsernamePassword(OAuth2TestConstants.Username, OAuth2TestConstants.UserPassword);
 
       using (var response = protectedResourceRequest.AcceptJson().Get<ProtectedResource>())
       {
@@ -73,7 +73,8 @@ namespace Ramone.Tests.OAuth2
       {
         TokenEndpoint = new System.Uri(Session.BaseUri, OAuth2TestConstants.TokenEndpointPath),
         ClientID = OAuth2TestConstants.ClientID,
-        ClientSecret = OAuth2TestConstants.ClientPassword
+        ClientSecret = OAuth2TestConstants.ClientPassword,
+        UseBasicAuthenticationForClient = true
       };
     }
   }
