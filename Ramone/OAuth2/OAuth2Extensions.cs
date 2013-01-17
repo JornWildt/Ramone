@@ -9,20 +9,34 @@ namespace Ramone.OAuth2
 {
   public static class OAuth2Extensions
   {
-    private const string OAuth2SettingsKey = "OAuth2Settings";
+    private const string OAuth2SettingsSessionKey = "OAuth2Settings";
 
 
+    /// <summary>
+    /// Configure OAuth2 and store configuration in session for later use. 
+    /// Must always be called before using any of the other OAuth2 methods.
+    /// </summary>
+    /// <param name="session"></param>
+    /// <param name="settings"></param>
+    /// <returns>The session passed in as argument.</returns>
     public static ISession OAuth2_Configure(this ISession session, OAuth2Settings settings)
     {
       Condition.Requires(settings, "settings").IsNotNull();
 
-      session.Items[OAuth2SettingsKey] = settings;
+      session.Items[OAuth2SettingsSessionKey] = settings;
 
       return session;
     }
 
 
-    public static OAuth2AuthorizationRedirect OAuth2_AuthorizeWithRedirect(this ISession session, string scope = null)
+    /// <summary>
+    /// Get URL for user authorization via browser (user agent). This will initiate the "Authorization Code Grant" flow.
+    /// </summary>
+    /// <remarks>See http://tools.ietf.org/html/rfc6749#section-4.1.1</remarks>
+    /// <param name="session"></param>
+    /// <param name="scope"></param>
+    /// <returns>Authorization request URL.</returns>
+    public static Uri OAuth2_GetAuthorizationRequestUrl(this ISession session, string scope = null)
     {
       OAuth2Settings settings = GetSettings(session);
 
@@ -35,22 +49,36 @@ namespace Ramone.OAuth2
         state = "123456" // FIXME : see http://tools.ietf.org/html/rfc6749#section-10.12
       };
 
-      using (var response = session.Bind(settings.AuthorizationEndpoint.AddQueryParameters(codeRequestArgs)).Get())
-      {
-        return new OAuth2AuthorizationRedirect { Location = response.Location };
-      }
+      return settings.AuthorizationEndpoint.AddQueryParameters(codeRequestArgs);
     }
 
-    // FIXME: how to, automaticall, decode redirect response (when possible)?
-    //NameValueCollection responseQuery = HttpUtility.ParseQueryString(response.Location.Query);
-    //return new OAuth2AuthorizationCodeResponse
-    //{
-    //  code = responseQuery["code"],
-    //  state = responseQuery["state"]
-    //};
 
-    // FIXME: handle additional access token parameters
+    /// <summary>
+    /// Extract authorization code from authorization response encoded in a redirect URL from the authorization endpoint.
+    /// </summary>
+    /// <remarks>After completion of the authorization process the browser will be redirected to a URL specified
+    /// by the client (and configured using Ramone's OAuth2Settings). This URL will contain the acquired 
+    /// authorization code. Call OAuth2_GetAuthorizationCodeFromRedirectUrl to extract the code.</remarks>
+    /// <param name="session"></param>
+    /// <param name="redirectUrl"></param>
+    /// <returns>Authorization code</returns>
+    public static string OAuth2_GetAuthorizationCodeFromRedirectUrl(this ISession session, string redirectUrl)
+    {
+      Condition.Requires(redirectUrl, "redirectUrl").IsNotNull();
 
+      NameValueCollection parameters = HttpUtility.ParseQueryString(redirectUrl);
+
+      return parameters["code"];
+    }
+
+
+    /// <summary>
+    /// Request an access token from authorization code acquired in earlier requests.
+    /// </summary>
+    /// <remarks>See http://tools.ietf.org/html/rfc6749#section-4.1.3</remarks>
+    /// <param name="session"></param>
+    /// <param name="authorizationCode"></param>
+    /// <returns></returns>
     public static OAuth2AccessTokenResponse OAuth2_GetAccessTokenFromAuthorizationCode(this ISession session, string authorizationCode)
     {
       OAuth2Settings settings = GetSettings(session);
@@ -68,6 +96,14 @@ namespace Ramone.OAuth2
     }
 
 
+    /// <summary>
+    /// Request an access token using the flow "Resource Owner Password Credentials Grant".
+    /// </summary>
+    /// <remarks>See http://tools.ietf.org/html/rfc6749#section-4.3</remarks>
+    /// <param name="session"></param>
+    /// <param name="ownerUserName"></param>
+    /// <param name="ownerPassword"></param>
+    /// <returns></returns>
     public static OAuth2AccessTokenResponse OAuth2_GetAccessTokenFromResourceOwnerUsernamePassword(
       this ISession session,
       string ownerUserName, 
@@ -114,7 +150,7 @@ namespace Ramone.OAuth2
 
     private static OAuth2Settings GetSettings(ISession session)
     {
-      object settings = session.Items[OAuth2SettingsKey];
+      object settings = session.Items[OAuth2SettingsSessionKey];
       if (settings == null)
         throw new InvalidOperationException("No OAuth2 settings has been registered with the session");
 

@@ -144,7 +144,6 @@
     <Compile Include="OAuth2\BearerTokenRequestInterceptor.cs" />
     <Compile Include="OAuth2\OAuth2AccessTokenResponse.cs" />
     <Compile Include="OAuth2\OAuth2AuthorizationCodeResponse.cs" />
-    <Compile Include="OAuth2\OAuth2AuthorizationRedirect.cs" />
     <Compile Include="OAuth2\OAuth2Extensions.cs" />
     <Compile Include="OAuth2\OAuth2Settings.cs" />
     <Compile Include="RamoneConfiguration.cs" />
