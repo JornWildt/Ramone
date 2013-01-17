@@ -18,9 +18,9 @@ namespace Ramone.Tests
         using (Session.Request(BasicAuthUrl).Get<string>()) { }
         Assert.Fail("Missing exception.");
       }
-      catch (NotAuthorizedException ex)
+      catch (WebException ex)
       {
-        HtmlDocument error = ex.Response.AsRamoneResponse<HtmlDocument>(Session).Body;
+        HtmlDocument error = ((HttpWebResponse)ex.Response).AsRamoneResponse<HtmlDocument>(Session).Body;
         Assert.IsNotNull(error);
       }
     }

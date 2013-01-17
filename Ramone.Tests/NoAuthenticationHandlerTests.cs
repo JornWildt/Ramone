@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using System.Net;
 
 
 namespace Ramone.Tests
@@ -7,9 +8,9 @@ namespace Ramone.Tests
   public class NoAuthenticationHandlerTests : TestHelper
   {
     [Test]
-    public void WhenNoAuthorizationCodeIsSendItThrowsRamoneNotAuthorizedException()
+    public void WhenNoAuthorizationCodeIsSendItThrowsWebException()
     {
-      AssertThrows<NotAuthorizedException>(() => Session.Request(BasicAuthUrl).Get<string>());
+      AssertThrowsWebException(() => Session.Request(BasicAuthUrl).Get<string>(), HttpStatusCode.Unauthorized);
     }
   }
 }

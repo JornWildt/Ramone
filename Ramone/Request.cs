@@ -580,8 +580,8 @@ namespace Ramone
       {
         if (response.StatusCode == HttpStatusCode.Unauthorized)
         {
-          // This either throws or returns with success
-          HandleUnauthorized(response, ex);
+          if (!HandleUnauthorized(response, ex))
+            return null;
 
           if (retryLevel == 0)
           {
@@ -589,7 +589,7 @@ namespace Ramone
             return DoRequest(url, method, includeBody, requestModifier, retryLevel + 1);
           }
           else
-            throw new NotAuthorizedException(response, ex);
+            return null;
         }
       }
 
@@ -597,7 +597,7 @@ namespace Ramone
     }
 
 
-    private void HandleUnauthorized(HttpWebResponse response, WebException ex)
+    private bool HandleUnauthorized(HttpWebResponse response, WebException ex)
     {
       string authenticationHeader = response.Headers["WWW-Authenticate"];
       if (!string.IsNullOrEmpty(authenticationHeader))
@@ -607,10 +607,10 @@ namespace Ramone
         string parameters = authenticationHeader.Substring(pos+1);
         IAuthorizationHandler handler = Session.AuthorizationDispatcher.Get(scheme);
         if (handler != null && handler.HandleAuthorizationRequest(new AuthorizationContext(Session, response, scheme, parameters)))
-          return;
+          return true;
       }
 
-      throw new NotAuthorizedException(response, ex);
+      return false;
     }
   }
 

@@ -4,6 +4,7 @@ using Ramone.Tests.Common;
 using Ramone.Tests.Common.CMS;
 using Ramone.Utility.ObjectSerialization;
 using System.Threading;
+using System.Net;
 
 
 namespace Ramone.Tests
@@ -207,6 +208,14 @@ namespace Ramone.Tests
       }
 
       Assert.Fail(String.Format("Expected {0}, but no exception was thrown", typeof(ExT)));
+    }
+
+
+    public static void AssertThrowsWebException(Action blockThatThrowsException, HttpStatusCode expectedStatusCode)
+    {
+      AssertThrows<WebException>(
+        blockThatThrowsException,
+        ex => ((HttpWebResponse)ex.Response).StatusCode == expectedStatusCode);
     }
 
 

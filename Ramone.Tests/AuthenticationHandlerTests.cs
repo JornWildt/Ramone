@@ -21,7 +21,7 @@ namespace Ramone.Tests
     [Test]
     public void WhenNoAuthorizationCodeIsSendItAsksForAuthorization()
     {
-      AssertThrows<NotAuthorizedException>(() => Session.Request(BasicAuthUrl).Get<string>());
+      AssertThrowsWebException(() => Session.Request(BasicAuthUrl).Get<string>(), HttpStatusCode.Unauthorized);
       // Will get called twice since it does not try to fix the access problem
       Assert.AreEqual(2, CountingAuthorizationHandler.Count);
     }

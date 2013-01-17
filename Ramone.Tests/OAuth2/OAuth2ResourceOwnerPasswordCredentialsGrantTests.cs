@@ -50,7 +50,7 @@ namespace Ramone.Tests.OAuth2
       // Arrange
       Request protectedResourceRequest = Session.Bind(OAuth2TestConstants.ProtectedResourcePath);
 
-      AssertThrows<NotAuthorizedException>(() => protectedResourceRequest.Get());
+      AssertThrowsWebException(() => protectedResourceRequest.Get(), HttpStatusCode.Unauthorized);
 
       // Act
       Session.OAuth2_Configure(GetSettings())

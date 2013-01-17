@@ -107,7 +107,7 @@ namespace Ramone.OAuth2
           return accessToken;
         }
         else
-          throw new RamoneException(string.Format("Unknown access token type '{0}' (expected 'bearer')", accessToken.token_type));
+          throw new InvalidOperationException(string.Format("Unknown access token type '{0}' (expected 'bearer')", accessToken.token_type));
       }
     }
 

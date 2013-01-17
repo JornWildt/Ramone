@@ -1,10 +1,11 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
+using System.Net;
 using Ramone;
 using Ramone.OAuth2;
-using System.Net;
-using System.Diagnostics;
 
+// This program will access your google account and retreive user name and e-mail
 
 namespace GoogleDemo
 {
@@ -14,24 +15,15 @@ namespace GoogleDemo
 
     static void Main(string[] args)
     {
+      Console.WriteLine("This program will access your google account and retreive user name and e-mail");
       try
       {
         Setup();
-        AuthorizeGoogleAccess_UsingOutOfBandPincode();
-      }
-      catch (Ramone.NotAuthorizedException ex)
-      {
-        WebException wex = (WebException)ex.InnerException;
-        using (TextReader reader = new StreamReader(((HttpWebResponse)wex.Response).GetResponseStream()))
-        {
-          string content = reader.ReadToEnd();
-          File.WriteAllText("c:\\tmp\\google-output.html", content);
-          Console.WriteLine(content);
-          Console.ReadKey();
-        }
+        AuthorizeGoogleAccess_Using_AuthorizationCodeGrantWithPincode();
       }
       catch (WebException ex)
       {
+        // Catch web exceptions and stream the content to a file
         using (TextReader reader = new StreamReader(((HttpWebResponse)ex.Response).GetResponseStream()))
         {
           string content = reader.ReadToEnd();
@@ -47,15 +39,10 @@ namespace GoogleDemo
     {
       // Create new session with implicit service
       Session = RamoneConfiguration.NewSession(new Uri("https://www.googleapis.com/oauth2/v1"));
-
-      //// Set default request/response media-types to UrlEncoded/JSON for Google.
-      //// This saves us the hassle of specifying codecs for all the Google resource types (Tweet, Timeline, User etc.)
-      //Session.DefaultRequestMediaType = MediaType.ApplicationFormUrlEncoded;
-      //Session.DefaultResponseMediaType = MediaType.ApplicationJson;
     }
 
 
-    static void AuthorizeGoogleAccess_UsingOutOfBandPincode()
+    static void AuthorizeGoogleAccess_Using_AuthorizationCodeGrantWithPincode()
     {
       // Get Google API keys from file (don't want the secret parts hardcoded in public repository
       GoogleKeys keys = ReadKeys();
@@ -78,7 +65,7 @@ namespace GoogleDemo
       Console.WriteLine("Now opening a browser with autorization info. Please follow instructions there.");
       Process.Start(redirectResponse.Location.AbsoluteUri);
 
-      Console.WriteLine("Please enter Google authorization code: ");
+      Console.WriteLine("\nPlease enter Google authorization code from browser authorization: ");
       string authorizationCode = Console.ReadLine();
 
       if (!string.IsNullOrWhiteSpace(authorizationCode))
@@ -89,6 +76,7 @@ namespace GoogleDemo
         using (var response = Session.Bind("userinfo").AcceptJson().Get<dynamic>())
         {
           var body = response.Body;
+          Console.WriteLine("\nRESULT:");
           Console.WriteLine("User name: " + body.name);
           Console.WriteLine("E-mail: " + body.email);
         }
@@ -110,7 +98,7 @@ namespace GoogleDemo
       string[] keys;
       using (TextReader reader = new StreamReader("c:\\tmp\\googlekeys.txt"))
       {
-        string keystring = reader.ReadToEnd();
+        string keystring = reader.ReadLine();
         keys = keystring.Split('|');
 
         return new GoogleKeys
