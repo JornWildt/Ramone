@@ -196,107 +196,107 @@ namespace Ramone
 
     public override Response Post(object body)
     {
-      throw new InvalidOperationException("Synchronous GET operation is not supported on Asynchronous requests.");
+      throw new InvalidOperationException("Synchronous POST operation is not supported on Asynchronous requests.");
     }
 
     public override Response<TResponse> Post<TResponse>(object body)
     {
-      throw new InvalidOperationException("Synchronous GET operation is not supported on Asynchronous requests.");
+      throw new InvalidOperationException("Synchronous POST operation is not supported on Asynchronous requests.");
     }
 
     public override Response Post()
     {
-      throw new InvalidOperationException("Synchronous GET operation is not supported on Asynchronous requests.");
+      throw new InvalidOperationException("Synchronous POST operation is not supported on Asynchronous requests.");
     }
 
     public override Response<TResponse> Post<TResponse>()
     {
-      throw new InvalidOperationException("Synchronous GET operation is not supported on Asynchronous requests.");
+      throw new InvalidOperationException("Synchronous POST operation is not supported on Asynchronous requests.");
     }
 
     public override Response Put(object body)
     {
-      throw new InvalidOperationException("Synchronous GET operation is not supported on Asynchronous requests.");
+      throw new InvalidOperationException("Synchronous PUT operation is not supported on Asynchronous requests.");
     }
 
     public override Response<TResponse> Put<TResponse>(object body)
     {
-      throw new InvalidOperationException("Synchronous GET operation is not supported on Asynchronous requests.");
+      throw new InvalidOperationException("Synchronous PUT operation is not supported on Asynchronous requests.");
     }
 
     public override Response Put()
     {
-      throw new InvalidOperationException("Synchronous GET operation is not supported on Asynchronous requests.");
+      throw new InvalidOperationException("Synchronous PUT operation is not supported on Asynchronous requests.");
     }
 
     public override Response<TResponse> Put<TResponse>()
     {
-      throw new InvalidOperationException("Synchronous GET operation is not supported on Asynchronous requests.");
+      throw new InvalidOperationException("Synchronous PUT operation is not supported on Asynchronous requests.");
     }
 
     public override Response Delete()
     {
-      throw new InvalidOperationException("Synchronous GET operation is not supported on Asynchronous requests.");
+      throw new InvalidOperationException("Synchronous DELETE operation is not supported on Asynchronous requests.");
     }
 
     public override Response<TResponse> Delete<TResponse>()
     {
-      throw new InvalidOperationException("Synchronous GET operation is not supported on Asynchronous requests.");
+      throw new InvalidOperationException("Synchronous DELETE operation is not supported on Asynchronous requests.");
     }
 
     public override Response Patch(object body)
     {
-      throw new InvalidOperationException("Synchronous GET operation is not supported on Asynchronous requests.");
+      throw new InvalidOperationException("Synchronous PATCH operation is not supported on Asynchronous requests.");
     }
 
     public override Response<TResponse> Patch<TResponse>(object body)
     {
-      throw new InvalidOperationException("Synchronous GET operation is not supported on Asynchronous requests.");
+      throw new InvalidOperationException("Synchronous PATCH operation is not supported on Asynchronous requests.");
     }
 
     public override Response Patch()
     {
-      throw new InvalidOperationException("Synchronous GET operation is not supported on Asynchronous requests.");
+      throw new InvalidOperationException("Synchronous PATCH operation is not supported on Asynchronous requests.");
     }
 
     public override Response<TResponse> Patch<TResponse>()
     {
-      throw new InvalidOperationException("Synchronous GET operation is not supported on Asynchronous requests.");
+      throw new InvalidOperationException("Synchronous PATCH operation is not supported on Asynchronous requests.");
     }
 
     public override Response Options()
     {
-      throw new InvalidOperationException("Synchronous GET operation is not supported on Asynchronous requests.");
+      throw new InvalidOperationException("Synchronous OPTIONS operation is not supported on Asynchronous requests.");
     }
 
     public override Response<TResponse> Options<TResponse>()
     {
-      throw new InvalidOperationException("Synchronous GET operation is not supported on Asynchronous requests.");
+      throw new InvalidOperationException("Synchronous OPTIONS operation is not supported on Asynchronous requests.");
     }
 
     public override Response Head()
     {
-      throw new InvalidOperationException("Synchronous GET operation is not supported on Asynchronous requests.");
+      throw new InvalidOperationException("Synchronous HEAD operation is not supported on Asynchronous requests.");
     }
 
     public override Response Execute(string method)
     {
-      throw new InvalidOperationException("Synchronous GET operation is not supported on Asynchronous requests.");
+      throw new InvalidOperationException("Synchronous operation is not supported on Asynchronous requests.");
     }
 
     public override Response<TResponse> Execute<TResponse>(string method)
     {
-      throw new InvalidOperationException("Synchronous GET operation is not supported on Asynchronous requests.");
+      throw new InvalidOperationException("Synchronous operation is not supported on Asynchronous requests.");
     }
 
     public override Response Execute(string method, object body)
     {
-      throw new InvalidOperationException("Synchronous GET operation is not supported on Asynchronous requests.");
+      throw new InvalidOperationException("Synchronous operation is not supported on Asynchronous requests.");
     }
 
     public override Response<TResponse> Execute<TResponse>(string method, object body)
     {
-      throw new InvalidOperationException("Synchronous GET operation is not supported on Asynchronous requests.");
+      throw new InvalidOperationException("Synchronous operation is not supported on Asynchronous requests.");
     }
 
     #endregion
