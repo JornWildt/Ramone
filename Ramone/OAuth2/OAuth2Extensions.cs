@@ -78,8 +78,12 @@ namespace Ramone.OAuth2
     /// <remarks>See http://tools.ietf.org/html/rfc6749#section-4.1.3</remarks>
     /// <param name="session"></param>
     /// <param name="authorizationCode"></param>
+    /// <param name="useAccessToken">Request automatic use of the returned access token in following requests.</param>
     /// <returns></returns>
-    public static OAuth2AccessTokenResponse OAuth2_GetAccessTokenFromAuthorizationCode(this ISession session, string authorizationCode)
+    public static OAuth2AccessTokenResponse OAuth2_GetAccessTokenFromAuthorizationCode(
+      this ISession session, 
+      string authorizationCode,
+      bool useAccessToken = true)
     {
       OAuth2Settings settings = GetSettings(session);
 
@@ -92,7 +96,7 @@ namespace Ramone.OAuth2
       if (!settings.UseBasicAuthenticationForClient)
         tokenRequestArgs["client_secret"] = settings.ClientSecret;
 
-      return GetAccessToken(session, tokenRequestArgs);
+      return GetAndStoreAccessToken(session, tokenRequestArgs, useAccessToken);
     }
 
 
@@ -103,11 +107,13 @@ namespace Ramone.OAuth2
     /// <param name="session"></param>
     /// <param name="ownerUserName"></param>
     /// <param name="ownerPassword"></param>
+    /// <param name="useAccessToken">Request automatic use of the returned access token in following requests.</param>
     /// <returns></returns>
     public static OAuth2AccessTokenResponse OAuth2_GetAccessTokenFromResourceOwnerUsernamePassword(
       this ISession session,
       string ownerUserName, 
-      string ownerPassword)
+      string ownerPassword,
+      bool useAccessToken = true)
     {
       OAuth2Settings settings = GetSettings(session);
 
@@ -119,11 +125,25 @@ namespace Ramone.OAuth2
       if (!settings.UseBasicAuthenticationForClient)
         tokenRequestArgs["client_secret"] = settings.ClientSecret;
 
-      return GetAccessToken(session, tokenRequestArgs);
+      return GetAndStoreAccessToken(session, tokenRequestArgs, useAccessToken);
     }
 
 
-    private static OAuth2AccessTokenResponse GetAccessToken(ISession session, object args)
+    public static bool OAuth2_HasActiveAccessToken(this ISession session)
+    {
+      return session.RequestInterceptors.Find("Bearer") != null;
+    }
+
+
+    public static OAuth2Settings OAuth2_GetSettings(this ISession session)
+    {
+      object settings;
+      session.Items.TryGetValue(OAuth2SettingsSessionKey, out settings);
+      return settings as OAuth2Settings;
+    }
+
+
+    private static OAuth2AccessTokenResponse GetAndStoreAccessToken(ISession session, object args, bool useAccessToken)
     {
       OAuth2Settings settings = GetSettings(session);
 
@@ -137,21 +157,24 @@ namespace Ramone.OAuth2
       using (var response = request.Post<OAuth2AccessTokenResponse>(args))
       {
         OAuth2AccessTokenResponse accessToken = response.Body;
-        if (string.Equals(accessToken.token_type, "bearer", StringComparison.InvariantCultureIgnoreCase))
+        if (useAccessToken)
         {
-          session.RequestInterceptors.Add("Bearer", new BearerTokenRequestInterceptor(accessToken.access_token));
-          return accessToken;
+          if (string.Equals(accessToken.token_type, "bearer", StringComparison.InvariantCultureIgnoreCase))
+          {
+            session.RequestInterceptors.Add("Bearer", new BearerTokenRequestInterceptor(accessToken.access_token));
+          }
+          else
+            throw new InvalidOperationException(string.Format("Unknown access token type '{0}' (expected 'bearer')", accessToken.token_type));
         }
-        else
-          throw new InvalidOperationException(string.Format("Unknown access token type '{0}' (expected 'bearer')", accessToken.token_type));
+        return accessToken;
       }
     }
 
 
     private static OAuth2Settings GetSettings(ISession session)
     {
-      object settings = session.Items[OAuth2SettingsSessionKey];
-      if (settings == null)
+      object settings;
+      if (!session.Items.TryGetValue(OAuth2SettingsSessionKey, out settings))
         throw new InvalidOperationException("No OAuth2 settings has been registered with the session");
 
       if (settings is OAuth2Settings)

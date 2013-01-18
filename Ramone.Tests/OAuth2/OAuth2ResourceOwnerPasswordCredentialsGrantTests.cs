@@ -2,6 +2,7 @@
 using Ramone.Tests.Common.OAuth2;
 using Ramone.OAuth2;
 using System.Net;
+using System;
 
 
 namespace Ramone.Tests.OAuth2
@@ -64,6 +65,69 @@ namespace Ramone.Tests.OAuth2
         Assert.IsNotNull(r);
         Assert.AreEqual("Got it", r.Title);
       }
+    }
+
+
+    [Test]
+    public void CanAvoidAutomaticUseOfAccessToken()
+    {
+      // Arrange
+      Request protectedResourceRequest = Session.Bind(OAuth2TestConstants.ProtectedResourcePath);
+
+      // Act
+      Session.OAuth2_Configure(GetSettings())
+              .OAuth2_GetAccessTokenFromResourceOwnerUsernamePassword(OAuth2TestConstants.Username, OAuth2TestConstants.UserPassword,
+                                                                      useAccessToken: false);
+
+      AssertThrowsWebException(() => protectedResourceRequest.Get(), HttpStatusCode.Unauthorized);
+    }
+
+
+    [Test]
+    public void CanQuestionOAuth2State()
+    {
+      // Arrange
+      Request protectedResourceRequest = Session.Bind(OAuth2TestConstants.ProtectedResourcePath);
+
+      // Act
+      bool isActive1 = Session.OAuth2_HasActiveAccessToken();
+
+      Session.OAuth2_Configure(GetSettings())
+              .OAuth2_GetAccessTokenFromResourceOwnerUsernamePassword(OAuth2TestConstants.Username, OAuth2TestConstants.UserPassword);
+
+      bool isActive2 = Session.OAuth2_HasActiveAccessToken();
+
+      // Assert
+      Assert.IsFalse(isActive1);
+      Assert.IsTrue(isActive2);
+    }
+
+
+    [Test]
+    public void CanGetCurrentOAuth2Settings()
+    {
+      // Arrange
+      Request protectedResourceRequest = Session.Bind(OAuth2TestConstants.ProtectedResourcePath);
+
+      // Act
+      OAuth2Settings settings1 = Session.OAuth2_GetSettings();
+
+      Session.OAuth2_Configure(GetSettings())
+              .OAuth2_GetAccessTokenFromResourceOwnerUsernamePassword(OAuth2TestConstants.Username, OAuth2TestConstants.UserPassword);
+
+      OAuth2Settings settings2 = Session.OAuth2_GetSettings();
+
+      // Assert
+      Assert.IsNull(settings1);
+      Assert.IsNotNull(settings2);
+    }
+
+
+    [Test]
+    public void WhenDoingOAuth2BeforeConfiguringItThrowsInvalidOperation()
+    {
+      AssertThrows<InvalidOperationException>(
+        () => Session.OAuth2_GetAccessTokenFromResourceOwnerUsernamePassword(OAuth2TestConstants.Username, OAuth2TestConstants.UserPassword));
     }
 
 
