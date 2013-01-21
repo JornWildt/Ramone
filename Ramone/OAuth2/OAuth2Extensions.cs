@@ -109,7 +109,7 @@ namespace Ramone.OAuth2
     /// <param name="ownerPassword"></param>
     /// <param name="useAccessToken">Request automatic use of the returned access token in following requests.</param>
     /// <returns></returns>
-    public static OAuth2AccessTokenResponse OAuth2_GetAccessTokenFromResourceOwnerUsernamePassword(
+    public static OAuth2AccessTokenResponse OAuth2_GetAccessTokenFromResourceUsingOwnerUsernamePassword(
       this ISession session,
       string ownerUserName, 
       string ownerPassword,
@@ -129,17 +129,27 @@ namespace Ramone.OAuth2
     }
 
 
+    /// <summary>
+    /// Does this session have an active access token associated with it?
+    /// </summary>
+    /// <param name="session"></param>
+    /// <returns></returns>
     public static bool OAuth2_HasActiveAccessToken(this ISession session)
     {
       return session.RequestInterceptors.Find("Bearer") != null;
     }
 
 
+    /// <summary>
+    /// Get a copy of the OAuth2 settings (use OAuth2_Configure to change them)
+    /// </summary>
+    /// <param name="session"></param>
+    /// <returns></returns>
     public static OAuth2Settings OAuth2_GetSettings(this ISession session)
     {
       object settings;
       session.Items.TryGetValue(OAuth2SettingsSessionKey, out settings);
-      return settings as OAuth2Settings;
+      return settings as OAuth2Settings == null ? null : new OAuth2Settings((OAuth2Settings)settings);
     }
 
 

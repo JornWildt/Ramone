@@ -106,6 +106,8 @@
     <Compile Include="MediaTypes\JsonPatch\JsonPatchTests.cs" />
     <Compile Include="MediaTypes\JsonPatch\JsonPatchApplyTests.cs" />
     <Compile Include="OAuth2\OAuth2ResourceOwnerPasswordCredentialsGrantTests.cs" />
+    <Compile Include="OAuth2\OAuth2Tests.cs" />
+    <Compile Include="OAuth2\TestHelper.cs" />
     <Compile Include="PatchTests.cs" />
     <Compile Include="DefaultContentTypeTests.cs" />
     <Compile Include="ExceptionHandlingTests.cs" />
