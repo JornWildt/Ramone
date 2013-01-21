@@ -47,10 +47,39 @@ namespace Ramone.Tests
 
 
     [Test]
+    public void CanAddAuthorizerWithInternationalLettersToService()
+    {
+      // Arrange
+      IService service = RamoneConfiguration.NewService(BaseUrl);
+
+      // Act
+      service.BasicAuthentication("Jürgen Wølst", "hmpf");
+      ISession session = service.NewSession();
+      using (Response response = session.Request(BasicAuthUrl).Get())
+      {
+        // Assert
+        Assert.IsNotNull(response);
+      }
+    }
+
+
+    [Test]
     public void CanAddAuthorizerToRequest()
     {
       // Act
       using (Response response = Session.Request(BasicAuthUrl).BasicAuthentication("John", "magic").Get())
+      {
+        // Assert
+        Assert.IsNotNull(response);
+      }
+    }
+
+
+    [Test]
+    public void CanAddAuthorizerWithInternationalLettersToRequest()
+    {
+      // Act
+      using (Response response = Session.Request(BasicAuthUrl).BasicAuthentication("Jürgen Wølst", "hmpf").Get())
       {
         // Assert
         Assert.IsNotNull(response);

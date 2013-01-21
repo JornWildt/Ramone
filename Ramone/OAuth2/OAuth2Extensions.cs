@@ -123,7 +123,10 @@ namespace Ramone.OAuth2
       tokenRequestArgs["password"] = ownerPassword;
 
       if (!settings.UseBasicAuthenticationForClient)
+      {
+        tokenRequestArgs["client_id"] = settings.ClientID;
         tokenRequestArgs["client_secret"] = settings.ClientSecret;
+      }
 
       return GetAndStoreAccessToken(session, tokenRequestArgs, useAccessToken);
     }

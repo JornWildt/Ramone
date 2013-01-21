@@ -20,7 +20,7 @@ namespace Ramone.AuthorizationInterceptors
 
     public void HeadersReady(RequestContext context)
     {
-      string token = Convert.ToBase64String(Encoding.ASCII.GetBytes(Username + ":" + Password));
+      string token = Convert.ToBase64String(Encoding.GetEncoding(1252).GetBytes(Username + ":" + Password));
       context.Request.Headers["Authorization"] = "Basic " + token;
     }
 
