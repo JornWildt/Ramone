@@ -49,25 +49,25 @@ namespace Ramone.Tests.OAuth2
     }
 
 
-    [Test]
-    public void WhenGettingSettingsItReturnsACopy()
-    {
-      // Arrange
-      Session.OAuth2_Configure(GetSettings());
+    //[Test]
+    //public void WhenGettingSettingsItReturnsACopy()
+    //{
+    //  // Arrange
+    //  Session.OAuth2_Configure(GetSettings());
 
-      // Act
-      OAuth2Settings settings1 = Session.OAuth2_GetSettings();
-      settings1.ClientID = "NEWCID";
-      OAuth2Settings settings2 = Session.OAuth2_GetSettings();
+    //  // Act
+    //  OAuth2Settings settings1 = Session.OAuth2_GetSettings();
+    //  settings1.ClientID = "NEWCID";
+    //  OAuth2Settings settings2 = Session.OAuth2_GetSettings();
 
-      // Assert
-      Assert.AreEqual(OAuth2TestConstants.ClientID, settings2.ClientID);
-      Assert.AreEqual(settings2.ClientSecret, settings2.ClientSecret);
-      Assert.AreEqual(settings2.AuthorizationEndpoint, settings2.AuthorizationEndpoint);
-      Assert.AreEqual(settings2.RedirectUri, settings2.RedirectUri);
-      Assert.AreEqual(settings2.TokenEndpoint, settings2.TokenEndpoint);
-      Assert.AreEqual(settings2.UseBasicAuthenticationForClient, settings2.UseBasicAuthenticationForClient);
-    }
+    //  // Assert
+    //  Assert.AreEqual(OAuth2TestConstants.ClientID, settings2.ClientID);
+    //  Assert.AreEqual(settings2.ClientSecret, settings2.ClientSecret);
+    //  Assert.AreEqual(settings2.AuthorizationEndpoint, settings2.AuthorizationEndpoint);
+    //  Assert.AreEqual(settings2.RedirectUri, settings2.RedirectUri);
+    //  Assert.AreEqual(settings2.TokenEndpoint, settings2.TokenEndpoint);
+    //  Assert.AreEqual(settings2.UseBasicAuthenticationForClient, settings2.UseBasicAuthenticationForClient);
+    //}
 
 
     [Test]

@@ -8,22 +8,6 @@ namespace Ramone.OAuth2
   /// </summary>
   public class OAuth2Settings
   {
-    public OAuth2Settings()
-    {
-    }
-
-
-    public OAuth2Settings(OAuth2Settings src)
-    {
-      ClientID = src.ClientID;
-      ClientSecret = src.ClientSecret;
-      AuthorizationEndpoint = src.AuthorizationEndpoint;
-      TokenEndpoint = src.TokenEndpoint;
-      RedirectUri = src.RedirectUri;
-      UseBasicAuthenticationForClient = src.UseBasicAuthenticationForClient;
-    }
-
-
     /// <summary>
     /// Server authorization endpoint URL.
     /// </summary>

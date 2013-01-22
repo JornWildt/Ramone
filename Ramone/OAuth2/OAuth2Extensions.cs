@@ -1,8 +1,8 @@
-﻿using CuttingEdge.Conditions;
-using System;
+﻿using System;
 using System.Collections.Specialized;
 using System.Web;
-using System.Diagnostics;
+using CuttingEdge.Conditions;
+using Ramone.Utility;
 
 
 namespace Ramone.OAuth2
@@ -10,6 +10,7 @@ namespace Ramone.OAuth2
   public static class OAuth2Extensions
   {
     private const string OAuth2SettingsSessionKey = "OAuth2Settings";
+    private const string OAuth2StateSessionKey = "OAuth2State";
 
 
     /// <summary>
@@ -40,13 +41,17 @@ namespace Ramone.OAuth2
     {
       OAuth2Settings settings = GetSettings(session);
 
+      string authorizationRequestState = RandomStrings.GetRandomStringWithLettersAndDigitsOnly(20);
+      OAuth2SessionState state = session.OAuth2_GetOrCreateState();
+      state.AuthorizationState = authorizationRequestState;
+
       var codeRequestArgs = new
       {
         response_type = "code",
         client_id = settings.ClientID,
         redirect_uri = settings.RedirectUri.ToString(),
         scope = scope,
-        state = "123456" // FIXME : see http://tools.ietf.org/html/rfc6749#section-10.12
+        state = authorizationRequestState
       };
 
       return settings.AuthorizationEndpoint.AddQueryParameters(codeRequestArgs);
@@ -66,7 +71,13 @@ namespace Ramone.OAuth2
     {
       Condition.Requires(redirectUrl, "redirectUrl").IsNotNull();
 
-      NameValueCollection parameters = HttpUtility.ParseQueryString(redirectUrl);
+      OAuth2SessionState sessionState = session.OAuth2_GetState();
+
+      NameValueCollection parameters = HttpUtility.ParseQueryString(new Uri(redirectUrl).Query);
+
+      string state = parameters["state"];
+      if (sessionState.AuthorizationState == null || state != sessionState.AuthorizationState)
+        return null;
 
       return parameters["code"];
     }
@@ -152,7 +163,52 @@ namespace Ramone.OAuth2
     {
       object settings;
       session.Items.TryGetValue(OAuth2SettingsSessionKey, out settings);
-      return settings as OAuth2Settings == null ? null : new OAuth2Settings((OAuth2Settings)settings);
+      return settings as OAuth2Settings;
+    }
+
+
+    /// <summary>
+    /// Get current authorization state.
+    /// </summary>
+    /// <remarks>The authorization state contains information about active authorization codes,
+    /// authorization request state, access token and so on. The state can later on be restored with a
+    /// called to OAuth2_RestoreState.</remarks>
+    /// <param name="session"></param>
+    /// <returns></returns>
+    public static OAuth2SessionState OAuth2_GetState(this ISession session)
+    {
+      object state;
+      session.Items.TryGetValue(OAuth2StateSessionKey, out state);
+      return state as OAuth2SessionState;
+    }
+
+
+    /// <summary>
+    /// Restore authorization state previously obtained from OAuth2_GetState.
+    /// </summary>
+    /// <param name="session"></param>
+    /// <param name="state"></param>
+    /// <returns></returns>
+    public static ISession OAuth2_RestoreState(this ISession session, OAuth2SessionState state)
+    {
+      session.Items[OAuth2StateSessionKey] = state;
+      if (state.AccessToken != null && state.TokenType != null)
+        ActivateAuthorization(session, state.AccessToken, state.TokenType);
+      return session;
+    }
+
+
+    internal static OAuth2SessionState OAuth2_GetOrCreateState(this ISession session)
+    {
+      object obj;
+      session.Items.TryGetValue(OAuth2StateSessionKey, out obj);
+      OAuth2SessionState state = obj as OAuth2SessionState;
+      if (state == null)
+      {
+        state = new OAuth2SessionState();
+        session.Items[OAuth2StateSessionKey] = state;
+      }
+      return state;
     }
 
 
@@ -172,15 +228,25 @@ namespace Ramone.OAuth2
         OAuth2AccessTokenResponse accessToken = response.Body;
         if (useAccessToken)
         {
-          if (string.Equals(accessToken.token_type, "bearer", StringComparison.InvariantCultureIgnoreCase))
-          {
-            session.RequestInterceptors.Add("Bearer", new BearerTokenRequestInterceptor(accessToken.access_token));
-          }
-          else
-            throw new InvalidOperationException(string.Format("Unknown access token type '{0}' (expected 'bearer')", accessToken.token_type));
+          OAuth2SessionState state = session.OAuth2_GetOrCreateState();
+          state.AccessToken = accessToken.access_token;
+          state.TokenType = accessToken.token_type;
+
+          ActivateAuthorization(session, accessToken.access_token, accessToken.token_type);
         }
         return accessToken;
       }
+    }
+
+
+    private static void ActivateAuthorization(ISession session, string accessToken, string tokenType)
+    {
+      if (string.Equals(tokenType, "bearer", StringComparison.InvariantCultureIgnoreCase))
+      {
+        session.RequestInterceptors.Add("Bearer", new BearerTokenRequestInterceptor(accessToken));
+      }
+      else
+        throw new InvalidOperationException(string.Format("Unknown access token type '{0}' (expected 'bearer')", tokenType));
     }
 
 

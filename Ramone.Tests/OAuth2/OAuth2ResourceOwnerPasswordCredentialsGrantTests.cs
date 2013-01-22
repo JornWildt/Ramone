@@ -81,5 +81,30 @@ namespace Ramone.Tests.OAuth2
 
       AssertThrowsWebException(() => protectedResourceRequest.Get(), HttpStatusCode.Unauthorized);
     }
+
+
+    [Test]
+    public void CanRestoreSessionStateWithAccessToken()
+    {
+      // Arrange
+      Session.OAuth2_Configure(GetSettings())
+              .OAuth2_GetAccessTokenFromResourceUsingOwnerUsernamePassword(OAuth2TestConstants.Username, OAuth2TestConstants.UserPassword);
+
+      OAuth2SessionState state = Session.OAuth2_GetState();
+
+      // Act
+      ISession newSession = TestService.NewSession();
+
+      Request protectedResourceRequest = newSession.OAuth2_RestoreState(state).Bind(OAuth2TestConstants.ProtectedResourcePath);
+
+      using (var response = protectedResourceRequest.AcceptJson().Get<ProtectedResource>())
+      {
+        ProtectedResource r = response.Body;
+
+        // Assert
+        Assert.IsNotNull(r);
+        Assert.AreEqual("Got it", r.Title);
+      }
+    }
   }
 }
