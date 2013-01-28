@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace Ramone.Tests.Server.OAuth2
+﻿namespace Ramone.Tests.Server.OAuth2
 {
   public class OAuth2AccessTokenRequest
   {
@@ -17,6 +12,7 @@ namespace Ramone.Tests.Server.OAuth2
   {
     public string access_token { get; set; }
     public string token_type { get; set; }
+    public string additional_param { get; set; }
   }
 
 

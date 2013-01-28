@@ -25,7 +25,8 @@ namespace Ramone.Tests.Server.OAuth2.Handlers
           return new OAuth2AccessTokenResponse
           {
             access_token = OAuth2TestConstants.CreatedAccessToken,
-            token_type = "beAReR" // Mixed case => assert testing for this is case-insensitive
+            token_type = "beAReR", // Mixed case => assert testing for this is case-insensitive
+            additional_param = "Special"
           };
         }
         else

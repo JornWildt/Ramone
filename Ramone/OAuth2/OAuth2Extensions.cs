@@ -3,6 +3,7 @@ using System.Collections.Specialized;
 using System.Web;
 using CuttingEdge.Conditions;
 using Ramone.Utility;
+using Microsoft.CSharp.RuntimeBinder;
 
 
 namespace Ramone.OAuth2
@@ -223,9 +224,17 @@ namespace Ramone.OAuth2
       if (settings.UseBasicAuthenticationForClient)
         request = request.BasicAuthentication(settings.ClientID, settings.ClientSecret);
 
-      using (var response = request.Post<OAuth2AccessTokenResponse>(args))
+      using (var response = request.AcceptJson().Post<object>(args))
       {
-        OAuth2AccessTokenResponse accessToken = response.Body;
+        OAuth2AccessTokenResponse accessToken = new OAuth2AccessTokenResponse
+        {
+          access_token = TryGet<string>(response.Body, r => r.access_token),
+          token_type = TryGet<string>(response.Body, r => r.token_type),
+          expires_in = TryGet<int>(response.Body, r => r.expires_in),
+          refresh_token = TryGet<string>(response.Body, r => r.refresh_token),
+          AllParameters = response.Body
+        };
+
         if (useAccessToken)
         {
           OAuth2SessionState state = session.OAuth2_GetOrCreateState();
@@ -235,6 +244,19 @@ namespace Ramone.OAuth2
           ActivateAuthorization(session, accessToken.access_token, accessToken.token_type);
         }
         return accessToken;
+      }
+    }
+
+
+    private static T TryGet<T>(dynamic obj, Func<dynamic, T> f)
+    {
+      try
+      {
+        return f(obj);
+      }
+      catch (RuntimeBinderException)
+      {
+        return default(T);
       }
     }
 

@@ -34,7 +34,7 @@ namespace Ramone.Tests.OAuth2
 
 
     [Test]
-    public void CanGetAccessTokenUsingOAuth2Extensions()
+    public void CanGetAccessTokenWithAdditionalParametersUsingOAuth2Extensions()
     {
       OAuth2AccessTokenResponse token = 
         Session.OAuth2_Configure(GetSettings())
@@ -42,6 +42,7 @@ namespace Ramone.Tests.OAuth2
 
       Assert.IsNotNull(token);
       Assert.IsNotNullOrEmpty(token.access_token);
+      Assert.AreEqual("Special", token.AllParameters.additional_param);
     }
 
 
