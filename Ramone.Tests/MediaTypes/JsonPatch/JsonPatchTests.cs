@@ -454,6 +454,7 @@ namespace Ramone.Tests.MediaTypes.JsonPatch
     public Party Responsible { get; set; }
     public List<Party> RelatedParties { get; set; }
     public DateTime Created { get; set; }
+    public DateTime? LastModified { get; set; }
 
     public class Party
     {

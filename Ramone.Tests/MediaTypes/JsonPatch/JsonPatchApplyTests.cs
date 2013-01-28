@@ -83,6 +83,7 @@ namespace Ramone.Tests.MediaTypes.JsonPatch
       JsonPatchDocument doc = new JsonPatchDocument();
       doc.Add("/Responsible", null);
       doc.Add("/Title", null);
+      doc.Add("/LastModified", null);
 
       BugReportPatchVisitor callback = new BugReportPatchVisitor();
 
@@ -90,7 +91,7 @@ namespace Ramone.Tests.MediaTypes.JsonPatch
       doc.Apply(callback);
 
       // Assert
-      Assert.AreEqual("/Responsible => |/Title => |", callback.Result);
+      Assert.AreEqual("/Responsible => |/Title => |/LastModified => |", callback.Result);
     }
   }
 
@@ -160,6 +161,9 @@ namespace Ramone.Tests.MediaTypes.JsonPatch
           v => Result += string.Format("{0} => {1}|", path, v))
       ||
         IfMatch<DateTime>(r => r.Created, path, value,
+          v => Result += string.Format("{0} => {1}|", path, v))
+      ||
+        IfMatch<DateTime?>(r => r.LastModified, path, value,
           v => Result += string.Format("{0} => {1}|", path, v))
       ||
         IfMatch<dynamic>(r => r.Responsible, path, value,

@@ -66,7 +66,10 @@ namespace Ramone.MediaTypes.JsonPatch
     {
       if (JsonPointer.GetPath(expr) == path)
       {
-        if (value is TValue || value == null && !typeof(TValue).IsValueType)
+        Type type = typeof(TValue);
+        bool isGenericNullableType = (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>));
+
+        if (value is TValue || value == null && (!type.IsValueType || isGenericNullableType))
           a((TValue)value);
         else
           throw new JsonPatchParserException(string.Format("Unable to convert '{0}' to {1} (got {2}).", path, typeof(TValue), (value != null ? value.GetType().ToString() : "null")));
