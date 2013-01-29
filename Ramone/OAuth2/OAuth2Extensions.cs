@@ -145,6 +145,25 @@ namespace Ramone.OAuth2
     }
 
 
+    public static OAuth2AccessTokenResponse OAuth2_RefreshAccessToken(this ISession session, string refreshToken, string scope = null, bool useAccessToken = true)
+    {
+      OAuth2Settings settings = GetSettings(session);
+
+      NameValueCollection tokenRequestArgs = new NameValueCollection();
+      tokenRequestArgs["grant_type"] = "refresh_token";
+      tokenRequestArgs["refresh_token"] = refreshToken;
+      tokenRequestArgs["scope"] = scope;
+
+      if (!settings.UseBasicAuthenticationForClient)
+      {
+        tokenRequestArgs["client_id"] = settings.ClientID;
+        tokenRequestArgs["client_secret"] = settings.ClientSecret;
+      }
+
+      return GetAndStoreAccessToken(session, tokenRequestArgs, useAccessToken);
+    }
+
+
     /// <summary>
     /// Does this session have an active access token associated with it?
     /// </summary>

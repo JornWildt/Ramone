@@ -32,6 +32,15 @@ namespace Ramone.Tests.Server.OAuth2.Handlers
         else
           return new OperationResult.BadRequest { ResponseResource = new OAuth2Error { error = "invalid_grant" } };
       }
+      else if (request.grant_type == "refresh_token")
+      {
+        return new OAuth2AccessTokenResponse
+        {
+          access_token = OAuth2TestConstants.CreatedAccessToken,
+          token_type = "beAReR", // Mixed case => assert testing for this is case-insensitive
+          additional_param = "Special"
+        };
+      }
       else
         return new OperationResult.BadRequest { ResponseResource = new OAuth2Error { error = "unsupported_grant_type" } };
     }
