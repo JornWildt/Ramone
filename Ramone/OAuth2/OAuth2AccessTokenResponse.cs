@@ -1,4 +1,7 @@
-﻿namespace Ramone.OAuth2
+﻿using System.Collections;
+
+
+namespace Ramone.OAuth2
 {
   /// <summary>
   /// A class representing the response from an access token request.
@@ -8,8 +11,8 @@
   {
     public string access_token { get; set; }
     public string token_type { get; set; }
-    public int expires_in { get; set; }
+    public int? expires_in { get; set; }
     public string refresh_token { get; set; }
-    public dynamic AllParameters { get; set; }
+    public Hashtable AllParameters { get; set; }
   }
 }

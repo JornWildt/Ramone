@@ -42,7 +42,7 @@ namespace Ramone.Tests.OAuth2
 
       Assert.IsNotNull(token);
       Assert.IsNotNullOrEmpty(token.access_token);
-      Assert.AreEqual("Special", token.AllParameters.additional_param);
+      Assert.AreEqual("Special", (string)token.AllParameters["additional_param"]);
     }
 
 

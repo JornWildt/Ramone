@@ -4,6 +4,7 @@ using System.Web;
 using CuttingEdge.Conditions;
 using Ramone.Utility;
 using Microsoft.CSharp.RuntimeBinder;
+using System.Collections;
 
 
 namespace Ramone.OAuth2
@@ -224,14 +225,14 @@ namespace Ramone.OAuth2
       if (settings.UseBasicAuthenticationForClient)
         request = request.BasicAuthentication(settings.ClientID, settings.ClientSecret);
 
-      using (var response = request.AcceptJson().Post<object>(args))
+      using (var response = request.AcceptJson().Post<Hashtable>(args))
       {
         OAuth2AccessTokenResponse accessToken = new OAuth2AccessTokenResponse
         {
-          access_token = TryGet<string>(response.Body, r => r.access_token),
-          token_type = TryGet<string>(response.Body, r => r.token_type),
-          expires_in = TryGet<int>(response.Body, r => r.expires_in),
-          refresh_token = TryGet<string>(response.Body, r => r.refresh_token),
+          access_token = TryGet<string>(response.Body["access_token"]),
+          token_type = TryGet<string>(response.Body["token_type"]),
+          expires_in = TryGet<int?>(response.Body["expires_in"]),
+          refresh_token = TryGet<string>(response.Body["refresh_token"]),
           AllParameters = response.Body
         };
 
@@ -248,16 +249,13 @@ namespace Ramone.OAuth2
     }
 
 
-    private static T TryGet<T>(dynamic obj, Func<dynamic, T> f)
+    private static T TryGet<T>(object v)
     {
-      try
-      {
-        return f(obj);
-      }
-      catch (RuntimeBinderException)
-      {
+      if (v == null)
         return default(T);
-      }
+      if (v is T)
+        return (T)v;
+      return default(T);
     }
 
 
