@@ -179,6 +179,7 @@
     <Compile Include="Utility\ContextRegistrator.cs" />
     <Compile Include="Utility\CryptographicRandomNumberGenerator.cs" />
     <Compile Include="Utility\DateTimeUtility.cs" />
+    <Compile Include="Utility\JsonWebToken\AssertionArgs.cs" />
     <Compile Include="Utility\JsonWebToken\RSASHA256SigningAlgorithm.cs" />
     <Compile Include="Utility\JsonWebToken\ISigningAlgorithm.cs" />
     <Compile Include="Utility\JsonPointerHelper.cs" />

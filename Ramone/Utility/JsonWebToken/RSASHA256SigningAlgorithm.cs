@@ -7,6 +7,8 @@ namespace Ramone.Utility.JsonWebToken
   {
     #region ISigningAlgorithm Members
 
+    public string Name { get { return Algorithms.RSASHA256; } }
+
     public string Sign(string data)
     {
       return JsonWebTokenUtility.HMAC_ASCII_RSASHA256_Base64Url(data, CryptoProvider);

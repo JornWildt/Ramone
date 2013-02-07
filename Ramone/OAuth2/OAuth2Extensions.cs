@@ -147,7 +147,19 @@ namespace Ramone.OAuth2
     }
 
 
-    public static OAuth2AccessTokenResponse OAuth2_GetAccessTokenFromJWT(this ISession session, RSACryptoServiceProvider cp, string algorithm, string issuer, string audience, string scope = "", bool useAccessToken = true)
+    public static OAuth2AccessTokenResponse OAuth2_GetAccessTokenFromJWT_SHA256(this ISession session, byte[] shaKey, AssertionArgs args, bool useAccessToken = true)
+    {
+      return OAuth2_GetAccessTokenFromJWT(session, new SHA256SigningAlgorithm(shaKey), args, useAccessToken);
+    }
+
+
+    public static OAuth2AccessTokenResponse OAuth2_GetAccessTokenFromJWT_RSASHA256(this ISession session, RSACryptoServiceProvider cp, AssertionArgs args, bool useAccessToken = true)
+    {
+      return OAuth2_GetAccessTokenFromJWT(session, new RSASHA256SigningAlgorithm(cp), args, useAccessToken);
+    }
+
+
+    public static OAuth2AccessTokenResponse OAuth2_GetAccessTokenFromJWT(this ISession session, ISigningAlgorithm signingAlgorithm, AssertionArgs args, bool useAccessToken = true)
     {
       OAuth2Settings settings = GetSettings(session);
 
@@ -162,11 +174,8 @@ namespace Ramone.OAuth2
   ""exp"":{3},
   ""iat"":{4}
 }}";
-      string claims = string.Format(claimsFormat, issuer, scope, audience, expires, issuedAt);
-      string token = null;
-
-      if (algorithm == "RS256")
-        token = JsonWebTokenUtility.JWT_RSASHA1(claims, cp);
+      string claims = string.Format(claimsFormat, args.Issuer, args.Scope, args.Audience, expires, issuedAt);
+      string token = JsonWebTokenUtility.CreateJsonWebToken(claims, signingAlgorithm);
 
       NameValueCollection tokenRequestArgs = new NameValueCollection();
       tokenRequestArgs["grant_type"] = "urn:ietf:params:oauth:grant-type:jwt-bearer";

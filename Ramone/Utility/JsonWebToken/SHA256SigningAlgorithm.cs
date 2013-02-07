@@ -4,6 +4,8 @@
   {
     #region ISigningAlgorithm Members
 
+    public string Name { get { return Algorithms.SHA256; } }
+
     public string Sign(string data)
     {
       return JsonWebTokenUtility.HMAC_ASCII_SHA256_Base64Url(data, SHAKey);

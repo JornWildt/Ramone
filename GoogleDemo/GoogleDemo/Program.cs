@@ -6,6 +6,7 @@ using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 using Ramone;
 using Ramone.OAuth2;
+using Ramone.Utility.JsonWebToken;
 
 
 // This program will access your google account and retreive user name and e-mail
@@ -25,8 +26,8 @@ namespace GoogleDemo
     // Certificate file containing keys for RSA signing of JWT
     const string JWT_CertificatePath = "C:\\Jørn\\Google API - Elfisk - Private key (notasecret).p12";
 
-    // *** Assign JWT issuer here (apparently not used at Google in any way)
-    const string JWT_Issuer = "your-e-mail-here";
+    // *** Assign JWT issuer here
+    const string JWT_Issuer = "285324442069-2f2ptfikn22ojv5min3ns51tsqoavhuf@developer.gserviceaccount.com";
 
     // Define scope for user info request to Google
     const string Scope = "https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile";
@@ -212,12 +213,15 @@ namespace GoogleDemo
 
         using (var aescsp = new RSACryptoServiceProvider(cspParam) { PersistKeyInCsp = false })
         {
-          OAuth2AccessTokenResponse token = Session.OAuth2_GetAccessTokenFromJWT(
-            aescsp,
-            algorithm: "RS256",
-            issuer: "285324442069-2f2ptfikn22ojv5min3ns51tsqoavhuf@developer.gserviceaccount.com",
-            audience: "https://accounts.google.com/o/oauth2/token",
-            scope: Scope);//"https://www.googleapis.com/auth/prediction");
+          AssertionArgs args = new AssertionArgs
+          {
+            Algorithm = Algorithms.RSASHA256,
+            Audience = "https://accounts.google.com/o/oauth2/token",
+            Issuer = JWT_Issuer,
+            Scope = Scope
+          };
+
+          OAuth2AccessTokenResponse token = Session.OAuth2_GetAccessTokenFromJWT_RSASHA256(aescsp, args);
         }
       }
     }

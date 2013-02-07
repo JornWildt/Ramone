@@ -22,34 +22,21 @@ namespace Ramone.Utility.JsonWebToken
     }
 
 
-    public static string JWT_SHA256(string jsonPayload, byte[] shaKey)
+    public static string CreateJsonWebToken_SHA256(string jsonHeader, string jsonPayload, byte[] shaKey)
     {
-      string jsonHeader = @"{""typ"":""JWT"",""alg"":""HS256""}";
-      return JWT_SHA256(jsonHeader, jsonPayload, shaKey);
+      return CreateJsonWebToken(jsonPayload, new SHA256SigningAlgorithm(shaKey));
     }
 
 
-    public static string JWT_SHA256(string jsonHeader, string jsonPayload, byte[] shaKey)
+    public static string CreateJsonWebToken_RSASHA256(string jsonPayload, RSACryptoServiceProvider cp)
     {
-      return CreateJsonWebToken(jsonHeader, jsonPayload, new SHA256SigningAlgorithm(shaKey));
+      return CreateJsonWebToken(jsonPayload, new RSASHA256SigningAlgorithm(cp));
     }
 
 
-    public static string JWT_RSASHA1(string jsonPayload, RSACryptoServiceProvider cp)
+    public static string CreateJsonWebToken(string jsonPayload, ISigningAlgorithm sign)
     {
-      string jsonHeader = @"{""alg"":""RS256"",""typ"":""JWT""}";
-      return JWT_RSASHA256(jsonHeader, jsonPayload, cp);
-    }
-
-
-    public static string JWT_RSASHA256(string jsonHeader, string jsonPayload, RSACryptoServiceProvider cp)
-    {
-      return CreateJsonWebToken(jsonHeader, jsonPayload, new RSASHA256SigningAlgorithm(cp));
-    }
-
-
-    public static string CreateJsonWebToken(string jsonHeader, string jsonPayload, ISigningAlgorithm sign)
-    {
+      string jsonHeader = string.Format(@"{{""alg"":""{0}"",""typ"":""JWT""}}", sign.Name);
       string claim = Base64Utility.UTF8UrlEncode(jsonHeader) + "." + Base64Utility.UTF8UrlEncode(jsonPayload);
       string signature = sign.Sign(claim);
       return claim + "." + signature;
