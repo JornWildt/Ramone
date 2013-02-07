@@ -175,14 +175,19 @@
     <Compile Include="RequestContext.cs" />
     <Compile Include="RequestStreamWrapperContext.cs" />
     <Compile Include="UriExtensions.cs" />
+    <Compile Include="Utility\Base64Utility.cs" />
     <Compile Include="Utility\ContextRegistrator.cs" />
     <Compile Include="Utility\CryptographicRandomNumberGenerator.cs" />
+    <Compile Include="Utility\DateTimeUtility.cs" />
+    <Compile Include="Utility\JsonWebToken\RSASHA256SigningAlgorithm.cs" />
+    <Compile Include="Utility\JsonWebToken\ISigningAlgorithm.cs" />
     <Compile Include="Utility\JsonPointerHelper.cs" />
     <Compile Include="Utility\HashtableConverterPropertyVisitor.cs" />
     <Compile Include="Utility\HashtableConverter.cs" />
     <Compile Include="Utility\DictionaryConverterPropertyVisitor.cs" />
     <Compile Include="Utility\EchoStream.cs" />
     <Compile Include="Utility\HeaderEncodingParser.cs" />
+    <Compile Include="Utility\JsonWebToken\JsonWebTokenUtility.cs" />
     <Compile Include="Utility\MediaTypeParser.cs" />
     <Compile Include="Utility\MessageDebugger.cs" />
     <Compile Include="Utility\MultipartFormDataPropertyVisitor.cs" />
@@ -201,6 +206,7 @@
     <Compile Include="Utility\ObjectSerialization\ObjectSerializerFormaterManager.cs" />
     <Compile Include="Utility\ObjectSerialization\ObjectSerializerSettings.cs" />
     <Compile Include="Utility\RandomStrings.cs" />
+    <Compile Include="Utility\JsonWebToken\SHA256SigningAlgorithm.cs" />
     <Compile Include="Utility\TempFile.cs" />
     <Compile Include="Utility\WebLinkParser.cs" />
   </ItemGroup>

@@ -5,6 +5,8 @@ using CuttingEdge.Conditions;
 using Ramone.Utility;
 using Microsoft.CSharp.RuntimeBinder;
 using System.Collections;
+using System.Security.Cryptography;
+using Ramone.Utility.JsonWebToken;
 
 
 namespace Ramone.OAuth2
@@ -122,7 +124,7 @@ namespace Ramone.OAuth2
     /// <param name="ownerPassword"></param>
     /// <param name="useAccessToken">Request automatic use of the returned access token in following requests.</param>
     /// <returns></returns>
-    public static OAuth2AccessTokenResponse OAuth2_GetAccessTokenFromResourceUsingOwnerUsernamePassword(
+    public static OAuth2AccessTokenResponse OAuth2_GetAccessTokenUsingOwnerUsernamePassword(
       this ISession session,
       string ownerUserName, 
       string ownerPassword,
@@ -134,6 +136,41 @@ namespace Ramone.OAuth2
       tokenRequestArgs["grant_type"] = "password";
       tokenRequestArgs["username"] = ownerUserName;
       tokenRequestArgs["password"] = ownerPassword;
+
+      if (!settings.UseBasicAuthenticationForClient)
+      {
+        tokenRequestArgs["client_id"] = settings.ClientID;
+        tokenRequestArgs["client_secret"] = settings.ClientSecret;
+      }
+
+      return GetAndStoreAccessToken(session, tokenRequestArgs, useAccessToken);
+    }
+
+
+    public static OAuth2AccessTokenResponse OAuth2_GetAccessTokenFromJWT(this ISession session, RSACryptoServiceProvider cp, string algorithm, string issuer, string audience, string scope = "", bool useAccessToken = true)
+    {
+      OAuth2Settings settings = GetSettings(session);
+
+      DateTime now = DateTime.Now.AddMinutes(-10);
+      long issuedAt = now.ToUnixTime();
+      long expires = now.AddMinutes(50).ToUnixTime();
+
+      string claimsFormat = @"{{
+  ""iss"":""{0}"",
+  ""scope"":""{1}"",
+  ""aud"":""{2}"",
+  ""exp"":{3},
+  ""iat"":{4}
+}}";
+      string claims = string.Format(claimsFormat, issuer, scope, audience, expires, issuedAt);
+      string token = null;
+
+      if (algorithm == "RS256")
+        token = JsonWebTokenUtility.JWT_RSASHA1(claims, cp);
+
+      NameValueCollection tokenRequestArgs = new NameValueCollection();
+      tokenRequestArgs["grant_type"] = "urn:ietf:params:oauth:grant-type:jwt-bearer";
+      tokenRequestArgs["assertion"] = token;
 
       if (!settings.UseBasicAuthenticationForClient)
       {

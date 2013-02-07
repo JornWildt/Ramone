@@ -38,7 +38,7 @@ namespace Ramone.Tests.OAuth2
     {
       OAuth2AccessTokenResponse token = 
         Session.OAuth2_Configure(GetSettings())
-               .OAuth2_GetAccessTokenFromResourceUsingOwnerUsernamePassword(OAuth2TestConstants.Username, OAuth2TestConstants.UserPassword);
+               .OAuth2_GetAccessTokenUsingOwnerUsernamePassword(OAuth2TestConstants.Username, OAuth2TestConstants.UserPassword);
 
       Assert.IsNotNull(token);
       Assert.IsNotNullOrEmpty(token.access_token);
@@ -56,7 +56,7 @@ namespace Ramone.Tests.OAuth2
 
       // Act
       Session.OAuth2_Configure(GetSettings())
-              .OAuth2_GetAccessTokenFromResourceUsingOwnerUsernamePassword(OAuth2TestConstants.Username, OAuth2TestConstants.UserPassword);
+              .OAuth2_GetAccessTokenUsingOwnerUsernamePassword(OAuth2TestConstants.Username, OAuth2TestConstants.UserPassword);
 
       using (var response = protectedResourceRequest.AcceptJson().Get<ProtectedResource>())
       {
@@ -77,8 +77,8 @@ namespace Ramone.Tests.OAuth2
 
       // Act
       Session.OAuth2_Configure(GetSettings())
-              .OAuth2_GetAccessTokenFromResourceUsingOwnerUsernamePassword(OAuth2TestConstants.Username, OAuth2TestConstants.UserPassword,
-                                                                      useAccessToken: false);
+              .OAuth2_GetAccessTokenUsingOwnerUsernamePassword(OAuth2TestConstants.Username, OAuth2TestConstants.UserPassword,
+                                                               useAccessToken: false);
 
       AssertThrowsWebException(() => protectedResourceRequest.Get(), HttpStatusCode.Unauthorized);
     }
@@ -89,7 +89,7 @@ namespace Ramone.Tests.OAuth2
     {
       // Arrange
       Session.OAuth2_Configure(GetSettings())
-              .OAuth2_GetAccessTokenFromResourceUsingOwnerUsernamePassword(OAuth2TestConstants.Username, OAuth2TestConstants.UserPassword);
+              .OAuth2_GetAccessTokenUsingOwnerUsernamePassword(OAuth2TestConstants.Username, OAuth2TestConstants.UserPassword);
 
       OAuth2SessionState state = Session.OAuth2_GetState();
 

@@ -19,7 +19,7 @@ namespace Ramone.Tests.OAuth2
       bool isActive1 = Session.OAuth2_HasActiveAccessToken();
 
       Session.OAuth2_Configure(GetSettings())
-              .OAuth2_GetAccessTokenFromResourceUsingOwnerUsernamePassword(OAuth2TestConstants.Username, OAuth2TestConstants.UserPassword);
+              .OAuth2_GetAccessTokenUsingOwnerUsernamePassword(OAuth2TestConstants.Username, OAuth2TestConstants.UserPassword);
 
       bool isActive2 = Session.OAuth2_HasActiveAccessToken();
 
@@ -39,7 +39,7 @@ namespace Ramone.Tests.OAuth2
       OAuth2Settings settings1 = Session.OAuth2_GetSettings();
 
       Session.OAuth2_Configure(GetSettings())
-              .OAuth2_GetAccessTokenFromResourceUsingOwnerUsernamePassword(OAuth2TestConstants.Username, OAuth2TestConstants.UserPassword);
+              .OAuth2_GetAccessTokenUsingOwnerUsernamePassword(OAuth2TestConstants.Username, OAuth2TestConstants.UserPassword);
 
       OAuth2Settings settings2 = Session.OAuth2_GetSettings();
 
@@ -74,7 +74,7 @@ namespace Ramone.Tests.OAuth2
     public void WhenDoingOAuth2BeforeConfiguringItThrowsInvalidOperation()
     {
       AssertThrows<InvalidOperationException>(
-        () => Session.OAuth2_GetAccessTokenFromResourceUsingOwnerUsernamePassword(OAuth2TestConstants.Username, OAuth2TestConstants.UserPassword));
+        () => Session.OAuth2_GetAccessTokenUsingOwnerUsernamePassword(OAuth2TestConstants.Username, OAuth2TestConstants.UserPassword));
     }
   }
 }
