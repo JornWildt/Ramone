@@ -1,8 +1,11 @@
-﻿namespace Ramone.Utility.JsonWebToken
+﻿using System;
+
+
+namespace Ramone.Utility.JsonWebToken
 {
   public static class Algorithms
   {
-    public const string SHA256 = "SH256";
+    public const string SHA256 = "HS256";
     public const string RSASHA256 = "RS256";
   }
 
@@ -28,5 +31,22 @@
     /// Space separated list of strings identifying the required scopes (as defined by the authorization server)
     /// </summary>
     public string Scope { get; set; }
+
+    /// <summary>
+    /// Life time of created token (used to calculate expire time).
+    /// </summary>
+    public TimeSpan ExpireTime { get; set; }
+
+    /// <summary>
+    /// Offset time span for issued-at time. Default is -10 seconds.
+    /// </summary>
+    public TimeSpan IssueTimeOffset { get; set; }
+
+    
+    public AssertionArgs()
+    {
+      ExpireTime = TimeSpan.FromSeconds(3600);
+      IssueTimeOffset = TimeSpan.FromSeconds(-10);
+    }
   }
 }

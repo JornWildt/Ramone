@@ -108,7 +108,7 @@ namespace Ramone.OAuth2
       tokenRequestArgs["redirect_uri"] = settings.RedirectUri.ToString();
       tokenRequestArgs["client_id"] = settings.ClientID;
 
-      if (!settings.UseBasicAuthenticationForClient)
+      if (settings.ClientAuthenticationMethod == OAuth2Settings.DefaultClientAuthenticationMethods.RequestBody)
         tokenRequestArgs["client_secret"] = settings.ClientSecret;
 
       return GetAndStoreAccessToken(session, tokenRequestArgs, useAccessToken);
@@ -137,7 +137,7 @@ namespace Ramone.OAuth2
       tokenRequestArgs["username"] = ownerUserName;
       tokenRequestArgs["password"] = ownerPassword;
 
-      if (!settings.UseBasicAuthenticationForClient)
+      if (settings.ClientAuthenticationMethod == OAuth2Settings.DefaultClientAuthenticationMethods.RequestBody)
       {
         tokenRequestArgs["client_id"] = settings.ClientID;
         tokenRequestArgs["client_secret"] = settings.ClientSecret;
@@ -163,9 +163,11 @@ namespace Ramone.OAuth2
     {
       OAuth2Settings settings = GetSettings(session);
 
-      DateTime now = DateTime.Now.AddMinutes(-10);
-      long issuedAt = now.ToUnixTime();
-      long expires = now.AddMinutes(50).ToUnixTime();
+      DateTime now = DateTime.UtcNow;
+      DateTime issuedAtDate = now.Add(args.IssueTimeOffset);
+      DateTime expiresDate = issuedAtDate.Add(args.ExpireTime);
+      long issuedAt = issuedAtDate.ToUnixTime();
+      long expires = expiresDate.ToUnixTime();
 
       string claimsFormat = @"{{
   ""iss"":""{0}"",
@@ -181,12 +183,6 @@ namespace Ramone.OAuth2
       tokenRequestArgs["grant_type"] = "urn:ietf:params:oauth:grant-type:jwt-bearer";
       tokenRequestArgs["assertion"] = token;
 
-      if (!settings.UseBasicAuthenticationForClient)
-      {
-        tokenRequestArgs["client_id"] = settings.ClientID;
-        tokenRequestArgs["client_secret"] = settings.ClientSecret;
-      }
-
       return GetAndStoreAccessToken(session, tokenRequestArgs, useAccessToken);
     }
 
@@ -200,7 +196,7 @@ namespace Ramone.OAuth2
       tokenRequestArgs["refresh_token"] = refreshToken;
       tokenRequestArgs["scope"] = scope;
 
-      if (!settings.UseBasicAuthenticationForClient)
+      if (settings.ClientAuthenticationMethod == OAuth2Settings.DefaultClientAuthenticationMethods.RequestBody)
       {
         tokenRequestArgs["client_id"] = settings.ClientID;
         tokenRequestArgs["client_secret"] = settings.ClientSecret;
@@ -287,7 +283,7 @@ namespace Ramone.OAuth2
                                .AsFormUrlEncoded()
                                .AcceptJson();
 
-      if (settings.UseBasicAuthenticationForClient)
+      if (settings.ClientAuthenticationMethod == OAuth2Settings.DefaultClientAuthenticationMethods.BasicAuthenticationHeader)
         request = request.BasicAuthentication(settings.ClientID, settings.ClientSecret);
 
       using (var response = request.AcceptJson().Post<Hashtable>(args))

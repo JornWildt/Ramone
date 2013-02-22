@@ -7,9 +7,9 @@ namespace Ramone.Utility.JsonWebToken
   {
     public static string HMAC_ASCII_SHA256_Base64Url(string input, byte[] key)
     {
-      HMACSHA256 hmacsha1 = new HMACSHA256(key);
+      HMACSHA256 hmacsha256 = new HMACSHA256(key);
       byte[] inputBytes = System.Text.Encoding.ASCII.GetBytes(input);
-      byte[] hashBytes = hmacsha1.ComputeHash(inputBytes);
+      byte[] hashBytes = hmacsha256.ComputeHash(inputBytes);
       return Base64Utility.UrlEncode(hashBytes);
     }
 
@@ -36,7 +36,7 @@ namespace Ramone.Utility.JsonWebToken
 
     public static string CreateJsonWebToken(string jsonPayload, ISigningAlgorithm sign)
     {
-      string jsonHeader = string.Format(@"{{""alg"":""{0}"",""typ"":""JWT""}}", sign.Name);
+      string jsonHeader = string.Format(@"{{""alg"":""{0}"",""typ"":""JWT""}}", sign.AlgorithmName);
       string claim = Base64Utility.UTF8UrlEncode(jsonHeader) + "." + Base64Utility.UTF8UrlEncode(jsonPayload);
       string signature = sign.Sign(claim);
       return claim + "." + signature;

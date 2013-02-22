@@ -15,7 +15,7 @@ namespace Ramone.Tests.OAuth2
         TokenEndpoint = new System.Uri(Session.BaseUri, OAuth2TestConstants.TokenEndpointPath),
         ClientID = OAuth2TestConstants.ClientID,
         ClientSecret = OAuth2TestConstants.ClientPassword,
-        UseBasicAuthenticationForClient = true,
+        ClientAuthenticationMethod = OAuth2Settings.DefaultClientAuthenticationMethods.BasicAuthenticationHeader,
         RedirectUri = new Uri("http://dr.dk")
       };
     }

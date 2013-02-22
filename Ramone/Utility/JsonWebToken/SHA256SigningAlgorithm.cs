@@ -4,7 +4,7 @@
   {
     #region ISigningAlgorithm Members
 
-    public string Name { get { return Algorithms.SHA256; } }
+    public string AlgorithmName { get { return Algorithms.SHA256; } }
 
     public string Sign(string data)
     {

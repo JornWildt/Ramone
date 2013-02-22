@@ -15,9 +15,9 @@ namespace Ramone.Tests.Utility.JsonWebToken
     X509Certificate2 Certificate;
 
 
-    protected override void TestFixtureSetUp()
+    protected override void SetUp()
     {
-      base.TestFixtureSetUp();
+      base.SetUp();
       Certificate = new X509Certificate2(CertificatePath, "123456", X509KeyStorageFlags.Exportable);
     }
 
@@ -38,15 +38,26 @@ namespace Ramone.Tests.Utility.JsonWebToken
 
 
     [Test]
-    public void CanSignUsing_RSA1()
+    public void CanSignUsing_RSASHA256()
     {
       using (RSACryptoServiceProvider cp = (RSACryptoServiceProvider)Certificate.PrivateKey)
       {
-        // Act
-        string signature = JsonWebTokenUtility.HMAC_ASCII_RSASHA1_Base64Url("1234", cp);
+        // Create new crypto service provider that supports SHA256 (and don't ask me why the first one doesn't)
+        CspParameters cspParam = new CspParameters
+        {
+          KeyContainerName = cp.CspKeyContainerInfo.KeyContainerName,
+          KeyNumber = cp.CspKeyContainerInfo.KeyNumber == KeyNumber.Exchange ? 1 : 2
+        };
 
-        // Assert
-        Assert.IsNotNull(signature);
+        using (var aes_csp = new RSACryptoServiceProvider(cspParam) { PersistKeyInCsp = false })
+        {
+
+          // Act
+          string signature = JsonWebTokenUtility.HMAC_ASCII_RSASHA256_Base64Url("1234", aes_csp);
+
+          // Assert
+          Assert.IsNotNull(signature);
+        }
       }
     }
 
@@ -63,7 +74,7 @@ namespace Ramone.Tests.Utility.JsonWebToken
  ""http://example.com/is_root"":true}";
 
       // Act
-      string token = JsonWebTokenUtility.JWT_SHA256(header, payload, SHA256Key);
+      string token = JsonWebTokenUtility.CreateJsonWebToken_SHA256(header, payload, SHA256Key);
 
       // Assert
       Assert.AreEqual("eyJ0eXAiOiJKV1QiLA0KICJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJqb2UiLA0KICJleHAiOjEzMDA4MTkzODAsDQogImh0dHA6Ly9leGFtcGxlLmNvbS9pc19yb290Ijp0cnVlfQ.dBjftJeZ4CVP-mB92K27uhbUJU1p1r_wW1gFWFOEjXk", token);
@@ -79,7 +90,7 @@ namespace Ramone.Tests.Utility.JsonWebToken
  ""http://example.com/is_root"":true}";
 
       // Act
-      string token = JsonWebTokenUtility.JWT_SHA256(payload, SHA256Key);
+      string token = JsonWebTokenUtility.CreateJsonWebToken(payload, new SHA256SigningAlgorithm(SHA256Key));
 
       // Assert
       Assert.AreEqual("eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJqb2UiLA0KICJleHAiOjEzMDA4MTkzODAsDQogImh0dHA6Ly9leGFtcGxlLmNvbS9pc19yb290Ijp0cnVlfQ.liUd5va9zeRHhgLXwSKoXqwwfdW_SQigE717KM69cMQ", token);
@@ -87,7 +98,7 @@ namespace Ramone.Tests.Utility.JsonWebToken
 
 
     [Test]
-    public void CanCreateJsonWebTokenWithRSASHA1()
+    public void CanCreateJsonWebTokenWithRSASHA256()
     {
       // Arrange
       string payload = @"{""iss"":""joe"",
@@ -97,11 +108,21 @@ namespace Ramone.Tests.Utility.JsonWebToken
       // Act
       using (RSACryptoServiceProvider cp = (RSACryptoServiceProvider)Certificate.PrivateKey)
       {
-        // Act
-        string token = JsonWebTokenUtility.JWT_RSASHA1(payload, cp);
+        // Create new crypto service provider that supports SHA256 (and don't ask me why the first one doesn't)
+        CspParameters cspParam = new CspParameters
+        {
+          KeyContainerName = cp.CspKeyContainerInfo.KeyContainerName,
+          KeyNumber = cp.CspKeyContainerInfo.KeyNumber == KeyNumber.Exchange ? 1 : 2
+        };
 
-        // Assert
-        Assert.AreEqual("eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJqb2UiLA0KICJleHAiOjEzMDA4MTkzODAsDQogImh0dHA6Ly9leGFtcGxlLmNvbS9pc19yb290Ijp0cnVlfQ.T8hWkMST9Wnb4UxUU1OBiSJ_QvI2_POzHmeKmRKEQqjq8w8vwvk0Ge8wyRGCTdehpB6c4cPlbxH3-0CI0anZEMvQoCSSlGKxYeo-EGA0SkwGgE1ntFPdSc4tJd1KCQAmStbP_qP3Us7macwGH1M369zfp6l3P2AgEPD8sromgls", token);
+        using (var aes_csp = new RSACryptoServiceProvider(cspParam) { PersistKeyInCsp = false })
+        {
+          // Act
+          string token = JsonWebTokenUtility.CreateJsonWebToken(payload, new RSASHA256SigningAlgorithm(aes_csp));
+
+          // Assert
+          Assert.AreEqual("eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJqb2UiLA0KICJleHAiOjEzMDA4MTkzODAsDQogImh0dHA6Ly9leGFtcGxlLmNvbS9pc19yb290Ijp0cnVlfQ.T8hWkMST9Wnb4UxUU1OBiSJ_QvI2_POzHmeKmRKEQqjq8w8vwvk0Ge8wyRGCTdehpB6c4cPlbxH3-0CI0anZEMvQoCSSlGKxYeo-EGA0SkwGgE1ntFPdSc4tJd1KCQAmStbP_qP3Us7macwGH1M369zfp6l3P2AgEPD8sromgls", token);
+        }
       }
     }
 
