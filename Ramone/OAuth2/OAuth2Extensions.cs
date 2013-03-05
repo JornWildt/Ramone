@@ -11,6 +11,9 @@ using Ramone.Utility.JsonWebToken;
 
 namespace Ramone.OAuth2
 {
+  public enum AccessTokenType { Bearer }
+
+
   public static class OAuth2Extensions
   {
     private const string OAuth2SettingsSessionKey = "OAuth2Settings";
@@ -309,8 +312,8 @@ namespace Ramone.OAuth2
     public static ISession OAuth2_RestoreState(this ISession session, OAuth2SessionState state)
     {
       session.Items[OAuth2StateSessionKey] = state;
-      if (state.AccessToken != null && state.TokenType != null)
-        ActivateAuthorization(session, state.AccessToken, state.TokenType);
+      if (state.AccessToken != null)
+        OAuth2_ActivateAuthorization(session, state.AccessToken, state.TokenType);
       return session;
     }
 
@@ -355,9 +358,9 @@ namespace Ramone.OAuth2
         {
           OAuth2SessionState state = session.OAuth2_GetOrCreateState();
           state.AccessToken = accessToken.access_token;
-          state.TokenType = accessToken.token_type;
+          state.TokenType = ParseAccessTokenType(accessToken.token_type);
 
-          ActivateAuthorization(session, accessToken.access_token, accessToken.token_type);
+          OAuth2_ActivateAuthorization(session, accessToken.access_token, state.TokenType);
         }
         return accessToken;
       }
@@ -374,12 +377,27 @@ namespace Ramone.OAuth2
     }
 
 
-    private static void ActivateAuthorization(ISession session, string accessToken, string tokenType)
+    /// <summary>
+    /// Store access token in session and use it for future requests.
+    /// </summary>
+    /// <param name="session">Ramone session.</param>
+    /// <param name="accessToken">Access token to use.</param>
+    /// <param name="tokenType">Token type (so far only "bearer" is supported)</param>
+    public static void OAuth2_ActivateAuthorization(ISession session, string accessToken, AccessTokenType tokenType)
     {
-      if (string.Equals(tokenType, "bearer", StringComparison.InvariantCultureIgnoreCase))
+      if (tokenType == AccessTokenType.Bearer)
       {
         session.RequestInterceptors.Add("Bearer", new BearerTokenRequestInterceptor(accessToken));
       }
+      else
+        throw new InvalidOperationException(string.Format("Unknown access token type '{0}' (expected 'bearer')", tokenType));
+    }
+
+
+    private static AccessTokenType ParseAccessTokenType(string tokenType)
+    {
+      if (string.Equals(tokenType, "bearer", StringComparison.InvariantCultureIgnoreCase))
+        return AccessTokenType.Bearer;
       else
         throw new InvalidOperationException(string.Format("Unknown access token type '{0}' (expected 'bearer')", tokenType));
     }

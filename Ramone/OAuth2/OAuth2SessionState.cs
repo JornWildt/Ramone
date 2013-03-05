@@ -8,6 +8,6 @@ namespace Ramone.OAuth2
   {
     public string AuthorizationState { get; set; }
     public string AccessToken { get; set; }
-    public string TokenType { get; set; }
+    public AccessTokenType TokenType { get; set; }
   }
 }
