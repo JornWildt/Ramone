@@ -21,7 +21,7 @@ namespace Ramone.OAuth2
     /// Configure OAuth2 and store configuration in session for later use. 
     /// Must always be called before using any of the other OAuth2 methods.
     /// </summary>
-    /// <param name="session"></param>
+    /// <param name="session">Ramone session.</param>
     /// <param name="settings"></param>
     /// <returns>The session passed in as argument.</returns>
     public static ISession OAuth2_Configure(this ISession session, OAuth2Settings settings)
@@ -38,8 +38,8 @@ namespace Ramone.OAuth2
     /// Get URL for user authorization via browser (user agent). This will initiate the "Authorization Code Grant" flow.
     /// </summary>
     /// <remarks>See http://tools.ietf.org/html/rfc6749#section-4.1.1</remarks>
-    /// <param name="session"></param>
-    /// <param name="scope"></param>
+    /// <param name="session">Ramone session.</param>
+    /// <param name="scope">Space separated list of strings identifying the required scopes (as defined by the authorization server).</param>
     /// <returns>Authorization request URL.</returns>
     public static Uri OAuth2_GetAuthorizationRequestUrl(this ISession session, string scope = null)
     {
@@ -68,7 +68,7 @@ namespace Ramone.OAuth2
     /// <remarks>After completion of the authorization process the browser will be redirected to a URL specified
     /// by the client (and configured using Ramone's OAuth2Settings). This URL will contain the acquired 
     /// authorization code. Call OAuth2_GetAuthorizationCodeFromRedirectUrl to extract the code.</remarks>
-    /// <param name="session"></param>
+    /// <param name="session">Ramone session.</param>
     /// <param name="redirectUrl"></param>
     /// <returns>Authorization code</returns>
     public static string OAuth2_GetAuthorizationCodeFromRedirectUrl(this ISession session, string redirectUrl)
@@ -91,7 +91,7 @@ namespace Ramone.OAuth2
     /// Request an access token from authorization code acquired in earlier requests.
     /// </summary>
     /// <remarks>See http://tools.ietf.org/html/rfc6749#section-4.1.3</remarks>
-    /// <param name="session"></param>
+    /// <param name="session">Ramone session.</param>
     /// <param name="authorizationCode"></param>
     /// <param name="useAccessToken">Request automatic use of the returned access token in following requests.</param>
     /// <returns></returns>
@@ -119,15 +119,17 @@ namespace Ramone.OAuth2
     /// Request an access token using the flow "Resource Owner Password Credentials Grant".
     /// </summary>
     /// <remarks>See http://tools.ietf.org/html/rfc6749#section-4.3</remarks>
-    /// <param name="session"></param>
+    /// <param name="session">Ramone session.</param>
     /// <param name="ownerUserName"></param>
     /// <param name="ownerPassword"></param>
+    /// <param name="scope">Space separated list of strings identifying the required scopes (as defined by the authorization server).</param>
     /// <param name="useAccessToken">Request automatic use of the returned access token in following requests.</param>
     /// <returns></returns>
     public static OAuth2AccessTokenResponse OAuth2_GetAccessTokenUsingOwnerUsernamePassword(
       this ISession session,
       string ownerUserName, 
       string ownerPassword,
+      string scope = null,
       bool useAccessToken = true)
     {
       OAuth2Settings settings = GetSettings(session);
@@ -136,6 +138,8 @@ namespace Ramone.OAuth2
       tokenRequestArgs["grant_type"] = "password";
       tokenRequestArgs["username"] = ownerUserName;
       tokenRequestArgs["password"] = ownerPassword;
+      if (scope != null)
+        tokenRequestArgs["scope"] = scope;
 
       if (settings.ClientAuthenticationMethod == OAuth2Settings.DefaultClientAuthenticationMethods.RequestBody)
       {
@@ -147,18 +151,68 @@ namespace Ramone.OAuth2
     }
 
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="session">Ramone session.</param>
+    /// <param name="scope">Space separated list of strings identifying the required scopes (as defined by the authorization server).</param>
+    /// <param name="useAccessToken">Store the returned access token in session and use that in future requests to the resource server.</param>
+    /// <returns></returns>
+    public static OAuth2AccessTokenResponse OAuth2_GetAccessTokenUsingClientCredentials(this ISession session, string scope = null, bool useAccessToken = true)
+    {
+      OAuth2Settings settings = GetSettings(session);
+
+      NameValueCollection tokenRequestArgs = new NameValueCollection();
+      tokenRequestArgs["grant_type"] = "client_credentials";
+      if (scope != null)
+        tokenRequestArgs["scope"] = scope;
+
+      if (settings.ClientAuthenticationMethod == OAuth2Settings.DefaultClientAuthenticationMethods.RequestBody)
+      {
+        tokenRequestArgs["client_id"] = settings.ClientID;
+        tokenRequestArgs["client_secret"] = settings.ClientSecret;
+      }
+
+      return GetAndStoreAccessToken(session, tokenRequestArgs, useAccessToken);
+    }
+
+
+    /// <summary>
+    /// Get an access token using the flow "Client Credentials Grant" with SHA256 signed JWT client credentials.
+    /// </summary>
+    /// <param name="session">Ramone session.</param>
+    /// <param name="shaKey">Binary representation of the SHA256 key.</param>
+    /// <param name="args">Assertion arguments</param>
+    /// <param name="useAccessToken">Store the returned access token in session and use that in future requests to the resource server.</param>
+    /// <returns></returns>
     public static OAuth2AccessTokenResponse OAuth2_GetAccessTokenFromJWT_SHA256(this ISession session, byte[] shaKey, AssertionArgs args, bool useAccessToken = true)
     {
       return OAuth2_GetAccessTokenFromJWT(session, new SHA256SigningAlgorithm(shaKey), args, useAccessToken);
     }
 
 
+    /// <summary>
+    /// Get an access token using the flow "Client Credentials Grant" with RAS-SHA256 signed JWT client credentials.
+    /// </summary>
+    /// <param name="session">Ramone session.</param>
+    /// <param name="cp">RSA Crypto provider used to do the RSA-SHA256 signing.</param>
+    /// <param name="args">Assertion arguments.</param>
+    /// <param name="useAccessToken">Store the returned access token in session and use that in future requests to the resource server.</param>
+    /// <returns></returns>
     public static OAuth2AccessTokenResponse OAuth2_GetAccessTokenFromJWT_RSASHA256(this ISession session, RSACryptoServiceProvider cp, AssertionArgs args, bool useAccessToken = true)
     {
       return OAuth2_GetAccessTokenFromJWT(session, new RSASHA256SigningAlgorithm(cp), args, useAccessToken);
     }
 
 
+    /// <summary>
+    /// Get an access token using the flow "Client Credentials Grant" with JWT client credentials signed with a generic algorithm.
+    /// </summary>
+    /// <param name="session">Ramone session.</param>
+    /// <param name="signingAlgorithm">An implementation of ISigningAlgorithm to do the actual signing.</param>
+    /// <param name="args">Assertion arguments.</param>
+    /// <param name="useAccessToken">Store the returned access token in session and use that in future requests to the resource server.</param>
+    /// <returns></returns>
     public static OAuth2AccessTokenResponse OAuth2_GetAccessTokenFromJWT(this ISession session, ISigningAlgorithm signingAlgorithm, AssertionArgs args, bool useAccessToken = true)
     {
       OAuth2Settings settings = GetSettings(session);
@@ -209,7 +263,7 @@ namespace Ramone.OAuth2
     /// <summary>
     /// Does this session have an active access token associated with it?
     /// </summary>
-    /// <param name="session"></param>
+    /// <param name="session">Ramone session.</param>
     /// <returns></returns>
     public static bool OAuth2_HasActiveAccessToken(this ISession session)
     {
@@ -220,7 +274,7 @@ namespace Ramone.OAuth2
     /// <summary>
     /// Get a copy of the OAuth2 settings (use OAuth2_Configure to change them)
     /// </summary>
-    /// <param name="session"></param>
+    /// <param name="session">Ramone session.</param>
     /// <returns></returns>
     public static OAuth2Settings OAuth2_GetSettings(this ISession session)
     {
@@ -236,7 +290,7 @@ namespace Ramone.OAuth2
     /// <remarks>The authorization state contains information about active authorization codes,
     /// authorization request state, access token and so on. The state can later on be restored with a
     /// called to OAuth2_RestoreState.</remarks>
-    /// <param name="session"></param>
+    /// <param name="session">Ramone session.</param>
     /// <returns></returns>
     public static OAuth2SessionState OAuth2_GetState(this ISession session)
     {
@@ -249,7 +303,7 @@ namespace Ramone.OAuth2
     /// <summary>
     /// Restore authorization state previously obtained from OAuth2_GetState.
     /// </summary>
-    /// <param name="session"></param>
+    /// <param name="session">Ramone session.</param>
     /// <param name="state"></param>
     /// <returns></returns>
     public static ISession OAuth2_RestoreState(this ISession session, OAuth2SessionState state)

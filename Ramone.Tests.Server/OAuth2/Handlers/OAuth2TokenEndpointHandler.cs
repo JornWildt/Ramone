@@ -41,6 +41,15 @@ namespace Ramone.Tests.Server.OAuth2.Handlers
           additional_param = "Special"
         };
       }
+      else if (request.grant_type == "client_credentials")
+      {
+        return new OAuth2AccessTokenResponse
+        {
+          access_token = OAuth2TestConstants.CreatedAccessToken,
+          token_type = "beAReR", // Mixed case => assert testing for this is case-insensitive
+          additional_param = "Special"
+        };
+      }
       else
         return new OperationResult.BadRequest { ResponseResource = new OAuth2Error { error = "unsupported_grant_type" } };
     }

@@ -1,8 +1,7 @@
-﻿using NUnit.Framework;
-using Ramone.Tests.Common.OAuth2;
+﻿using System.Net;
+using NUnit.Framework;
 using Ramone.OAuth2;
-using System.Net;
-using System;
+using Ramone.Tests.Common.OAuth2;
 
 
 namespace Ramone.Tests.OAuth2

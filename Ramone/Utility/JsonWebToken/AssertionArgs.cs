@@ -13,11 +13,6 @@ namespace Ramone.Utility.JsonWebToken
   public class AssertionArgs
   {
     /// <summary>
-    /// Which signature algorithm to use (you can select from the predefined constains in "Algorithms").
-    /// </summary>
-    public string Algorithm { get; set; }
-
-    /// <summary>
     /// The unique identifier for the entity that issued the assertion.
     /// </summary>
     public string Issuer { get; set; }
@@ -38,7 +33,7 @@ namespace Ramone.Utility.JsonWebToken
     public TimeSpan ExpireTime { get; set; }
 
     /// <summary>
-    /// Offset time span for issued-at time. Default is -10 seconds.
+    /// Offset time span for issued-at time. Default is -10 seconds to allow for some time skew.
     /// </summary>
     public TimeSpan IssueTimeOffset { get; set; }
 

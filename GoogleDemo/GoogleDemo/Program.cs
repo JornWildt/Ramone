@@ -229,7 +229,6 @@ namespace GoogleDemo
           // Parameters for JWT creation
           AssertionArgs args = new AssertionArgs
           {
-            Algorithm = Algorithms.RSASHA256,
             Audience = TokenEndpointUrl,
             Issuer = JWT_Issuer,
             Scope = Scope
