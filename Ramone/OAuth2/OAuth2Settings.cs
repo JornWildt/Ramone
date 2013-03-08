@@ -38,7 +38,7 @@ namespace Ramone.OAuth2
     /// <remarks>See http://tools.ietf.org/html/rfc6749#section-2.3.1</remarks>
     public string ClientSecret { get; set; }
 
-    public enum DefaultClientAuthenticationMethods { BasicAuthenticationHeader, RequestBody, None }
+    public enum DefaultClientAuthenticationMethods { BasicAuthenticationHeader, RequestBody, Other }
 
     /// <summary>
     /// Specify whether or not to use HTTP Basic authentication for client credentials.

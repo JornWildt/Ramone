@@ -118,19 +118,29 @@ namespace GoogleDemo
       // Configure OAuth2 with the stuff it needs for it's magic
       OAuth2Settings settings = new OAuth2Settings
       {
-        AuthorizationEndpoint = new Uri(AuthorizationEndpointUrl),
-        TokenEndpoint = new Uri(TokenEndpointUrl),
-        ClientID = keys.ClientId,
-        ClientSecret = keys.ClientSecret,
-        ClientAuthenticationMethod = OAuth2Settings.DefaultClientAuthenticationMethods.RequestBody
+        TokenEndpoint = new Uri(TokenEndpointUrl)
       };
 
       if (SelectedAccessType == AccessType.PinCode)
+      {
+        settings.AuthorizationEndpoint = new Uri(AuthorizationEndpointUrl);
         settings.RedirectUri = new Uri("urn:ietf:wg:oauth:2.0:oob");
+        settings.ClientID = keys.ClientId;
+        settings.ClientSecret = keys.ClientSecret;
+        settings.ClientAuthenticationMethod = OAuth2Settings.DefaultClientAuthenticationMethods.RequestBody;
+      }
       else if (SelectedAccessType == AccessType.Redirect)
+      {
+        settings.AuthorizationEndpoint = new Uri(AuthorizationEndpointUrl);
         settings.RedirectUri = new Uri("http://localhost");
+        settings.ClientID = keys.ClientId;
+        settings.ClientSecret = keys.ClientSecret;
+        settings.ClientAuthenticationMethod = OAuth2Settings.DefaultClientAuthenticationMethods.RequestBody;
+      }
       else
-        settings.ClientAuthenticationMethod = OAuth2Settings.DefaultClientAuthenticationMethods.None;
+      {
+        settings.ClientAuthenticationMethod = OAuth2Settings.DefaultClientAuthenticationMethods.Other;
+      }
 
       Session.OAuth2_Configure(settings);
     }
