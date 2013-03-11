@@ -20,7 +20,8 @@ namespace Ramone.Tests.Server.OAuth2.Handlers
 
       if (request.grant_type == "password")
       {
-        if (request.username == OAuth2TestConstants.Username && request.password == OAuth2TestConstants.UserPassword)
+        if (request.username == OAuth2TestConstants.Username && request.password == OAuth2TestConstants.UserPassword
+            || request.username == OAuth2TestConstants.UsernameWithEmptyPassword)
         {
           return new OAuth2AccessTokenResponse
           {

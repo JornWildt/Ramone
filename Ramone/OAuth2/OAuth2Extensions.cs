@@ -140,7 +140,8 @@ namespace Ramone.OAuth2
       NameValueCollection tokenRequestArgs = new NameValueCollection();
       tokenRequestArgs["grant_type"] = "password";
       tokenRequestArgs["username"] = ownerUserName;
-      tokenRequestArgs["password"] = ownerPassword;
+      if (ownerPassword != null)
+        tokenRequestArgs["password"] = ownerPassword;
       if (scope != null)
         tokenRequestArgs["scope"] = scope;
 

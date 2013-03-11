@@ -46,6 +46,18 @@ namespace Ramone.Tests.OAuth2
 
 
     [Test]
+    public void CanGetAccessTokenUsingNullPassword()
+    {
+      OAuth2AccessTokenResponse token =
+        Session.OAuth2_Configure(GetSettings())
+               .OAuth2_GetAccessTokenUsingOwnerUsernamePassword(OAuth2TestConstants.UsernameWithEmptyPassword, null);
+
+      Assert.IsNotNull(token);
+      Assert.IsNotNullOrEmpty(token.access_token);
+    }
+
+
+    [Test]
     public void WhenItHasAccessTokenItCanAccessProtectedResource()
     {
       // Arrange
