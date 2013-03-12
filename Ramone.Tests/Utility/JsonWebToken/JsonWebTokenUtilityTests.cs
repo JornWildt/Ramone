@@ -77,7 +77,7 @@ namespace Ramone.Tests.Utility.JsonWebToken
       string token = JsonWebTokenUtility.CreateJsonWebToken_SHA256(header, payload, SHA256Key);
 
       // Assert
-      Assert.AreEqual("eyJ0eXAiOiJKV1QiLA0KICJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJqb2UiLA0KICJleHAiOjEzMDA4MTkzODAsDQogImh0dHA6Ly9leGFtcGxlLmNvbS9pc19yb290Ijp0cnVlfQ.dBjftJeZ4CVP-mB92K27uhbUJU1p1r_wW1gFWFOEjXk", token);
+      Assert.AreEqual("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJqb2UiLA0KICJleHAiOjEzMDA4MTkzODAsDQogImh0dHA6Ly9leGFtcGxlLmNvbS9pc19yb290Ijp0cnVlfQ.SfgggA-oZk7ztlq1i8Uz5VhmPmustakoDa9wAf8uHyQ", token);
     }
 
 
@@ -93,7 +93,7 @@ namespace Ramone.Tests.Utility.JsonWebToken
       string token = JsonWebTokenUtility.CreateJsonWebToken(payload, new SHA256SigningAlgorithm(SHA256Key));
 
       // Assert
-      Assert.AreEqual("eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJqb2UiLA0KICJleHAiOjEzMDA4MTkzODAsDQogImh0dHA6Ly9leGFtcGxlLmNvbS9pc19yb290Ijp0cnVlfQ.liUd5va9zeRHhgLXwSKoXqwwfdW_SQigE717KM69cMQ", token);
+      Assert.AreEqual("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJqb2UiLA0KICJleHAiOjEzMDA4MTkzODAsDQogImh0dHA6Ly9leGFtcGxlLmNvbS9pc19yb290Ijp0cnVlfQ.SfgggA-oZk7ztlq1i8Uz5VhmPmustakoDa9wAf8uHyQ", token);
     }
 
 
@@ -121,7 +121,8 @@ namespace Ramone.Tests.Utility.JsonWebToken
           string token = JsonWebTokenUtility.CreateJsonWebToken(payload, new RSASHA256SigningAlgorithm(aes_csp));
 
           // Assert
-          Assert.AreEqual("eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJqb2UiLA0KICJleHAiOjEzMDA4MTkzODAsDQogImh0dHA6Ly9leGFtcGxlLmNvbS9pc19yb290Ijp0cnVlfQ.T8hWkMST9Wnb4UxUU1OBiSJ_QvI2_POzHmeKmRKEQqjq8w8vwvk0Ge8wyRGCTdehpB6c4cPlbxH3-0CI0anZEMvQoCSSlGKxYeo-EGA0SkwGgE1ntFPdSc4tJd1KCQAmStbP_qP3Us7macwGH1M369zfp6l3P2AgEPD8sromgls", token);
+
+          Assert.AreEqual("eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJqb2UiLA0KICJleHAiOjEzMDA4MTkzODAsDQogImh0dHA6Ly9leGFtcGxlLmNvbS9pc19yb290Ijp0cnVlfQ.WtHFqb6881Rp4tfRwu-ePqjnhKJxzismQvbOblfeabL1dZkq7TbEqKZM4dkJAgwFyP-BmKDGlr0DtHMYNJQenmBTz5ff1rVvBbPNzSR9zA8JCBST_pdYFryHl0I62xmfOYnsQ2uYCHXooZ0XMJpvXHGZsXattTV4wmYNXJ5BXOU", token);
         }
       }
     }
