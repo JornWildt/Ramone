@@ -30,6 +30,12 @@ namespace Ramone.Tests.Server.Handlers
     }
 
 
+    public object Head(int code, int count)
+    {
+      return Process(code, count, "HEAD");
+    }
+
+
     private object Process(int code, int count, string method)
     {
       if (count == 5)

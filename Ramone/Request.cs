@@ -544,20 +544,31 @@ namespace Ramone
           int allowedRedirectCount = Session.GetAllowedRedirects((int)response.StatusCode);
           if (retryLevel < allowedRedirectCount)
           {
+            bool allowAutomaticRedirect = false;
             if (response.StatusCode == HttpStatusCode.SeeOther)
             {
               method = "GET";
               includeBody = false;
+              allowAutomaticRedirect = true;
             }
-            Uri location = response.LocationAsUri();
-            if (location == null)
-              throw new InvalidOperationException(string.Format("No redirect location supplied in {0} response from {1}.", (int)response.StatusCode, response.ResponseUri));
+            else if (method.Equals("GET", StringComparison.InvariantCultureIgnoreCase)
+                     || method.Equals("HEAD", StringComparison.InvariantCultureIgnoreCase))
+            {
+              allowAutomaticRedirect = true;
+            }
 
-            response.Close();
-            if (connectionId != null)
-              ConnectionStatistics.DiscardConnection(connectionId.Value);
+            if (allowAutomaticRedirect)
+            {
+              Uri location = response.LocationAsUri();
+              if (location == null)
+                throw new InvalidOperationException(string.Format("No redirect location supplied in {0} response from {1}.", (int)response.StatusCode, response.ResponseUri));
 
-            return DoRequest(location, method, includeBody, requestModifier, retryLevel + 1);
+              response.Close();
+              if (connectionId != null)
+                ConnectionStatistics.DiscardConnection(connectionId.Value);
+
+              return DoRequest(location, method, includeBody, requestModifier, retryLevel + 1);
+            }
           }
         }
 

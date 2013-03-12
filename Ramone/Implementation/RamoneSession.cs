@@ -44,7 +44,7 @@ namespace Ramone.Implementation
     {
       if (AllowedRedirectsMap.ContainsKey(responseCode))
         return AllowedRedirectsMap[responseCode];
-      if (responseCode == 303)
+      if (responseCode == 301 || responseCode == 302 || responseCode == 303 || responseCode == 307)
         return 10;
       else
         return 0;
