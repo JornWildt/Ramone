@@ -20,5 +20,6 @@ namespace Ramone.Tests.Common
     public string Help { get; set; }
     public string EncType { get; set; }
     public string Charset { get; set; }
+    public string Method { get; set; }
   }
 }

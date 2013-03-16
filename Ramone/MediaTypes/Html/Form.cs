@@ -60,10 +60,18 @@ namespace Ramone.MediaTypes.Html
     public Request Bind(string button = null)
     {
       string charset = GetCharset();
-      Request request = Session.Bind(Action)
+      Uri action = Action;
+
+      if (!MethodDescription.GetMethod(Method).BodyAllowed && EncodingType == MediaType.ApplicationFormUrlEncoded)
+        action = Action.AddQueryParameters(GetSubmitData(button));
+
+      Request request = Session.Bind(action)
                               .ContentType(EncodingType)
-                              .Body(GetSubmitData(button))
                               .Method(Method);
+
+      if (MethodDescription.GetMethod(Method).BodyAllowed)
+        request.Body(GetSubmitData(button));
+
       if (charset != null)
         request.CodecParameter("Charset", charset);
 

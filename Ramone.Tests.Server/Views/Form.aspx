@@ -6,7 +6,7 @@
     <h1>Create new blog item</h1>
     <div>
       <form id="create" 
-            method="post" 
+            method="<%= Resource.Method %>" 
             <%= Resource.ActionUrl != null ? "action=\"" + Resource.ActionUrl + "\"" : "" %> 
             <%= Resource.Charset != "unused" ? "accept-charset=\"" + Resource.Charset + "\"" : "" %> 
             enctype="<%=Resource.EncType%>">

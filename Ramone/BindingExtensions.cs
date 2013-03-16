@@ -90,7 +90,7 @@ namespace Ramone
     #endregion
 
 
-    private static Uri BindTemplate(Uri baseUri, UriTemplate template, object parameters = null)
+    public static Uri BindTemplate(Uri baseUri, UriTemplate template, object parameters = null)
     {
       Condition.Requires(template, "template").IsNotNull();
 

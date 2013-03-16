@@ -34,7 +34,8 @@
 
     public const string BasicAuthPath = "basicauthentication.aspx";
 
-    public const string FormPath = "form/{actionUrlMode}/{encType}/{charset}";
+    public const string FormSimplePath = "form/{actionUrlMode}/{encType}/{charset}/{method}";
+    public const string FormPath = "form/{actionUrlMode}/{encType}/{charset}/{method}?InputText={InputText}&Select={Select}";
 
     public const string FileDownloadPath = "filedownload";
 

@@ -276,10 +276,61 @@ namespace Ramone.Tests.HyperMedia.Html
     }
 
 
-    IKeyValueForm GetForm(string actionUrlMode = "absolute", string encType = "multipart", string charset = "iso-8859-1")
+    [Test]
+    public void CanSubmitWithGetMethod()
+    {
+      // Arrange
+      FormArgs args = new FormArgs
+      {
+        InputText = "This is a GET",
+        Select = "Select XXX"
+      };
+
+      // Act
+      IKeyValueForm form = GetForm("relative", encType: "urlencoded", method: "GET");
+      using (var r = form.Value(args).Bind("Cancel").Submit<FormArgs>())
+      {
+        FormArgs result = r.Body;
+
+        // Assert
+        Assert.IsNotNull(result);
+        Assert.AreEqual("GET", result.Method);
+        Assert.AreEqual(args.InputText, result.InputText);
+        Assert.AreEqual(args.Select, result.Select);
+      }
+    }
+
+
+    [Test]
+    public void CanSubmitWithPostMethod()
+    {
+      // Arrange
+      FormArgs args = new FormArgs
+      {
+        InputText = "This is a POST",
+        Select = "Select XXX"
+      };
+
+
+      // Act
+      IKeyValueForm form = GetForm("relative", method: "POST");
+      using (var r = form.Value(args).Bind("Cancel").Submit<FormArgs>())
+      {
+        FormArgs result = r.Body;
+
+        // Assert
+        Assert.IsNotNull(result);
+        Assert.AreEqual("POST", result.Method);
+        Assert.AreEqual(args.InputText, result.InputText);
+        Assert.AreEqual(args.Select, result.Select);
+      }
+    }
+
+
+    IKeyValueForm GetForm(string actionUrlMode = "absolute", string encType = "multipart", string charset = "iso-8859-1", string method = "POST")
     {
       // Pass charset to form creator such that it can insert "accept-charset" in the form.
-      Request formRequest = Session.Bind(FormTemplate, new { actionUrlMode = actionUrlMode, encType = encType, charset = charset });
+      Request formRequest = Session.Bind(FormTemplate, new { actionUrlMode = actionUrlMode, encType = encType, charset = charset, method = method, InputText = "", Select = "" });
       using (Response<HtmlDocument> response = formRequest.Get<HtmlDocument>())
       {
         IKeyValueForm form = response.Body.DocumentNode.SelectNodes(@"//form").First().Form(response);

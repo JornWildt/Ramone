@@ -2,6 +2,7 @@
 using OpenRasta.Web;
 using Ramone.Tests.Common;
 using System.Web;
+using System.Runtime.InteropServices;
 
 
 namespace Ramone.Tests.Server.Handlers
@@ -14,20 +15,31 @@ namespace Ramone.Tests.Server.Handlers
 
   public class FormHandler
   {
-    public object Get(string actionUrlMode, string encType, string charset)
-    {
-      string actionUrl = null;
-      if (actionUrlMode == "absolute")
-        actionUrl = typeof(TestForm).CreateUri(new { actionUrlMode = actionUrlMode, encType = encType, charset = charset }).AbsoluteUri;
-      else if (actionUrlMode == "relative")
-        actionUrl = typeof(TestForm).CreateUri(new { actionUrlMode = actionUrlMode, encType = encType, charset = charset }).AbsolutePath;
+    public ICommunicationContext CommunicationContext { get; set; }
 
-      return new TestForm
-      {
-        ActionUrl = actionUrl,
-        EncType = (encType == "multipart" ? (string)MediaType.MultipartFormData : (string)MediaType.ApplicationFormUrlEncoded),
-        Charset = charset
-      };
+    public object Get(string actionUrlMode, string encType, string charset, string method, string InputText, string Select)
+    {
+      InputText = HttpUtility.UrlDecode(InputText);
+      Select = HttpUtility.UrlDecode(Select);
+      string actionUrl = null;
+      object parameters = new { actionUrlMode = actionUrlMode, encType = encType, charset = charset, method = method };
+      Uri newUri = BindingExtensions.BindTemplate(CommunicationContext.ApplicationBaseUri, new UriTemplate(Constants.FormSimplePath), parameters);
+
+      if (actionUrlMode == "absolute")
+        actionUrl = newUri.AbsoluteUri;
+      else if (actionUrlMode == "relative")
+        actionUrl = newUri.AbsolutePath;
+
+      TestForm args = new TestForm();
+
+      args.InputText = InputText;
+      args.Select = Select;
+      args.ActionUrl = actionUrl;
+      args.EncType = (encType == "multipart" ? (string)MediaType.MultipartFormData : (string)MediaType.ApplicationFormUrlEncoded);
+      args.Charset = charset;
+      args.Method = method;
+
+      return args;
     }
 
 

@@ -191,6 +191,7 @@
     <Compile Include="Utility\JsonWebToken\JsonWebTokenUtility.cs" />
     <Compile Include="Utility\MediaTypeParser.cs" />
     <Compile Include="Utility\MessageDebugger.cs" />
+    <Compile Include="Utility\MethodDescription.cs" />
     <Compile Include="Utility\MultipartFormDataPropertyVisitor.cs" />
     <Compile Include="Utility\DictionaryConverter.cs" />
     <Compile Include="Utility\FormUrlEncodingPropertyVisitor.cs" />
