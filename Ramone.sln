@@ -10,6 +10,8 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documents", "Documents", "{2615491B-5415-4FFF-A79F-1735FCF5E4E6}"
 	ProjectSection(SolutionItems) = preProject
 		LICENSE.TXT = LICENSE.TXT
+		make-bin.bat = make-bin.bat
+		make-doc.bat = make-doc.bat
 		post-build.bat = post-build.bat
 		README.TXT = README.TXT
 	EndProjectSection
