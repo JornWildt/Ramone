@@ -1,17 +1,31 @@
 ﻿using System;
+using System.Net;
+using System.Threading;
 using NUnit.Framework;
 using Ramone.Tests.Common;
 using Ramone.Tests.Common.CMS;
 using Ramone.Utility.ObjectSerialization;
-using System.Threading;
-using System.Net;
 
 
 namespace Ramone.Tests
 {
   public class TestHelper
   {
-    public static readonly Uri BaseUrl = new Uri("http://jorn-pc/ramone-testserver/");
+    public static readonly Uri DefaultBaseUrl = new Uri("http://jorn-pc/ramone-testserver/");
+
+    private static Uri _baseUrl;
+    public static Uri BaseUrl
+    {
+      get
+      {
+        if (_baseUrl == null)
+        {
+          string url = Environment.GetEnvironmentVariable("RAMONETEST_BASEURL");
+          _baseUrl = url != null ? new Uri(url) : DefaultBaseUrl;
+        }
+        return _baseUrl;
+      }
+    }
 
 
     protected static readonly UriTemplate DossierTemplate = new UriTemplate(CMSConstants.DossierPath);
