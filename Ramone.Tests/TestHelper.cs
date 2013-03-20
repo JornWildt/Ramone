@@ -13,7 +13,7 @@ namespace Ramone.Tests
   {
     public static readonly Uri DefaultBaseUrl = new Uri("http://jorn-pc/ramone-jenkinsserver/");
 
-    private static Uri _base Url;
+    private static Uri _baseUrl;
     public static Uri BaseUrl
     {
       get

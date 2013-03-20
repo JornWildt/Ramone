@@ -22,7 +22,7 @@ namespace Ramone.Tests
       using (var dossier = dossierReq.Get<Dossier>())
       {
         // Assert
-        Assert.AreEqual(8, dossier.Body.Id);
+        Assert.AreEqual(9, dossier.Body.Id);
         Assert.AreEqual("Dossier no. 8", dossier.Body.Title);
         Assert.IsNotNull(dossier.Body.Links);
       }
