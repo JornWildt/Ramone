@@ -59,12 +59,23 @@ Ramone with the punk band "The Ramones" if that suits you better :-)
 
 Happy hacking.
 
-J�rn Wildt
+Jorn Wildt
+
+
+DOWNLOAD
+--------
+Binaries are available at these links:
+
+  Version 1.0: http://elfisk.dk/Ramone/Ramone-1.0.0.zip
+
+  Nightly build: http://elfisk.dk/Ramone/Ramone.zip
 
 
 DOCUMENTATION
 -------------
-Not much so far. There's a few blog posts though:
+Some of the documentation is available as a PDF (distributed with the binaries).
+
+In addition to this there is a few blog posts:
 
   Consuming Web APIs in C# with Ramone
   http://soabits.blogspot.com/2012/04/consuming-web-apis-in-c-with-ramone.html
@@ -77,6 +88,9 @@ Not much so far. There's a few blog posts though:
 
   JSON-Patch support in Ramone 
   http://soabits.blogspot.dk/2013/01/json-patch-support-in-ramone.html
+
+  Using Ramone for OAuth2 authorization with Google APIs
+  http://soabits.blogspot.dk/2013/03/using-ramone-for-oauth2-authorization.html
 
 
 USING
@@ -115,8 +129,8 @@ SIMILAR PROJECTS
 
 CREDITS
 -------
-Thanks to the OpenRasta (openrasta.org) and Restfulie 
-(restfulie.caelum.com.br) projects for inspiration.
+Thanks to the OpenRasta (openrasta.org) and Restfulie (restfulie.caelum.com.br)
+projects for inspiration.
 
 Thanks to cBrain (www.cbrain.com) for investing some hours in the project.
 
