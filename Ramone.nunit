@@ -1,5 +1,5 @@
 ﻿<NUnitProject>
-  <Settings activeconfig="Debug" processModel="Default" domainUsage="Default" appbase="C:\Projects\Ramone" />
+  <Settings activeconfig="Debug" />
   <Config name="Debug" binpathtype="Auto">
     <assembly path="Ramone.Tests\bin\Debug\Ramone.Tests.dll" />
   </Config>
