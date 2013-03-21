@@ -13,6 +13,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documents", "Documents", "{
 		make-bin.bat = make-bin.bat
 		make-buildnumber.bat = make-buildnumber.bat
 		make-doc.bat = make-doc.bat
+		make-zip.bat = make-zip.bat
 		post-build.bat = post-build.bat
 		README.TXT = README.TXT
 	EndProjectSection
