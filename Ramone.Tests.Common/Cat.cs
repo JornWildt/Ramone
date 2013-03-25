@@ -1,4 +1,7 @@
 ﻿using System;
+using Ramone.MediaTypes.Atom;
+
+
 namespace Ramone.Tests.Common
 {
   // Cats have nine lives - and multiple representations (text, json and html)
@@ -6,6 +9,7 @@ namespace Ramone.Tests.Common
   {
     public string Name { get; set; }
     public DateTime DateOfBirth { get; set; }
+    public AtomLink Parent { get; set; }
 
     public Cat()
     {

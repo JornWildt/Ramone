@@ -18,21 +18,27 @@ What Ramone does is to wrap the inner workings of HTTP (using .NET's
 HttpWebRequest/HttpWebResponse classes) and make encoding and decoding easier 
 through the use of codecs for the various formats used on the web.
 
-Ramone supports plain XML, JSON, and Atom out of the box, but where it really
-excels is when it comes to working with user defined objects, domain specific
-media types and hyper media elements.
+In its most simple form you can GET a resource like this:
 
-In its most simple form you can transfer an object like this:
-
+  // Define resource type
   class Cat
   {
     public string Name { get; set; }
-    public DateTime Born { get; set; }
+    public DateTime DateOfBirth { get; set; }
   }
 
-  RamoneRequest req = Session.Bind(CatUrlTemplate, new { id = 8 });
+  // Create session pointing to service root
+  ISession Session = RamoneConfiguration.NewSession(new Uri("http://cat-example.com"));
 
-  Cat c = req.Get<Cat>().Body;
+  // Setup HTTP request
+  Request req = Session.Bind("/cat/{name}", new { name = "Mike" });
+
+  // Make actual request
+  using (var resp = req.AcceptXml().Get<Cat>())
+  {
+    Cat c = resp.Body;
+    Console.WriteLine("Cat with name={0} was born on={1:d}.", c.Name, c.DateOfBirth);
+  }
 
 Hyper media elements for linking resources together can be added with objects
 that implement ILink (such as the built-in AtomLink):
@@ -46,16 +52,19 @@ that implement ILink (such as the built-in AtomLink):
 
 Links can be followed to other resources like this:
 
-  RamoneRequest req = Session.Bind(CatUrlTemplate, new { id = 8 });
+  Request req = Session.Bind("/cat/{name}", new { name = "Mike" });
 
-  Cat c = req.Get<Cat>().Body;
+  using (var resp = req.AcceptXml().Get<Cat>())
+  {
+    Cat c = resp.Body;
+    Console.WriteLine("Cat with name={0} was born on={1:d}.", c.Name, c.DateOfBirth);
 
-  Cat parent = c.Body.Parent.Follow().Get<Cat>().Body;
-
-The name "Ramone" was inspired by the character "Ramone" in the movie "Cars".
-In the movie Ramone is an easy going car. Hopefully you will find using the 
-Ramone library just as easy going. You are of course also free to associate 
-Ramone with the punk band "The Ramones" if that suits you better :-)
+    using (var parentResp = c.Parent.Follow(Session).AcceptXml().Get<Cat>())
+    {
+      Cat parent = parentResp.Body;
+      Console.WriteLine("Cat with name={0} has parent.name={1}", c.Name, parent.Name);
+    }
+  }
 
 Happy hacking.
 
@@ -91,6 +100,11 @@ In addition to this there is a few blog posts:
 
   Using Ramone for OAuth2 authorization with Google APIs
   http://soabits.blogspot.dk/2013/03/using-ramone-for-oauth2-authorization.html
+
+The name "Ramone" was inspired by the character "Ramone" in the movie "Cars".
+In the movie Ramone is an easy going car. Hopefully you will find using the 
+Ramone library just as easy going. You are of course also free to associate 
+Ramone with the punk band "The Ramones" if that suits you better :-)
 
 
 USING

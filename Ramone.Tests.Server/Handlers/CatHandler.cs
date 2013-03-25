@@ -1,5 +1,7 @@
 ﻿using Ramone.Tests.Common;
 using OpenRasta.Web;
+using System;
+using Ramone.MediaTypes.Atom;
 
 
 namespace Ramone.Tests.Server.Handlers
@@ -8,7 +10,12 @@ namespace Ramone.Tests.Server.Handlers
   {
     public Cat Get(string name)
     {
-      return new Cat { Name = name };
+      Uri parentUrl = typeof(Cat).CreateUri(new { name = "Felix" });
+      return new Cat 
+      { 
+        Name = name,
+        Parent = new AtomLink(parentUrl.AbsoluteUri, "up", MediaType.ApplicationJson, "Parent cat")
+      };
     }
 
 
