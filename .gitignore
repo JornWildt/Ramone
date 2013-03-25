@@ -1,6 +1,7 @@
 Binaries/
 bin/
 obj/
+*.nupkg
 *.user
 *.suo
 TestResult.xml
