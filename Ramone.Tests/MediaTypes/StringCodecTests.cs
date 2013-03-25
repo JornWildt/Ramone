@@ -34,7 +34,7 @@ namespace Ramone.Tests.MediaTypes
       using (var s = stringReq.AcceptJson().Get<string>())
       {
         // Assert
-        Assert.AreEqual("{\"Name\":\"Henry \\u00C6\\u00D8\\u00C5\",\"DateOfBirth\":\"2012-11-24T09:11:13.000\"}", s.Body);
+        StringAssert.StartsWith("{\"Name\":\"Henry \\u00C6\\u00D8\\u00C5\",\"DateOfBirth\":\"2012-11-24T09:11:13.000\"", s.Body);
       }
     }
   }
