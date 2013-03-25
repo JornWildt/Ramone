@@ -40,31 +40,7 @@ In its most simple form you can GET a resource like this:
     Console.WriteLine("Cat with name={0} was born on={1:d}.", c.Name, c.DateOfBirth);
   }
 
-Hyper media elements for linking resources together can be added with objects
-that implement ILink (such as the built-in AtomLink):
-
-  class Cat
-  {
-    public string Name { get; set; }
-    public DateTime Born { get; set; }
-    public AtomLink Parent { get; set; }
-  }
-
-Links can be followed to other resources like this:
-
-  Request req = Session.Bind("/cat/{name}", new { name = "Mike" });
-
-  using (var resp = req.AcceptXml().Get<Cat>())
-  {
-    Cat c = resp.Body;
-    Console.WriteLine("Cat with name={0} was born on={1:d}.", c.Name, c.DateOfBirth);
-
-    using (var parentResp = c.Parent.Follow(Session).AcceptXml().Get<Cat>())
-    {
-      Cat parent = parentResp.Body;
-      Console.WriteLine("Cat with name={0} has parent.name={1}", c.Name, parent.Name);
-    }
-  }
+See more examples here: https://github.com/JornWildt/Ramone/wiki/Examples.
 
 Happy hacking.
 
