@@ -49,7 +49,7 @@ Jorn Wildt
 
 DOWNLOAD
 --------
-Binaries are available at these links:
+Binaries are available on NuGet and at these links:
 
   Version 1.0: http://elfisk.dk/Ramone/Ramone-1.0.0.zip
 
