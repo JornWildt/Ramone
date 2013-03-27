@@ -21,11 +21,44 @@ namespace Ramone.Tests
 
 
     [Test]
+    public void WhenAuthorizationCodeIsSendItWorks_Async()
+    {
+      Session.RequestInterceptors.Add("WhenAuthorizationCodeIsSendItWorks", new BasicAuthorizationInterceptor("John", "magic"));
+
+      TestAsync(wh =>
+      {
+        // Act
+        Session.Request(BasicAuthUrl).Async().Get<string>(response =>
+        {
+          Assert.IsNotNull(response.Body);
+          wh.Set();
+        });
+      });
+    }
+
+
+    [Test]
     public void CanAddAuthorizerToSession()
     {
       Session.BasicAuthentication("John", "magic");
       using (var respone = Session.Request(BasicAuthUrl).Get<string>())
         Assert.IsNotNull(respone.Body);
+    }
+
+
+    [Test]
+    public void CanAddAuthorizerToSession_Async()
+    {
+      Session.BasicAuthentication("John", "magic");
+      TestAsync(wh =>
+      {
+        // Act
+        Session.Request(BasicAuthUrl).Async().Get<string>(response =>
+        {
+          Assert.IsNotNull(response.Body);
+          wh.Set();
+        });
+      });
     }
 
 
@@ -76,6 +109,21 @@ namespace Ramone.Tests
 
 
     [Test]
+    public void CanAddAuthorizerToRequest_Async()
+    {
+      TestAsync(wh =>
+      {
+        // Act
+        Session.Request(BasicAuthUrl).BasicAuthentication("John", "magic").Async().Get<string>(response =>
+        {
+          Assert.IsNotNull(response.Body);
+          wh.Set();
+        });
+      });
+    }
+
+
+    [Test]
     public void CanAddAuthorizerWithInternationalLettersToRequest()
     {
       // Act
@@ -98,6 +146,45 @@ namespace Ramone.Tests
 
       using (var response = Session.Request(BasicAuthUrl).Get<string>())
         Assert.IsNotNull(response.Body);
+    }
+
+
+    [Test]
+    public void WhenAskedForAuthorizationAndAnsweredItGetsAccess_Async()
+    {
+      // Throws first time
+      bool? failedAsExpected = null;
+      TestAsync(wh =>
+      {
+        // Act
+        Session.Request(BasicAuthUrl).Async().OnError(response =>
+        {
+          failedAsExpected = (HttpStatusCode.Unauthorized == response.StatusCode);
+          wh.Set();
+        }).Get<string>(response => {});
+      });
+
+      Assert.AreEqual(true, failedAsExpected);
+
+      // Throws first time
+      AssertThrowsWebException(() => Session.Request(BasicAuthUrl).Get<string>(), HttpStatusCode.Unauthorized);
+
+      // Then we assign a authorization handler - and now we gain access
+      Session.AuthorizationDispatcher.Add("basic", new BasicAuthorizationHandler());
+
+      bool succeededAsExpected = false;
+
+      TestAsync(wh =>
+      {
+        // Act
+        Session.Request(BasicAuthUrl).Async().Get<string>(response => 
+        {
+          succeededAsExpected = true;
+          wh.Set();
+        });
+      });
+
+      Assert.True(succeededAsExpected);
     }
 
 

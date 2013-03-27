@@ -341,6 +341,7 @@ namespace Ramone
       }
       else
       {
+        ApplyHeadersReadyInterceptors(request);
         request.BeginGetResponse(HandleResponse, state);
       }
 

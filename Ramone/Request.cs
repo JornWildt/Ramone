@@ -498,10 +498,7 @@ namespace Ramone
           requestStream = request.GetRequestStream();
 
         ApplyHeadersReadyInterceptors(request);
-
-        foreach (KeyValuePair<string, IRequestInterceptor> interceptor in Session.RequestInterceptors)
-          if (interceptor.Value is IRequestStreamWrapper)
-            requestStream = ((IRequestStreamWrapper)interceptor.Value).Wrap(new RequestStreamWrapperContext(requestStream, request, Session));
+        ApplyRequestStreamWrappers(requestStream, request);
 
         BodyCodec.WriteTo(new WriterContext(requestStream, BodyData, request, Session, CodecParameters));
         request.GetRequestStream().Close();
@@ -519,6 +516,16 @@ namespace Ramone
       {
         interceptor.Value.HeadersReady(new RequestContext(request, Session));
       }
+    }
+
+
+    protected Stream ApplyRequestStreamWrappers(Stream requestStream, HttpWebRequest request)
+    {
+      foreach (KeyValuePair<string, IRequestInterceptor> interceptor in Session.RequestInterceptors)
+        if (interceptor.Value is IRequestStreamWrapper)
+          requestStream = ((IRequestStreamWrapper)interceptor.Value).Wrap(new RequestStreamWrapperContext(requestStream, request, Session));
+
+      return requestStream;
     }
 
 

@@ -28,7 +28,7 @@ namespace Ramone.Tests
 
 
     [Test]
-    public void WhenNoAuthorizationCodeIsSendItAsksForAuthorization_async()
+    public void WhenNoAuthorizationCodeIsSendItAsksForAuthorization_Async()
     {
       Response errorResponse = null;
 
