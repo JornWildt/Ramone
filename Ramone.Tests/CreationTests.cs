@@ -35,6 +35,36 @@ namespace Ramone.Tests
 
 
     [Test]
+    public void CanGetCreatedLocationAndBody_Async()
+    {
+      // Arrange
+      Dossier dossier = new Dossier
+      {
+        Title = "A new dossier"
+      };
+
+      Request request = Session.Request(DossiersUrl);
+
+      // Act
+      TestAsync(wh =>
+        {
+          request.Async().Post<Dossier>(dossier, response =>
+            {
+              // Assert
+              Uri createdDossierLocation = response.CreatedLocation;
+              Dossier createdDossier = response.Body;
+
+              Assert.IsNotNull(createdDossierLocation);
+              Assert.IsNotNull(createdDossier);
+              Assert.AreEqual("A new dossier", createdDossier.Title);
+              Assert.AreEqual(999, createdDossier.Id);
+              wh.Set();
+            });
+        });
+    }
+
+
+    [Test]
     public void WhenCreatedHasNoBodyItFollowsLocation()
     {
       // Arrange

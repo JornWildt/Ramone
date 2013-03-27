@@ -318,6 +318,15 @@ namespace Ramone
     }
 
 
+    /// <summary>
+    /// Do actual async request.
+    /// </summary>
+    /// <param name="url"></param>
+    /// <param name="method"></param>
+    /// <param name="includeBody">Indicates a redirect where the available POST data should be ignored (if false).</param>
+    /// <param name="requestModifier"></param>
+    /// <param name="retryLevel"></param>
+    /// <returns>Always null.</returns>
     protected override Response DoRequest(Uri url, string method, bool includeBody, Action<HttpWebRequest> requestModifier, int retryLevel = 0)
     {
       HttpWebRequest request = SetupRequest(url, method, includeBody, requestModifier);
@@ -331,9 +340,6 @@ namespace Ramone
         Url = url,
         Request = request
       };
-
-      //FIXME ApplyDataSentInterceptors(request);
-      // FIXME what is includeBody doing?
 
       if (includeBody && BodyData != null)
       {

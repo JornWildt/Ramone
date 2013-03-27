@@ -41,6 +41,28 @@ namespace Ramone.Tests
 
 
     [Test]
+    public void CanGetCatAsHtml_Async()
+    {
+      // Arrange
+      Request catReq = Session.Bind(CatTemplate, new { name = "Fiona" });
+
+      // Act
+      bool? ok = null;
+      TestAsync(wh =>
+      {
+        catReq.Accept("text/html").Async().Get<Cat>(response => 
+        {
+          ok = ("<html><body><p>Fiona</p></body></html>" == response.Body.Name);
+          wh.Set();
+        });
+      });
+
+      // Assert
+      Assert.AreEqual(true, ok);
+    }
+
+
+    [Test]
     public void CanGetCatAsText()
     {
       // Arrange
