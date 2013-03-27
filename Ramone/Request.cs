@@ -439,10 +439,10 @@ namespace Ramone
       }
       catch (WebException ex)
       {
-        Response r = HandleWebException(ex, url, method, includeBody, requestModifier, retryLevel);
-        if (r == null)
+        HandleWebExceptionResult result = HandleWebException(ex, url, method, includeBody, requestModifier, retryLevel);
+        if (!result.Retried)
           throw;
-        return r;
+        return result.Response;
       }
     }
 
@@ -584,7 +584,14 @@ namespace Ramone
     }
 
 
-    protected Response HandleWebException(WebException ex, Uri url, string method, bool includeBody, Action<HttpWebRequest> requestModifier, int retryLevel)
+    protected class HandleWebExceptionResult
+    {
+      public bool Retried { get; set; }
+      public Response Response { get; set; }
+    }
+
+
+    protected HandleWebExceptionResult HandleWebException(WebException ex, Uri url, string method, bool includeBody, Action<HttpWebRequest> requestModifier, int retryLevel)
     {
       HttpWebResponse response = ex.Response as HttpWebResponse;
       if (response != null)
@@ -592,19 +599,23 @@ namespace Ramone
         if (response.StatusCode == HttpStatusCode.Unauthorized)
         {
           if (!HandleUnauthorized(response, ex))
-            return null;
+            return new HandleWebExceptionResult();
 
           if (retryLevel == 0)
           {
             // Resend request one time if no exceptions are thrown
-            return DoRequest(url, method, includeBody, requestModifier, retryLevel + 1);
+            return new HandleWebExceptionResult
+            {
+              Response = DoRequest(url, method, includeBody, requestModifier, retryLevel + 1),
+              Retried = true
+            };
           }
           else
-            return null;
+            return new HandleWebExceptionResult();
         }
       }
 
-      return null;
+      return new HandleWebExceptionResult();
     }
 
 

@@ -11,6 +11,8 @@ namespace Ramone
 
     private Action CompleteAction { get; set; }
 
+    private Action<Response> ErrorAction { get; set; }
+
     public AsyncRequest(Request r)
       : base(r)
     {
@@ -309,6 +311,13 @@ namespace Ramone
     }
 
 
+    public virtual AsyncRequest OnError(Action<Response> errorAction)
+    {
+      ErrorAction = errorAction;
+      return this;
+    }
+
+
     protected override Response DoRequest(Uri url, string method, bool includeBody, Action<HttpWebRequest> requestModifier, int retryLevel = 0)
     {
       HttpWebRequest request = SetupRequest(url, method, includeBody, requestModifier);
@@ -369,10 +378,14 @@ namespace Ramone
       }
       catch (WebException ex)
       {
-        Response response = HandleWebException(ex, state.Url, state.Method, state.IncludeBody, state.RequestModifier, state.RetryLevel);
-        if (response == null)
-          throw;
-        ResponseCallback(response);
+        HandleWebExceptionResult exResult = HandleWebException(ex, state.Url, state.Method, state.IncludeBody, state.RequestModifier, state.RetryLevel);
+        if (!exResult.Retried)
+        {
+          if (ErrorAction != null)
+            ErrorAction(new Response((HttpWebResponse)ex.Response, Session, state.RetryLevel));
+          if (CompleteAction != null)
+            CompleteAction();
+        }
       }
     }
 

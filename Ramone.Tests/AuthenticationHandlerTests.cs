@@ -27,24 +27,26 @@ namespace Ramone.Tests
     }
 
 
-#if false
     [Test]
     public void WhenNoAuthorizationCodeIsSendItAsksForAuthorization_async()
     {
+      Response errorResponse = null;
+
       TestAsync(wh =>
       {
         Session.Request(BasicAuthUrl).Async()
           .OnComplete(() => wh.Set())
-          .Get<string>(r =>
-          {
-          });
+          .OnError(resp => errorResponse = resp)
+          .Get<string>(r => {});
       });
 
-      //AssertThrows<NotAuthorizedException>(() => ;
+      Assert.IsNotNull(errorResponse);
+      Assert.AreEqual(HttpStatusCode.Unauthorized, errorResponse.StatusCode);
+
       // Will get called twice since it does not try to fix the access problem
       Assert.AreEqual(2, CountingAuthorizationHandler.Count);
     }
-#endif
+
 
     public class CountingAuthorizationHandler : IAuthorizationHandler
     {
