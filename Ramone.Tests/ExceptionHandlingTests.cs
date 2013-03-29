@@ -27,6 +27,23 @@ namespace Ramone.Tests
 
 
     [Test]
+    public void WhenCatchingAuthorizationExceptionItAllowsToDeserializeContent_Async()
+    {
+      TestAsync(wh =>
+        {
+          Session.Request(BasicAuthUrl).Async()
+                 .OnError(response =>
+                  {
+                    HtmlDocument error = response.Decode<HtmlDocument>();
+                    Assert.IsNotNull(error);
+                    wh.Set();
+                  })
+                 .Get<string>(response => { });
+        });
+    }
+
+
+    [Test]
     public void CanHandleClientSideExceptionsWhenDisposing()
     {
       Request request = Session.Bind(DossierTemplate, new { id = 8 });
