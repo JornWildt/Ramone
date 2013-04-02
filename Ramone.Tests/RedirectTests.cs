@@ -27,6 +27,18 @@ namespace Ramone.Tests
       new object[] { 303, "PUT" }
     };
 
+
+    static object[] InvalidRedirectCases = 
+    {
+      new object[] { 301, "POST" },
+      new object[] { 302, "POST" },
+      new object[] { 307, "POST" },
+      new object[] { 301, "PUT" },
+      new object[] { 302, "PUT" },
+      new object[] { 307, "PUT" }
+    };
+
+
     [Test, TestCaseSource("ValidRedirectCases")]
     public void ItFollowsRedirectOnValidMethodsAndStatuses(int responseCode, string method)
     {
@@ -42,15 +54,24 @@ namespace Ramone.Tests
     }
 
 
-    static object[] InvalidRedirectCases = 
+    [Test, TestCaseSource("ValidRedirectCases")]
+    public void ItFollowsRedirectOnValidMethodsAndStatuses_Async(int responseCode, string method)
     {
-      new object[] { 301, "POST" },
-      new object[] { 302, "POST" },
-      new object[] { 307, "POST" },
-      new object[] { 301, "PUT" },
-      new object[] { 302, "PUT" },
-      new object[] { 307, "PUT" }
-    };
+      // Arrange
+      Request req = Session.Bind(RedirectTemplate, new { code = responseCode, count = 1 });
+
+      // Act
+      TestAsync(wh =>
+        {
+          req.Async().Execute<RedirectArgs>(method, response =>
+            {
+              // Assert
+              Assert.AreEqual(4, response.RedirectCount);
+              wh.Set();
+            });
+        });
+    }
+
 
     [Test, TestCaseSource("InvalidRedirectCases")]
     public void ItDoesNotFollowRedirectOnInvalidMethodsAndStatuses(int responseCode, string method)
@@ -67,6 +88,25 @@ namespace Ramone.Tests
     }
 
 
+    [Test, TestCaseSource("InvalidRedirectCases")]
+    public void ItDoesNotFollowRedirectOnInvalidMethodsAndStatuses_Async(int responseCode, string method)
+    {
+      // Arrange
+      Request req = Session.Bind(RedirectTemplate, new { code = responseCode, count = 1 });
+
+      // Act
+      TestAsync(wh =>
+        {
+          req.Async().Execute<RedirectArgs>(method, response =>
+            {
+              // Assert
+              Assert.AreEqual(0, response.RedirectCount);
+              wh.Set();
+            });
+        });
+    }
+
+
     static object[] AFewValidRedirectCases = 
     {
       new object[] { 301, "GET" },
@@ -75,6 +115,7 @@ namespace Ramone.Tests
       new object[] { 303, "PUT" },
       new object[] { 303, "POST" }
     };
+
 
     [Test, TestCaseSource("AFewValidRedirectCases")]
     public void RedirectCountCanBeSpecified(int responseCode, string method)
@@ -89,6 +130,26 @@ namespace Ramone.Tests
         // Assert
         Assert.AreEqual(2, resp.RedirectCount);
       }
+    }
+
+
+    [Test, TestCaseSource("AFewValidRedirectCases")]
+    public void RedirectCountCanBeSpecified_Async(int responseCode, string method)
+    {
+      // Arrange
+      Session.SetAllowedRedirects(responseCode, 2);
+      Request req = Session.Bind(RedirectTemplate, new { code = responseCode, count = 1 });
+
+      // Act
+      TestAsync(wh =>
+      {
+        req.Async().Execute<RedirectArgs>(method, response =>
+        {
+          // Assert
+          Assert.AreEqual(2, response.RedirectCount);
+          wh.Set();
+        });
+      });
     }
 
 
@@ -110,6 +171,27 @@ namespace Ramone.Tests
 
 
     [Test, TestCaseSource("AFewValidRedirectCases")]
+    public void WithRedirectCountSetToZeroItDoesNotFollowRedirects_Async(int responseCode, string method)
+    {
+      // Arrange
+      Request req = Session.Bind(RedirectTemplate, new { code = responseCode, count = 1 });
+      Session.SetAllowedRedirects(responseCode, 0);
+
+      // Act
+      TestAsync(wh =>
+      {
+        req.Async().Execute<RedirectArgs>(method, response =>
+        {
+          // Assert
+          Assert.AreEqual(0, response.RedirectCount);
+          Assert.AreEqual(responseCode, (int)response.WebResponse.StatusCode);
+          wh.Set();
+        });
+      });
+    }
+
+
+    [Test, TestCaseSource("AFewValidRedirectCases")]
     public void WhenFollowingRedirectsItAppliesRequestInterceptors(int responseCode, string method)
     {
       // Arrange
@@ -124,6 +206,28 @@ namespace Ramone.Tests
         // Assert
         Assert.AreEqual(5, InterceptorCount);
       }
+    }
+
+
+    [Test, TestCaseSource("AFewValidRedirectCases")]
+    public void WhenFollowingRedirectsItAppliesRequestInterceptors_Async(int responseCode, string method)
+    {
+      // Arrange
+      Request req = Session.Bind(RedirectTemplate, new { code = responseCode, count = 1 });
+      Session.SetAllowedRedirects(responseCode, 5);
+      Session.RequestInterceptors.Add(new RequestInterceptor());
+      InterceptorCount = 0;
+
+      // Act
+      TestAsync(wh =>
+      {
+        req.Async().Execute<RedirectArgs>(method, response =>
+        {
+          // Assert
+          Assert.AreEqual(5, InterceptorCount);
+          wh.Set();
+        });
+      });
     }
 
 

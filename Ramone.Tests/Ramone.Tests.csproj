@@ -143,7 +143,6 @@
     <Compile Include="MediaTypes\Xml\XmlDocumentCodecTests.cs" />
     <Compile Include="MediaTypes\Xml\XmlSerializerCodecTests.cs" />
     <Compile Include="MediaTypeTests.cs" />
-    <Compile Include="NoAuthenticationHandlerTests.cs" />
     <Compile Include="OAuth1\OAuth1HelperTests.cs" />
     <Compile Include="PostTests.cs" />
     <Compile Include="PutTests.cs" />

@@ -153,7 +153,7 @@ namespace Ramone
 
     public void Execute<TResponse>(string method, Action<Response<TResponse>> callback) where TResponse : class
     {
-      ResponseCallback = (r => callback(new Response<TResponse>(r, 0)));
+      ResponseCallback = (r => callback(new Response<TResponse>(r, r.RedirectCount)));
       DoRequest(method);
     }
 
@@ -331,7 +331,7 @@ namespace Ramone
     {
       HttpWebRequest request = SetupRequest(url, method, includeBody, requestModifier);
 
-      AsynState state = new AsynState
+      AsyncState state = new AsyncState
       {
         IncludeBody = includeBody,
         Method = method,
@@ -357,7 +357,7 @@ namespace Ramone
 
     private void HandleGetRequestStream(IAsyncResult result)
     {
-      AsynState state = (AsynState)result.AsyncState;
+      AsyncState state = (AsyncState)result.AsyncState;
 
       using (Stream requestStream = state.Request.EndGetRequestStream(result))
       {
@@ -370,14 +370,17 @@ namespace Ramone
 
     private void HandleResponse(IAsyncResult result)
     {
-      AsynState state = (AsynState)result.AsyncState;
+      AsyncState state = (AsyncState)result.AsyncState;
 
       try
       {
         HttpWebResponse response = state.Request.EndGetResponse(result) as HttpWebResponse;
         using (Response r = HandleResponse(response, state.Method, state.IncludeBody, state.RequestModifier, state.RetryLevel))
         {
-          ResponseCallback(r);
+          if (r != null)
+          {
+            ResponseCallback(r);
+          }
         }
 
         if (CompleteAction != null)
@@ -397,7 +400,7 @@ namespace Ramone
     }
 
 
-    private class AsynState
+    private class AsyncState
     {
       public Uri Url { get; set; }
       public string Method { get; set; }
