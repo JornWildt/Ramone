@@ -76,5 +76,26 @@ namespace Ramone.Tests
             }).Get(r => { });
         });
     }
+
+
+    [Test]
+    public void WhenExceptionIsThrownItAlsoCallsOnComplete()
+    {
+      // Arrange
+      Request request = Session.Bind("/unknown-url");
+      bool onErrorHandled = false;
+
+      TestAsync(wh =>
+      {
+        request.Async().OnError(error =>
+        {
+          onErrorHandled = true;
+        }).OnComplete(() =>
+        {
+          Assert.IsTrue(onErrorHandled);
+          wh.Set();
+        }).Get(r => { });
+      });
+    }
   }
 }

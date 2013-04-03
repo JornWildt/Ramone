@@ -73,6 +73,27 @@ namespace Ramone.Tests
     }
 
 
+    [Test]
+    public void WhenRedirectingItOnlyCallsOnCompleteOnce()
+    {
+      // Arrange
+      Request req = Session.Bind(RedirectTemplate, new { code = 301, count = 1 });
+      int onCompleteCount = 0;
+
+      // Act
+      req.Async().OnComplete(() =>
+          {
+            ++onCompleteCount;
+          })
+          .Get<RedirectArgs>(response => {});
+
+      System.Threading.Thread.Sleep(3000);
+
+      // Asert
+      Assert.AreEqual(1, onCompleteCount);
+    }
+
+
     [Test, TestCaseSource("InvalidRedirectCases")]
     public void ItDoesNotFollowRedirectOnInvalidMethodsAndStatuses(int responseCode, string method)
     {

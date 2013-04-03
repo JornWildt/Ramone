@@ -23,7 +23,7 @@ namespace Ramone
 
     public void Get<TResponse>(Action<Response<TResponse>> callback) where TResponse : class
     {
-      ResponseCallback = (r => callback(new Response<TResponse>(r, 0)));
+      ResponseCallback = (r => callback(new Response<TResponse>(r, r.RedirectCount)));
       DoRequest("GET");
     }
 
@@ -37,7 +37,7 @@ namespace Ramone
 
     public void Post<TResponse>(Action<Response<TResponse>> callback) where TResponse : class
     {
-      ResponseCallback = (r => callback(new Response<TResponse>(r, 0)));
+      ResponseCallback = (r => callback(new Response<TResponse>(r, r.RedirectCount)));
       DoRequest("POST");
     }
 
@@ -52,7 +52,7 @@ namespace Ramone
     public void Post<TResponse>(object body, Action<Response<TResponse>> callback) where TResponse : class
     {
       Body(body);
-      ResponseCallback = (r => callback(new Response<TResponse>(r, 0)));
+      ResponseCallback = (r => callback(new Response<TResponse>(r, r.RedirectCount)));
       DoRequest("POST");
     }
 
@@ -67,7 +67,7 @@ namespace Ramone
 
     public void Put<TResponse>(Action<Response<TResponse>> callback) where TResponse : class
     {
-      ResponseCallback = (r => callback(new Response<TResponse>(r, 0)));
+      ResponseCallback = (r => callback(new Response<TResponse>(r, r.RedirectCount)));
       DoRequest("PUT");
     }
 
@@ -82,7 +82,7 @@ namespace Ramone
     public void Put<TResponse>(object body, Action<Response<TResponse>> callback) where TResponse : class
     {
       Body(body);
-      ResponseCallback = (r => callback(new Response<TResponse>(r, 0)));
+      ResponseCallback = (r => callback(new Response<TResponse>(r, r.RedirectCount)));
       DoRequest("PUT");
     }
 
@@ -97,7 +97,7 @@ namespace Ramone
 
     public void Delete<TResponse>(Action<Response<TResponse>> callback) where TResponse : class
     {
-      ResponseCallback = (r => callback(new Response<TResponse>(r, 0)));
+      ResponseCallback = (r => callback(new Response<TResponse>(r, r.RedirectCount)));
       DoRequest("DELETE");
     }
 
@@ -112,7 +112,7 @@ namespace Ramone
     public void Patch<TResponse>(object body, Action<Response<TResponse>> callback) where TResponse : class
     {
       Body(body);
-      ResponseCallback = (r => callback(new Response<TResponse>(r, 0)));
+      ResponseCallback = (r => callback(new Response<TResponse>(r, r.RedirectCount)));
       DoRequest("PATCH");
     }
 
@@ -134,7 +134,7 @@ namespace Ramone
 
     public void Options<TResponse>(Action<Response<TResponse>> callback) where TResponse : class
     {
-      ResponseCallback = (r => callback(new Response<TResponse>(r, 0)));
+      ResponseCallback = (r => callback(new Response<TResponse>(r, r.RedirectCount)));
       DoRequest("OPTIONS");
     }
 
@@ -168,7 +168,7 @@ namespace Ramone
     public void Execute<TResponse>(string method, object body, Action<Response<TResponse>> callback) where TResponse : class
     {
       Body(body);
-      ResponseCallback = (r => callback(new Response<TResponse>(r, 0)));
+      ResponseCallback = (r => callback(new Response<TResponse>(r, r.RedirectCount)));
       DoRequest(method);
     }
 
@@ -304,6 +304,11 @@ namespace Ramone
     #endregion
 
 
+    /// <summary>
+    /// Register callback for when all asynchronous operations and optional error handling has completed (including redirects and response callback).
+    /// </summary>
+    /// <param name="completeAction"></param>
+    /// <returns></returns>
     public virtual AsyncRequest OnComplete(Action completeAction)
     {
       CompleteAction = completeAction;
@@ -380,11 +385,10 @@ namespace Ramone
           if (r != null)
           {
             ResponseCallback(r);
+            if (CompleteAction != null)
+              CompleteAction();
           }
         }
-
-        if (CompleteAction != null)
-          CompleteAction();
       }
       catch (WebException ex)
       {
