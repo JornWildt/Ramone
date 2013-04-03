@@ -11,7 +11,7 @@ namespace Ramone
 
     private Action CompleteAction { get; set; }
 
-    private Action<Response> ErrorAction { get; set; }
+    private Action<AsyncError> ErrorAction { get; set; }
 
     public AsyncRequest(Request r)
       : base(r)
@@ -311,7 +311,7 @@ namespace Ramone
     }
 
 
-    public virtual AsyncRequest OnError(Action<Response> errorAction)
+    public virtual AsyncRequest OnError(Action<AsyncError> errorAction)
     {
       ErrorAction = errorAction;
       return this;
@@ -392,7 +392,7 @@ namespace Ramone
         if (!exResult.Retried)
         {
           if (ErrorAction != null)
-            ErrorAction(new Response((HttpWebResponse)ex.Response, Session, state.RetryLevel));
+            ErrorAction(new AsyncError(ex, new Response((HttpWebResponse)ex.Response, Session, state.RetryLevel)));
           if (CompleteAction != null)
             CompleteAction();
         }

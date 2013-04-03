@@ -157,9 +157,9 @@ namespace Ramone.Tests
       TestAsync(wh =>
       {
         // Act
-        Session.Request(BasicAuthUrl).Async().OnError(response =>
+        Session.Request(BasicAuthUrl).Async().OnError(error =>
         {
-          failedAsExpected = (HttpStatusCode.Unauthorized == response.StatusCode);
+          failedAsExpected = (HttpStatusCode.Unauthorized == error.Response.StatusCode);
           wh.Set();
         }).Get<string>(response => {});
       });

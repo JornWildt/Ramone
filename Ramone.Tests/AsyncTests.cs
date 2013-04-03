@@ -57,5 +57,24 @@ namespace Ramone.Tests
       AssertThrows<InvalidOperationException>(() => request.Async().Options<object>());
       AssertThrows<InvalidOperationException>(() => request.Async().Head());
     }
+
+
+    [Test]
+    public void WhenExceptionIsThrownItIsPassedToErrorHandler()
+    {
+      // Arrange
+      Request request = Session.Bind("/unknown-url");
+
+      TestAsync(wh =>
+        {
+          request.Async().OnError(error =>
+            {
+              Assert.IsNotNull(error);
+              Assert.IsNotNull(error.Exception);
+              Assert.IsNotNull(error.Response);
+              wh.Set();
+            }).Get(r => { });
+        });
+    }
   }
 }

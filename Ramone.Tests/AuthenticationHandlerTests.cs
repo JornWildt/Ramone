@@ -36,7 +36,7 @@ namespace Ramone.Tests
       {
         Session.Request(BasicAuthUrl).Async()
           .OnComplete(() => wh.Set())
-          .OnError(resp => errorResponse = resp)
+          .OnError(error => errorResponse = error.Response)
           .Get<string>(r => {});
       });
 

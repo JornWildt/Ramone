@@ -32,10 +32,10 @@ namespace Ramone.Tests
       TestAsync(wh =>
         {
           Session.Request(BasicAuthUrl).Async()
-                 .OnError(response =>
+                 .OnError(error =>
                   {
-                    HtmlDocument error = response.Decode<HtmlDocument>();
-                    Assert.IsNotNull(error);
+                    HtmlDocument html = error.Response.Decode<HtmlDocument>();
+                    Assert.IsNotNull(html);
                     wh.Set();
                   })
                  .Get<string>(response => { });
