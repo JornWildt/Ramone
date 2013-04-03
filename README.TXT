@@ -117,6 +117,13 @@ SIMILAR PROJECTS
 - Hammock (discontinued by the developer) https://github.com/danielcrenna/hammock
 
 
+CONTACT
+-------
+E-Mail: jw@fjeldgruppen.dk
+
+Please add bug reports as issues on GitHub, thanks.
+
+
 CREDITS
 -------
 Thanks to the OpenRasta (openrasta.org) and Restfulie (restfulie.caelum.com.br)
