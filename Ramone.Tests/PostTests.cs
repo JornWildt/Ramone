@@ -241,6 +241,7 @@ namespace Ramone.Tests
       }
     }
 
+    #region POST with null/empty callback handlers
 
     [Test]
     public void CanPostAsyncWithoutHandler()
@@ -368,5 +369,7 @@ namespace Ramone.Tests
           }).Post<Dossier>(null);
       });
     }
+
+    #endregion
   }
 }

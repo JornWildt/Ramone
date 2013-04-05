@@ -75,6 +75,22 @@ namespace Ramone.Tests.Server.CMS.Handlers
     }
 
 
+    public OperationResult Put(string method, Dossier dossier)
+    {
+      if (method != "PUT")
+        throw new InvalidOperationException(string.Format("Unexpected method (should have been {0}, was PUT'.", method));
+      return Put(dossier);
+    }
+
+
+    public OperationResult Put(string method)
+    {
+      if (method != "PUT")
+        throw new InvalidOperationException(string.Format("Unexpected method (should have been {0}, was PUT'.", method));
+      return Put((Dossier)null);
+    }
+
+
     public object Patch(long id, string title = null)
     {
       return (title ?? "<null>") + ": ok";

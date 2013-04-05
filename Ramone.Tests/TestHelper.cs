@@ -30,6 +30,8 @@ namespace Ramone.Tests
 
     protected static readonly UriTemplate DossierTemplate = new UriTemplate(CMSConstants.DossierPath);
 
+    protected static readonly UriTemplate VerifiedMethodDossierTemplate = new UriTemplate(CMSConstants.VerifiedMethodDossierPath);
+
     protected static readonly UriTemplate DossierDocumentsTemplate = new UriTemplate(CMSConstants.DossierDocumentsPath);
 
     protected static readonly UriTemplate DocumentTemplate = new UriTemplate(CMSConstants.DocumentPath);

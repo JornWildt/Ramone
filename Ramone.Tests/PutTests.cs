@@ -21,7 +21,7 @@ namespace Ramone.Tests
     protected override void SetUp()
     {
       base.SetUp();
-      DossierReq = Session.Bind(DossierTemplate, new { id = MyDossier.Id });
+      DossierReq = Session.Bind(VerifiedMethodDossierTemplate, new { id = MyDossier.Id, method = "PUT" });
     }
 
 
@@ -111,19 +111,15 @@ namespace Ramone.Tests
     [Test]
     public void CanPutEmptyBody_Typed_Async()
     {
-      // Arrange
-      Request request = Session.Bind(AnyEchoTemplate);
-
       TestAsync(wh =>
       {
         // Act
-        request.Accept("text/plain").ContentType("application/octet-stream").Async()
+        DossierReq.ContentType("application/octet-stream").Async()
+          .OnError(error => Assert.Fail())
           .OnComplete(() => wh.Set())
           .Put<string>(
           r =>
           {
-            // Assert
-            Assert.IsNull(r.Body);
           });
       });
     }
@@ -147,26 +143,21 @@ namespace Ramone.Tests
     [Test]
     public void CanPutEmptyBody_Untyped_Async()
     {
-      // Arrange
-      Request request = Session.Bind(AnyEchoTemplate);
-
       TestAsync(wh =>
       {
         // Act
-        request.Accept("text/plain").ContentType("application/octet-stream").Async()
+        DossierReq.ContentType("application/octet-stream").Async()
+          .OnError(error => Assert.Fail())
           .OnComplete(() => wh.Set())
-          .Put(r =>
+          .Put<string>(
+          r =>
           {
-            // Assert
-            Assert.IsNull(r.Body);
           });
       });
     }
 
 
-
-
-
+    #region Tests with empty/null callback handlers
 
     [Test]
     public void CanPutAsyncWithoutHandler()
@@ -174,10 +165,12 @@ namespace Ramone.Tests
       TestAsync(wh =>
       {
         // Act
-        DossierReq.Async().OnComplete(() =>
-        {
-          wh.Set();
-        }).Put(MyDossier);
+        DossierReq.Async()
+          .OnError(error => Assert.Fail())
+          .OnComplete(() =>
+          {
+            wh.Set();
+          }).Put(MyDossier);
       });
     }
 
@@ -188,10 +181,12 @@ namespace Ramone.Tests
       TestAsync(wh =>
       {
         // Act
-        DossierReq.Async().OnComplete(() =>
-        {
-          wh.Set();
-        }).Put();
+        DossierReq.Async()
+          .OnError(error => Assert.Fail())
+          .OnComplete(() =>
+          {
+            wh.Set();
+          }).Put();
       });
     }
 
@@ -202,10 +197,12 @@ namespace Ramone.Tests
       TestAsync(wh =>
       {
         // Act
-        DossierReq.Async().OnComplete(() =>
-        {
-          wh.Set();
-        }).Put<Dossier>(MyDossier);
+        DossierReq.Async()
+          .OnError(error => Assert.Fail())
+          .OnComplete(() =>
+          {
+            wh.Set();
+          }).Put<Dossier>(MyDossier);
       });
     }
 
@@ -216,10 +213,12 @@ namespace Ramone.Tests
       TestAsync(wh =>
       {
         // Act
-        DossierReq.Async().OnComplete(() =>
-        {
-          wh.Set();
-        }).Put<Dossier>();
+        DossierReq.Async()
+          .OnError(error => Assert.Fail())
+          .OnComplete(() =>
+          {
+            wh.Set();
+          }).Put<Dossier>();
       });
     }
 
@@ -230,10 +229,12 @@ namespace Ramone.Tests
       TestAsync(wh =>
       {
         // Act
-        DossierReq.Async().OnComplete(() =>
-        {
-          wh.Set();
-        }).Put(MyDossier, null);
+        DossierReq.Async()
+          .OnError(error => Assert.Fail())
+          .OnComplete(() =>
+          {
+            wh.Set();
+          }).Put(MyDossier, null);
       });
     }
 
@@ -244,10 +245,12 @@ namespace Ramone.Tests
       TestAsync(wh =>
       {
         // Act
-        DossierReq.Async().OnComplete(() =>
-        {
-          wh.Set();
-        }).Put(null);
+        DossierReq.Async()
+          .OnError(error => Assert.Fail())
+          .OnComplete(() =>
+          {
+            wh.Set();
+          }).Put(null);
       });
     }
 
@@ -258,10 +261,12 @@ namespace Ramone.Tests
       TestAsync(wh =>
       {
         // Act
-        DossierReq.Async().OnComplete(() =>
-        {
-          wh.Set();
-        }).Put<Dossier>(MyDossier, null);
+        DossierReq.Async()
+          .OnError(error => Assert.Fail())
+          .OnComplete(() =>
+          {
+            wh.Set();
+          }).Put<Dossier>(MyDossier, null);
       });
     }
 
@@ -272,11 +277,16 @@ namespace Ramone.Tests
       TestAsync(wh =>
       {
         // Act
-        DossierReq.Async().OnComplete(() =>
-        {
-          wh.Set();
-        }).Put<Dossier>(null);
+        DossierReq.Async()
+          .OnError(error => Assert.Fail())
+          .OnComplete(() =>
+          {
+            wh.Set();
+          }).Put<Dossier>(null);
       });
     }
+
+
+    #endregion
   }
 }
