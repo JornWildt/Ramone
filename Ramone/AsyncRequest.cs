@@ -214,12 +214,33 @@ namespace Ramone
 
     #endregion DELETE
 
+    #region PATCH
 
-    public virtual void Patch<TResponse>(object body, Action<Response<TResponse>> callback) where TResponse : class
+    public override Response Patch(object body)
     {
-      Body(body);
-      ResponseCallback = (r => callback(new Response<TResponse>(r, r.RedirectCount)));
-      DoRequest("PATCH");
+      Patch(body, null);
+      return null;
+    }
+
+
+    public override Response Patch()
+    {
+      Patch(null, null);
+      return null;
+    }
+
+
+    public override Response<TResponse> Patch<TResponse>(object body)
+    {
+      Patch<TResponse>(body, null);
+      return null;
+    }
+
+
+    public override Response<TResponse> Patch<TResponse>()
+    {
+      Patch<TResponse>(null, null);
+      return null;
     }
 
 
@@ -227,8 +248,34 @@ namespace Ramone
     {
       Body(body);
       ResponseCallback = callback;
-      DoRequest("Patch");
+      DoRequest("PATCH");
     }
+
+
+    public virtual void Patch(Action<Response> callback)
+    {
+      ResponseCallback = callback;
+      DoRequest("PATCH");
+    }
+
+
+    public virtual void Patch<TResponse>(Action<Response<TResponse>> callback) where TResponse : class
+    {
+      if (callback != null)
+        ResponseCallback = (r => callback(new Response<TResponse>(r, r.RedirectCount)));
+      DoRequest("PATCH");
+    }
+
+
+    public virtual void Patch<TResponse>(object body, Action<Response<TResponse>> callback) where TResponse : class
+    {
+      Body(body);
+      if (callback != null)
+        ResponseCallback = (r => callback(new Response<TResponse>(r, r.RedirectCount)));
+      DoRequest("PATCH");
+    }
+
+    #endregion PATCH
 
 
     public virtual void Head(Action<Response> callback)
@@ -291,26 +338,6 @@ namespace Ramone
 
 
     #region Disable standard methods from base class
-
-    public override Response Patch(object body)
-    {
-      throw new InvalidOperationException("Synchronous PATCH operation is not supported on Asynchronous requests.");
-    }
-
-    public override Response<TResponse> Patch<TResponse>(object body)
-    {
-      throw new InvalidOperationException("Synchronous PATCH operation is not supported on Asynchronous requests.");
-    }
-
-    public override Response Patch()
-    {
-      throw new InvalidOperationException("Synchronous PATCH operation is not supported on Asynchronous requests.");
-    }
-
-    public override Response<TResponse> Patch<TResponse>()
-    {
-      throw new InvalidOperationException("Synchronous PATCH operation is not supported on Asynchronous requests.");
-    }
 
     public override Response Options()
     {

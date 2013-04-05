@@ -23,8 +23,8 @@ namespace Ramone.Tests.Server.CMS.Handlers
         Title = string.Format("Dossier no. {0}", id),
         Links = new AtomLinkList
         {
-          //new AtomLink(typeof(DossierDocumentList).CreateUri(new { id = id }), CMSConstants.DocumentsLinkRelType, CMSConstants.CMSMediaTypeId, "Documents"),
-          new AtomLink("documents", CMSConstants.DocumentsLinkRelType, CMSConstants.CMSMediaTypeId, "Documents"),
+          new AtomLink(typeof(DossierDocumentList).CreateUri(new { id = id }), CMSConstants.DocumentsLinkRelType, CMSConstants.CMSMediaTypeId, "Documents"),
+          //new AtomLink("documents", CMSConstants.DocumentsLinkRelType, CMSConstants.CMSMediaTypeId, "Documents"),
           new AtomLink(party.CreateUri(), CMSConstants.PartyLinkRelType, CMSConstants.CMSMediaTypeId, party.FullName)
         }
       };
@@ -54,7 +54,7 @@ namespace Ramone.Tests.Server.CMS.Handlers
       return new OperationResult.Created
       {
         ResponseResource = d,
-        RedirectLocation = typeof(Dossier).CreateUri(new { id = 999 })
+        RedirectLocation = typeof(Dossier).CreateUri("Simple", new { id = 999 })
       };
     }
 
@@ -103,7 +103,19 @@ namespace Ramone.Tests.Server.CMS.Handlers
 
     public object Patch(long id, string title = null)
     {
-      return (title ?? "<null>") + ": ok";
+      return new Dossier
+      {
+        Id = id,
+        Title = (title ?? "<null>") + ": ok"
+      };
+    }
+
+
+    public object Patch(string method, long id, string title = null)
+    {
+      if (method != "PATCH")
+        throw new InvalidOperationException(string.Format("Unexpected method (should have been {0}, was PATCH'.", method));
+      return Patch(id, title);
     }
 
 

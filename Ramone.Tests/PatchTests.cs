@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using Ramone.Tests.Common.CMS;
 
 
 namespace Ramone.Tests
@@ -12,7 +13,7 @@ namespace Ramone.Tests
     protected override void SetUp()
     {
       base.SetUp();
-      DossierReq = Session.Bind(DossierTemplate, new { id = 15 });
+      DossierReq = Session.Bind(VerifiedMethodDossierTemplate, new { id = 15, method = "PATCH" });
     }
 
 
@@ -23,7 +24,7 @@ namespace Ramone.Tests
       using (Response response = DossierReq.AsFormUrlEncoded().Patch(new { title = "Duh" }))
       {
         // Assert
-        Assert.AreEqual("Duh: ok", response.Decode<string>());
+        Assert.AreEqual("Duh: ok", response.Decode<Dossier>().Title);
       }
     }
 
@@ -37,7 +38,7 @@ namespace Ramone.Tests
         DossierReq.AsFormUrlEncoded().Async().Patch(new { title = "Duh" }, response =>
         {
           // Assert
-          Assert.AreEqual("Duh: ok", response.Decode<string>());
+          Assert.AreEqual("Duh: ok", response.Decode<Dossier>().Title);
           wh.Set();
         });
       });
@@ -48,10 +49,10 @@ namespace Ramone.Tests
     public void CanPatchAndGetResult_Typed()
     {
       // Act
-      using (Response<string> response = DossierReq.AsFormUrlEncoded().Patch<string>(new { title = "Duh" }))
+      using (Response<Dossier> response = DossierReq.AsFormUrlEncoded().Patch<Dossier>(new { title = "Duh" }))
       {
         // Assert
-        Assert.AreEqual("Duh: ok", response.Body);
+        Assert.AreEqual("Duh: ok", response.Body.Title);
       }
     }
 
@@ -62,10 +63,10 @@ namespace Ramone.Tests
       TestAsync(wh =>
       {
         // Act
-        DossierReq.AsFormUrlEncoded().Async().Patch<string>(new { title = "Duh" }, response =>
+        DossierReq.AsFormUrlEncoded().Async().Patch<Dossier>(new { title = "Duh" }, response =>
         {
           // Assert
-          Assert.AreEqual("Duh: ok", response.Body);
+          Assert.AreEqual("Duh: ok", response.Body.Title);
           wh.Set();
         });
       });
@@ -76,10 +77,10 @@ namespace Ramone.Tests
     public void CanPatchAndGetResultWithAccept()
     {
       // Act
-      using (var title = DossierReq.AsFormUrlEncoded().Accept<string>().Patch(new { title = "Duh" }))
+      using (var title = DossierReq.AsFormUrlEncoded().Accept<Dossier>().Patch(new { title = "Duh" }))
       {
         // Assert
-        Assert.AreEqual("Duh: ok", title.Body);
+        Assert.AreEqual("Duh: ok", title.Body.Title);
       }
     }
 
@@ -88,11 +89,143 @@ namespace Ramone.Tests
     public void CanPatchAndGetResultWithAcceptMediaType()
     {
       // Act
-      using (var title = DossierReq.AsFormUrlEncoded().Accept<string>("text/plain").Patch(new { title = "Duh" }))
+      using (var title = DossierReq.AsFormUrlEncoded().Accept<Dossier>(CMSConstants.CMSMediaType).Patch(new { title = "Duh" }))
       {
         // Assert
-        Assert.AreEqual("Duh: ok", title.Body);
+        Assert.AreEqual("Duh: ok", title.Body.Title);
       }
     }
+
+
+    #region PATCH with null/empty callback handlers
+
+    [Test]
+    public void CanPatchAsyncWithoutHandler()
+    {
+      TestAsync(wh =>
+      {
+        // Act
+        DossierReq.AsFormUrlEncoded().Async()
+          .OnError(error => Assert.Fail())
+          .OnComplete(() =>
+          {
+            wh.Set();
+          }).Patch(new { title = "Duh" });
+      });
+    }
+
+
+    [Test]
+    public void CanPatchEmptyAsyncWithoutHandler()
+    {
+      TestAsync(wh =>
+      {
+        // Act
+        DossierReq.Async()
+          .OnError(error => Assert.Fail())
+          .OnComplete(() =>
+          {
+            wh.Set();
+          }).Patch();
+      });
+    }
+
+
+    [Test]
+    public void CanPatchAsyncWithoutHandler_Typed()
+    {
+      TestAsync(wh =>
+      {
+        // Act
+        DossierReq.AsFormUrlEncoded().Async()
+          .OnError(error => Assert.Fail())
+          .OnComplete(() =>
+          {
+            wh.Set();
+          }).Patch<Dossier>(new { title = "Duh" });
+      });
+    }
+
+
+    [Test]
+    public void CanPatchEmptyAsyncWithoutHandler_Typed()
+    {
+      TestAsync(wh =>
+      {
+        // Act
+        DossierReq.Async()
+          .OnError(error => Assert.Fail())
+          .OnComplete(() =>
+          {
+            wh.Set();
+          }).Patch<Dossier>();
+      });
+    }
+
+
+    [Test]
+    public void CanPatchAsyncWithNullHandler()
+    {
+      TestAsync(wh =>
+      {
+        // Act
+        DossierReq.AsFormUrlEncoded().Async()
+          .OnError(error => Assert.Fail())
+          .OnComplete(() =>
+          {
+            wh.Set();
+          }).Patch(new { title = "Duh" }, null);
+      });
+    }
+
+
+    [Test]
+    public void CanPatchEmptyAsyncWithNullHandler()
+    {
+      TestAsync(wh =>
+      {
+        // Act
+        DossierReq.Async()
+          .OnError(error => Assert.Fail())
+          .OnComplete(() =>
+          {
+            wh.Set();
+          }).Patch(null);
+      });
+    }
+
+
+    [Test]
+    public void CanPatchAsyncWithNullHandler_Typed()
+    {
+      TestAsync(wh =>
+      {
+        // Act
+        DossierReq.AsFormUrlEncoded().Async()
+          .OnError(error => Assert.Fail())
+          .OnComplete(() =>
+          {
+            wh.Set();
+          }).Patch<Dossier>(new { title = "Duh" }, null);
+      });
+    }
+
+
+    [Test]
+    public void CanPatchEmptyAsyncWithNullHandler_Typed()
+    {
+      TestAsync(wh =>
+      {
+        // Act
+        DossierReq.Async()
+          .OnError(error => Assert.Fail())
+          .OnComplete(() =>
+          {
+            wh.Set();
+          }).Patch<Dossier>(null);
+      });
+    }
+
+    #endregion
   }
 }
