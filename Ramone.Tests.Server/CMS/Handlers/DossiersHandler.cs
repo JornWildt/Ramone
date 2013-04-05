@@ -113,6 +113,14 @@ namespace Ramone.Tests.Server.CMS.Handlers
     }
 
 
+    public OperationResult Delete(string method, long id)
+    {
+      if (method != "DELETE")
+        throw new InvalidOperationException(string.Format("Unexpected method (should have been {0}, was DELETE'.", method));
+      return Delete(id);
+    }
+
+
     public object Head(long id)
     {
       HttpContext.Current.Response.Headers["X-ExtraHeader"] = "1";

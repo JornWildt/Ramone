@@ -15,7 +15,7 @@ namespace Ramone.Tests
     protected override void SetUp()
     {
       base.SetUp();
-      DossierReq = Session.Bind(DossierTemplate, new { id = 8 });
+      DossierReq = Session.Bind(VerifiedMethodDossierTemplate, new { id = 8, method = "DELETE" });
     }
 
 
@@ -50,12 +50,12 @@ namespace Ramone.Tests
       {
         // Act
         DossierReq.Async()
-          .OnComplete(() => wh.Set())
           .Delete<string>(
           r =>
           {
             // Assert
             Assert.AreEqual("Deleted, yup!", r.Body);
+            wh.Set();
           });
       });
     }
@@ -68,12 +68,12 @@ namespace Ramone.Tests
       {
         // Act
         DossierReq.Async()
-          .OnComplete(() => wh.Set())
           .Delete(
           r =>
           {
             // Assert
             Assert.AreEqual("Deleted, yup!", r.Decode<string>());
+            wh.Set();
           });
       });
     }
@@ -114,6 +114,7 @@ namespace Ramone.Tests
       AssertThrows<InvalidOperationException>(() => dossierReq.Charset("utf-8").Delete<Dossier>());
     }
 
+    #region DELETE with empty/null callbacks
 
     [Test]
     public void CanDeleteAsyncWithoutHandler()
@@ -121,10 +122,12 @@ namespace Ramone.Tests
       TestAsync(wh =>
       {
         // Act
-        DossierReq.Async().OnComplete(() =>
-        {
-          wh.Set();
-        }).Delete();
+        DossierReq.Async()
+          .OnError(error => Assert.Fail())
+          .OnComplete(() =>
+          {
+            wh.Set();
+          }).Delete();
       });
     }
 
@@ -135,10 +138,12 @@ namespace Ramone.Tests
       TestAsync(wh =>
       {
         // Act
-        DossierReq.Async().OnComplete(() =>
-        {
-          wh.Set();
-        }).Delete<string>();
+        DossierReq.Async()
+          .OnError(error => Assert.Fail())
+          .OnComplete(() =>
+          {
+            wh.Set();
+          }).Delete<string>();
       });
     }
 
@@ -149,10 +154,12 @@ namespace Ramone.Tests
       TestAsync(wh =>
       {
         // Act
-        DossierReq.Async().OnComplete(() =>
-        {
-          wh.Set();
-        }).Delete(null);
+        DossierReq.Async()
+          .OnError(error => Assert.Fail())
+          .OnComplete(() =>
+          {
+            wh.Set();
+          }).Delete(null);
       });
     }
 
@@ -163,11 +170,15 @@ namespace Ramone.Tests
       TestAsync(wh =>
       {
         // Act
-        DossierReq.Async().OnComplete(() =>
-        {
-          wh.Set();
-        }).Delete<string>(null);
+        DossierReq.Async()
+          .OnError(error => Assert.Fail())
+          .OnComplete(() =>
+          {
+            wh.Set();
+          }).Delete<string>(null);
       });
     }
+
+    #endregion
   }
 }

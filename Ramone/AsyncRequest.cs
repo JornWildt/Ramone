@@ -201,7 +201,7 @@ namespace Ramone
     public virtual void Delete(Action<Response> callback)
     {
       ResponseCallback = callback;
-      DoRequest("GET");
+      DoRequest("DELETE");
     }
 
 
@@ -209,7 +209,7 @@ namespace Ramone
     {
       if (callback != null)
         ResponseCallback = (r => callback(new Response<TResponse>(r, r.RedirectCount)));
-      DoRequest("GET");
+      DoRequest("DELETE");
     }
 
     #endregion DELETE
