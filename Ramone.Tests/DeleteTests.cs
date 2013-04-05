@@ -113,5 +113,61 @@ namespace Ramone.Tests
       AssertThrows<InvalidOperationException>(() => dossierReq.Charset("utf-8").Delete());
       AssertThrows<InvalidOperationException>(() => dossierReq.Charset("utf-8").Delete<Dossier>());
     }
+
+
+    [Test]
+    public void CanDeleteAsyncWithoutHandler()
+    {
+      TestAsync(wh =>
+      {
+        // Act
+        DossierReq.Async().OnComplete(() =>
+        {
+          wh.Set();
+        }).Delete();
+      });
+    }
+
+
+    [Test]
+    public void CanDeleteAsyncWithoutHandler_Typed()
+    {
+      TestAsync(wh =>
+      {
+        // Act
+        DossierReq.Async().OnComplete(() =>
+        {
+          wh.Set();
+        }).Delete<string>();
+      });
+    }
+
+
+    [Test]
+    public void CanDeleteAsyncWithNullHandler()
+    {
+      TestAsync(wh =>
+      {
+        // Act
+        DossierReq.Async().OnComplete(() =>
+        {
+          wh.Set();
+        }).Delete(null);
+      });
+    }
+
+
+    [Test]
+    public void CanDeleteAsyncWithNullHandler_Typed()
+    {
+      TestAsync(wh =>
+      {
+        // Act
+        DossierReq.Async().OnComplete(() =>
+        {
+          wh.Set();
+        }).Delete<string>(null);
+      });
+    }
   }
 }

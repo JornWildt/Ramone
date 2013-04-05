@@ -162,5 +162,121 @@ namespace Ramone.Tests
           });
       });
     }
+
+
+
+
+
+
+    [Test]
+    public void CanPutAsyncWithoutHandler()
+    {
+      TestAsync(wh =>
+      {
+        // Act
+        DossierReq.Async().OnComplete(() =>
+        {
+          wh.Set();
+        }).Put(MyDossier);
+      });
+    }
+
+
+    [Test]
+    public void CanPutEmptyAsyncWithoutHandler()
+    {
+      TestAsync(wh =>
+      {
+        // Act
+        DossierReq.Async().OnComplete(() =>
+        {
+          wh.Set();
+        }).Put();
+      });
+    }
+
+
+    [Test]
+    public void CanPutAsyncWithoutHandler_Typed()
+    {
+      TestAsync(wh =>
+      {
+        // Act
+        DossierReq.Async().OnComplete(() =>
+        {
+          wh.Set();
+        }).Put<Dossier>(MyDossier);
+      });
+    }
+
+
+    [Test]
+    public void CanPutEmptyAsyncWithoutHandler_Typed()
+    {
+      TestAsync(wh =>
+      {
+        // Act
+        DossierReq.Async().OnComplete(() =>
+        {
+          wh.Set();
+        }).Put<Dossier>();
+      });
+    }
+
+
+    [Test]
+    public void CanPutAsyncWithNullHandler()
+    {
+      TestAsync(wh =>
+      {
+        // Act
+        DossierReq.Async().OnComplete(() =>
+        {
+          wh.Set();
+        }).Put(MyDossier, null);
+      });
+    }
+
+
+    [Test]
+    public void CanPutEmptyAsyncWithNullHandler()
+    {
+      TestAsync(wh =>
+      {
+        // Act
+        DossierReq.Async().OnComplete(() =>
+        {
+          wh.Set();
+        }).Put(null);
+      });
+    }
+
+
+    [Test]
+    public void CanPutAsyncWithNullHandler_Typed()
+    {
+      TestAsync(wh =>
+      {
+        // Act
+        DossierReq.Async().OnComplete(() =>
+        {
+          wh.Set();
+        }).Put<Dossier>(MyDossier, null);
+      });
+    }
+
+
+    [Test]
+    public void CanPutEmptyAsyncWithNullHandler_Typed()
+    {
+      TestAsync(wh =>
+      {
+        // Act
+        DossierReq.Async().OnComplete(() =>
+        {
+          wh.Set();
+        }).Put<Dossier>(null);
+      });
+    }
   }
 }

@@ -38,6 +38,8 @@ namespace Ramone.Tests
     
     protected static readonly Uri DossiersUrl = new Uri(BaseUrl, CMSConstants.DossiersPath);
 
+    protected static readonly Uri VerifiedMethodDossiersUrl = new Uri(BaseUrl, CMSConstants.VerifiedMethodDossiersPath);
+
 
     protected static readonly UriTemplate CatTemplate = new UriTemplate(Constants.CatPath);
 

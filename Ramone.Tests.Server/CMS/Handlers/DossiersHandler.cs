@@ -2,6 +2,7 @@
 using OpenRasta.Web;
 using Ramone.MediaTypes.Atom;
 using Ramone.Tests.Common.CMS;
+using System;
 
 
 namespace Ramone.Tests.Server.CMS.Handlers
@@ -34,10 +35,10 @@ namespace Ramone.Tests.Server.CMS.Handlers
       Dossier d = new Dossier
       {
         Id = 999,
-        Title = dossier.Title
+        Title = dossier != null ? dossier.Title : null
       };
 
-      if (dossier.Title == "Do not return body")
+      if (dossier != null && dossier.Title == "Do not return body")
         d = null;
 
       return new OperationResult.Created
@@ -48,6 +49,22 @@ namespace Ramone.Tests.Server.CMS.Handlers
     }
 
 
+    public OperationResult Post(string method, Dossier dossier)
+    {
+      if (method != "POST")
+        throw new InvalidOperationException(string.Format("Unexpected method (should have been {0}, was POST'.", method));
+      return Post(dossier);
+    }
+
+
+    public OperationResult Post(string method)
+    {
+      if (method != "POST")
+        throw new InvalidOperationException(string.Format("Unexpected method (should have been {0}, was POST'.", method));
+      return Post((Dossier)null);
+    }
+    
+    
     public OperationResult Put(Dossier dossier)
     {
       return new OperationResult.Created

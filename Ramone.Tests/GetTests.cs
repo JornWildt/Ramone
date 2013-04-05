@@ -104,6 +104,74 @@ namespace Ramone.Tests
 
 
     [Test]
+    public void CanGetAsyncWithoutHandler()
+    {
+      // Arrange
+      Request dossierReq = Session.Bind(DossierTemplate, new { id = 8 });
+
+      TestAsync(wh =>
+      {
+        // Act
+        dossierReq.Async().OnComplete(() =>
+        {
+          wh.Set();
+        }).Get();
+      });
+    }
+
+
+    [Test]
+    public void CanGetAsyncWithoutHandler_Typed()
+    {
+      // Arrange
+      Request dossierReq = Session.Bind(DossierTemplate, new { id = 8 });
+
+      TestAsync(wh =>
+      {
+        // Act
+        dossierReq.Async().OnComplete(() =>
+        {
+          wh.Set();
+        }).Get<string>();
+      });
+    }
+
+
+    [Test]
+    public void CanGetAsyncWithNullHandler()
+    {
+      // Arrange
+      Request dossierReq = Session.Bind(DossierTemplate, new { id = 8 });
+
+      TestAsync(wh =>
+      {
+        // Act
+        dossierReq.Async().OnComplete(() =>
+        {
+          wh.Set();
+        }).Get(null);
+      });
+    }
+
+
+    [Test]
+    public void CanGetAsyncWithNullHandler_Typed()
+    {
+      // Arrange
+      Request dossierReq = Session.Bind(DossierTemplate, new { id = 8 });
+
+      TestAsync(wh =>
+      {
+        // Act
+        dossierReq.Async().OnComplete(() =>
+        {
+          wh.Set();
+        }).Get<string>(null);
+      });
+    }
+
+
+    [Test]
     public void CanGetDossierWithDictionaryParams()
     {
       // Arrange

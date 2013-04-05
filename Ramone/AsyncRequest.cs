@@ -21,95 +21,201 @@ namespace Ramone
 
     #region Standard methods
 
-    public void Get<TResponse>(Action<Response<TResponse>> callback) where TResponse : class
+    #region GET
+
+    public override Response Get()
     {
-      ResponseCallback = (r => callback(new Response<TResponse>(r, r.RedirectCount)));
+      Get(null);
+      return null;
+    }
+
+
+    public override Response<TResponse> Get<TResponse>()
+    {
+      Get<TResponse>(null);
+      return null;
+    }
+
+
+    public virtual void Get(Action<Response> callback)
+    {
+      ResponseCallback = callback;
       DoRequest("GET");
     }
 
 
-    public void Get(Action<Response> callback)
+    public virtual void Get<TResponse>(Action<Response<TResponse>> callback) where TResponse : class
+    {
+      if (callback != null)
+        ResponseCallback = (r => callback(new Response<TResponse>(r, r.RedirectCount)));
+      DoRequest("GET");
+    }
+
+    #endregion GET
+
+
+    #region POST
+
+    public override Response Post(object body)
+    {
+      Post(body, null);
+      return null;
+    }
+
+    
+    public override Response Post()
+    {
+      Post(null, null);
+      return null;
+    }
+
+    
+    public override Response<TResponse> Post<TResponse>(object body)
+    {
+      Post<TResponse>(body, null);
+      return null;
+    }
+
+    
+    public override Response<TResponse> Post<TResponse>()
+    {
+      Post<TResponse>(null, null);
+      return null;
+    }
+
+
+    public virtual void Post(object body, Action<Response> callback)
+    {
+      Body(body);
+      ResponseCallback = callback;
+      DoRequest("POST");
+    }
+
+
+    public virtual void Post(Action<Response> callback)
+    {
+      ResponseCallback = callback;
+      DoRequest("POST");
+    }
+
+
+    public virtual void Post<TResponse>(Action<Response<TResponse>> callback) where TResponse : class
+    {
+      if (callback != null)
+        ResponseCallback = (r => callback(new Response<TResponse>(r, r.RedirectCount)));
+      DoRequest("POST");
+    }
+
+
+    public virtual void Post<TResponse>(object body, Action<Response<TResponse>> callback) where TResponse : class
+    {
+      Body(body);
+      if (callback != null)
+        ResponseCallback = (r => callback(new Response<TResponse>(r, r.RedirectCount)));
+      DoRequest("POST");
+    }
+
+    #endregion POST
+
+
+    #region PUT
+
+    public override Response Put(object body)
+    {
+      Put(body, null);
+      return null;
+    }
+
+    
+    public override Response Put()
+    {
+      Put(null, null);
+      return null;
+    }
+
+    
+    public override Response<TResponse> Put<TResponse>(object body)
+    {
+      Put<TResponse>(body, null);
+      return null;
+    }
+
+    
+    public override Response<TResponse> Put<TResponse>()
+    {
+      Put<TResponse>(null, null);
+      return null;
+    }
+
+
+    public virtual void Put(object body, Action<Response> callback)
+    {
+      Body(body);
+      ResponseCallback = callback;
+      DoRequest("PUT");
+    }
+
+
+    public virtual void Put(Action<Response> callback)
+    {
+      ResponseCallback = callback;
+      DoRequest("PUT");
+    }
+
+
+    public virtual void Put<TResponse>(Action<Response<TResponse>> callback) where TResponse : class
+    {
+      if (callback != null)
+        ResponseCallback = (r => callback(new Response<TResponse>(r, r.RedirectCount)));
+      DoRequest("GET");
+    }
+
+
+    public virtual void Put<TResponse>(object body, Action<Response<TResponse>> callback) where TResponse : class
+    {
+      Body(body);
+      if (callback != null)
+        ResponseCallback = (r => callback(new Response<TResponse>(r, r.RedirectCount)));
+      DoRequest("PUT");
+    }
+
+    #endregion PUT
+
+
+    #region DELETE
+
+    public override Response Delete()
+    {
+      Delete(null);
+      return null;
+    }
+
+
+    public override Response<TResponse> Delete<TResponse>()
+    {
+      Delete<TResponse>(null);
+      return null;
+    }
+
+
+    public virtual void Delete(Action<Response> callback)
     {
       ResponseCallback = callback;
       DoRequest("GET");
     }
 
 
-    public void Post<TResponse>(Action<Response<TResponse>> callback) where TResponse : class
+    public virtual void Delete<TResponse>(Action<Response<TResponse>> callback) where TResponse : class
     {
-      ResponseCallback = (r => callback(new Response<TResponse>(r, r.RedirectCount)));
-      DoRequest("POST");
-    }
-
-
-    public void Post(Action<Response> callback)
-    {
-      ResponseCallback = callback;
-      DoRequest("POST");
-    }
-
-
-    public void Post<TResponse>(object body, Action<Response<TResponse>> callback) where TResponse : class
-    {
-      Body(body);
-      ResponseCallback = (r => callback(new Response<TResponse>(r, r.RedirectCount)));
-      DoRequest("POST");
-    }
-
-
-    public void Post(object body, Action<Response> callback)
-    {
-      Body(body);
-      ResponseCallback = callback;
-      DoRequest("POST");
-    }
-
-
-    public void Put<TResponse>(Action<Response<TResponse>> callback) where TResponse : class
-    {
-      ResponseCallback = (r => callback(new Response<TResponse>(r, r.RedirectCount)));
-      DoRequest("PUT");
-    }
-
-
-    public void Put(Action<Response> callback)
-    {
-      ResponseCallback = callback;
-      DoRequest("PUT");
-    }
-
-
-    public void Put<TResponse>(object body, Action<Response<TResponse>> callback) where TResponse : class
-    {
-      Body(body);
-      ResponseCallback = (r => callback(new Response<TResponse>(r, r.RedirectCount)));
-      DoRequest("PUT");
-    }
-
-
-    public void Put(object body, Action<Response> callback)
-    {
-      Body(body);
-      ResponseCallback = callback;
-      DoRequest("PUT");
-    }
-
-
-    public void Delete<TResponse>(Action<Response<TResponse>> callback) where TResponse : class
-    {
-      ResponseCallback = (r => callback(new Response<TResponse>(r, r.RedirectCount)));
+      if (callback != null)
+        ResponseCallback = (r => callback(new Response<TResponse>(r, r.RedirectCount)));
       DoRequest("DELETE");
     }
 
-
-    public void Delete(Action<Response> callback)
-    {
-      ResponseCallback = callback;
-      DoRequest("DELETE");
-    }
+    #endregion DELETE
 
 
-    public void Patch<TResponse>(object body, Action<Response<TResponse>> callback) where TResponse : class
+    public virtual void Patch<TResponse>(object body, Action<Response<TResponse>> callback) where TResponse : class
     {
       Body(body);
       ResponseCallback = (r => callback(new Response<TResponse>(r, r.RedirectCount)));
@@ -117,7 +223,7 @@ namespace Ramone
     }
 
 
-    public void Patch(object body, Action<Response> callback)
+    public virtual void Patch(object body, Action<Response> callback)
     {
       Body(body);
       ResponseCallback = callback;
@@ -125,21 +231,21 @@ namespace Ramone
     }
 
 
-    public void Head(Action<Response> callback)
+    public virtual void Head(Action<Response> callback)
     {
       ResponseCallback = callback;
       DoRequest("HEAD");
     }
 
 
-    public void Options<TResponse>(Action<Response<TResponse>> callback) where TResponse : class
+    public virtual void Options<TResponse>(Action<Response<TResponse>> callback) where TResponse : class
     {
       ResponseCallback = (r => callback(new Response<TResponse>(r, r.RedirectCount)));
       DoRequest("OPTIONS");
     }
 
 
-    public void Options(Action<Response> callback)
+    public virtual void Options(Action<Response> callback)
     {
       ResponseCallback = callback;
       DoRequest("OPTIONS");
@@ -151,21 +257,21 @@ namespace Ramone
 
     #region Generic methods
 
-    public void Execute<TResponse>(string method, Action<Response<TResponse>> callback) where TResponse : class
+    public virtual void Execute<TResponse>(string method, Action<Response<TResponse>> callback) where TResponse : class
     {
       ResponseCallback = (r => callback(new Response<TResponse>(r, r.RedirectCount)));
       DoRequest(method);
     }
 
 
-    public void Execute(string method, Action<Response> callback)
+    public virtual void Execute(string method, Action<Response> callback)
     {
       ResponseCallback = callback;
       DoRequest(method);
     }
 
 
-    public void Execute<TResponse>(string method, object body, Action<Response<TResponse>> callback) where TResponse : class
+    public virtual void Execute<TResponse>(string method, object body, Action<Response<TResponse>> callback) where TResponse : class
     {
       Body(body);
       ResponseCallback = (r => callback(new Response<TResponse>(r, r.RedirectCount)));
@@ -173,7 +279,7 @@ namespace Ramone
     }
 
 
-    public void Execute(string method, object body, Action<Response> callback)
+    public virtual void Execute(string method, object body, Action<Response> callback)
     {
       Body(body);
       ResponseCallback = callback;
@@ -185,66 +291,6 @@ namespace Ramone
 
 
     #region Disable standard methods from base class
-
-    public override Response Get()
-    {
-      throw new InvalidOperationException("Synchronous GET operation is not supported on Asynchronous requests.");
-    }
-
-    public override Response<TResponse> Get<TResponse>()
-    {
-      throw new InvalidOperationException("Synchronous GET operation is not supported on Asynchronous requests.");
-    }
-
-    public override Response Post(object body)
-    {
-      throw new InvalidOperationException("Synchronous POST operation is not supported on Asynchronous requests.");
-    }
-
-    public override Response<TResponse> Post<TResponse>(object body)
-    {
-      throw new InvalidOperationException("Synchronous POST operation is not supported on Asynchronous requests.");
-    }
-
-    public override Response Post()
-    {
-      throw new InvalidOperationException("Synchronous POST operation is not supported on Asynchronous requests.");
-    }
-
-    public override Response<TResponse> Post<TResponse>()
-    {
-      throw new InvalidOperationException("Synchronous POST operation is not supported on Asynchronous requests.");
-    }
-
-    public override Response Put(object body)
-    {
-      throw new InvalidOperationException("Synchronous PUT operation is not supported on Asynchronous requests.");
-    }
-
-    public override Response<TResponse> Put<TResponse>(object body)
-    {
-      throw new InvalidOperationException("Synchronous PUT operation is not supported on Asynchronous requests.");
-    }
-
-    public override Response Put()
-    {
-      throw new InvalidOperationException("Synchronous PUT operation is not supported on Asynchronous requests.");
-    }
-
-    public override Response<TResponse> Put<TResponse>()
-    {
-      throw new InvalidOperationException("Synchronous PUT operation is not supported on Asynchronous requests.");
-    }
-
-    public override Response Delete()
-    {
-      throw new InvalidOperationException("Synchronous DELETE operation is not supported on Asynchronous requests.");
-    }
-
-    public override Response<TResponse> Delete<TResponse>()
-    {
-      throw new InvalidOperationException("Synchronous DELETE operation is not supported on Asynchronous requests.");
-    }
 
     public override Response Patch(object body)
     {
@@ -384,7 +430,8 @@ namespace Ramone
         {
           if (r != null)
           {
-            ResponseCallback(r);
+            if (ResponseCallback != null)
+              ResponseCallback(r);
             if (CompleteAction != null)
               CompleteAction();
           }

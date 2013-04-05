@@ -6,6 +6,7 @@
     public const string DossierPath = "cms/dossiers/{id}/";
     public const string DossierDocumentsPath = "cms/dossiers/{id}/documents";
     public const string DossiersPath = "cms/dossiers";
+    public const string VerifiedMethodDossiersPath = "cms/dossiers/{method}";
 
     public const string DocumentPath = "cms/documents/{id}";
     public const string PartyPath = "cms/party/{id}";

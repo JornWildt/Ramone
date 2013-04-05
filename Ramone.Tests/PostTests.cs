@@ -15,13 +15,13 @@ namespace Ramone.Tests
       Title = "A new dossier"
     };
 
-    Request DossiersReq;
+    Request DossierReq;
 
 
     protected override void SetUp()
     {
       base.SetUp();
-      DossiersReq = Session.Request(DossiersUrl);
+      DossierReq = Session.Bind(VerifiedMethodDossiersUrl, new { method = "POST" });
     }
 
 
@@ -29,7 +29,7 @@ namespace Ramone.Tests
     public void CanPostAndIgnoreReturnedBody()
     {
       // Act
-      using (Response response = DossiersReq.Post(MyDossier))
+      using (Response response = DossierReq.Post(MyDossier))
       {
         // Assert
         Assert.IsNotNull(response);
@@ -41,7 +41,7 @@ namespace Ramone.Tests
     public void CanPostAndGetResult()
     {
       // Act
-      using (Response<Dossier> response = DossiersReq.Post<Dossier>(MyDossier))
+      using (Response<Dossier> response = DossierReq.Post<Dossier>(MyDossier))
       {
         Dossier newDossier = response.Body;
 
@@ -52,7 +52,7 @@ namespace Ramone.Tests
 
 
     [Test]
-    public void WhenPostingEmptyDataAsyncTheRequestIsInFactAsync_Async()
+    public void WhenPostingEmptyDataAsyncTheRequestIsInFactAsync()
     {
       // Arrange
       Request request = Session.Bind(Constants.SlowPath);
@@ -66,6 +66,7 @@ namespace Ramone.Tests
 
         // Act
         request.Async()
+          .OnError(error => Assert.Fail())
           .OnComplete(() => wh.Set())
           .Post(response =>
           {
@@ -85,7 +86,7 @@ namespace Ramone.Tests
 
 
     [Test]
-    public void WhenPostingAsyncTheRequestIsInFactAsync_Async()
+    public void WhenPostingAsyncTheRequestIsInFactAsync()
     {
       // Arrange
       Request request = Session.Bind(Constants.SlowPath).AsJson();
@@ -100,6 +101,7 @@ namespace Ramone.Tests
 
         // Act
         request.Async()
+          .OnError(error => Assert.Fail())
           .OnComplete(() => wh.Set())
           .Post<SlowResource>(input, response =>
           {
@@ -122,7 +124,7 @@ namespace Ramone.Tests
     public void CanPostAndGetResultWithAccept()
     {
       // Act
-      using (var newDossier = DossiersReq.Accept<Dossier>().Post(MyDossier))
+      using (var newDossier = DossierReq.Accept<Dossier>().Post(MyDossier))
       {
         // Assert
         Assert.IsNotNull(newDossier.Body);
@@ -134,7 +136,7 @@ namespace Ramone.Tests
     public void CanPostAndGetResultWithAcceptMediaType()
     {
       // Act
-      using (var newDossier = DossiersReq.Accept<Dossier>(CMSConstants.CMSMediaType).Post(MyDossier))
+      using (var newDossier = DossierReq.Accept<Dossier>(CMSConstants.CMSMediaType).Post(MyDossier))
       {
         // Assert
         Assert.IsNotNull(newDossier.Body);
@@ -160,19 +162,15 @@ namespace Ramone.Tests
     [Test]
     public void CanPostEmptyBody_Typed_Async()
     {
-      // Arrange
-      Request request = Session.Bind(AnyEchoTemplate);
-
       TestAsync(wh =>
       {
         // Act
-        request.Accept("text/plain").ContentType("application/octet-stream").Async()
+        DossierReq.ContentType("application/octet-stream").Async()
+          .OnError(error => Assert.Fail())
           .OnComplete(() => wh.Set())
           .Post<string>(
           r =>
           {
-            // Assert
-            Assert.IsNull(r.Body);
           });
       });
     }
@@ -213,19 +211,15 @@ namespace Ramone.Tests
     [Test]
     public void CanPostEmptyBody_Untyped_Async()
     {
-      // Arrange
-      Request request = Session.Bind(AnyEchoTemplate);
-
       TestAsync(wh =>
       {
         // Act
-        request.Accept("text/plain").ContentType("application/octet-stream").Async()
+        DossierReq.ContentType("application/octet-stream").Async()
+          .OnError(error => Assert.Fail())
           .OnComplete(() => wh.Set())
           .Post(
           r =>
           {
-            // Assert
-            Assert.IsNull(r.Body);
           });
       });
     }
@@ -245,6 +239,134 @@ namespace Ramone.Tests
         // Assert
         Assert.IsNull(response.Body);
       }
+    }
+
+
+    [Test]
+    public void CanPostAsyncWithoutHandler()
+    {
+      TestAsync(wh =>
+      {
+        // Act
+        DossierReq.Async()
+          .OnError(error => Assert.Fail())
+          .OnComplete(() =>
+          {
+            wh.Set();
+          }).Post(MyDossier);
+      });
+    }
+
+
+    [Test]
+    public void CanPostEmptyAsyncWithoutHandler()
+    {
+      TestAsync(wh =>
+      {
+        // Act
+        DossierReq.Async()
+          .OnError(error => Assert.Fail())
+          .OnComplete(() =>
+          {
+            wh.Set();
+          }).Post();
+      });
+    }
+
+
+    [Test]
+    public void CanPostAsyncWithoutHandler_Typed()
+    {
+      TestAsync(wh =>
+      {
+        // Act
+        DossierReq.Async()
+          .OnError(error => Assert.Fail())
+          .OnComplete(() =>
+          {
+            wh.Set();
+          }).Post<Dossier>(MyDossier);
+      });
+    }
+
+
+    [Test]
+    public void CanPostEmptyAsyncWithoutHandler_Typed()
+    {
+      TestAsync(wh =>
+      {
+        // Act
+        DossierReq.Async()
+          .OnError(error => Assert.Fail())
+          .OnComplete(() =>
+          {
+            wh.Set();
+          }).Post<Dossier>();
+      });
+    }
+
+
+    [Test]
+    public void CanPostAsyncWithNullHandler()
+    {
+      TestAsync(wh =>
+      {
+        // Act
+        DossierReq.Async()
+          .OnError(error => Assert.Fail())
+          .OnComplete(() =>
+          {
+            wh.Set();
+          }).Post(MyDossier, null);
+      });
+    }
+
+
+    [Test]
+    public void CanPostEmptyAsyncWithNullHandler()
+    {
+      TestAsync(wh =>
+      {
+        // Act
+        DossierReq.Async()
+          .OnError(error => Assert.Fail())
+          .OnComplete(() =>
+          {
+            wh.Set();
+          }).Post(null);
+      });
+    }
+
+
+    [Test]
+    public void CanPostAsyncWithNullHandler_Typed()
+    {
+      TestAsync(wh =>
+      {
+        // Act
+        DossierReq.Async()
+          .OnError(error => Assert.Fail())
+          .OnComplete(() =>
+          {
+            wh.Set();
+          }).Post<Dossier>(MyDossier, null);
+      });
+    }
+
+
+    [Test]
+    public void CanPostEmptyAsyncWithNullHandler_Typed()
+    {
+      TestAsync(wh =>
+      {
+        // Act
+        DossierReq.Async()
+          .OnError(error => Assert.Fail())
+          .OnComplete(() =>
+          {
+            wh.Set();
+          }).Post<Dossier>(null);
+      });
     }
   }
 }
