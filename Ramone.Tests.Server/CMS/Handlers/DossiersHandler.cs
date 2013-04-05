@@ -12,6 +12,7 @@ namespace Ramone.Tests.Server.CMS.Handlers
     public ICommunicationContext Context { get; set; }
 
 
+    [HttpOperation(ForUriName="Simple")]
     public Dossier Get(long id)
     {
       Party party = new PartyHandler().Get(19);
@@ -30,6 +31,15 @@ namespace Ramone.Tests.Server.CMS.Handlers
     }
 
 
+    [HttpOperation(ForUriName = "Verified")]
+    public Dossier Get(string method, long id)
+    {
+      if (method != "GET")
+        throw new InvalidOperationException(string.Format("Unexpected method (should have been {0}, was GET'.", method));
+      return Get(id);
+    }
+
+    
     public OperationResult Post(Dossier dossier)
     {
       Dossier d = new Dossier

@@ -209,7 +209,7 @@ namespace Ramone
     {
       if (callback != null)
         ResponseCallback = (r => callback(new Response<TResponse>(r, r.RedirectCount)));
-      DoRequest("DELETE");
+      DoRequest("GET");
     }
 
     #endregion DELETE

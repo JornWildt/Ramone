@@ -11,8 +11,8 @@ namespace Ramone.Tests.Server.CMS
     public static void Configure()
     {
       ResourceSpace.Has.ResourcesOfType<Dossier>()
-          .AtUri(CMSConstants.DossierPath)
-          .And.AtUri(CMSConstants.VerifiedMethodDossierPath)
+          .AtUri(CMSConstants.DossierPath).Named("Simple")
+          .And.AtUri(CMSConstants.VerifiedMethodDossierPath).Named("Verified")
           .And.AtUri(CMSConstants.DossiersPath)
           .And.AtUri(CMSConstants.VerifiedMethodDossiersPath)
           .HandledBy<DossiersHandler>()

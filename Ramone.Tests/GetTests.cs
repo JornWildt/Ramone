@@ -12,6 +12,16 @@ namespace Ramone.Tests
   [TestFixture]
   public class GetTests : TestHelper
   {
+    Request DossierReq;
+
+
+    protected override void SetUp()
+    {
+      base.SetUp();
+      DossierReq = Session.Bind(VerifiedMethodDossierTemplate, new { id = 8, method = "GET" });
+    }
+
+
     [Test]
     public void CanGetDossier()
     {
@@ -102,20 +112,20 @@ namespace Ramone.Tests
       });
     }
 
+    #region GET with empty/null callbacks
 
     [Test]
     public void CanGetAsyncWithoutHandler()
     {
-      // Arrange
-      Request dossierReq = Session.Bind(DossierTemplate, new { id = 8 });
-
       TestAsync(wh =>
       {
         // Act
-        dossierReq.Async().OnComplete(() =>
-        {
-          wh.Set();
-        }).Get();
+        DossierReq.Async()
+          .OnError(error => Assert.Fail())
+          .OnComplete(() =>
+          {
+            wh.Set();
+          }).Get();
       });
     }
 
@@ -123,16 +133,15 @@ namespace Ramone.Tests
     [Test]
     public void CanGetAsyncWithoutHandler_Typed()
     {
-      // Arrange
-      Request dossierReq = Session.Bind(DossierTemplate, new { id = 8 });
-
       TestAsync(wh =>
       {
         // Act
-        dossierReq.Async().OnComplete(() =>
-        {
-          wh.Set();
-        }).Get<string>();
+        DossierReq.Async()
+          .OnError(error => Assert.Fail())
+          .OnComplete(() =>
+          {
+            wh.Set();
+          }).Get<string>();
       });
     }
 
@@ -140,16 +149,15 @@ namespace Ramone.Tests
     [Test]
     public void CanGetAsyncWithNullHandler()
     {
-      // Arrange
-      Request dossierReq = Session.Bind(DossierTemplate, new { id = 8 });
-
       TestAsync(wh =>
       {
         // Act
-        dossierReq.Async().OnComplete(() =>
-        {
-          wh.Set();
-        }).Get(null);
+        DossierReq.Async()
+          .OnError(error => Assert.Fail())
+          .OnComplete(() =>
+          {
+            wh.Set();
+          }).Get(null);
       });
     }
 
@@ -157,18 +165,19 @@ namespace Ramone.Tests
     [Test]
     public void CanGetAsyncWithNullHandler_Typed()
     {
-      // Arrange
-      Request dossierReq = Session.Bind(DossierTemplate, new { id = 8 });
-
       TestAsync(wh =>
       {
         // Act
-        dossierReq.Async().OnComplete(() =>
-        {
-          wh.Set();
-        }).Get<string>(null);
+        DossierReq.Async()
+          .OnError(error => Assert.Fail())
+          .OnComplete(() =>
+          {
+            wh.Set();
+          }).Get<string>(null);
       });
     }
+
+    #endregion
 
 
     [Test]
