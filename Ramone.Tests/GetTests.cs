@@ -112,73 +112,6 @@ namespace Ramone.Tests
       });
     }
 
-    #region GET with empty/null callbacks
-
-    [Test]
-    public void CanGetAsyncWithoutHandler()
-    {
-      TestAsync(wh =>
-      {
-        // Act
-        DossierReq.Async()
-          .OnError(error => Assert.Fail())
-          .OnComplete(() =>
-          {
-            wh.Set();
-          }).Get();
-      });
-    }
-
-
-    [Test]
-    public void CanGetAsyncWithoutHandler_Typed()
-    {
-      TestAsync(wh =>
-      {
-        // Act
-        DossierReq.Async()
-          .OnError(error => Assert.Fail())
-          .OnComplete(() =>
-          {
-            wh.Set();
-          }).Get<string>();
-      });
-    }
-
-
-    [Test]
-    public void CanGetAsyncWithNullHandler()
-    {
-      TestAsync(wh =>
-      {
-        // Act
-        DossierReq.Async()
-          .OnError(error => Assert.Fail())
-          .OnComplete(() =>
-          {
-            wh.Set();
-          }).Get(null);
-      });
-    }
-
-
-    [Test]
-    public void CanGetAsyncWithNullHandler_Typed()
-    {
-      TestAsync(wh =>
-      {
-        // Act
-        DossierReq.Async()
-          .OnError(error => Assert.Fail())
-          .OnComplete(() =>
-          {
-            wh.Set();
-          }).Get<string>(null);
-      });
-    }
-
-    #endregion
-
 
     [Test]
     public void CanGetDossierWithDictionaryParams()
@@ -288,5 +221,73 @@ namespace Ramone.Tests
       AssertThrows<InvalidOperationException>(() => dossierReq.Charset("utf-8").Get());
       AssertThrows<InvalidOperationException>(() => dossierReq.Charset("utf-8").Get<Dossier>());
     }
+
+
+    #region GET with empty/null callbacks
+
+    [Test]
+    public void CanGetAsyncWithoutHandler()
+    {
+      TestAsync(wh =>
+      {
+        // Act
+        DossierReq.Async()
+          .OnError(error => Assert.Fail())
+          .OnComplete(() =>
+          {
+            wh.Set();
+          }).Get();
+      });
+    }
+
+
+    [Test]
+    public void CanGetAsyncWithoutHandler_Typed()
+    {
+      TestAsync(wh =>
+      {
+        // Act
+        DossierReq.Async()
+          .OnError(error => Assert.Fail())
+          .OnComplete(() =>
+          {
+            wh.Set();
+          }).Get<string>();
+      });
+    }
+
+
+    [Test]
+    public void CanGetAsyncWithNullHandler()
+    {
+      TestAsync(wh =>
+      {
+        // Act
+        DossierReq.Async()
+          .OnError(error => Assert.Fail())
+          .OnComplete(() =>
+          {
+            wh.Set();
+          }).Get(null);
+      });
+    }
+
+
+    [Test]
+    public void CanGetAsyncWithNullHandler_Typed()
+    {
+      TestAsync(wh =>
+      {
+        // Act
+        DossierReq.Async()
+          .OnError(error => Assert.Fail())
+          .OnComplete(() =>
+          {
+            wh.Set();
+          }).Get<string>(null);
+      });
+    }
+
+    #endregion
   }
 }
