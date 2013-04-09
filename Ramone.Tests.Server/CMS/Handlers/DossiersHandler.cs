@@ -133,6 +133,7 @@ namespace Ramone.Tests.Server.CMS.Handlers
     }
 
 
+    [HttpOperation(ForUriName = "Simple")]
     public object Head(long id)
     {
       HttpContext.Current.Response.Headers["X-ExtraHeader"] = "1";
@@ -140,11 +141,29 @@ namespace Ramone.Tests.Server.CMS.Handlers
     }
 
 
+    [HttpOperation(ForUriName = "Verified")]
+    public object Head(string method, long id)
+    {
+      if (method != "HEAD")
+        throw new InvalidOperationException(string.Format("Unexpected method (should have been {0}, was HEAD'.", method));
+      return Head(id);
+    }
+
+
+    [HttpOperation(ForUriName = "Simple")]
     public object Options(long id)
     {
       HttpContext.Current.Response.Headers["X-ExtraHeader"] = "2";
-
       return "Yes";
    }
+
+
+    [HttpOperation(ForUriName = "Verified")]
+    public object Options(string method, long id)
+    {
+      if (method != "OPTIONS")
+        throw new InvalidOperationException(string.Format("Unexpected method (should have been {0}, was OPTIONS'.", method));
+      return Options(id);
+    }
   }
 }

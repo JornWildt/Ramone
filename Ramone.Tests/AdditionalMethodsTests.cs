@@ -33,6 +33,7 @@ namespace Ramone.Tests
       {
         // Act
         dossierReq.Async()
+          .OnError(error => Assert.Fail())
           .OnComplete(() => wh.Set())
           .Head(response =>
           {
@@ -44,83 +45,35 @@ namespace Ramone.Tests
 
 
     [Test]
-    public void CanDoOptions()
+    public void CanDoAsyncHeadWithEmptyHandler()
     {
       // Arrange
-      Request dossierReq = Session.Bind(DossierTemplate, new { id = 8 });
-
-      // Act
-      using (Response response = dossierReq.Options())
-      {
-        // Assert
-        Assert.IsNotNull(response);
-        Assert.AreEqual("2", response.Headers["X-ExtraHeader"]);
-      }
-    }
-
-
-    [Test]
-    public void CanDoOptions_Async()
-    {
-      // Arrange
-      Request dossierReq = Session.Bind(DossierTemplate, new { id = 8 });
+      Request dossierReq = Session.Bind(VerifiedMethodDossierTemplate, new { id = 8, method = "HEAD" });
 
       TestAsync(wh =>
       {
         // Act
         dossierReq.Async()
+          .OnError(error => Assert.Fail())
           .OnComplete(() => wh.Set())
-          .Options(response =>
-          {
-            // Assert
-            Assert.AreEqual("2", response.Headers["X-ExtraHeader"]);
-          });
+          .Head();
       });
     }
 
 
     [Test]
-    public void CanDoOptionsWithBody()
+    public void CanDoAsyncHeadWithNullHandler()
     {
       // Arrange
-      Request dossierReq = Session.Bind(DossierTemplate, new { id = 8 });
-
-      // Act
-      using (Response<string> response1 = dossierReq.Options<string>())
-      using (Response<string> response2 = dossierReq.Accept<string>().Options())
-      using (Response response3 = dossierReq.Accept("text/plain").Options())
-      {
-        // Assert
-        Assert.IsNotNull(response1);
-        Assert.IsNotNull(response2);
-        Assert.IsNotNull(response3);
-        Assert.AreEqual("2", response1.Headers["X-ExtraHeader"]);
-        Assert.AreEqual("2", response2.Headers["X-ExtraHeader"]);
-        Assert.AreEqual("2", response3.Headers["X-ExtraHeader"]);
-        Assert.AreEqual("Yes", response1.Body);
-        Assert.AreEqual("Yes", response2.Body);
-        Assert.AreEqual("Yes", response3.Decode<string>());
-      }
-    }
-
-
-    [Test]
-    public void CanDoOptionsWithBody_Async()
-    {
-      // Arrange
-      Request dossierReq = Session.Bind(DossierTemplate, new { id = 8 });
+      Request dossierReq = Session.Bind(VerifiedMethodDossierTemplate, new { id = 8, method = "HEAD" });
 
       TestAsync(wh =>
       {
         // Act
         dossierReq.Async()
+          .OnError(error => Assert.Fail())
           .OnComplete(() => wh.Set())
-          .Options<string>(response =>
-          {
-            // Assert
-            Assert.AreEqual("2", response.Headers["X-ExtraHeader"]);
-            Assert.AreEqual("Yes", response.Body);
-          });
+          .Head(null);
       });
     }
   }

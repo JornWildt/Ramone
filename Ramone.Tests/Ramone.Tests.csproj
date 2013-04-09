@@ -111,6 +111,7 @@
     <Compile Include="OAuth2\OAuth2ResourceOwnerPasswordCredentialsGrantTests.cs" />
     <Compile Include="OAuth2\OAuth2Tests.cs" />
     <Compile Include="OAuth2\TestHelper.cs" />
+    <Compile Include="OptionsTests.cs" />
     <Compile Include="PatchTests.cs" />
     <Compile Include="DefaultContentTypeTests.cs" />
     <Compile Include="ExceptionHandlingTests.cs" />

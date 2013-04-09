@@ -8,6 +8,16 @@ namespace Ramone.Tests
   [TestFixture]
   public class GenericMethodTests : TestHelper
   {
+    Request DossierReq;
+
+
+    protected override void SetUp()
+    {
+      base.SetUp();
+      DossierReq = Session.Bind(VerifiedMethodDossiersUrl, new { method = "POST" });
+    }
+
+    
     [Test]
     public void CanExecuteGetWithGenericResult()
     {
@@ -171,5 +181,137 @@ namespace Ramone.Tests
           });
       });
     }
+
+
+    #region EXECUTE-ANY with null/empty callback handlers
+
+    [Test]
+    public void CanExecuteAsyncWithoutHandler()
+    {
+      TestAsync(wh =>
+      {
+        // Act
+        DossierReq.Async()
+          .OnError(error => Assert.Fail())
+          .OnComplete(() =>
+          {
+            wh.Set();
+          }).Execute("POST", MyDossier);
+      });
+    }
+
+
+    [Test]
+    public void CanExecuteEmptyAsyncWithoutHandler()
+    {
+      TestAsync(wh =>
+      {
+        // Act
+        DossierReq.Async()
+          .OnError(error => Assert.Fail())
+          .OnComplete(() =>
+          {
+            wh.Set();
+          }).Execute("POST");
+      });
+    }
+
+
+    [Test]
+    public void CanExecuteAsyncWithoutHandler_Typed()
+    {
+      TestAsync(wh =>
+      {
+        // Act
+        DossierReq.Async()
+          .OnError(error => Assert.Fail())
+          .OnComplete(() =>
+          {
+            wh.Set();
+          }).Execute<Dossier>("POST", MyDossier);
+      });
+    }
+
+
+    [Test]
+    public void CanExecuteEmptyAsyncWithoutHandler_Typed()
+    {
+      TestAsync(wh =>
+      {
+        // Act
+        DossierReq.Async()
+          .OnError(error => Assert.Fail())
+          .OnComplete(() =>
+          {
+            wh.Set();
+          }).Execute<Dossier>("POST");
+      });
+    }
+
+
+    [Test]
+    public void CanExecuteAsyncWithNullHandler()
+    {
+      TestAsync(wh =>
+      {
+        // Act
+        DossierReq.Async()
+          .OnError(error => Assert.Fail())
+          .OnComplete(() =>
+          {
+            wh.Set();
+          }).Execute("POST", MyDossier, null);
+      });
+    }
+
+
+    [Test]
+    public void CanExecuteEmptyAsyncWithNullHandler()
+    {
+      TestAsync(wh =>
+      {
+        // Act
+        DossierReq.Async()
+          .OnError(error => Assert.Fail())
+          .OnComplete(() =>
+          {
+            wh.Set();
+          }).Execute("POST", null);
+      });
+    }
+
+
+    [Test]
+    public void CanExecuteAsyncWithNullHandler_Typed()
+    {
+      TestAsync(wh =>
+      {
+        // Act
+        DossierReq.Async()
+          .OnError(error => Assert.Fail())
+          .OnComplete(() =>
+          {
+            wh.Set();
+          }).Execute<Dossier>("POST", MyDossier, null);
+      });
+    }
+
+
+    [Test]
+    public void CanExecuteEmptyAsyncWithNullHandler_Typed()
+    {
+      TestAsync(wh =>
+      {
+        // Act
+        DossierReq.Async()
+          .OnError(error => Assert.Fail())
+          .OnComplete(() =>
+          {
+            wh.Set();
+          }).Execute<Dossier>("POST", null);
+      });
+    }
+
+    #endregion
   }
 }

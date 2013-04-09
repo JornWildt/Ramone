@@ -277,6 +277,14 @@ namespace Ramone
 
     #endregion PATCH
 
+    #region HEAD
+
+    public override Response Head()
+    {
+      Head(null);
+      return null;
+    }
+
 
     public virtual void Head(Action<Response> callback)
     {
@@ -284,11 +292,22 @@ namespace Ramone
       DoRequest("HEAD");
     }
 
+    #endregion
 
-    public virtual void Options<TResponse>(Action<Response<TResponse>> callback) where TResponse : class
+
+    #region OPTIONS
+
+    public override Response Options()
     {
-      ResponseCallback = (r => callback(new Response<TResponse>(r, r.RedirectCount)));
-      DoRequest("OPTIONS");
+      Options(null);
+      return null;
+    }
+
+
+    public override Response<TResponse> Options<TResponse>()
+    {
+      Options<TResponse>(null);
+      return null;
     }
 
 
@@ -299,30 +318,46 @@ namespace Ramone
     }
 
 
+    public virtual void Options<TResponse>(Action<Response<TResponse>> callback) where TResponse : class
+    {
+      if (callback != null)
+        ResponseCallback = (r => callback(new Response<TResponse>(r, r.RedirectCount)));
+      DoRequest("OPTIONS");
+    }
+
+    #endregion OPTIONS
+
+
     #endregion Standard methods
 
 
     #region Generic methods
 
-    public virtual void Execute<TResponse>(string method, Action<Response<TResponse>> callback) where TResponse : class
+    public override Response Execute(string method, object body)
     {
-      ResponseCallback = (r => callback(new Response<TResponse>(r, r.RedirectCount)));
-      DoRequest(method);
+      Execute(method, body, null);
+      return null;
     }
 
 
-    public virtual void Execute(string method, Action<Response> callback)
+    public override Response Execute(string method)
     {
-      ResponseCallback = callback;
-      DoRequest(method);
+      Execute(method, null, null);
+      return null;
     }
 
 
-    public virtual void Execute<TResponse>(string method, object body, Action<Response<TResponse>> callback) where TResponse : class
+    public override Response<TResponse> Execute<TResponse>(string method, object body)
     {
-      Body(body);
-      ResponseCallback = (r => callback(new Response<TResponse>(r, r.RedirectCount)));
-      DoRequest(method);
+      Execute<TResponse>(method, body, null);
+      return null;
+    }
+
+
+    public override Response<TResponse> Execute<TResponse>(string method)
+    {
+      Execute<TResponse>(method, null, null);
+      return null;
     }
 
 
@@ -334,45 +369,29 @@ namespace Ramone
     }
 
 
-    #endregion
-
-
-    #region Disable standard methods from base class
-
-    public override Response Options()
+    public virtual void Execute(string method, Action<Response> callback)
     {
-      throw new InvalidOperationException("Synchronous OPTIONS operation is not supported on Asynchronous requests.");
+      ResponseCallback = callback;
+      DoRequest(method);
     }
 
-    public override Response<TResponse> Options<TResponse>()
+
+    public virtual void Execute<TResponse>(string method, Action<Response<TResponse>> callback) where TResponse : class
     {
-      throw new InvalidOperationException("Synchronous OPTIONS operation is not supported on Asynchronous requests.");
+      if (callback != null)
+        ResponseCallback = (r => callback(new Response<TResponse>(r, r.RedirectCount)));
+      DoRequest(method);
     }
 
-    public override Response Head()
+
+    public virtual void Execute<TResponse>(string method, object body, Action<Response<TResponse>> callback) where TResponse : class
     {
-      throw new InvalidOperationException("Synchronous HEAD operation is not supported on Asynchronous requests.");
+      Body(body);
+      if (callback != null)
+        ResponseCallback = (r => callback(new Response<TResponse>(r, r.RedirectCount)));
+      DoRequest(method);
     }
 
-    public override Response Execute(string method)
-    {
-      throw new InvalidOperationException("Synchronous operation is not supported on Asynchronous requests.");
-    }
-
-    public override Response<TResponse> Execute<TResponse>(string method)
-    {
-      throw new InvalidOperationException("Synchronous operation is not supported on Asynchronous requests.");
-    }
-
-    public override Response Execute(string method, object body)
-    {
-      throw new InvalidOperationException("Synchronous operation is not supported on Asynchronous requests.");
-    }
-
-    public override Response<TResponse> Execute<TResponse>(string method, object body)
-    {
-      throw new InvalidOperationException("Synchronous operation is not supported on Asynchronous requests.");
-    }
 
     #endregion
 
