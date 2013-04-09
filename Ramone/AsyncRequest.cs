@@ -5,7 +5,7 @@ using System.IO;
 
 namespace Ramone
 {
-  public class AsyncRequest : Request
+  public class AsyncRequest : BaseRequest
   {
     private Action<Response> ResponseCallback { get; set; }
 
@@ -19,21 +19,17 @@ namespace Ramone
     }
 
 
-    #region Standard methods
-
     #region GET
 
-    public override Response Get()
+    public void Get()
     {
       Get(null);
-      return null;
     }
 
 
-    public override Response<TResponse> Get<TResponse>()
+    public void Get<TResponse>() where TResponse : class
     {
       Get<TResponse>(null);
-      return null;
     }
 
 
@@ -56,37 +52,33 @@ namespace Ramone
 
     #region POST
 
-    public override Response Post(object body)
+    public void Post(object body)
     {
       Post(body, null);
-      return null;
     }
 
     
-    public override Response Post()
+    public void Post()
     {
       Post(null, null);
-      return null;
     }
 
-    
-    public override Response<TResponse> Post<TResponse>(object body)
+
+    public void Post<TResponse>(object body) where TResponse : class
     {
       Post<TResponse>(body, null);
-      return null;
     }
 
-    
-    public override Response<TResponse> Post<TResponse>()
+
+    public void Post<TResponse>() where TResponse : class
     {
       Post<TResponse>(null, null);
-      return null;
     }
 
 
     public virtual void Post(object body, Action<Response> callback)
     {
-      Body(body);
+      SetBody(body);
       ResponseCallback = callback;
       DoRequest("POST");
     }
@@ -109,7 +101,7 @@ namespace Ramone
 
     public virtual void Post<TResponse>(object body, Action<Response<TResponse>> callback) where TResponse : class
     {
-      Body(body);
+      SetBody(body);
       if (callback != null)
         ResponseCallback = (r => callback(new Response<TResponse>(r, r.RedirectCount)));
       DoRequest("POST");
@@ -120,37 +112,33 @@ namespace Ramone
 
     #region PUT
 
-    public override Response Put(object body)
+    public void Put(object body)
     {
       Put(body, null);
-      return null;
     }
 
     
-    public override Response Put()
+    public void Put()
     {
       Put(null, null);
-      return null;
     }
 
-    
-    public override Response<TResponse> Put<TResponse>(object body)
+
+    public void Put<TResponse>(object body) where TResponse : class
     {
       Put<TResponse>(body, null);
-      return null;
     }
 
-    
-    public override Response<TResponse> Put<TResponse>()
+
+    public void Put<TResponse>() where TResponse : class
     {
       Put<TResponse>(null, null);
-      return null;
     }
 
 
     public virtual void Put(object body, Action<Response> callback)
     {
-      Body(body);
+      SetBody(body);
       ResponseCallback = callback;
       DoRequest("PUT");
     }
@@ -173,7 +161,7 @@ namespace Ramone
 
     public virtual void Put<TResponse>(object body, Action<Response<TResponse>> callback) where TResponse : class
     {
-      Body(body);
+      SetBody(body);
       if (callback != null)
         ResponseCallback = (r => callback(new Response<TResponse>(r, r.RedirectCount)));
       DoRequest("PUT");
@@ -184,17 +172,15 @@ namespace Ramone
 
     #region DELETE
 
-    public override Response Delete()
+    public void Delete()
     {
       Delete(null);
-      return null;
     }
 
 
-    public override Response<TResponse> Delete<TResponse>()
+    public void Delete<TResponse>() where TResponse : class
     {
       Delete<TResponse>(null);
-      return null;
     }
 
 
@@ -214,39 +200,36 @@ namespace Ramone
 
     #endregion DELETE
 
+
     #region PATCH
 
-    public override Response Patch(object body)
+    public void Patch(object body)
     {
       Patch(body, null);
-      return null;
     }
 
 
-    public override Response Patch()
+    public void Patch()
     {
       Patch(null, null);
-      return null;
     }
 
 
-    public override Response<TResponse> Patch<TResponse>(object body)
+    public void Patch<TResponse>(object body) where TResponse : class
     {
       Patch<TResponse>(body, null);
-      return null;
     }
 
 
-    public override Response<TResponse> Patch<TResponse>()
+    public void Patch<TResponse>() where TResponse : class
     {
       Patch<TResponse>(null, null);
-      return null;
     }
 
 
     public virtual void Patch(object body, Action<Response> callback)
     {
-      Body(body);
+      SetBody(body);
       ResponseCallback = callback;
       DoRequest("PATCH");
     }
@@ -269,7 +252,7 @@ namespace Ramone
 
     public virtual void Patch<TResponse>(object body, Action<Response<TResponse>> callback) where TResponse : class
     {
-      Body(body);
+      SetBody(body);
       if (callback != null)
         ResponseCallback = (r => callback(new Response<TResponse>(r, r.RedirectCount)));
       DoRequest("PATCH");
@@ -277,12 +260,12 @@ namespace Ramone
 
     #endregion PATCH
 
+    
     #region HEAD
 
-    public override Response Head()
+    public void Head()
     {
       Head(null);
-      return null;
     }
 
 
@@ -297,17 +280,15 @@ namespace Ramone
 
     #region OPTIONS
 
-    public override Response Options()
+    public void Options()
     {
       Options(null);
-      return null;
     }
 
 
-    public override Response<TResponse> Options<TResponse>()
+    public void Options<TResponse>() where TResponse : class
     {
       Options<TResponse>(null);
-      return null;
     }
 
 
@@ -328,42 +309,35 @@ namespace Ramone
     #endregion OPTIONS
 
 
-    #endregion Standard methods
-
-
     #region Generic methods
 
-    public override Response Execute(string method, object body)
+    public void Execute(string method, object body)
     {
       Execute(method, body, null);
-      return null;
     }
 
 
-    public override Response Execute(string method)
+    public void Execute(string method)
     {
       Execute(method, null, null);
-      return null;
     }
 
 
-    public override Response<TResponse> Execute<TResponse>(string method, object body)
+    public void Execute<TResponse>(string method, object body) where TResponse : class
     {
       Execute<TResponse>(method, body, null);
-      return null;
     }
 
 
-    public override Response<TResponse> Execute<TResponse>(string method)
+    public void Execute<TResponse>(string method) where TResponse : class
     {
       Execute<TResponse>(method, null, null);
-      return null;
     }
 
 
     public virtual void Execute(string method, object body, Action<Response> callback)
     {
-      Body(body);
+      SetBody(body);
       ResponseCallback = callback;
       DoRequest(method);
     }
@@ -386,7 +360,7 @@ namespace Ramone
 
     public virtual void Execute<TResponse>(string method, object body, Action<Response<TResponse>> callback) where TResponse : class
     {
-      Body(body);
+      SetBody(body);
       if (callback != null)
         ResponseCallback = (r => callback(new Response<TResponse>(r, r.RedirectCount)));
       DoRequest(method);

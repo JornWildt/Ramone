@@ -88,6 +88,7 @@
     <Compile Include="AsyncError.cs" />
     <Compile Include="AsyncRequest.cs" />
     <Compile Include="AuthorizationExtensions.cs" />
+    <Compile Include="BaseRequest.cs" />
     <Compile Include="BindingExtensions.cs" />
     <Compile Include="CodecManagerExtensions.cs" />
     <Compile Include="ConnectionStatistics.cs" />
