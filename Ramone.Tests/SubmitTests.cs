@@ -10,18 +10,70 @@ namespace Ramone.Tests
   [TestFixture]
   public class SubmitTests : TestHelper
   {
+    Request DossierReq;
+
+
+    protected override void SetUp()
+    {
+      base.SetUp();
+      DossierReq = Session.Bind(VerifiedMethodDossierTemplate, new { method = "GET", id = 8 });
+    }
+
+    
     [Test]
     public void CanRememberGetForNextSubmit_generic()
     {
-      // Arrange
-      Request dossierReq = Session.Bind(DossierTemplate, new { id = 8 });
-
       // Act
-      using (var dossier = dossierReq.Method("Get").Submit<Dossier>())
+      using (var r = DossierReq.Method("Get").Submit<Dossier>())
       {
         // Assert
-        Assert.AreEqual(8, dossier.Body.Id);
+        Assert.AreEqual(8, r.Body.Id);
       }
+    }
+
+
+    [Test]
+    public void CanRememberGetForNextSubmit_generic_async()
+    {
+      // Act
+      TestAsync(wh =>
+        {
+          DossierReq.Method("GET").Async()
+            .OnError(e => Assert.Fail())
+            .OnComplete(() => wh.Set())
+            .Submit<Dossier>(r => 
+            {
+              Assert.AreEqual(8, r.Body.Id);
+            });
+        });
+    }
+
+
+    [Test]
+    public void CanRememberGetForNextSubmitWithEmptyHandler_generic_async()
+    {
+      // Act
+      TestAsync(wh =>
+      {
+        DossierReq.Method("GET").Async()
+          .OnError(e => Assert.Fail())
+          .OnComplete(() => wh.Set())
+          .Submit<Dossier>();
+      });
+    }
+
+
+    [Test]
+    public void CanRememberGetForNextSubmitWithEmptyHandler_untyped_async()
+    {
+      // Act
+      TestAsync(wh =>
+      {
+        DossierReq.Method("GET").Async()
+          .OnError(e => Assert.Fail())
+          .OnComplete(() => wh.Set())
+          .Submit();
+      });
     }
 
 
@@ -39,11 +91,8 @@ namespace Ramone.Tests
     [Test]
     public void CanRememberGetForNextSubmit_untyped()
     {
-      // Arrange
-      Request dossierReq = Session.Bind(DossierTemplate, new { id = 8 });
-
       // Act
-      using (var r = dossierReq.Method("Get").Submit())
+      using (var r = DossierReq.Method("Get").Submit())
       {
         Dossier dossier = r.Decode<Dossier>();
 
@@ -54,13 +103,28 @@ namespace Ramone.Tests
 
 
     [Test]
+    public void CanRememberGetForNextSubmit_untyped_async()
+    {
+      // Act
+      TestAsync(wh =>
+      {
+        DossierReq.Method("GET").Async()
+          .OnError(e => Assert.Fail())
+          .OnComplete(() => wh.Set())
+          .Submit(r =>
+          {
+            Dossier dossier = r.Decode<Dossier>();
+            Assert.AreEqual(8, dossier.Id);
+          });
+      });
+    }
+
+
+    [Test]
     public void WhenNoMethodIsSetThenSubmitThrows_untyped()
     {
-      // Arrange
-      Request dossierReq = Session.Bind(DossierTemplate, new { id = 8 });
-
       // Act
-      AssertThrows<InvalidOperationException>(() => dossierReq.Submit());
+      AssertThrows<InvalidOperationException>(() => DossierReq.Submit());
     }
   }
 }

@@ -284,7 +284,7 @@ namespace Ramone
 
 
     /// <summary>
-    /// Submit request using previously registered method.
+    /// Submit request using previously registered method and payload.
     /// </summary>
     /// <typeparam name="TResponse"></typeparam>
     /// <returns></returns>

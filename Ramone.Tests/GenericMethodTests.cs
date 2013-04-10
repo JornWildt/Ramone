@@ -14,7 +14,7 @@ namespace Ramone.Tests
     protected override void SetUp()
     {
       base.SetUp();
-      DossierReq = Session.Bind(VerifiedMethodDossiersUrl, new { method = "POST" });
+      DossierReq = Session.Bind(VerifiedMethodDossierTemplate, new { method = "POST", id = 8 });
     }
 
     

@@ -135,14 +135,14 @@ namespace Ramone
     }
 
 
-    protected Response<TResponse> DoRequest<TResponse>(string method, int retryLevel = 0) where TResponse : class
+    protected virtual Response<TResponse> DoRequest<TResponse>(string method, int retryLevel = 0) where TResponse : class
     {
       Response r = DoRequest(Url, method, true, req => req.Accept = GetAcceptHeader(typeof(TResponse)), retryLevel);
       return new Response<TResponse>(r, r.RedirectCount);
     }
 
 
-    protected Response DoRequest(string method, int retryLevel = 0)
+    protected virtual Response DoRequest(string method, int retryLevel = 0)
     {
       return DoRequest(Url, method, true, req => req.Accept = GetAcceptHeader(null), retryLevel);
     }

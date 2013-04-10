@@ -367,6 +367,50 @@ namespace Ramone
     }
 
 
+    /// <summary>
+    /// Submit request using previously registered method and payload.
+    /// </summary>
+    public virtual void Submit()
+    {
+      Submit(null);
+    }
+
+
+    /// <summary>
+    /// Submit request using previously registered method and payload.
+    /// </summary>
+    /// <typeparam name="TResponse"></typeparam>
+    public virtual void Submit<TResponse>() where TResponse : class
+    {
+      Submit<TResponse>(null);
+    }
+
+
+    /// <summary>
+    /// Submit request using previously registered method payload.
+    /// </summary>
+    public virtual void Submit(Action<Response> callback)
+    {
+      if (string.IsNullOrEmpty(SubmitMethod))
+        throw new InvalidOperationException("Missing method for Submit(). Call Method() first.");
+      ResponseCallback = callback;
+      DoRequest(SubmitMethod);
+    }
+
+
+    /// <summary>
+    /// Submit request using previously registered method payload.
+    /// </summary>
+    /// <typeparam name="TResponse"></typeparam>
+    public virtual void Submit<TResponse>(Action<Response<TResponse>> callback) where TResponse : class
+    {
+      if (string.IsNullOrEmpty(SubmitMethod))
+        throw new InvalidOperationException("Missing method for Submit(). Call Method() first.");
+      if (callback != null)
+        ResponseCallback = (r => callback(new Response<TResponse>(r, r.RedirectCount)));
+      DoRequest<TResponse>(SubmitMethod);
+    }
+    
     #endregion
 
 
@@ -386,6 +430,20 @@ namespace Ramone
     {
       ErrorAction = errorAction;
       return this;
+    }
+
+
+    protected override Response DoRequest(string method, int retryLevel = 0)
+    {
+      DoRequest(Url, method, true, req => req.Accept = GetAcceptHeader(null), retryLevel);
+      return null;
+    }
+
+
+    protected override Response<TResponse> DoRequest<TResponse>(string method, int retryLevel = 0)
+    {
+      DoRequest(Url, method, true, req => req.Accept = GetAcceptHeader(null), retryLevel);
+      return null;
     }
 
 

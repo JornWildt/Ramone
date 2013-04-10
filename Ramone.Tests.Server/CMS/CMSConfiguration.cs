@@ -14,7 +14,7 @@ namespace Ramone.Tests.Server.CMS
           .AtUri(CMSConstants.DossierPath).Named("Simple")
           .And.AtUri(CMSConstants.VerifiedMethodDossierPath).Named("Verified")
           .And.AtUri(CMSConstants.DossiersPath)
-          .And.AtUri(CMSConstants.VerifiedMethodDossiersPath)
+          //.And.AtUri(CMSConstants.VerifiedMethodDossiersPath)
           .HandledBy<DossiersHandler>()
           .TranscodedBy<DossierCodec>();
 

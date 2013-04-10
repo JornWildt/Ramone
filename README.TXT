@@ -10,9 +10,11 @@ This means natural support for
 
 - URIs as identifiers for resources.
 - The standard HTTP methods GET, POST, PUT and more.
-- Multiple media types (XML, JSON, HTML, ATOM and more).
+- Multiple media types (XML, JSON, HTML, ATOM, multipart, urlencoded and more).
 - User defined media types.
 - Hyper media controls (linking and key/value forms).
+- Automatic redirect handling.
+- File up/download.
 
 What Ramone does is to wrap the inner workings of HTTP (using .NET's 
 HttpWebRequest/HttpWebResponse classes) and make encoding and decoding easier 
