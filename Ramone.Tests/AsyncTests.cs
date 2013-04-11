@@ -71,5 +71,29 @@ namespace Ramone.Tests
         }).Get(r => { });
       });
     }
+
+
+    [Test]
+    public void WhenExceptionIsThrownInCallbackItCallsErrorHandlerWithRequestAsWellAsCompleteHandler()
+    {
+      Request request = Session.Bind(DossierTemplate, new { id = 8 });
+      AsyncError error = null;
+
+      TestAsync(wh =>
+      {
+        // Act
+        request.Async()
+               .OnError(e => error = e)
+               .OnComplete(() => wh.Set())
+               .Get(r =>
+               {
+                 throw new InvalidOperationException();
+               });
+      });
+
+      Assert.IsNotNull(error);
+      Assert.IsInstanceOf<InvalidOperationException>(error.Exception);
+      Assert.IsNotNull(error.Response);
+    }
   }
 }

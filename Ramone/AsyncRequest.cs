@@ -508,8 +508,7 @@ namespace Ramone
         {
           if (r != null)
           {
-            if (ResponseCallback != null)
-              ResponseCallback(r);
+            TryCallResponseCallback(r);
             if (CompleteAction != null)
               CompleteAction();
           }
@@ -524,6 +523,23 @@ namespace Ramone
             ErrorAction(new AsyncError(ex, new Response((HttpWebResponse)ex.Response, Session, state.RetryLevel)));
           if (CompleteAction != null)
             CompleteAction();
+        }
+      }
+    }
+
+
+    protected void TryCallResponseCallback(Response r)
+    {
+      if (ResponseCallback != null)
+      {
+        try
+        {
+          ResponseCallback(r);
+        }
+        catch (Exception ex)
+        {
+          if (ErrorAction != null)
+            ErrorAction(new AsyncError(ex, r));
         }
       }
     }
