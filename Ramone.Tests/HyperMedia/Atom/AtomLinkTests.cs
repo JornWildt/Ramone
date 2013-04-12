@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using NUnit.Framework;
 using System.ServiceModel.Syndication;
-using Ramone.MediaTypes.Atom;
+using NUnit.Framework;
 using Ramone.HyperMedia;
+using Ramone.MediaTypes.Atom;
+
 
 namespace Ramone.Tests.HyperMedia.Atom
 {
