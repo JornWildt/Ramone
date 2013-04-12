@@ -15,6 +15,7 @@ This means natural support for
 - Hyper media controls (linking and key/value forms).
 - Automatic redirect handling.
 - File up/download.
+- Asynchronous requests
 
 What Ramone does is to wrap the inner workings of HTTP (using .NET's 
 HttpWebRequest/HttpWebResponse classes) and make encoding and decoding easier 
@@ -53,14 +54,20 @@ DOWNLOAD
 --------
 Binaries are available on NuGet and at these links:
 
-  Version 1.0: http://elfisk.dk/Ramone/Ramone-1.0.0.zip
+  Version 1.1: http://elfisk.dk/Ramone/Ramone-1.1.0.zip
 
   Nightly build: http://elfisk.dk/Ramone/Ramone.zip
 
 
+  Version 1.0: http://elfisk.dk/Ramone/Ramone-1.0.0.zip
+
+
 DOCUMENTATION
 -------------
-Some of the documentation is available as a PDF (distributed with the binaries).
+I am trying to write a complete downloadable manual which is available as a PDF. You can
+download that together with the binaries via the links above.
+
+There are online examples on the GitHub wiki: https://github.com/JornWildt/Ramone/wiki/Examples
 
 In addition to this there is a few blog posts:
 
@@ -78,6 +85,9 @@ In addition to this there is a few blog posts:
 
   Using Ramone for OAuth2 authorization with Google APIs
   http://soabits.blogspot.dk/2013/03/using-ramone-for-oauth2-authorization.html
+
+  Asynchronous HTTP requests using Ramone
+  http://soabits.blogspot.dk/2013/04/asynchronous-http-requests-using-ramone.html
 
 The name "Ramone" was inspired by the character "Ramone" in the movie "Cars".
 In the movie Ramone is an easy going car. Hopefully you will find using the 
@@ -122,6 +132,7 @@ SIMILAR PROJECTS
 CONTACT
 -------
 E-Mail: jw@fjeldgruppen.dk
+Twitter: @JornWildt
 
 Please add bug reports as issues on GitHub, thanks.
 
