@@ -72,6 +72,8 @@ namespace Ramone
 
     protected NameValueCollection AdditionalHeaders { get; set; }
 
+    protected DateTime? IfModifiedSinceValue { get; set; }
+
     protected NameValueCollection CodecParameters { get; set; }
 
     #endregion
@@ -179,6 +181,8 @@ namespace Ramone
       request.AllowAutoRedirect = false;
 
       request.Headers.Add(AdditionalHeaders);
+      if (IfModifiedSinceValue != null)
+        request.IfModifiedSince = IfModifiedSinceValue.Value;
 
       if (requestModifier != null)
         requestModifier(request);

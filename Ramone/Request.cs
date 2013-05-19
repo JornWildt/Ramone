@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.IO;
-using System.Net;
+using System.Globalization;
 using CuttingEdge.Conditions;
 
 
@@ -89,9 +86,19 @@ namespace Ramone
     }
 
 
+    public Request IfModifiedSince(DateTime t)
+    {
+      IfModifiedSinceValue = t;
+      return this;
+    }
+
+
     public Request Header(string name, string value)
     {
-      AdditionalHeaders[name] = value;
+      if (name == HeaderConstants.IfModifiedSince)
+        IfModifiedSinceValue = DateTime.ParseExact(value, "r", CultureInfo.InvariantCulture, DateTimeStyles.AssumeUniversal);
+      else
+        AdditionalHeaders[name] = value;
       return this;
     }
 
