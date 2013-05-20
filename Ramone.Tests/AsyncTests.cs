@@ -23,9 +23,9 @@ namespace Ramone.Tests
         request.Async()
                .OnComplete(() => wh.Set())
                .Get(r => 
-        { 
-          ok = true; 
-        });
+                    { 
+                      ok = true; 
+                    });
       });
 
       // Assert

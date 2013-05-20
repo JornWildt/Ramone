@@ -74,6 +74,8 @@ namespace Ramone
 
     protected DateTime? IfModifiedSinceValue { get; set; }
 
+    protected DateTime? IfUnmodifiedSinceValue { get; set; }
+
     protected NameValueCollection CodecParameters { get; set; }
 
     #endregion

@@ -93,6 +93,13 @@ namespace Ramone
     }
 
 
+    public Request IfUnmodifiedSince(DateTime t)
+    {
+      Header(HeaderConstants.IfUnmodifiedSince, t.ToUniversalTime().ToString("r"));
+      return this;
+    }
+
+
     public Request Header(string name, string value)
     {
       if (name == HeaderConstants.IfModifiedSince)

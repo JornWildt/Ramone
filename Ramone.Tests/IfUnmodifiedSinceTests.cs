@@ -10,17 +10,17 @@ using Ramone.Tests.Common;
 namespace Ramone.Tests
 {
   [TestFixture]
-  public class IfModifiedSinceTests : TestHelper
+  public class IfUnmodifiedSinceTests : TestHelper
   {
     [Test]
-    public void CanSetIfModifiedDirectly()
+    public void CanSetIfUnmodifiedDirectly()
     {
       // Arrange
       DateTime since = new DateTime(2013, 5, 1, 10, 22, 11);
       Request request = Session.Request(HeaderListUrl);
 
       // Act
-      request.IfModifiedSince(since);
+      request.IfUnmodifiedSince(since);
 
       // Act
       using (var r = request.Get<HeaderList>())
@@ -28,20 +28,20 @@ namespace Ramone.Tests
         HeaderList headers = r.Body;
 
         // Assert
-        Assert.IsTrue(headers.Any(h => h == "If-Modified-Since: Wed, 01 May 2013 08:22:11 GMT"), "Must contain If-Modified-Since header");
+        Assert.IsTrue(headers.Any(h => h == "If-Unmodified-Since: Wed, 01 May 2013 08:22:11 GMT"), "Must contain If-Unmodified-Since header");
       }
     }
 
 
     [Test]
-    public void CanSetIfModifiedViaHeader()
+    public void CanSetIfUnmodifiedViaHeader()
     {
       // Arrange
       DateTime since = new DateTime(2013, 5, 1, 10, 22, 11);
       Request request = Session.Request(HeaderListUrl);
 
       // Act
-      request.Header("If-Modified-Since", since.ToUniversalTime().ToString("r"));
+      request.Header("If-Unmodified-Since", since.ToUniversalTime().ToString("r"));
 
       // Act
       using (var r = request.Get<HeaderList>())
@@ -49,20 +49,20 @@ namespace Ramone.Tests
         HeaderList headers = r.Body;
 
         // Assert
-        Assert.IsTrue(headers.Any(h => h == "If-Modified-Since: Wed, 01 May 2013 08:22:11 GMT"), "Must contain If-Modified-Since header");
+        Assert.IsTrue(headers.Any(h => h == "If-Unmodified-Since: Wed, 01 May 2013 08:22:11 GMT"), "Must contain If-Unmodified-Since header");
       }
     }
 
 
     [Test]
-    public void CanSetIfModifiedDirectly_Async()
+    public void CanSetIfUnmodifiedDirectly_Async()
     {
       // Arrange
       DateTime since = new DateTime(2013, 5, 1, 10, 22, 11);
       Request request = Session.Request(HeaderListUrl);
 
       // Act
-      request.IfModifiedSince(since);
+      request.IfUnmodifiedSince(since);
 
       // Act
       TestAsync(wh =>
@@ -74,35 +74,35 @@ namespace Ramone.Tests
             HeaderList headers = r.Body;
 
             // Assert
-            Assert.IsTrue(headers.Any(h => h == "If-Modified-Since: Wed, 01 May 2013 08:22:11 GMT"), "Must contain If-Modified-Since header");
+            Assert.IsTrue(headers.Any(h => h == "If-Unmodified-Since: Wed, 01 May 2013 08:22:11 GMT"), "Must contain If-Unmodified-Since header");
           });
       });
     }
 
 
     [Test]
-    public void CanSetIfModifiedViaHeader_Async()
+    public void CanSetIfUnmodifiedViaHeader_Async()
     {
       // Arrange
       DateTime since = new DateTime(2013, 5, 1, 10, 22, 11);
       Request request = Session.Request(HeaderListUrl);
 
       // Act
-      request.Header("If-Modified-Since", since.ToUniversalTime().ToString("r"));
+      request.Header("If-Unmodified-Since", since.ToUniversalTime().ToString("r"));
 
       // Act
       TestAsync(wh =>
-      {
-        request.Async()
-          .OnComplete(() => wh.Set())
-          .Get<HeaderList>(r =>
-          {
-            HeaderList headers = r.Body;
+        {
+          request.Async()
+            .OnComplete(() => wh.Set())
+            .Get<HeaderList>(r =>
+            {
+              HeaderList headers = r.Body;
 
-            // Assert
-            Assert.IsTrue(headers.Any(h => h == "If-Modified-Since: Wed, 01 May 2013 08:22:11 GMT"), "Must contain If-Modified-Since header");
-          });
-      });
+              // Assert
+              Assert.IsTrue(headers.Any(h => h == "If-Unmodified-Since: Wed, 01 May 2013 08:22:11 GMT"), "Must contain If-Unmodified-Since header");
+            });
+        });
     }
   }
 }
