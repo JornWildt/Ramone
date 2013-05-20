@@ -45,6 +45,7 @@ namespace Ramone
       AcceptHeader = src.AcceptHeader;
       SubmitMethod = src.SubmitMethod;
       AdditionalHeaders = new NameValueCollection(src.AdditionalHeaders);
+      IfModifiedSinceValue = src.IfModifiedSinceValue;
       CodecParameters = new NameValueCollection();
     }
 
@@ -73,8 +74,6 @@ namespace Ramone
     protected NameValueCollection AdditionalHeaders { get; set; }
 
     protected DateTime? IfModifiedSinceValue { get; set; }
-
-    protected DateTime? IfUnmodifiedSinceValue { get; set; }
 
     protected NameValueCollection CodecParameters { get; set; }
 

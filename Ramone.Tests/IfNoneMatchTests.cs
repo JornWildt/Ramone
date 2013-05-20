@@ -10,17 +10,17 @@ using Ramone.Tests.Common;
 namespace Ramone.Tests
 {
   [TestFixture]
-  public class IfMatchTests : TestHelper
+  public class IfNoneMatchTests : TestHelper
   {
     [Test]
-    public void CanSetIfMatchDirectly()
+    public void CanSetIfNoneMatchDirectly()
     {
       // Arrange
       string tag = "ab12";
       Request request = Session.Request(HeaderListUrl);
 
       // Act
-      request.IfMatch(tag);
+      request.IfNoneMatch(tag);
 
       // Act
       using (var r = request.Get<HeaderList>())
@@ -28,20 +28,20 @@ namespace Ramone.Tests
         HeaderList headers = r.Body;
 
         // Assert
-        Assert.IsTrue(headers.Any(h => h == "If-Match: ab12"), "Must contain If-Match header");
+        Assert.IsTrue(headers.Any(h => h == "If-None-Match: ab12"), "Must contain If-None-Match header");
       }
     }
 
 
     [Test]
-    public void CanSetIfMatchViaHeader()
+    public void CanSetIfNoneMatchViaHeader()
     {
       // Arrange
       string tag = "ab12";
       Request request = Session.Request(HeaderListUrl);
 
       // Act
-      request.Header("If-Match", tag);
+      request.Header("If-None-Match", tag);
 
       // Act
       using (var r = request.Get<HeaderList>())
@@ -49,20 +49,20 @@ namespace Ramone.Tests
         HeaderList headers = r.Body;
 
         // Assert
-        Assert.IsTrue(headers.Any(h => h == "If-Match: ab12"), "Must contain If-Match header");
+        Assert.IsTrue(headers.Any(h => h == "If-None-Match: ab12"), "Must contain If-None-Match header");
       }
     }
 
 
     [Test]
-    public void CanSetIfMatchWithStarDirectly()
+    public void CanSetIfNoneMatchWithStarDirectly()
     {
       // Arrange
       string tag = "*";
       Request request = Session.Request(HeaderListUrl);
 
       // Act
-      request.IfMatch(tag);
+      request.IfNoneMatch(tag);
 
       // Act
       using (var r = request.Get<HeaderList>())
@@ -70,20 +70,20 @@ namespace Ramone.Tests
         HeaderList headers = r.Body;
 
         // Assert
-        Assert.IsTrue(headers.Any(h => h == "If-Match: *"), "Must contain If-Match header");
+        Assert.IsTrue(headers.Any(h => h == "If-None-Match: *"), "Must contain If-None-Match header");
       }
     }
 
 
     [Test]
-    public void CanSetIfMatchWithListDirectly()
+    public void CanSetIfNoneMatchWithListDirectly()
     {
       // Arrange
       string tag = "\"ab\", \"qw\"";
       Request request = Session.Request(HeaderListUrl);
 
       // Act
-      request.IfMatch(tag);
+      request.IfNoneMatch(tag);
 
       // Act
       using (var r = request.Get<HeaderList>())
@@ -91,20 +91,20 @@ namespace Ramone.Tests
         HeaderList headers = r.Body;
 
         // Assert
-        Assert.IsTrue(headers.Any(h => h == "If-Match: \"ab\", \"qw\""), "Must contain If-Match header");
+        Assert.IsTrue(headers.Any(h => h == "If-None-Match: \"ab\", \"qw\""), "Must contain If-None-Match header");
       }
     }
 
 
     [Test]
-    public void CanSetIfMatchDirectly_Async()
+    public void CanSetIfNoneMatchDirectly_Async()
     {
       // Arrange
       string tag = "ab12";
       Request request = Session.Request(HeaderListUrl);
 
       // Act
-      request.IfMatch(tag);
+      request.IfNoneMatch(tag);
 
       // Act
       TestAsync(wh =>
@@ -115,7 +115,7 @@ namespace Ramone.Tests
             HeaderList headers = r.Body;
 
             // Assert
-            Assert.IsTrue(headers.Any(h => h == "If-Match: ab12"), "Must contain If-Match header");
+            Assert.IsTrue(headers.Any(h => h == "If-None-Match: ab12"), "Must contain If-None-Match header");
             wh.Set();
           });
       });
@@ -123,14 +123,14 @@ namespace Ramone.Tests
 
 
     [Test]
-    public void CanSetIfMatchViaHeader_Async()
+    public void CanSetIfNoneMatchViaHeader_Async()
     {
       // Arrange
       string tag = "ab12";
       Request request = Session.Request(HeaderListUrl);
 
       // Act
-      request.Header("If-Match", tag);
+      request.Header("If-None-Match", tag);
 
       // Act
       TestAsync(wh =>
@@ -141,7 +141,7 @@ namespace Ramone.Tests
             HeaderList headers = r.Body;
 
             // Assert
-            Assert.IsTrue(headers.Any(h => h == "If-Match: ab12"), "Must contain If-Match header");
+            Assert.IsTrue(headers.Any(h => h == "If-None-Match: ab12"), "Must contain If-None-Match header");
             wh.Set();
           });
       });

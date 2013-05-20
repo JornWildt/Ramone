@@ -107,6 +107,13 @@ namespace Ramone
     }
 
 
+    public Request IfNoneMatch(string tag)
+    {
+      Header(HeaderConstants.IfNoneMatch, tag);
+      return this;
+    }
+
+
     public Request Header(string name, string value)
     {
       if (name == HeaderConstants.IfModifiedSince)
