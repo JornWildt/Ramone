@@ -102,6 +102,7 @@
     <Compile Include="Blog\Resources\Post.cs" />
     <Compile Include="Blog\TypedHtmlTests.cs" />
     <Compile Include="HyperMedia\FollowTests.cs" />
+    <Compile Include="IfMatchTests.cs" />
     <Compile Include="IfModifiedSinceTests.cs" />
     <Compile Include="IfUnmodifiedSinceTests.cs" />
     <Compile Include="MediaTypes\JsonPatch\JsonPatchCodecTests.cs" />

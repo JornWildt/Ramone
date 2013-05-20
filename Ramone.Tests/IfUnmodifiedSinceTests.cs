@@ -75,6 +75,7 @@ namespace Ramone.Tests
 
             // Assert
             Assert.IsTrue(headers.Any(h => h == "If-Unmodified-Since: Wed, 01 May 2013 08:22:11 GMT"), "Must contain If-Unmodified-Since header");
+            wh.Set();
           });
       });
     }
@@ -94,13 +95,13 @@ namespace Ramone.Tests
       TestAsync(wh =>
         {
           request.Async()
-            .OnComplete(() => wh.Set())
             .Get<HeaderList>(r =>
             {
               HeaderList headers = r.Body;
 
               // Assert
               Assert.IsTrue(headers.Any(h => h == "If-Unmodified-Since: Wed, 01 May 2013 08:22:11 GMT"), "Must contain If-Unmodified-Since header");
+              wh.Set();
             });
         });
     }
