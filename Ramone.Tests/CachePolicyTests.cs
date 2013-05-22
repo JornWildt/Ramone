@@ -10,7 +10,7 @@ namespace Ramone.Tests
   [TestFixture]
   public class CachePolicyTests : TestHelper
   {
-    HttpRequestCachePolicy Policy = new HttpRequestCachePolicy(HttpRequestCacheLevel.CacheOrNextCacheOnly);
+    RequestCachePolicy Policy = new HttpRequestCachePolicy(HttpRequestCacheLevel.CacheOrNextCacheOnly);
 
 
     [Test]
