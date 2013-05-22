@@ -1,8 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net;
+using System.Net.Cache;
 using System.Text;
 using Ramone.Utility.ObjectSerialization;
-using System.Collections.Generic;
 
 
 namespace Ramone.Implementation
@@ -17,6 +18,8 @@ namespace Ramone.Implementation
     
     public Uri BaseUri { get; protected set; }
 
+    public RequestCachePolicy CachePolicy { get; set; }
+    
     public Encoding DefaultEncoding { get; set; }
 
     public MediaType DefaultRequestMediaType { get; set; }
@@ -61,6 +64,7 @@ namespace Ramone.Implementation
       Service = service;
       UserAgent = service.UserAgent;
       BaseUri = Service.BaseUri;
+      CachePolicy = Service.CachePolicy;
       DefaultEncoding = service.DefaultEncoding;
       DefaultRequestMediaType = service.DefaultRequestMediaType;
       DefaultResponseMediaType = service.DefaultResponseMediaType;

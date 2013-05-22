@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using Ramone.Utility.ObjectSerialization;
+using System.Net.Cache;
 
 
 namespace Ramone
@@ -13,6 +14,8 @@ namespace Ramone
     string UserAgent { get; set; }
 
     Uri BaseUri { get; }
+
+    RequestCachePolicy CachePolicy { get; set; }
 
     Encoding DefaultEncoding { get; set; }
 

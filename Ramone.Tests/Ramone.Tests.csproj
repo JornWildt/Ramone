@@ -101,6 +101,7 @@
     <Compile Include="Blog\Resources\CreatePostDescriptor.cs" />
     <Compile Include="Blog\Resources\Post.cs" />
     <Compile Include="Blog\TypedHtmlTests.cs" />
+    <Compile Include="CachePolicyTests.cs" />
     <Compile Include="HyperMedia\FollowTests.cs" />
     <Compile Include="IfMatchTests.cs" />
     <Compile Include="IfModifiedSinceTests.cs" />
@@ -115,6 +116,7 @@
     <Compile Include="OAuth2\OAuth2ResourceOwnerPasswordCredentialsGrantTests.cs" />
     <Compile Include="OAuth2\OAuth2Tests.cs" />
     <Compile Include="OAuth2\TestHelper.cs" />
+    <Compile Include="OnHeadersReadyTests.cs" />
     <Compile Include="OptionsTests.cs" />
     <Compile Include="PatchTests.cs" />
     <Compile Include="DefaultContentTypeTests.cs" />

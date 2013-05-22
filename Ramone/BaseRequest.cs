@@ -4,6 +4,7 @@ using System.Collections.Specialized;
 using System.IO;
 using System.Net;
 using CuttingEdge.Conditions;
+using System.Net.Cache;
 
 
 namespace Ramone
@@ -46,6 +47,7 @@ namespace Ramone
       SubmitMethod = src.SubmitMethod;
       AdditionalHeaders = new NameValueCollection(src.AdditionalHeaders);
       IfModifiedSinceValue = src.IfModifiedSinceValue;
+      OnHeadersReadyHandler = src.OnHeadersReadyHandler;
       CodecParameters = new NameValueCollection();
     }
 
@@ -76,6 +78,8 @@ namespace Ramone
     protected DateTime? IfModifiedSinceValue { get; set; }
 
     protected NameValueCollection CodecParameters { get; set; }
+
+    protected Action<HttpWebRequest> OnHeadersReadyHandler { get; set; }
 
     #endregion
 
@@ -184,6 +188,8 @@ namespace Ramone
       request.Headers.Add(AdditionalHeaders);
       if (IfModifiedSinceValue != null)
         request.IfModifiedSince = IfModifiedSinceValue.Value;
+      if (Session.CachePolicy != null)
+        request.CachePolicy = Session.CachePolicy;
 
       if (requestModifier != null)
         requestModifier(request);
@@ -238,6 +244,9 @@ namespace Ramone
 
     protected void ApplyHeadersReadyInterceptors(HttpWebRequest request)
     {
+      if (OnHeadersReadyHandler != null)
+        OnHeadersReadyHandler(request);
+
       foreach (KeyValuePair<string, IRequestInterceptor> interceptor in Session.RequestInterceptors)
       {
         interceptor.Value.HeadersReady(new RequestContext(request, Session));

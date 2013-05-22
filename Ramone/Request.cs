@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Globalization;
 using CuttingEdge.Conditions;
+using System.Net;
+using System.Net.Cache;
 
 
 namespace Ramone
@@ -154,6 +156,16 @@ namespace Ramone
       Condition.Requires(key, "key").IsNotNull();
 
       return CodecParameters[key];
+    }
+
+
+    public Request OnHeadersReady(Action<HttpWebRequest> handler)
+    {
+      Condition.Requires(handler, "handler").IsNotNull();
+
+      OnHeadersReadyHandler = handler;
+
+      return this;
     }
 
     #endregion
