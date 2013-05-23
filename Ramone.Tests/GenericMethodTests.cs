@@ -48,12 +48,12 @@ namespace Ramone.Tests
       {
         // Act
         dossierReq.Async()
-          .OnComplete(() => wh.Set())
           .Execute<Dossier>("GET", response =>
-        {
-          // Assert
-          Assert.AreEqual(8, response.Body.Id);
-        });
+          {
+            // Assert
+            Assert.AreEqual(8, response.Body.Id);
+            wh.Set();
+          });
       });
     }
 
@@ -86,11 +86,11 @@ namespace Ramone.Tests
       {
         // Act
         dossierReq.Async()
-          .OnComplete(() => wh.Set())
           .Execute("GET", response =>
           {
             // Assert
             Assert.AreEqual(8, response.Decode<Dossier>().Id);
+            wh.Set();
           });
       });
     }
@@ -135,11 +135,11 @@ namespace Ramone.Tests
       {
         // Act
         dossiersReq.Async()
-          .OnComplete(() => wh.Set())
           .Execute<Dossier>("POST", MyDossier, response =>
           {
             // Assert
             Assert.AreEqual(999, response.Body.Id);
+            wh.Set();
           });
       });
     }
@@ -173,11 +173,11 @@ namespace Ramone.Tests
       {
         // Act
         dossiersReq.Async()
-          .OnComplete(() => wh.Set())
           .Execute("POST", MyDossier, response =>
           {
             // Assert
             Assert.AreEqual(999, response.Decode<Dossier>().Id);
+            wh.Set();
           });
       });
     }

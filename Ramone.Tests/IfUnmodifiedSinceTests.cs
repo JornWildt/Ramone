@@ -68,7 +68,6 @@ namespace Ramone.Tests
       TestAsync(wh =>
       {
         request.Async()
-          .OnComplete(() => wh.Set())
           .Get<HeaderList>(r =>
           {
             HeaderList headers = r.Body;

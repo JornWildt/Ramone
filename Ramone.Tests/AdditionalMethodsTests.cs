@@ -34,11 +34,11 @@ namespace Ramone.Tests
         // Act
         dossierReq.Async()
           .OnError(error => Assert.Fail())
-          .OnComplete(() => wh.Set())
           .Head(response =>
           {
             // Assert
             Assert.AreEqual("1", response.Headers["X-ExtraHeader"]);
+            wh.Set();
           });
       });
     }

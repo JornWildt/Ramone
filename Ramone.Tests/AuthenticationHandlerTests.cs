@@ -35,9 +35,11 @@ namespace Ramone.Tests
       TestAsync(wh =>
       {
         Session.Request(BasicAuthUrl).Async()
-          .OnComplete(() => wh.Set())
           .OnError(error => errorResponse = error.Response)
-          .Get<string>(r => {});
+          .OnComplete(() => wh.Set())
+          .Get<string>(r => 
+          {
+          });
       });
 
       Assert.IsNotNull(errorResponse);

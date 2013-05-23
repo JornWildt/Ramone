@@ -37,11 +37,11 @@ namespace Ramone.Tests
         // Act
         DossierReq.Async()
           .OnError(error => Assert.Fail())
-          .OnComplete(() => wh.Set())
           .Options(response =>
           {
             // Assert
             Assert.AreEqual("2", response.Headers["X-ExtraHeader"]);
+            wh.Set();
           });
       });
     }
@@ -77,12 +77,12 @@ namespace Ramone.Tests
         // Act
         DossierReq.Async()
           .OnError(error => Assert.Fail())
-          .OnComplete(() => wh.Set())
           .Options<string>(response =>
           {
             // Assert
             Assert.AreEqual("2", response.Headers["X-ExtraHeader"]);
             Assert.AreEqual("Yes", response.Body);
+            wh.Set();
           });
       });
     }

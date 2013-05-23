@@ -116,10 +116,9 @@ namespace Ramone.Tests
         // Act
         DossierReq.ContentType("application/octet-stream").Async()
           .OnError(error => Assert.Fail())
-          .OnComplete(() => wh.Set())
-          .Put<string>(
-          r =>
+          .Put<string>(r =>
           {
+            wh.Set();
           });
       });
     }
@@ -148,10 +147,9 @@ namespace Ramone.Tests
         // Act
         DossierReq.ContentType("application/octet-stream").Async()
           .OnError(error => Assert.Fail())
-          .OnComplete(() => wh.Set())
-          .Put<string>(
-          r =>
+          .Put<string>(r =>
           {
+            wh.Set();
           });
       });
     }
