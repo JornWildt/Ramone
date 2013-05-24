@@ -1,0 +1,14 @@
+NEXT
+--------------
+* Introducing cache headers on Request object:
+  Request.IfModifiedSince()
+  Request.IfUnmodifiedSince()
+  Request.IfMatch()
+  Request.IfNoneMatch()
+* Introducing .NET cache policy on Session and Service:
+  Session.CachePolicy
+  Service.CachePolicy
+* Adding Request.OnHeadersReady() for working with the underlying 
+  HttpWebRequest object.
+* Adding Request.AddQueryParameters() as an alternative to binding with 
+  predefined URL templates.
