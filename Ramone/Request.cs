@@ -168,6 +168,24 @@ namespace Ramone
       return this;
     }
 
+
+    /// <summary>
+    /// Add query parameters to request URL while keeping exiting parameters already specified in the URL.
+    /// </summary>
+    /// <remarks>This method respects repeated keys, such that adding "x=3&amp;x=4" to "x=1&amp;x=2" yields "x=1&amp;x=2&amp;x=3&amp;x=4".</remarks>
+    /// <param name="url"></param>
+    /// <param name="parameters">Either IDictionary&lt;string,string&gt;, NameValueCollection or any other
+    /// class where the public properties are added as query parameters.</param>
+    /// <returns>Same request with Url having parameters added.</returns>
+    public Request AddQueryParameters(object parameters)
+    {
+      if (parameters != null)
+      {
+        Url = Url.AddQueryParameters(parameters);
+      }
+      return this;
+    }
+
     #endregion
 
 

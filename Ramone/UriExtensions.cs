@@ -18,7 +18,7 @@ namespace Ramone
     /// <param name="url"></param>
     /// <param name="parameters">Either IDictionary&lt;string,string&gt;, NameValueCollection or any other
     /// class where the public properties are added as query parameters.</param>
-    /// <returns></returns>
+    /// <returns>New Uri with added parameters</returns>
     public static Uri AddQueryParameters(this Uri url, object parameters)
     {
       if (parameters == null)

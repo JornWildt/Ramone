@@ -84,6 +84,20 @@ namespace Ramone.Tests
     }
 
 
+    [Test]
+    public void CanAddQueryParametersToRequest()
+    {
+      // Arrange
+      Request r = Session.Bind("http://dr.dk/xyz");
+
+      // Act
+      r.AddQueryParameters(new { x = 1 });
+
+      // Assert
+      Assert.AreEqual("http://dr.dk/xyz?x=1", r.Url.AbsoluteUri);
+    }
+
+
     private void CanAddQueryParametersFromAny(object p)
     {
       // Arrange
