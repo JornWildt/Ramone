@@ -12,3 +12,5 @@ NEXT
   HttpWebRequest object.
 * Adding Request.AddQueryParameters() as an alternative to binding with 
   predefined URL templates.
+* Adding XML settings in XmlConfiguration.XmlReaderSettings. Used when
+  deserializing XML documents. Default is to allow DTD processing.

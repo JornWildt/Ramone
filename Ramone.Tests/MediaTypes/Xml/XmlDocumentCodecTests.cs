@@ -2,6 +2,8 @@
 using NUnit.Framework;
 using Ramone.Tests.Common.CMS;
 using System;
+using Ramone.Tests.Common;
+using Ramone.MediaTypes.Xml;
 
 
 namespace Ramone.Tests.MediaTypes.Xml
@@ -98,6 +100,37 @@ namespace Ramone.Tests.MediaTypes.Xml
         Assert.AreEqual(charsetOut, response.WebResponse.Headers["X-accept-charset"]);
         Assert.AreEqual("ÆØÅüî", textNode.InnerText);
       }
+    }
+
+
+    [Test]
+    public void CanReadHtmlWithDOCTYPEAsXmlDocument()
+    {
+      // Arrange
+      Request req = Session.Bind(Constants.HtmlPath);
+
+      // Act
+      using (var r = req.Get<XmlDocument>())
+      {
+        XmlDocument doc = r.Body;
+
+        // Assert
+        Assert.IsNotNull(doc);
+      }
+    }
+
+
+    [Test]
+    public void WhenReadingXmlItChecksXmlConfiguration()
+    {
+      // Arrange
+      Request req = Session.Bind(Constants.HtmlPath);
+
+      XmlReaderSettings settings = new XmlReaderSettings();
+      settings.DtdProcessing = DtdProcessing.Prohibit;
+      XmlConfiguration.XmlReaderSettings = settings;
+
+      AssertThrows<InvalidOperationException>(() => { using (var resp = req.Get<XmlDocument>()) { resp.Body.Clone(); } });
     }
   }
 }

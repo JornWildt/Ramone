@@ -136,6 +136,7 @@
     <Compile Include="MediaTypes\StreamCodec.cs" />
     <Compile Include="MediaTypes\StringCodec.cs" />
     <Compile Include="MediaTypes\TextCodecBase.cs" />
+    <Compile Include="MediaTypes\Xml\XmlConfiguration.cs" />
     <Compile Include="MediaTypes\Xml\XmlDocumentCodec.cs" />
     <Compile Include="MediaTypes\Xml\XmlSerializerCodec.cs" />
     <Compile Include="OAuth1\IOAuth1Logger.cs" />

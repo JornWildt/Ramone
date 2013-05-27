@@ -46,5 +46,7 @@
     public const string PatchPath = "patch";
 
     public const string SlowPath = "slow";
+
+    public const string HtmlPath = "html";
   }
 }

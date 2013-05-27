@@ -174,6 +174,7 @@
     <Compile Include="Handlers\FormHandler.cs" />
     <Compile Include="Handlers\FormUrlEncodedHandler.cs" />
     <Compile Include="Handlers\HeaderEchoHandler.cs" />
+    <Compile Include="Handlers\HtmlHandler.cs" />
     <Compile Include="Handlers\LinkHeaderHandler.cs" />
     <Compile Include="Handlers\MultipartFormDataHandler.cs" />
     <Compile Include="Handlers\PatchHandler.cs" />
@@ -190,7 +191,9 @@
     <Compile Include="OAuth2\OAuth2Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Views\Html.aspx" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Ramone.Tests.Common\Ramone.Tests.Common.csproj">
       <Project>{DD3B040F-3D75-4C46-BB54-CD06F594F894}</Project>

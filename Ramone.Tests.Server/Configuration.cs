@@ -147,6 +147,11 @@ namespace Ramone.Tests.Server
             .HandledBy<RedirectHandler>()
             .TranscodedBy<FormUrlencodedCodec>();
 
+        ResourceSpace.Has.ResourcesOfType<HtmlPageResource>()
+            .AtUri(Constants.HtmlPath)
+            .HandledBy<HtmlHandler>()
+            .RenderedByAspx("~/Views/Html.aspx");
+
         BlogConfiguration.Configure();
         OAuth2Configuration.Configure();
       }
