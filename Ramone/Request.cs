@@ -46,31 +46,64 @@ namespace Ramone
     }
 
 
-    public Request Accept(MediaType accept)
+    /// <summary>
+    /// Set Accept header.
+    /// </summary>
+    /// <remarks>Can be called multiple times to add more than one media type to the accept header.</remarks>
+    /// <param name="accept">Media type to accept.</param>
+    /// <param name="q">Quality value.</param>
+    /// <returns></returns>
+    public Request Accept(MediaType accept, double? q = null)
     {
-      AcceptHeader = (string)accept;
+      Condition.Requires(accept, "accept").IsNotNull();
+      if (!string.IsNullOrEmpty(AcceptHeader))
+        AcceptHeader += ", ";
+      AcceptHeader += (string)accept;
+      if (q != null)
+        AcceptHeader += string.Format(CultureInfo.InvariantCulture, "; q={0:F2}", q);
       return this;
     }
 
 
-    public RamoneRequest<TAccept> Accept<TAccept>(MediaType accept = null)
+    /// <summary>
+    /// Set Accept header and expected payload type.
+    /// </summary>
+    /// <remarks>Can be called multiple times to add more than one media type to the accept header.</remarks>
+    /// <param name="accept">Media type to accept.</param>
+    /// <param name="q">Quality value.</param>
+    /// <returns></returns>
+    public RamoneRequest<TAccept> Accept<TAccept>(MediaType accept = null, double? q = null)
       where TAccept : class
     {
-      Accept(accept);
+      Accept(accept, q);
       return new RamoneRequest<TAccept>(this);
     }
 
 
-    public Request Accept(string accept)
+    /// <summary>
+    /// Set Accept header.
+    /// </summary>
+    /// <remarks>Can be called multiple times to add more than one media type to the accept header.</remarks>
+    /// <param name="accept">Media type (identifier) to accept.</param>
+    /// <param name="q">Quality value.</param>
+    /// <returns></returns>
+    public Request Accept(string accept, double? q = null)
     {
-      return Accept(new MediaType(accept));
+      return Accept(new MediaType(accept), q);
     }
 
 
-    public RamoneRequest<TAccept> Accept<TAccept>(string accept)
+    /// <summary>
+    /// Set Accept header and expected payload type.
+    /// </summary>
+    /// <remarks>Can be called multiple times to add more than one media type to the accept header.</remarks>
+    /// <param name="accept">Media type (identifier) to accept.</param>
+    /// <param name="q">Quality value.</param>
+    /// <returns></returns>
+    public RamoneRequest<TAccept> Accept<TAccept>(string accept, double? q = null)
       where TAccept : class
     {
-      return Accept<TAccept>(new MediaType(accept));
+      return Accept<TAccept>(new MediaType(accept), q);
     }
 
 

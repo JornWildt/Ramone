@@ -84,6 +84,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AcceptTests.cs" />
     <Compile Include="AdditionalMethodsTests.cs" />
     <Compile Include="AsyncTests.cs" />
     <Compile Include="BindingTests.cs" />
