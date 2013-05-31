@@ -17,6 +17,15 @@ namespace Ramone
 
     RequestCachePolicy CachePolicy { get; set; }
 
+    /// <summary>
+    /// Assign one or more media types to be included in the Accept header on all request.
+    /// </summary>
+    /// <param name="accept"></param>
+    /// <param name="q"></param>
+    IService AlwaysAccept(MediaType accept, double? q = null);
+
+    string AlwaysAcceptHeader { get; }
+
     Encoding DefaultEncoding { get; set; }
 
     MediaType DefaultRequestMediaType { get; set; }

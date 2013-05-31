@@ -4,6 +4,8 @@ using System.Net;
 using System.Net.Cache;
 using System.Text;
 using Ramone.Utility.ObjectSerialization;
+using CuttingEdge.Conditions;
+using System.Globalization;
 
 
 namespace Ramone.Implementation
@@ -19,7 +21,7 @@ namespace Ramone.Implementation
     public Uri BaseUri { get; protected set; }
 
     public RequestCachePolicy CachePolicy { get; set; }
-    
+
     public Encoding DefaultEncoding { get; set; }
 
     public MediaType DefaultRequestMediaType { get; set; }
@@ -53,6 +55,21 @@ namespace Ramone.Implementation
         return 0;
     }
 
+
+    public ISession AlwaysAccept(MediaType accept, double? q = null)
+    {
+      Condition.Requires(accept, "accept").IsNotNull();
+      if (!string.IsNullOrEmpty(AlwaysAcceptHeader))
+        AlwaysAcceptHeader += ", ";
+      AlwaysAcceptHeader += (string)accept;
+      if (q != null)
+        AlwaysAcceptHeader += string.Format(CultureInfo.InvariantCulture, "; q={0:F2}", q);
+      return this;
+    }
+
+
+    public string AlwaysAcceptHeader { get; set; }
+
     #endregion
 
 
@@ -65,6 +82,7 @@ namespace Ramone.Implementation
       UserAgent = service.UserAgent;
       BaseUri = Service.BaseUri;
       CachePolicy = Service.CachePolicy;
+      AlwaysAcceptHeader = service.AlwaysAcceptHeader;
       DefaultEncoding = service.DefaultEncoding;
       DefaultRequestMediaType = service.DefaultRequestMediaType;
       DefaultResponseMediaType = service.DefaultResponseMediaType;

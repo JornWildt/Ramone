@@ -114,6 +114,22 @@ namespace Ramone
 
     protected virtual string GetAcceptHeader(Type t)
     {
+      string header = GetAcceptHeaderWithoutDefault(t);
+      string sessionAccept = (Session.AlwaysAcceptHeader != null ? Session.AlwaysAcceptHeader.ToString() : null);
+
+      if (!string.IsNullOrEmpty(header) && !string.IsNullOrEmpty(sessionAccept))
+        header += ", " + sessionAccept;
+      else if (string.IsNullOrEmpty(header) && !string.IsNullOrEmpty(sessionAccept))
+        header = sessionAccept;
+      else if (string.IsNullOrEmpty(header) && string.IsNullOrEmpty(sessionAccept) && t != null)
+        throw new InvalidOperationException(string.Format("Could not find a reader codec for {0}. Try specifying Accept header.", t));
+
+      return header;
+    }
+
+
+    private string GetAcceptHeaderWithoutDefault(Type t)
+    {
       if (!string.IsNullOrEmpty(AcceptHeader))
         return AcceptHeader;
       if (Session.DefaultResponseMediaType != null)
@@ -134,9 +150,6 @@ namespace Ramone
           accept += r.MediaType;
         }
       }
-
-      if (string.IsNullOrEmpty(accept))
-        throw new InvalidOperationException(string.Format("Could not find a reader codec for {0}. Try specifying Accept header.", t));
 
       return accept;
     }

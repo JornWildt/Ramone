@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Net.Cache;
 using System.Text;
 using Ramone.Utility.ObjectSerialization;
+using CuttingEdge.Conditions;
+using System.Globalization;
 
 
 namespace Ramone.Implementation
@@ -64,6 +66,20 @@ namespace Ramone.Implementation
         session.SetAllowedRedirects(code, AllowedRedirectsMap[code]);
       }
     }
+
+
+    public IService AlwaysAccept(MediaType accept, double? q = null)
+    {
+      Condition.Requires(accept, "accept").IsNotNull();
+      if (!string.IsNullOrEmpty(AlwaysAcceptHeader))
+        AlwaysAcceptHeader += ", ";
+      AlwaysAcceptHeader += (string)accept;
+      if (q != null)
+        AlwaysAcceptHeader += string.Format(CultureInfo.InvariantCulture, "; q={0:F2}", q);
+      return this;
+    }
+
+    public string AlwaysAcceptHeader { get; set; }
 
     #endregion
 

@@ -196,5 +196,67 @@ namespace Ramone.Tests
         Assert.IsTrue(headers.Any(h => h == "Accept: application/xml; q=0.34"), "Must contain Accept header with q-value");
       }
     }
+
+
+    [Test]
+    public void ItAlwaysUsesDefaultAcceptFromSession()
+    {
+      // Arrange
+      AcceptSession.AlwaysAccept(MediaType.ApplicationXml);
+
+      // Act
+      var request = AcceptSession.Bind(HeaderListUrl);
+
+      using (var r = request.Get<HeaderList>())
+      {
+        HeaderList headers = r.Body;
+
+        // Assert
+        Assert.IsTrue(headers.Any(h => h == "Accept: application/xml"), "Must contain Accept header with q-value");
+      }
+    }
+
+
+    [Test]
+    public void ItUsesMultipleDefaultAcceptFromSessionWithAdditionalAcceptFromRequest()
+    {
+      // Arrange
+      AcceptSession.AlwaysAccept(MediaType.ApplicationXml, 0.88)
+                   .AlwaysAccept(MediaType.TextPlain);
+
+      // Act
+      var request = AcceptSession.Bind(HeaderListUrl).Accept(MediaType.ApplicationJson).Accept("text/csv", 0.21);
+
+      using (var r = request.Get<HeaderList>())
+      {
+        HeaderList headers = r.Body;
+
+        // Assert
+        Assert.IsTrue(headers.Any(h => h == "Accept: application/json, text/csv; q=0.21, application/xml; q=0.88, text/plain"), "Must contain Accept header with q-value");
+      }
+    }
+
+
+    [Test]
+    public void ItUsesMultipleDefaultAcceptFromServiceWithAdditionalAcceptFromRequest()
+    {
+      // Arrange
+      IService service = RamoneConfiguration.NewService(BaseUrl)
+                                            .AlwaysAccept(MediaType.ApplicationXml, 0.88)
+                                            .AlwaysAccept(MediaType.TextPlain);
+      
+      ISession session = service.NewSession().AlwaysAccept(MediaType.TextHtml);
+      
+      // Act
+      var request = session.Bind(HeaderListUrl).Accept(MediaType.ApplicationJson).Accept("text/csv", 0.21);
+
+      using (var r = request.Get<HeaderList>())
+      {
+        HeaderList headers = r.Body;
+
+        // Assert
+        Assert.IsTrue(headers.Any(h => h == "Accept: application/json, text/csv; q=0.21, application/xml; q=0.88, text/plain, text/html"), "Must contain Accept header with q-value");
+      }
+    }
   }
 }

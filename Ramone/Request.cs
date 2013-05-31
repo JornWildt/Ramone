@@ -55,7 +55,6 @@ namespace Ramone
     /// <returns></returns>
     public Request Accept(MediaType accept, double? q = null)
     {
-      Condition.Requires(accept, "accept").IsNotNull();
       if (!string.IsNullOrEmpty(AcceptHeader))
         AcceptHeader += ", ";
       AcceptHeader += (string)accept;
