@@ -192,8 +192,11 @@ namespace Ramone
     {
       HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
 
-      // Set headers and similar before writing to stream
+      // Set method before headers
       request.Method = method;
+      ApplyMethodSetInterceptors(request);
+
+      // Set headers and similar before writing to stream
       request.CookieContainer = Session.Cookies;
       request.UserAgent = Session.UserAgent;
       request.AllowAutoRedirect = false;
@@ -251,6 +254,19 @@ namespace Ramone
       else
       {
         ApplyHeadersReadyInterceptors(request);
+      }
+    }
+
+
+    protected void ApplyMethodSetInterceptors(HttpWebRequest request)
+    {
+      //if (OnHeadersReadyHandler != null)
+      //  OnHeadersReadyHandler(request);
+
+      foreach (KeyValuePair<string, IRequestInterceptor> interceptor in Session.RequestInterceptors)
+      {
+        if (interceptor.Value is IRequestInterceptor2)
+          ((IRequestInterceptor2)interceptor.Value).MethodSet(new RequestContext(request, Session));
       }
     }
 
