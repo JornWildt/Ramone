@@ -14,6 +14,10 @@ namespace Ramone.Utility
       if (m.Parameters.ContainsKey("charset"))
         enc = Encoding.GetEncoding(m.Parameters["charset"]);
 
+      // Trying to avoid UTF8Encoding that produced byte order marks
+      if (enc is UTF8Encoding)
+        enc = new UTF8Encoding();
+
       return enc;
     }
   }
