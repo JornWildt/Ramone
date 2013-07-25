@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using NUnit.Framework;
 using Ramone.MediaTypes.FormUrlEncoded;
 using Ramone.Tests.Common;
@@ -196,6 +197,30 @@ namespace Ramone.Tests.MediaTypes.FormUrlEncoded
         // Assert
         Assert.AreEqual("ÆØÅ", data.Title);
         Assert.AreEqual("Güntør", data.SubData.Name);
+      }
+    }
+
+
+    [Test]
+    // This tests for an error found while using Ramone
+    public void WhenPostingFormUrlEncodedItAssignsCorrectContentLength()
+    {
+      // Arrange
+      Request request = Session.Request(HeaderListUrl).AsFormUrlEncoded();
+      var registrations = new
+      {
+        f = "json"
+      };
+
+      // Act
+      using (var r = request.Post(registrations))
+      {
+        HeaderList headers = r.Decode<HeaderList>();
+
+        // Assert
+        string header = headers.FirstOrDefault(h => h == "Content-Length: 6");
+        Assert.IsNotNull(header);
+        Console.WriteLine(header);
       }
     }
   }

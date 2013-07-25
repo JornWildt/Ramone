@@ -1,3 +1,9 @@
+Version Next
+----------------
+* Introducing IRequestInterceptor2 which allows implementors to intercept the
+  request at a time where it is possible to change the request method.
+
+
 Version 1.2.0.56
 ----------------
 * Introducing cache headers on Request object:
