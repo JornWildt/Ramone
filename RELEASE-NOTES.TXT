@@ -2,6 +2,9 @@ Version Next
 ----------------
 * Introducing IRequestInterceptor2 which allows implementors to intercept the
   request at a time where it is possible to change the request method.
+* Now possible to create services and sessions without a base URL. In this case
+  it is only possible to make requests with absolute URLs.
+* Remove byte order marks in output from text based formats (especially JSON).
 
 
 Version 1.2.0.56

@@ -92,6 +92,8 @@ namespace Ramone
 
     public static Uri BindTemplate(Uri baseUri, UriTemplate template, object parameters = null)
     {
+      if (baseUri == null)
+        throw new InvalidOperationException("It is not possible to bind relative URL templates without a base URL. Make sure session and/or service has been created with a base URL.");
       Condition.Requires(template, "template").IsNotNull();
 
       if (parameters == null)
