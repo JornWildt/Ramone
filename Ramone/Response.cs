@@ -63,11 +63,14 @@ namespace Ramone
     }
 
 
+    private object _body;
     public object Body
     {
       get
       {
-        return Decode<object>();
+        if (_body == null)
+          _body = Decode<object>();
+        return _body;
       }
     }
 

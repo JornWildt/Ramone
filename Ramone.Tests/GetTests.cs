@@ -223,6 +223,48 @@ namespace Ramone.Tests
     }
 
 
+    [Test]
+    public void WhenReadingBodyTwiceItOnlyReadsInputStreamOnce_Untyped()
+    {
+      // Arrange
+      Request req = Session.Bind(CatTemplate, new { name = "Fiona" });
+
+      // Act
+      using (Response resp = req.AcceptJson().Get())
+      {
+        dynamic body1 = resp.Body;
+        string name1 = body1.Name;
+        dynamic body2 = resp.Body;
+        string name2 = body2.Name;
+
+        // Assert
+        Assert.AreEqual("Fiona", name1);
+        Assert.AreEqual("Fiona", name2);
+      }
+    }
+
+
+    [Test]
+    public void WhenReadingBodyTwiceItOnlyReadsInputStreamOnce_Typed()
+    {
+      // Arrange
+      Request req = Session.Bind(CatTemplate, new { name = "Fiona" });
+
+      // Act
+      using (var resp = req.Get<Cat>())
+      {
+        Cat body1 = resp.Body;
+        string name1 = body1.Name;
+        Cat body2 = resp.Body;
+        string name2 = body2.Name;
+
+        // Assert
+        Assert.AreEqual("Fiona", name1);
+        Assert.AreEqual("Fiona", name2);
+      }
+    }
+
+
     #region GET with empty/null callbacks
 
     [Test]
