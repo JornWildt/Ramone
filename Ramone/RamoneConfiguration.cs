@@ -47,7 +47,13 @@ namespace Ramone
       SerializerSettings = new ObjectSerializerSettings();
     }
 
-    
+
+    public static IService NewService()
+    {
+      return NewService(null);
+    }
+
+
     public static IService NewService(Uri baseUrl)
     {
       IService service = new RamoneService(baseUrl)
@@ -59,6 +65,12 @@ namespace Ramone
       if (UseStandardCodecs)
         RamoneConfiguration.RegisterStandardCodecs(service.CodecManager);
       return service;
+    }
+
+
+    public static ISession NewSession()
+    {
+      return NewSession(null);
     }
 
 

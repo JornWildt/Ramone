@@ -5,6 +5,8 @@ using System.Net.Cache;
 using System.Text;
 using NUnit.Framework;
 using Ramone.Utility.ObjectSerialization;
+using Ramone.Tests.Common.CMS;
+using Ramone.MediaTypes.Xml;
 
 
 namespace Ramone.Tests
@@ -201,6 +203,35 @@ namespace Ramone.Tests
 
       // Assert
       Assert.AreEqual(1234, x);
+    }
+
+
+    [Test]
+    public void CanCreateSessionWithoutBaseUrlAndMakeAbsoluteRequests()
+    {
+      // Act
+      ISession session = RamoneConfiguration.NewSession();
+
+      session.Service.CodecManager.AddCodec<Dossier, XmlSerializerCodec>(CMSConstants.CMSMediaType);
+      Request req = session.Bind(new Uri(BaseUrl, CMSConstants.DossierPath.Replace("{id}", "0")));
+      using (var resp = req.Get<Dossier>())
+      {
+        // Assert
+        Assert.IsNotNull(resp.Body);
+        Assert.AreEqual(0, resp.Body.Id);
+      }
+    }
+
+
+    [Test]
+    public void WhenNotUsingBaseUrlItThrowsInvalidOperationException()
+    {
+      // Act
+      ISession session = RamoneConfiguration.NewSession();
+
+      AssertThrows<InvalidOperationException>(
+        () => session.Bind(DossierTemplate, new { id = 2 }),
+        ex => ex.Message.Contains("base URL"));
     }
 
 

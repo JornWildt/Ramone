@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Linq;
+using System.Text;
 using NUnit.Framework;
 using Ramone.MediaTypes.FormUrlEncoded;
 using Ramone.Tests.Common;
 using Ramone.Utility.ObjectSerialization;
-using System.Collections.Specialized;
-using System.Text;
 
 
 namespace Ramone.Tests.MediaTypes.FormUrlEncoded
@@ -202,11 +202,12 @@ namespace Ramone.Tests.MediaTypes.FormUrlEncoded
 
 
     [Test]
-    // This tests for an error found while using Ramone
-    public void WhenPostingFormUrlEncodedItAssignsCorrectContentLength()
+    public void WhenPostingFormUrlEncodedItAssignsCorrectContentLength_WhichMeans_DoNotIncludeByteOrderMarks()
     {
       // Arrange
-      Request request = Session.Request(HeaderListUrl).AsFormUrlEncoded();
+      ISession localSession = RamoneConfiguration.NewSession(DefaultBaseUrl);
+      Request request = localSession.Bind(Constants.HeaderEchoPath).AsFormUrlEncoded();
+
       var registrations = new
       {
         f = "json"
@@ -219,7 +220,7 @@ namespace Ramone.Tests.MediaTypes.FormUrlEncoded
 
         // Assert
         string header = headers.FirstOrDefault(h => h == "Content-Length: 6");
-        Assert.IsNotNull(header);
+        Assert.IsNotNull(header, "Must send 6 bytes of data (should not include byte order marks)");
         Console.WriteLine(header);
       }
     }
