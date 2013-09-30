@@ -1,4 +1,4 @@
-Version Next
+Version 1.2.1.63
 ----------------
 * Introducing IRequestInterceptor2 which allows implementors to intercept the
   request at a time where it is possible to change the request method.
