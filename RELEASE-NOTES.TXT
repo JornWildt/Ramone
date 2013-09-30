@@ -5,7 +5,7 @@ Version Next
 * Now possible to create services and sessions without a base URL. In this case
   it is only possible to make requests with absolute URLs.
 * Remove byte order marks in output from text based formats (especially JSON).
-
+* Fix issue #2: "Response.Body is re-reading input"
 
 Version 1.2.0.56
 ----------------
