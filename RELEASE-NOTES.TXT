@@ -2,6 +2,7 @@ Version Next
 ----------------
 * Introducing IRequestInterceptor2 which allows implementors to intercept the
   request at a time where it is possible to change the request method.
+* Fix issue #2: "Response.Body is re-reading input"
 
 
 Version 1.2.0.56
