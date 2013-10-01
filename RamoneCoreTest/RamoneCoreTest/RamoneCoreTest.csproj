@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{CCEC0626-7C4C-424F-A4B2-DCCA56872A56}</ProjectGuid>
+    <ProjectGuid>{2E3F0A30-C524-4773-9221-220D9F8EA51F}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>GoogleDemo</RootNamespace>
-    <AssemblyName>GoogleDemo</AssemblyName>
+    <RootNamespace>RamoneCoreTest</RootNamespace>
+    <AssemblyName>RamoneCoreTest</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>
@@ -35,8 +35,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Ramone">
-      <HintPath>..\..\Binaries\Ramone.dll</HintPath>
+    <Reference Include="CuttingEdge.Conditions">
+      <HintPath>..\..\Libraries\CuttingEdge.Conditions.dll</HintPath>
+    </Reference>
+    <Reference Include="HtmlAgilityPack">
+      <HintPath>..\..\Libraries\HtmlAgilityPack.dll</HintPath>
+    </Reference>
+    <Reference Include="Ramone.Core">
+      <HintPath>..\..\Binaries\Ramone.Core.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -53,6 +59,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="README.TXT" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

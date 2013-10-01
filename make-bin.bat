@@ -4,7 +4,6 @@ SET ProgFiles86Root=%ProgramFiles%
 :win64
 
 cd Ramone\bin\debug
-copy Ramone.dll Ramone.Core.dll 
 
 "%ProgFiles86Root%\Microsoft\ILMerge\ilmerge.exe" /target:library /out:Ramone.dll Ramone.Core.dll JsonFx.dll HtmlAgilityPack.dll CuttingEdge.Conditions.dll /targetplatform:v4
 
