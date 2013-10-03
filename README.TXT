@@ -54,15 +54,16 @@ DOWNLOAD
 --------
 Binaries are available on NuGet and at these links:
 
-  Version 1.2.1: http://elfisk.dk/Ramone/Ramone-1.2.1.zip
+  Version 1.3.0: http://elfisk.dk/Ramone/Ramone-1.3.0.zip
 
   Nightly build:  http://elfisk.dk/Ramone/Ramone.zip
   - Documentation http://elfisk.dk/Ramone/Documentation/Ramone.pdf
 
 
-  Version 1.2: http://elfisk.dk/Ramone/Ramone-1.2.0.zip
-  Version 1.1: http://elfisk.dk/Ramone/Ramone-1.1.0.zip
-  Version 1.0: http://elfisk.dk/Ramone/Ramone-1.0.0.zip
+  Version 1.2.1: http://elfisk.dk/Ramone/Ramone-1.2.1.zip
+  Version 1.2.0: http://elfisk.dk/Ramone/Ramone-1.2.0.zip
+  Version 1.1.0: http://elfisk.dk/Ramone/Ramone-1.1.0.zip
+  Version 1.0.0: http://elfisk.dk/Ramone/Ramone-1.0.0.zip
 
 
 DOCUMENTATION
