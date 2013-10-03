@@ -56,7 +56,8 @@ Binaries are available on NuGet and at these links:
 
   Version 1.2.1: http://elfisk.dk/Ramone/Ramone-1.2.1.zip
 
-  Nightly build: http://elfisk.dk/Ramone/Ramone.zip
+  Nightly build:  http://elfisk.dk/Ramone/Ramone.zip
+  - Documentation http://elfisk.dk/Ramone/Documentation/Ramone.pdf
 
 
   Version 1.2: http://elfisk.dk/Ramone/Ramone-1.2.0.zip
@@ -67,9 +68,10 @@ Binaries are available on NuGet and at these links:
 DOCUMENTATION
 -------------
 I am trying to write a complete downloadable manual which is available as a PDF. You can
-download that together with the binaries via the links above.
+either download that together with the binaries via the links above or access the nightly
+build here: http://elfisk.dk/Ramone/Documentation/Ramone.pdf
 
-There are online examples on the GitHub wiki: https://github.com/JornWildt/Ramone/wiki/Examples
+There are some online examples on the GitHub wiki: https://github.com/JornWildt/Ramone/wiki/Examples
 
 In addition to this there is a few blog posts:
 
