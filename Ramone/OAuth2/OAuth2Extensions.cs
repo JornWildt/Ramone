@@ -333,7 +333,14 @@ namespace Ramone.OAuth2
     }
 
 
-    private static OAuth2AccessTokenResponse GetAndStoreAccessToken(ISession session, object args, bool useAccessToken)
+    /// <summary>
+    /// Request access token, passing the supplied args to the OAuth2 endpoint.
+    /// </summary>
+    /// <param name="session"></param>
+    /// <param name="args"></param>
+    /// <param name="useAccessToken">Store the returned access token in session and use that in future requests to the resource server.</param>
+    /// <returns></returns>
+    public static OAuth2AccessTokenResponse GetAndStoreAccessToken(ISession session, object args, bool useAccessToken)
     {
       OAuth2Settings settings = GetSettings(session);
 
@@ -404,7 +411,7 @@ namespace Ramone.OAuth2
     }
 
 
-    private static OAuth2Settings GetSettings(ISession session)
+    public static OAuth2Settings GetSettings(ISession session)
     {
       object settings;
       if (!session.Items.TryGetValue(OAuth2SettingsSessionKey, out settings))
