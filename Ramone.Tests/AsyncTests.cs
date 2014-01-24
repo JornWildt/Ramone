@@ -1,5 +1,6 @@
 ﻿using NUnit.Framework;
 using System;
+using Ramone.Tests.Common;
 
 
 namespace Ramone.Tests
@@ -94,6 +95,60 @@ namespace Ramone.Tests
       Assert.IsNotNull(error);
       Assert.IsInstanceOf<InvalidOperationException>(error.Exception);
       Assert.IsNotNull(error.Response);
+    }
+
+
+    [Test]
+    public void CanCancelAsyncRequest()
+    {
+      // Arrange
+      Request request = Session.Bind(Constants.SlowPath);
+      bool gotOk = false;
+      bool gotError = false;
+      bool gotComplete = false;
+
+      TestAsync(wh =>
+      {
+        // Act
+        request.Async()
+               .OnError(err => gotError = true)
+               .OnComplete(() => { gotComplete = true; wh.Set(); })
+               .Get(r => { gotOk = true; });
+
+        request.CancelAsync();
+      });
+
+      // Assert
+      Assert.IsFalse(gotOk);
+      Assert.IsFalse(gotError);
+      Assert.IsTrue(gotComplete);
+    }
+
+
+    [Test]
+    public void ItIsSafeToCancelClosedAsyncRequest()
+    {
+      // Arrange
+      Request request = Session.Bind(Constants.SlowPath);
+      bool gotOk = false;
+      bool gotError = false;
+      bool gotComplete = false;
+
+      TestAsync(wh =>
+      {
+        request.Async()
+               .OnError(err => gotError = true)
+               .OnComplete(() => { gotComplete = true; wh.Set(); })
+               .Get(r => { gotOk = true; });
+      });
+
+      // Act
+      request.CancelAsync();
+
+      // Assert
+      Assert.IsTrue(gotOk);
+      Assert.IsFalse(gotError);
+      Assert.IsTrue(gotComplete);
     }
   }
 }

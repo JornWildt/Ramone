@@ -11,7 +11,7 @@ namespace Ramone.Tests
 {
   public class TestHelper
   {
-    public static readonly Uri DefaultBaseUrl = new Uri("http://jorn-pc/ramone-testserver/");
+    public static readonly Uri DefaultBaseUrl = new Uri("http://localhost/ramone-testserver/");
 
     private static Uri _baseUrl;
     public static Uri BaseUrl

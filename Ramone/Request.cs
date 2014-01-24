@@ -26,6 +26,8 @@ namespace Ramone
     public Request(Request src)
       : base(src)
     {
+      Condition.Requires(src, "src").IsNotNull();
+      RelatedAsyncRequest = src.RelatedAsyncRequest;
     }
 
     #endregion
@@ -400,10 +402,24 @@ namespace Ramone
     #endregion
 
 
+    #region Async handling
+
+    protected AsyncRequest RelatedAsyncRequest { get; set; }
+
+
     public AsyncRequest Async()
     {
-      return new AsyncRequest(this);
+      return RelatedAsyncRequest = new AsyncRequest(this);
     }
+
+
+    public void CancelAsync()
+    {
+      if (RelatedAsyncRequest != null)
+        RelatedAsyncRequest.CancelAsync();
+    }
+
+    #endregion
   }
 
 

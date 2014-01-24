@@ -447,6 +447,8 @@ namespace Ramone
     }
 
 
+    internal HttpWebRequest CurrentAsyncRequest { get; set; }
+
     /// <summary>
     /// Do actual async request.
     /// </summary>
@@ -458,7 +460,7 @@ namespace Ramone
     /// <returns>Always null.</returns>
     protected override Response DoRequest(Uri url, string method, bool includeBody, Action<HttpWebRequest> requestModifier, int retryLevel = 0)
     {
-      HttpWebRequest request = SetupRequest(url, method, includeBody, requestModifier);
+      CurrentAsyncRequest = SetupRequest(url, method, includeBody, requestModifier);
 
       AsyncState state = new AsyncState
       {
@@ -467,20 +469,31 @@ namespace Ramone
         RequestModifier = requestModifier,
         RetryLevel = retryLevel,
         Url = url,
-        Request = request
+        Request = CurrentAsyncRequest
       };
 
       if (includeBody && BodyData != null)
       {
-        request.BeginGetRequestStream(HandleGetRequestStream, state);
+        CurrentAsyncRequest.BeginGetRequestStream(HandleGetRequestStream, state);
       }
       else
       {
-        ApplyHeadersReadyInterceptors(request);
-        request.BeginGetResponse(HandleResponse, state);
+        ApplyHeadersReadyInterceptors(CurrentAsyncRequest);
+        CurrentAsyncRequest.BeginGetResponse(HandleResponse, state);
       }
 
       return null;
+    }
+
+
+    public void CancelAsync()
+    {
+      if (CurrentAsyncRequest != null)
+      {
+        HttpWebRequest r = CurrentAsyncRequest;
+        CurrentAsyncRequest = null;
+        r.Abort();
+      }
     }
 
 
@@ -519,11 +532,18 @@ namespace Ramone
         HandleWebExceptionResult exResult = HandleWebException(ex, state.Url, state.Method, state.IncludeBody, state.RequestModifier, state.RetryLevel);
         if (!exResult.Retried)
         {
-          if (ErrorAction != null)
-            ErrorAction(new AsyncError(ex, new Response((HttpWebResponse)ex.Response, Session, state.RetryLevel)));
+          if (ex.Status != WebExceptionStatus.RequestCanceled)
+          {
+            if (ErrorAction != null)
+              ErrorAction(new AsyncError(ex, new Response((HttpWebResponse)ex.Response, Session, state.RetryLevel)));
+          }
           if (CompleteAction != null)
             CompleteAction();
         }
+      }
+      finally
+      {
+        CurrentAsyncRequest = null;
       }
     }
 

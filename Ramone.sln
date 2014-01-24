@@ -1,12 +1,6 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ramone", "Ramone\Ramone.csproj", "{445D7DFA-0123-4CE0-ADE2-1D632A517E2C}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ramone.Tests", "Ramone.Tests\Ramone.Tests.csproj", "{D1BE3B6D-C886-4C78-8826-036E5834A08E}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ramone.Tests.Server", "Ramone.Tests.Server\Ramone.Tests.Server.csproj", "{BC8D95DB-9320-4E7A-BD1E-C63F3710D9FB}"
-EndProject
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documents", "Documents", "{2615491B-5415-4FFF-A79F-1735FCF5E4E6}"
 	ProjectSection(SolutionItems) = preProject
 		LICENSE.TXT = LICENSE.TXT
@@ -18,6 +12,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documents", "Documents", "{
 		README.TXT = README.TXT
 		RELEASE-NOTES.TXT = RELEASE-NOTES.TXT
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ramone", "Ramone\Ramone.csproj", "{445D7DFA-0123-4CE0-ADE2-1D632A517E2C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ramone.Tests", "Ramone.Tests\Ramone.Tests.csproj", "{D1BE3B6D-C886-4C78-8826-036E5834A08E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ramone.Tests.Server", "Ramone.Tests.Server\Ramone.Tests.Server.csproj", "{BC8D95DB-9320-4E7A-BD1E-C63F3710D9FB}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ramone.Tests.Common", "Ramone.Tests.Common\Ramone.Tests.Common.csproj", "{DD3B040F-3D75-4C46-BB54-CD06F594F894}"
 EndProject
