@@ -43,6 +43,8 @@ namespace Ramone
       BodyData = src.BodyData;
       BodyCodec = src.BodyCodec;
       BodyContentType = src.BodyContentType;
+      BodyBoundary = src.BodyBoundary;
+      BodyCharacterSet = src.BodyCharacterSet;
       AcceptHeader = src.AcceptHeader;
       SubmitMethod = src.SubmitMethod;
       AdditionalHeaders = new NameValueCollection(src.AdditionalHeaders);

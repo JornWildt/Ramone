@@ -104,6 +104,7 @@
     <Compile Include="HyperMedia\WebLinkExtensions.cs" />
     <Compile Include="IContextContainer.cs" />
     <Compile Include="IHaveContext.cs" />
+    <Compile Include="IO\StringFile.cs" />
     <Compile Include="MediaTypes\Atom\AtomLinkExtensions.cs" />
     <Compile Include="MediaTypes\Html\Anchor.cs" />
     <Compile Include="MediaTypes\Html\HtmlFormExtensions.cs" />
