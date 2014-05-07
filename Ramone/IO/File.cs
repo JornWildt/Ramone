@@ -8,21 +8,30 @@ namespace Ramone.IO
   {
     #region IFile Members
 
-    public string Filename { get; protected set; }
+    public string Filename
+    {
+      get { return TargetFilename == null ? DiskFilename : TargetFilename; }
+    }
 
     public string ContentType { get; protected set; }
 
     public Stream OpenStream()
     {
-      return new FileStream(Filename, FileMode.Open);
+      return new FileStream(DiskFilename, FileMode.Open);
     }
 
     #endregion
 
 
-    public File(string filename, string contentType = null)
+    public string DiskFilename { get; protected set; }
+
+    public string TargetFilename { get; protected set; }
+
+
+    public File(string filename, string contentType = null, string targetFilename = null)
     {
-      Filename = filename;
+      DiskFilename = filename;
+      TargetFilename = targetFilename;
       ContentType = contentType;
     }
   }

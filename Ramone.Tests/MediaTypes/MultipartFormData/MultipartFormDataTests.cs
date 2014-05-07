@@ -150,6 +150,24 @@ namespace Ramone.Tests.MediaTypes.MultipartFormData
 
 
     [Test]
+    public void CanPostMultipartFormDataWithAdditionalFilenameSpecified()
+    {
+      // Arrange
+      IFile file = new File("..\\..\\data1.gif", "image/gif", "other-filename.guf");
+      MultipartDataFile data = new MultipartDataFile { DataFile = file, Age = 99 };
+      Request formdataReq = Session.Bind(MultipartFormDataFileTemplate);
+
+      // Act
+      using (Response<string> response = formdataReq.Accept("text/plain").ContentType("multipart/form-data").Post<string>(data))
+      {
+        // Assert
+        Assert.IsTrue(response.Headers["x-contenttype"].StartsWith("multipart/form-data"));
+        Assert.AreEqual("other-filename.guf-image/gif-R0lGODlhAgACAA==-99", response.Body);
+      }
+    }
+
+
+    [Test]
     public void CanPostSMultipartFormDataFromAnonymousTypes()
     {
       // Arrange
