@@ -41,7 +41,7 @@
 
     public const string LinkHeaderPath = "linkheader";
 
-    public const string RedirectPath = "redirect/{code}/{count}";
+    public const string RedirectPath = "redirect/{code}/{count}?void={v}";
 
     public const string PatchPath = "patch";
 

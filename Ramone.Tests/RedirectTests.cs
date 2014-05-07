@@ -43,7 +43,7 @@ namespace Ramone.Tests
     public void ItFollowsRedirectOnValidMethodsAndStatuses(int responseCode, string method)
     {
       // Arrange
-      Request req = Session.Bind(RedirectTemplate, new { code = responseCode, count = 1 });
+      Request req = Session.Bind(RedirectTemplate, new { code = responseCode, count = 1, v = 0 });
 
       // Act
       using (Response<RedirectArgs> resp = req.Execute<RedirectArgs>(method))
@@ -58,7 +58,7 @@ namespace Ramone.Tests
     public void ItFollowsRedirectOnValidMethodsAndStatuses_Async(int responseCode, string method)
     {
       // Arrange
-      Request req = Session.Bind(RedirectTemplate, new { code = responseCode, count = 1 });
+      Request req = Session.Bind(RedirectTemplate, new { code = responseCode, count = 1, v = 0 });
 
       // Act
       TestAsync(wh =>
@@ -77,7 +77,7 @@ namespace Ramone.Tests
     public void WhenRedirectingItOnlyCallsOnCompleteOnce()
     {
       // Arrange
-      Request req = Session.Bind(RedirectTemplate, new { code = 301, count = 1 });
+      Request req = Session.Bind(RedirectTemplate, new { code = 301, count = 1, v = 0 });
       int onCompleteCount = 0;
 
       // Act
@@ -98,7 +98,7 @@ namespace Ramone.Tests
     public void ItDoesNotFollowRedirectOnInvalidMethodsAndStatuses(int responseCode, string method)
     {
       // Arrange
-      Request req = Session.Bind(RedirectTemplate, new { code = responseCode, count = 1 });
+      Request req = Session.Bind(RedirectTemplate, new { code = responseCode, count = 1, v = 0 });
 
       // Act
       using (Response<RedirectArgs> resp = req.Execute<RedirectArgs>(method))
@@ -113,7 +113,7 @@ namespace Ramone.Tests
     public void ItDoesNotFollowRedirectOnInvalidMethodsAndStatuses_Async(int responseCode, string method)
     {
       // Arrange
-      Request req = Session.Bind(RedirectTemplate, new { code = responseCode, count = 1 });
+      Request req = Session.Bind(RedirectTemplate, new { code = responseCode, count = 1, v = 0 });
 
       // Act
       TestAsync(wh =>
@@ -143,7 +143,7 @@ namespace Ramone.Tests
     {
       // Arrange
       Session.SetAllowedRedirects(responseCode, 2);
-      Request req = Session.Bind(RedirectTemplate, new { code = responseCode, count = 1 });
+      Request req = Session.Bind(RedirectTemplate, new { code = responseCode, count = 1, v = 0 });
 
       // Act
       using (Response<RedirectArgs> resp = req.Execute<RedirectArgs>(method))
@@ -159,7 +159,7 @@ namespace Ramone.Tests
     {
       // Arrange
       Session.SetAllowedRedirects(responseCode, 2);
-      Request req = Session.Bind(RedirectTemplate, new { code = responseCode, count = 1 });
+      Request req = Session.Bind(RedirectTemplate, new { code = responseCode, count = 1, v = 0 });
 
       // Act
       TestAsync(wh =>
@@ -178,7 +178,24 @@ namespace Ramone.Tests
     public void WithRedirectCountSetToZeroItDoesNotFollowRedirects(int responseCode, string method)
     {
       // Arrange
-      Request req = Session.Bind(RedirectTemplate, new { code = responseCode, count = 1 });
+      Request req = Session.Bind(RedirectTemplate, new { code = responseCode, count = 1, v = 0 });
+      Session.SetAllowedRedirects(responseCode, 0);
+
+      // Act
+      using (Response<RedirectArgs> resp = req.Execute<RedirectArgs>(method))
+      {
+        // Assert
+        Assert.AreEqual(0, resp.RedirectCount);
+        Assert.AreEqual(responseCode, (int)resp.WebResponse.StatusCode);
+      }
+    }
+
+
+    [Test, TestCaseSource("AFewValidRedirectCases")]
+    public void WithRedirectCountSetToZeroItDoesNotFollowEmptyRedirects(int responseCode, string method)
+    {
+      // Arrange
+      Request req = Session.Bind(RedirectTemplate, new { code = responseCode, count = 1, v = 1 });
       Session.SetAllowedRedirects(responseCode, 0);
 
       // Act
@@ -195,7 +212,7 @@ namespace Ramone.Tests
     public void WithRedirectCountSetToZeroItDoesNotFollowRedirects_Async(int responseCode, string method)
     {
       // Arrange
-      Request req = Session.Bind(RedirectTemplate, new { code = responseCode, count = 1 });
+      Request req = Session.Bind(RedirectTemplate, new { code = responseCode, count = 1, v = 0 });
       Session.SetAllowedRedirects(responseCode, 0);
 
       // Act
@@ -216,7 +233,7 @@ namespace Ramone.Tests
     public void WhenFollowingRedirectsItAppliesRequestInterceptors(int responseCode, string method)
     {
       // Arrange
-      Request req = Session.Bind(RedirectTemplate, new { code = responseCode, count = 1 });
+      Request req = Session.Bind(RedirectTemplate, new { code = responseCode, count = 1, v = 0 });
       Session.SetAllowedRedirects(responseCode, 5);
       Session.RequestInterceptors.Add(new RequestInterceptor());
       InterceptorCount = 0;
@@ -234,7 +251,7 @@ namespace Ramone.Tests
     public void WhenFollowingRedirectsItAppliesRequestInterceptors_Async(int responseCode, string method)
     {
       // Arrange
-      Request req = Session.Bind(RedirectTemplate, new { code = responseCode, count = 1 });
+      Request req = Session.Bind(RedirectTemplate, new { code = responseCode, count = 1, v = 0 });
       Session.SetAllowedRedirects(responseCode, 5);
       Session.RequestInterceptors.Add(new RequestInterceptor());
       InterceptorCount = 0;
