@@ -133,7 +133,7 @@ namespace Ramone.Tests.Server
         ResourceSpace.Has.ResourcesOfType<JsonPatchDocument>()
             .AtUri(Constants.PatchPath)
             .HandledBy<PatchHandler>()
-            .TranscodedBy<Ramone.Tests.Server.Codecs.JsonPatchDocumentCodec>().ForMediaType("application/json-patch");
+            .TranscodedBy<Ramone.Tests.Server.Codecs.JsonPatchDocumentCodec>();
 
 
         ResourceSpace.Has.ResourcesOfType<SlowResource>()

@@ -127,7 +127,7 @@ namespace Ramone
       cm.AddXml<OpenSearchDescription>(new MediaType("application/opensearchdescription+xml"));
 
       // Json patch
-      cm.AddCodec<JsonPatchDocument, JsonPatchDocumentCodec>(new MediaType("application/json-patch"));
+      cm.AddCodec<JsonPatchDocument, JsonPatchDocumentCodec>(new MediaType("application/json-patch+json"));
     }
 
 

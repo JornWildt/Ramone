@@ -7,6 +7,7 @@ using Ramone.MediaTypes.JsonPatch;
 
 namespace Ramone.Tests.Server.Codecs
 {
+  [MediaType("application/json-patch+json")]
   [MediaType("application/json-patch")]
   public class JsonPatchDocumentCodec : OpenRasta.Codecs.IMediaTypeReader
   {
