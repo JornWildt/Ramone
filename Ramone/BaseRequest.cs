@@ -11,7 +11,13 @@ namespace Ramone
 {
   public class BaseRequest
   {
+    #region Public properties
+
     public Uri Url { get; protected set; }
+
+    public ISession Session { get; protected set; }
+
+    #endregion
 
 
     #region Constructors
@@ -56,10 +62,7 @@ namespace Ramone
     #endregion
 
 
-
-    #region Properties
-
-    protected ISession Session { get; set; }
+    #region Internal properties
 
     protected string SubmitMethod { get; set; }
 

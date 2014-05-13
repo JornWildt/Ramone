@@ -2,6 +2,7 @@ Version 1.3.2.XX
 ----------------
 * Now possible to specify target filename for file uploads (GitHub issue #11)
 * Change JSON patch identifier to application/json-patch+json (GitHub issue #8)
+* Make Session member public on Request object (GitHub issue #7)
 
 
 Version 1.3.1.79
