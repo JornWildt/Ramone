@@ -109,10 +109,12 @@ namespace Ramone.OAuth2
       tokenRequestArgs["grant_type"] = "authorization_code";
       tokenRequestArgs["code"] = authorizationCode;
       tokenRequestArgs["redirect_uri"] = settings.RedirectUri.ToString();
-      tokenRequestArgs["client_id"] = settings.ClientID;
 
       if (settings.ClientAuthenticationMethod == OAuth2Settings.DefaultClientAuthenticationMethods.RequestBody)
+      {
+        tokenRequestArgs["client_id"] = settings.ClientID;
         tokenRequestArgs["client_secret"] = settings.ClientSecret;
+      }
 
       return GetAndStoreAccessToken(session, tokenRequestArgs, useAccessToken);
     }
