@@ -30,6 +30,19 @@ namespace Ramone
       RelatedAsyncRequest = src.RelatedAsyncRequest;
     }
 
+
+    public Request(Uri url)
+      : base(RamoneConfiguration.NewSession(), url)
+    {
+    }
+
+
+    public Request(string url)
+      : base(RamoneConfiguration.NewSession(), new Uri(url))
+    {
+    }
+
+
     #endregion
 
 

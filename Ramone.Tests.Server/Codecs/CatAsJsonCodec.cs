@@ -8,4 +8,9 @@ namespace Ramone.Tests.Server.Codecs
   public class CatAsJsonCodec : JsonSerializerCodec<Cat>
   {
   }
+  
+  [MediaType("application/json")]
+  public class CatsAsJsonCodec : JsonSerializerCodec<Cat>
+  {
+  }
 }

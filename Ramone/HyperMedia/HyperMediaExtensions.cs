@@ -47,6 +47,19 @@ namespace Ramone.HyperMedia
 
 
     /// <summary>
+    /// Create request from link with implicit session (created on demand)
+    /// </summary>
+    /// <param name="link"></param>
+    /// <returns></returns>
+    public static Request Follow(this ILink link)
+    {
+      Condition.Requires(link, "link").IsNotNull();
+
+      return new Request(link.HRef);
+    }
+
+
+    /// <summary>
     /// Create request from link, apply base URL from specific response and use session from same response.
     /// </summary>
     /// <param name="response"></param>

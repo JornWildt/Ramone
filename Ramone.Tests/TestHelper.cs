@@ -28,6 +28,12 @@ namespace Ramone.Tests
     }
 
 
+    protected Uri ResolveTestUrl(string path)
+    {
+      return new Uri(BaseUrl, path);
+    }
+
+
     protected static readonly UriTemplate DossierTemplate = new UriTemplate(CMSConstants.DossierPath);
 
     protected static readonly UriTemplate VerifiedMethodDossierTemplate = new UriTemplate(CMSConstants.VerifiedMethodDossierPath);

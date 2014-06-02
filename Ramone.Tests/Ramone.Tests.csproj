@@ -85,6 +85,7 @@
   <ItemGroup>
     <Compile Include="AcceptTests.cs" />
     <Compile Include="AdditionalMethodsTests.cs" />
+    <Compile Include="AnonymousSessionTests.cs" />
     <Compile Include="AsyncTests.cs" />
     <Compile Include="BindingTests.cs" />
     <Compile Include="Blog\BlogTestHelper.cs" />
