@@ -47,6 +47,16 @@ namespace Ramone.Tests
 
 
     [Test]
+    public void CanAddAuthorizerToSessionMoreThanOnce()
+    {
+      Session.BasicAuthentication("John", "magic");
+      Session.BasicAuthentication("Steinbeck", "more magic");
+      AssertThrows<WebException>(() => Session.Request(BasicAuthUrl).Get<string>(),
+        ex => ((HttpWebResponse)ex.Response).StatusCode == HttpStatusCode.Unauthorized);
+    }
+
+
+    [Test]
     public void CanAddAuthorizerToSession_Async()
     {
       Session.BasicAuthentication("John", "magic");

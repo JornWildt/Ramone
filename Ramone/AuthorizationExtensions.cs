@@ -9,6 +9,7 @@ namespace Ramone
   {
     public static void BasicAuthentication(this IHaveRequestInterceptors interceptorOwner, string username, string password)
     {
+      interceptorOwner.RequestInterceptors.Remove(typeof(BasicAuthorizationInterceptor));
       interceptorOwner.RequestInterceptors.Add(new BasicAuthorizationInterceptor(username, password));
     }
 
