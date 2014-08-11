@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq.Expressions;
-using JsonFx.Json;
 using Ramone.Utility;
 using System.Collections;
 using CuttingEdge.Conditions;
-using JsonFx.Serialization;
+using Newtonsoft.Json;
+using System.Runtime.Serialization;
+using System.Dynamic;
+using System.Reflection;
 
 
 namespace Ramone.MediaTypes.JsonPatch
@@ -91,22 +93,32 @@ namespace Ramone.MediaTypes.JsonPatch
 
     public void Write(TextWriter w)
     {
-      JsonWriter jsw = new JsonWriter();
-      jsw.Write(Operations, w);
+      using (JsonWriter jsw = new JsonTextWriter(w))
+      {
+        JsonSerializer serializer = new JsonSerializer();
+        serializer.Serialize(jsw, Operations);
+      }
     }
 
 
     public static JsonPatchDocument Read(TextReader r)
     {
       JsonPatchDocument patch = new JsonPatchDocument();
-
-      JsonReader jsr = new JsonReader();
       CompleteOperation[] operations = null;
+
       try
       {
-        operations = jsr.Read<CompleteOperation[]>(r);
+        using (JsonReader jsr = new JsonTextReader(r))
+        {
+          JsonSerializer serializer = new JsonSerializer();
+          operations = serializer.Deserialize<CompleteOperation[]>(jsr);
+        }
       }
-      catch (DeserializationException ex)
+      catch (JsonReaderException ex)
+      {
+        throw new JsonPatchParserException(ex.Message, ex);
+      }
+      catch (JsonSerializationException ex)
       {
         throw new JsonPatchParserException(ex.Message, ex);
       }
@@ -232,6 +244,7 @@ namespace Ramone.MediaTypes.JsonPatch
     {
       public string op { get; set; }
       public string path { get; set; }
+      [JsonConverter(typeof(Newtonsoft.Json.Converters.ExpandoObjectConverter))]
       public object value { get; set; }
       public string from { get; set; }
     }

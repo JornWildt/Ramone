@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
-using JsonFx.Json;
+using Newtonsoft.Json;
+using System.Dynamic;
 
 
 namespace Ramone.MediaTypes.Json
@@ -9,10 +10,13 @@ namespace Ramone.MediaTypes.Json
   {
     protected override object ReadFrom(TextReader reader, ReaderContext context)
     {
-      JsonReader jsr = new JsonReader();
-      string text = reader.ReadToEnd();
-      // FIXME: should be able to read directly from reader, but fails
-      return jsr.Read(text, context.DataType);
+      using (JsonReader jsr = new JsonTextReader(reader))
+      {
+        JsonSerializer serializer = new JsonSerializer();
+        // Avoid JSON.NET wrapping result in JToken wrapper - return ExpandoObject for "object"
+        Type t = (context.DataType == typeof(object) ? typeof(ExpandoObject) : context.DataType);
+        return serializer.Deserialize(jsr, t);
+      }
     }
 
 
@@ -21,8 +25,11 @@ namespace Ramone.MediaTypes.Json
       if (item == null)
         throw new ArgumentNullException("item");
 
-      JsonWriter jsw = new JsonWriter();
-      jsw.Write(item, writer);
+      using (JsonWriter jsw = new JsonTextWriter(writer))
+      {
+        JsonSerializer serializer = new JsonSerializer();
+        serializer.Serialize(jsw, item);
+      }
     }
   }
 }

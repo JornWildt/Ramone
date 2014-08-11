@@ -1,7 +1,5 @@
 ﻿using NUnit.Framework;
-using Ramone.MediaTypes.Json;
 using Ramone.Tests.Common;
-using Ramone.Tests.Common.CMS;
 using System;
 
 

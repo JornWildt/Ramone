@@ -16,7 +16,7 @@ namespace Ramone.MediaTypes
 
     public object ReadFrom(ReaderContext context)
     {
-      Encoding enc = MediaTypeParser.GetEncodingFromCharset(context.Response.ContentType, context.Session.DefaultEncoding);
+      Encoding enc = MediaTypeParser.GetEncodingFromCharset(context.Response.ContentType, DefaultEncoding ?? context.Session.DefaultEncoding);
 
       using (var reader = new StreamReader(context.HttpStream, enc))
       {
@@ -31,7 +31,7 @@ namespace Ramone.MediaTypes
 
     public void WriteTo(WriterContext context)
     {
-      Encoding enc = MediaTypeParser.GetEncodingFromCharset(context.Request.ContentType, context.Session.DefaultEncoding);
+      Encoding enc = MediaTypeParser.GetEncodingFromCharset(context.Request.ContentType, DefaultEncoding ?? context.Session.DefaultEncoding);
 
       using (var writer = new StreamWriter(context.HttpStream, enc))
       {
@@ -47,6 +47,8 @@ namespace Ramone.MediaTypes
     public object CodecArgument { get; set; }
 
     #endregion
+
+    protected virtual Encoding DefaultEncoding { get { return null; } }
 
     protected abstract TEntity ReadFrom(TextReader reader, ReaderContext context);
 
