@@ -41,9 +41,8 @@ namespace Ramone.Hypermedia.Mason
         }
         else if (pair.Key == MasonProperties.Actions && pair.Value is JObject)
         {
-          //ActionsJsonValue = pair.Value;
-          //Actions = new ObservableCollection<ActionViewModel>(
-          //  pair.Value.Children().OfType<JProperty>().Select(a => ActionViewModel.CreateAction(this, a, context)));
+          foreach (JProperty actionJson in pair.Value.Children().OfType<JProperty>())
+            result.Controls.Add(BuildAction(actionJson));
         }
         else if (pair.Key == MasonProperties.Meta && pair.Value is JObject)
         {
@@ -103,15 +102,24 @@ namespace Ramone.Hypermedia.Mason
       string name = Namespaces.Expand(actionJson.Name, out prefix, out reference, out nsname);
 
       string type = GetValue<string>(actionObject, "type");
-      string method = GetValue<string>(actionObject, "method");
+      string method = GetValue<string>(actionObject, "method", "POST");
       string href = GetValue<string>(actionObject, "href");
 
-      if (type == MasonProperties.ActionTypes.JSON)
+      if (type == MasonProperties.ActionTypes.Void)
+      {
+        return new VoidAction(name, href, method);
+      }
+      else if (type == MasonProperties.ActionTypes.JSON)
       {
         return new JsonAction(name, href, method);
       }
+      else if (type == MasonProperties.ActionTypes.JSONFiles)
+      {
+        // FIXME
+        return new JsonAction(name, href, method);
+      }
       
-      throw new NotImplementedException();
+      throw new NotImplementedException("Unknown action type: " + type);
     }
 
 
@@ -156,13 +164,13 @@ namespace Ramone.Hypermedia.Mason
     }
 
 
-    protected T GetValue<T>(JToken t, string name)
+    protected T GetValue<T>(JToken t, string name, T defaultValue = null)
       where T : class
     {
       JToken value = t[name];
       if (value != null)
         return value.Value<T>();
-      return null;
+      return defaultValue;
     }
   }
 }

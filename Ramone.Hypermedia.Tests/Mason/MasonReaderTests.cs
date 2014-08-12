@@ -24,7 +24,7 @@ namespace Ramone.Hypermedia.Tests.Mason
   [TestFixture]
   public class MasonReaderTests : TestHelper
   {
-    const string IssueTrackerIndexUrl = "http://localhost/mason-demo/resource-common";
+    const string IssueTrackerIndexUrl = "http://jorn-pc/mason-demo/resource-common";
 
 
     protected override void TestFixtureSetUp()
@@ -78,13 +78,66 @@ namespace Ramone.Hypermedia.Tests.Mason
       Resource common = GetCommonResource();
 
       // FIXME: can we avoid including Session here?
+
       // Follow link directly (alias for "Invoke")
       using (var resp = common.Controls[MasonTestConstants.Contact].Follow<Resource>(Session))
       {
         Resource contact = resp.Body;
         Assert.AreEqual("IssueTracker Demo (by Jørn Wildt)", ((dynamic)contact).Name);
       }
+    }
 
+
+    [Test]
+    public void CanInvokeWithoutArguments()
+    {
+      // Arrange
+      Resource common = GetCommonResource();
+
+      // FIXME: can we avoid including Session here?
+
+      using (var resp = common.Controls[MasonTestConstants.Contact].Invoke<Resource>(Session))
+      {
+        Resource contact = resp.Body;
+        Assert.AreEqual("IssueTracker Demo (by Jørn Wildt)", ((dynamic)contact).Name);
+      }
+    }
+
+
+    [Test]
+    public void CanBindAndThenInvoke()
+    {
+      // Arrange
+      Resource common = GetCommonResource();
+
+      // FIXME: can we avoid including Session here?
+
+      using (var resp = common.Controls[MasonTestConstants.Contact].Bind(Session).Invoke<Resource>())
+      {
+        Resource contact = resp.Body;
+        Assert.AreEqual("IssueTracker Demo (by Jørn Wildt)", ((dynamic)contact).Name);
+      }
+    }
+
+    // FIXME: repeat most tests with and without <T> Body type
+
+    [Test]
+    public void CanInvokeJsonAction()
+    {
+      // Arrange
+      Resource common = GetCommonResource();
+
+      // FIXME: can we avoid including Session here?
+
+      string code = Guid.NewGuid().ToString();
+      var newProjectArgs = new { Code = code, Title = "Human resources", Description = "Blah" };
+      using (var resp = common.Controls[MasonTestConstants.ProjectCreate].Invoke<Resource>(Session, newProjectArgs))
+      {
+        Resource project = resp.Created();
+        Assert.AreEqual(code, ((dynamic)project).Code);
+        Assert.AreEqual("Human resources", ((dynamic)project).Title);
+        Assert.AreEqual("Blah", ((dynamic)project).Description);
+      }
     }
 
 

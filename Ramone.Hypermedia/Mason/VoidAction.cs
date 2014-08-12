@@ -2,53 +2,51 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using Ramone;
 
 
 namespace Ramone.Hypermedia.Mason
 {
-  public class JsonAction : ActionBase
+  public class VoidAction : ActionBase
   {
-    public JsonAction(string name, string href, string method)
+    public VoidAction(string name, string href, string method)
       : base(name, href, method)
     {
     }
 
-
+    
     public override Request Bind(ISession session)
     {
-      return session.Bind(HRef).Method(Method);
+      throw new NotImplementedException();
     }
 
-
+    
     public override Request Bind(ISession session, object args)
     {
-      return session.Bind(HRef).Method(Method).AsJson().Body(args);
+      throw new NotImplementedException();
     }
 
-
+    
     public override Response Invoke(ISession session)
     {
-      return session.Bind(HRef).Method(Method).Submit();
+      throw new NotImplementedException();
     }
 
-
+    
     public override Response Invoke(ISession session, object args)
     {
-      return session.Bind(HRef).Method(Method).AsJson().Body(args).Submit();
+      throw new NotImplementedException();
     }
 
     
     public override Response<T> Invoke<T>(ISession session)
     {
-      return session.Bind(HRef).Method(Method).Submit<T>();
+      throw new NotImplementedException();
     }
 
-
+    
     public override Response<T> Invoke<T>(ISession session, object args)
     {
-      return session.Bind(HRef).Method(Method).AsJson().Body(args).Submit<T>();
+      throw new NotImplementedException();
     }
   }
 }

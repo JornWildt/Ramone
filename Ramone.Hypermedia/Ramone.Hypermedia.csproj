@@ -52,12 +52,14 @@
     <Compile Include="IControl.cs" />
     <Compile Include="IControlCollection.cs" />
     <Compile Include="IResource.cs" />
+    <Compile Include="Mason\ActionBase.cs" />
     <Compile Include="Mason\Builder.cs" />
     <Compile Include="Mason\JsonAction.cs" />
     <Compile Include="Mason\Link.cs" />
     <Compile Include="Mason\MasonCodec.cs" />
     <Compile Include="Mason\MasonProperties.cs" />
     <Compile Include="Mason\MasonResource.cs" />
+    <Compile Include="Mason\VoidAction.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resource.cs" />
     <Compile Include="Utilities\NamespaceManager.cs" />
