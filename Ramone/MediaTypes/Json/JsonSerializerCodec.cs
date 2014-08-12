@@ -2,19 +2,25 @@
 using System.IO;
 using Newtonsoft.Json;
 using System.Dynamic;
+using System.Text;
 
 
 namespace Ramone.MediaTypes.Json
 {
   public class JsonSerializerCodec : TextCodecBase<object>
   {
+    protected override Encoding DefaultEncoding { get { return Encoding.UTF8; } }
+
+
     protected override object ReadFrom(TextReader reader, ReaderContext context)
     {
       using (JsonReader jsr = new JsonTextReader(reader))
       {
         JsonSerializer serializer = new JsonSerializer();
+
         // Avoid JSON.NET wrapping result in JToken wrapper - return ExpandoObject for "object"
         Type t = (context.DataType == typeof(object) ? typeof(ExpandoObject) : context.DataType);
+        
         return serializer.Deserialize(jsr, t);
       }
     }

@@ -21,22 +21,28 @@ namespace Ramone.Hypermedia
 
     #region IControlCollection Members
 
-    public IControl this[string key]
+    public bool Exists(string name)
+    {
+      return Controls.ContainsKey(name);
+    }
+
+
+    public IControl this[string name]
     {
       get
       {
         IList<IControl> c;
-        if (Controls.TryGetValue(key, out c))
+        if (Controls.TryGetValue(name, out c))
           return c[0];
         return null;
       }
       set
       {
         IList<IControl> c;
-        if (Controls.TryGetValue(key, out c))
+        if (Controls.TryGetValue(name, out c))
           c.Add(value);
         else
-          Controls[key] = new List<IControl> { value };
+          Controls[name] = new List<IControl> { value };
       }
     }
 

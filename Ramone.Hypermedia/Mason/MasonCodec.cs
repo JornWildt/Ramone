@@ -1,15 +1,18 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using Ramone;
 using Ramone.MediaTypes;
 using System;
 using System.IO;
+using System.Text;
 
 
 namespace Ramone.Hypermedia.Mason
 {
   public class MasonCodec : TextCodecBase<MasonResource>
   {
+    protected override Encoding DefaultEncoding { get { return Encoding.UTF8; } }
+
+
     protected override MasonResource ReadFrom(TextReader reader, ReaderContext context)
     {
       using (JsonReader jsr = new JsonTextReader(reader))
