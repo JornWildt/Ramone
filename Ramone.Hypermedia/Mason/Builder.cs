@@ -2,6 +2,7 @@
 using Ramone.Hypermedia.Utilities;
 using System;
 using System.Linq;
+using System.Reflection;
 
 
 namespace Ramone.Hypermedia.Mason
@@ -11,16 +12,20 @@ namespace Ramone.Hypermedia.Mason
     private NamespaceManager Namespaces = new NamespaceManager();
 
 
-    public MasonResource Build(JObject json)
+    public Resource Build(JObject json, Type targetType)
     {
       if (json == null)
         return null;
+
+      if (targetType != null && !typeof(Resource).IsAssignableFrom(targetType))
+        throw new InvalidOperationException(string.Format("Cannot decode type {0} since it does not inherit fra Resource.", targetType));
 
       JObject namespaceJson = json[MasonProperties.Namespaces] as JObject;
       if (namespaceJson != null)
         BuildNamespaces(namespaceJson);
 
-      MasonResource result = new MasonResource();
+      Resource result = (targetType == null ? new MasonResource() : Activator.CreateInstance(targetType) as Resource);
+      MasonResource mason = result as MasonResource;
 
       foreach (var pair in json)
       {
@@ -64,7 +69,14 @@ namespace Ramone.Hypermedia.Mason
         }
         else
         {
-          result.RegisterPropertyValue(pair.Key, CreatePropertyRecursively(pair.Value));
+          PropertyInfo pi = (targetType != null ? targetType.GetProperty(pair.Key) : null);
+          MethodInfo mi = (pi != null ? pi.GetSetMethod() : null);
+
+          // If the JSON property name matches a property name on the target class then deserialize into that .NET property
+          if (pi != null && pi.CanWrite && mi != null && mi.IsPublic)
+            pi.SetValue(result, CreatePropertyRecursively(pair.Value, pi.PropertyType), new object[0]);
+          else
+            result.RegisterPropertyValue(pair.Key, CreatePropertyRecursively(pair.Value, null));
         }
       }
 
@@ -123,7 +135,7 @@ namespace Ramone.Hypermedia.Mason
     }
 
 
-    private object CreatePropertyRecursively(JToken json)
+    private object CreatePropertyRecursively(JToken json, Type expectedType)
     {
       if (json == null)
       {
@@ -131,11 +143,11 @@ namespace Ramone.Hypermedia.Mason
       }
       else if (json is JArray)
       {
-        return ((JArray)json).Select(item => CreatePropertyRecursively(item)).ToArray();
+        return ((JArray)json).Select(item => CreatePropertyRecursively(item, null)).ToArray();
       }
       else if (json is JObject)
       {
-        return Build((JObject)json);
+        return Build((JObject)json, expectedType);
       }
       else if (json is JValue)
       {

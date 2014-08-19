@@ -6,7 +6,7 @@ namespace Ramone.Hypermedia
 {
   public class Resource : DynamicObject, IResource
   {
-    public Dictionary<string, object> Properties { get; set; }
+    private Dictionary<string, object> Properties { get; set; }
 
     public IControlCollection Controls { get; protected set; }
 

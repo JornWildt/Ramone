@@ -71,7 +71,7 @@ namespace Ramone.Implementation
     {
       Condition.Requires(t, "t").IsNotNull();
 
-      return SelectReaders(t, MediaType.Wildcard).Select(e => new MediaTypeReaderRegistration(e.MediaType, e.ClrType, InstantiateReaderCodec(e.CodecType)));
+      return SelectReaders(t, MediaType.Wildcard).Select(e => new MediaTypeReaderRegistration(e.MediaType, e.ClrType, t, InstantiateReaderCodec(e.CodecType)));
     }
 
 
@@ -83,7 +83,7 @@ namespace Ramone.Implementation
       if (entry == null)
         throw new ArgumentException(string.Format("Could not find a reader codec for '{0}' + {1}", mediaType, t));
 
-      return new MediaTypeReaderRegistration(entry.MediaType, entry.ClrType, InstantiateReaderCodec(entry.CodecType));
+      return new MediaTypeReaderRegistration(entry.MediaType, entry.ClrType, t, InstantiateReaderCodec(entry.CodecType));
     }
 
 
@@ -95,7 +95,7 @@ namespace Ramone.Implementation
       if (entry == null)
         throw new ArgumentException(string.Format("Could not find a writer codec for '{0}' + {1}", mediaType, t));
 
-      return new MediaTypeWriterRegistration(entry.MediaType, entry.ClrType, InstantiateWriterCodec(entry.CodecType));
+      return new MediaTypeWriterRegistration(entry.MediaType, entry.ClrType, t, InstantiateWriterCodec(entry.CodecType));
     }
 
     #endregion

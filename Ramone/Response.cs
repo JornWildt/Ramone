@@ -55,9 +55,9 @@ namespace Ramone
       if (WebResponse.ContentLength == 0 || ContentType == null || WebResponse.StatusCode == HttpStatusCode.NoContent)
         return null;
 
-      IMediaTypeReader reader = Session.Service.CodecManager.GetReader(typeof(T), ContentType).Codec;
+      MediaTypeReaderRegistration reader = Session.Service.CodecManager.GetReader(typeof(T), ContentType);
       ReaderContext context = new ReaderContext(WebResponse.GetResponseStream(), typeof(T), WebResponse, Session);
-      T result = (T)reader.ReadFrom(context);
+      T result = (T)reader.Codec.ReadFrom(context);
       ContextRegistrator.RegisterContext(Session, BaseUri, result);
       return result;
     }

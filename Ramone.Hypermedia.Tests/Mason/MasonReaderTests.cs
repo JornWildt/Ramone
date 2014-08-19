@@ -1,39 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using Ramone.Hypermedia.Mason;
+using System;
 
 
 // Support multiple media types - fx Sirene og HAL
 // - Support inheritance from Resource or IResource in the media type codecs
-// Support intellisense for member variables
-// Support async
-// Add "Select(name, mediatype)" to IControlCollection
-
-// Also test for link existence
-// What about session?
-// - ISessionLink
-
-// .Follow() makes sense too on a Control
 
 namespace Ramone.Hypermedia.Tests.Mason
 {
   [TestFixture]
   public class MasonReaderTests : TestHelper
   {
-    const string IssueTrackerIndexUrl = "http://jorn-pc/mason-demo/resource-common";
-
-
-    protected override void TestFixtureSetUp()
+    class CommonResource : MasonResource
     {
-      base.TestFixtureSetUp();
-      // FIXME: move this to some utility feature in Hypermedia namespace
-      TestService.CodecManager.AddCodec<Resource, MasonCodec>(new MediaType("application/vnd.mason+json"));
+      public string Title { get; set; }
+      public string Description { get; set; }
     }
-
 
     [Test]
     public void CanGetServiceIndexAsResource()
@@ -47,7 +29,7 @@ namespace Ramone.Hypermedia.Tests.Mason
 
 
     [Test]
-    public void CanAccessDataOnResource()
+    public void CanAccessDataOnResourceAsDynamic()
     {
       // Arrange
       Resource common = GetCommonResource();
@@ -56,6 +38,25 @@ namespace Ramone.Hypermedia.Tests.Mason
 
       // Assert
       Assert.AreEqual("IssueTracker Demo", ((dynamic)common).Title);
+    }
+
+
+    [Test]
+    public void CanAccessDataOnResourceAsTypedClass()
+    {
+      // Arrange
+      Request req = Session.Request(IssueTrackerIndexUrl);
+
+      //Session.Service.CodecManager.AddCodec<CommonResource, MasonCodec>(new MediaType("application/vnd.mason+json"));
+
+      // Act
+      using (var resp = req.Get<CommonResource>())
+      {
+        CommonResource common = resp.Body;
+
+        // Assert
+        Assert.AreEqual("IssueTracker Demo", common.Title);
+      }
     }
 
 
@@ -89,7 +90,7 @@ namespace Ramone.Hypermedia.Tests.Mason
 
 
     [Test]
-    public void CanInvokeWithoutArguments()
+    public void CanInvokeLink()
     {
       // Arrange
       Resource common = GetCommonResource();
@@ -105,7 +106,7 @@ namespace Ramone.Hypermedia.Tests.Mason
 
 
     [Test]
-    public void CanBindAndThenInvoke()
+    public void CanBindAndThenInvokeLink()
     {
       // Arrange
       Resource common = GetCommonResource();
@@ -117,42 +118,6 @@ namespace Ramone.Hypermedia.Tests.Mason
         Resource contact = resp.Body;
         Assert.AreEqual("IssueTracker Demo (by Jørn Wildt)", ((dynamic)contact).Name);
       }
-    }
-
-    // FIXME: repeat most tests with and without <T> Body type
-
-    [Test]
-    public void CanInvokeJsonAction()
-    {
-      // Arrange
-      Resource common = GetCommonResource();
-
-      // FIXME: can we avoid including Session here?
-
-      string code = Guid.NewGuid().ToString();
-      var newProjectArgs = new { Code = code, Title = "Human resources", Description = "Blah" };
-      using (var resp = common.Controls[MasonTestConstants.ProjectCreate].Invoke<Resource>(Session, newProjectArgs))
-      {
-        Resource project = resp.Created();
-        Assert.AreEqual(code, ((dynamic)project).Code);
-        Assert.AreEqual("Human resources", ((dynamic)project).Title);
-        Assert.AreEqual("Blah", ((dynamic)project).Description);
-      }
-    }
-
-
-    private Resource _commonResource;
-    private Resource GetCommonResource()
-    {
-      if (_commonResource == null)
-      {
-        Request req = Session.Request(IssueTrackerIndexUrl);
-        using (var resp = req.Get<Resource>())
-        {
-          _commonResource = resp.Body;
-        }
-      }
-      return _commonResource;
     }
   }
 }

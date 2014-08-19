@@ -29,13 +29,15 @@ namespace Ramone
   public class CodecRegistration<T>
   {
     public MediaType MediaType { get; set; }
-    public Type ClrType { get; set; }
+    public Type ExpectedClrType { get; set; }
+    public Type ActualClrType { get; set; }
     public T Codec { get; set; }
 
-    public CodecRegistration(MediaType mediaType, Type clrType, T codec)
+    public CodecRegistration(MediaType mediaType, Type expectedClrType, Type actualClrType, T codec)
     {
       MediaType = mediaType;
-      ClrType = clrType;
+      ExpectedClrType = expectedClrType;
+      ActualClrType = actualClrType;
       Codec = codec;
     }
   }
@@ -43,8 +45,8 @@ namespace Ramone
 
   public class MediaTypeReaderRegistration : CodecRegistration<IMediaTypeReader>
   {
-    public MediaTypeReaderRegistration(MediaType mediaType, Type clrType, IMediaTypeReader codec)
-      : base(mediaType, clrType, codec)
+    public MediaTypeReaderRegistration(MediaType mediaType, Type expectedClrType, Type actualClrType, IMediaTypeReader codec)
+      : base(mediaType, expectedClrType, actualClrType, codec)
     {
     }
   }
@@ -52,8 +54,8 @@ namespace Ramone
 
   public class MediaTypeWriterRegistration : CodecRegistration<IMediaTypeWriter>
   {
-    public MediaTypeWriterRegistration(MediaType mediaType, Type clrType, IMediaTypeWriter codec)
-      : base(mediaType, clrType, codec)
+    public MediaTypeWriterRegistration(MediaType mediaType, Type expectedClrType, Type actualClrType, IMediaTypeWriter codec)
+      : base(mediaType, expectedClrType, actualClrType, codec)
     {
     }
   }

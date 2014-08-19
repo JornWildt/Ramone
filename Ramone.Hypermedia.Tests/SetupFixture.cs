@@ -8,6 +8,7 @@ using Ramone.Tests.Common.CMS;
 using Ramone.MediaTypes;
 using System.Collections.Generic;
 using System;
+using Ramone.Hypermedia.Mason;
 
 
 namespace Ramone.Hypermedia.Tests
@@ -21,6 +22,8 @@ namespace Ramone.Hypermedia.Tests
       TestHelper.TestService = RamoneConfiguration.NewService(TestHelper.BaseUrl);
 
       TestHelper.TestService.DefaultEncoding = Encoding.GetEncoding("iso-8859-1");
+      // FIXME: move this to some utility feature in Hypermedia namespace
+      TestHelper.TestService.CodecManager.AddCodec<Resource, MasonCodec>(new MediaType("application/vnd.mason+json"));
 
       ICodecManager cm = TestHelper.TestService.CodecManager;
     }
