@@ -17,6 +17,18 @@ namespace Ramone.Hypermedia
     }
 
 
+    public static Response Follow(this Request req)
+    {
+      return req.Submit();
+    }
+
+
+    public static Response<T> Follow<T>(this Request req) where T : class
+    {
+      return req.Submit<T>();
+    }
+
+
     public static Response Follow(this IControl control, ISession session)
     {
       return control.Invoke(session);

@@ -3,9 +3,6 @@ using Ramone.Hypermedia.Mason;
 using System;
 
 
-// Support multiple media types - fx Sirene og HAL
-// - Support inheritance from Resource or IResource in the media type codecs
-
 namespace Ramone.Hypermedia.Tests.Mason
 {
   [TestFixture]
@@ -34,8 +31,6 @@ namespace Ramone.Hypermedia.Tests.Mason
       // Arrange
       Resource common = GetCommonResource();
 
-      // FIXME: casting to dynamic is cumbersome
-
       // Assert
       Assert.AreEqual("IssueTracker Demo", ((dynamic)common).Title);
     }
@@ -46,8 +41,6 @@ namespace Ramone.Hypermedia.Tests.Mason
     {
       // Arrange
       Request req = Session.Request(IssueTrackerIndexUrl);
-
-      //Session.Service.CodecManager.AddCodec<CommonResource, MasonCodec>(new MediaType("application/vnd.mason+json"));
 
       // Act
       using (var resp = req.Get<CommonResource>())
@@ -78,8 +71,6 @@ namespace Ramone.Hypermedia.Tests.Mason
       // Arrange
       Resource common = GetCommonResource();
 
-      // FIXME: can we avoid including Session here?
-
       // Follow link directly (alias for "Invoke")
       using (var resp = common.Controls[MasonTestConstants.Contact].Follow<Resource>(Session))
       {
@@ -95,8 +86,6 @@ namespace Ramone.Hypermedia.Tests.Mason
       // Arrange
       Resource common = GetCommonResource();
 
-      // FIXME: can we avoid including Session here?
-
       using (var resp = common.Controls[MasonTestConstants.Contact].Invoke<Resource>(Session))
       {
         Resource contact = resp.Body;
@@ -111,9 +100,21 @@ namespace Ramone.Hypermedia.Tests.Mason
       // Arrange
       Resource common = GetCommonResource();
 
-      // FIXME: can we avoid including Session here?
-
       using (var resp = common.Controls[MasonTestConstants.Contact].Bind(Session).Invoke<Resource>())
+      {
+        Resource contact = resp.Body;
+        Assert.AreEqual("IssueTracker Demo (by Jørn Wildt)", ((dynamic)contact).Name);
+      }
+    }
+
+
+    [Test]
+    public void CanBindAndThenFollowLink()
+    {
+      // Arrange
+      Resource common = GetCommonResource();
+
+      using (var resp = common.Controls[MasonTestConstants.Contact].Bind(Session).Follow<Resource>())
       {
         Resource contact = resp.Body;
         Assert.AreEqual("IssueTracker Demo (by Jørn Wildt)", ((dynamic)contact).Name);

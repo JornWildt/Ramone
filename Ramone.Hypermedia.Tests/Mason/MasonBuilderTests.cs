@@ -21,6 +21,7 @@ namespace Ramone.Hypermedia.Tests.Mason
       public string Text { get; set; }
     }
 
+
     [Test]
     public void CanBuildComplexDataStructures()
     {
@@ -52,6 +53,7 @@ namespace Ramone.Hypermedia.Tests.Mason
       Assert.IsInstanceOf<X>(result.MyX);
       Assert.AreEqual(20, result.MyX.X1);
       Assert.AreEqual(70, result.MyX.X2);
+      Assert.IsTrue(((dynamic)result.MyX).a);
     }
   }
 }
