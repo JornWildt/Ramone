@@ -16,6 +16,9 @@ namespace Ramone.Hypermedia.Tests
   [SetUpFixture]
   class SetupFixture
   {
+    public static Resource SharedProject { get; set; }
+
+
     [SetUp]
     public void Setup()
     {

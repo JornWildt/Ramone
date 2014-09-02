@@ -16,37 +16,37 @@ namespace Ramone.Hypermedia.Mason
     
     public override Request Bind(ISession session)
     {
-      throw new NotImplementedException();
+      return session.Bind(HRef).Method(Method);
     }
 
     
     public override Request Bind(ISession session, object args)
     {
-      throw new NotImplementedException();
+      throw new InvalidOperationException("A void action does not accept any arguments");
     }
 
     
     public override Response Invoke(ISession session)
     {
-      throw new NotImplementedException();
+      return session.Bind(HRef).Method(Method).Submit();
     }
 
     
     public override Response Invoke(ISession session, object args)
     {
-      throw new NotImplementedException();
+      throw new InvalidOperationException("A link does not accept any arguments");
     }
 
     
     public override Response<T> Invoke<T>(ISession session)
     {
-      throw new NotImplementedException();
+      return session.Bind(HRef).Method(Method).Submit<T>();
     }
 
     
     public override Response<T> Invoke<T>(ISession session, object args)
     {
-      throw new NotImplementedException();
+      throw new InvalidOperationException("A link does not accept any arguments");
     }
   }
 }

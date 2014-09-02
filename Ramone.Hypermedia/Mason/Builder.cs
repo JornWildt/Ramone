@@ -127,8 +127,8 @@ namespace Ramone.Hypermedia.Mason
       }
       else if (type == MasonProperties.ActionTypes.JSONFiles)
       {
-        // FIXME
-        return new JsonAction(name, href, method);
+        string jsonFile = GetValue<string>(actionObject, "jsonFile");
+        return new JsonFilesAction(name, href, method, jsonFile);
       }
       
       throw new NotImplementedException("Unknown action type: " + type);

@@ -18,7 +18,7 @@ namespace Ramone.Hypermedia.Mason
 
     public override Request Bind(ISession session)
     {
-      return session.Bind(HRef).Method(Method);
+      return session.Bind(HRef).Method(Method).AsJson();
     }
 
 
@@ -30,7 +30,7 @@ namespace Ramone.Hypermedia.Mason
 
     public override Response Invoke(ISession session)
     {
-      return session.Bind(HRef).Method(Method).Submit();
+      throw new InvalidOperationException("A json action must have arguments applied");
     }
 
 
@@ -42,7 +42,7 @@ namespace Ramone.Hypermedia.Mason
     
     public override Response<T> Invoke<T>(ISession session)
     {
-      return session.Bind(HRef).Method(Method).Submit<T>();
+      throw new InvalidOperationException("A json action must have arguments applied");
     }
 
 

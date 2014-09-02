@@ -60,7 +60,7 @@ namespace Ramone.Hypermedia.Tests.Mason
       Resource common = GetCommonResource();
 
       // Assert
-      Assert.IsTrue(common.Controls.Exists(MasonTestConstants.Contact));
+      Assert.IsTrue(common.Controls.Exists(MasonTestConstants.Rels.Contact));
       Assert.IsFalse(common.Controls.Exists("XXX"));
     }
 
@@ -72,7 +72,7 @@ namespace Ramone.Hypermedia.Tests.Mason
       Resource common = GetCommonResource();
 
       // Follow link directly (alias for "Invoke")
-      using (var resp = common.Controls[MasonTestConstants.Contact].Follow<Resource>(Session))
+      using (var resp = common.Controls[MasonTestConstants.Rels.Contact].Follow<Resource>(Session))
       {
         Resource contact = resp.Body;
         Assert.AreEqual("IssueTracker Demo (by Jørn Wildt)", ((dynamic)contact).Name);
@@ -86,7 +86,7 @@ namespace Ramone.Hypermedia.Tests.Mason
       // Arrange
       Resource common = GetCommonResource();
 
-      using (var resp = common.Controls[MasonTestConstants.Contact].Invoke<Resource>(Session))
+      using (var resp = common.Controls[MasonTestConstants.Rels.Contact].Invoke<Resource>(Session))
       {
         Resource contact = resp.Body;
         Assert.AreEqual("IssueTracker Demo (by Jørn Wildt)", ((dynamic)contact).Name);
@@ -100,7 +100,7 @@ namespace Ramone.Hypermedia.Tests.Mason
       // Arrange
       Resource common = GetCommonResource();
 
-      using (var resp = common.Controls[MasonTestConstants.Contact].Bind(Session).Invoke<Resource>())
+      using (var resp = common.Controls[MasonTestConstants.Rels.Contact].Bind(Session).Invoke<Resource>())
       {
         Resource contact = resp.Body;
         Assert.AreEqual("IssueTracker Demo (by Jørn Wildt)", ((dynamic)contact).Name);
@@ -114,7 +114,7 @@ namespace Ramone.Hypermedia.Tests.Mason
       // Arrange
       Resource common = GetCommonResource();
 
-      using (var resp = common.Controls[MasonTestConstants.Contact].Bind(Session).Follow<Resource>())
+      using (var resp = common.Controls[MasonTestConstants.Rels.Contact].Bind(Session).Follow<Resource>())
       {
         Resource contact = resp.Body;
         Assert.AreEqual("IssueTracker Demo (by Jørn Wildt)", ((dynamic)contact).Name);
