@@ -57,6 +57,7 @@
     <Compile Include="Mason\JsonAction.cs" />
     <Compile Include="Mason\JsonFilesAction.cs" />
     <Compile Include="Mason\Link.cs" />
+    <Compile Include="Mason\LinkTemplate.cs" />
     <Compile Include="Mason\MasonCodec.cs" />
     <Compile Include="Mason\MasonProperties.cs" />
     <Compile Include="Mason\MasonResource.cs" />

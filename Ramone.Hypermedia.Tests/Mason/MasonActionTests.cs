@@ -4,6 +4,7 @@ using Ramone.Hypermedia.Mason;
 using System;
 using System.Net;
 using Ramone.IO;
+using System.Collections.Generic;
 
 
 namespace Ramone.Hypermedia.Tests.Mason
@@ -17,8 +18,6 @@ namespace Ramone.Hypermedia.Tests.Mason
       // Arrange
       Resource common = GetCommonResource();
 
-      // FIXME: can we avoid including Session here?
-
       string code = Guid.NewGuid().ToString();
       var newProjectArgs = new { Code = code, Title = "Human resources", Description = "Blah" };
       using (var resp = common.Controls[MasonTestConstants.Rels.ProjectCreate].Invoke<Resource>(Session, newProjectArgs))
@@ -27,6 +26,22 @@ namespace Ramone.Hypermedia.Tests.Mason
         Assert.AreEqual(code, ((dynamic)project).Code);
         Assert.AreEqual("Human resources", ((dynamic)project).Title);
         Assert.AreEqual("Blah", ((dynamic)project).Description);
+      }
+    }
+
+
+    [Test]
+    public void CanInvokeLinkTemplate()
+    {
+      // Arrange
+      Resource common = GetCommonResource();
+
+      var args = new { text = "blah", severity = "", pid = "" };
+      using (var resp = common.Controls[MasonTestConstants.Rels.IssueQuery].Invoke<Resource>(Session, args))
+      {
+        dynamic result = resp.Body;
+        Assert.IsNotNull(result.Issues);
+        Assert.IsInstanceOf<List<MasonResource>>(result.Issues);
       }
     }
 
@@ -63,13 +78,13 @@ namespace Ramone.Hypermedia.Tests.Mason
       var attachment = new StringFile { ContentType = "text/plain", Filename = "test.txt", Data = "1234" };
       var files = new { attachment = attachment };
 
-      using (var resp = project.Controls[MasonTestConstants.Rels.IssueAdd].Upload(Session, args, files))
+      using (var resp = project.Controls[MasonTestConstants.Rels.IssueAdd].Upload<Resource>(Session, args, files))
       {
-        dynamic result = resp.Created<Resource>();
+        dynamic result = resp.Created();
         Assert.AreEqual("New issue", result.Title);
         Assert.AreEqual(5, result.Severity);
         Assert.IsNotNull(result.Attachments);
-        Assert.AreEqual(1, result.Attachments.Length);
+        Assert.AreEqual(1, result.Attachments.Count);
       }
     }
   }

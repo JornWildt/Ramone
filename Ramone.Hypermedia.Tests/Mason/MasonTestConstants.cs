@@ -10,6 +10,7 @@
       public const string ProjectCreate = RelBase + "project-create";
       public const string ProjectDelete = RelBase + "project-delete";
       public const string IssueAdd = RelBase + "add-issue";
+      public const string IssueQuery = RelBase + "issue-query";
     }
   }
 }

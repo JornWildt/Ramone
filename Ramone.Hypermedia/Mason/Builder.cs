@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json.Linq;
 using Ramone.Hypermedia.Utilities;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
@@ -40,9 +41,8 @@ namespace Ramone.Hypermedia.Mason
         }
         else if (pair.Key == MasonProperties.LinkTemplates && pair.Value is JObject)
         {
-          //LinkTemplatesJsonValue = pair.Value;
-          //LinkTemplates = new ObservableCollection<LinkTemplateViewModel>(
-          //  pair.Value.Children().OfType<JProperty>().Select(l => new LinkTemplateViewModel(this, l, context)));
+          foreach (JProperty linkTemplateJson in pair.Value.Children().OfType<JProperty>())
+            result.Controls.Add(BuildLinkTemplate(linkTemplateJson));
         }
         else if (pair.Key == MasonProperties.Actions && pair.Value is JObject)
         {
@@ -101,6 +101,24 @@ namespace Ramone.Hypermedia.Mason
       return link;
     }
 
+    
+    private IControl BuildLinkTemplate(JProperty linkTemplateJson)
+    {
+      JObject linkTemplateObject = linkTemplateJson.Value as JObject;
+      if (linkTemplateObject == null)
+        return null;
+
+      string prefix;
+      string reference;
+      string nsname;
+      string name = Namespaces.Expand(linkTemplateJson.Name, out prefix, out reference, out nsname);
+
+      string template = GetValue<string>(linkTemplateObject, "template");
+
+      LinkTemplate linkTemplate = new LinkTemplate(name, template);
+      return linkTemplate;
+    }
+
 
     private IControl BuildAction(JProperty actionJson)
     {
@@ -143,7 +161,38 @@ namespace Ramone.Hypermedia.Mason
       }
       else if (json is JArray)
       {
-        return ((JArray)json).Select(item => CreatePropertyRecursively(item, null)).ToArray();
+        if (expectedType != null)
+        {
+          // Figure out expected item type (assuming expectedType is an array, list or other collection)
+          Type itemType = GetItemTypeFromSequenceType(expectedType);
+
+          // Create a "list of itemtype"
+          Type genericListType = typeof(List<>);
+          Type listType = genericListType.MakeGenericType(itemType);
+
+          // Get "Add" method for adding items to the list
+          MethodInfo listAddMethod = listType.GetMethod("Add");
+
+          // Create the list
+          object list = Activator.CreateInstance(listType);
+
+          // Build the sequence of items in the JSON array
+          IEnumerable<object> items = ((JArray)json).Select(item => CreatePropertyRecursively(item, itemType));
+
+          // Move the JSON items into typed list
+          foreach (object i in items)
+            listAddMethod.Invoke(list, new object[] { i });
+
+          // Construct expected type with typed list as constructor argument - hoping that such one exists
+          var result = Activator.CreateInstance(expectedType, list);
+
+          return result;
+        }
+        else
+        {
+          IEnumerable<MasonResource> items = ((JArray)json).Select(item => CreatePropertyRecursively(item, null)).Cast<MasonResource>();
+          return new List<MasonResource>(items);
+        }
       }
       else if (json is JObject)
       {
@@ -157,6 +206,17 @@ namespace Ramone.Hypermedia.Mason
         throw new NotImplementedException(string.Format("Cannot build property value from JSON type '{0}'", json.GetType()));
     }
 
+    
+    
+    private Type GetItemTypeFromSequenceType(Type expectedType)
+    {
+      // Crazy guess ...
+      if (expectedType.IsGenericType && expectedType.GetGenericArguments().Length == 1)
+        return expectedType.GetGenericArguments()[0];
+      if (expectedType.IsArray)
+        return expectedType.GetElementType();
+      return null;
+    }
 
 
     private void BuildNamespaces(JObject namespaces)
