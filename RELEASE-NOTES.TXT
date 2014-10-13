@@ -7,6 +7,7 @@ Version 1.3.2.XX
 * Do not include client_id in OAuth2 access token request when using HTTP Basic Auth (GitHub issue #14)
 * Enable anonymous sessions (GitHub issue #13)
 * Make it possible to call BasicAuthentication(...) on Session more than once (GitHub issue #16)
+* Add default codec for byte arrays (GitHub issue #15)
 
 
 Version 1.3.1.79

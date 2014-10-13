@@ -108,6 +108,7 @@
     <Compile Include="IfModifiedSinceTests.cs" />
     <Compile Include="IfNoneMatchTests.cs" />
     <Compile Include="IfUnmodifiedSinceTests.cs" />
+    <Compile Include="MediaTypes\ByteArrayCodecTests.cs" />
     <Compile Include="MediaTypes\JsonPatch\JsonPatchCodecTests.cs" />
     <Compile Include="MediaTypes\JsonPatch\JsonPatchTests.cs" />
     <Compile Include="MediaTypes\JsonPatch\JsonPatchApplyTests.cs" />

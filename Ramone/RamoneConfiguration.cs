@@ -123,6 +123,9 @@ namespace Ramone
       // Streams
       cm.AddCodec<Stream, StreamCodec>(new MediaType("*/*"));
 
+      // Byte arrays
+      cm.AddCodec<byte[], ByteArrayCodec>(new MediaType("*/*"));
+
       // Open search
       cm.AddXml<OpenSearchDescription>(new MediaType("application/opensearchdescription+xml"));
 

@@ -109,6 +109,7 @@
     <Compile Include="IO\MemoryFile.cs" />
     <Compile Include="IO\StringFile.cs" />
     <Compile Include="MediaTypes\Atom\AtomLinkExtensions.cs" />
+    <Compile Include="MediaTypes\ByteArrayCodec.cs" />
     <Compile Include="MediaTypes\Html\Anchor.cs" />
     <Compile Include="MediaTypes\Html\HtmlFormExtensions.cs" />
     <Compile Include="MediaTypes\Html\Form.cs" />
@@ -194,7 +195,6 @@
     <Compile Include="Utility\HashtableConverterPropertyVisitor.cs" />
     <Compile Include="Utility\HashtableConverter.cs" />
     <Compile Include="Utility\DictionaryConverterPropertyVisitor.cs" />
-    <Compile Include="Utility\EchoStream.cs" />
     <Compile Include="Utility\HeaderEncodingParser.cs" />
     <Compile Include="Utility\JsonWebToken\JsonWebTokenUtility.cs" />
     <Compile Include="Utility\MediaTypeParser.cs" />
