@@ -46,7 +46,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Mason\MasonActionTests.cs" />
+    <Compile Include="Mason\MasonJsonFileActionTests.cs" />
+    <Compile Include="Mason\MasonVoidActionTests.cs" />
+    <Compile Include="Mason\MasonLinkTemplateTests.cs" />
+    <Compile Include="Mason\MasonJsonActionTests.cs" />
     <Compile Include="Mason\MasonBuilderTests.cs" />
     <Compile Include="Mason\MasonReaderTests.cs" />
     <Compile Include="Mason\MasonTestConstants.cs" />
