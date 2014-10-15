@@ -1,6 +1,15 @@
-Version 1.4.0.XX
-----------------
+Version 20.0.0.XX
+-----------------
+This release contains a few breaking changes:
+
+- Ramone now uses NuGet to manage dependencies instead of merging them into the final assembly (Ramone.dll).
+- There is no longer a Ramone.Core.dll as this has been replaced with Ramone.dll.
+- For various reasons Ramone now uses JSON.NET instead of JSONFX for JSON serializations.
+
+Complete changelist:
+
 * Using JSON.NET instead of JSONFX for JSON (de)serialization.
+* Using JOSE JWT for JWT generation instead of implementing them internally (GitHub issue #24).
 * Now possible to specify target filename for file uploads (GitHub issue #11)
 * Change JSON patch identifier to application/json-patch+json (GitHub issue #8)
 * Make Session member public on Request object (GitHub issue #7)
