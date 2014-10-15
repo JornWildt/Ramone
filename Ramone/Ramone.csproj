@@ -9,7 +9,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Ramone</RootNamespace>
-    <AssemblyName>Ramone.Core</AssemblyName>
+    <AssemblyName>Ramone</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <FileUpgradeFlags>
@@ -59,13 +59,17 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\CuttingEdge.Conditions.1.2.0.0\lib\NET35\CuttingEdge.Conditions.dll</HintPath>
     </Reference>
-    <Reference Include="HtmlAgilityPack, Version=1.4.6.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
+    <Reference Include="HtmlAgilityPack, Version=1.4.9.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\HtmlAgilityPack.1.4.6\lib\Net40\HtmlAgilityPack.dll</HintPath>
+      <HintPath>..\packages\HtmlAgilityPack.1.4.9\lib\Net40\HtmlAgilityPack.dll</HintPath>
+    </Reference>
+    <Reference Include="jose-jwt">
+      <HintPath>..\packages\jose-jwt.1.7.0\lib\4.0\jose-jwt.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Newtonsoft.Json.6.0.3\lib\net40\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.6.0.5\lib\net40\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
@@ -189,14 +193,11 @@
     <Compile Include="Utility\CryptographicRandomNumberGenerator.cs" />
     <Compile Include="Utility\DateTimeUtility.cs" />
     <Compile Include="Utility\JsonWebToken\AssertionArgs.cs" />
-    <Compile Include="Utility\JsonWebToken\RSASHA256SigningAlgorithm.cs" />
-    <Compile Include="Utility\JsonWebToken\ISigningAlgorithm.cs" />
     <Compile Include="Utility\JsonPointerHelper.cs" />
     <Compile Include="Utility\HashtableConverterPropertyVisitor.cs" />
     <Compile Include="Utility\HashtableConverter.cs" />
     <Compile Include="Utility\DictionaryConverterPropertyVisitor.cs" />
     <Compile Include="Utility\HeaderEncodingParser.cs" />
-    <Compile Include="Utility\JsonWebToken\JsonWebTokenUtility.cs" />
     <Compile Include="Utility\MediaTypeParser.cs" />
     <Compile Include="Utility\MessageDebugger.cs" />
     <Compile Include="Utility\MethodDescription.cs" />
@@ -216,7 +217,6 @@
     <Compile Include="Utility\ObjectSerialization\ObjectSerializerFormaterManager.cs" />
     <Compile Include="Utility\ObjectSerialization\ObjectSerializerSettings.cs" />
     <Compile Include="Utility\RandomStrings.cs" />
-    <Compile Include="Utility\JsonWebToken\SHA256SigningAlgorithm.cs" />
     <Compile Include="Utility\TempFile.cs" />
     <Compile Include="Utility\WebLinkParser.cs" />
   </ItemGroup>
@@ -238,6 +238,7 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <None Include="LICENSE" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

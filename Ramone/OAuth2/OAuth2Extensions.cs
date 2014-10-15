@@ -193,7 +193,7 @@ namespace Ramone.OAuth2
     /// <returns></returns>
     public static OAuth2AccessTokenResponse OAuth2_GetAccessTokenFromJWT_SHA256(this ISession session, byte[] shaKey, AssertionArgs args, bool useAccessToken = true)
     {
-      return OAuth2_GetAccessTokenFromJWT(session, new SHA256SigningAlgorithm(shaKey), args, useAccessToken);
+      return OAuth2_GetAccessTokenFromJWT(session, Jose.JwsAlgorithm.HS256, shaKey, args, useAccessToken);
     }
 
 
@@ -207,7 +207,7 @@ namespace Ramone.OAuth2
     /// <returns></returns>
     public static OAuth2AccessTokenResponse OAuth2_GetAccessTokenFromJWT_RSASHA256(this ISession session, RSACryptoServiceProvider cp, AssertionArgs args, bool useAccessToken = true)
     {
-      return OAuth2_GetAccessTokenFromJWT(session, new RSASHA256SigningAlgorithm(cp), args, useAccessToken);
+      return OAuth2_GetAccessTokenFromJWT(session, Jose.JwsAlgorithm.RS256, cp, args, useAccessToken);
     }
 
 
@@ -219,7 +219,7 @@ namespace Ramone.OAuth2
     /// <param name="args">Assertion arguments.</param>
     /// <param name="useAccessToken">Store the returned access token in session and use that in future requests to the resource server.</param>
     /// <returns></returns>
-    public static OAuth2AccessTokenResponse OAuth2_GetAccessTokenFromJWT(this ISession session, ISigningAlgorithm signingAlgorithm, AssertionArgs args, bool useAccessToken = true)
+    public static OAuth2AccessTokenResponse OAuth2_GetAccessTokenFromJWT(this ISession session, Jose.JwsAlgorithm alg, object key, AssertionArgs args, bool useAccessToken = true)
     {
       OAuth2Settings settings = GetSettings(session);
 
@@ -237,7 +237,7 @@ namespace Ramone.OAuth2
   ""iat"":{4}
 }}";
       string claims = string.Format(claimsFormat, args.Issuer, args.Scope, args.Audience, expires, issuedAt);
-      string token = JsonWebTokenUtility.CreateJsonWebToken(claims, signingAlgorithm);
+      string token = Jose.JWT.Encode(claims, key, alg);
 
       NameValueCollection tokenRequestArgs = new NameValueCollection();
       tokenRequestArgs["grant_type"] = "urn:ietf:params:oauth:grant-type:jwt-bearer";

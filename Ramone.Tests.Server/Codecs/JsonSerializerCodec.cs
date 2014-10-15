@@ -1,8 +1,9 @@
 ﻿using System;
 using System.IO;
-using JsonFx.Json;
+using Newtonsoft.Json;
 using OpenRasta.Codecs;
 using OpenRasta.Web;
+using System.Dynamic;
 
 
 namespace Ramone.Tests.Server.Codecs
@@ -25,9 +26,10 @@ namespace Ramone.Tests.Server.Codecs
         throw new ArgumentException("Entity was not a " + typeof(TEntity).Name, "entity");
 
       using (var writer = new StreamWriter(response.Stream))
+      using (JsonWriter jsw = new JsonTextWriter(writer))
       {
-        JsonWriter jsw = new JsonWriter();
-        jsw.Write(item, writer);
+        JsonSerializer serializer = new JsonSerializer();
+        serializer.Serialize(jsw, item);
       }
     }
 
@@ -35,9 +37,14 @@ namespace Ramone.Tests.Server.Codecs
     public virtual object ReadFrom(IHttpEntity request, OpenRasta.TypeSystem.IType destinationType, string destinationName)
     {
       using (var reader = new StreamReader(request.Stream))
+      using (JsonReader jsr = new JsonTextReader(reader))
       {
-        JsonReader jsr = new JsonReader();
-        return jsr.Read(reader, typeof(TEntity));
+        JsonSerializer serializer = new JsonSerializer();
+
+        // Avoid JSON.NET wrapping result in JToken wrapper - return ExpandoObject for "object"
+        Type t = (destinationType.StaticType == typeof(object) ? typeof(ExpandoObject) : destinationType.StaticType);
+
+        return serializer.Deserialize(jsr, t);
       }
     }
   }

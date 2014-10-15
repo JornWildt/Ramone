@@ -22,7 +22,7 @@ namespace GoogleDemo
 
     // *** Assign Google API keys here (get this from the Google API console)
     // API keys filename (must contain one line with: username|password)
-    const string APIKeysFilename = "c:\\tmp\\googlekeys.txt";
+    const string APIKeysFilename = "c:\\temp\\googlekeys.txt";
 
     // *** Assign API certificate here (get this from the Google API console)
     // Certificate file containing keys for RSA signing of JWT

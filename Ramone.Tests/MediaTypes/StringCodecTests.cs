@@ -27,14 +27,14 @@ namespace Ramone.Tests.MediaTypes
     public void CanGetStringFromJavascript()
     {
       // Arrange
-      //Session.DefaultEncoding = Encoding.UTF8;
+      Session.DefaultEncoding = Encoding.UTF8;
       Request stringReq = Session.Bind(CatTemplate, new { name = "Henry ÆØÅ" });
 
       // Act
       using (var s = stringReq.AcceptJson().Get<string>())
       {
         // Assert
-        StringAssert.StartsWith("{\"Name\":\"Henry \\u00C6\\u00D8\\u00C5\",\"DateOfBirth\":\"2012-11-24T09:11:13.000\"", s.Body);
+        StringAssert.StartsWith("{\"Name\":\"Henry ÆØÅ\",\"DateOfBirth\":\"2012-11-24T09:11:13\"", s.Body);
       }
     }
 

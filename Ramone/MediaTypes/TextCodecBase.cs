@@ -6,7 +6,7 @@ using Ramone.Utility;
 namespace Ramone.MediaTypes
 {
   /// <summary>
-  /// Base for a type-checked codec which will only serialize objects of type TEntity
+  /// Base for a type-checked text based codec which will only serialize objects of type TEntity
   /// </summary>
   /// <typeparam name="TEntity">The type of the entity.</typeparam>
   public abstract class TextCodecBase<TEntity>

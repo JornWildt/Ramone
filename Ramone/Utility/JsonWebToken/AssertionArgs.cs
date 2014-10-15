@@ -3,13 +3,6 @@
 
 namespace Ramone.Utility.JsonWebToken
 {
-  public static class Algorithms
-  {
-    public const string SHA256 = "HS256";
-    public const string RSASHA256 = "RS256";
-  }
-
-
   public class AssertionArgs
   {
     /// <summary>
