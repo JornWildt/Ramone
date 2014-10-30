@@ -21,6 +21,11 @@ namespace Ramone.Utility.JsonWebToken
     public string Scope { get; set; }
 
     /// <summary>
+    /// The subject of the created token, e.g. the user to request access to
+    /// </summary>
+    public string Subject { get; set; }
+
+    /// <summary>
     /// Life time of created token (used to calculate expire time).
     /// </summary>
     public TimeSpan ExpireTime { get; set; }

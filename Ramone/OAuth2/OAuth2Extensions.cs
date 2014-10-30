@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Specialized;
 using System.Web;
 using CuttingEdge.Conditions;
@@ -7,6 +8,7 @@ using Microsoft.CSharp.RuntimeBinder;
 using System.Collections;
 using System.Security.Cryptography;
 using Ramone.Utility.JsonWebToken;
+using System.Collections.Generic;
 
 
 namespace Ramone.OAuth2
@@ -229,14 +231,17 @@ namespace Ramone.OAuth2
       long issuedAt = issuedAtDate.ToUnixTime();
       long expires = expiresDate.ToUnixTime();
 
-      string claimsFormat = @"{{
-  ""iss"":""{0}"",
-  ""scope"":""{1}"",
-  ""aud"":""{2}"",
-  ""exp"":{3},
-  ""iat"":{4}
-}}";
-      string claims = string.Format(claimsFormat, args.Issuer, args.Scope, args.Audience, expires, issuedAt);
+      var claims = new Dictionary<string,object>()
+      {
+        {"iss", args.Issuer},
+        {"scope", args.Scope},
+        {"aud", args.Audience},
+        {"sub", args.Subject},
+        {"exp", expires},
+        {"iat", issuedAt}
+      };
+      claims = claims.Where(kv => kv.Value != null).ToDictionary(kv => kv.Key, kv => kv.Value);
+      
       string token = Jose.JWT.Encode(claims, key, alg);
 
       NameValueCollection tokenRequestArgs = new NameValueCollection();
