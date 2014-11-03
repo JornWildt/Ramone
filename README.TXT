@@ -153,6 +153,10 @@ projects for inspiration.
 
 Thanks to cBrain (www.cbrain.com) for investing some hours in the project.
 
+Thanks to these contributers:
+  https://github.com/prearrangedchaos
+  https://github.com/poizan42
+
 Ramone includes distributions of:
 
   Newtonsoft.Json
