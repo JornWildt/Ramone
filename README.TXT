@@ -54,6 +54,10 @@ DOWNLOAD
 --------
 Binaries are available on NuGet and at these links:
 
+  NuGet: https://www.nuget.org/packages/Ramone
+
+  (Binaries and nightly are currently out of order, sorry ... I got a new PC and never set it up)
+
   Version 1.3.0: http://elfisk.dk/Ramone/Ramone-1.3.0.zip
 
   Nightly build:  http://elfisk.dk/Ramone/Ramone.zip
@@ -151,9 +155,9 @@ Thanks to cBrain (www.cbrain.com) for investing some hours in the project.
 
 Ramone includes distributions of:
 
-  JsonFx.Net
-    Source: https://github.com/jsonfx/jsonfx
-    licens (MIT): http://www.opensource.org/licenses/MIT
+  Newtonsoft.Json
+    Source: http://james.newtonking.com/json
+    licens (MIT): https://github.com/JamesNK/Newtonsoft.Json/blob/master/LICENSE.md
 
   Html Agility Pack
     Source: http://htmlagilitypack.codeplex.com/
@@ -162,6 +166,10 @@ Ramone includes distributions of:
   Cutting Edge Conditions
     Source: http://conditions.codeplex.com/
     License (MIT): http://conditions.codeplex.com/license
+
+  JOSE-JWT
+    Source: https://github.com/dvsekhvalnov/jose-jwt
+    License (MIT): https://raw.githubusercontent.com/dvsekhvalnov/jose-jwt/master/LICENSE
 
 
 LICENSE
