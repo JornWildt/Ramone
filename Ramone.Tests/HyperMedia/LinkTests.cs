@@ -193,6 +193,21 @@ namespace Ramone.Tests.HyperMedia
     }
 
 
+
+    //[Test]
+    //public void CanBindDirectlyToLink()
+    //{
+    //  // Arrange
+    //  ILink link = new AtomLink(new Uri("http://dr.dk"), "http://dr.dk/", "home", "text/html", "Danish Television");
+
+    //  // Act
+    //  Request request = Session.Bind(link);
+
+    //  // Assert
+    //  Assert.IsNotNull(request);
+    //  Assert.AreEqual(link.HRef, request.Url.AbsoluteUri);
+    //}
+
     public class Resource
     {
       [XmlElement("link", Namespace = AtomConstants.AtomNamespace)]
