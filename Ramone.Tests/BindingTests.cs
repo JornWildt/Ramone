@@ -252,7 +252,7 @@ namespace Ramone.Tests
       Uri url = req.Url;
 
       // Assert
-      Assert.AreEqual(BaseUrl + "set?name=J%c3%b8rn", req.Url.AbsoluteUri);
+      Assert.AreEqual(BaseUrl + "set?name=J%C3%B8rn", req.Url.AbsoluteUri);
     }
 
 

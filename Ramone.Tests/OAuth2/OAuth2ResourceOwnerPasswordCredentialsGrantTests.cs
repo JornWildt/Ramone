@@ -27,7 +27,7 @@ namespace Ramone.Tests.OAuth2
       using (var response = request.Post<dynamic>(tokenRequest))
       {
         Assert.IsNotNull(response.Body);
-        Assert.IsNotNullOrEmpty(response.Body.access_token);
+        Assert.That(response.Body.access_token, Is.Not.Null.And.Not.Empty);
       }
     }
 
@@ -40,7 +40,7 @@ namespace Ramone.Tests.OAuth2
                .OAuth2_GetAccessTokenUsingOwnerUsernamePassword(OAuth2TestConstants.Username, OAuth2TestConstants.UserPassword);
 
       Assert.IsNotNull(token);
-      Assert.IsNotNullOrEmpty(token.access_token);
+      Assert.That(token.access_token, Is.Not.Null.And.Not.Empty);
       Assert.AreEqual("Special", (string)token.AllParameters["additional_param"]);
     }
 
@@ -53,7 +53,7 @@ namespace Ramone.Tests.OAuth2
                .OAuth2_GetAccessTokenUsingOwnerUsernamePassword(OAuth2TestConstants.UsernameWithEmptyPassword, null);
 
       Assert.IsNotNull(token);
-      Assert.IsNotNullOrEmpty(token.access_token);
+      Assert.That(token.access_token, Is.Not.Null.And.Not.Empty);
     }
 
 

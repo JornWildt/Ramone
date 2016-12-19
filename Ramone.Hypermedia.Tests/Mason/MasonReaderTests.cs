@@ -32,7 +32,7 @@ namespace Ramone.Hypermedia.Tests.Mason
       Resource common = GetCommonResource();
 
       // Assert
-      Assert.AreEqual("IssueTracker Demo", ((dynamic)common).Title);
+      Assert.AreEqual("IssueTracker Demo", ((dynamic)common)["@meta"]["@title"]);
     }
 
 

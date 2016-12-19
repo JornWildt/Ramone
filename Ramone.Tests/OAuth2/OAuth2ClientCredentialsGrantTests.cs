@@ -17,7 +17,7 @@ namespace Ramone.Tests.OAuth2
                .OAuth2_GetAccessTokenUsingClientCredentials();
 
       Assert.IsNotNull(token);
-      Assert.IsNotNullOrEmpty(token.access_token);
+      Assert.That(token.access_token, Is.Not.Null.And.Not.Empty);
       Assert.AreEqual("Special", (string)token.AllParameters["additional_param"]);
     }
   }

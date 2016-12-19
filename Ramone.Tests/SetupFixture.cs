@@ -8,16 +8,19 @@ using Ramone.Tests.Common.CMS;
 using Ramone.MediaTypes;
 using System.Collections.Generic;
 using System;
-
+using System.Reflection;
+using System.IO;
 
 namespace Ramone.Tests
 {
   [SetUpFixture]
   class SetupFixture
   {
-    [SetUp]
+    [OneTimeSetUp]
     public void Setup()
     {
+      Environment.CurrentDirectory = Path.GetDirectoryName(Assembly.GetAssembly(typeof(SetupFixture)).Location);
+
       TestHelper.TestService = RamoneConfiguration.NewService(TestHelper.BaseUrl);
 
       TestHelper.TestService.DefaultEncoding = Encoding.GetEncoding("iso-8859-1");
@@ -41,7 +44,7 @@ namespace Ramone.Tests
     }
 
 
-    [TearDown]
+    [OneTimeTearDown]
     public void TearDown()
     {
       IList<ConnectionStatistics.ConnectionInfo> connections = ConnectionStatistics.GetOpenConnections().ToList();

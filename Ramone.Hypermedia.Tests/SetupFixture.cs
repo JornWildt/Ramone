@@ -19,7 +19,7 @@ namespace Ramone.Hypermedia.Tests
     public static Resource SharedProject { get; set; }
 
 
-    [SetUp]
+    [OneTimeSetUp]
     public void Setup()
     {
       TestHelper.TestService = RamoneConfiguration.NewService(TestHelper.BaseUrl);
@@ -32,7 +32,7 @@ namespace Ramone.Hypermedia.Tests
     }
 
 
-    [TearDown]
+    [OneTimeTearDown]
     public void TearDown()
     {
       IList<ConnectionStatistics.ConnectionInfo> connections = ConnectionStatistics.GetOpenConnections().ToList();

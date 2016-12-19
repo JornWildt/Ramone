@@ -102,7 +102,7 @@ namespace Ramone.Tests
     /// <summary>
     /// Do not call. For use by NUnit only.
     /// </summary>
-    [TestFixtureSetUp]
+    [OneTimeSetUp]
     public void MasterTestFixtureSetUp()
     {
       TestFixtureSetUp();
@@ -166,7 +166,7 @@ namespace Ramone.Tests
     /// <summary>
     /// Do not call. For use by NUnit only.
     /// </summary>
-    [TestFixtureTearDown]
+    [OneTimeTearDown]
     public void TestFixtureMasterTearDown()
     {
       TestFixtureTearDown();
