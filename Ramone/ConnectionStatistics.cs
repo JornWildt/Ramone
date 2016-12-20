@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Net;
 using System.Collections.Generic;
 
@@ -26,20 +27,29 @@ namespace Ramone
     public static Guid RegisterConnection(HttpWebResponse response)
     {
       Guid id = Guid.NewGuid();
-      OpenConnections[id] = new ConnectionInfo(response.ResponseUri, response.Method);
+      lock (OpenConnections)
+      {
+        OpenConnections[id] = new ConnectionInfo(response.ResponseUri, response.Method);
+      }
       return id;
     }
 
 
     public static void DiscardConnection(Guid id)
     {
-      OpenConnections.Remove(id);
+      lock (OpenConnections)
+      {
+        OpenConnections.Remove(id);
+      }
     }
 
 
-    public static IEnumerable<ConnectionInfo> GetOpenConnections()
+    public static IList<ConnectionInfo> GetOpenConnections()
     {
-      return OpenConnections.Values;
+      lock (OpenConnections)
+      {
+        return OpenConnections.Values.ToList();
+      }
     }
   }
 }

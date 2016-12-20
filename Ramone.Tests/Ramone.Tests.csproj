@@ -124,6 +124,7 @@
     <Compile Include="OAuth2\TestHelper.cs" />
     <Compile Include="OnHeadersReadyTests.cs" />
     <Compile Include="OptionsTests.cs" />
+    <Compile Include="ParallelTests.cs" />
     <Compile Include="PatchTests.cs" />
     <Compile Include="DefaultContentTypeTests.cs" />
     <Compile Include="ExceptionHandlingTests.cs" />

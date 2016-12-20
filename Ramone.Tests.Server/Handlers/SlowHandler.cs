@@ -5,10 +5,10 @@ namespace Ramone.Tests.Server.Handlers
 {
   public class SlowHandler
   {
-    public object Get()
+    public object Get(int sec = 4)
     {
-      System.Threading.Thread.Sleep(4000);
-      return new SlowResource { Time = 4 };
+      System.Threading.Thread.Sleep(sec * 1000);
+      return new SlowResource { Time = sec };
     }
 
 
