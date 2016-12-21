@@ -176,6 +176,7 @@
     <Compile Include="UriParametersTests.cs" />
     <Compile Include="UserAgentTests.cs" />
     <Compile Include="Utility\Base64UtilityTests.cs" />
+    <Compile Include="Utility\ContextRegistratorTests.cs" />
     <Compile Include="Utility\JsonPointerHelperTests.cs" />
     <Compile Include="Utility\FormUrlEncodingDeserializerTests.cs" />
     <Compile Include="Utility\DictionaryConverterTests.cs" />

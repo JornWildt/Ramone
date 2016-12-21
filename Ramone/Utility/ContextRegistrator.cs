@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Reflection;
+using System.Collections;
 
 namespace Ramone.Utility
 {
@@ -34,6 +35,14 @@ namespace Ramone.Utility
       if (item is IHaveContext)
       {
         ((IHaveContext)item).RegisterContext(session, baseUrl);
+      }
+
+      if (item is IEnumerable)
+      {
+        foreach (object sub in (IEnumerable)item)
+        {
+          RegisterContext(session, baseUrl, sub);
+        }
       }
     }
   }
