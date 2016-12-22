@@ -160,7 +160,7 @@ namespace Ramone.Tests.MediaTypes.FormUrlEncoded
 
 
     [Test]
-    public void CanReadNameValueCollection()
+    public void CanReadNameValueCollectionIncludingNullValues()
     {
       // Arrange
       Request request = Session.Bind(FormUrlEncodedTemplate, new { mode = "x" });
@@ -174,6 +174,9 @@ namespace Ramone.Tests.MediaTypes.FormUrlEncoded
         Assert.AreEqual("Abc", data["Title"]);
         Assert.AreEqual("15", data["Age"]);
         Assert.AreEqual("Grete", data["SubData.Name"]);
+        Assert.IsTrue(data.AllKeys.Contains("NullValue"));
+        Assert.IsEmpty(data["NullValue"]);
+        Assert.IsFalse(data.AllKeys.Contains("Unused"));
       }
     }
 

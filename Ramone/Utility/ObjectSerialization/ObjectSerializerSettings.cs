@@ -28,6 +28,8 @@ namespace Ramone.Utility.ObjectSerialization
 
     public Encoding Encoding { get; set; }
 
+    public bool IncludeNullValues { get; set; }
+
 
     public ObjectSerializerSettings()
     {
@@ -41,6 +43,7 @@ namespace Ramone.Utility.ObjectSerialization
       Formaters = new ObjectSerializerFormaterManager();
       Culture = CultureInfo.InvariantCulture;
       Encoding = Encoding.UTF8;
+      IncludeNullValues = false;
     }
 
 
@@ -57,6 +60,7 @@ namespace Ramone.Utility.ObjectSerialization
       Culture = (CultureInfo)src.Culture.Clone();
       Encoding = src.Encoding;
       EnableNonAsciiCharactersInMultipartFilenames = src.EnableNonAsciiCharactersInMultipartFilenames;
+      IncludeNullValues = src.IncludeNullValues;
     }
   }
 }

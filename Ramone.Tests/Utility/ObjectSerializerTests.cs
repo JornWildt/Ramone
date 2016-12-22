@@ -265,6 +265,54 @@ namespace Ramone.Tests.Utility
 
 
     [Test]
+    public void CanSerializeDictionaryAndClassesWithNullValues()
+    {
+      // Arrange
+      var o = new
+      {
+        A = (int?)null,
+        B = new Dictionary<string, object>
+        {
+          { "X", 100 },
+          { "Y", null }
+        }
+      };
+
+      ObjectSerializerSettings settings = new ObjectSerializerSettings { IncludeNullValues = true };
+
+      // Act
+      string result = Serialize(o, settings);
+
+      // Assert
+      Assert.AreEqual("|A=|B[X]=100|B[Y]=", result);
+    }
+
+
+    [Test]
+    public void CanSerializeDictionaryAndClassesAndExcludeNullValues()
+    {
+      // Arrange
+      var o = new
+      {
+        A = (int?)null,
+        B = new Dictionary<string, object>
+        {
+          { "X", 100 },
+          { "Y", null }
+        }
+      };
+
+      ObjectSerializerSettings settings = new ObjectSerializerSettings { IncludeNullValues = false };
+
+      // Act
+      string result = Serialize(o, settings);
+
+      // Assert
+      Assert.AreEqual("|B[X]=100", result);
+    }
+
+
+    [Test]
     public void WhenSerializingSingleDictionaryItAddsNoSeparators()
     {
       // Arrange

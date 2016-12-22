@@ -4,7 +4,7 @@ using Ramone.Utility;
 using OpenRasta.Web;
 using System.Text;
 using Ramone.Utility.ObjectSerialization;
-
+using Ramone.Tests.Common;
 
 namespace Ramone.Tests.Server.Codecs
 {
@@ -20,7 +20,11 @@ namespace Ramone.Tests.Server.Codecs
         Encoding enc = null;
         if (Context.Request.Headers["Accept-Charset"] != null)
           enc = Encoding.GetEncoding(Context.Request.Headers["Accept-Charset"]);
-        ObjectSerializerSettings settings = new ObjectSerializerSettings { Encoding = enc };
+        ObjectSerializerSettings settings = new ObjectSerializerSettings
+        {
+          Encoding = enc,
+          IncludeNullValues = entity is ISerializeWithNullValues
+        };
         FormUrlEncodingSerializer serializer = new FormUrlEncodingSerializer(entity.GetType());
         serializer.Serialize(writer, entity, settings);
       }

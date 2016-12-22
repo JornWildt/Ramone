@@ -10,6 +10,7 @@ namespace Ramone.Tests.Common
     public string Name { get; set; }
     public DateTime DateOfBirth { get; set; }
     public AtomLink Parent { get; set; }
+    public int? UnusedNullValue { get; set; }
 
     public Cat()
     {

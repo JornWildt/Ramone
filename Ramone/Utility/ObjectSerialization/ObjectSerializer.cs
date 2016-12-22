@@ -70,10 +70,11 @@ namespace Ramone.Utility.ObjectSerialization
         dataType = typeof(string);
       }
 
-      if (data == null)
+      if (data == null && Settings.IncludeNullValues)
+        SerializeSimpleValue(null, dataType, prefix);
+      else if (data == null && !Settings.IncludeNullValues)
         return;
-
-      if (typeof(IDictionary).IsAssignableFrom(dataType))
+      else if (typeof(IDictionary).IsAssignableFrom(dataType))
         SerializeDictionary((IDictionary)data, dataType, prefix);
       else if (typeof(NameValueCollection).IsAssignableFrom(dataType))
         SerializeNameValueCollection((NameValueCollection)data, dataType, prefix);
@@ -111,6 +112,8 @@ namespace Ramone.Utility.ObjectSerialization
         formatedValue = ((double)data).ToString(Settings.Culture.NumberFormat);
       else if (data != null)
         formatedValue = data.ToString();
+      else if (data == null)
+        formatedValue = null;
       
       Visitor.SimpleValue(name, data, formatedValue);
     }
