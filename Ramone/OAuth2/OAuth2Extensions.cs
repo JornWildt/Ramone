@@ -364,7 +364,7 @@ namespace Ramone.OAuth2
         {
           access_token = TryGet<string>(response.Body["access_token"]),
           token_type = TryGet<string>(response.Body["token_type"]),
-          expires_in = TryGet<int?>(response.Body["expires_in"]),
+          expires_in = TryGet<long?>(response.Body["expires_in"]),
           refresh_token = TryGet<string>(response.Body["refresh_token"]),
           AllParameters = response.Body
         };

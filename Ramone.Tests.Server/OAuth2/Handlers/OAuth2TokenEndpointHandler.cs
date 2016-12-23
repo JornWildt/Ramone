@@ -27,7 +27,8 @@ namespace Ramone.Tests.Server.OAuth2.Handlers
           {
             access_token = OAuth2TestConstants.CreatedAccessToken,
             token_type = "beAReR", // Mixed case => assert testing for this is case-insensitive
-            additional_param = "Special"
+            additional_param = "Special",
+            expires_in = 199
           };
         }
         else
@@ -39,7 +40,8 @@ namespace Ramone.Tests.Server.OAuth2.Handlers
         {
           access_token = OAuth2TestConstants.CreatedAccessToken,
           token_type = "beAReR", // Mixed case => assert testing for this is case-insensitive
-          additional_param = "Special"
+          additional_param = "Special",
+          expires_in = 199
         };
       }
       else if (request.grant_type == "client_credentials")
@@ -48,7 +50,8 @@ namespace Ramone.Tests.Server.OAuth2.Handlers
         {
           access_token = OAuth2TestConstants.CreatedAccessToken,
           token_type = "beAReR", // Mixed case => assert testing for this is case-insensitive
-          additional_param = "Special"
+          additional_param = "Special",
+          expires_in = 199
         };
       }
       else

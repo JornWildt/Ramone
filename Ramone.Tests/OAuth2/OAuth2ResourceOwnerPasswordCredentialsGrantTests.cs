@@ -41,6 +41,7 @@ namespace Ramone.Tests.OAuth2
 
       Assert.IsNotNull(token);
       Assert.That(token.access_token, Is.Not.Null.And.Not.Empty);
+      Assert.AreEqual(199, token.expires_in);
       Assert.AreEqual("Special", (string)token.AllParameters["additional_param"]);
     }
 
