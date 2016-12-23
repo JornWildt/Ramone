@@ -46,6 +46,20 @@ namespace Ramone.HyperMedia
     }
 
 
+    public static Request Follow<T>(this IEnumerable<T> links, ISession session, string rel, MediaType mediaType = null)
+      where T : ILink
+    {
+      return links.Select(rel, mediaType).Follow(session);
+    }
+
+
+    public static Request Follow<T>(this IEnumerable<T> links, string rel, MediaType mediaType = null)
+      where T : ISessionLink
+    {
+      return links.Select(rel, mediaType).Follow();
+    }
+
+
     /// <summary>
     /// Create request from link with implicit session (created on demand)
     /// </summary>

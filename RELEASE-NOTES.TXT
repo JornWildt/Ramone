@@ -1,6 +1,7 @@
 Version 3.0.0.00
 ----------------
-* Include value of "expires_in" from OAuth2 access token (GitHub issue #30)
+* Extended link Follow() with overloads to allow link selection too (GitHub issue #29).
+* Include value of "expires_in" from OAuth2 access token (GitHub issue #30).
 * Improving object serializer such that it may include null values (GitHub issue #31).
 * Fixed missing handling of arrays and other enumerables in ContextRegistrator (GitHub issue #32).
 * Fixed concurrency problems with connection statistics (GitHub issue #33).

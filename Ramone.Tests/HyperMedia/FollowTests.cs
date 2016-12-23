@@ -51,5 +51,45 @@ namespace Ramone.Tests.HyperMedia
         }
       }
     }
+
+
+    [Test]
+    public void FollowCanSelectLinkByItself()
+    {
+      // Arrange
+      Request dossierReq = Session.Bind(DossierTemplate, new { id = 8 });
+      using (var r = dossierReq.Get<Dossier>())
+      {
+        // Act
+        using (var r2 = r.Body.Links.Follow(Session, CMSConstants.DocumentsLinkRelType).Get<DossierDocumentList>())
+        {
+          DossierDocumentList documents1 = r2.Body;
+
+          // Assert
+          Assert.IsNotNull(documents1);
+          Assert.AreEqual(2, documents1.Count);
+        }
+      }
+    }
+
+
+    [Test]
+    public void FollowCanSelectLinkByItselfWithoutUsingSession()
+    {
+      // Arrange
+      Request dossierReq = Session.Bind(DossierTemplate, new { id = 8 });
+      using (var r = dossierReq.Get<Dossier>())
+      {
+        // Act
+        using (var r2 = r.Body.Links.Follow(CMSConstants.DocumentsLinkRelType).Get<DossierDocumentList>())
+        {
+          DossierDocumentList documents1 = r2.Body;
+
+          // Assert
+          Assert.IsNotNull(documents1);
+          Assert.AreEqual(2, documents1.Count);
+        }
+      }
+    }
   }
 }
