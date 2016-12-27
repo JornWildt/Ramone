@@ -3,7 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using NUnit.Framework;
-
+using Ramone.HyperMedia;
+using Ramone.MediaTypes.Atom;
 
 namespace Ramone.Tests
 {
@@ -256,14 +257,18 @@ namespace Ramone.Tests
     }
 
 
-    //[Test]
-    //public void CanRequest_Uri()
-    //{
-    //  // Act
-    //  RamoneRequest req = Session.Request(new Uri("http://dr.dk"));
+    [Test]
+    public void CanBindLink()
+    {
+      // Arrange
+      ILink link = new AtomLink("http://dr.dk", "alt", MediaType.ApplicationXHtml, "Here");
 
-    //  // Assert
-    //  Assert.AreEqual("http://dr.dk/", req.Url.AbsoluteUri);
-    //}
+      // Act
+      Request req = Session.Bind(link);
+
+      // Assert
+      Assert.IsNotNull(req);
+      Assert.AreEqual(new Uri("http://dr.dk"), req.Url);
+    }
   }
 }

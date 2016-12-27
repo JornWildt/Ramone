@@ -177,6 +177,16 @@ namespace Ramone
     #endregion
 
 
+    #region ILink
+
+    public static Request Bind(this ISession session, ILink link)
+    {
+      return session.Bind(link.HRef);
+    }
+
+    #endregion
+
+
     #region ILinkTemplate
 
     /// <summary>
