@@ -16,6 +16,8 @@ namespace Ramone
 
     public bool IsWildcard { get { return IsTopLevelWildcard && IsSubTypeWildcard; } }
 
+    public bool IsAnyWildcard { get { return IsTopLevelWildcard || IsSubTypeWildcard; } }
+
 
     public static readonly MediaType ApplicationXml = new MediaType("application/xml");
 

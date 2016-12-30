@@ -1,6 +1,6 @@
-﻿using System.IO;
+﻿using System.Linq;
 using NUnit.Framework;
-
+using Ramone.Tests.Common;
 
 namespace Ramone.Tests.MediaTypes
 {
@@ -32,10 +32,9 @@ namespace Ramone.Tests.MediaTypes
     {
       // Arrange
       Request fileReq = Session.Bind(FileTemplate);
-
-      // Act
       byte[] data = new byte[] { 10, 2, 30, 4 };
 
+      // Act
       using (Response<byte[]> response =
         fileReq.Accept("application/octet-stream").ContentType("application/octet-stream").Post<byte[]>(data))
       {
@@ -45,6 +44,25 @@ namespace Ramone.Tests.MediaTypes
         Assert.AreEqual(2, response.Body[1]);
         Assert.AreEqual(30, response.Body[2]);
         Assert.AreEqual(4, response.Body[3]);
+      }
+    }
+
+
+    [Test]
+    public void CanPostByteArrayWithDefaultMediaTypeOctetStream()
+    {
+      // Arrange
+      Request fileReq = Session.Bind(Constants.HeaderEchoPath);
+      byte[] data = new byte[] { 10, 2, 30, 4 };
+
+      // Act
+      using (Response<HeaderList> response = fileReq.Post<HeaderList>(data))
+      {
+        HeaderList headers = response.Body;
+
+        // Assert
+        Assert.IsNotNull(headers);
+        Assert.IsTrue(headers.Any(h => h == "Content-Type: application/octet-stream"), "Must contain content type octet stream");
       }
     }
   }

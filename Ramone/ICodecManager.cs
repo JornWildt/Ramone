@@ -6,9 +6,13 @@ namespace Ramone
 {
   public interface ICodecManager
   {
-    void AddCodec<TClrType, TCodec>(MediaType mediaType) where TCodec : IMediaTypeCodec;
+    void AddCodec<TClrType, TCodec>(MediaType mediaType) 
+      where TCodec : IMediaTypeCodec;
+    void AddCodec<TClrType, TCodec>(MediaType mediaType, MediaType fallbackMediaType) 
+      where TCodec : IMediaTypeCodec;
     void AddCodec<TClrType>(MediaType mediaType, Type codecType);
     void AddCodec(Type clrType, MediaType mediaType, Type codecType);
+    void AddCodec(Type clrType, MediaType mediaType, Type codecType, MediaType fallbackMediaType);
 
     /// <summary>
     /// Add codec for any CLR type

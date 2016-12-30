@@ -1,5 +1,9 @@
 Version 3.0.0.00
 ----------------
+* Default media type fixed (GitHub issue #27)
+  * Stream is now application/octet-stream.
+  * Byte[] is now application/octet-stream.
+  * String is new text/plain.
 * Extended Bind() with overload for binding links (GitHub issue #28).
 * Extended link Follow() with overloads to allow link selection too (GitHub issue #29).
 * Include value of "expires_in" from OAuth2 access token (GitHub issue #30).

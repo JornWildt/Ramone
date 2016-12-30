@@ -101,6 +101,8 @@ namespace Ramone
         MediaTypeWriterRegistration writer = codecManager.GetWriter(body.GetType(), BodyContentType ?? MediaType.Wildcard);
         if (BodyContentType == null)
           BodyContentType = writer.MediaType;
+        if (BodyContentType.IsAnyWildcard)
+          throw new InvalidOperationException($"Wildcard media type {BodyContentType} is not a valid content type.");
         BodyCodec = writer.Codec;
       }
       else if (BodyContentType == null)

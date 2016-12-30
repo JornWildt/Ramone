@@ -11,8 +11,15 @@ namespace Ramone.Implementation
     protected class CodecEntry
     {
       public MediaType MediaType { get; set; }
+      public MediaType FallbackMediaType { get; set; }
       public Type ClrType { get; set; }
       public Type CodecType { get; set; }
+
+      public CodecEntry(MediaType mediaType, Type clrType, Type codecType, MediaType fallbackMediaType)
+        : this(mediaType, clrType, codecType)
+      {
+        FallbackMediaType = fallbackMediaType;
+      }
 
       public CodecEntry(MediaType mediaType, Type clrType, Type codecType)
       {
@@ -31,19 +38,33 @@ namespace Ramone.Implementation
     #region ICodecManager Members
 
 
-    public void AddCodec<TClrType, TCodec>(MediaType mediaType) where TCodec : IMediaTypeCodec
+    public void AddCodec<TClrType, TCodec>(MediaType mediaType) 
+      where TCodec : IMediaTypeCodec
     {
-      AddCodec<TClrType>(mediaType, typeof(TCodec));
+      AddCodec(typeof(TClrType), mediaType, typeof(TCodec), null);
+    }
+
+
+    public void AddCodec<TClrType, TCodec>(MediaType mediaType, MediaType fallbackMediaType) 
+      where TCodec : IMediaTypeCodec
+    {
+      AddCodec(typeof(TClrType), mediaType, typeof(TCodec), fallbackMediaType);
     }
 
 
     public void AddCodec<TClrType>(MediaType mediaType, Type codecType)
     {
-      AddCodec(typeof(TClrType), mediaType, codecType);
+      AddCodec(typeof(TClrType), mediaType, codecType, null);
     }
 
 
     public void AddCodec(Type clrType, MediaType mediaType, Type codecType)
+    {
+      AddCodec(clrType, mediaType, codecType, null);
+    }
+
+
+    public void AddCodec(Type clrType, MediaType mediaType, Type codecType, MediaType fallbackMediaType)
     {
       Condition.Requires(mediaType, "mediaType").IsNotNull();
       Condition.Requires(codecType, "codecType").IsNotNull();
@@ -51,19 +72,19 @@ namespace Ramone.Implementation
       if (typeof(IMediaTypeReader).IsAssignableFrom(codecType))
         AddReader(clrType, mediaType, codecType);
       if (typeof(IMediaTypeWriter).IsAssignableFrom(codecType))
-        AddWriter(clrType, mediaType, codecType);
+        AddWriter(clrType, mediaType, codecType, fallbackMediaType);
     }
 
     
     public void AddCodec<TCodec>(MediaType mediaType) where TCodec : IMediaTypeCodec
     {
-      AddCodec(null, mediaType, typeof(TCodec));
+      AddCodec(null, mediaType, typeof(TCodec), null);
     }
 
     
     public void AddCodec(MediaType mediaType, Type codecType)
     {
-      AddCodec(null, mediaType, codecType);
+      AddCodec(null, mediaType, codecType, null);
     }
 
 
@@ -95,7 +116,11 @@ namespace Ramone.Implementation
       if (entry == null)
         throw new ArgumentException(string.Format("Could not find a writer codec for '{0}' + {1}", mediaType, t));
 
-      return new MediaTypeWriterRegistration(entry.MediaType, entry.ClrType, t, InstantiateWriterCodec(entry.CodecType));
+      MediaType m = entry.MediaType.IsAnyWildcard && entry.FallbackMediaType != null
+        ? entry.FallbackMediaType
+        : entry.MediaType;
+
+      return new MediaTypeWriterRegistration(m, entry.ClrType, t, InstantiateWriterCodec(entry.CodecType));
     }
 
     #endregion
@@ -115,7 +140,7 @@ namespace Ramone.Implementation
     }
 
 
-    protected virtual void AddWriter(Type t, MediaType mediaType, Type writerType)
+    protected virtual void AddWriter(Type t, MediaType mediaType, Type writerType, MediaType fallbackMediaType)
     {
       Condition.Requires(mediaType, "mediaType").IsNotNull();
       Condition.Requires(writerType, "writerType").IsNotNull();
@@ -123,7 +148,7 @@ namespace Ramone.Implementation
       CodecEntry entry = SelectExactMatchingWriters(t, mediaType).FirstOrDefault();
       if (entry != null)
         throw new ArgumentException(string.Format("Could not add writer of type {0} for media-type '{1}' since one already exists (got {2} for '{3}').", t, mediaType, entry.ClrType, entry.MediaType));
-      RegisteredWriters.Add(new CodecEntry(mediaType, t, writerType));
+      RegisteredWriters.Add(new CodecEntry(mediaType, t, writerType, fallbackMediaType));
     }
 
 

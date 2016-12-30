@@ -118,13 +118,13 @@ namespace Ramone
       cm.AddCodec<FormUrlEncodedSerializerCodec>(MediaType.ApplicationFormUrlEncoded);
 
       // Strings
-      cm.AddCodec<String, StringCodec>(new MediaType("*/*"));
+      cm.AddCodec<String, StringCodec>(new MediaType("*/*"), new MediaType("text/plain"));
 
       // Streams
-      cm.AddCodec<Stream, StreamCodec>(new MediaType("*/*"));
+      cm.AddCodec<Stream, StreamCodec>(new MediaType("*/*"), new MediaType("application/octet-stream"));
 
       // Byte arrays
-      cm.AddCodec<byte[], ByteArrayCodec>(new MediaType("*/*"));
+      cm.AddCodec<byte[], ByteArrayCodec>(new MediaType("*/*"), new MediaType("application/octet-stream"));
 
       // Open search
       cm.AddXml<OpenSearchDescription>(new MediaType("application/opensearchdescription+xml"));

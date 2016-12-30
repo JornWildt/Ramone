@@ -1,6 +1,7 @@
-﻿using System.Text;
+﻿using System.Linq;
+using System.Text;
 using NUnit.Framework;
-
+using Ramone.Tests.Common;
 
 namespace Ramone.Tests.MediaTypes
 {
@@ -50,6 +51,24 @@ namespace Ramone.Tests.MediaTypes
       {
         // Assert
         StringAssert.StartsWith("<?xml version=\"1.0\"?><Aaa>Anders</Aaa>", s.Body);
+      }
+    }
+
+
+    [Test]
+    public void CanPostStringWithDefaultMediaTypeTextPlain()
+    {
+      // Arrange
+      Request fileReq = Session.Bind(Constants.HeaderEchoPath);
+
+      // Act
+      using (Response<HeaderList> response = fileReq.Post<HeaderList>("hello"))
+      {
+        HeaderList headers = response.Body;
+
+        // Assert
+        Assert.IsNotNull(headers);
+        Assert.IsTrue(headers.Any(h => h == "Content-Type: text/plain"), "Must contain content type text/plain");
       }
     }
   }

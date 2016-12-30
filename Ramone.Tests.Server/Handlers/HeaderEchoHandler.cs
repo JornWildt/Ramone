@@ -1,4 +1,5 @@
 ﻿using System.Collections.Specialized;
+using System.IO;
 using System.Web;
 using OpenRasta.Web;
 using Ramone.MediaTypes.JsonPatch;
@@ -28,6 +29,18 @@ namespace Ramone.Tests.Server.Handlers
 
 
     public object Post()
+    {
+      return Get();
+    }
+
+
+    public object Post(string f)
+    {
+      return Get();
+    }
+
+
+    public object Post(Stream s)
     {
       return Get();
     }
