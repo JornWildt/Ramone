@@ -1,5 +1,6 @@
 Version 3.0.0.00
 ----------------
+* Added non-generic overload of Created() on Response (GitHub issue #23).
 * Default media type fixed (GitHub issue #27)
   * Stream is now application/octet-stream.
   * Byte[] is now application/octet-stream.

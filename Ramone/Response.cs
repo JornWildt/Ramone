@@ -90,6 +90,12 @@ namespace Ramone
     }
 
 
+    public object Created()
+    {
+      return Created<object>();
+    }
+
+
     public T Created<T>() where T : class
     {
       if (WebResponse.StatusCode != HttpStatusCode.Created)
@@ -147,7 +153,7 @@ namespace Ramone
     }
 
 
-    public TBody Created()
+    public new TBody Created()
     {
       return base.Created<TBody>();
     }

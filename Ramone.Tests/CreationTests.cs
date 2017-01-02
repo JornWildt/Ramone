@@ -1,7 +1,9 @@
 ﻿using NUnit.Framework;
 using Ramone.Tests.Common.CMS;
 using System;
-
+using Ramone.MediaTypes.Xml;
+using Ramone.MediaTypes.Json;
+using Ramone.Implementation;
 
 namespace Ramone.Tests
 {
@@ -9,7 +11,7 @@ namespace Ramone.Tests
   public class CreationTests : TestHelper
   {
     [Test]
-    public void CanGetCreatedLocationAndBody()
+    public void CanGetCreatedLocationAndBody_Generic()
     {
       // Arrange
       Dossier dossier = new Dossier
@@ -30,6 +32,35 @@ namespace Ramone.Tests
         Assert.IsNotNull(createdDossier);
         Assert.AreEqual("A new dossier", createdDossier.Title);
         Assert.AreEqual(999, createdDossier.Id);
+      }
+    }
+
+
+    [Test]
+    public void CanGetCreatedLocationAndBody_Dynamic()
+    {
+      // Arrange
+      Dossier dossier = new Dossier
+      {
+        Title = "A new dossier"
+      };
+
+      IService service = SetupFixture.CreateDefaultService();
+      ISession session = service.NewSession();
+
+      session.Service.CodecManager.AddCodec<object, JsonSerializerCodec>(CMSConstants.CMSMediaType);
+      Request request = session.Request(DossiersUrl).AcceptJson();
+
+      // Act
+      using (Response response = request.Post(dossier))
+      {
+        // Assert
+        Uri createdDossierLocation = response.CreatedLocation;
+        dynamic createdDossier = response.Body;
+
+        Assert.IsNotNull(createdDossierLocation);
+        Assert.IsNotNull(createdDossier);
+        Assert.AreEqual("A new dossier", createdDossier.Title);
       }
     }
 

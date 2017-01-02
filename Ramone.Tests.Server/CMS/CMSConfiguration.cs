@@ -2,7 +2,7 @@
 using Ramone.Tests.Common.CMS;
 using Ramone.Tests.Server.CMS.Codecs;
 using Ramone.Tests.Server.CMS.Handlers;
-
+using Ramone.Tests.Server.Codecs;
 
 namespace Ramone.Tests.Server.CMS
 {
@@ -14,9 +14,9 @@ namespace Ramone.Tests.Server.CMS
           .AtUri(CMSConstants.DossierPath).Named("Simple")
           .And.AtUri(CMSConstants.VerifiedMethodDossierPath).Named("Verified")
           .And.AtUri(CMSConstants.DossiersPath)
-          //.And.AtUri(CMSConstants.VerifiedMethodDossiersPath)
           .HandledBy<DossiersHandler>()
-          .TranscodedBy<DossierCodec>();
+          .TranscodedBy<DossierCodec>()
+          .And.TranscodedBy<JsonSerializerCodec<Dossier>>().ForMediaType("application/json;q=0.9");
 
       ResourceSpace.Has.ResourcesOfType<DossierDocumentList>()
           .AtUri(CMSConstants.DossierDocumentsPath)

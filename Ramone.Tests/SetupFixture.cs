@@ -20,12 +20,17 @@ namespace Ramone.Tests
     public void Setup()
     {
       Environment.CurrentDirectory = Path.GetDirectoryName(Assembly.GetAssembly(typeof(SetupFixture)).Location);
+      TestHelper.TestService = CreateDefaultService();
+    }
 
-      TestHelper.TestService = RamoneConfiguration.NewService(TestHelper.BaseUrl);
 
-      TestHelper.TestService.DefaultEncoding = Encoding.GetEncoding("iso-8859-1");
+    public static IService CreateDefaultService()
+    {
+      IService service = RamoneConfiguration.NewService(TestHelper.BaseUrl);
 
-      ICodecManager cm = TestHelper.TestService.CodecManager;
+      service.DefaultEncoding = Encoding.GetEncoding("iso-8859-1");
+
+      ICodecManager cm = service.CodecManager;
 
       cm.AddCodec<Dossier, XmlSerializerCodec>(CMSConstants.CMSMediaType);
       cm.AddCodec<DossierDocumentList, XmlSerializerCodec>(CMSConstants.CMSMediaType);
@@ -41,6 +46,8 @@ namespace Ramone.Tests
       cm.AddCodec<HeaderList, XmlSerializerCodec>(MediaType.ApplicationXml);
 
       cm.AddCodec<RegisteredClass, XmlSerializerCodec>(MediaType.ApplicationXml);
+
+      return service;
     }
 
 
