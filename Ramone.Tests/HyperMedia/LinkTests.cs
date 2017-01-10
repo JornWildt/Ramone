@@ -74,6 +74,19 @@ namespace Ramone.Tests.HyperMedia
 
 
     [Test]
+    public void CanTestLinksInLinkList()
+    {
+      // Act + Assert
+      Assert.True(Links.Exists(Link1.RelationType));
+      Assert.True(Links.Exists(Link2.RelationType));
+      Assert.True(Links.Exists(Link1.RelationType, "text/html"));
+      Assert.True(Links.Exists(Link2.RelationType, "text/html"));
+      Assert.True(Links.Exists(Link3.RelationType, "application/atom+xml"));
+      Assert.True(Links.Exists(Link4.RelationType, "application/atom+xml"));
+    }
+
+
+    [Test]
     public void CanSelectLinkFromMultiRelLinkList()
     {
       // Act

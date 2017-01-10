@@ -18,16 +18,33 @@ namespace Ramone.HyperMedia
     public static T Select<T>(this IEnumerable<T> links, string rel, MediaType mediaType = null)
       where T : ISelectable
     {
-      Condition.Requires(links, "links").IsNotNull();
-      Condition.Requires(rel, "rel").IsNotNull();
-
-      T result =  links.Where(l => l.RelationTypes.Any(r => string.Equals(r, rel, StringComparison.InvariantCultureIgnoreCase))
-                                                       && (mediaType == null || l.MediaType == mediaType)).FirstOrDefault();
-
-      if (result == null)
+      T result;
+      if (!links.TrySelect(rel, out result, mediaType))
         throw new SelectFailedException(string.Format("No {0} found matching rel='{1}' and mediaType='{2}'.", typeof(T), rel, mediaType));
 
       return result;
+    }
+
+
+    public static bool TrySelect<T>(this IEnumerable<T> links, string rel, out T result, MediaType mediaType = null)
+      where T : ISelectable
+    {
+      Condition.Requires(links, "links").IsNotNull();
+      Condition.Requires(rel, "rel").IsNotNull();
+
+      result = links.Where(l => l.RelationTypes.Any(r => string.Equals(r, rel, StringComparison.InvariantCultureIgnoreCase))
+                                                    && (mediaType == null || l.MediaType == mediaType)).FirstOrDefault();
+      return result != null;
+    }
+
+
+    public static bool Exists(this IEnumerable<ISelectable> links, string rel, MediaType mediaType = null)
+    {
+      Condition.Requires(links, "links").IsNotNull();
+      Condition.Requires(rel, "rel").IsNotNull();
+
+      ISelectable result;
+      return links.TrySelect(rel, out result, mediaType);
     }
 
 
