@@ -1,5 +1,6 @@
 Version 3.0.0.00
 ----------------
+* Added access to ResponseUri directly in Response class (GitHub issue #20).
 * Added TrySelect() and Exists() to check for existence of links in link lists (GitHub issue #21).
 * Added non-generic overload of Created() on Response (GitHub issue #23).
 * Default media type fixed (GitHub issue #27)

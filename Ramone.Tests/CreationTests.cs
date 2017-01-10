@@ -1,9 +1,7 @@
-﻿using NUnit.Framework;
-using Ramone.Tests.Common.CMS;
-using System;
-using Ramone.MediaTypes.Xml;
+﻿using System;
+using NUnit.Framework;
 using Ramone.MediaTypes.Json;
-using Ramone.Implementation;
+using Ramone.Tests.Common.CMS;
 
 namespace Ramone.Tests
 {

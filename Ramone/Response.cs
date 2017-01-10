@@ -17,6 +17,8 @@ namespace Ramone
 
     public Uri Location { get { return WebResponse.LocationAsUri(); } }
 
+    public Uri ResponseUri { get { return WebResponse.ResponseUri; } }
+
     public Uri BaseUri { get { return new Uri(WebResponse.ResponseUri.GetLeftPart(UriPartial.Path)); } }
 
     public int RedirectCount { get; protected set; }

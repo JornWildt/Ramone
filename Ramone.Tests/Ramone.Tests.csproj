@@ -168,6 +168,7 @@
     <Compile Include="RequestInterceptorSetTests.cs" />
     <Compile Include="RequestInterceptorTests.cs" />
     <Compile Include="RequestObjectTests.cs" />
+    <Compile Include="ResponseUrlAndLocationTests.cs" />
     <Compile Include="ServiceTests.cs" />
     <Compile Include="SessionTests.cs" />
     <Compile Include="SetupFixture.cs" />
