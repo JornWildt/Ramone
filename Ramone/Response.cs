@@ -31,18 +31,22 @@ namespace Ramone
     public Response(HttpWebResponse response, ISession session, int retryCount, Guid? connectionId = null)
     {
       WebResponse = response;
-      try
-      {
-        // FIXME: TryParse
-        ContentType = new MediaType(WebResponse.ContentType);
-      }
-      catch (Exception)
-      {
-        ContentType = null;
-      }
+      ReadContentType();
       Session = session;
       RedirectCount = retryCount;
       ConnectionId = connectionId;
+    }
+
+
+    private void ReadContentType()
+    {
+      if (WebResponse != null && WebResponse.ContentType != null)
+      {
+        string error;
+        MediaType contentType = null;
+        MediaType.TryParse(WebResponse.ContentType, out contentType, out error);
+        ContentType = contentType;
+      }
     }
 
 

@@ -38,6 +38,11 @@ namespace Ramone.Tests.Server.Handlers
 
     private object Process(int code, int count, string method, int voidResponse)
     {
+      if (count == -1)
+      {
+        return null;
+      }
+
       if (count == 5)
       {
         return new RedirectArgs { Count = count, Method = method };

@@ -269,6 +269,24 @@ namespace Ramone.Tests
     }
 
 
+    [Test]
+    public void WhenNotFollowingARedirectItWillNotCrashDueToMissingMediaType()
+    {
+      // Arrange
+      Request req = Session.Bind(RedirectTemplate, new { code = 303, count = -1, v = 0 });
+
+      Session.SetAllowedRedirects(303, 0);
+
+      // Act
+      using (Response resp = req.Post())
+      {
+        // Assert
+        Assert.AreEqual(0, resp.RedirectCount);
+        Assert.IsNull(resp.ContentType);
+      }
+    }
+
+
     static int InterceptorCount;
 
 

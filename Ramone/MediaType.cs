@@ -65,25 +65,14 @@ namespace Ramone
     {
       Condition.Requires(mediaType, "mediaType").IsNotNull();
 
-      string[] parameters = mediaType.Split(';');
-      string mediaType2 = parameters[0].Trim();
+      string error;
+      MediaType type;
+      if (!MediaType.TryParse(mediaType, out type, out error))
+        throw new FormatException(error);
 
-      if (mediaType2 == string.Empty)
-        throw new FormatException(string.Format("The media-type string '{0}' did not contain any media-type.", mediaType));
-
-      string[] types = mediaType2.Split('/');
-      if (types.Length != 2)
-        throw new FormatException(string.Format("Cannot instantiate MediaType from '{0}' - expected exactly one '/'.", mediaType));
-
-      FullType = mediaType2;
-      TopLevelType = types[0];
-      SubType = types[1];
-
-      if (TopLevelType == string.Empty)
-        throw new FormatException(string.Format("The media-type string '{0}' did not contain any top-level type.", TopLevelType));
-
-      if (SubType == string.Empty)
-        throw new FormatException(string.Format("The media-type string '{0}' did not contain any sub-level type.", SubType));
+      FullType = type.FullType;
+      TopLevelType = type.TopLevelType;
+      SubType = type.SubType;
     }
 
 
@@ -92,6 +81,63 @@ namespace Ramone
       FullType = src.FullType;
       TopLevelType = src.TopLevelType;
       SubType = src.SubType;
+    }
+
+
+    public MediaType(string fullType, string topLevelType, string subType)
+    {
+      FullType = fullType;
+      TopLevelType = topLevelType;
+      SubType = subType;
+    }
+
+
+    public static bool TryParse(string mediaType, out MediaType result, out string error)
+    {
+      result = null;
+      error = null;
+
+      if (mediaType == null)
+      {
+        error = "The parameter 'mediaType' was null.";
+        return false;
+      }
+
+      string[] parameters = mediaType.Split(';');
+      string mediaType2 = parameters[0].Trim();
+
+      if (mediaType2 == string.Empty)
+      {
+        error = string.Format("The media-type string '{0}' did not contain any media-type.", mediaType);
+        return false;
+      }
+
+      string[] types = mediaType2.Split('/');
+      if (types.Length != 2)
+      {
+        error = string.Format("Cannot instantiate MediaType from '{0}' - expected exactly one '/'.", mediaType);
+        return false;
+      }
+
+      string fullType = mediaType2;
+      string topLevelType = types[0];
+      string subType = types[1];
+
+      if (topLevelType == string.Empty)
+      {
+        error = string.Format("The media-type string '{0}' did not contain any top-level type.", topLevelType);
+        return false;
+      }
+
+      if (subType == string.Empty)
+      {
+        error = string.Format("The media-type string '{0}' did not contain any sub-level type.", subType);
+        return false;
+      }
+
+      result = new MediaType(fullType, topLevelType, subType);
+
+      return true;
     }
 
 
