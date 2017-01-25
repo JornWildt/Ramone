@@ -8,20 +8,20 @@ namespace Ramone.Tests
   // Not many tests here - they are dispersed among the normal tests
 
   [TestFixture]
-  public class AsyncTests : TestHelper
+  public class AsyncEventTests : TestHelper
   {
     [Test]
     // As simple test to verify that we got something right (mostly while modeling the API)
-    public void CanDoAsyncRequest()
+    public void CanDoAsyncEventRequest()
     {
       // Arrange
       Request request = Session.Bind(DossierTemplate, new { id = 8 });
       bool ok = false;
 
-      TestAsync(wh =>
+      TestAsyncEvent(wh =>
       {
         // Act
-        request.Async()
+        request.AsyncEvent()
                .OnComplete(() => wh.Set())
                .Get(r => 
                     { 
@@ -40,9 +40,9 @@ namespace Ramone.Tests
       // Arrange
       Request request = Session.Bind("/unknown-url");
 
-      TestAsync(wh =>
+      TestAsyncEvent(wh =>
         {
-          request.Async().OnError(error =>
+          request.AsyncEvent().OnError(error =>
             {
               Assert.IsNotNull(error);
               Assert.IsNotNull(error.Exception);
@@ -60,9 +60,9 @@ namespace Ramone.Tests
       Request request = Session.Bind("/unknown-url");
       bool onErrorHandled = false;
 
-      TestAsync(wh =>
+      TestAsyncEvent(wh =>
       {
-        request.Async().OnError(error =>
+        request.AsyncEvent().OnError(error =>
         {
           onErrorHandled = true;
         }).OnComplete(() =>
@@ -78,12 +78,12 @@ namespace Ramone.Tests
     public void WhenExceptionIsThrownInCallbackItCallsErrorHandlerWithRequestAsWellAsCompleteHandler()
     {
       Request request = Session.Bind(DossierTemplate, new { id = 8 });
-      AsyncError error = null;
+      AsyncEventError error = null;
 
-      TestAsync(wh =>
+      TestAsyncEvent(wh =>
       {
         // Act
-        request.Async()
+        request.AsyncEvent()
                .OnError(e => error = e)
                .OnComplete(() => wh.Set())
                .Get(r =>
@@ -99,7 +99,7 @@ namespace Ramone.Tests
 
 
     [Test]
-    public void CanCancelAsyncRequest()
+    public void CanCancelAsyncEventRequest()
     {
       // Arrange
       Request request = Session.Bind(Constants.SlowPath);
@@ -107,10 +107,10 @@ namespace Ramone.Tests
       bool gotError = false;
       bool gotComplete = false;
 
-      TestAsync(wh =>
+      TestAsyncEvent(wh =>
       {
         // Act
-        request.Async()
+        request.AsyncEvent()
                .OnError(err => gotError = true)
                .OnComplete(() => { gotComplete = true; wh.Set(); })
                .Get(r => { gotOk = true; });
@@ -126,7 +126,7 @@ namespace Ramone.Tests
 
 
     [Test]
-    public void ItIsSafeToCancelClosedAsyncRequest()
+    public void ItIsSafeToCancelClosedAsyncEventRequest()
     {
       // Arrange
       Request request = Session.Bind(Constants.SlowPath);
@@ -134,9 +134,9 @@ namespace Ramone.Tests
       bool gotError = false;
       bool gotComplete = false;
 
-      TestAsync(wh =>
+      TestAsyncEvent(wh =>
       {
-        request.Async()
+        request.AsyncEvent()
                .OnError(err => gotError = true)
                .OnComplete(() => { gotComplete = true; wh.Set(); })
                .Get(r => { gotOk = true; });

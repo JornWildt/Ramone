@@ -27,11 +27,11 @@ namespace Ramone.Tests
 
 
     [Test]
-    public void WhenCatchingAuthorizationExceptionItAllowsToDeserializeContent_Async()
+    public void WhenCatchingAuthorizationExceptionItAllowsToDeserializeContent_AsyncEvent()
     {
-      TestAsync(wh =>
+      TestAsyncEvent(wh =>
         {
-          Session.Request(BasicAuthUrl).Async()
+          Session.Request(BasicAuthUrl).AsyncEvent()
                  .OnError(error =>
                   {
                     HtmlDocument html = error.Response.Decode<HtmlDocument>();

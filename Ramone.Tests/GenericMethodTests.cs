@@ -39,15 +39,15 @@ namespace Ramone.Tests
 
 
     [Test]
-    public void CanExecuteGetWithGenericResult_Async()
+    public void CanExecuteGetWithGenericResult_AsyncEvent()
     {
       // Arrange
       Request dossierReq = Session.Bind(DossierTemplate, new { id = 8 });
 
-      TestAsync(wh =>
+      TestAsyncEvent(wh =>
       {
         // Act
-        dossierReq.Async()
+        dossierReq.AsyncEvent()
           .Execute<Dossier>("GET", response =>
           {
             // Assert
@@ -77,15 +77,15 @@ namespace Ramone.Tests
 
 
     [Test]
-    public void CanExecuteGetWithNonGenericResult_Async()
+    public void CanExecuteGetWithNonGenericResult_AsyncEvent()
     {
       // Arrange
       Request dossierReq = Session.Bind(DossierTemplate, new { id = 8 });
 
-      TestAsync(wh =>
+      TestAsyncEvent(wh =>
       {
         // Act
-        dossierReq.Async()
+        dossierReq.AsyncEvent()
           .Execute("GET", response =>
           {
             // Assert
@@ -126,15 +126,15 @@ namespace Ramone.Tests
 
 
     [Test]
-    public void CanExecutePostWithGenericResult_Async()
+    public void CanExecutePostWithGenericResult_AsyncEvent()
     {
       // Arrange
       Request dossiersReq = Session.Request(DossiersUrl);
 
-      TestAsync(wh =>
+      TestAsyncEvent(wh =>
       {
         // Act
-        dossiersReq.Async()
+        dossiersReq.AsyncEvent()
           .Execute<Dossier>("POST", MyDossier, response =>
           {
             // Assert
@@ -164,15 +164,15 @@ namespace Ramone.Tests
 
 
     [Test]
-    public void CanExecutePostWithNonGenericResult_Async()
+    public void CanExecutePostWithNonGenericResult_AsyncEvent()
     {
       // Arrange
       Request dossiersReq = Session.Request(DossiersUrl);
 
-      TestAsync(wh =>
+      TestAsyncEvent(wh =>
       {
         // Act
-        dossiersReq.Async()
+        dossiersReq.AsyncEvent()
           .Execute("POST", MyDossier, response =>
           {
             // Assert
@@ -186,12 +186,12 @@ namespace Ramone.Tests
     #region EXECUTE-ANY with null/empty callback handlers
 
     [Test]
-    public void CanExecuteAsyncWithoutHandler()
+    public void CanExecuteAsyncEventWithoutHandler()
     {
-      TestAsync(wh =>
+      TestAsyncEvent(wh =>
       {
         // Act
-        DossierReq.Async()
+        DossierReq.AsyncEvent()
           .OnError(error => Assert.Fail())
           .OnComplete(() =>
           {
@@ -202,12 +202,12 @@ namespace Ramone.Tests
 
 
     [Test]
-    public void CanExecuteEmptyAsyncWithoutHandler()
+    public void CanExecuteEmptyAsyncEventWithoutHandler()
     {
-      TestAsync(wh =>
+      TestAsyncEvent(wh =>
       {
         // Act
-        DossierReq.Async()
+        DossierReq.AsyncEvent()
           .OnError(error => Assert.Fail())
           .OnComplete(() =>
           {
@@ -218,12 +218,12 @@ namespace Ramone.Tests
 
 
     [Test]
-    public void CanExecuteAsyncWithoutHandler_Typed()
+    public void CanExecuteAsyncEventWithoutHandler_Typed()
     {
-      TestAsync(wh =>
+      TestAsyncEvent(wh =>
       {
         // Act
-        DossierReq.Async()
+        DossierReq.AsyncEvent()
           .OnError(error => Assert.Fail())
           .OnComplete(() =>
           {
@@ -234,12 +234,12 @@ namespace Ramone.Tests
 
 
     [Test]
-    public void CanExecuteEmptyAsyncWithoutHandler_Typed()
+    public void CanExecuteEmptyAsyncEventWithoutHandler_Typed()
     {
-      TestAsync(wh =>
+      TestAsyncEvent(wh =>
       {
         // Act
-        DossierReq.Async()
+        DossierReq.AsyncEvent()
           .OnError(error => Assert.Fail())
           .OnComplete(() =>
           {
@@ -250,12 +250,12 @@ namespace Ramone.Tests
 
 
     [Test]
-    public void CanExecuteAsyncWithNullHandler()
+    public void CanExecuteAsyncEventWithNullHandler()
     {
-      TestAsync(wh =>
+      TestAsyncEvent(wh =>
       {
         // Act
-        DossierReq.Async()
+        DossierReq.AsyncEvent()
           .OnError(error => Assert.Fail())
           .OnComplete(() =>
           {
@@ -266,12 +266,12 @@ namespace Ramone.Tests
 
 
     [Test]
-    public void CanExecuteEmptyAsyncWithNullHandler()
+    public void CanExecuteEmptyAsyncEventWithNullHandler()
     {
-      TestAsync(wh =>
+      TestAsyncEvent(wh =>
       {
         // Act
-        DossierReq.Async()
+        DossierReq.AsyncEvent()
           .OnError(error => Assert.Fail())
           .OnComplete(() =>
           {
@@ -282,12 +282,12 @@ namespace Ramone.Tests
 
 
     [Test]
-    public void CanExecuteAsyncWithNullHandler_Typed()
+    public void CanExecuteAsyncEventWithNullHandler_Typed()
     {
-      TestAsync(wh =>
+      TestAsyncEvent(wh =>
       {
         // Act
-        DossierReq.Async()
+        DossierReq.AsyncEvent()
           .OnError(error => Assert.Fail())
           .OnComplete(() =>
           {
@@ -298,12 +298,12 @@ namespace Ramone.Tests
 
 
     [Test]
-    public void CanExecuteEmptyAsyncWithNullHandler_Typed()
+    public void CanExecuteEmptyAsyncEventWithNullHandler_Typed()
     {
-      TestAsync(wh =>
+      TestAsyncEvent(wh =>
       {
         // Act
-        DossierReq.Async()
+        DossierReq.AsyncEvent()
           .OnError(error => Assert.Fail())
           .OnComplete(() =>
           {

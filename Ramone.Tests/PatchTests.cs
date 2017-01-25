@@ -30,12 +30,12 @@ namespace Ramone.Tests
 
 
     [Test]
-    public void CanPatch_Untyped_Async()
+    public void CanPatch_Untyped_AsyncEvent()
     {
-      TestAsync(wh =>
+      TestAsyncEvent(wh =>
       {
         // Act
-        DossierReq.AsFormUrlEncoded().Async().Patch(new { title = "Duh" }, response =>
+        DossierReq.AsFormUrlEncoded().AsyncEvent().Patch(new { title = "Duh" }, response =>
         {
           // Assert
           Assert.AreEqual("Duh: ok", response.Decode<Dossier>().Title);
@@ -58,12 +58,12 @@ namespace Ramone.Tests
 
 
     [Test]
-    public void CanPatchAndGetResult_Typed_Async()
+    public void CanPatchAndGetResult_Typed_AsyncEvent()
     {
-      TestAsync(wh =>
+      TestAsyncEvent(wh =>
       {
         // Act
-        DossierReq.AsFormUrlEncoded().Async().Patch<Dossier>(new { title = "Duh" }, response =>
+        DossierReq.AsFormUrlEncoded().AsyncEvent().Patch<Dossier>(new { title = "Duh" }, response =>
         {
           // Assert
           Assert.AreEqual("Duh: ok", response.Body.Title);
@@ -100,12 +100,12 @@ namespace Ramone.Tests
     #region PATCH with null/empty callback handlers
 
     [Test]
-    public void CanPatchAsyncWithoutHandler()
+    public void CanPatchAsyncEventWithoutHandler()
     {
-      TestAsync(wh =>
+      TestAsyncEvent(wh =>
       {
         // Act
-        DossierReq.AsFormUrlEncoded().Async()
+        DossierReq.AsFormUrlEncoded().AsyncEvent()
           .OnError(error => Assert.Fail())
           .OnComplete(() =>
           {
@@ -116,12 +116,12 @@ namespace Ramone.Tests
 
 
     [Test]
-    public void CanPatchEmptyAsyncWithoutHandler()
+    public void CanPatchEmptyAsyncEventWithoutHandler()
     {
-      TestAsync(wh =>
+      TestAsyncEvent(wh =>
       {
         // Act
-        DossierReq.Async()
+        DossierReq.AsyncEvent()
           .OnError(error => Assert.Fail())
           .OnComplete(() =>
           {
@@ -132,12 +132,12 @@ namespace Ramone.Tests
 
 
     [Test]
-    public void CanPatchAsyncWithoutHandler_Typed()
+    public void CanPatchAsyncEventWithoutHandler_Typed()
     {
-      TestAsync(wh =>
+      TestAsyncEvent(wh =>
       {
         // Act
-        DossierReq.AsFormUrlEncoded().Async()
+        DossierReq.AsFormUrlEncoded().AsyncEvent()
           .OnError(error => Assert.Fail())
           .OnComplete(() =>
           {
@@ -148,12 +148,12 @@ namespace Ramone.Tests
 
 
     [Test]
-    public void CanPatchEmptyAsyncWithoutHandler_Typed()
+    public void CanPatchEmptyAsyncEventWithoutHandler_Typed()
     {
-      TestAsync(wh =>
+      TestAsyncEvent(wh =>
       {
         // Act
-        DossierReq.Async()
+        DossierReq.AsyncEvent()
           .OnError(error => Assert.Fail())
           .OnComplete(() =>
           {
@@ -164,12 +164,12 @@ namespace Ramone.Tests
 
 
     [Test]
-    public void CanPatchAsyncWithNullHandler()
+    public void CanPatchAsyncEventWithNullHandler()
     {
-      TestAsync(wh =>
+      TestAsyncEvent(wh =>
       {
         // Act
-        DossierReq.AsFormUrlEncoded().Async()
+        DossierReq.AsFormUrlEncoded().AsyncEvent()
           .OnError(error => Assert.Fail())
           .OnComplete(() =>
           {
@@ -180,12 +180,12 @@ namespace Ramone.Tests
 
 
     [Test]
-    public void CanPatchEmptyAsyncWithNullHandler()
+    public void CanPatchEmptyAsyncEventWithNullHandler()
     {
-      TestAsync(wh =>
+      TestAsyncEvent(wh =>
       {
         // Act
-        DossierReq.Async()
+        DossierReq.AsyncEvent()
           .OnError(error => Assert.Fail())
           .OnComplete(() =>
           {
@@ -196,12 +196,12 @@ namespace Ramone.Tests
 
 
     [Test]
-    public void CanPatchAsyncWithNullHandler_Typed()
+    public void CanPatchAsyncEventWithNullHandler_Typed()
     {
-      TestAsync(wh =>
+      TestAsyncEvent(wh =>
       {
         // Act
-        DossierReq.AsFormUrlEncoded().Async()
+        DossierReq.AsFormUrlEncoded().AsyncEvent()
           .OnError(error => Assert.Fail())
           .OnComplete(() =>
           {
@@ -212,12 +212,12 @@ namespace Ramone.Tests
 
 
     [Test]
-    public void CanPatchEmptyAsyncWithNullHandler_Typed()
+    public void CanPatchEmptyAsyncEventWithNullHandler_Typed()
     {
-      TestAsync(wh =>
+      TestAsyncEvent(wh =>
       {
         // Act
-        DossierReq.Async()
+        DossierReq.AsyncEvent()
           .OnError(error => Assert.Fail())
           .OnComplete(() =>
           {

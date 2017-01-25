@@ -97,7 +97,7 @@ namespace Ramone.Tests
 
 
     [Test]
-    public void CanSetIfMatchDirectly_Async()
+    public void CanSetIfMatchDirectly_AsyncEvent()
     {
       // Arrange
       string tag = "ab12";
@@ -107,9 +107,9 @@ namespace Ramone.Tests
       request.IfMatch(tag);
 
       // Act
-      TestAsync(wh =>
+      TestAsyncEvent(wh =>
       {
-        request.Async()
+        request.AsyncEvent()
           .Get<HeaderList>(r =>
           {
             HeaderList headers = r.Body;
@@ -123,7 +123,7 @@ namespace Ramone.Tests
 
 
     [Test]
-    public void CanSetIfMatchViaHeader_Async()
+    public void CanSetIfMatchViaHeader_AsyncEvent()
     {
       // Arrange
       string tag = "ab12";
@@ -133,9 +133,9 @@ namespace Ramone.Tests
       request.Header("If-Match", tag);
 
       // Act
-      TestAsync(wh =>
+      TestAsyncEvent(wh =>
       {
-        request.Async()
+        request.AsyncEvent()
           .Get<HeaderList>(r =>
           {
             HeaderList headers = r.Body;

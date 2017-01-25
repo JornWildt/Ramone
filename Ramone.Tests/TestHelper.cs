@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Net;
 using System.Threading;
+using System.Threading.Tasks;
 using NUnit.Framework;
 using Ramone.Tests.Common;
 using Ramone.Tests.Common.CMS;
@@ -252,7 +253,20 @@ namespace Ramone.Tests
     }
 
 
-    protected void TestAsync(Action<AutoResetEvent> asyncBlock)
+    protected async Task TestAsync(Func<AutoResetEvent,Task> asyncBlock)
+    {
+      AutoResetEvent handle = new AutoResetEvent(false);
+
+      await asyncBlock(handle);
+
+      // Wait for request to complete
+      bool signalReceived = handle.WaitOne(TimeSpan.FromSeconds(10));
+
+      Assert.IsTrue(signalReceived, "Timeout in async handler");
+    }
+
+
+    protected void TestAsyncEvent(Action<AutoResetEvent> asyncBlock)
     {
       AutoResetEvent handle = new AutoResetEvent(false);
 

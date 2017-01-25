@@ -3,12 +3,12 @@
 
 namespace Ramone
 {
-  public class AsyncError
+  public class AsyncEventError
   {
     public Exception Exception { get; private set; }
     public Response Response { get; private set; }
 
-    public AsyncError(Exception exception, Response response)
+    public AsyncEventError(Exception exception, Response response)
     {
       Exception = exception;
       Response = response;

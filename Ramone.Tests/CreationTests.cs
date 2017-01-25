@@ -64,7 +64,7 @@ namespace Ramone.Tests
 
 
     [Test]
-    public void CanGetCreatedLocationAndBody_Async()
+    public void CanGetCreatedLocationAndBody_AsyncEvent()
     {
       // Arrange
       Dossier dossier = new Dossier
@@ -75,9 +75,9 @@ namespace Ramone.Tests
       Request request = Session.Request(DossiersUrl);
 
       // Act
-      TestAsync(wh =>
+      TestAsyncEvent(wh =>
         {
-          request.Async().Post<Dossier>(dossier, response =>
+          request.AsyncEvent().Post<Dossier>(dossier, response =>
             {
               // Assert
               Uri createdDossierLocation = response.CreatedLocation;

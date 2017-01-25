@@ -27,7 +27,7 @@ namespace Ramone
       : base(src)
     {
       Condition.Requires(src, "src").IsNotNull();
-      RelatedAsyncRequest = src.RelatedAsyncRequest;
+      RelatedAsyncEventRequest = src.RelatedAsyncEventRequest;
     }
 
 
@@ -419,17 +419,29 @@ namespace Ramone
 
     protected AsyncRequest RelatedAsyncRequest { get; set; }
 
-
     public AsyncRequest Async()
     {
       return RelatedAsyncRequest = new AsyncRequest(this);
     }
 
+    #endregion
+
+
+    #region Event based async handling
+
+    protected AsyncEventRequest RelatedAsyncEventRequest { get; set; }
+
+
+    public AsyncEventRequest AsyncEvent()
+    {
+      return RelatedAsyncEventRequest = new AsyncEventRequest(this);
+    }
+
 
     public void CancelAsync()
     {
-      if (RelatedAsyncRequest != null)
-        RelatedAsyncRequest.CancelAsync();
+      if (RelatedAsyncEventRequest != null)
+        RelatedAsyncEventRequest.CancelAsync();
     }
 
     #endregion

@@ -30,12 +30,12 @@ namespace Ramone.Tests
 
 
     [Test]
-    public void CanDoOptions_Async()
+    public void CanDoOptions_AsyncEvent()
     {
-      TestAsync(wh =>
+      TestAsyncEvent(wh =>
       {
         // Act
-        DossierReq.Async()
+        DossierReq.AsyncEvent()
           .OnError(error => Assert.Fail())
           .Options(response =>
           {
@@ -70,12 +70,12 @@ namespace Ramone.Tests
 
 
     [Test]
-    public void CanDoOptionsWithBody_Async()
+    public void CanDoOptionsWithBody_AsyncEvent()
     {
-      TestAsync(wh =>
+      TestAsyncEvent(wh =>
       {
         // Act
-        DossierReq.Async()
+        DossierReq.AsyncEvent()
           .OnError(error => Assert.Fail())
           .Options<string>(response =>
           {
@@ -91,12 +91,12 @@ namespace Ramone.Tests
     #region OPTIONS with empty/null callbacks
 
     [Test]
-    public void CanOptionsAsyncWithoutHandler()
+    public void CanOptionsAsyncEventWithoutHandler()
     {
-      TestAsync(wh =>
+      TestAsyncEvent(wh =>
       {
         // Act
-        DossierReq.Async()
+        DossierReq.AsyncEvent()
           .OnError(error => Assert.Fail())
           .OnComplete(() =>
           {
@@ -107,12 +107,12 @@ namespace Ramone.Tests
 
 
     [Test]
-    public void CanOptionsAsyncWithoutHandler_Typed()
+    public void CanOptionsAsyncEventWithoutHandler_Typed()
     {
-      TestAsync(wh =>
+      TestAsyncEvent(wh =>
       {
         // Act
-        DossierReq.Async()
+        DossierReq.AsyncEvent()
           .OnError(error => Assert.Fail())
           .OnComplete(() =>
           {
@@ -123,12 +123,12 @@ namespace Ramone.Tests
 
 
     [Test]
-    public void CanOptionsAsyncWithNullHandler()
+    public void CanOptionsAsyncEventWithNullHandler()
     {
-      TestAsync(wh =>
+      TestAsyncEvent(wh =>
       {
         // Act
-        DossierReq.Async()
+        DossierReq.AsyncEvent()
           .OnError(error => Assert.Fail())
           .OnComplete(() =>
           {
@@ -139,12 +139,12 @@ namespace Ramone.Tests
 
 
     [Test]
-    public void CanOptionsAsyncWithNullHandler_Typed()
+    public void CanOptionsAsyncEventWithNullHandler_Typed()
     {
-      TestAsync(wh =>
+      TestAsyncEvent(wh =>
       {
         // Act
-        DossierReq.Async()
+        DossierReq.AsyncEvent()
           .OnError(error => Assert.Fail())
           .OnComplete(() =>
           {

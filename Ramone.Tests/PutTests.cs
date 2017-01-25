@@ -52,12 +52,12 @@ namespace Ramone.Tests
 
 
     [Test]
-    public void CanPutAndGetResult_Async()
+    public void CanPutAndGetResult_AsyncEvent()
     {
-      TestAsync(wh =>
+      TestAsyncEvent(wh =>
       {
         // Act
-        DossierReq.Async().Put<Dossier>(MyDossier, response =>
+        DossierReq.AsyncEvent().Put<Dossier>(MyDossier, response =>
         {
           Dossier newDossier = response.Body;
 
@@ -109,12 +109,12 @@ namespace Ramone.Tests
 
 
     [Test]
-    public void CanPutEmptyBody_Typed_Async()
+    public void CanPutEmptyBody_Typed_AsyncEvent()
     {
-      TestAsync(wh =>
+      TestAsyncEvent(wh =>
       {
         // Act
-        DossierReq.ContentType("application/octet-stream").Async()
+        DossierReq.ContentType("application/octet-stream").AsyncEvent()
           .OnError(error => Assert.Fail())
           .Put<string>(r =>
           {
@@ -140,12 +140,12 @@ namespace Ramone.Tests
 
 
     [Test]
-    public void CanPutEmptyBody_Untyped_Async()
+    public void CanPutEmptyBody_Untyped_AsyncEvent()
     {
-      TestAsync(wh =>
+      TestAsyncEvent(wh =>
       {
         // Act
-        DossierReq.ContentType("application/octet-stream").Async()
+        DossierReq.ContentType("application/octet-stream").AsyncEvent()
           .OnError(error => Assert.Fail())
           .Put<string>(r =>
           {
@@ -158,12 +158,12 @@ namespace Ramone.Tests
     #region Tests with empty/null callback handlers
 
     [Test]
-    public void CanPutAsyncWithoutHandler()
+    public void CanPutAsyncEventWithoutHandler()
     {
-      TestAsync(wh =>
+      TestAsyncEvent(wh =>
       {
         // Act
-        DossierReq.Async()
+        DossierReq.AsyncEvent()
           .OnError(error => Assert.Fail())
           .OnComplete(() =>
           {
@@ -174,12 +174,12 @@ namespace Ramone.Tests
 
 
     [Test]
-    public void CanPutEmptyAsyncWithoutHandler()
+    public void CanPutEmptyAsyncEventWithoutHandler()
     {
-      TestAsync(wh =>
+      TestAsyncEvent(wh =>
       {
         // Act
-        DossierReq.Async()
+        DossierReq.AsyncEvent()
           .OnError(error => Assert.Fail())
           .OnComplete(() =>
           {
@@ -190,12 +190,12 @@ namespace Ramone.Tests
 
 
     [Test]
-    public void CanPutAsyncWithoutHandler_Typed()
+    public void CanPutAsyncEventWithoutHandler_Typed()
     {
-      TestAsync(wh =>
+      TestAsyncEvent(wh =>
       {
         // Act
-        DossierReq.Async()
+        DossierReq.AsyncEvent()
           .OnError(error => Assert.Fail())
           .OnComplete(() =>
           {
@@ -206,12 +206,12 @@ namespace Ramone.Tests
 
 
     [Test]
-    public void CanPutEmptyAsyncWithoutHandler_Typed()
+    public void CanPutEmptyAsyncEventWithoutHandler_Typed()
     {
-      TestAsync(wh =>
+      TestAsyncEvent(wh =>
       {
         // Act
-        DossierReq.Async()
+        DossierReq.AsyncEvent()
           .OnError(error => Assert.Fail())
           .OnComplete(() =>
           {
@@ -222,12 +222,12 @@ namespace Ramone.Tests
 
 
     [Test]
-    public void CanPutAsyncWithNullHandler()
+    public void CanPutAsyncEventWithNullHandler()
     {
-      TestAsync(wh =>
+      TestAsyncEvent(wh =>
       {
         // Act
-        DossierReq.Async()
+        DossierReq.AsyncEvent()
           .OnError(error => Assert.Fail())
           .OnComplete(() =>
           {
@@ -238,12 +238,12 @@ namespace Ramone.Tests
 
 
     [Test]
-    public void CanPutEmptyAsyncWithNullHandler()
+    public void CanPutEmptyAsyncEventWithNullHandler()
     {
-      TestAsync(wh =>
+      TestAsyncEvent(wh =>
       {
         // Act
-        DossierReq.Async()
+        DossierReq.AsyncEvent()
           .OnError(error => Assert.Fail())
           .OnComplete(() =>
           {
@@ -254,12 +254,12 @@ namespace Ramone.Tests
 
 
     [Test]
-    public void CanPutAsyncWithNullHandler_Typed()
+    public void CanPutAsyncEventWithNullHandler_Typed()
     {
-      TestAsync(wh =>
+      TestAsyncEvent(wh =>
       {
         // Act
-        DossierReq.Async()
+        DossierReq.AsyncEvent()
           .OnError(error => Assert.Fail())
           .OnComplete(() =>
           {
@@ -270,12 +270,12 @@ namespace Ramone.Tests
 
 
     [Test]
-    public void CanPutEmptyAsyncWithNullHandler_Typed()
+    public void CanPutEmptyAsyncEventWithNullHandler_Typed()
     {
-      TestAsync(wh =>
+      TestAsyncEvent(wh =>
       {
         // Act
-        DossierReq.Async()
+        DossierReq.AsyncEvent()
           .OnError(error => Assert.Fail())
           .OnComplete(() =>
           {

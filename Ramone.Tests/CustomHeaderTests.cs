@@ -29,15 +29,15 @@ namespace Ramone.Tests
 
 
     [Test]
-    public void CanAddCustomerHeader_Async()
+    public void CanAddCustomerHeader_AsyncEvent()
     {
       // Arrange
       Request request = Session.Request(HeaderListUrl);
 
       // Act
-      TestAsync(wh =>
+      TestAsyncEvent(wh =>
         {
-          request.Header("X-Ramone", "123").Async().Get<HeaderList>(response =>
+          request.Header("X-Ramone", "123").AsyncEvent().Get<HeaderList>(response =>
             {
               HeaderList headers = response.Body;
 

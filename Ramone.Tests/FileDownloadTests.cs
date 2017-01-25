@@ -30,7 +30,7 @@ namespace Ramone.Tests
 
 
     [Test]
-    public void CanDownloadFile_Async()
+    public void CanDownloadFile_AsyncEvent()
     {
       // Arrange
       Request request = Session.Bind(FileDownloadTemplate);
@@ -38,9 +38,9 @@ namespace Ramone.Tests
       using (TempFile file = new TempFile())
       {
         // Act
-        TestAsync(wh =>
+        TestAsyncEvent(wh =>
           {
-            request.Async().Get(response =>
+            request.AsyncEvent().Get(response =>
               {
                 response.SaveToFile(file.Path);
 

@@ -30,7 +30,7 @@ namespace Ramone.Tests
 
 
     [Test]
-    public void CanAssignCachePolicyToSession_Async()
+    public void CanAssignCachePolicyToSession_AsyncEvent()
     {
       // Act
       Session.CachePolicy = Policy;
@@ -38,9 +38,9 @@ namespace Ramone.Tests
 
       // Assert
       RequestCachePolicy policy = null;
-      TestAsync(wh =>
+      TestAsyncEvent(wh =>
         {
-          request.OnHeadersReady(r => policy = r.CachePolicy).Async().Get<HeaderList>(r =>
+          request.OnHeadersReady(r => policy = r.CachePolicy).AsyncEvent().Get<HeaderList>(r =>
             {
               wh.Set();
             });

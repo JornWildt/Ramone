@@ -95,7 +95,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AsyncError.cs" />
+    <Compile Include="AsyncEventError.cs" />
+    <Compile Include="AsyncEventRequest.cs" />
     <Compile Include="AsyncRequest.cs" />
     <Compile Include="AuthorizationExtensions.cs" />
     <Compile Include="BaseRequest.cs" />

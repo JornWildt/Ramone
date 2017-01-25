@@ -24,15 +24,15 @@ namespace Ramone.Tests
 
 
     [Test]
-    public void CanDoHead_Async()
+    public void CanDoHead_AsyncEvent()
     {
       // Arrange
       Request dossierReq = Session.Bind(DossierTemplate, new { id = 8 });
 
-      TestAsync(wh =>
+      TestAsyncEvent(wh =>
       {
         // Act
-        dossierReq.Async()
+        dossierReq.AsyncEvent()
           .OnError(error => Assert.Fail())
           .Head(response =>
           {
@@ -45,15 +45,15 @@ namespace Ramone.Tests
 
 
     [Test]
-    public void CanDoAsyncHeadWithEmptyHandler()
+    public void CanDoAsyncEventHeadWithEmptyHandler()
     {
       // Arrange
       Request dossierReq = Session.Bind(VerifiedMethodDossierTemplate, new { id = 8, method = "HEAD" });
 
-      TestAsync(wh =>
+      TestAsyncEvent(wh =>
       {
         // Act
-        dossierReq.Async()
+        dossierReq.AsyncEvent()
           .OnError(error => Assert.Fail())
           .OnComplete(() => wh.Set())
           .Head();
@@ -62,15 +62,15 @@ namespace Ramone.Tests
 
 
     [Test]
-    public void CanDoAsyncHeadWithNullHandler()
+    public void CanDoAsyncEventHeadWithNullHandler()
     {
       // Arrange
       Request dossierReq = Session.Bind(VerifiedMethodDossierTemplate, new { id = 8, method = "HEAD" });
 
-      TestAsync(wh =>
+      TestAsyncEvent(wh =>
       {
         // Act
-        dossierReq.Async()
+        dossierReq.AsyncEvent()
           .OnError(error => Assert.Fail())
           .OnComplete(() => wh.Set())
           .Head(null);

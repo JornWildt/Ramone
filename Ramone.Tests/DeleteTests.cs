@@ -44,12 +44,12 @@ namespace Ramone.Tests
 
 
     [Test]
-    public void CanDeleteAndGetResult_Typed_Async()
+    public void CanDeleteAndGetResult_Typed_AsyncEvent()
     {
-      TestAsync(wh =>
+      TestAsyncEvent(wh =>
       {
         // Act
-        DossierReq.Async()
+        DossierReq.AsyncEvent()
           .Delete<string>(
           r =>
           {
@@ -62,12 +62,12 @@ namespace Ramone.Tests
 
 
     [Test]
-    public void CanDeleteAndGetResult_Untyped_Async()
+    public void CanDeleteAndGetResult_Untyped_AsyncEvent()
     {
-      TestAsync(wh =>
+      TestAsyncEvent(wh =>
       {
         // Act
-        DossierReq.Async()
+        DossierReq.AsyncEvent()
           .Delete(
           r =>
           {
@@ -117,12 +117,12 @@ namespace Ramone.Tests
     #region DELETE with empty/null callbacks
 
     [Test]
-    public void CanDeleteAsyncWithoutHandler()
+    public void CanDeleteAsyncEventWithoutHandler()
     {
-      TestAsync(wh =>
+      TestAsyncEvent(wh =>
       {
         // Act
-        DossierReq.Async()
+        DossierReq.AsyncEvent()
           .OnError(error => Assert.Fail())
           .OnComplete(() =>
           {
@@ -133,12 +133,12 @@ namespace Ramone.Tests
 
 
     [Test]
-    public void CanDeleteAsyncWithoutHandler_Typed()
+    public void CanDeleteAsyncEventWithoutHandler_Typed()
     {
-      TestAsync(wh =>
+      TestAsyncEvent(wh =>
       {
         // Act
-        DossierReq.Async()
+        DossierReq.AsyncEvent()
           .OnError(error => Assert.Fail())
           .OnComplete(() =>
           {
@@ -149,12 +149,12 @@ namespace Ramone.Tests
 
 
     [Test]
-    public void CanDeleteAsyncWithNullHandler()
+    public void CanDeleteAsyncEventWithNullHandler()
     {
-      TestAsync(wh =>
+      TestAsyncEvent(wh =>
       {
         // Act
-        DossierReq.Async()
+        DossierReq.AsyncEvent()
           .OnError(error => Assert.Fail())
           .OnComplete(() =>
           {
@@ -165,12 +165,12 @@ namespace Ramone.Tests
 
 
     [Test]
-    public void CanDeleteAsyncWithNullHandler_Typed()
+    public void CanDeleteAsyncEventWithNullHandler_Typed()
     {
-      TestAsync(wh =>
+      TestAsyncEvent(wh =>
       {
         // Act
-        DossierReq.Async()
+        DossierReq.AsyncEvent()
           .OnError(error => Assert.Fail())
           .OnComplete(() =>
           {

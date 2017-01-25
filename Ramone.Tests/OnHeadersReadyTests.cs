@@ -26,15 +26,15 @@ namespace Ramone.Tests
 
 
     [Test]
-    public void CanHandleHeadersReady_Async()
+    public void CanHandleHeadersReady_AsyncEvent()
     {
       // Arrange
       Request request = Session.Request(HeaderListUrl);
 
       HttpWebRequest httpRequest = null;
-      TestAsync(wh =>
+      TestAsyncEvent(wh =>
         {
-          request.OnHeadersReady(r => httpRequest = r).Async().Get<HeaderList>(r =>
+          request.OnHeadersReady(r => httpRequest = r).AsyncEvent().Get<HeaderList>(r =>
           {
             wh.Set();
           });

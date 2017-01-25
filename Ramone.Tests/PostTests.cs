@@ -52,7 +52,7 @@ namespace Ramone.Tests
 
 
     [Test]
-    public void WhenPostingEmptyDataAsyncTheRequestIsInFactAsync()
+    public void WhenPostingEmptyDataAsyncEventTheRequestIsInFactAsync()
     {
       // Arrange
       Request request = Session.Bind(Constants.SlowPath);
@@ -60,12 +60,12 @@ namespace Ramone.Tests
       TimeSpan syncTime = TimeSpan.MinValue;
       SlowResource result = null;
 
-      TestAsync(wh =>
+      TestAsyncEvent(wh =>
       {
         DateTime t1 = DateTime.Now;
 
         // Act
-        request.Async()
+        request.AsyncEvent()
           .OnError(error => Assert.Fail())
           .OnComplete(() => wh.Set())
           .Post(response =>
@@ -86,7 +86,7 @@ namespace Ramone.Tests
 
 
     [Test]
-    public void WhenPostingAsyncTheRequestIsInFactAsync()
+    public void WhenPostingAsyncEventTheRequestIsInFactAsync()
     {
       // Arrange
       Request request = Session.Bind(Constants.SlowPath).AsJson();
@@ -95,12 +95,12 @@ namespace Ramone.Tests
       SlowResource input = new SlowResource { Time = 10 };
       SlowResource result = null;
 
-      TestAsync(wh =>
+      TestAsyncEvent(wh =>
       {
         DateTime t1 = DateTime.Now;
 
         // Act
-        request.Async()
+        request.AsyncEvent()
           .OnError(error => Assert.Fail())
           .OnComplete(() => wh.Set())
           .Post<SlowResource>(input, response =>
@@ -160,12 +160,12 @@ namespace Ramone.Tests
 
 
     [Test]
-    public void CanPostEmptyBody_Typed_Async()
+    public void CanPostEmptyBody_Typed_AsyncEvent()
     {
-      TestAsync(wh =>
+      TestAsyncEvent(wh =>
       {
         // Act
-        DossierReq.ContentType("application/octet-stream").Async()
+        DossierReq.ContentType("application/octet-stream").AsyncEvent()
           .OnError(error => Assert.Fail())
           .Post<string>(r =>
           {
@@ -208,12 +208,12 @@ namespace Ramone.Tests
 
 
     [Test]
-    public void CanPostEmptyBody_Untyped_Async()
+    public void CanPostEmptyBody_Untyped_AsyncEvent()
     {
-      TestAsync(wh =>
+      TestAsyncEvent(wh =>
       {
         // Act
-        DossierReq.ContentType("application/octet-stream").Async()
+        DossierReq.ContentType("application/octet-stream").AsyncEvent()
           .OnError(error => Assert.Fail())
           .Post(r =>
           {
@@ -242,12 +242,12 @@ namespace Ramone.Tests
     #region POST with null/empty callback handlers
 
     [Test]
-    public void CanPostAsyncWithoutHandler()
+    public void CanPostAsyncEventWithoutHandler()
     {
-      TestAsync(wh =>
+      TestAsyncEvent(wh =>
       {
         // Act
-        DossierReq.Async()
+        DossierReq.AsyncEvent()
           .OnError(error => Assert.Fail())
           .OnComplete(() =>
           {
@@ -258,12 +258,12 @@ namespace Ramone.Tests
 
 
     [Test]
-    public void CanPostEmptyAsyncWithoutHandler()
+    public void CanPostEmptyAsyncEventWithoutHandler()
     {
-      TestAsync(wh =>
+      TestAsyncEvent(wh =>
       {
         // Act
-        DossierReq.Async()
+        DossierReq.AsyncEvent()
           .OnError(error => Assert.Fail())
           .OnComplete(() =>
           {
@@ -274,12 +274,12 @@ namespace Ramone.Tests
 
 
     [Test]
-    public void CanPostAsyncWithoutHandler_Typed()
+    public void CanPostAsyncEventWithoutHandler_Typed()
     {
-      TestAsync(wh =>
+      TestAsyncEvent(wh =>
       {
         // Act
-        DossierReq.Async()
+        DossierReq.AsyncEvent()
           .OnError(error => Assert.Fail())
           .OnComplete(() =>
           {
@@ -290,12 +290,12 @@ namespace Ramone.Tests
 
 
     [Test]
-    public void CanPostEmptyAsyncWithoutHandler_Typed()
+    public void CanPostEmptyAsyncEventWithoutHandler_Typed()
     {
-      TestAsync(wh =>
+      TestAsyncEvent(wh =>
       {
         // Act
-        DossierReq.Async()
+        DossierReq.AsyncEvent()
           .OnError(error => Assert.Fail())
           .OnComplete(() =>
           {
@@ -306,12 +306,12 @@ namespace Ramone.Tests
 
 
     [Test]
-    public void CanPostAsyncWithNullHandler()
+    public void CanPostAsyncEventWithNullHandler()
     {
-      TestAsync(wh =>
+      TestAsyncEvent(wh =>
       {
         // Act
-        DossierReq.Async()
+        DossierReq.AsyncEvent()
           .OnError(error => Assert.Fail())
           .OnComplete(() =>
           {
@@ -322,12 +322,12 @@ namespace Ramone.Tests
 
 
     [Test]
-    public void CanPostEmptyAsyncWithNullHandler()
+    public void CanPostEmptyAsyncEventWithNullHandler()
     {
-      TestAsync(wh =>
+      TestAsyncEvent(wh =>
       {
         // Act
-        DossierReq.Async()
+        DossierReq.AsyncEvent()
           .OnError(error => Assert.Fail())
           .OnComplete(() =>
           {
@@ -338,12 +338,12 @@ namespace Ramone.Tests
 
 
     [Test]
-    public void CanPostAsyncWithNullHandler_Typed()
+    public void CanPostAsyncEventWithNullHandler_Typed()
     {
-      TestAsync(wh =>
+      TestAsyncEvent(wh =>
       {
         // Act
-        DossierReq.Async()
+        DossierReq.AsyncEvent()
           .OnError(error => Assert.Fail())
           .OnComplete(() =>
           {
@@ -354,12 +354,12 @@ namespace Ramone.Tests
 
 
     [Test]
-    public void CanPostEmptyAsyncWithNullHandler_Typed()
+    public void CanPostEmptyAsyncEventWithNullHandler_Typed()
     {
-      TestAsync(wh =>
+      TestAsyncEvent(wh =>
       {
         // Act
-        DossierReq.Async()
+        DossierReq.AsyncEvent()
           .OnError(error => Assert.Fail())
           .OnComplete(() =>
           {

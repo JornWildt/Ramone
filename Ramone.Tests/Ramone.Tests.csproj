@@ -90,7 +90,7 @@
     <Compile Include="AcceptTests.cs" />
     <Compile Include="AdditionalMethodsTests.cs" />
     <Compile Include="AnonymousSessionTests.cs" />
-    <Compile Include="AsyncTests.cs" />
+    <Compile Include="AsyncEventTests.cs" />
     <Compile Include="BindingTests.cs" />
     <Compile Include="Blog\BlogTestHelper.cs" />
     <Compile Include="Blog\Codecs\Html\AuthorCodec_Html.cs" />
@@ -108,6 +108,7 @@
     <Compile Include="Blog\TypedHtmlTests.cs" />
     <Compile Include="CachePolicyTests.cs" />
     <Compile Include="FallbackMediaTypeTests.cs" />
+    <Compile Include="GetTests_Async.cs" />
     <Compile Include="HyperMedia\FollowTests.cs" />
     <Compile Include="IfMatchTests.cs" />
     <Compile Include="IfModifiedSinceTests.cs" />

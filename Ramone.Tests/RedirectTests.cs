@@ -55,15 +55,15 @@ namespace Ramone.Tests
 
 
     [Test, TestCaseSource("ValidRedirectCases")]
-    public void ItFollowsRedirectOnValidMethodsAndStatuses_Async(int responseCode, string method)
+    public void ItFollowsRedirectOnValidMethodsAndStatuses_AsyncEvent(int responseCode, string method)
     {
       // Arrange
       Request req = Session.Bind(RedirectTemplate, new { code = responseCode, count = 1, v = 0 });
 
       // Act
-      TestAsync(wh =>
+      TestAsyncEvent(wh =>
         {
-          req.Async().Execute<RedirectArgs>(method, response =>
+          req.AsyncEvent().Execute<RedirectArgs>(method, response =>
             {
               // Assert
               Assert.AreEqual(4, response.RedirectCount);
@@ -74,14 +74,14 @@ namespace Ramone.Tests
 
 
     [Test]
-    public void WhenRedirectingItOnlyCallsOnCompleteOnce()
+    public void WhenRedirectingItOnlyCallsOnCompleteOnce_AsyncEvent()
     {
       // Arrange
       Request req = Session.Bind(RedirectTemplate, new { code = 301, count = 1, v = 0 });
       int onCompleteCount = 0;
 
       // Act
-      req.Async().OnComplete(() =>
+      req.AsyncEvent().OnComplete(() =>
           {
             ++onCompleteCount;
           })
@@ -110,15 +110,15 @@ namespace Ramone.Tests
 
 
     [Test, TestCaseSource("InvalidRedirectCases")]
-    public void ItDoesNotFollowRedirectOnInvalidMethodsAndStatuses_Async(int responseCode, string method)
+    public void ItDoesNotFollowRedirectOnInvalidMethodsAndStatuses_AsyncEvent(int responseCode, string method)
     {
       // Arrange
       Request req = Session.Bind(RedirectTemplate, new { code = responseCode, count = 1, v = 0 });
 
       // Act
-      TestAsync(wh =>
+      TestAsyncEvent(wh =>
         {
-          req.Async().Execute<RedirectArgs>(method, response =>
+          req.AsyncEvent().Execute<RedirectArgs>(method, response =>
             {
               // Assert
               Assert.AreEqual(0, response.RedirectCount);
@@ -155,16 +155,16 @@ namespace Ramone.Tests
 
 
     [Test, TestCaseSource("AFewValidRedirectCases")]
-    public void RedirectCountCanBeSpecified_Async(int responseCode, string method)
+    public void RedirectCountCanBeSpecified_AsyncEvent(int responseCode, string method)
     {
       // Arrange
       Session.SetAllowedRedirects(responseCode, 2);
       Request req = Session.Bind(RedirectTemplate, new { code = responseCode, count = 1, v = 0 });
 
       // Act
-      TestAsync(wh =>
+      TestAsyncEvent(wh =>
       {
-        req.Async().Execute<RedirectArgs>(method, response =>
+        req.AsyncEvent().Execute<RedirectArgs>(method, response =>
         {
           // Assert
           Assert.AreEqual(2, response.RedirectCount);
@@ -209,16 +209,16 @@ namespace Ramone.Tests
 
 
     [Test, TestCaseSource("AFewValidRedirectCases")]
-    public void WithRedirectCountSetToZeroItDoesNotFollowRedirects_Async(int responseCode, string method)
+    public void WithRedirectCountSetToZeroItDoesNotFollowRedirects_AsyncEvent(int responseCode, string method)
     {
       // Arrange
       Request req = Session.Bind(RedirectTemplate, new { code = responseCode, count = 1, v = 0 });
       Session.SetAllowedRedirects(responseCode, 0);
 
       // Act
-      TestAsync(wh =>
+      TestAsyncEvent(wh =>
       {
-        req.Async().Execute<RedirectArgs>(method, response =>
+        req.AsyncEvent().Execute<RedirectArgs>(method, response =>
         {
           // Assert
           Assert.AreEqual(0, response.RedirectCount);
@@ -248,7 +248,7 @@ namespace Ramone.Tests
 
 
     [Test, TestCaseSource("AFewValidRedirectCases")]
-    public void WhenFollowingRedirectsItAppliesRequestInterceptors_Async(int responseCode, string method)
+    public void WhenFollowingRedirectsItAppliesRequestInterceptors_AsyncEvent(int responseCode, string method)
     {
       // Arrange
       Request req = Session.Bind(RedirectTemplate, new { code = responseCode, count = 1, v = 0 });
@@ -257,9 +257,9 @@ namespace Ramone.Tests
       InterceptorCount = 0;
 
       // Act
-      TestAsync(wh =>
+      TestAsyncEvent(wh =>
       {
-        req.Async().Execute<RedirectArgs>(method, response =>
+        req.AsyncEvent().Execute<RedirectArgs>(method, response =>
         {
           // Assert
           Assert.AreEqual(5, InterceptorCount);

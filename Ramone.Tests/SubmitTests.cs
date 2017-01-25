@@ -33,12 +33,12 @@ namespace Ramone.Tests
 
 
     [Test]
-    public void CanRememberGetForNextSubmit_generic_async()
+    public void CanRememberGetForNextSubmit_generic_AsyncEvent()
     {
       // Act
-      TestAsync(wh =>
+      TestAsyncEvent(wh =>
         {
-          DossierReq.Method("GET").Async()
+          DossierReq.Method("GET").AsyncEvent()
             .OnError(e => Assert.Fail())
             .OnComplete(() => wh.Set())
             .Submit<Dossier>(r => 
@@ -50,12 +50,12 @@ namespace Ramone.Tests
 
 
     [Test]
-    public void CanRememberGetForNextSubmitWithEmptyHandler_generic_async()
+    public void CanRememberGetForNextSubmitWithEmptyHandler_generic_AsyncEvent()
     {
       // Act
-      TestAsync(wh =>
+      TestAsyncEvent(wh =>
       {
-        DossierReq.Method("GET").Async()
+        DossierReq.Method("GET").AsyncEvent()
           .OnError(e => Assert.Fail())
           .OnComplete(() => wh.Set())
           .Submit<Dossier>();
@@ -64,12 +64,12 @@ namespace Ramone.Tests
 
 
     [Test]
-    public void CanRememberGetForNextSubmitWithEmptyHandler_untyped_async()
+    public void CanRememberGetForNextSubmitWithEmptyHandler_untyped_AsyncEvent()
     {
       // Act
-      TestAsync(wh =>
+      TestAsyncEvent(wh =>
       {
-        DossierReq.Method("GET").Async()
+        DossierReq.Method("GET").AsyncEvent()
           .OnError(e => Assert.Fail())
           .OnComplete(() => wh.Set())
           .Submit();
@@ -103,12 +103,12 @@ namespace Ramone.Tests
 
 
     [Test]
-    public void CanRememberGetForNextSubmit_untyped_async()
+    public void CanRememberGetForNextSubmit_untyped_AsyncEvent()
     {
       // Act
-      TestAsync(wh =>
+      TestAsyncEvent(wh =>
       {
-        DossierReq.Method("GET").Async()
+        DossierReq.Method("GET").AsyncEvent()
           .OnError(e => Assert.Fail())
           .OnComplete(() => wh.Set())
           .Submit(r =>

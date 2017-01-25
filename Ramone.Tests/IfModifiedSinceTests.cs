@@ -55,7 +55,7 @@ namespace Ramone.Tests
 
 
     [Test]
-    public void CanSetIfModifiedDirectly_Async()
+    public void CanSetIfModifiedDirectly_AsyncEvent()
     {
       // Arrange
       DateTime since = new DateTime(2013, 5, 1, 10, 22, 11);
@@ -65,9 +65,9 @@ namespace Ramone.Tests
       request.IfModifiedSince(since);
 
       // Act
-      TestAsync(wh =>
+      TestAsyncEvent(wh =>
       {
-        request.Async()
+        request.AsyncEvent()
           .Get<HeaderList>(r =>
           {
             HeaderList headers = r.Body;
@@ -81,7 +81,7 @@ namespace Ramone.Tests
 
 
     [Test]
-    public void CanSetIfModifiedViaHeader_Async()
+    public void CanSetIfModifiedViaHeader_AsyncEvent()
     {
       // Arrange
       DateTime since = new DateTime(2013, 5, 1, 10, 22, 11);
@@ -91,9 +91,9 @@ namespace Ramone.Tests
       request.Header("If-Modified-Since", since.ToUniversalTime().ToString("r"));
 
       // Act
-      TestAsync(wh =>
+      TestAsyncEvent(wh =>
       {
-        request.Async()
+        request.AsyncEvent()
           .Get<HeaderList>(r =>
           {
             HeaderList headers = r.Body;

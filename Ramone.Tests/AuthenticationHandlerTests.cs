@@ -28,13 +28,13 @@ namespace Ramone.Tests
 
 
     [Test]
-    public void WhenNoAuthorizationCodeIsSendItAsksForAuthorization_Async()
+    public void WhenNoAuthorizationCodeIsSendItAsksForAuthorization_AsyncEvent()
     {
       Response errorResponse = null;
 
-      TestAsync(wh =>
+      TestAsyncEvent(wh =>
       {
-        Session.Request(BasicAuthUrl).Async()
+        Session.Request(BasicAuthUrl).AsyncEvent()
           .OnError(error => errorResponse = error.Response)
           .OnComplete(() => wh.Set())
           .Get<string>(r => 

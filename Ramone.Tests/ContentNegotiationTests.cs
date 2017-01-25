@@ -41,16 +41,16 @@ namespace Ramone.Tests
 
 
     [Test]
-    public void CanGetCatAsHtml_Async()
+    public void CanGetCatAsHtml_AsyncEvent()
     {
       // Arrange
       Request catReq = Session.Bind(CatTemplate, new { name = "Fiona" });
 
       // Act
       bool? ok = null;
-      TestAsync(wh =>
+      TestAsyncEvent(wh =>
       {
-        catReq.Accept("text/html").Async().Get<Cat>(response => 
+        catReq.Accept("text/html").AsyncEvent().Get<Cat>(response => 
         {
           ok = ("<html><body><p>Fiona</p></body></html>" == response.Body.Name);
           wh.Set();

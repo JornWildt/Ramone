@@ -21,14 +21,14 @@ namespace Ramone.Tests
 
 
     [Test]
-    public void WhenAuthorizationCodeIsSendItWorks_Async()
+    public void WhenAuthorizationCodeIsSendItWorks_AsyncEvent()
     {
       Session.RequestInterceptors.Add("WhenAuthorizationCodeIsSendItWorks", new BasicAuthorizationInterceptor("John", "magic"));
 
-      TestAsync(wh =>
+      TestAsyncEvent(wh =>
       {
         // Act
-        Session.Request(BasicAuthUrl).Async().Get<string>(response =>
+        Session.Request(BasicAuthUrl).AsyncEvent().Get<string>(response =>
         {
           Assert.IsNotNull(response.Body);
           wh.Set();
@@ -57,13 +57,13 @@ namespace Ramone.Tests
 
 
     [Test]
-    public void CanAddAuthorizerToSession_Async()
+    public void CanAddAuthorizerToSession_AsyncEvent()
     {
       Session.BasicAuthentication("John", "magic");
-      TestAsync(wh =>
+      TestAsyncEvent(wh =>
       {
         // Act
-        Session.Request(BasicAuthUrl).Async().Get<string>(response =>
+        Session.Request(BasicAuthUrl).AsyncEvent().Get<string>(response =>
         {
           Assert.IsNotNull(response.Body);
           wh.Set();
@@ -119,12 +119,12 @@ namespace Ramone.Tests
 
 
     [Test]
-    public void CanAddAuthorizerToRequest_Async()
+    public void CanAddAuthorizerToRequest_AsyncEvent()
     {
-      TestAsync(wh =>
+      TestAsyncEvent(wh =>
       {
         // Act
-        Session.Request(BasicAuthUrl).BasicAuthentication("John", "magic").Async().Get<string>(response =>
+        Session.Request(BasicAuthUrl).BasicAuthentication("John", "magic").AsyncEvent().Get<string>(response =>
         {
           Assert.IsNotNull(response.Body);
           wh.Set();
@@ -160,14 +160,14 @@ namespace Ramone.Tests
 
 
     [Test]
-    public void WhenAskedForAuthorizationAndAnsweredItGetsAccess_Async()
+    public void WhenAskedForAuthorizationAndAnsweredItGetsAccess_AsyncEvent()
     {
       // Throws first time
       bool? failedAsExpected = null;
-      TestAsync(wh =>
+      TestAsyncEvent(wh =>
       {
         // Act
-        Session.Request(BasicAuthUrl).Async().OnError(error =>
+        Session.Request(BasicAuthUrl).AsyncEvent().OnError(error =>
         {
           failedAsExpected = (HttpStatusCode.Unauthorized == error.Response.StatusCode);
           wh.Set();
@@ -184,10 +184,10 @@ namespace Ramone.Tests
 
       bool succeededAsExpected = false;
 
-      TestAsync(wh =>
+      TestAsyncEvent(wh =>
       {
         // Act
-        Session.Request(BasicAuthUrl).Async().Get<string>(response => 
+        Session.Request(BasicAuthUrl).AsyncEvent().Get<string>(response => 
         {
           succeededAsExpected = true;
           wh.Set();
