@@ -1,7 +1,7 @@
 ﻿using System.Collections.Specialized;
 using System.IO;
 using System.Net;
-
+using System.Threading.Tasks;
 
 namespace Ramone
 {
@@ -27,5 +27,11 @@ namespace Ramone
   public interface IMediaTypeWriter : IMediaTypeCodec
   {
     void WriteTo(WriterContext context);
+  }
+
+
+  public interface IMediaTypeWriterAsync : IMediaTypeCodec
+  {
+    Task WriteToAsync(WriterContext context);
   }
 }

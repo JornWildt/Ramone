@@ -91,6 +91,7 @@
     <Compile Include="AdditionalMethodsTests.cs" />
     <Compile Include="AnonymousSessionTests.cs" />
     <Compile Include="AsyncEventTests.cs" />
+    <Compile Include="AsyncTests.cs" />
     <Compile Include="BindingTests.cs" />
     <Compile Include="Blog\BlogTestHelper.cs" />
     <Compile Include="Blog\Codecs\Html\AuthorCodec_Html.cs" />
@@ -109,6 +110,7 @@
     <Compile Include="CachePolicyTests.cs" />
     <Compile Include="FallbackMediaTypeTests.cs" />
     <Compile Include="GetTests_Async.cs" />
+    <Compile Include="GetTests_AsyncEvent.cs" />
     <Compile Include="HyperMedia\FollowTests.cs" />
     <Compile Include="IfMatchTests.cs" />
     <Compile Include="IfModifiedSinceTests.cs" />
@@ -161,6 +163,8 @@
     <Compile Include="MediaTypeTests.cs" />
     <Compile Include="OAuth1\OAuth1HelperTests.cs" />
     <Compile Include="PostTests.cs" />
+    <Compile Include="PostTests_Async.cs" />
+    <Compile Include="PostTest_AsyncEvent.cs" />
     <Compile Include="PutTests.cs" />
     <Compile Include="CreationTests.cs" />
     <Compile Include="GetTests.cs" />

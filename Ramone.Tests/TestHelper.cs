@@ -210,9 +210,28 @@ namespace Ramone.Tests
     public static void AssertThrows<ExT>(Action blockThatThrowsException,
                                          Func<ExT, bool> exceptionVerifier) where ExT : System.Exception
     {
+      // Safe to do .Wait() here as we know it is a *sync* operation
+      AssertThrows<ExT>(null, blockThatThrowsException, exceptionVerifier).Wait();
+    }
+
+
+    public static async Task AssertThrows<ExT>(Func<Task> blockThatThrowsException,
+                                               Func<ExT, bool> exceptionVerifier) where ExT : System.Exception
+    {
+      await AssertThrows<ExT>(blockThatThrowsException, null, exceptionVerifier);
+    }
+
+
+    private static async Task AssertThrows<ExT>(Func<Task> asyncBlockThatThrowsException,
+                                                Action blockThatThrowsException,
+                                                Func<ExT, bool> exceptionVerifier) where ExT : System.Exception
+    {
       try
       {
-        blockThatThrowsException();
+        if (asyncBlockThatThrowsException != null)
+          await asyncBlockThatThrowsException();
+        else
+          blockThatThrowsException();
       }
       catch (System.Exception ex)
       {
@@ -253,16 +272,34 @@ namespace Ramone.Tests
     }
 
 
-    protected async Task TestAsync(Func<AutoResetEvent,Task> asyncBlock)
+    protected async Task VerifyIsAsync<T>(Func<Request,Task<Response<T>>> asyncBlock, Action<Response<T>> verifier)
+      where T : class
     {
-      AutoResetEvent handle = new AutoResetEvent(false);
+      // Arrange
+      Request request = Session.Bind(Constants.SlowPath);
 
-      await asyncBlock(handle);
+      // The (initiation of) the operation itself takes zero time - but is expected to work async in the background
+      DateTime t1 = DateTime.Now;
+      Task<Response<T>> task1 = asyncBlock(request);
+      TimeSpan getTime = DateTime.Now - t1;
 
-      // Wait for request to complete
-      bool signalReceived = handle.WaitOne(TimeSpan.FromSeconds(10));
+      // Wait for the request to finish on the server - the Delay(4) simulates work done in the mean time
+      await Task.Delay(TimeSpan.FromSeconds(4));
 
-      Assert.IsTrue(signalReceived, "Timeout in async handler");
+      // Now await response - this should not take any time at this point as the request should have finished already
+      DateTime t2 = DateTime.Now;
+      using (var response = await task1)
+      {
+        TimeSpan responseTime = DateTime.Now - t2;
+        TimeSpan totalTime = DateTime.Now - t1;
+
+        Assert.Less(getTime.TotalMilliseconds, 1000);
+        Assert.Less(responseTime.TotalMilliseconds, 1000);
+        Assert.GreaterOrEqual(totalTime.TotalMilliseconds, 4000);
+
+        if (verifier != null)
+          verifier(response);
+      }
     }
 
 
