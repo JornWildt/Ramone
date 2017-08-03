@@ -207,6 +207,29 @@ namespace Ramone.Tests
     }
 
 
+    public static async Task AssertThrowsAsync<Exception>(Func<Task> blockThatThrowsException) 
+      where Exception : System.Exception
+    {
+      try
+      {
+        await blockThatThrowsException();
+      }
+      catch (System.Exception ex)
+      {
+        if (ex.GetType() == typeof(Exception))
+        {
+          Console.WriteLine("Got expected exception with message: {0}", ex.Message);
+          return;
+        }
+
+        Console.WriteLine(ex.ToString());
+        Assert.Fail(String.Format("Expected {0}, got {1} saying: {2}", typeof(Exception), ex.GetType(), ex.Message));
+      }
+
+      Assert.Fail(String.Format("Expected {0}, but no exception was thrown", typeof(Exception)));
+    }
+
+
     public static void AssertThrows<ExT>(Action blockThatThrowsException,
                                          Func<ExT, bool> exceptionVerifier) where ExT : System.Exception
     {

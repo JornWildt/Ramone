@@ -91,5 +91,73 @@ namespace Ramone.Tests
         });
       });
     }
+
+
+    #region GET with empty/null callbacks
+
+    [Test]
+    public void CanGetAsyncEventWithoutHandler()
+    {
+      TestAsyncEvent(wh =>
+      {
+        // Act
+        DossierReq.AsyncEvent()
+          .OnError(error => Assert.Fail())
+          .OnComplete(() =>
+          {
+            wh.Set();
+          }).Get();
+      });
+    }
+
+
+    [Test]
+    public void CanGetAsyncEventWithoutHandler_Typed()
+    {
+      TestAsyncEvent(wh =>
+      {
+        // Act
+        DossierReq.AsyncEvent()
+          .OnError(error => Assert.Fail())
+          .OnComplete(() =>
+          {
+            wh.Set();
+          }).Get<string>();
+      });
+    }
+
+
+    [Test]
+    public void CanGetAsyncEventWithNullHandler()
+    {
+      TestAsyncEvent(wh =>
+      {
+        // Act
+        DossierReq.AsyncEvent()
+          .OnError(error => Assert.Fail())
+          .OnComplete(() =>
+          {
+            wh.Set();
+          }).Get(null);
+      });
+    }
+
+
+    [Test]
+    public void CanGetAsyncEventWithNullHandler_Typed()
+    {
+      TestAsyncEvent(wh =>
+      {
+        // Act
+        DossierReq.AsyncEvent()
+          .OnError(error => Assert.Fail())
+          .OnComplete(() =>
+          {
+            wh.Set();
+          }).Get<string>(null);
+      });
+    }
+
+    #endregion
   }
 }

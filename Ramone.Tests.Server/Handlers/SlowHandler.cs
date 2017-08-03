@@ -12,6 +12,13 @@ namespace Ramone.Tests.Server.Handlers
     }
 
 
+    public object Delete(int sec = 4)
+    {
+      System.Threading.Thread.Sleep(sec * 1000);
+      return new SlowResource { Time = sec };
+    }
+
+
     public object Post()
     {
       System.Threading.Thread.Sleep(4000);
@@ -20,6 +27,20 @@ namespace Ramone.Tests.Server.Handlers
 
 
     public object Post(SlowResource r)
+    {
+      System.Threading.Thread.Sleep(4000);
+      return new SlowResource { Time = r.Time };
+    }
+
+
+    public object Put()
+    {
+      System.Threading.Thread.Sleep(4000);
+      return new SlowResource { Time = 4 };
+    }
+
+
+    public object Put(SlowResource r)
     {
       System.Threading.Thread.Sleep(4000);
       return new SlowResource { Time = r.Time };

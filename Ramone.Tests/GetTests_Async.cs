@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using NUnit.Framework;
 using Ramone.Tests.Common;
@@ -46,6 +47,56 @@ namespace Ramone.Tests
         Assert.Less(responseTime.TotalMilliseconds, 1000);
         Assert.GreaterOrEqual(totalTime.TotalMilliseconds, 4000);
       }
+    }
+
+
+
+
+    [Test]
+    public async Task CanGetDossier_async()
+    {
+      // Arrange
+      Request dossierReq = Session.Bind(DossierTemplate, new { id = 8 });
+
+      // Act
+      using (var dossier = await dossierReq.Async().Get<Dossier>())
+      {
+        // Assert
+        Assert.AreEqual(8, dossier.Body.Id);
+        Assert.AreEqual("Dossier no. 8", dossier.Body.Title);
+        Assert.IsNotNull(dossier.Body.Links);
+      }
+    }
+
+
+    [Test]
+    public async Task CanGetDossierWithDictionaryParams_async()
+    {
+      // Arrange
+      Dictionary<string, string> p = new Dictionary<string, string>();
+      p["id"] = "8";
+      Request dossierReq = Session.Bind(DossierTemplate, p);
+
+      // Act
+      using (var dossier = await dossierReq.Async().Get<Dossier>())
+      {
+        // Assert
+        Assert.AreEqual(8, dossier.Body.Id);
+        Assert.AreEqual("Dossier no. 8", dossier.Body.Title);
+        Assert.IsNotNull(dossier.Body.Links);
+      }
+    }
+
+
+    [Test]
+    public async Task WhenSpecifyingCharsetForGetItThrows()
+    {
+      // Arrange
+      Request dossierReq = Session.Bind(DossierTemplate, new { id = 8 });
+
+      // Act + Assert
+      await AssertThrowsAsync<InvalidOperationException>(async () => await dossierReq.Charset("utf-8").Async().Get());
+      await AssertThrowsAsync<InvalidOperationException>(async () => await dossierReq.Charset("utf-8").Async().Get<Dossier>());
     }
   }
 }

@@ -108,6 +108,8 @@
     <Compile Include="Blog\Resources\Post.cs" />
     <Compile Include="Blog\TypedHtmlTests.cs" />
     <Compile Include="CachePolicyTests.cs" />
+    <Compile Include="DeleteTests_Async.cs" />
+    <Compile Include="DeleteTests_AsyncEvent.cs" />
     <Compile Include="FallbackMediaTypeTests.cs" />
     <Compile Include="GetTests_Async.cs" />
     <Compile Include="GetTests_AsyncEvent.cs" />
@@ -164,11 +166,13 @@
     <Compile Include="OAuth1\OAuth1HelperTests.cs" />
     <Compile Include="PostTests.cs" />
     <Compile Include="PostTests_Async.cs" />
-    <Compile Include="PostTest_AsyncEvent.cs" />
+    <Compile Include="PostTests_AsyncEvent.cs" />
     <Compile Include="PutTests.cs" />
     <Compile Include="CreationTests.cs" />
     <Compile Include="GetTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="PutTests_Async.cs" />
+    <Compile Include="PutTests_AsyncEvent.cs" />
     <Compile Include="RedirectTests.cs" />
     <Compile Include="RequestInterceptorSetTests.cs" />
     <Compile Include="RequestInterceptorTests.cs" />

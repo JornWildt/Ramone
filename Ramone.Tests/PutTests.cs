@@ -1,7 +1,5 @@
-﻿using System.ServiceModel.Syndication;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using Ramone.Tests.Common.CMS;
-using System.Net;
 
 
 namespace Ramone.Tests
@@ -52,24 +50,6 @@ namespace Ramone.Tests
 
 
     [Test]
-    public void CanPutAndGetResult_AsyncEvent()
-    {
-      TestAsyncEvent(wh =>
-      {
-        // Act
-        DossierReq.AsyncEvent().Put<Dossier>(MyDossier, response =>
-        {
-          Dossier newDossier = response.Body;
-
-          // Assert
-          Assert.IsNotNull(newDossier);
-          wh.Set();
-        });
-      });
-    }
-
-
-    [Test]
     public void CanPutAndGetResultWithAccept()
     {
       // Act
@@ -109,22 +89,6 @@ namespace Ramone.Tests
 
 
     [Test]
-    public void CanPutEmptyBody_Typed_AsyncEvent()
-    {
-      TestAsyncEvent(wh =>
-      {
-        // Act
-        DossierReq.ContentType("application/octet-stream").AsyncEvent()
-          .OnError(error => Assert.Fail())
-          .Put<string>(r =>
-          {
-            wh.Set();
-          });
-      });
-    }
-
-
-    [Test]
     public void CanPutEmptyBody_Untyped()
     {
       // Arrange
@@ -137,154 +101,5 @@ namespace Ramone.Tests
         Assert.IsNull(response.Body);
       }
     }
-
-
-    [Test]
-    public void CanPutEmptyBody_Untyped_AsyncEvent()
-    {
-      TestAsyncEvent(wh =>
-      {
-        // Act
-        DossierReq.ContentType("application/octet-stream").AsyncEvent()
-          .OnError(error => Assert.Fail())
-          .Put<string>(r =>
-          {
-            wh.Set();
-          });
-      });
-    }
-
-
-    #region Tests with empty/null callback handlers
-
-    [Test]
-    public void CanPutAsyncEventWithoutHandler()
-    {
-      TestAsyncEvent(wh =>
-      {
-        // Act
-        DossierReq.AsyncEvent()
-          .OnError(error => Assert.Fail())
-          .OnComplete(() =>
-          {
-            wh.Set();
-          }).Put(MyDossier);
-      });
-    }
-
-
-    [Test]
-    public void CanPutEmptyAsyncEventWithoutHandler()
-    {
-      TestAsyncEvent(wh =>
-      {
-        // Act
-        DossierReq.AsyncEvent()
-          .OnError(error => Assert.Fail())
-          .OnComplete(() =>
-          {
-            wh.Set();
-          }).Put();
-      });
-    }
-
-
-    [Test]
-    public void CanPutAsyncEventWithoutHandler_Typed()
-    {
-      TestAsyncEvent(wh =>
-      {
-        // Act
-        DossierReq.AsyncEvent()
-          .OnError(error => Assert.Fail())
-          .OnComplete(() =>
-          {
-            wh.Set();
-          }).Put<Dossier>(MyDossier);
-      });
-    }
-
-
-    [Test]
-    public void CanPutEmptyAsyncEventWithoutHandler_Typed()
-    {
-      TestAsyncEvent(wh =>
-      {
-        // Act
-        DossierReq.AsyncEvent()
-          .OnError(error => Assert.Fail())
-          .OnComplete(() =>
-          {
-            wh.Set();
-          }).Put<Dossier>();
-      });
-    }
-
-
-    [Test]
-    public void CanPutAsyncEventWithNullHandler()
-    {
-      TestAsyncEvent(wh =>
-      {
-        // Act
-        DossierReq.AsyncEvent()
-          .OnError(error => Assert.Fail())
-          .OnComplete(() =>
-          {
-            wh.Set();
-          }).Put(MyDossier, null);
-      });
-    }
-
-
-    [Test]
-    public void CanPutEmptyAsyncEventWithNullHandler()
-    {
-      TestAsyncEvent(wh =>
-      {
-        // Act
-        DossierReq.AsyncEvent()
-          .OnError(error => Assert.Fail())
-          .OnComplete(() =>
-          {
-            wh.Set();
-          }).Put(null);
-      });
-    }
-
-
-    [Test]
-    public void CanPutAsyncEventWithNullHandler_Typed()
-    {
-      TestAsyncEvent(wh =>
-      {
-        // Act
-        DossierReq.AsyncEvent()
-          .OnError(error => Assert.Fail())
-          .OnComplete(() =>
-          {
-            wh.Set();
-          }).Put<Dossier>(MyDossier, null);
-      });
-    }
-
-
-    [Test]
-    public void CanPutEmptyAsyncEventWithNullHandler_Typed()
-    {
-      TestAsyncEvent(wh =>
-      {
-        // Act
-        DossierReq.AsyncEvent()
-          .OnError(error => Assert.Fail())
-          .OnComplete(() =>
-          {
-            wh.Set();
-          }).Put<Dossier>(null);
-      });
-    }
-
-
-    #endregion
   }
 }

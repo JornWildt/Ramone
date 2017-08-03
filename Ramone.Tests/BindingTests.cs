@@ -270,5 +270,69 @@ namespace Ramone.Tests
       Assert.IsNotNull(req);
       Assert.AreEqual(new Uri("http://dr.dk"), req.Url);
     }
+
+
+    /*
+    This us simply not possible with the .NET Uri + UriTemplate classes as the JSON will get unescaped at some
+    point and then interpreted as template variables.
+
+    [Test]
+    public void CanBindWithJSONInUrl()
+    {
+      // Arrange (URL with JSON {"a":10}
+      string url = "http://example.com/?filter=%7b%22a%22%3a10%7d";
+
+      // Act
+      Request r = Session.Bind(url);
+
+      // Assert
+      Assert.IsNotNull(r);
+      Assert.AreEqual(url, r.Url.AbsoluteUri);
+    }
+
+
+    [Test]
+    public void CanBindWithJSONAndTemplateVariableInUrl()
+    {
+      // Arrange (URL with JSON {"a":10}
+      string url = "http://example.com?filter=%7B%22a%22%3A10%7D&x={x}";
+
+      // Act
+      Request r = Session.Bind(url, new { x = 10 });
+
+      // Assert
+      Assert.IsNotNull(r);
+      Assert.AreEqual("http://example.com?filter=%7B%22a%22%3A10%7D&x=10", r.Url);
+    }
+    */
+
+    [Test]
+    public void CanBindJSONIntoTemplateVariable1()
+    {
+      // Arrange
+      string url = "http://example.com";
+
+      // Act
+      Request r = Session.Bind(url, new { filter = "{\"a\":10}" });
+
+      // Assert
+      Assert.IsNotNull(r);
+      Assert.AreEqual("http://example.com/?filter={\"a\":10}", r.Url.ToString());
+    }
+
+
+    [Test]
+    public void CanBindJSONIntoTemplateVariable2()
+    {
+      // Arrange
+      string url = "http://example.com?filter={filter}";
+
+      // Act
+      Request r = Session.Bind(url, new { filter = "{\"a\":10}" });
+
+      // Assert
+      Assert.IsNotNull(r);
+      Assert.AreEqual("http://example.com/?filter={\"a\":10}", r.Url.ToString());
+    }
   }
 }

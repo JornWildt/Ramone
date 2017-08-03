@@ -61,6 +61,51 @@ namespace Ramone
     #endregion
 
 
+    #region PUT
+
+    public async Task<Response> Put()
+    {
+      return await DoRequestAsync("PUT");
+    }
+
+
+    public async Task<Response<TResponse>> Put<TResponse>() where TResponse : class
+    {
+      return await DoRequestAsync<TResponse>("PUT");
+    }
+
+    public async Task<Response> Put(object body)
+    {
+      SetBody(body);
+      return await DoRequestAsync("PUT");
+    }
+
+
+    public async Task<Response<TResponse>> Put<TResponse>(object body) where TResponse : class
+    {
+      SetBody(body);
+      return await DoRequestAsync<TResponse>("PUT");
+    }
+
+    #endregion
+
+
+    #region DELETE
+
+    public async Task<Response> Delete()
+    {
+      return await DoRequestAsync("DELETE");
+    }
+
+
+    public async Task<Response<TResponse>> Delete<TResponse>() where TResponse : class
+    {
+      return await DoRequestAsync<TResponse>("DELETE");
+    }
+
+    #endregion
+
+
 
     #region Generic request
 
