@@ -111,6 +111,7 @@
     <Compile Include="DeleteTests_Async.cs" />
     <Compile Include="DeleteTests_AsyncEvent.cs" />
     <Compile Include="FallbackMediaTypeTests.cs" />
+    <Compile Include="GenericMethodTests_Async.cs" />
     <Compile Include="GetTests_Async.cs" />
     <Compile Include="GetTests_AsyncEvent.cs" />
     <Compile Include="HyperMedia\FollowTests.cs" />

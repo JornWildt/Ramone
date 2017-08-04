@@ -529,5 +529,15 @@ namespace Ramone
     }
 
     #endregion
+
+
+    #region Async handling
+
+    public new RamoneAsyncRequest<TResponse> Async()
+    {
+      return new RamoneAsyncRequest<TResponse>(this);
+    }
+
+    #endregion
   }
 }

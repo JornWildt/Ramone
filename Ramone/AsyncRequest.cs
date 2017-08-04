@@ -106,6 +106,35 @@ namespace Ramone
     #endregion
 
 
+    #region EXECUTE
+
+    public async Task<Response> Execute(string method)
+    {
+      return await DoRequestAsync(method);
+    }
+
+
+    public async Task<Response<TResponse>> Execute<TResponse>(string method) where TResponse : class
+    {
+      return await DoRequestAsync<TResponse>(method);
+    }
+
+    public async Task<Response> Execute(string method, object body)
+    {
+      SetBody(body);
+      return await DoRequestAsync(method);
+    }
+
+
+    public async Task<Response<TResponse>> Execute<TResponse>(string method, object body) where TResponse : class
+    {
+      SetBody(body);
+      return await DoRequestAsync<TResponse>(method);
+    }
+
+    #endregion
+
+
 
     #region Generic request
 
@@ -143,6 +172,71 @@ namespace Ramone
       HttpWebResponse response = ((HttpWebResponse)await request.GetResponseAsync());
       Response r = HandleResponse(response, method, includeBody, requestModifier, retryLevel);
       return r;
+    }
+
+    #endregion
+  }
+
+
+  public class RamoneAsyncRequest<TResponse> : AsyncRequest
+    where TResponse : class
+  {
+    public RamoneAsyncRequest(Request request)
+      : base(request)
+    {
+    }
+
+
+    #region Standard methods
+
+    public new async Task<Response<TResponse>> Get()
+    {
+      return await Get<TResponse>();
+    }
+
+
+    public new async Task<Response<TResponse>> Post(object body)
+    {
+      return await Post<TResponse>(body);
+    }
+
+
+    public new async Task<Response<TResponse>> Post()
+    {
+      return await Post<TResponse>();
+    }
+
+
+    public new async Task<Response<TResponse>> Put(object body)
+    {
+      return await Put<TResponse>(body);
+    }
+
+
+    public new async Task<Response<TResponse>> Put()
+    {
+      return await Put<TResponse>();
+    }
+
+    public new async Task<Response<TResponse>> Delete()
+    {
+      return await Delete<TResponse>();
+    }
+
+    #endregion
+
+
+    #region Generic methods
+
+    public new async Task<Response<TResponse>> Execute(string method)
+    {
+      return await Execute<TResponse>(method);
+    }
+
+
+    public new async Task<Response<TResponse>> Execute(string method, object body)
+    {
+      return await Execute<TResponse>(method, body);
     }
 
     #endregion
