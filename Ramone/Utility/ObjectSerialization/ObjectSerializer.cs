@@ -123,12 +123,17 @@ namespace Ramone.Utility.ObjectSerialization
     {
       foreach (PropertyInfo p in dataType.GetProperties())
       {
-        string propertyName = prefix != string.Empty 
-                              ? string.Format(Settings.PropertyFormat, prefix, p.Name)
-                              : p.Name;
-        object propertyValue = (data != null ? p.GetValue(data, null) : null);
+        // Ignore indexed properties
+        var parameters = p.GetIndexParameters();
+        if (parameters.Length == 0)
+        {
+          string propertyName = prefix != string.Empty
+                                ? string.Format(Settings.PropertyFormat, prefix, p.Name)
+                                : p.Name;
+          object propertyValue = (data != null ? p.GetValue(data, null) : null);
 
-        Serialize(propertyValue, p.PropertyType, propertyName);
+          Serialize(propertyValue, p.PropertyType, propertyName);
+        }
       }
     }
 

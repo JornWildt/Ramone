@@ -371,6 +371,38 @@ namespace Ramone.Tests.Utility
     }
 
 
+    class ClassWithIndexer
+    {
+      public string A { get; set; }
+
+      public string this[int a]
+      {
+        get
+        {
+          return a.ToString();
+        }
+        set
+        {
+          // Do nothing
+        }
+      }
+    }
+
+
+    [Test]
+    public void WhenSerializingItIgnoresIndexer()
+    {
+      // Arrange
+      object o = new ClassWithIndexer { A = "XYZ" };
+
+      // Act
+      string result = Serialize(o);
+
+      // Assert
+      Assert.AreEqual("|A=XYZ", result);
+    }
+
+
     class ClassWithLocaleDependentValues
     {
       public decimal Dec { get; set; }
