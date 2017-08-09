@@ -156,5 +156,16 @@ namespace Ramone.Tests
       // Assert
       Assert.IsNull(m);
     }
+
+
+    [Test]
+    public void CanCompareEmptyStringWithMediaType()
+    {
+      string ct = "";
+      Assert.IsFalse(ct == MediaType.ApplicationXml);
+      Assert.IsFalse(MediaType.ApplicationXml == ct);
+      Assert.IsTrue(ct != MediaType.ApplicationXml);
+      Assert.IsTrue(MediaType.ApplicationXml != ct);
+    }
   }
 }

@@ -46,13 +46,21 @@ namespace Ramone
 
 
     /// <summary>
-    /// Create new instance of MediaType - returns null if input is null.
+    /// Create new instance of MediaType - returns null if input is null or invalid media type string.
     /// </summary>
     /// <param name="mediaType"></param>
     /// <returns></returns>
     public static MediaType Create(string mediaType)
     {
-      return mediaType != null ? new MediaType(mediaType) : null;
+      if (mediaType == null)
+        return null;
+
+      string error;
+      MediaType type;
+      if (!MediaType.TryParse(mediaType, out type, out error))
+        return null;
+
+      return type;
     }
 
 
@@ -158,7 +166,7 @@ namespace Ramone
       if (t == null)
         return false;
 
-      return       (IsTopLevelWildcard || t.IsTopLevelWildcard || TopLevelType.Equals(t.TopLevelType, StringComparison.OrdinalIgnoreCase))
+      return (IsTopLevelWildcard || t.IsTopLevelWildcard || TopLevelType.Equals(t.TopLevelType, StringComparison.OrdinalIgnoreCase))
                 && (IsSubTypeWildcard || t.IsSubTypeWildcard || SubType.Equals(t.SubType, StringComparison.OrdinalIgnoreCase));
     }
 
@@ -186,7 +194,7 @@ namespace Ramone
     }
 
 
-    public static explicit operator string(MediaType mediaType)
+    public static explicit operator string (MediaType mediaType)
     {
       return mediaType != null ? mediaType.FullType : null;
     }
