@@ -31,8 +31,10 @@ namespace Ramone.Utility.ObjectSerialization
       if (data != null && data.GetType() != DataType)
         throw new ArgumentException(string.Format("Cannot serialize {0} - expected {1}.", data.GetType(), DataType), "data");
 
+      Stack<object> visited = new Stack<object>();
+
       visitor.Begin();
-      Serialize(data, DataType, "");
+      Serialize(data, DataType, "", visited);
       visitor.End();
     }
 
@@ -61,8 +63,17 @@ namespace Ramone.Utility.ObjectSerialization
 
     #region Serialization internals
 
-    protected void Serialize(object data, Type dataType, string prefix)
+    protected void Serialize(object data, Type dataType, string prefix, Stack<object> visited)
     {
+      bool didPush = false;
+      if (data != null && (dataType != null && dataType.IsClass || dataType == null && data.GetType().IsClass))
+      {
+        if (visited.Contains(data))
+          throw new InvalidOperationException($"Circular object reference detected while serializing data. This is not supported. Data type is '{dataType}'");
+        visited.Push(data);
+        didPush = true;
+      }
+
       IObjectSerializerFormater formater = Settings.Formaters.GetFormater(dataType);
       if (formater != null)
       {
@@ -75,17 +86,22 @@ namespace Ramone.Utility.ObjectSerialization
       else if (data == null && !Settings.IncludeNullValues)
         return;
       else if (typeof(IDictionary).IsAssignableFrom(dataType))
-        SerializeDictionary((IDictionary)data, dataType, prefix);
+        SerializeDictionary((IDictionary)data, dataType, prefix, visited);
       else if (typeof(NameValueCollection).IsAssignableFrom(dataType))
-        SerializeNameValueCollection((NameValueCollection)data, dataType, prefix);
+        SerializeNameValueCollection((NameValueCollection)data, dataType, prefix, visited);
       else if (typeof(IList).IsAssignableFrom(dataType))
-        SerializeList((IList)data, dataType, prefix);
+        SerializeList((IList)data, dataType, prefix, visited);
       else if (typeof(IFile).IsAssignableFrom(dataType))
         SerializeFile((IFile)data, dataType, prefix);
       else if (IsSimpleType(dataType))
         SerializeSimpleValue(data, dataType, prefix);
       else
-        SerializeProperties(data, dataType, prefix);
+        SerializeProperties(data, dataType, prefix, visited);
+
+      if (didPush)
+      {
+        visited.Pop();
+      }
     }
 
 
@@ -119,7 +135,7 @@ namespace Ramone.Utility.ObjectSerialization
     }
 
 
-    protected void SerializeProperties(object data, Type dataType, string prefix)
+    protected void SerializeProperties(object data, Type dataType, string prefix, Stack<object> visited)
     {
       foreach (PropertyInfo p in dataType.GetProperties())
       {
@@ -132,25 +148,25 @@ namespace Ramone.Utility.ObjectSerialization
                                 : p.Name;
           object propertyValue = (data != null ? p.GetValue(data, null) : null);
 
-          Serialize(propertyValue, p.PropertyType, propertyName);
+          Serialize(propertyValue, p.PropertyType, propertyName, visited);
         }
       }
     }
 
 
-    protected void SerializeDictionary(IDictionary dict, Type dataType, string prefix)
+    protected void SerializeDictionary(IDictionary dict, Type dataType, string prefix, Stack<object> visited)
     {
       foreach (DictionaryEntry entry in dict)
       {
         string name = prefix != string.Empty
                       ? string.Format(Settings.DictionaryFormat, prefix, entry.Key)
                       : entry.Key.ToString();
-        Serialize(entry.Value, entry.Value != null ? entry.Value.GetType() : null, name);
+        Serialize(entry.Value, entry.Value != null ? entry.Value.GetType() : null, name, visited);
       }
     }
 
 
-    protected void SerializeNameValueCollection(NameValueCollection collection, Type dataType, string prefix)
+    protected void SerializeNameValueCollection(NameValueCollection collection, Type dataType, string prefix, Stack<object> visited)
     {
       foreach (string name in collection)
       {
@@ -158,17 +174,17 @@ namespace Ramone.Utility.ObjectSerialization
                               ? string.Format(Settings.DictionaryFormat, prefix, name)
                               : name;
         string value = collection[name];
-        Serialize(value, value != null ? value.GetType() : null, prefixedName);
+        Serialize(value, value != null ? value.GetType() : null, prefixedName, visited);
       }
     }
 
 
-    protected void SerializeList(IList collection, Type dataType, string prefix)
+    protected void SerializeList(IList collection, Type dataType, string prefix, Stack<object> visited)
     {
       for (int i=0; i<collection.Count; ++i)
       {
         string name = string.Format(Settings.ArrayFormat, prefix, i);
-        Serialize(collection[i], collection[i] != null ? collection[i].GetType() : null, name);
+        Serialize(collection[i], collection[i] != null ? collection[i].GetType() : null, name, visited);
       }
     }
 

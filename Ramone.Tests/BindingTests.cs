@@ -334,5 +334,19 @@ namespace Ramone.Tests
       Assert.IsNotNull(r);
       Assert.AreEqual("http://example.com/?filter={\"a\":10}", r.Url.ToString());
     }
+
+
+    [Test]
+    public void DoNotAllowUsingSessionObjectAsParameterWhenBindingUrl()
+    {
+      // Arrange
+      Uri url = new Uri("http://example.org");
+
+      // Act + Assert
+      AssertThrows<ArgumentException>(() => url.Bind(Session),
+        ex => ex.Message.Contains("probably should have written"));
+
+      // The point here is that the right way to bind with session is Session.Bind(url)!
+    }
   }
 }

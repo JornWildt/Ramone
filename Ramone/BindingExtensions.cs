@@ -167,6 +167,9 @@ namespace Ramone
     {
       Condition.Requires(url, "url").IsNotNull();
 
+      if (parameters is ISession)
+        throw new ArgumentException("Do not use session as Bind() parameter. You probably should have written 'Session.Bind(url)'.", "parameters");
+
       Uri baseUri = new Uri(url.GetComponents(UriComponents.SchemeAndServer, UriFormat.Unescaped));
       UriTemplate template = new UriTemplate(url.GetComponents(UriComponents.PathAndQuery, UriFormat.Unescaped));
 

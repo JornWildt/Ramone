@@ -403,6 +403,53 @@ namespace Ramone.Tests.Utility
     }
 
 
+    class Graph
+    {
+      public string S { get; set; }
+      public Graph Other1 { get; set; }
+      public Graph Other2 { get; set; }
+    }
+
+    [Test]
+    public void WhenDetectingCircularReferencesItThrows()
+    {
+      // Arrange circular graph
+      Graph a = new Graph { S = "a" };
+      Graph b = new Graph { S = "b" };
+
+      a.Other1 = b;
+      b.Other1 = a;
+
+      // Act + Assert
+      AssertThrows<InvalidOperationException>(
+        () => Serialize(a),
+        ex => ex.Message.Contains("Circular object reference detected"));
+    }
+
+    [Test]
+    public void ItCanSerializeGraphsWithoutCircularReferences()
+    {
+      // Arrange non-circular graph
+      Graph a = new Graph { S = "a" };
+      Graph b = new Graph { S = "b" };
+      Graph c = new Graph { S = "c" };
+      Graph d = new Graph { S = "d" };
+
+      a.Other1 = b;
+      a.Other2 = c;
+      b.Other1 = null;
+      b.Other2 = d;
+      c.Other1 = null;
+      c.Other2 = d;
+
+      // Act
+      string result = Serialize(a);
+
+      // Assert
+      Assert.AreEqual("|S=a|Other1.S=b|Other1.Other2.S=d|Other2.S=c|Other2.Other2.S=d", result);
+    }
+
+
     class ClassWithLocaleDependentValues
     {
       public decimal Dec { get; set; }
