@@ -125,7 +125,7 @@
     <Compile Include="HyperMedia\IKeyValueForm.cs" />
     <Compile Include="MediaTypes\Html\HtmlAnchorExtensions.cs" />
     <Compile Include="MediaTypes\Html\HtmlLinkExtensions.cs" />
-    <Compile Include="HyperMedia\HyperMediaExtensions.cs" />
+    <Compile Include="HyperMediaExtensions.cs" />
     <Compile Include="HyperMedia\ILink.cs" />
     <Compile Include="MediaTypes\Atom\AtomLink.cs" />
     <Compile Include="MediaTypes\Atom\AtomLinkList.cs" />

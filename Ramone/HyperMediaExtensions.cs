@@ -2,9 +2,10 @@
 using CuttingEdge.Conditions;
 using System.Collections.Generic;
 using System;
+using Ramone.HyperMedia;
 
 
-namespace Ramone.HyperMedia
+namespace Ramone
 {
   public static class HyperMediaExtensions
   {

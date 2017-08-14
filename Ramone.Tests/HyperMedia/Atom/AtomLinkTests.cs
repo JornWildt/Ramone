@@ -124,7 +124,7 @@ namespace Ramone.Tests.HyperMedia.Atom
     public void CanSelectSyndicationLinks()
     {
       // Act
-      ILink link = Feed.Links.Select("edit");
+      ILink link = Feed.Links().Select("edit");
 
       // Assert
       Assert.IsNotNull(link);
