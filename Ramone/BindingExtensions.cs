@@ -4,7 +4,7 @@ using System.Collections.Specialized;
 using Ramone.Utility;
 using Ramone.HyperMedia;
 using CuttingEdge.Conditions;
-
+using System.Net;
 
 namespace Ramone
 {
@@ -251,6 +251,21 @@ namespace Ramone
       {
         Dictionary<string, string> parameterDictionary = DictionaryConverter.ConvertObjectPropertiesToDictionary(parameters);
         return template.BindByName(baseUri, parameterDictionary);
+      }
+    }
+
+
+    public static Response<T> Decode<T>(this ISession session, WebException ex)
+      where T : class
+    {
+      if (ex.Response is HttpWebResponse)
+      {
+        HttpWebResponse response = (HttpWebResponse)ex.Response;
+        return new Response<T>(response, session, 0);
+      }
+      else
+      {
+        return null;
       }
     }
   }

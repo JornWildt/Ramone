@@ -153,6 +153,11 @@ namespace Ramone.Tests.Server
             .HandledBy<HtmlHandler>()
             .RenderedByAspx("~/Views/Html.aspx");
 
+        ResourceSpace.Has.ResourcesOfType<ApplicationError>()
+            .AtUri(Constants.ApplicationErrorPath)
+            .HandledBy<ApplicationErrorHandler>()
+            .TranscodedBy<JsonSerializerCodec<ApplicationError>>();
+
         BlogConfiguration.Configure();
         OAuth2Configuration.Configure();
       }

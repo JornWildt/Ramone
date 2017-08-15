@@ -93,7 +93,9 @@ namespace Ramone.Tests
     protected static readonly UriTemplate RedirectTemplate = new UriTemplate(Constants.RedirectPath);
 
     protected static readonly UriTemplate PatchTemplate = new UriTemplate(Constants.PatchPath);
-    
+
+    protected static readonly UriTemplate ApplicationErrorTemplate = new UriTemplate(Constants.ApplicationErrorPath);
+
 
     public static IService TestService { get; set; }
 

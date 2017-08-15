@@ -44,6 +44,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApplicationError.cs" />
     <Compile Include="Cat.cs" />
     <Compile Include="CMS\CaseFile.cs" />
     <Compile Include="CMS\CMSConstans.cs" />

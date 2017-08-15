@@ -48,5 +48,7 @@
     public const string SlowPath = "slow";
 
     public const string HtmlPath = "html";
+
+    public const string ApplicationErrorPath = "error/{code}";
   }
 }

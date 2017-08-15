@@ -1,5 +1,6 @@
 Version NEXT
 ------------
+* Make error handling easier with Session.Decode<T>(WebException ex) (GitHub issue #38)
 * Move Follow and Select extensions out of Hypermedia namespace (GitHub issue #36)
 * Protect agains stack overflows on circular references when serializing(GitHub issue #37).
 * Avoid binding session as URL parameter (GitHub issue #37).

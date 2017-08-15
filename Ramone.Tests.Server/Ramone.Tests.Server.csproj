@@ -169,6 +169,7 @@
     <Compile Include="Blog\Resources\BlogList.cs" />
     <Compile Include="Blog\Handlers\BlogListHandler.cs" />
     <Compile Include="Blog\Resources\Image.cs" />
+    <Compile Include="Handlers\ApplicationErrorHandler.cs" />
     <Compile Include="Handlers\CatHandler.cs" />
     <Compile Include="CMS\Handlers\DossierDocumentsHandler.cs" />
     <Compile Include="CMS\Handlers\DocumentHandler.cs" />

@@ -90,6 +90,7 @@
     <Compile Include="AcceptTests.cs" />
     <Compile Include="AdditionalMethodsTests.cs" />
     <Compile Include="AnonymousSessionTests.cs" />
+    <Compile Include="ApplicationErrorTests.cs" />
     <Compile Include="AsyncEventTests.cs" />
     <Compile Include="AsyncTests.cs" />
     <Compile Include="BindingTests.cs" />
