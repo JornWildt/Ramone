@@ -176,6 +176,8 @@
     <Compile Include="PutTests_Async.cs" />
     <Compile Include="PutTests_AsyncEvent.cs" />
     <Compile Include="RedirectTests.cs" />
+    <Compile Include="ResponseInterceptorTests.cs" />
+    <Compile Include="ResponseInterceptorSetTests.cs" />
     <Compile Include="RequestInterceptorSetTests.cs" />
     <Compile Include="RequestInterceptorTests.cs" />
     <Compile Include="RequestObjectTests.cs" />

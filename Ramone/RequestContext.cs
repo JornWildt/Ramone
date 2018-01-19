@@ -1,6 +1,5 @@
 ﻿using System.Net;
 
-
 namespace Ramone
 {
   public class RequestContext

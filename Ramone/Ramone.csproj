@@ -115,8 +115,15 @@
     <Compile Include="HyperMedia\WebLinkExtensions.cs" />
     <Compile Include="IContextContainer.cs" />
     <Compile Include="IHaveContext.cs" />
+    <Compile Include="IHaveResponseInterceptors.cs" />
+    <Compile Include="IInterceptorSet.cs" />
+    <Compile Include="Implementation\InterceptorSet.cs" />
+    <Compile Include="Implementation\ResponseInterceptorSet.cs" />
     <Compile Include="IO\MemoryFile.cs" />
     <Compile Include="IO\StringFile.cs" />
+    <Compile Include="IRequestInterceptor2.cs" />
+    <Compile Include="IResponseInterceptor.cs" />
+    <Compile Include="IResponseInterceptorSet.cs" />
     <Compile Include="MediaTypes\Atom\AtomLinkExtensions.cs" />
     <Compile Include="MediaTypes\ByteArrayCodec.cs" />
     <Compile Include="MediaTypes\Html\Anchor.cs" />
@@ -192,6 +199,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RequestContext.cs" />
     <Compile Include="RequestStreamWrapperContext.cs" />
+    <Compile Include="ResponseContext.cs" />
     <Compile Include="UriExtensions.cs" />
     <Compile Include="Utility\Base64Utility.cs" />
     <Compile Include="Utility\ContextRegistrator.cs" />

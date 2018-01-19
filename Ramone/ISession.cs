@@ -8,7 +8,7 @@ using Ramone.Utility.ObjectSerialization;
 
 namespace Ramone
 {
-  public interface ISession : IHaveRequestInterceptors
+  public interface ISession : IHaveRequestInterceptors, IHaveResponseInterceptors
   {
     IService Service { get; }
 

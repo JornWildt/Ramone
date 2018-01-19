@@ -3,10 +3,10 @@ Version NEXT
 * Added support for async/await operations. This means the old event based async methods
   have been moved to "AsyncEvent()" and the moderne .NET async handling is now the
   result of using "Async()". If you are using "Async()" today then you need to rename all
-  those class references to "AsyncEvent" instead to keep working with the event based async interface.
+  those method references to "AsyncEvent" instead to keep working with the event based async interface.
 * Make error handling easier with Session.Decode<T>(WebException ex) (GitHub issue #38)
 * Move Follow and Select extensions out of Hypermedia namespace (GitHub issue #36)
-* Protect agains stack overflows on circular references when serializing(GitHub issue #37).
+* Protect against stack overflows on circular references when serializing(GitHub issue #37).
 * Avoid binding session as URL parameter (GitHub issue #37).
 * Do not try to serialize indexer properties (GitHub issue #35)
 * Avoid exceptions when comparing non-valid-media-type strings to MediaType instances (GitHub issue #39)

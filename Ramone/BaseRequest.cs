@@ -267,9 +267,6 @@ namespace Ramone
 
     protected void ApplyMethodSetInterceptors(HttpWebRequest request)
     {
-      //if (OnHeadersReadyHandler != null)
-      //  OnHeadersReadyHandler(request);
-
       foreach (KeyValuePair<string, IRequestInterceptor> interceptor in Session.RequestInterceptors)
       {
         if (interceptor.Value is IRequestInterceptor2)
@@ -316,6 +313,8 @@ namespace Ramone
       {
         connectionId = ConnectionStatistics.RegisterConnection(response);
 
+        ApplyResponseInterceptors(response);
+
         // Handle redirects
         if (300 <= (int)response.StatusCode && (int)response.StatusCode <= 399)
         {
@@ -345,6 +344,8 @@ namespace Ramone
               if (connectionId != null)
                 ConnectionStatistics.DiscardConnection(connectionId.Value);
 
+              response.Dispose();
+
               return DoRequest(location, method, includeBody, requestModifier, retryLevel + 1);
             }
           }
@@ -358,6 +359,15 @@ namespace Ramone
         if (connectionId != null)
           ConnectionStatistics.DiscardConnection(connectionId.Value);
         throw;
+      }
+    }
+
+
+    protected virtual void ApplyResponseInterceptors(HttpWebResponse response)
+    {
+      foreach (KeyValuePair<string, IResponseInterceptor> interceptor in Session.ResponseInterceptors)
+      {
+        interceptor.Value.ResponseReady(new ResponseContext(response, Session));
       }
     }
 

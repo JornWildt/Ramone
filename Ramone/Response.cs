@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net;
 using Ramone.Utility;
 
@@ -121,7 +122,17 @@ namespace Ramone
       return body;
     }
 
-    
+
+    protected void ApplyResponseReadyInterceptors(HttpWebResponse response)
+    {
+      foreach (KeyValuePair<string, IResponseInterceptor> interceptor in Session.ResponseInterceptors)
+      {
+        var context = new ResponseContext(response, Session);
+        interceptor.Value.ResponseReady(context);
+      }
+    }
+
+
     public void Dispose()
     {
       if (WebResponse != null)

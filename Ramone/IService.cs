@@ -7,7 +7,7 @@ using System.Net.Cache;
 
 namespace Ramone
 {
-  public interface IService : IHaveRequestInterceptors
+  public interface IService : IHaveRequestInterceptors, IHaveResponseInterceptors
   {
     ICodecManager CodecManager { get; }
 

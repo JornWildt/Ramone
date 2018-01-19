@@ -31,6 +31,8 @@ namespace Ramone.Implementation
 
     public IRequestInterceptorSet RequestInterceptors { get; protected set; }
 
+    public IResponseInterceptorSet ResponseInterceptors { get; protected set; }
+
     public ObjectSerializerSettings SerializerSettings { get; set; }
 
     public IDictionary<string, object> Items { get; protected set; }
@@ -94,6 +96,7 @@ namespace Ramone.Implementation
       CodecManager = new CodecManager();
       AuthorizationDispatcher = new AuthorizationDispatcher();
       RequestInterceptors = new RequestInterceptorSet();
+      ResponseInterceptors = new ResponseInterceptorSet();
       SerializerSettings = new ObjectSerializerSettings();
       AllowedRedirectsMap = new Dictionary<int, int>();
       Items = new Dictionary<string, object>();

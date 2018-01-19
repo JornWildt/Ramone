@@ -34,6 +34,8 @@ namespace Ramone.Implementation
 
     public IRequestInterceptorSet RequestInterceptors { get; protected set; }
 
+    public IResponseInterceptorSet ResponseInterceptors { get; protected set; }
+
     public ObjectSerializerSettings SerializerSettings { get; set; }
 
     public IDictionary<string, object> Items { get; protected set; }
@@ -88,7 +90,8 @@ namespace Ramone.Implementation
       DefaultResponseMediaType = service.DefaultResponseMediaType;
       Cookies = new CookieContainer();
       AuthorizationDispatcher = service.AuthorizationDispatcher.Clone();
-      RequestInterceptors = service.RequestInterceptors.Clone();
+      RequestInterceptors = (IRequestInterceptorSet)service.RequestInterceptors.Clone();
+      ResponseInterceptors = (IResponseInterceptorSet)service.ResponseInterceptors.Clone();
       SerializerSettings = new ObjectSerializerSettings(service.SerializerSettings);
       AllowedRedirectsMap = new Dictionary<int, int>();
       service.CopyRedirect(this);
