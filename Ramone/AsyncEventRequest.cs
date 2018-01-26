@@ -501,12 +501,32 @@ namespace Ramone
     {
       AsyncState state = (AsyncState)result.AsyncState;
 
-      using (Stream requestStream = state.Request.EndGetRequestStream(result))
+      try
       {
-        WriteBody(requestStream, state.Request, state.IncludeBody);
-      }
+        using (Stream requestStream = state.Request.EndGetRequestStream(result))
+        {
+          WriteBody(requestStream, state.Request, state.IncludeBody);
+        }
 
-      state.Request.BeginGetResponse(HandleResponse, state);
+        state.Request.BeginGetResponse(HandleResponse, state);
+      }
+      catch (WebException ex)
+      {
+        Response response = new Response((HttpWebResponse)ex.Response, Session, state.RetryLevel);
+        HandleWebExceptionResult exResult = HandleWebException(ex, state.Url, state.Method, state.IncludeBody, state.RequestModifier, state.RetryLevel);
+        if (!exResult.Retried)
+        {
+          if (ex.Status != WebExceptionStatus.RequestCanceled)
+          {
+            TryCallErrorCallback(ex, response);
+          }
+          TryCallCompleteCallback(response);
+        }
+      }
+      finally
+      {
+        CurrentAsyncRequest = null;
+      }
     }
 
 
@@ -522,23 +542,21 @@ namespace Ramone
           if (r != null)
           {
             TryCallResponseCallback(r);
-            if (CompleteAction != null)
-              CompleteAction();
+            TryCallCompleteCallback(r);
           }
         }
       }
       catch (WebException ex)
       {
+        Response response = new Response((HttpWebResponse)ex.Response, Session, state.RetryLevel);
         HandleWebExceptionResult exResult = HandleWebException(ex, state.Url, state.Method, state.IncludeBody, state.RequestModifier, state.RetryLevel);
         if (!exResult.Retried)
         {
           if (ex.Status != WebExceptionStatus.RequestCanceled)
           {
-            if (ErrorAction != null)
-              ErrorAction(new AsyncEventError(ex, new Response((HttpWebResponse)ex.Response, Session, state.RetryLevel)));
+            TryCallErrorCallback(ex, response);
           }
-          if (CompleteAction != null)
-            CompleteAction();
+          TryCallCompleteCallback(response);
         }
       }
       finally
@@ -558,10 +576,32 @@ namespace Ramone
         }
         catch (Exception ex)
         {
-          if (ErrorAction != null)
-            ErrorAction(new AsyncEventError(ex, r));
+          TryCallErrorCallback(ex, r);
         }
       }
+    }
+
+
+    protected void TryCallCompleteCallback(Response r)
+    {
+      if (CompleteAction != null)
+      {
+        try
+        {
+          CompleteAction();
+        }
+        catch (Exception ex)
+        {
+          TryCallErrorCallback(ex, r);
+        }
+      }
+    }
+
+
+    protected void TryCallErrorCallback(Exception ex, Response r)
+    {
+      if (ErrorAction != null)
+        ErrorAction(new AsyncEventError(ex, r));
     }
 
 

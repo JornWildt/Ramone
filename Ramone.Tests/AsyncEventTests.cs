@@ -60,17 +60,48 @@ namespace Ramone.Tests
       Request request = Session.Bind("/unknown-url");
       bool onErrorHandled = false;
 
+      // Act
       TestAsyncEvent(wh =>
       {
         request.AsyncEvent().OnError(error =>
         {
           onErrorHandled = true;
+          wh.Set();
         }).OnComplete(() =>
         {
-          Assert.IsTrue(onErrorHandled);
           wh.Set();
         }).Get(r => { });
       });
+
+      // Assert
+      Assert.IsTrue(onErrorHandled);
+    }
+
+
+    [Test]
+    public void ItCallsOnErrorWhenRequestingUnknownService()
+    {
+      // Arrange
+      Request req = new Request("http://unknown.very-unlikely-weqeqex2-hostname.dk");
+      bool onErrorHandled = false;
+
+      // Act
+      TestAsyncEvent(wh =>
+      {
+        req.AsJson().AsyncEvent()
+          .OnError(error =>
+          {
+            onErrorHandled = true;
+            wh.Set();
+          })
+          .OnComplete(() =>
+          {
+            wh.Set();
+          }).Post(new { a = 1 });
+      });
+
+      // Assert
+      Assert.IsTrue(onErrorHandled);
     }
 
 
