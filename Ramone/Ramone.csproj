@@ -205,6 +205,7 @@
     <Compile Include="Utility\ContextRegistrator.cs" />
     <Compile Include="Utility\CryptographicRandomNumberGenerator.cs" />
     <Compile Include="Utility\DateTimeUtility.cs" />
+    <Compile Include="Utility\FileUtility.cs" />
     <Compile Include="Utility\JsonWebToken\AssertionArgs.cs" />
     <Compile Include="Utility\JsonPointerHelper.cs" />
     <Compile Include="Utility\HashtableConverterPropertyVisitor.cs" />

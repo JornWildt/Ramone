@@ -132,6 +132,27 @@ namespace Ramone.Tests.MediaTypes.MultipartFormData
 
 
     [Test]
+    [Ignore("OpenRasta does not handle quoted strings for content-disposition filename")]
+    public void CanPostMultipartFormDataWithFilenameContainingQuotes()
+    {
+      // Arrange
+      IFile file = new FileWithSpecialName("..\\..\\data1.txt", "B\"all\"e.txt");
+      MultipartDataFile data = new MultipartDataFile { DataFile = file, Age = 10 };
+      Request formdataReq = Session.Bind(MultipartFormDataFileTemplate);
+
+      // Act
+      using (Response<string> response = formdataReq.Accept("text/plain").ContentType("multipart/form-data").Post<string>(data))
+      {
+        // Assert
+        Assert.IsTrue(response.Headers["x-contenttype"].StartsWith("multipart/form-data"));
+
+        // This is the correct result, but not what OpenRasta returns currently.
+        //Assert.AreEqual("B\"all\"e.txt/plain-w4bDvMOuwrRgJw==-10", response.Body);
+      }
+    }
+
+
+    [Test]
     public void CanPostMultipartFormDataWithBinaryFile()
     {
       // Arrange
