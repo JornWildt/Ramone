@@ -16,44 +16,7 @@
   - jose-jwt        :  2.4.0
   - Newtonsoft.Json : 11.0.2
   - HtmlAgilityPack :  1.8.7
-
-
-Version 3.1.1.0
----------------
-* Handling quotes in filenames (GitHub issue #42)
-
-
-Version 3.1.0.0
----------------
-* Added support for async/await operations. This means the old event based async methods
-  have been moved to "AsyncEvent()" and the moderne .NET async handling is now the
-  result of using "Async()". If you are using "Async()" today then you need to rename all
-  those method references to "AsyncEvent" instead to keep working with the event based async interface.
-* Make error handling easier with Session.Decode<T>(WebException ex) (GitHub issue #38)
-* Move Follow and Select extensions out of Hypermedia namespace (GitHub issue #36)
-* Protect against stack overflows on circular references when serializing(GitHub issue #37).
-* Avoid binding session as URL parameter (GitHub issue #37).
-* Do not try to serialize indexer properties (GitHub issue #35)
-* Avoid exceptions when comparing non-valid-media-type strings to MediaType instances (GitHub issue #39)
-
-
-Version 3.0.0.0
----------------
-* Added access to ResponseUri directly in Response class (GitHub issue #20).
-* Added TrySelect() and Exists() to check for existence of links in link lists (GitHub issue #21).
-* Added non-generic overload of Created() on Response (GitHub issue #23).
-* Default media type fixed (GitHub issue #27)
-  * Stream is now application/octet-stream.
-  * Byte[] is now application/octet-stream.
-  * String is new text/plain.
-* Extended Bind() with overload for binding links (GitHub issue #28).
-* Extended link Follow() with overloads to allow link selection too (GitHub issue #29).
-* Include value of "expires_in" from OAuth2 access token (GitHub issue #30).
-* Improving object serializer such that it may include null values (GitHub issue #31).
-* Fixed missing handling of arrays and other enumerables in ContextRegistrator (GitHub issue #32).
-* Fixed concurrency problems with connection statistics (GitHub issue #33).
-* Updated to .NET frameork 4.6.
-* Updated dependencies to latest versions.]]>
+]]>
 </releaseNotes>
         <language>en-US</language>
         <tags>rest http api web xml json</tags>
