@@ -15,6 +15,7 @@ namespace Ramone.OAuth2
 {
   public enum AccessTokenType { Bearer }
 
+  public enum ClientAuthenticationFlowType { Rfc6749Section44, Rfc7521Section62 }
 
   public static class OAuth2Extensions
   {
@@ -214,15 +215,42 @@ namespace Ramone.OAuth2
 
 
     /// <summary>
-    /// Get an access token using the flow "Client Credentials Grant" with JWT client credentials signed with a generic algorithm.
+    /// Get an access token using the flow "Client Credentials Grant" defined in RFC 6749 Section 4.4 with JWT client credentials signed with a generic algorithm.
     /// </summary>
     /// <param name="session">Ramone session.</param>
     /// <param name="signingAlgorithm">An implementation of ISigningAlgorithm to do the actual signing.</param>
+    /// <param name="key">The key used by the signing algorithm.</param>
     /// <param name="args">Assertion arguments.</param>
     /// <param name="useAccessToken">Store the returned access token in session and use that in future requests to the resource server.</param>
     /// <returns></returns>
     public static OAuth2AccessTokenResponse OAuth2_GetAccessTokenFromJWT(this ISession session, Jose.JwsAlgorithm alg, object key, AssertionArgs args, bool useAccessToken = true)
     {
+      return OAuth2_GetAccessTokenFromJWT(session, alg, key, args, ClientAuthenticationFlowType.Rfc6749Section44, null, null, null, useAccessToken);
+    }
+
+    /// <summary>
+    /// Get an access token using either the flow "Client Credentials Grant" defined in RFC 6749 Section 4.4 or
+    /// "Client Acting on Behalf of Itself" defined in RFC 7521 Section 6.2 with JWT client credentials signed with a generic algorithm.
+    /// </summary>
+    /// <param name="session">Ramone session.</param>
+    /// <param name="alg">An implementation of ISigningAlgorithm to do the actual signing.<</param>
+    /// <param name="key">The key used by the signing algorithm.</param>
+    /// <param name="args">Assertion arguments.</param>
+    /// <param name="flowType">Specify which client authentication flow to use.</param>
+    /// <param name="extraHeaders">Optionally specify extra headers in the assertion.</param>
+    /// <param name="extraClaims">Optionally specify extra claims in the assertion.</param>
+    /// <param name="extraRequestArgs">Optionally specify extra arguments in the POST data of the HTTP request.</param>
+    /// <param name="useAccessToken">Store the returned access token in session and use that in future requests to the resource server.</param>
+    /// <returns></returns>
+    public static OAuth2AccessTokenResponse OAuth2_GetAccessTokenFromJWT(this ISession session, Jose.JwsAlgorithm alg, object key, AssertionArgs args,
+      ClientAuthenticationFlowType flowType,
+      IDictionary<string, object> extraHeaders = null, IDictionary<string, object> extraClaims = null, IDictionary<string, string> extraRequestArgs = null,
+      bool useAccessToken = true)
+    {
+      if (args == null)
+        throw new ArgumentNullException(nameof(args));
+      if (flowType != ClientAuthenticationFlowType.Rfc6749Section44 && flowType != ClientAuthenticationFlowType.Rfc7521Section62)
+        throw new ArgumentOutOfRangeException(nameof(flowType));
       OAuth2Settings settings = GetSettings(session);
 
       DateTime now = DateTime.UtcNow;
@@ -231,7 +259,7 @@ namespace Ramone.OAuth2
       long issuedAt = issuedAtDate.ToUnixTime();
       long expires = expiresDate.ToUnixTime();
 
-      var claims = new Dictionary<string,object>()
+      IEnumerable<KeyValuePair<string, object>> baseClaims = new Dictionary<string,object>()
       {
         {"iss", args.Issuer},
         {"scope", args.Scope},
@@ -240,13 +268,30 @@ namespace Ramone.OAuth2
         {"exp", expires},
         {"iat", issuedAt}
       };
-      claims = claims.Where(kv => kv.Value != null).ToDictionary(kv => kv.Key, kv => kv.Value);
+      if (extraClaims != null)
+        baseClaims = baseClaims.Concat(extraClaims);
+      var claims = baseClaims.Where(kv => kv.Value != null).ToDictionary(kv => kv.Key, kv => kv.Value);
       
-      string token = Jose.JWT.Encode(claims, key, alg);
+      string token = Jose.JWT.Encode(claims, key, alg, extraHeaders: extraHeaders);
 
       NameValueCollection tokenRequestArgs = new NameValueCollection();
-      tokenRequestArgs["grant_type"] = "urn:ietf:params:oauth:grant-type:jwt-bearer";
-      tokenRequestArgs["assertion"] = token;
+      if (flowType == ClientAuthenticationFlowType.Rfc6749Section44)
+      {
+        tokenRequestArgs["grant_type"] = "urn:ietf:params:oauth:grant-type:jwt-bearer";
+        tokenRequestArgs["assertion"] = token;
+      }
+      else
+      {
+        tokenRequestArgs["scope"] = args.Scope; // This is nominally optional and redundant, but Microsoft wants it...
+        tokenRequestArgs["grant_type"] = "client_credentials";
+        tokenRequestArgs["client_assertion_type"] = "urn:ietf:params:oauth:client-assertion-type:jwt-bearer";
+        tokenRequestArgs["client_assertion"] = token;
+      }
+      if (extraRequestArgs != null)
+      {
+        foreach (var kv in extraRequestArgs)
+          tokenRequestArgs[kv.Key] = kv.Value;
+      }
 
       return GetAndStoreAccessToken(session, tokenRequestArgs, useAccessToken);
     }
