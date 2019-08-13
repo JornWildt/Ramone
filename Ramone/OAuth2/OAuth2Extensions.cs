@@ -9,6 +9,8 @@ using System.Collections;
 using System.Security.Cryptography;
 using Ramone.Utility.JsonWebToken;
 using System.Collections.Generic;
+using System.Security.Cryptography.X509Certificates;
+using System.Reflection;
 
 
 namespace Ramone.OAuth2
@@ -22,6 +24,17 @@ namespace Ramone.OAuth2
     private const string OAuth2SettingsSessionKey = "OAuth2Settings";
     private const string OAuth2StateSessionKey = "OAuth2State";
 
+    // ECDsaCertificateExtensions was introduced in .NET 4.6.1
+    private static Lazy<Func<X509Certificate2, ECDsa>> getECDsaPublicKey = new Lazy<Func<X509Certificate2, ECDsa>>(() =>
+    {
+      Type t = Type.GetType("System.Security.Cryptography.X509Certificates.ECDsaCertificateExtensions, System.Core, Version = 4.0.0.0, Culture = neutral, PublicKeyToken = b77a5c561934e089");
+      if (t == null)
+        return null;
+      MethodInfo mi = t.GetMethod("GetECDsaPrivateKey", BindingFlags.Public | BindingFlags.Static, null, new[] { typeof(X509Certificate2) }, null);
+      if (mi == null)
+        return null;
+      return (Func<X509Certificate2, ECDsa>)mi.CreateDelegate(typeof(Func<X509Certificate2, ECDsa>));
+    }, System.Threading.LazyThreadSafetyMode.PublicationOnly);
 
     /// <summary>
     /// Configure OAuth2 and store configuration in session for later use. 
@@ -213,6 +226,96 @@ namespace Ramone.OAuth2
       return OAuth2_GetAccessTokenFromJWT(session, Jose.JwsAlgorithm.RS256, cp, args, useAccessToken);
     }
 
+
+    /// <summary>
+    /// Get an access token using either the flow "Client Credentials Grant" defined in RFC 6749 Section 4.4 or
+    /// "Client Acting on Behalf of Itself" defined in RFC 7521 Section 6.2 with JWT client credentials signed with an algorithm appropiate for the supplied certificate.
+    /// </summary>
+    /// <param name="session">Ramone session.</param>
+    /// <param name="key">The key used by the signing algorithm.</param>
+    /// <param name="args">Assertion arguments.</param>
+    /// <param name="flowType">Specify which client authentication flow to use.</param>
+    /// <param name="extraHeaders">Optionally specify extra headers in the assertion.</param>
+    /// <param name="extraClaims">Optionally specify extra claims in the assertion.</param>
+    /// <param name="extraRequestArgs">Optionally specify extra arguments in the POST data of the HTTP request.</param>
+    /// <param name="useAccessToken">Store the returned access token in session and use that in future requests to the resource server.</param>
+    /// <returns></returns>
+    /// <remarks>For RSA the number of signature bits are independent of the keysize, this function will always use RS256 for RSA.</remarks>
+    public static OAuth2AccessTokenResponse OAuth2_GetAccessTokenFromJWT_ByCertificate(this ISession session, X509Certificate2 cert, AssertionArgs args,
+      ClientAuthenticationFlowType flowType,
+      IDictionary<string, object> extraHeaders = null, IDictionary<string, object> extraClaims = null, IDictionary<string, string> extraRequestArgs = null,
+      bool useAccessToken = true)
+    {
+      if (cert == null)
+        throw new ArgumentNullException(nameof(cert));
+      if (!cert.HasPrivateKey)
+        throw new InvalidOperationException("The certificate does not contain a private key");
+      AsymmetricAlgorithm key = cert.GetRSAPrivateKey();
+      if (key == null)
+        key = getECDsaPublicKey.Value?.Invoke(cert);
+      if (key == null)
+        throw new NotSupportedException(string.Format("Unsupported private key: {0}", cert.PrivateKey));
+      return OAuth2_GetAccessTokenFromJWT_ByKey(session, key, args, flowType, extraHeaders, extraClaims, extraRequestArgs, useAccessToken);
+    }
+
+    /// <summary>
+    /// Get an access token using either the flow "Client Credentials Grant" defined in RFC 6749 Section 4.4 or
+    /// "Client Acting on Behalf of Itself" defined in RFC 7521 Section 6.2 with JWT client credentials signed with an algorithm appropiate for the supplied key.
+    /// </summary>
+    /// <param name="session">Ramone session.</param>
+    /// <param name="key">The key used by the signing algorithm.</param>
+    /// <param name="args">Assertion arguments.</param>
+    /// <param name="flowType">Specify which client authentication flow to use.</param>
+    /// <param name="extraHeaders">Optionally specify extra headers in the assertion.</param>
+    /// <param name="extraClaims">Optionally specify extra claims in the assertion.</param>
+    /// <param name="extraRequestArgs">Optionally specify extra arguments in the POST data of the HTTP request.</param>
+    /// <param name="useAccessToken">Store the returned access token in session and use that in future requests to the resource server.</param>
+    /// <returns></returns>
+    /// <remarks>For RSA the number of signature bits are independent of the keysize, this function will always use RS256 for RSA.</remarks>
+    public static OAuth2AccessTokenResponse OAuth2_GetAccessTokenFromJWT_ByKey(this ISession session, object key, AssertionArgs args,
+      ClientAuthenticationFlowType flowType,
+      IDictionary<string, object> extraHeaders = null, IDictionary<string, object> extraClaims = null, IDictionary<string, string> extraRequestArgs = null,
+      bool useAccessToken = true)
+    {
+      object testKey = key ?? throw new ArgumentNullException(nameof(key));
+
+      if (testKey is CngKey cngKey)
+      {
+        if (cngKey.AlgorithmGroup.Equals(CngAlgorithmGroup.ECDiffieHellman) || cngKey.AlgorithmGroup.Equals(CngAlgorithmGroup.ECDsa))
+          testKey = new ECDsaCng(cngKey);
+        else if (cngKey.AlgorithmGroup.Equals(CngAlgorithmGroup.Rsa))
+          testKey = new RSACng(cngKey);
+        else
+          throw new NotSupportedException(string.Format("Unsupported algorithm: {0}", cngKey.Algorithm));
+      }
+      Jose.JwsAlgorithm alg;
+      if (testKey is RSA)
+      {
+        alg = Jose.JwsAlgorithm.RS256;
+      }
+      else if (testKey is ECDsa ecdsaKey)
+      {
+        switch (ecdsaKey.KeySize)
+        {
+          case 256:
+            alg = Jose.JwsAlgorithm.ES256;
+            break;
+          case 384:
+            alg = Jose.JwsAlgorithm.ES384;
+            break;
+          case 521: // NB: ES512 uses the P-521/secp521r1 curve which has a key size of 521 bits, this is not a typo...
+            alg = Jose.JwsAlgorithm.ES512;
+            break;
+          default:
+            throw new NotSupportedException(string.Format("Unsupported ECDSA key size: {0}", ecdsaKey.KeySize));
+        }
+      }
+      else
+      {
+        throw new NotSupportedException(string.Format("Unsupported private key type: {0}", key.GetType()));
+      }
+      return OAuth2_GetAccessTokenFromJWT(session, alg, key, args, flowType, extraHeaders, extraClaims, extraRequestArgs, useAccessToken);
+    }
 
     /// <summary>
     /// Get an access token using the flow "Client Credentials Grant" defined in RFC 6749 Section 4.4 with JWT client credentials signed with a generic algorithm.
