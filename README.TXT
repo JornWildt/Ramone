@@ -121,10 +121,6 @@ Here is how to build Ramone from scratch:
 1) Download the source from GitHub (https://github.com/JornWildt/Ramone).
 2) Open "Ramone.sln" and build the whole project.
    - This builds the core Ramone.dll and additional test projects
-3) Merge Ramone.dll and supporting libraries into one dll.
-   a) Install ilmerge.exe from Microsoft.
-   b) Fix ilmerge path in post-build.bat.
-   c) Run post-build.bat.
 
 
 SIMILAR PROJECTS
@@ -140,7 +136,7 @@ SIMILAR PROJECTS
 
 CONTACT
 -------
-E-Mail: jw@fjeldgruppen.dk
+E-Mail: jw@elfisk.dk
 Twitter: @JornWildt
 
 Please add bug reports as issues on GitHub, thanks.
