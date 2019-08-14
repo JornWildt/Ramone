@@ -17,7 +17,7 @@ namespace Ramone.OAuth2
 {
   public enum AccessTokenType { Bearer }
 
-  public enum ClientAuthenticationFlowType { Rfc6749Section44, Rfc7521Section62 }
+  public enum ClientAuthenticationFlowType { Rfc7523Section21, Rfc7521Section62 }
 
   public static class OAuth2Extensions
   {
@@ -25,7 +25,7 @@ namespace Ramone.OAuth2
     private const string OAuth2StateSessionKey = "OAuth2State";
 
     // ECDsaCertificateExtensions was introduced in .NET 4.6.1
-    private static Lazy<Func<X509Certificate2, ECDsa>> getECDsaPublicKey = new Lazy<Func<X509Certificate2, ECDsa>>(() =>
+    private static Lazy<Func<X509Certificate2, ECDsa>> GetECDsaPublicKey = new Lazy<Func<X509Certificate2, ECDsa>>(() =>
     {
       Type t = Type.GetType("System.Security.Cryptography.X509Certificates.ECDsaCertificateExtensions, System.Core, Version = 4.0.0.0, Culture = neutral, PublicKeyToken = b77a5c561934e089");
       if (t == null)
@@ -207,7 +207,11 @@ namespace Ramone.OAuth2
     /// <param name="args">Assertion arguments</param>
     /// <param name="useAccessToken">Store the returned access token in session and use that in future requests to the resource server.</param>
     /// <returns></returns>
-    public static OAuth2AccessTokenResponse OAuth2_GetAccessTokenFromJWT_SHA256(this ISession session, byte[] shaKey, AssertionArgs args, bool useAccessToken = true)
+    public static OAuth2AccessTokenResponse OAuth2_GetAccessTokenFromJWT_SHA256(
+      this ISession session, 
+      byte[] shaKey, 
+      AssertionArgs args, 
+      bool useAccessToken = true)
     {
       return OAuth2_GetAccessTokenFromJWT(session, Jose.JwsAlgorithm.HS256, shaKey, args, useAccessToken);
     }
@@ -221,15 +225,20 @@ namespace Ramone.OAuth2
     /// <param name="args">Assertion arguments.</param>
     /// <param name="useAccessToken">Store the returned access token in session and use that in future requests to the resource server.</param>
     /// <returns></returns>
-    public static OAuth2AccessTokenResponse OAuth2_GetAccessTokenFromJWT_RSASHA256(this ISession session, RSACryptoServiceProvider cp, AssertionArgs args, bool useAccessToken = true)
+    public static OAuth2AccessTokenResponse OAuth2_GetAccessTokenFromJWT_RSASHA256(
+      this ISession session, 
+      RSACryptoServiceProvider cp, 
+      AssertionArgs args, 
+      bool useAccessToken = true)
     {
       return OAuth2_GetAccessTokenFromJWT(session, Jose.JwsAlgorithm.RS256, cp, args, useAccessToken);
     }
 
 
     /// <summary>
-    /// Get an access token using either the flow "Client Credentials Grant" defined in RFC 6749 Section 4.4 or
-    /// "Client Acting on Behalf of Itself" defined in RFC 7521 Section 6.2 with JWT client credentials signed with an algorithm appropiate for the supplied certificate.
+    /// Get an access token using either the flow "JWTs as Authorization Grants" defined in RFC 7523 Section 2.1 or
+    /// "Client Acting on Behalf of Itself" defined in RFC 7521 Section 6.2 with JWT client credentials signed with 
+    /// an algorithm appropiate for the supplied certificate.
     /// </summary>
     /// <param name="session">Ramone session.</param>
     /// <param name="key">The key used by the signing algorithm.</param>
@@ -241,9 +250,14 @@ namespace Ramone.OAuth2
     /// <param name="useAccessToken">Store the returned access token in session and use that in future requests to the resource server.</param>
     /// <returns></returns>
     /// <remarks>For RSA the number of signature bits are independent of the keysize, this function will always use RS256 for RSA.</remarks>
-    public static OAuth2AccessTokenResponse OAuth2_GetAccessTokenFromJWT_ByCertificate(this ISession session, X509Certificate2 cert, AssertionArgs args,
+    public static OAuth2AccessTokenResponse OAuth2_GetAccessTokenFromJWT_ByCertificate(
+      this ISession session, 
+      X509Certificate2 cert, 
+      AssertionArgs args,
       ClientAuthenticationFlowType flowType,
-      IDictionary<string, object> extraHeaders = null, IDictionary<string, object> extraClaims = null, IDictionary<string, string> extraRequestArgs = null,
+      IDictionary<string, object> extraHeaders = null, 
+      IDictionary<string, object> extraClaims = null, 
+      IDictionary<string, string> extraRequestArgs = null,
       bool useAccessToken = true)
     {
       if (cert == null)
@@ -252,15 +266,16 @@ namespace Ramone.OAuth2
         throw new InvalidOperationException("The certificate does not contain a private key");
       AsymmetricAlgorithm key = cert.GetRSAPrivateKey();
       if (key == null)
-        key = getECDsaPublicKey.Value?.Invoke(cert);
+        key = GetECDsaPublicKey.Value?.Invoke(cert);
       if (key == null)
         throw new NotSupportedException(string.Format("Unsupported private key: {0}", cert.PrivateKey));
       return OAuth2_GetAccessTokenFromJWT_ByKey(session, key, args, flowType, extraHeaders, extraClaims, extraRequestArgs, useAccessToken);
     }
 
     /// <summary>
-    /// Get an access token using either the flow "Client Credentials Grant" defined in RFC 6749 Section 4.4 or
-    /// "Client Acting on Behalf of Itself" defined in RFC 7521 Section 6.2 with JWT client credentials signed with an algorithm appropiate for the supplied key.
+    /// Get an access token using either the flow "JWTs as Authorization Grants" defined in RFC 7523 Section 2.1 or
+    /// "Client Acting on Behalf of Itself" defined in RFC 7521 Section 6.2 with JWT client credentials signed with 
+    /// an algorithm appropiate for the supplied key.
     /// </summary>
     /// <param name="session">Ramone session.</param>
     /// <param name="key">The key used by the signing algorithm.</param>
@@ -272,9 +287,14 @@ namespace Ramone.OAuth2
     /// <param name="useAccessToken">Store the returned access token in session and use that in future requests to the resource server.</param>
     /// <returns></returns>
     /// <remarks>For RSA the number of signature bits are independent of the keysize, this function will always use RS256 for RSA.</remarks>
-    public static OAuth2AccessTokenResponse OAuth2_GetAccessTokenFromJWT_ByKey(this ISession session, object key, AssertionArgs args,
+    public static OAuth2AccessTokenResponse OAuth2_GetAccessTokenFromJWT_ByKey(
+      this ISession session, 
+      object key, 
+      AssertionArgs args,
       ClientAuthenticationFlowType flowType,
-      IDictionary<string, object> extraHeaders = null, IDictionary<string, object> extraClaims = null, IDictionary<string, string> extraRequestArgs = null,
+      IDictionary<string, object> extraHeaders = null, 
+      IDictionary<string, object> extraClaims = null, 
+      IDictionary<string, string> extraRequestArgs = null,
       bool useAccessToken = true)
     {
       object testKey = key ?? throw new ArgumentNullException(nameof(key));
@@ -326,13 +346,18 @@ namespace Ramone.OAuth2
     /// <param name="args">Assertion arguments.</param>
     /// <param name="useAccessToken">Store the returned access token in session and use that in future requests to the resource server.</param>
     /// <returns></returns>
-    public static OAuth2AccessTokenResponse OAuth2_GetAccessTokenFromJWT(this ISession session, Jose.JwsAlgorithm alg, object key, AssertionArgs args, bool useAccessToken = true)
+    public static OAuth2AccessTokenResponse OAuth2_GetAccessTokenFromJWT(
+      this ISession session, 
+      Jose.JwsAlgorithm alg, 
+      object key, 
+      AssertionArgs args, 
+      bool useAccessToken = true)
     {
-      return OAuth2_GetAccessTokenFromJWT(session, alg, key, args, ClientAuthenticationFlowType.Rfc6749Section44, null, null, null, useAccessToken);
+      return OAuth2_GetAccessTokenFromJWT(session, alg, key, args, ClientAuthenticationFlowType.Rfc7523Section21, null, null, null, useAccessToken);
     }
 
     /// <summary>
-    /// Get an access token using either the flow "Client Credentials Grant" defined in RFC 6749 Section 4.4 or
+    /// Get an access token using either the flow "JWTs as Authorization Grants" defined in RFC 7523 Section 2.1 or
     /// "Client Acting on Behalf of Itself" defined in RFC 7521 Section 6.2 with JWT client credentials signed with a generic algorithm.
     /// </summary>
     /// <param name="session">Ramone session.</param>
@@ -345,15 +370,22 @@ namespace Ramone.OAuth2
     /// <param name="extraRequestArgs">Optionally specify extra arguments in the POST data of the HTTP request.</param>
     /// <param name="useAccessToken">Store the returned access token in session and use that in future requests to the resource server.</param>
     /// <returns></returns>
-    public static OAuth2AccessTokenResponse OAuth2_GetAccessTokenFromJWT(this ISession session, Jose.JwsAlgorithm alg, object key, AssertionArgs args,
+    public static OAuth2AccessTokenResponse OAuth2_GetAccessTokenFromJWT(
+      this ISession session, 
+      Jose.JwsAlgorithm alg, 
+      object key, 
+      AssertionArgs args,
       ClientAuthenticationFlowType flowType,
-      IDictionary<string, object> extraHeaders = null, IDictionary<string, object> extraClaims = null, IDictionary<string, string> extraRequestArgs = null,
+      IDictionary<string, object> extraHeaders = null, 
+      IDictionary<string, object> extraClaims = null, 
+      IDictionary<string, string> extraRequestArgs = null,
       bool useAccessToken = true)
     {
       if (args == null)
         throw new ArgumentNullException(nameof(args));
-      if (flowType != ClientAuthenticationFlowType.Rfc6749Section44 && flowType != ClientAuthenticationFlowType.Rfc7521Section62)
+      if (flowType != ClientAuthenticationFlowType.Rfc7523Section21 && flowType != ClientAuthenticationFlowType.Rfc7521Section62)
         throw new ArgumentOutOfRangeException(nameof(flowType));
+
       OAuth2Settings settings = GetSettings(session);
 
       DateTime now = DateTime.UtcNow;
@@ -378,7 +410,7 @@ namespace Ramone.OAuth2
       string token = Jose.JWT.Encode(claims, key, alg, extraHeaders: extraHeaders);
 
       NameValueCollection tokenRequestArgs = new NameValueCollection();
-      if (flowType == ClientAuthenticationFlowType.Rfc6749Section44)
+      if (flowType == ClientAuthenticationFlowType.Rfc7523Section21)
       {
         tokenRequestArgs["grant_type"] = "urn:ietf:params:oauth:grant-type:jwt-bearer";
         tokenRequestArgs["assertion"] = token;
@@ -400,7 +432,11 @@ namespace Ramone.OAuth2
     }
 
 
-    public static OAuth2AccessTokenResponse OAuth2_RefreshAccessToken(this ISession session, string refreshToken, string scope = null, bool useAccessToken = true)
+    public static OAuth2AccessTokenResponse OAuth2_RefreshAccessToken(
+      this ISession session, 
+      string refreshToken, 
+      string scope = null, 
+      bool useAccessToken = true)
     {
       OAuth2Settings settings = GetSettings(session);
 
