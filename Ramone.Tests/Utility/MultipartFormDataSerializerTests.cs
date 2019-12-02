@@ -34,7 +34,8 @@ Content-Type: text/plain; charset=utf-8
 Content-Disposition: form-data; name=""MyString""
 Content-Type: text/plain; charset=utf-8
 
-Abc";
+Abc
+--xyzq--";
 
         s.Seek(0, SeekOrigin.Begin);
         using (StreamReader r = new StreamReader(s))
@@ -67,7 +68,8 @@ Abc ÆØÅ
 --xyzq
 Content-Disposition: form-data; name=""MyFile""; filename=""data1.txt""
 
-Æüî´`'";
+Æüî´`'
+--xyzq--";
 
         s.Seek(0, SeekOrigin.Begin);
         using (StreamReader r = new StreamReader(s))
@@ -97,7 +99,8 @@ Content-Disposition: form-data; name=""MyFile""; filename=""data1.txt""
 --xyzq
 Content-Disposition: form-data; name=""MyFile""; filename=""Bxllefrx.txt""; filename*=UTF-8''B%c3%b8llefr%c3%b8.txt
 
-Æüî´`'";
+Æüî´`'
+--xyzq--";
 
         s.Seek(0, SeekOrigin.Begin);
         using (StreamReader r = new StreamReader(s))
@@ -127,7 +130,8 @@ Content-Disposition: form-data; name=""MyFile""; filename=""Bxllefrx.txt""; file
 --xyzq
 Content-Disposition: form-data; name=""MyFile""; filename=""Bxllefrx.txt""
 
-Æüî´`'";
+Æüî´`'
+--xyzq--";
 
         s.Seek(0, SeekOrigin.Begin);
         using (StreamReader r = new StreamReader(s))

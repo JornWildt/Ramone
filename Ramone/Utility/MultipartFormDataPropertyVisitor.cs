@@ -96,6 +96,10 @@ Content-Disposition: form-data; name=""{1}""{2}{3}
 
     public void End()
     {
+      string footer = string.Format(@"
+--{0}--", Boundary);
+
+      Writer.Write(footer);
       Writer.Flush();
     }
 
