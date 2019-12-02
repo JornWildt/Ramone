@@ -1,3 +1,8 @@
+Version 3.2.1.1
+---------------
+* Updated version numbers
+
+
 Version 3.2.1.0
 ---------------
 * Add missing multipart/form-data terminating boundary (GitHub issue #48).

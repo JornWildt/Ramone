@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
     <metadata>
         <id>Ramone</id>
-        <version>3.2.1.0</version>
+        <version>3.2.1.1</version>
         <title>Ramone</title>
         <authors>Jørn Wildt</authors>
         <license type="expression">MIT</license>
@@ -11,7 +11,11 @@
         <description>Ramone is a C# library that simplifies access to HTTP based Web APIs and REST services. It has a strong focus on REST and implements elements of the Uniform Interface as first class citizens of the API.</description>
         <summary>A client library for working with REST services and Web APIs.</summary>
         <releaseNotes>
-  <![CDATA[Version 3.2.1.0
+  <![CDATA[Version 3.2.1.1
+---------------
+* Updated version numbers
+
+Version 3.2.1.0
 ---------------
 * Add missing multipart/form-data terminating boundary (GitHub issue #48).
 ]]>
