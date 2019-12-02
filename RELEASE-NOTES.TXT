@@ -1,3 +1,8 @@
+Version 3.2.1.0
+---------------
+* Add missing multipart/form-data terminating boundary (GitHub issue #48).
+
+
 Version 3.2.0.0
 ---------------
 * Added improved JWT methods for OAuth2 authentication (GitHub pull request #46 and #47).

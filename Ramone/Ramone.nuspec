@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
     <metadata>
         <id>Ramone</id>
-        <version>3.2.0.0</version>
+        <version>3.2.1.0</version>
         <title>Ramone</title>
         <authors>Jørn Wildt</authors>
         <license type="expression">MIT</license>
@@ -10,10 +10,10 @@
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
         <description>Ramone is a C# library that simplifies access to HTTP based Web APIs and REST services. It has a strong focus on REST and implements elements of the Uniform Interface as first class citizens of the API.</description>
         <summary>A client library for working with REST services and Web APIs.</summary>
-        <releaseNotes><![CDATA[Version 3.2.0.0
+        <releaseNotes>
+  <![CDATA[Version 3.2.1.0
 ---------------
-* Added improved JWT methods for OAuth2 authentication (GitHub pull request #46 and #47).
-* Fixed: Decode fails with null reference (GitHub issue #45)
+* Add missing multipart/form-data terminating boundary (GitHub issue #48).
 ]]>
 </releaseNotes>
         <language>en-US</language>
