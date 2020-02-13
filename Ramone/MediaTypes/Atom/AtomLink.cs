@@ -1,9 +1,8 @@
-﻿using System;
-using System.Xml.Serialization;
+﻿using Newtonsoft.Json;
 using Ramone.HyperMedia;
+using System;
 using System.Collections.Generic;
-using System.ServiceModel.Syndication;
-
+using System.Xml.Serialization;
 
 namespace Ramone.MediaTypes.Atom
 {
@@ -13,7 +12,8 @@ namespace Ramone.MediaTypes.Atom
   /// <remarks>Is similar to .NET's built in SyndicationItem, but this one is XML serializable as a ATOM link.</remarks>
   public class AtomLink : SelectableBase, ISessionLink, IHaveContext
   {
-    [XmlIgnore()]
+    [XmlIgnore]
+    [JsonIgnore]
     public Uri HRef { get; set; }
 
 
@@ -37,6 +37,7 @@ namespace Ramone.MediaTypes.Atom
 
 
     [XmlIgnore]
+    [JsonIgnore]
     public IEnumerable<string> RelationTypes
     {
       get { return GetRelationTypes(); }
@@ -52,18 +53,20 @@ namespace Ramone.MediaTypes.Atom
 
 
     [XmlIgnore]
+    [JsonIgnore]
     public MediaType MediaType
     {
       get { return GetMediaType(); }
       set { SetMediaType(value); }
     }
 
-    
+
     [XmlAttribute("title")]
     public string Title { get; set; }
 
 
     [XmlIgnore]
+    [JsonIgnore]
     public ISession Session { get; set; }
 
 
