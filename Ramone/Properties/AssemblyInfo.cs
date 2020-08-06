@@ -6,9 +6,9 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("Ramone")]
-[assembly: AssemblyDescription("A client side library for REST and other HTTP services.")]
+[assembly: AssemblyDescription("Ramone is a C# library that simplifies access to HTTP based Web APIs and REST services. It has a strong focus on REST and implements elements of the Uniform Interface as first class citizens of the API.")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("Jorn Wildt")]
 [assembly: AssemblyProduct("Ramone")]
 [assembly: AssemblyCopyright("Copyright ©2010, Ramone team")]
 [assembly: AssemblyTrademark("")]
@@ -32,5 +32,5 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("3.2.1.1")]
-[assembly: AssemblyFileVersion("3.2.1.1")]
+[assembly: AssemblyVersion("3.2.2.0")]
+[assembly: AssemblyFileVersion("3.2.2.0")]

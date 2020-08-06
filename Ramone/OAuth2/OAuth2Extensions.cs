@@ -112,11 +112,13 @@ namespace Ramone.OAuth2
     /// <remarks>See http://tools.ietf.org/html/rfc6749#section-4.1.3</remarks>
     /// <param name="session">Ramone session.</param>
     /// <param name="authorizationCode"></param>
+    /// <param name="extraRequestArgs">Optionally specify extra arguments in the POST data of the HTTP request.</param>
     /// <param name="useAccessToken">Request automatic use of the returned access token in following requests.</param>
     /// <returns></returns>
     public static OAuth2AccessTokenResponse OAuth2_GetAccessTokenFromAuthorizationCode(
       this ISession session, 
       string authorizationCode,
+      IDictionary<string, string> extraRequestArgs = null,
       bool useAccessToken = true)
     {
       OAuth2Settings settings = GetSettings(session);
@@ -125,6 +127,12 @@ namespace Ramone.OAuth2
       tokenRequestArgs["grant_type"] = "authorization_code";
       tokenRequestArgs["code"] = authorizationCode;
       tokenRequestArgs["redirect_uri"] = settings.RedirectUri.ToString();
+
+      if (extraRequestArgs != null)
+      {
+        foreach (var kv in extraRequestArgs)
+          tokenRequestArgs[kv.Key] = kv.Value;
+      }
 
       if (settings.ClientAuthenticationMethod == OAuth2Settings.DefaultClientAuthenticationMethods.RequestBody)
       {
@@ -144,6 +152,7 @@ namespace Ramone.OAuth2
     /// <param name="ownerUserName"></param>
     /// <param name="ownerPassword"></param>
     /// <param name="scope">Space separated list of strings identifying the required scopes (as defined by the authorization server).</param>
+    /// <param name="extraRequestArgs">Optionally specify extra arguments in the POST data of the HTTP request.</param>
     /// <param name="useAccessToken">Request automatic use of the returned access token in following requests.</param>
     /// <returns></returns>
     public static OAuth2AccessTokenResponse OAuth2_GetAccessTokenUsingOwnerUsernamePassword(
@@ -151,6 +160,7 @@ namespace Ramone.OAuth2
       string ownerUserName, 
       string ownerPassword,
       string scope = null,
+      IDictionary<string, string> extraRequestArgs = null,
       bool useAccessToken = true)
     {
       OAuth2Settings settings = GetSettings(session);
@@ -162,6 +172,12 @@ namespace Ramone.OAuth2
         tokenRequestArgs["password"] = ownerPassword;
       if (scope != null)
         tokenRequestArgs["scope"] = scope;
+
+      if (extraRequestArgs != null)
+      {
+        foreach (var kv in extraRequestArgs)
+          tokenRequestArgs[kv.Key] = kv.Value;
+      }
 
       if (settings.ClientAuthenticationMethod == OAuth2Settings.DefaultClientAuthenticationMethods.RequestBody)
       {
@@ -178,9 +194,14 @@ namespace Ramone.OAuth2
     /// </summary>
     /// <param name="session">Ramone session.</param>
     /// <param name="scope">Space separated list of strings identifying the required scopes (as defined by the authorization server).</param>
+    /// <param name="extraRequestArgs">Optionally specify extra arguments in the POST data of the HTTP request.</param>
     /// <param name="useAccessToken">Store the returned access token in session and use that in future requests to the resource server.</param>
     /// <returns></returns>
-    public static OAuth2AccessTokenResponse OAuth2_GetAccessTokenUsingClientCredentials(this ISession session, string scope = null, bool useAccessToken = true)
+    public static OAuth2AccessTokenResponse OAuth2_GetAccessTokenUsingClientCredentials(
+      this ISession session, 
+      string scope = null,
+      IDictionary<string, string> extraRequestArgs = null,
+      bool useAccessToken = true)
     {
       OAuth2Settings settings = GetSettings(session);
 
@@ -188,6 +209,12 @@ namespace Ramone.OAuth2
       tokenRequestArgs["grant_type"] = "client_credentials";
       if (scope != null)
         tokenRequestArgs["scope"] = scope;
+
+      if (extraRequestArgs != null)
+      {
+        foreach (var kv in extraRequestArgs)
+          tokenRequestArgs[kv.Key] = kv.Value;
+      }
 
       if (settings.ClientAuthenticationMethod == OAuth2Settings.DefaultClientAuthenticationMethods.RequestBody)
       {

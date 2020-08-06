@@ -1,16 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.539
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29905.134
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documents", "Documents", "{2615491B-5415-4FFF-A79F-1735FCF5E4E6}"
 	ProjectSection(SolutionItems) = preProject
+		BuildNuGet.bat = BuildNuGet.bat
 		LICENSE.TXT = LICENSE.TXT
-		make-bin.bat = make-bin.bat
-		make-buildnumber.bat = make-buildnumber.bat
 		make-doc.bat = make-doc.bat
-		make-zip.bat = make-zip.bat
-		post-build.bat = post-build.bat
 		Ramone\Ramone.nuspec = Ramone\Ramone.nuspec
 		README.TXT = README.TXT
 		RELEASE-NOTES.TXT = RELEASE-NOTES.TXT
