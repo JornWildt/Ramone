@@ -1,1 +1,0 @@
-﻿This little project verifies that a standalone program can be build using Ramone.Core.dll
