@@ -52,22 +52,9 @@ Jorn Wildt
 
 DOWNLOAD
 --------
-Binaries are available on NuGet and at these links:
+Binaries are available on NuGet:
 
   NuGet: https://www.nuget.org/packages/Ramone
-
-  (Binaries and nightly are currently out of order, sorry ... I got a new PC and never set it up)
-
-  Version 1.3.0: http://elfisk.dk/Ramone/Ramone-1.3.0.zip
-
-  Nightly build:  http://elfisk.dk/Ramone/Ramone.zip
-  - Documentation http://elfisk.dk/Ramone/Documentation/Ramone.pdf
-
-
-  Version 1.2.1: http://elfisk.dk/Ramone/Ramone-1.2.1.zip
-  Version 1.2.0: http://elfisk.dk/Ramone/Ramone-1.2.0.zip
-  Version 1.1.0: http://elfisk.dk/Ramone/Ramone-1.1.0.zip
-  Version 1.0.0: http://elfisk.dk/Ramone/Ramone-1.0.0.zip
 
 
 DOCUMENTATION
@@ -121,10 +108,6 @@ Here is how to build Ramone from scratch:
 1) Download the source from GitHub (https://github.com/JornWildt/Ramone).
 2) Open "Ramone.sln" and build the whole project.
    - This builds the core Ramone.dll and additional test projects
-3) Merge Ramone.dll and supporting libraries into one dll.
-   a) Install ilmerge.exe from Microsoft.
-   b) Fix ilmerge path in post-build.bat.
-   c) Run post-build.bat.
 
 
 SIMILAR PROJECTS
@@ -140,7 +123,7 @@ SIMILAR PROJECTS
 
 CONTACT
 -------
-E-Mail: jw@fjeldgruppen.dk
+E-Mail: jw@elfisk.dk
 Twitter: @JornWildt
 
 Please add bug reports as issues on GitHub, thanks.
@@ -151,7 +134,7 @@ CREDITS
 Thanks to the OpenRasta (openrasta.org) and Restfulie (restfulie.caelum.com.br)
 projects for inspiration.
 
-Thanks to cBrain (www.cbrain.com) for investing some hours in the project.
+Thanks to cBrain (www.cbrain.com) for investing hours in the project.
 
 Thanks to these contributers:
   https://github.com/prearrangedchaos

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Configuration;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
@@ -22,6 +23,8 @@ namespace Ramone.Tests
         if (_baseUrl == null)
         {
           string url = Environment.GetEnvironmentVariable("RAMONETEST_BASEURL");
+          if (url == null)
+            url = ConfigurationManager.AppSettings["RAMONETEST_BASEURL"];
           _baseUrl = url != null ? new Uri(url) : DefaultBaseUrl;
         }
         return _baseUrl;

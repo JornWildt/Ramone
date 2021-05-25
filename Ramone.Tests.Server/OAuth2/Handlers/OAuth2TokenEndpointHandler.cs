@@ -18,6 +18,8 @@ namespace Ramone.Tests.Server.OAuth2.Handlers
       if (result != null)
         return result;
 
+      string additional_param = request.additional ?? "Special";
+
       if (request.grant_type == "password")
       {
         if (request.username == OAuth2TestConstants.Username && request.password == OAuth2TestConstants.UserPassword
@@ -27,7 +29,7 @@ namespace Ramone.Tests.Server.OAuth2.Handlers
           {
             access_token = OAuth2TestConstants.CreatedAccessToken,
             token_type = "beAReR", // Mixed case => assert testing for this is case-insensitive
-            additional_param = "Special",
+            additional_param = additional_param,
             expires_in = 199
           };
         }
@@ -40,7 +42,7 @@ namespace Ramone.Tests.Server.OAuth2.Handlers
         {
           access_token = OAuth2TestConstants.CreatedAccessToken,
           token_type = "beAReR", // Mixed case => assert testing for this is case-insensitive
-          additional_param = "Special",
+          additional_param = additional_param,
           expires_in = 199
         };
       }
@@ -50,7 +52,7 @@ namespace Ramone.Tests.Server.OAuth2.Handlers
         {
           access_token = OAuth2TestConstants.CreatedAccessToken,
           token_type = "beAReR", // Mixed case => assert testing for this is case-insensitive
-          additional_param = "Special",
+          additional_param = additional_param,
           expires_in = 199
         };
       }

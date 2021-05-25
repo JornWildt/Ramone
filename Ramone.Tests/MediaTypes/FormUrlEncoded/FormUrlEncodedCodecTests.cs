@@ -208,7 +208,7 @@ namespace Ramone.Tests.MediaTypes.FormUrlEncoded
     public void WhenPostingFormUrlEncodedItAssignsCorrectContentLength_WhichMeans_DoNotIncludeByteOrderMarks()
     {
       // Arrange
-      ISession localSession = RamoneConfiguration.NewSession(DefaultBaseUrl);
+      ISession localSession = RamoneConfiguration.NewSession(BaseUrl);
       Request request = localSession.Bind(Constants.HeaderEchoPath).AsFormUrlEncoded();
 
       var registrations = new

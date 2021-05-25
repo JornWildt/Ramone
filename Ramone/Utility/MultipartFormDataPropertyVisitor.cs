@@ -41,7 +41,7 @@ namespace Ramone.Utility
       if (value is IFile)
       {
         IFile file = (IFile)value;
-        filename = string.Format("; filename=\"{0}\"", System.IO.Path.GetFileName(file.Filename ?? "unknown"));
+        filename = string.Format("; filename=\"{0}\"", FileUtility.GetFileName(file.Filename ?? "unknown"));
         if (file.ContentType != null)
           contentType = string.Format("\r\nContent-Type: {0}", file.ContentType);
       }
@@ -66,9 +66,9 @@ Content-Disposition: form-data; name=""{1}""{2}{3}
     public void File(IFile file, string name)
     {
       string contentType = "";
-      string filename = Path.GetFileName(file.Filename ?? "unknown");
+      string filename = FileUtility.GetFileName(file.Filename ?? "unknown");
       string asciiFilename = Regex.Replace(filename, @"[^\u0000-\u007F]", "x");
-      string filenameFormat = string.Format("; filename=\"{0}\"", asciiFilename);
+      string filenameFormat = string.Format("; filename=\"{0}\"", asciiFilename.Replace("\"", "\\\""));
       if (asciiFilename != filename && Settings != null && Settings.EnableNonAsciiCharactersInMultipartFilenames)
       {
         string utf8Filename = HttpUtility.UrlEncode(filename, Encoding.UTF8);
@@ -96,6 +96,10 @@ Content-Disposition: form-data; name=""{1}""{2}{3}
 
     public void End()
     {
+      string footer = string.Format(@"
+--{0}--", Boundary);
+
+      Writer.Write(footer);
       Writer.Flush();
     }
 

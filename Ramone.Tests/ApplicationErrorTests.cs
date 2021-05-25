@@ -54,5 +54,22 @@ namespace Ramone.Tests
         }
       }
     }
+
+
+    [Test]
+    public void ItSignalsMissingSessionWhenDecodingResponse()
+    {
+      // Example: for some odd reasons a web response is created outside of Ramone and we now try to decode it,
+      // but without a session at hand.
+
+      WebRequest request = WebRequest.Create(BindingExtensions.BindTemplate(BaseUrl, DossierTemplate, new { id = 8 }));
+      using (WebResponse response = request.GetResponse())
+      {
+        Response ramoneResponse = new Response((HttpWebResponse)response, null, 0);
+        AssertThrows<ArgumentNullException>(
+          () => ramoneResponse.Decode<ApplicationError>(),
+          ex => ex.Message.Contains("session"));
+      }
+    }
   }
 }

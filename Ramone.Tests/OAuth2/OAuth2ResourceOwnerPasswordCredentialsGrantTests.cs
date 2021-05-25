@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System.Collections.Generic;
+using System.Net;
 using NUnit.Framework;
 using Ramone.OAuth2;
 using Ramone.Tests.Common.OAuth2;
@@ -37,12 +38,15 @@ namespace Ramone.Tests.OAuth2
     {
       OAuth2AccessTokenResponse token = 
         Session.OAuth2_Configure(GetSettings())
-               .OAuth2_GetAccessTokenUsingOwnerUsernamePassword(OAuth2TestConstants.Username, OAuth2TestConstants.UserPassword);
+               .OAuth2_GetAccessTokenUsingOwnerUsernamePassword(
+                 OAuth2TestConstants.Username, 
+                 OAuth2TestConstants.UserPassword,
+                 extraRequestArgs: new Dictionary<string, string> { ["additional"] = "Even more special" });
 
       Assert.IsNotNull(token);
       Assert.That(token.access_token, Is.Not.Null.And.Not.Empty);
       Assert.AreEqual(199, token.expires_in);
-      Assert.AreEqual("Special", (string)token.AllParameters["additional_param"]);
+      Assert.AreEqual("Even more special", (string)token.AllParameters["additional_param"]);
     }
 
 

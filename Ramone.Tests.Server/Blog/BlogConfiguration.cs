@@ -2,7 +2,6 @@
 using Ramone.Tests.Server.Blog.Codecs;
 using Ramone.Tests.Server.Blog.Handlers;
 using Ramone.Tests.Server.Blog.Resources;
-using Ramone.Tests.Server.Codecs;
 
 
 namespace Ramone.Tests.Server.Blog
