@@ -1,6 +1,6 @@
 ﻿using System;
 using System.IO;
-using CuttingEdge.Conditions;
+using Ramone.Utility.Validation;
 
 
 namespace Ramone.Utility

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Text;
-using CuttingEdge.Conditions;
+using Ramone.Utility.Validation;
 
 
 /// <summary>

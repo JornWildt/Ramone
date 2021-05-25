@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using CuttingEdge.Conditions;
+using Ramone.Utility.Validation;
 using HtmlAgilityPack;
 using System;
 

@@ -1,7 +1,7 @@
-﻿using System;
+﻿using Ramone.Utility.Validation;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using CuttingEdge.Conditions;
 
 
 namespace Ramone.Implementation

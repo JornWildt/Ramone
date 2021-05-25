@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Collections.Specialized;
 using System.Web;
-using CuttingEdge.Conditions;
+using Ramone.Utility.Validation;
 using Ramone.Utility;
 
 namespace Ramone

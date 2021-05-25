@@ -1,9 +1,10 @@
-﻿using NUnit.Framework;
+﻿using System;
+using NUnit.Framework;
 using Ramone.HyperMedia;
 using Ramone.MediaTypes.Atom;
 using Ramone.MediaTypes.OpenSearch;
 using Ramone.Tests.Common;
-using System;
+using Template = UriTemplate.Core.UriTemplate;
 
 
 namespace Ramone.Tests
@@ -128,7 +129,7 @@ namespace Ramone.Tests
     public void CanBindRequestFromUriTemplateWithoutExplicitSession()
     {
       // Arrange
-      UriTemplate template = new UriTemplate(Constants.CatPath);
+      Template template = new Template(Constants.CatPath);
 
       // Act
       using (var response = template.Bind(BaseUrl, new { name = "Petra" }).AcceptJson().Get<Cat>())

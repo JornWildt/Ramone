@@ -2,7 +2,7 @@
 using OpenRasta.Web;
 using Ramone.Tests.Common;
 using System.Web;
-using System.Runtime.InteropServices;
+using Template = UriTemplate.Core.UriTemplate;
 
 
 namespace Ramone.Tests.Server.Handlers
@@ -23,7 +23,7 @@ namespace Ramone.Tests.Server.Handlers
       Select = HttpUtility.UrlDecode(Select);
       string actionUrl = null;
       object parameters = new { actionUrlMode = actionUrlMode, encType = encType, charset = charset, method = method };
-      Uri newUri = BindingExtensions.BindTemplate(CommunicationContext.ApplicationBaseUri, new UriTemplate(Constants.FormSimplePath), parameters);
+      Uri newUri = BindingExtensions.BindTemplate(CommunicationContext.ApplicationBaseUri, new Template(Constants.FormSimplePath), parameters);
 
       if (actionUrlMode == "absolute")
         actionUrl = newUri.AbsoluteUri;

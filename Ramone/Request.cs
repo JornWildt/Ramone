@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Globalization;
-using CuttingEdge.Conditions;
+using Ramone.Utility.Validation;
 using System.Net;
 using System.Net.Cache;
 

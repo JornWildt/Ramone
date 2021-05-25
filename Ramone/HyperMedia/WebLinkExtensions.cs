@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using CuttingEdge.Conditions;
 using Ramone.Utility;
-
+using Ramone.Utility.Validation;
 
 namespace Ramone.HyperMedia
 {

@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using CuttingEdge.Conditions;
+using Ramone.Utility.Validation;
 using Ramone.HyperMedia;
 
 
@@ -69,8 +69,6 @@ namespace Ramone.Utility
 
     protected WebLink ParseLink()
     {
-      Condition.Requires(NextToken.Type, "CurrentToken.Type").IsEqualTo(TokenType.Url);
-
       string url = NextToken.Value;
       string rel = null;
       string title = null;

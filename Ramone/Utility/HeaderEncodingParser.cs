@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using CuttingEdge.Conditions;
+using Ramone.Utility.Validation;
 using System.Web;
 
 namespace Ramone.Utility

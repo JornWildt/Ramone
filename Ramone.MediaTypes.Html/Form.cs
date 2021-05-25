@@ -2,11 +2,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using CuttingEdge.Conditions;
 using HtmlAgilityPack;
 using Ramone.HyperMedia;
 using Ramone.Utility;
-
+using Ramone.Utility.Validation;
 
 namespace Ramone.MediaTypes.Html
 {

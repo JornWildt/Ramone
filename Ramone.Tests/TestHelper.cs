@@ -7,6 +7,7 @@ using NUnit.Framework;
 using Ramone.Tests.Common;
 using Ramone.Tests.Common.CMS;
 using Ramone.Utility.ObjectSerialization;
+using Template = UriTemplate.Core.UriTemplate;
 
 
 namespace Ramone.Tests
@@ -38,66 +39,66 @@ namespace Ramone.Tests
     }
 
 
-    protected static readonly UriTemplate DossierTemplate = new UriTemplate(CMSConstants.DossierPath);
+    protected static readonly Template DossierTemplate = new Template(CMSConstants.DossierPath);
 
-    protected static readonly UriTemplate VerifiedMethodDossierTemplate = new UriTemplate(CMSConstants.VerifiedMethodDossierPath);
+    protected static readonly Template VerifiedMethodDossierTemplate = new Template(CMSConstants.VerifiedMethodDossierPath);
 
-    protected static readonly UriTemplate DossierDocumentsTemplate = new UriTemplate(CMSConstants.DossierDocumentsPath);
+    protected static readonly Template DossierDocumentsTemplate = new Template(CMSConstants.DossierDocumentsPath);
 
-    protected static readonly UriTemplate DocumentTemplate = new UriTemplate(CMSConstants.DocumentPath);
+    protected static readonly Template DocumentTemplate = new Template(CMSConstants.DocumentPath);
 
-    protected static readonly UriTemplate PartyTemplate = new UriTemplate(CMSConstants.PartyPath);
+    protected static readonly Template PartyTemplate = new Template(CMSConstants.PartyPath);
     
     protected static readonly Uri DossiersUrl = new Uri(BaseUrl, CMSConstants.DossiersPath);
 
     //protected static readonly Uri VerifiedMethodDossiersUrl = new Uri(BaseUrl, CMSConstants.VerifiedMethodDossiersPath);
 
 
-    protected static readonly UriTemplate CatTemplate = new UriTemplate(Constants.CatPath);
+    protected static readonly Template CatTemplate = new Template(Constants.CatPath);
 
-    protected static readonly UriTemplate CatsTemplate = new UriTemplate(Constants.CatsPath);
+    protected static readonly Template CatsTemplate = new Template(Constants.CatsPath);
 
-    protected static readonly UriTemplate Dog1Template = new UriTemplate(Constants.DogPath + "?v=1");
+    protected static readonly Template Dog1Template = new Template(Constants.DogPath + "?v=1");
 
-    protected static readonly UriTemplate Dog2Template = new UriTemplate(Constants.DogPath + "?v=2");
+    protected static readonly Template Dog2Template = new Template(Constants.DogPath + "?v=2");
 
-    protected static readonly UriTemplate PersonTemplate = new UriTemplate(Constants.PersonPath);
+    protected static readonly Template PersonTemplate = new Template(Constants.PersonPath);
 
-    protected static readonly UriTemplate EncodingTemplate = new UriTemplate(Constants.EncodingPath);
+    protected static readonly Template EncodingTemplate = new Template(Constants.EncodingPath);
 
-    protected static readonly UriTemplate FileTemplate = new UriTemplate(Constants.FilePath);
+    protected static readonly Template FileTemplate = new Template(Constants.FilePath);
 
-    protected static readonly UriTemplate MultipartFormDataTemplate = new UriTemplate(Constants.MultipartFormDataPath);
+    protected static readonly Template MultipartFormDataTemplate = new Template(Constants.MultipartFormDataPath);
 
-    protected static readonly UriTemplate MultipartFormDataFileTemplate = new UriTemplate(Constants.MultipartFormDataFilePath);
+    protected static readonly Template MultipartFormDataFileTemplate = new Template(Constants.MultipartFormDataFilePath);
 
-    protected static readonly UriTemplate FormUrlEncodedTemplate = new UriTemplate(Constants.FormUrlEncodedPath);
+    protected static readonly Template FormUrlEncodedTemplate = new Template(Constants.FormUrlEncodedPath);
 
-    protected static readonly UriTemplate XmlEchoTemplate = new UriTemplate(Constants.XmlEchoPath);
+    protected static readonly Template XmlEchoTemplate = new Template(Constants.XmlEchoPath);
 
-    protected static readonly UriTemplate AnyEchoTemplate = new UriTemplate(Constants.AnyEchoPath);
+    protected static readonly Template AnyEchoTemplate = new Template(Constants.AnyEchoPath);
 
-    protected static readonly UriTemplate ComplexClassTemplate = new UriTemplate(Constants.ComplexClassPath);
+    protected static readonly Template ComplexClassTemplate = new Template(Constants.ComplexClassPath);
 
-    protected static readonly UriTemplate AtomFeedTemplate = new UriTemplate(Constants.AtomFeedPath);
+    protected static readonly Template AtomFeedTemplate = new Template(Constants.AtomFeedPath);
 
-    protected static readonly UriTemplate AtomItemTemplate = new UriTemplate(Constants.AtomItemPath);
+    protected static readonly Template AtomItemTemplate = new Template(Constants.AtomItemPath);
 
     protected static readonly Uri HeaderListUrl = new Uri(BaseUrl, Constants.HeaderEchoPath);
 
     protected static readonly Uri BasicAuthUrl = new Uri(BaseUrl, Constants.BasicAuthPath);
 
-    protected static readonly UriTemplate FormTemplate = new UriTemplate(Constants.FormPath);
+    protected static readonly Template FormTemplate = new Template(Constants.FormPath);
 
-    protected static readonly UriTemplate FileDownloadTemplate = new UriTemplate(Constants.FileDownloadPath);
+    protected static readonly Template FileDownloadTemplate = new Template(Constants.FileDownloadPath);
 
-    protected static readonly UriTemplate LinkHeaderTemplate = new UriTemplate(Constants.LinkHeaderPath);
+    protected static readonly Template LinkHeaderTemplate = new Template(Constants.LinkHeaderPath);
 
-    protected static readonly UriTemplate RedirectTemplate = new UriTemplate(Constants.RedirectPath);
+    protected static readonly Template RedirectTemplate = new Template(Constants.RedirectPath);
 
-    protected static readonly UriTemplate PatchTemplate = new UriTemplate(Constants.PatchPath);
+    protected static readonly Template PatchTemplate = new Template(Constants.PatchPath);
 
-    protected static readonly UriTemplate ApplicationErrorTemplate = new UriTemplate(Constants.ApplicationErrorPath);
+    protected static readonly Template ApplicationErrorTemplate = new Template(Constants.ApplicationErrorPath);
 
 
     public static IService TestService { get; set; }

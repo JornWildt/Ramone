@@ -1,21 +1,17 @@
 ﻿using System;
 using System.IO;
-using System.ServiceModel.Syndication;
 using System.Text;
 using System.Xml;
-using HtmlAgilityPack;
 using Ramone.Implementation;
 using Ramone.MediaTypes;
-using Ramone.MediaTypes.Atom;
 using Ramone.MediaTypes.FormUrlEncoded;
-using Ramone.MediaTypes.Html;
 using Ramone.MediaTypes.Json;
+using Ramone.MediaTypes.JsonPatch;
 using Ramone.MediaTypes.MultipartFormData;
 using Ramone.MediaTypes.OpenSearch;
 using Ramone.MediaTypes.Xml;
 using Ramone.Utility.ObjectSerialization;
 using Ramone.Utility.ObjectSerialization.Formaters;
-using Ramone.MediaTypes.JsonPatch;
 
 
 namespace Ramone
@@ -34,8 +30,6 @@ namespace Ramone
     static RamoneConfiguration()
     {
       Reset();
-      HtmlNode.ElementsFlags.Remove("form");
-      HtmlNode.ElementsFlags.Add("form", HtmlElementFlag.CanOverlap);
     }
 
 
@@ -97,16 +91,6 @@ namespace Ramone
       cm.AddCodec<XmlDocument, XmlSerializerCodec>(MediaType.TextXml);
       cm.AddCodec<XmlDocument, XmlSerializerCodec>(MediaType.TextHtml);
       cm.AddCodec<XmlDocument, XmlSerializerCodec>(MediaType.ApplicationXHtml);
-
-      // HTML + XHTML
-      cm.AddCodec<HtmlDocument, HtmlDocumentCodec>(MediaType.TextHtml);
-      cm.AddCodec<HtmlDocument, HtmlDocumentCodec>(MediaType.TextXml);
-      cm.AddCodec<HtmlDocument, HtmlDocumentCodec>(MediaType.ApplicationXHtml);
-      cm.AddCodec<HtmlDocument, HtmlDocumentCodec>(MediaType.ApplicationXml);
-
-      // Atom
-      cm.AddCodec<SyndicationFeed, AtomFeedCodec>(MediaType.ApplicationAtom);
-      cm.AddCodec<SyndicationItem, AtomItemCodec>(MediaType.ApplicationAtom);
 
       // JSON
       cm.AddCodec<JsonSerializerCodec>(MediaType.ApplicationJson);

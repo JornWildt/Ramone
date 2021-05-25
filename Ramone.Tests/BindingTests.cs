@@ -5,6 +5,7 @@ using System.Collections.Specialized;
 using NUnit.Framework;
 using Ramone.HyperMedia;
 using Ramone.MediaTypes.Atom;
+using Template = UriTemplate.Core.UriTemplate;
 
 namespace Ramone.Tests
 {
@@ -20,10 +21,10 @@ namespace Ramone.Tests
     NameValueCollection NameValueCollectionParameters = new NameValueCollection();
 
     // Templated inputs
-    UriTemplate UriTemplate_Path     = new UriTemplate("users/{a}?b={b}");
-    string      String_TemplatedPath = "users/{a}?b={b}";
-    string      String_TemplatedUrl  = "http://home/users/{a}?b={b}";
-    Uri         Uri_TemplatedUrl     = new Uri("http://home/users/{a}?b={b}");
+    Template UriTemplate_Path     = new Template("users/{a}?b={b}");
+    string   String_TemplatedPath = "users/{a}?b={b}";
+    string   String_TemplatedUrl  = "http://home/users/{a}?b={b}";
+    Uri      Uri_TemplatedUrl     = new Uri("http://home/users/{a}?b={b}");
 
 
     protected override void TestFixtureSetUp()
@@ -205,7 +206,7 @@ namespace Ramone.Tests
     public void CanBind_UriTemplate_NonTemplated()
     {
       // Act
-      Request req = Session.Bind(new UriTemplate("/cats"));
+      Request req = Session.Bind(new Template("/cats"));
 
       // Assert
       Assert.AreEqual(BaseUrl + "cats", req.Url.AbsoluteUri);
@@ -249,7 +250,7 @@ namespace Ramone.Tests
     public void CanBind_UriTemplate_WithEncoding()
     {
       // Act
-      Request req = Session.Bind(new UriTemplate("set?name={name}"), new { name = "Jørn" });
+      Request req = Session.Bind(new Template("set?name={name}"), new { name = "Jørn" });
       Uri url = req.Url;
 
       // Assert

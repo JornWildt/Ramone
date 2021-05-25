@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.ServiceModel.Syndication;
 using Ramone.HyperMedia;
-using CuttingEdge.Conditions;
+using Ramone.Utility.Validation;
 
 
 namespace Ramone.MediaTypes.Atom

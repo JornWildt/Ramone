@@ -62,10 +62,6 @@
     <Compile Include="TestHelper.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Ramone.Hypermedia\Ramone.Hypermedia.csproj">
-      <Project>{740b67b5-6bc3-48ba-a8a0-46ca89618521}</Project>
-      <Name>Ramone.Hypermedia</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Ramone.Tests.Common\Ramone.Tests.Common.csproj">
       <Project>{dd3b040f-3d75-4c46-bb54-cd06f594f894}</Project>
       <Name>Ramone.Tests.Common</Name>

@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.Linq;
 using Ramone.Utility;
 using Ramone.HyperMedia;
-using CuttingEdge.Conditions;
 using System.Net;
+using Ramone.Utility.Validation;
+using Template = UriTemplate.Core.UriTemplate;
 
 namespace Ramone
 {
@@ -19,7 +21,7 @@ namespace Ramone
     /// <param name="template"></param>
     /// <param name="parameters"></param>
     /// <returns></returns>
-    public static Request Bind(this ISession session, UriTemplate template, object parameters = null)
+    public static Request Bind(this ISession session, Template template, object parameters = null)
     {
       Uri url = BindUri(session, template, parameters);
       return session.Request(url);
@@ -33,7 +35,7 @@ namespace Ramone
     /// <param name="template"></param>
     /// <param name="parameters"></param>
     /// <returns></returns>
-    public static Uri BindUri(this ISession session, UriTemplate template, object parameters = null)
+    public static Uri BindUri(this ISession session, Template template, object parameters = null)
     {
       return BindTemplate(session.BaseUri, template, parameters);
     }
@@ -46,7 +48,7 @@ namespace Ramone
     /// <param name="baseUri"></param>
     /// <param name="parameters"></param>
     /// <returns></returns>
-    public static Request Bind(this UriTemplate template, Uri baseUri, object parameters = null)
+    public static Request Bind(this Template template, Uri baseUri, object parameters = null)
     {
       Uri url = BindTemplate(baseUri, template, parameters);
       return new Request(url);
@@ -90,7 +92,7 @@ namespace Ramone
       else
       {
         // String as relative path template
-        UriTemplate template = new UriTemplate(url);
+        Template template = new Template(url);
         return BindUri(session, template, parameters);
       }
     }
@@ -108,7 +110,7 @@ namespace Ramone
 
       Uri uri = new Uri(url);
       Uri baseUri = new Uri(uri.GetComponents(UriComponents.SchemeAndServer, UriFormat.Unescaped));
-      UriTemplate template = new UriTemplate(uri.GetComponents(UriComponents.PathAndQuery, UriFormat.Unescaped));
+      Template template = new Template(uri.GetComponents(UriComponents.PathAndQuery, UriFormat.Unescaped));
 
       Uri boundUrl = BindTemplate(baseUri, template, parameters);
       return new Request(boundUrl);
@@ -151,7 +153,7 @@ namespace Ramone
         baseUri = new Uri(url.GetComponents(UriComponents.SchemeAndServer, UriFormat.Unescaped));
       else
         baseUri = session.BaseUri;
-      UriTemplate template = new UriTemplate(url.GetComponents(UriComponents.PathAndQuery, UriFormat.Unescaped));
+      Template template = new Template(url.GetComponents(UriComponents.PathAndQuery, UriFormat.Unescaped));
 
       return BindTemplate(baseUri, template, parameters);
     }
@@ -171,7 +173,7 @@ namespace Ramone
         throw new ArgumentException("Do not use session as Bind() parameter. You probably should have written 'Session.Bind(url)'.", "parameters");
 
       Uri baseUri = new Uri(url.GetComponents(UriComponents.SchemeAndServer, UriFormat.Unescaped));
-      UriTemplate template = new UriTemplate(url.GetComponents(UriComponents.PathAndQuery, UriFormat.Unescaped));
+      Template template = new Template(url.GetComponents(UriComponents.PathAndQuery, UriFormat.Unescaped));
 
       Uri boundUrl = BindTemplate(baseUri, template, parameters);
       return new Request(boundUrl);
@@ -228,7 +230,7 @@ namespace Ramone
     /// <param name="parameters">Parameters for resolving URI template (can be IDictionary<string, string>, NameValueCollection or 
     /// any object where property names are used to match parameter names.</param>
     /// <returns></returns>
-    public static Uri BindTemplate(Uri baseUri, UriTemplate template, object parameters = null)
+    public static Uri BindTemplate(Uri baseUri, Template template, object parameters = null)
     {
       if (baseUri == null)
         throw new InvalidOperationException("It is not possible to bind relative URL templates without a base URL. Make sure session and/or service has been created with a base URL.");
@@ -239,13 +241,14 @@ namespace Ramone
         Dictionary<string, string> emptyParameters = new Dictionary<string, string>();
         return template.BindByName(baseUri, emptyParameters);
       }
-      else if (parameters is IDictionary<string, string>)
+      else if (parameters is IDictionary<string, string> dp)
       {
-        return template.BindByName(baseUri, (IDictionary<string, string>)parameters);
+        return template.BindByName(baseUri, dp);
       }
-      else if (parameters is NameValueCollection)
+      else if (parameters is NameValueCollection nvp)
       {
-        return template.BindByName(baseUri, (NameValueCollection)parameters);
+        var dictParameters = nvp.Cast<string>().ToDictionary(p => p, p => nvp[p][0]);
+        return template.BindByName(baseUri, dictParameters);
       }
       else
       {

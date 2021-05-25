@@ -1,8 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Xml.Serialization;
 using Ramone.HyperMedia;
-using System.Collections.Generic;
-using System.ServiceModel.Syndication;
 
 
 namespace Ramone.MediaTypes.Atom

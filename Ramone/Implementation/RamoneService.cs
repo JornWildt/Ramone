@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using System.Net.Cache;
 using System.Text;
 using Ramone.Utility.ObjectSerialization;
-using CuttingEdge.Conditions;
 using System.Globalization;
-
+using Ramone.Utility.Validation;
 
 namespace Ramone.Implementation
 {
