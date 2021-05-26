@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Xml;
@@ -26,6 +27,8 @@ namespace Ramone
 
     public static ObjectSerializerSettings SerializerSettings { get; set; }
 
+    private static List<ICodecRegistrator> CodecRegistrators { get; set; }
+
 
     static RamoneConfiguration()
     {
@@ -39,6 +42,13 @@ namespace Ramone
       UserAgent = "Ramone/1.0";
       DefaultEncoding = Encoding.UTF8;
       SerializerSettings = new ObjectSerializerSettings();
+      CodecRegistrators = new List<ICodecRegistrator>();
+    }
+
+
+    public static void AddCodecRegistrator(ICodecRegistrator registrator)
+    {
+      CodecRegistrators.Add(registrator);
     }
 
 
@@ -56,8 +66,13 @@ namespace Ramone
         DefaultEncoding = DefaultEncoding,
         SerializerSettings = new ObjectSerializerSettings(SerializerSettings)
       };
+
       if (UseStandardCodecs)
+      {
         RamoneConfiguration.RegisterStandardCodecs(service.CodecManager);
+        foreach (var registrator in CodecRegistrators)
+          registrator.RegisterCodecs(service.CodecManager);
+      }
       return service;
     }
 

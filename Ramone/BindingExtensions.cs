@@ -6,7 +6,7 @@ using Ramone.Utility;
 using Ramone.HyperMedia;
 using System.Net;
 using Ramone.Utility.Validation;
-using Template = UriTemplate.Core.UriTemplate;
+using Tavis.UriTemplates;
 
 namespace Ramone
 {
@@ -21,7 +21,7 @@ namespace Ramone
     /// <param name="template"></param>
     /// <param name="parameters"></param>
     /// <returns></returns>
-    public static Request Bind(this ISession session, Template template, object parameters = null)
+    public static Request Bind(this ISession session, UriTemplate template, object parameters = null)
     {
       Uri url = BindUri(session, template, parameters);
       return session.Request(url);
@@ -35,20 +35,20 @@ namespace Ramone
     /// <param name="template"></param>
     /// <param name="parameters"></param>
     /// <returns></returns>
-    public static Uri BindUri(this ISession session, Template template, object parameters = null)
+    public static Uri BindUri(this ISession session, UriTemplate template, object parameters = null)
     {
       return BindTemplate(session.BaseUri, template, parameters);
     }
 
 
     /// <summary>
-    /// Resolve URI template with supplied base URI and create request with implicit session.
+    /// Resolve URI UriTemplate with supplied base URI and create request with implicit session.
     /// </summary>
     /// <param name="template"></param>
     /// <param name="baseUri"></param>
     /// <param name="parameters"></param>
     /// <returns></returns>
-    public static Request Bind(this Template template, Uri baseUri, object parameters = null)
+    public static Request Bind(this UriTemplate template, Uri baseUri, object parameters = null)
     {
       Uri url = BindTemplate(baseUri, template, parameters);
       return new Request(url);
@@ -61,7 +61,7 @@ namespace Ramone
 
 
     /// <summary>
-    /// Resolve string URI template with session base URL and create a request bound to the session.
+    /// Resolve string URI UriTemplate with session base URL and create a request bound to the session.
     /// </summary>
     /// <param name="session"></param>
     /// <param name="url"></param>
@@ -75,7 +75,7 @@ namespace Ramone
 
 
     /// <summary>
-    /// Resolve string URI template with session base URL and create a URI.
+    /// Resolve string URI UriTemplate with session base URL and create a URI.
     /// </summary>
     /// <param name="session"></param>
     /// <param name="url"></param>
@@ -92,14 +92,14 @@ namespace Ramone
       else
       {
         // String as relative path template
-        Template template = new Template(url);
+        UriTemplate template = new UriTemplate(url);
         return BindUri(session, template, parameters);
       }
     }
 
 
     /// <summary>
-    /// Resolve absolute string URI template and create request with implicit session.
+    /// Resolve absolute string URI UriTemplate and create request with implicit session.
     /// </summary>
     /// <param name="url"></param>
     /// <param name="parameters"></param>
@@ -110,7 +110,7 @@ namespace Ramone
 
       Uri uri = new Uri(url);
       Uri baseUri = new Uri(uri.GetComponents(UriComponents.SchemeAndServer, UriFormat.Unescaped));
-      Template template = new Template(uri.GetComponents(UriComponents.PathAndQuery, UriFormat.Unescaped));
+      UriTemplate template = new UriTemplate(uri.GetComponents(UriComponents.PathAndQuery, UriFormat.Unescaped));
 
       Uri boundUrl = BindTemplate(baseUri, template, parameters);
       return new Request(boundUrl);
@@ -122,7 +122,7 @@ namespace Ramone
     #region Uri as template
 
     /// <summary>
-    /// Bind URI template with session base URI and create request bound to the session.
+    /// Bind URI UriTemplate with session base URI and create request bound to the session.
     /// </summary>
     /// <param name="session"></param>
     /// <param name="url"></param>
@@ -138,7 +138,7 @@ namespace Ramone
 
 
     /// <summary>
-    /// Bind URI template with session base URI and create new URI.
+    /// Bind URI UriTemplate with session base URI and create new URI.
     /// </summary>
     /// <param name="session"></param>
     /// <param name="url"></param>
@@ -153,14 +153,14 @@ namespace Ramone
         baseUri = new Uri(url.GetComponents(UriComponents.SchemeAndServer, UriFormat.Unescaped));
       else
         baseUri = session.BaseUri;
-      Template template = new Template(url.GetComponents(UriComponents.PathAndQuery, UriFormat.Unescaped));
+      UriTemplate template = new UriTemplate(url.GetComponents(UriComponents.PathAndQuery, UriFormat.Unescaped));
 
       return BindTemplate(baseUri, template, parameters);
     }
 
 
     /// <summary>
-    /// Resolve absolute URI template and create request with implicit session.
+    /// Resolve absolute URI UriTemplate and create request with implicit session.
     /// </summary>
     /// <param name="url"></param>
     /// <param name="parameters"></param>
@@ -173,7 +173,7 @@ namespace Ramone
         throw new ArgumentException("Do not use session as Bind() parameter. You probably should have written 'Session.Bind(url)'.", "parameters");
 
       Uri baseUri = new Uri(url.GetComponents(UriComponents.SchemeAndServer, UriFormat.Unescaped));
-      Template template = new Template(url.GetComponents(UriComponents.PathAndQuery, UriFormat.Unescaped));
+      UriTemplate template = new UriTemplate(url.GetComponents(UriComponents.PathAndQuery, UriFormat.Unescaped));
 
       Uri boundUrl = BindTemplate(baseUri, template, parameters);
       return new Request(boundUrl);
@@ -195,7 +195,7 @@ namespace Ramone
     #region ILinkTemplate
 
     /// <summary>
-    /// Resolve link template and create request bound to existing session.
+    /// Resolve link UriTemplate and create request bound to existing session.
     /// </summary>
     /// <param name="session"></param>
     /// <param name="link"></param>
@@ -209,7 +209,7 @@ namespace Ramone
 
 
     /// <summary>
-    /// Resolve absolute link template and create request with implicit session.
+    /// Resolve absolute link UriTemplate and create request with implicit session.
     /// </summary>
     /// <param name="link"></param>
     /// <param name="parameters"></param>
@@ -223,14 +223,14 @@ namespace Ramone
 
 
     /// <summary>
-    /// Resolve URI template with base URI and different types of arguments.
+    /// Resolve URI UriTemplate with base URI and different types of arguments.
     /// </summary>
     /// <param name="baseUri">Base URI for resolving relative URI templates.</param>
-    /// <param name="template">The URI template to resolve.</param>
-    /// <param name="parameters">Parameters for resolving URI template (can be IDictionary<string, string>, NameValueCollection or 
+    /// <param name="template">The URI UriTemplate to resolve.</param>
+    /// <param name="parameters">Parameters for resolving URI UriTemplate (can be IDictionary<string, string>, NameValueCollection or 
     /// any object where property names are used to match parameter names.</param>
     /// <returns></returns>
-    public static Uri BindTemplate(Uri baseUri, Template template, object parameters = null)
+    public static Uri BindTemplate(Uri baseUri, UriTemplate template, object parameters = null)
     {
       if (baseUri == null)
         throw new InvalidOperationException("It is not possible to bind relative URL templates without a base URL. Make sure session and/or service has been created with a base URL.");
@@ -247,7 +247,7 @@ namespace Ramone
       }
       else if (parameters is NameValueCollection nvp)
       {
-        var dictParameters = nvp.Cast<string>().ToDictionary(p => p, p => nvp[p][0]);
+        IDictionary<string, string> dictParameters = nvp.Cast<string>().ToDictionary(p => p, p => nvp[p]);
         return template.BindByName(baseUri, dictParameters);
       }
       else
@@ -270,6 +270,19 @@ namespace Ramone
       {
         return null;
       }
+    }
+
+
+    public static Uri BindByName(this UriTemplate template, Uri baseUri, IDictionary<string, string> parameters)
+    {
+      //// Reset before creating
+      //foreach (var parameter in template.GetParameterNames())
+      //  template.ClearParameter(parameter);
+
+      foreach (var item in parameters)
+        template = template.AddParameter(item.Key, item.Value);
+
+      return new Uri(baseUri, template.Resolve());
     }
   }
 }

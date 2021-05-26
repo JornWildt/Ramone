@@ -10,6 +10,8 @@ using System.Collections.Generic;
 using System;
 using System.Reflection;
 using System.IO;
+using Ramone.MediaTypes.Atom;
+using Ramone.MediaTypes.Html;
 
 namespace Ramone.Tests
 {
@@ -20,6 +22,8 @@ namespace Ramone.Tests
     public void Setup()
     {
       Environment.CurrentDirectory = Path.GetDirectoryName(Assembly.GetAssembly(typeof(SetupFixture)).Location);
+      AtomInitializer.Initialize();
+      HtmlInitializer.Initialize();
       TestHelper.TestService = CreateDefaultService();
     }
 

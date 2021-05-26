@@ -5,7 +5,7 @@ using System.Collections.Specialized;
 using NUnit.Framework;
 using Ramone.HyperMedia;
 using Ramone.MediaTypes.Atom;
-using Template = UriTemplate.Core.UriTemplate;
+using Template = Tavis.UriTemplates.UriTemplate;
 
 namespace Ramone.Tests
 {
@@ -21,10 +21,10 @@ namespace Ramone.Tests
     NameValueCollection NameValueCollectionParameters = new NameValueCollection();
 
     // Templated inputs
-    Template UriTemplate_Path     = new Template("users/{a}?b={b}");
-    string   String_TemplatedPath = "users/{a}?b={b}";
-    string   String_TemplatedUrl  = "http://home/users/{a}?b={b}";
-    Uri      Uri_TemplatedUrl     = new Uri("http://home/users/{a}?b={b}");
+    Template UriTemplate_Path     = new Template("users/{a}{?b,c}");
+    string   String_TemplatedPath = "users/{a}{?b,c}";
+    string   String_TemplatedUrl  = "http://home/users/{a}{?b,c}";
+    Uri      Uri_TemplatedUrl     = new Uri("http://home/users/{a}{?b,c}");
 
 
     protected override void TestFixtureSetUp()
@@ -311,14 +311,14 @@ namespace Ramone.Tests
     public void CanBindJSONIntoTemplateVariable1()
     {
       // Arrange
-      string url = "http://example.com";
+      string url = "http://example.com{?filter}";
 
       // Act
       Request r = Session.Bind(url, new { filter = "{\"a\":10}" });
 
       // Assert
       Assert.IsNotNull(r);
-      Assert.AreEqual("http://example.com/?filter={\"a\":10}", r.Url.ToString());
+      Assert.AreEqual("http://example.com/?filter={\"a\"%3A10}", r.Url.ToString());
     }
 
 
@@ -333,7 +333,7 @@ namespace Ramone.Tests
 
       // Assert
       Assert.IsNotNull(r);
-      Assert.AreEqual("http://example.com/?filter={\"a\":10}", r.Url.ToString());
+      Assert.AreEqual("http://example.com/?filter={\"a\"%3A10}", r.Url.ToString());
     }
 
 

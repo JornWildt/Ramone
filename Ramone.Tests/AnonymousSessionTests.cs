@@ -4,7 +4,7 @@ using Ramone.HyperMedia;
 using Ramone.MediaTypes.Atom;
 using Ramone.MediaTypes.OpenSearch;
 using Ramone.Tests.Common;
-using Template = UriTemplate.Core.UriTemplate;
+using Template = Tavis.UriTemplates.UriTemplate;
 
 
 namespace Ramone.Tests

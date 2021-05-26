@@ -2,7 +2,7 @@
 using OpenRasta.Web;
 using Ramone.Tests.Common;
 using System.Web;
-using Template = UriTemplate.Core.UriTemplate;
+using Template = Tavis.UriTemplates.UriTemplate;
 
 
 namespace Ramone.Tests.Server.Handlers

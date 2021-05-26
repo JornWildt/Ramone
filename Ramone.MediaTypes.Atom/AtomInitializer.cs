@@ -1,13 +1,10 @@
-﻿using System.ServiceModel.Syndication;
-
-namespace Ramone.MediaTypes.Atom
+﻿namespace Ramone.MediaTypes.Atom
 {
-  class AtomInitializer
+  public static class AtomInitializer
   {
-    void RegisterStandardCodecs(ICodecManager cm)
+    public static void Initialize()
     {
-      cm.AddCodec<SyndicationFeed, AtomFeedCodec>(MediaType.ApplicationAtom);
-      cm.AddCodec<SyndicationItem, AtomItemCodec>(MediaType.ApplicationAtom);
+      RamoneConfiguration.AddCodecRegistrator(new AtomCodecRegistrator());
     }
   }
 }

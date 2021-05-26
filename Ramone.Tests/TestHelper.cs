@@ -4,10 +4,12 @@ using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using NUnit.Framework;
+using Ramone.MediaTypes.Atom;
+using Ramone.MediaTypes.Html;
 using Ramone.Tests.Common;
 using Ramone.Tests.Common.CMS;
 using Ramone.Utility.ObjectSerialization;
-using Template = UriTemplate.Core.UriTemplate;
+using Template = Tavis.UriTemplates.UriTemplate;
 
 
 namespace Ramone.Tests
@@ -146,6 +148,9 @@ namespace Ramone.Tests
     protected virtual void SetUp()
     {
       RamoneConfiguration.Reset();
+      AtomInitializer.Initialize();
+      HtmlInitializer.Initialize();
+
       // Create a new session for each test
       Session = TestService.NewSession();
     }
