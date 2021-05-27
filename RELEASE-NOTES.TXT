@@ -1,3 +1,15 @@
+Version 4.0.0.0
+---------------
+* Ramone now compiles as a .NET Core assemply targeted .Net Standard 2.0.
+* Split HTML and Atom codecs into individual assemblies and NuGet packages to avoid dependencies on
+  HtmlAgilityPack and System.ServiceModel.Syndication in the core.
+  - Use HtmlInitializer.Initialize() and AtomInitializer.Initialize() to register codecs.
+* Now using Tavis UriTemplates as .NET Core does not have it's own UriTemplate.
+  - This UriTemplate implementation behaves differently from the old one!
+  - It will interpret /xxx as a root path reference (instead of simply concatenating it to the base URL).
+  - It does not add parameters which are not referenced in the template (instead of appending them to the URL)
+
+
 Version 3.2.2.0
 ---------------
 * Added "extraRequestArgs" to OAuth2_GetAccessTokenUsingOwnerUsernamePassword and OAuth2_GetAccessTokenFromAuthorizationCode.

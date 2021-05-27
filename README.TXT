@@ -3,8 +3,13 @@ Ramone - A C# library for working with REST services and Web APIs
 -----------------------------------------------------------------
 
 Ramone is a C# library that simplifies access to HTTP based Web APIs and REST
-services. It has a strong focus on REST and implements elements of the Uniform
-Interface as first class citizens of the API.
+services. It has a strong focus on REST amd hypermedia and implements elements 
+of the Uniform Interface as first class citizens of the API.
+
+Ramone has built-in support for serialization of simple objects as JSON, XML, 
+URL-encoding and multipart encoding.
+
+Ramone works with .NET Standard 2.0 and supports async/await construct
 
 This means natural support for
 
@@ -93,12 +98,7 @@ Ramone with the punk band "The Ramones" if that suits you better :-)
 
 USING
 -----
-To use Ramone in a .NET project you must first reference the Ramone.dll
-assembly. This assembly contains both the core Ramone code as well as supporting
-libraries (JsonFx, HtmlAgilityPack and more).
-
-If you already have the supporting libraries in your code base then you should
-reference Ramone.Core.dll which contains only the core Ramone code.
+Add a reference to the Ramone NuGet package and you are up and running.
 
 
 BUILDING
@@ -118,7 +118,6 @@ SIMILAR PROJECTS
 - Dynamic REST https://github.com/Huddle/dynamicrest
 - Spring.NET Rest client http://www.springframework.net/rest/
 - Microsoft WCF HttpClient http://wcf.codeplex.com/
-- Hammock (discontinued by the developer) https://github.com/danielcrenna/hammock
 
 
 CONTACT
@@ -139,24 +138,6 @@ Thanks to cBrain (www.cbrain.com) for investing hours in the project.
 Thanks to these contributers:
   https://github.com/prearrangedchaos
   https://github.com/poizan42
-
-Ramone includes distributions of:
-
-  Newtonsoft.Json
-    Source: http://james.newtonking.com/json
-    licens (MIT): https://github.com/JamesNK/Newtonsoft.Json/blob/master/LICENSE.md
-
-  Html Agility Pack
-    Source: http://htmlagilitypack.codeplex.com/
-    License (Ms-PL): http://htmlagilitypack.codeplex.com/license
-
-  Cutting Edge Conditions
-    Source: http://conditions.codeplex.com/
-    License (MIT): http://conditions.codeplex.com/license
-
-  JOSE-JWT
-    Source: https://github.com/dvsekhvalnov/jose-jwt
-    License (MIT): https://raw.githubusercontent.com/dvsekhvalnov/jose-jwt/master/LICENSE
 
 
 LICENSE
