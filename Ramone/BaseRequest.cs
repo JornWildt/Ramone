@@ -179,7 +179,9 @@ namespace Ramone
       {
         HttpWebRequest request = SetupRequest(url, method, includeBody, requestModifier);
         WriteBody(null, request, includeBody);
+
         ApplyDataSentInterceptors(request);
+
         HttpWebResponse response = (HttpWebResponse)request.GetResponse();
         return HandleResponse(response, method, includeBody, requestModifier, retryLevel);
       }

@@ -1,0 +1,7 @@
+BUILD NUGET PACKAGES
+
+* Update versions in project info (Package).
+* Select "Release" mode for compilation.
+* Update release note in project info.
+* Build
+* Right-click "Pack" on Ramone project.

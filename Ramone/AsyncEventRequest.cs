@@ -479,6 +479,7 @@ namespace Ramone
       else
       {
         ApplyHeadersReadyInterceptors(CurrentAsyncRequest);
+        ApplyDataSentInterceptors(CurrentAsyncRequest);
         CurrentAsyncRequest.BeginGetResponse(HandleResponse, state);
       }
 
@@ -507,6 +508,8 @@ namespace Ramone
         {
           WriteBody(requestStream, state.Request, state.IncludeBody);
         }
+
+        ApplyDataSentInterceptors(state.Request);
 
         state.Request.BeginGetResponse(HandleResponse, state);
       }

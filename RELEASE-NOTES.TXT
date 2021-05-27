@@ -7,7 +7,8 @@ Version 4.0.0.0
 * Now using Tavis UriTemplates as .NET Core does not have it's own UriTemplate.
   - This UriTemplate implementation behaves differently from the old one!
   - It will interpret /xxx as a root path reference (instead of simply concatenating it to the base URL).
-  - It does not add parameters which are not referenced in the template (instead of appending them to the URL)
+  - It does not add parameters which are not referenced in the template (instead of appending them to the URL).
+* Make sure IRequestInterceptor.DataSent is invoked in all valid situations (GitHub issue #50).
 
 
 Version 3.2.2.0

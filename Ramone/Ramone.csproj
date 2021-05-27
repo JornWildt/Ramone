@@ -5,13 +5,32 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/JornWildt/Ramone</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/JornWildt/Ramone.git</RepositoryUrl>
+    <RepositoryType>GIT</RepositoryType>
+    <PackageTags>REST JSON XML HTTP WEB API</PackageTags>
+    <Version>4.0.0.0</Version>
+    <Authors>Jørn Wildt and others</Authors>
+    <Company>Jørn Wildt</Company>
+    <Description>Ramone is a C# library that simplifies access to HTTP based Web APIs and REST
+services. It has a strong focus on REST and hypermedia and implements elements 
+of the Uniform Interface as first class citizens of the API.
+
+Ramone has built-in support for serialization of simple objects as JSON, XML, 
+URL-encoding and multipart encoding.
+</Description>
+    <Copyright>Copyright ©2010, Ramone team</Copyright>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="jose-jwt" Version="3.1.1" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="Tavis.UriTemplates" Version="1.1.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Properties\" />
   </ItemGroup>
 
 </Project>

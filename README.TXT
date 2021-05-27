@@ -3,7 +3,7 @@ Ramone - A C# library for working with REST services and Web APIs
 -----------------------------------------------------------------
 
 Ramone is a C# library that simplifies access to HTTP based Web APIs and REST
-services. It has a strong focus on REST amd hypermedia and implements elements 
+services. It has a strong focus on REST and hypermedia and implements elements 
 of the Uniform Interface as first class citizens of the API.
 
 Ramone has built-in support for serialization of simple objects as JSON, XML, 
