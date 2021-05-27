@@ -189,6 +189,16 @@ namespace Ramone
       return session.Bind(link.HRef);
     }
 
+    public static Request Bind(this ILink link, ISession session, object parameters = null)
+    {
+      return session.Bind(link.HRef, parameters);
+    }
+
+    public static Request Bind(this ISessionLink link, object parameters = null)
+    {
+      return link.Session.Bind(link.HRef, parameters);
+    }
+
     #endregion
 
 
