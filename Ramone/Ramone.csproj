@@ -18,9 +18,19 @@ services. It has a strong focus on REST and hypermedia and implements elements
 of the Uniform Interface as first class citizens of the API.
 
 Ramone has built-in support for serialization of simple objects as JSON, XML, 
-URL-encoding and multipart encoding.
-</Description>
+URL-encoding and multipart encoding.</Description>
     <Copyright>Copyright ©2010, Ramone team</Copyright>
+    <Product />
+    <PackageReleaseNotes>* Ramone now compiles as a .NET Core assemply targeted .Net Standard 2.0.
+* Split HTML and Atom codecs into individual assemblies and NuGet packages to avoid dependencies on
+  HtmlAgilityPack and System.ServiceModel.Syndication in the core.
+  - Use HtmlInitializer.Initialize() and AtomInitializer.Initialize() to register codecs.
+* Now using Tavis UriTemplates as .NET Core does not have it's own UriTemplate.
+  - This UriTemplate implementation behaves differently from the old one!
+  - It will interpret /xxx as a root path reference (instead of simply concatenating it to the base URL).
+  - It does not add parameters which are not referenced in the template (instead of appending them to the URL).
+* Make sure IRequestInterceptor.DataSent is invoked in all valid situations (GitHub issue #50).
+* Add support for Link.Bind(template_variables (GitHub issue #51).</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>

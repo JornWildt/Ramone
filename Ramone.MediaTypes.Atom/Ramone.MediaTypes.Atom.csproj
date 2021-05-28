@@ -2,14 +2,20 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <Authors>Jørn Wildt</Authors>
+    <Description>This package adds Atom feed (SyndicationFeed) support to Ramone.</Description>
+    <Copyright>Copyright ©2021, Ramone team</Copyright>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/JornWildt/Ramone</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/JornWildt/Ramone.git</RepositoryUrl>
+    <RepositoryType>GIT</RepositoryType>
+    <PackageTags>REST JSON XML HTTP WEB API ATOM</PackageTags>
+    <PackageReleaseNotes>Initial release after extracting from Ramone core NuGet package.</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="System.ServiceModel.Syndication" Version="5.0.0" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\Ramone\Ramone.csproj" />
+    <PackageReference Include="System.ServiceModel.Syndication" Version="5.0.0" />
   </ItemGroup>
 
 </Project>
