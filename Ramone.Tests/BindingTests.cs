@@ -272,8 +272,62 @@ namespace Ramone.Tests
     }
 
 
+    [Test]
+    public void CanBindLinkAsTemplate()
+    {
+      // Arrange
+      ILink link = new AtomLink("http://host/api/items/{id}", "template", MediaType.ApplicationXHtml, "Templated link");
+
+      // Act
+      Request req = link.Bind(Session, new { id = 5 });
+
+      // Assert
+      Assert.IsNotNull(req);
+      Assert.IsNotNull(req.Session);
+      Assert.AreEqual(new Uri("http://host/api/items/5"), req.Url);
+    }
+
+
+    [Test]
+    public void CanSelectAndBindLinkAsTemplate()
+    {
+      // Arrange
+      AtomLink link1 = new AtomLink("http://host/api/items/{id}", "template", MediaType.ApplicationXHtml, "Templated link");
+      AtomLink link2 = new AtomLink("http://host/api/other/stuff/1234", "other", MediaType.ApplicationXHtml, "Simple link");
+      
+      AtomLinkList links = new AtomLinkList();
+      links.Add(link1);
+      links.Add(link2);
+
+      // Act
+      Request req = links.Select("template").Bind(Session, new { id = 20 });
+
+      // Assert
+      Assert.IsNotNull(req);
+      Assert.IsNotNull(req.Session);
+      Assert.AreEqual(new Uri("http://host/api/items/20"), req.Url);
+    }
+
+
+    [Test]
+    public void CanBindSessionLinkAsTemplate()
+    {
+      // Arrange
+      AtomLink link = new AtomLink("http://host/api/items/{id}", "template", MediaType.ApplicationXHtml, "Templated link");
+      link.Session = Session;
+
+      // Act
+      Request req = link.Bind(new { id = 5 });
+
+      // Assert
+      Assert.IsNotNull(req);
+      Assert.IsNotNull(req.Session);
+      Assert.AreEqual(new Uri("http://host/api/items/5"), req.Url);
+    }
+
+
     /*
-    This us simply not possible with the .NET Uri + UriTemplate classes as the JSON will get unescaped at some
+    This us simply not possible with the UriTemplate classes as the JSON will get unescaped at some
     point and then interpreted as template variables.
 
     [Test]
