@@ -169,6 +169,8 @@ namespace Ramone
         }
       }
 
+      ApplyDataSentInterceptors(request);
+
       HttpWebResponse response = ((HttpWebResponse)await request.GetResponseAsync());
       Response r = HandleResponse(response, method, includeBody, requestModifier, retryLevel);
       return r;
