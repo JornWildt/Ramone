@@ -11,10 +11,8 @@
     <description>$description$</description>
     <copyright>$copyright$</copyright>
     <releaseNotes>
-<![CDATA[Version 3.2.2.0
----------------
-* Added "extraRequestArgs" to OAuth2_GetAccessTokenUsingOwnerUsernamePassword and OAuth2_GetAccessTokenFromAuthorizationCode.
-]]>
+<![CDATA[* Make sure IRequestInterceptor.DataSent is invoked in all valid situations (GitHub issue #50).
+* Add support for Link.Bind(template_variables (GitHub issue #51).]]>
 </releaseNotes>
     <language>en-US</language>
     <tags>rest http api web xml json</tags>

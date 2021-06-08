@@ -1,3 +1,9 @@
+Version 3.3.0.0
+---------------
+* Make sure IRequestInterceptor.DataSent is invoked in all valid situations (GitHub issue #50).
+* Add support for Link.Bind(template_variables (GitHub issue #51).
+
+
 Version 3.2.2.0
 ---------------
 * Added "extraRequestArgs" to OAuth2_GetAccessTokenUsingOwnerUsernamePassword and OAuth2_GetAccessTokenFromAuthorizationCode.
