@@ -202,6 +202,10 @@
       <Project>{b9dd3260-d1f0-4da5-9bd1-58a1ffcefad5}</Project>
       <Name>Ramone.MediaTypes.Html</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Ramone.OAuth2\Ramone.OAuth2.csproj">
+      <Project>{8cc811ec-d8f6-44d6-bf3c-026385956d5a}</Project>
+      <Name>Ramone.OAuth2</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Ramone.Tests.Common\Ramone.Tests.Common.csproj">
       <Project>{DD3B040F-3D75-4C46-BB54-CD06F594F894}</Project>
       <Name>Ramone.Tests.Common</Name>

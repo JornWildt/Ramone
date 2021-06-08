@@ -25,6 +25,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ramone.MediaTypes.Html", "R
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ramone.MediaTypes.Atom", "Ramone.MediaTypes.Atom\Ramone.MediaTypes.Atom.csproj", "{082E983F-80BB-4CFA-81AA-907199B5EEBB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ramone.OAuth2", "Ramone.OAuth2\Ramone.OAuth2.csproj", "{8CC811EC-D8F6-44D6-BF3C-026385956D5A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -101,6 +103,18 @@ Global
 		{082E983F-80BB-4CFA-81AA-907199B5EEBB}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{082E983F-80BB-4CFA-81AA-907199B5EEBB}.Release|x86.ActiveCfg = Release|Any CPU
 		{082E983F-80BB-4CFA-81AA-907199B5EEBB}.Release|x86.Build.0 = Release|Any CPU
+		{8CC811EC-D8F6-44D6-BF3C-026385956D5A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8CC811EC-D8F6-44D6-BF3C-026385956D5A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8CC811EC-D8F6-44D6-BF3C-026385956D5A}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{8CC811EC-D8F6-44D6-BF3C-026385956D5A}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{8CC811EC-D8F6-44D6-BF3C-026385956D5A}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{8CC811EC-D8F6-44D6-BF3C-026385956D5A}.Debug|x86.Build.0 = Debug|Any CPU
+		{8CC811EC-D8F6-44D6-BF3C-026385956D5A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8CC811EC-D8F6-44D6-BF3C-026385956D5A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8CC811EC-D8F6-44D6-BF3C-026385956D5A}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{8CC811EC-D8F6-44D6-BF3C-026385956D5A}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{8CC811EC-D8F6-44D6-BF3C-026385956D5A}.Release|x86.ActiveCfg = Release|Any CPU
+		{8CC811EC-D8F6-44D6-BF3C-026385956D5A}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
