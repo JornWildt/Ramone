@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\NUnit.3.13.2\build\NUnit.props" Condition="Exists('..\packages\NUnit.3.13.2\build\NUnit.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -13,6 +14,8 @@
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -35,13 +38,20 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="nunit.framework, Version=3.13.2.0, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
+      <HintPath>..\packages\NUnit.3.13.2\lib\net45\nunit.framework.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="Tavis.UriTemplates, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Tavis.UriTemplates.1.1.1\lib\Net45\Tavis.UriTemplates.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationError.cs" />
@@ -52,6 +62,8 @@
     <Compile Include="CMS\Dossier.cs" />
     <Compile Include="CMS\DossierDocumentList.cs" />
     <Compile Include="CMS\Party.cs" />
+    <Compile Include="Codecs\CatAsHtmlCodec.cs" />
+    <Compile Include="Codecs\CatAsTextCodec.cs" />
     <Compile Include="ComplexClassForSerializationTests.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="FormArgs.cs" />
@@ -67,16 +79,35 @@
     <Compile Include="MultipartData.cs" />
     <Compile Include="Person.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SetupFixture.cs" />
     <Compile Include="SlowResource.cs" />
+    <Compile Include="TestHelper.cs" />
     <Compile Include="UnregisteredClass.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Ramone.MediaTypes.Atom\Ramone.MediaTypes.Atom.csproj">
+      <Project>{082e983f-80bb-4cfa-81aa-907199b5eebb}</Project>
+      <Name>Ramone.MediaTypes.Atom</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Ramone.MediaTypes.Html\Ramone.MediaTypes.Html.csproj">
+      <Project>{b9dd3260-d1f0-4da5-9bd1-58a1ffcefad5}</Project>
+      <Name>Ramone.MediaTypes.Html</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Ramone\Ramone.csproj">
       <Project>{B20077D3-7F5D-4EF5-AF35-22CA78C8790F}</Project>
       <Name>Ramone</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\NUnit.3.13.2\build\NUnit.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\NUnit.3.13.2\build\NUnit.props'))" />
+  </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

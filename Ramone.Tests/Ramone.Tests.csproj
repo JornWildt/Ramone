@@ -142,8 +142,6 @@
     <Compile Include="AuthenticationHandlerTests.cs" />
     <Compile Include="AuthenticationTests.cs" />
     <Compile Include="CodecManagerTests.cs" />
-    <Compile Include="Codecs\CatAsTextCodec.cs" />
-    <Compile Include="Codecs\CatAsHtmlCodec.cs" />
     <Compile Include="ConfigurationTests.cs" />
     <Compile Include="ContentNegotiationTests.cs" />
     <Compile Include="CustomHeaderTests.cs" />
@@ -248,7 +246,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="NUnit">
-      <Version>3.12.0</Version>
+      <Version>3.13.2</Version>
     </PackageReference>
     <PackageReference Include="NUnit3TestAdapter">
       <Version>3.17.0</Version>

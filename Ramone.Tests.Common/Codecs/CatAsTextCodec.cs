@@ -4,9 +4,9 @@ using System.Text;
 using Ramone.Tests.Common;
 
 
-namespace Ramone.Tests.Codecs
+namespace Ramone.Tests.Common.Codecs
 {
-  public class CatAsHtmlCodec : IMediaTypeReader, IMediaTypeWriter
+  public class CatAsTextCodec : IMediaTypeReader, IMediaTypeWriter
   {
     #region IMediaTypeReader Members
 
@@ -22,6 +22,7 @@ namespace Ramone.Tests.Codecs
 
     #endregion
 
+
     #region IMediaTypeWriter Members
 
     public void WriteTo(WriterContext context)
@@ -29,8 +30,7 @@ namespace Ramone.Tests.Codecs
       Cat c = (Cat)context.Data;
       using (StreamWriter w = new StreamWriter(context.HttpStream, Encoding.UTF8))
       {
-        // Absolute meaningless post data
-        w.Write(string.Format("<html><body><p>{0}</p></body></html>", c.Name));
+        w.Write(c.Name);
       }
     }
 
