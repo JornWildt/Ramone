@@ -42,7 +42,7 @@ namespace Ramone.Utility
 
       string data = reader.ReadToEnd();
       Encoding enc = GetEncoding(settings);
-      NameValueCollection values = HttpUtility.ParseQueryString(data, enc);
+      NameValueCollection values = UrlUtility.ParseQueryString(data, enc);
       return Serializer.Deserialize(values, settings);
     }
 

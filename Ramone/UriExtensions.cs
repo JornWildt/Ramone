@@ -26,7 +26,7 @@ namespace Ramone
 
       Condition.Requires(url, "url").IsNotNull();
 
-      NameValueCollection paramColl = HttpUtility.ParseQueryString(url.Query);
+      NameValueCollection paramColl = UrlUtility.ParseQueryString(url.Query);
 
       if (parameters is IDictionary<string, string>)
       {
