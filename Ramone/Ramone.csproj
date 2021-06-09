@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.0;netcoreapp3.1</TargetFrameworks>
+    <TargetFrameworks>netstandard2.0</TargetFrameworks>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -10,7 +10,7 @@
     <RepositoryUrl>https://github.com/JornWildt/Ramone.git</RepositoryUrl>
     <RepositoryType>GIT</RepositoryType>
     <PackageTags>REST JSON XML HTTP WEB API</PackageTags>
-    <Version>4.1.0.0</Version>
+    <Version>4.1.1.0</Version>
     <Authors>Jørn Wildt and others</Authors>
     <Company>Jørn Wildt</Company>
     <Description>Ramone is a C# library that simplifies access to HTTP based Web APIs and REST
@@ -25,15 +25,16 @@ URL-encoding and multipart encoding.</Description>
 * Split HTML and Atom codecs into individual assemblies and NuGet packages to avoid dependencies on
   HtmlAgilityPack and System.ServiceModel.Syndication in the core.
   - Use HtmlInitializer.Initialize() and AtomInitializer.Initialize() to register codecs.
-* Split out OAuth2 implementation to avoid dependencies on jose-jwt and thus a ton of crypto libraries in the Ramone core.
+* [4.1.0] Split out OAuth2 implementation to avoid dependencies on jose-jwt and thus a ton of crypto libraries in the Ramone core.
+* [4.1.1] Fix issue with .Net Core not flushing the request stream before closing it.
 * Now using Tavis UriTemplates as .NET Core does not have it's own UriTemplate.
   - This UriTemplate implementation behaves differently from the old one!
   - It will interpret /xxx as a root path reference (instead of simply concatenating it to the base URL).
   - It does not add parameters which are not referenced in the template (instead of appending them to the URL).
 * Make sure IRequestInterceptor.DataSent is invoked in all valid situations (GitHub issue #50).
 * Add support for Link.Bind(template_variables (GitHub issue #51).</PackageReleaseNotes>
-    <AssemblyVersion>4.1.0.0</AssemblyVersion>
-    <FileVersion>4.1.0.0</FileVersion>
+    <AssemblyVersion>4.1.1.0</AssemblyVersion>
+    <FileVersion>4.1.1.0</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>
