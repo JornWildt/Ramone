@@ -12,7 +12,7 @@ namespace Ramone.Tests.Server
       if (Request.Headers["Authorization"] != null)
       {
         string b64 = Request.Headers["Authorization"].Substring(5);
-        string[] unamepasswd = Encoding.GetEncoding(1252).GetString(Convert.FromBase64String(b64)).Split(':');
+        string[] unamepasswd = Encoding.GetEncoding(28591).GetString(Convert.FromBase64String(b64)).Split(':');
         if (unamepasswd[0] == "John" && unamepasswd[1] == "magic")
           authorized = true;
         else if (unamepasswd[0] == "Jürgen Wølst" && unamepasswd[1] == "hmpf")

@@ -16,7 +16,7 @@ namespace Ramone
 
     public static Request BasicAuthentication(this Request request, string username, string password)
     {
-      string token = Convert.ToBase64String(Encoding.GetEncoding(1252).GetBytes(username + ":" + password));
+      string token = Convert.ToBase64String(Encoding.GetEncoding(28591).GetBytes(username + ":" + password));
       request.Header("Authorization", "BASIC " + token);
       return request;
     }
