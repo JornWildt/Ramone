@@ -49,7 +49,10 @@ namespace Ramone
 
       string q = paramColl.ToString();
 
-      return new Uri(url.GetLeftPart(UriPartial.Path) + "?" + q);
+      if (string.IsNullOrWhiteSpace(q))
+        return url;
+      else
+        return new Uri(url.GetLeftPart(UriPartial.Path) + "?" + q);
     }
   }
 }

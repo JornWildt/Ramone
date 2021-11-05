@@ -285,14 +285,20 @@ namespace Ramone
 
     public static Uri BindByName(this UriTemplate template, Uri baseUri, IDictionary<string, string> parameters)
     {
-      //// Reset before creating
-      //foreach (var parameter in template.GetParameterNames())
-      //  template.ClearParameter(parameter);
+      IDictionary<string, string> unusedParameters = new Dictionary<string,string>(parameters);
 
-      foreach (var item in parameters)
-        template = template.AddParameter(item.Key, item.Value);
+      foreach (var p in template.GetParameterNames())
+        if (parameters.TryGetValue(p, out string v))
+        {
+          template = template.AddParameter(p, v);
+          unusedParameters.Remove(p);
+        }
 
-      return new Uri(baseUri, template.Resolve());
+      var url = new Uri(baseUri, template.Resolve());
+
+      url = url.AddQueryParameters(unusedParameters);
+
+      return url;
     }
   }
 }

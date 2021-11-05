@@ -21,10 +21,13 @@ namespace Ramone.Tests
     NameValueCollection NameValueCollectionParameters = new NameValueCollection();
 
     // Templated inputs
-    Template UriTemplate_Path     = new Template("users/{a}{?b,c}");
-    string   String_TemplatedPath = "users/{a}{?b,c}";
-    string   String_TemplatedUrl  = "http://home/users/{a}{?b,c}";
-    Uri      Uri_TemplatedUrl     = new Uri("http://home/users/{a}{?b,c}");
+    // - merge "a" into path.
+    // - merge "b" into query parameter
+    // - add unreferenced "c" automatically as extra query parameter
+    Template UriTemplate_Path     = new Template("users/{a}{?b}");
+    string   String_TemplatedPath = "users/{a}{?b}";
+    string   String_TemplatedUrl  = "http://home/users/{a}{?b}";
+    Uri      Uri_TemplatedUrl     = new Uri("http://home/users/{a}{?b}");
 
 
     protected override void TestFixtureSetUp()
