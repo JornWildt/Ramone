@@ -1,7 +1,10 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFrameworks>netstandard2.0;netcoreapp3.1;net48</TargetFrameworks>
+  </PropertyGroup>
+
+  <PropertyGroup>
     <Authors>Jørn Wildt</Authors>
     <Description>This package adds OAuth2 support to Ramone.</Description>
     <Copyright>Copyright ©2021, Ramone team</Copyright>
@@ -10,7 +13,8 @@
     <RepositoryUrl>https://github.com/JornWildt/Ramone.git</RepositoryUrl>
     <RepositoryType>GIT</RepositoryType>
     <PackageTags>OAUTH2</PackageTags>
-    <PackageReleaseNotes>Initial release after extracting from Ramone core NuGet package.</PackageReleaseNotes>
+    <PackageReleaseNotes>Multi target to avoid funny issues with missing System.Object.</PackageReleaseNotes>
+    <Version>1.1.0</Version>
   </PropertyGroup>
 
   <ItemGroup>

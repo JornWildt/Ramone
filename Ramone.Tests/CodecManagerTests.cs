@@ -2,12 +2,11 @@
 using NUnit.Framework;
 using Ramone.Implementation;
 using Ramone.MediaTypes.FormUrlEncoded;
-using Ramone.MediaTypes.MultipartFormData;
-using Ramone.Tests.Codecs;
-using Ramone.Tests.Common;
-using Ramone.MediaTypes.Xml;
 using Ramone.MediaTypes.Json;
-
+using Ramone.MediaTypes.MultipartFormData;
+using Ramone.MediaTypes.Xml;
+using Ramone.Tests.Common;
+using Ramone.Tests.Common.Codecs;
 
 namespace Ramone.Tests
 {

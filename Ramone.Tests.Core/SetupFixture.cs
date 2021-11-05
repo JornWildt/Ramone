@@ -1,6 +1,6 @@
 ﻿using NUnit.Framework;
 
-namespace Ramone.Tests
+namespace Ramone.Tests.Core
 {
   [SetUpFixture]
   public class SetupFixture : Common.SetupFixture

@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
+using System.Net;
 using System.Security.Cryptography;
 using System.Text;
 using System.Web;
+using Ramone.Utility;
 using Ramone.Utility.Validation;
 
 
@@ -158,7 +160,7 @@ namespace Ramone.OAuth1
       switch (signatureType)
       {
         case SignatureTypes.PLAINTEXT: // FIXME: Is this correct?
-          return HttpUtility.UrlEncode(string.Format("{0}&{1}", consumerSecret, tokenSecret));
+          return WebUtility.UrlEncode(string.Format("{0}&{1}", consumerSecret, tokenSecret));
         case SignatureTypes.HMACSHA1:
           string signatureBase = GenerateSignatureBase(url, consumerKey, callback, token, httpMethod, timeStamp, nonce, HMACSHA1SignatureType, out normalizedUrl, out normalizedRequestParameters);
           Log("Signaturebase: " + signatureBase);
@@ -232,7 +234,7 @@ namespace Ramone.OAuth1
         query = query.Remove(0, 1);
       }
 
-      NameValueCollection parameters = HttpUtility.ParseQueryString(query);
+      NameValueCollection parameters = UrlUtility.ParseQueryString(query);
 
       return new List<QueryParameter>(
                    parameters.Cast<string>()

@@ -1,4 +1,4 @@
-﻿namespace Ramone.Tests
+﻿namespace Ramone.Tests.Core
 {
   public class TestHelper : Common.TestHelper
   {

@@ -1,8 +1,5 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using NUnit.Framework;
-using Ramone.Implementation;
-using Ramone.Tests.Codecs;
 using Ramone.Tests.Common;
 
 

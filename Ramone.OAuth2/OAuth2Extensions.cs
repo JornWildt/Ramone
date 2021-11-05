@@ -95,7 +95,7 @@ namespace Ramone.OAuth2
 
       OAuth2SessionState sessionState = session.OAuth2_GetState();
 
-      NameValueCollection parameters = HttpUtility.ParseQueryString(new Uri(redirectUrl).Query);
+      NameValueCollection parameters = UrlUtility.ParseQueryString(new Uri(redirectUrl).Query);
 
       string state = parameters["state"];
       if (sessionState.AuthorizationState == null || state != sessionState.AuthorizationState)

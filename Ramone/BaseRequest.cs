@@ -256,7 +256,8 @@ namespace Ramone
         ApplyRequestStreamWrappers(requestStream, request);
 
         BodyCodec.WriteTo(new WriterContext(requestStream, BodyData, request, Session, CodecParameters));
-        request.GetRequestStream().Close();
+        requestStream.Flush();
+        requestStream.Close();
       }
       else
       {

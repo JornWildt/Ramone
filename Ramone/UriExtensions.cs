@@ -26,7 +26,7 @@ namespace Ramone
 
       Condition.Requires(url, "url").IsNotNull();
 
-      NameValueCollection paramColl = HttpUtility.ParseQueryString(url.Query);
+      NameValueCollection paramColl = UrlUtility.ParseQueryString(url.Query);
 
       if (parameters is IDictionary<string, string>)
       {
@@ -49,7 +49,10 @@ namespace Ramone
 
       string q = paramColl.ToString();
 
-      return new Uri(url.GetLeftPart(UriPartial.Path) + "?" + q);
+      if (string.IsNullOrWhiteSpace(q))
+        return url;
+      else
+        return new Uri(url.GetLeftPart(UriPartial.Path) + "?" + q);
     }
   }
 }
