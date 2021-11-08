@@ -1,3 +1,27 @@
+Version 4.1.5.0
+---------------
+* Rebuild with the right code - was missing code from previous versions.
+
+Version 4.1.4.0
+---------------
+* Use code page 28591 instead of 1252 for basic auth base64 encoding as 1252 is not supported on .NET Core.
+
+Version 4.1.3.0
+---------------
+* Add parameters, not referenced in URI template, automatically as query parameters (like Ramone did before moving to Tavis UriTemplate).
+
+Version 4.1.2.0
+---------------
+* Multi target to avoid funny issues with System.Object not existing.
+
+Version 4.1.1.0
+---------------
+* Fix issue with .Net Core not flushing the request stream before closing it.
+
+Version 4.1.0.0
+---------------
+* Split out OAuth2 implementation to avoid dependencies on jose-jwt and thus a ton of crypto libraries in the Ramone core.
+
 Version 4.0.0.0
 ---------------
 * Ramone now compiles as a .NET Core assemply targeted .Net Standard 2.0.
