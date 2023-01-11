@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.IO;
 using System.Net;
+using System.Net.Http.Headers;
 
 namespace Ramone
 {
@@ -408,20 +409,18 @@ namespace Ramone
     }
 
 
-    private bool HandleUnauthorized(HttpWebResponse response, WebException ex)
+    private bool HandleUnauthorized(HttpWebResponse response)
     {
       string authenticationHeader = response.Headers["WWW-Authenticate"];
-      if (!string.IsNullOrEmpty(authenticationHeader))
-      {
-        int pos = authenticationHeader.IndexOf(' ');
-        string scheme = authenticationHeader.Substring(0, pos);
-        string parameters = authenticationHeader.Substring(pos + 1);
-        IAuthorizationHandler handler = Session.AuthorizationDispatcher.Get(scheme);
-        if (handler != null && handler.HandleAuthorizationRequest(new AuthorizationContext(Session, response, scheme, parameters)))
-          return true;
-      }
 
-      return false;
+      if (!AuthenticationHeaderValue.TryParse(authenticationHeader, out AuthenticationHeaderValue authenticationHeaderValue))
+        return false;
+
+      IAuthorizationHandler handler = Session.AuthorizationDispatcher.Get(authenticationHeaderValue.Scheme);
+
+      return handler != null
+          && handler.HandleAuthorizationRequest(
+               new AuthorizationContext(Session, response, authenticationHeaderValue.Scheme, authenticationHeaderValue.Parameter));
     }
   }
 }
