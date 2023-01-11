@@ -1,4 +1,4 @@
-﻿using Ramone.Utility.Validation;
+using Ramone.Utility.Validation;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
@@ -388,7 +388,7 @@ namespace Ramone
       {
         if (response.StatusCode == HttpStatusCode.Unauthorized)
         {
-          if (!HandleUnauthorized(response, ex))
+          if (!HandleUnauthorized(response))
             return new HandleWebExceptionResult();
 
           if (retryLevel == 0)
