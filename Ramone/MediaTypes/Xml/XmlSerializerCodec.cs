@@ -2,7 +2,7 @@
 using System.Xml.Serialization;
 using System;
 using System.Collections.Generic;
-using System.Collections.Concurrent;
+
 
 namespace Ramone.MediaTypes.Xml
 {
@@ -10,12 +10,12 @@ namespace Ramone.MediaTypes.Xml
   {
     // The XmlSerializer is thread safe according to the online docs, so it should be safe
     // to share instances.
-    static ConcurrentDictionary<Type, XmlSerializer> Serializers { get; set; }
+    static Dictionary<Type, XmlSerializer> Serializers { get; set; }
 
 
     static XmlSerializerCodec()
     {
-      Serializers = new ConcurrentDictionary<Type, XmlSerializer>();
+      Serializers = new Dictionary<Type, XmlSerializer>();
     }
 
 
@@ -38,7 +38,11 @@ namespace Ramone.MediaTypes.Xml
 
     protected XmlSerializer GetSerializer(Type t)
     {
-      return Serializers.GetOrAdd(t, CreateSerializer);
+      if (!Serializers.ContainsKey(t))
+      {
+        Serializers[t] = CreateSerializer(t);
+      }
+      return Serializers[t];
     }
 
 
