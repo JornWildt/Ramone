@@ -1,7 +1,3 @@
-# cBrain contribution guide
-
-There are currently 2 branches *master* and *dev*. The branch *dev* represents our synchronization with the original fork. As such changes which we expect to push back should be made in *dev* and subsequently merged to *master*. Changes which are purely internal, such as our own versioning, should be made in *master*.
-
 -----------------------------------------------------------------
 Ramone - A C# library for working with REST services and Web APIs
 -----------------------------------------------------------------
