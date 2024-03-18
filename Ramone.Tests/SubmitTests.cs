@@ -27,7 +27,7 @@ namespace Ramone.Tests
       using (var r = DossierReq.Method("Get").Submit<Dossier>())
       {
         // Assert
-        Assert.AreEqual(8, r.Body.Id);
+        Assert.That(r.Body.Id, Is.EqualTo(8));
       }
     }
 
@@ -43,7 +43,7 @@ namespace Ramone.Tests
             .OnComplete(() => wh.Set())
             .Submit<Dossier>(r => 
             {
-              Assert.AreEqual(8, r.Body.Id);
+              Assert.That(r.Body.Id, Is.EqualTo(8));
             });
         });
     }
@@ -97,7 +97,7 @@ namespace Ramone.Tests
         Dossier dossier = r.Decode<Dossier>();
 
         // Assert
-        Assert.AreEqual(8, dossier.Id);
+        Assert.That(dossier.Id, Is.EqualTo(8));
       }
     }
 
@@ -114,7 +114,7 @@ namespace Ramone.Tests
           .Submit(r =>
           {
             Dossier dossier = r.Decode<Dossier>();
-            Assert.AreEqual(8, dossier.Id);
+            Assert.That(dossier.Id, Is.EqualTo(8));
           });
       });
     }

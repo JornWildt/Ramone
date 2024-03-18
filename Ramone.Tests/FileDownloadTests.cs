@@ -23,7 +23,7 @@ namespace Ramone.Tests
 
           // Assert
           string s = File.ReadAllText(file.Path);
-          Assert.AreEqual("1234567890", s);
+          Assert.That(s, Is.EqualTo("1234567890"));
         }
       }
     }
@@ -46,7 +46,7 @@ namespace Ramone.Tests
 
                 // Assert
                 string s = File.ReadAllText(file.Path);
-                Assert.AreEqual("1234567890", s);
+                Assert.That(s, Is.EqualTo("1234567890"));
                 wh.Set();
               });
           });

@@ -19,7 +19,7 @@ namespace Ramone.Tests.MediaTypes
       using (var s = stringReq.Accept("application/octet-stream").Get<string>())
       {
         // Assert
-        Assert.AreEqual("Hello ÆØÅ", s.Body);
+        Assert.That(s.Body, Is.EqualTo("Hello ÆØÅ"));
       }
     }
     
@@ -35,7 +35,7 @@ namespace Ramone.Tests.MediaTypes
       using (var s = stringReq.AcceptJson().Get<string>())
       {
         // Assert
-        StringAssert.StartsWith("{\"Name\":\"Henry ÆØÅ\",\"DateOfBirth\":\"2012-11-24T09:11:13\"", s.Body);
+        Assert.That(s.Body, Does.StartWith("{\"Name\":\"Henry ÆØÅ\",\"DateOfBirth\":\"2012-11-24T09:11:13\""));
       }
     }
 
@@ -50,7 +50,7 @@ namespace Ramone.Tests.MediaTypes
       using (var s = stringReq.AsXml().Accept("application/xml").Post<string>("<?xml version=\"1.0\"?><Aaa>Anders</Aaa>"))
       {
         // Assert
-        StringAssert.StartsWith("<?xml version=\"1.0\"?><Aaa>Anders</Aaa>", s.Body);
+        Assert.That(s.Body, Does.StartWith("<?xml version=\"1.0\"?><Aaa>Anders</Aaa>"));
       }
     }
 

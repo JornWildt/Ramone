@@ -53,16 +53,16 @@ namespace Ramone.Tests.HyperMedia.Html
       List<Anchor> links = HtmlDoc.Anchors(BaseUrl).ToList();
 
       // Assert
-      Assert.AreEqual(5, links.Count);
+      Assert.That(links.Count, Is.EqualTo(5));
 
       ILink l1 = links[0];
-      Assert.AreEqual("http://link1/", l1.HRef.AbsoluteUri);
-      Assert.AreEqual("Link no. 1", l1.Title);
+      Assert.That(l1.HRef.AbsoluteUri, Is.EqualTo("http://link1/"));
+      Assert.That(l1.Title, Is.EqualTo("Link no. 1"));
       Assert.Contains("next", l1.RelationTypes.ToList());
 
       ILink l2 = links[2];
-      Assert.AreEqual("http://link2/", l2.HRef.AbsoluteUri);
-      Assert.AreEqual("Link no. 2", l2.Title);
+      Assert.That(l2.HRef.AbsoluteUri, Is.EqualTo("http://link2/"));
+      Assert.That(l2.Title, Is.EqualTo("Link no. 2"));
       Assert.Contains("up", l2.RelationTypes.ToList());
     }
 
@@ -77,11 +77,11 @@ namespace Ramone.Tests.HyperMedia.Html
       List<Anchor> links = node.Anchors(BaseUrl).ToList();
 
       // Assert
-      Assert.AreEqual(2, links.Count);
+      Assert.That(links.Count, Is.EqualTo(2));
       ILink l1 = links[0];
 
-      Assert.AreEqual("http://link2/", l1.HRef.AbsoluteUri);
-      Assert.AreEqual("Link no. 2", l1.Title);
+      Assert.That(l1.HRef.AbsoluteUri, Is.EqualTo("http://link2/"));
+      Assert.That(l1.Title, Is.EqualTo("Link no. 2"));
       Assert.Contains("up", l1.RelationTypes.ToList());
     }
 
@@ -94,12 +94,12 @@ namespace Ramone.Tests.HyperMedia.Html
       ILink link2 = HtmlDoc.Anchors(BaseUrl).Select("up");
 
       // Assert
-      Assert.AreEqual("http://link1/", link1.HRef.AbsoluteUri);
-      Assert.AreEqual("Link no. 1", link1.Title);
+      Assert.That(link1.HRef.AbsoluteUri, Is.EqualTo("http://link1/"));
+      Assert.That(link1.Title, Is.EqualTo("Link no. 1"));
       Assert.Contains("next", link1.RelationTypes.ToList());
 
-      Assert.AreEqual("http://link2/", link2.HRef.AbsoluteUri);
-      Assert.AreEqual("Link no. 2", link2.Title);
+      Assert.That(link2.HRef.AbsoluteUri, Is.EqualTo("http://link2/"));
+      Assert.That(link2.Title, Is.EqualTo("Link no. 2"));
       Assert.Contains("up", link2.RelationTypes.ToList());
     }
 
@@ -114,8 +114,8 @@ namespace Ramone.Tests.HyperMedia.Html
       ILink link = node.Anchors(BaseUrl).Select("up");
 
       // Assert
-      Assert.AreEqual("http://link2/", link.HRef.AbsoluteUri);
-      Assert.AreEqual("Link no. 2", link.Title);
+      Assert.That(link.HRef.AbsoluteUri, Is.EqualTo("http://link2/"));
+      Assert.That(link.Title, Is.EqualTo("Link no. 2"));
       Assert.Contains("up", link.RelationTypes.ToList());
     }
 
@@ -138,7 +138,7 @@ namespace Ramone.Tests.HyperMedia.Html
       ILink link1 = HtmlDoc.Anchors(BaseUrl).Select("last");
 
       // Assert
-      Assert.AreEqual(new Uri(BaseUrl, "last-page.html"), link1.HRef.AbsoluteUri);
+      Assert.That(link1.HRef.AbsoluteUri, Is.EqualTo(new Uri(BaseUrl, "last-page.html").AbsoluteUri));
       Assert.Contains("last", link1.RelationTypes.ToList());
     }
 
@@ -167,14 +167,14 @@ namespace Ramone.Tests.HyperMedia.Html
       ILink l8 = doc.DocumentNode.SelectNodes("//a").First().Anchor((Response)null);
 
       // Assert
-      Assert.AreEqual("http://link1/", l1.HRef.AbsoluteUri);
-      Assert.AreEqual("http://link1/", l2.HRef.AbsoluteUri);
-      Assert.AreEqual("http://link1/", l3.HRef.AbsoluteUri);
-      Assert.AreEqual("http://link1/", l4.HRef.AbsoluteUri);
-      Assert.AreEqual("http://link1/", l5.HRef.AbsoluteUri);
-      Assert.AreEqual("http://link1/", l6.HRef.AbsoluteUri);
-      Assert.AreEqual("http://link1/", l7.HRef.AbsoluteUri);
-      Assert.AreEqual("http://link1/", l8.HRef.AbsoluteUri);
+      Assert.That(l1.HRef.AbsoluteUri, Is.EqualTo("http://link1/"));
+      Assert.That(l2.HRef.AbsoluteUri, Is.EqualTo("http://link1/"));
+      Assert.That(l3.HRef.AbsoluteUri, Is.EqualTo("http://link1/"));
+      Assert.That(l4.HRef.AbsoluteUri, Is.EqualTo("http://link1/"));
+      Assert.That(l5.HRef.AbsoluteUri, Is.EqualTo("http://link1/"));
+      Assert.That(l6.HRef.AbsoluteUri, Is.EqualTo("http://link1/"));
+      Assert.That(l7.HRef.AbsoluteUri, Is.EqualTo("http://link1/"));
+      Assert.That(l8.HRef.AbsoluteUri, Is.EqualTo("http://link1/"));
     }
 
 
@@ -185,13 +185,13 @@ namespace Ramone.Tests.HyperMedia.Html
       List<Link> links = HtmlDoc.Links(BaseUrl).ToList();
 
       // Assert
-      Assert.AreEqual(2, links.Count);
+      Assert.That(links.Count, Is.EqualTo(2));
 
       ILink l1 = links[0];
-      Assert.AreEqual("http://example.com/", l1.HRef.AbsoluteUri);
-      Assert.AreEqual("Content search", l1.Title);
+      Assert.That(l1.HRef.AbsoluteUri, Is.EqualTo("http://example.com/"));
+      Assert.That(l1.Title, Is.EqualTo("Content search"));
       Assert.Contains("search", l1.RelationTypes.ToList());
-      Assert.AreEqual("application/opensearchdescription+xml", (string)l1.MediaType);
+      Assert.That((string)l1.MediaType, Is.EqualTo("application/opensearchdescription+xml"));
     }
 
 
@@ -202,13 +202,13 @@ namespace Ramone.Tests.HyperMedia.Html
       List<Link> links = HtmlDoc.DocumentNode.SelectNodes("//head").First().Links(BaseUrl).ToList();
 
       // Assert
-      Assert.AreEqual(2, links.Count);
+      Assert.That(links.Count, Is.EqualTo(2));
 
       ILink l1 = links[0];
-      Assert.AreEqual("http://example.com/", l1.HRef.AbsoluteUri);
-      Assert.AreEqual("Content search", l1.Title);
+      Assert.That(l1.HRef.AbsoluteUri, Is.EqualTo("http://example.com/"));
+      Assert.That(l1.Title, Is.EqualTo("Content search"));
       Assert.Contains("search", l1.RelationTypes.ToList());
-      Assert.AreEqual("application/opensearchdescription+xml", (string)l1.MediaType);
+      Assert.That((string)l1.MediaType, Is.EqualTo("application/opensearchdescription+xml"));
     }
 
 
@@ -219,13 +219,13 @@ namespace Ramone.Tests.HyperMedia.Html
       List<Link> links = HtmlDoc.DocumentNode.SelectNodes("//head").Links(BaseUrl).ToList();
 
       // Assert
-      Assert.AreEqual(2, links.Count);
+      Assert.That(links.Count, Is.EqualTo(2));
 
       ILink l1 = links[0];
-      Assert.AreEqual("http://example.com/", l1.HRef.AbsoluteUri);
-      Assert.AreEqual("Content search", l1.Title);
+      Assert.That(l1.HRef.AbsoluteUri, Is.EqualTo("http://example.com/"));
+      Assert.That(l1.Title, Is.EqualTo("Content search"));
       Assert.Contains("search", l1.RelationTypes.ToList());
-      Assert.AreEqual("application/opensearchdescription+xml", (string)l1.MediaType);
+      Assert.That((string)l1.MediaType, Is.EqualTo("application/opensearchdescription+xml"));
     }
 
 
@@ -236,10 +236,10 @@ namespace Ramone.Tests.HyperMedia.Html
       ILink link = HtmlDoc.DocumentNode.SelectNodes("//head/link").First().Link(BaseUrl);
 
       // Assert
-      Assert.AreEqual("http://example.com/", link.HRef.AbsoluteUri);
-      Assert.AreEqual("Content search", link.Title);
+      Assert.That(link.HRef.AbsoluteUri, Is.EqualTo("http://example.com/"));
+      Assert.That(link.Title, Is.EqualTo("Content search"));
       Assert.Contains("search", link.RelationTypes.ToList());
-      Assert.AreEqual("application/opensearchdescription+xml", (string)link.MediaType);
+      Assert.That((string)link.MediaType, Is.EqualTo("application/opensearchdescription+xml"));
     }
 
 
@@ -250,10 +250,10 @@ namespace Ramone.Tests.HyperMedia.Html
       List<Link> links = HtmlDoc.Links(BaseUrl).ToList();
 
       // Assert
-      Assert.AreEqual(2, links.Count);
+      Assert.That(links.Count, Is.EqualTo(2));
 
       ILink l1 = links[1];
-      Assert.AreEqual(new Uri(BaseUrl, "mystyle.css"), l1.HRef);
+      Assert.That(l1.HRef, Is.EqualTo(new Uri(BaseUrl, "mystyle.css")));
       Assert.Contains("stylesheet", l1.RelationTypes.ToList());
     }
 
@@ -285,14 +285,14 @@ namespace Ramone.Tests.HyperMedia.Html
       ILink l8 = doc.DocumentNode.SelectNodes("//link").First().Link((Response)null);
 
       // Assert
-      Assert.AreEqual("http://example.com/", l1.HRef.AbsoluteUri);
-      Assert.AreEqual("http://example.com/", l2.HRef.AbsoluteUri);
-      Assert.AreEqual("http://example.com/", l3.HRef.AbsoluteUri);
-      Assert.AreEqual("http://example.com/", l4.HRef.AbsoluteUri);
-      Assert.AreEqual("http://example.com/", l5.HRef.AbsoluteUri);
-      Assert.AreEqual("http://example.com/", l6.HRef.AbsoluteUri);
-      Assert.AreEqual("http://example.com/", l7.HRef.AbsoluteUri);
-      Assert.AreEqual("http://example.com/", l8.HRef.AbsoluteUri);
+      Assert.That(l1.HRef.AbsoluteUri, Is.EqualTo("http://example.com/"));
+      Assert.That(l2.HRef.AbsoluteUri, Is.EqualTo("http://example.com/"));
+      Assert.That(l3.HRef.AbsoluteUri, Is.EqualTo("http://example.com/"));
+      Assert.That(l4.HRef.AbsoluteUri, Is.EqualTo("http://example.com/"));
+      Assert.That(l5.HRef.AbsoluteUri, Is.EqualTo("http://example.com/"));
+      Assert.That(l6.HRef.AbsoluteUri, Is.EqualTo("http://example.com/"));
+      Assert.That(l7.HRef.AbsoluteUri, Is.EqualTo("http://example.com/"));
+      Assert.That(l8.HRef.AbsoluteUri, Is.EqualTo("http://example.com/"));
     }
   }
 }

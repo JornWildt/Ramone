@@ -25,7 +25,7 @@ namespace Ramone.Tests.HyperMedia
 
           // Assert
           Assert.IsNotNull(documents);
-          Assert.AreEqual(2, documents.Count);
+          Assert.That(documents.Count, Is.EqualTo(2));
         }
       }
     }
@@ -47,7 +47,7 @@ namespace Ramone.Tests.HyperMedia
 
           // Assert
           Assert.IsNotNull(documents1);
-          Assert.AreEqual(2, documents1.Count);
+          Assert.That(documents1.Count, Is.EqualTo(2));
         }
       }
     }
@@ -67,7 +67,7 @@ namespace Ramone.Tests.HyperMedia
 
           // Assert
           Assert.IsNotNull(documents1);
-          Assert.AreEqual(2, documents1.Count);
+          Assert.That(documents1.Count, Is.EqualTo(2));
         }
       }
     }
@@ -87,7 +87,7 @@ namespace Ramone.Tests.HyperMedia
 
           // Assert
           Assert.IsNotNull(documents1);
-          Assert.AreEqual(2, documents1.Count);
+          Assert.That(documents1.Count, Is.EqualTo(2));
         }
       }
     }

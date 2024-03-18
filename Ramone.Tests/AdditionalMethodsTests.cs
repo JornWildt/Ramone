@@ -18,7 +18,7 @@ namespace Ramone.Tests
       {
         // Assert
         Assert.IsNotNull(response);
-        Assert.AreEqual("1", response.Headers["X-ExtraHeader"]);
+        Assert.That(response.Headers["X-ExtraHeader"], Is.EqualTo("1"));
       }
     }
 
@@ -37,7 +37,7 @@ namespace Ramone.Tests
           .Head(response =>
           {
             // Assert
-            Assert.AreEqual("1", response.Headers["X-ExtraHeader"]);
+            Assert.That(response.Headers["X-ExtraHeader"], Is.EqualTo("1"));
             wh.Set();
           });
       });

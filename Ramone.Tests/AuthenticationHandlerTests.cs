@@ -23,7 +23,7 @@ namespace Ramone.Tests
     {
       AssertThrowsWebException(() => Session.Request(BasicAuthUrl).Get<string>(), HttpStatusCode.Unauthorized);
       // Will get called twice since it does not try to fix the access problem
-      Assert.AreEqual(2, CountingAuthorizationHandler.Count);
+      Assert.That(CountingAuthorizationHandler.Count, Is.EqualTo(2));
     }
 
 
@@ -43,10 +43,10 @@ namespace Ramone.Tests
       });
 
       Assert.IsNotNull(errorResponse);
-      Assert.AreEqual(HttpStatusCode.Unauthorized, errorResponse.StatusCode);
+      Assert.That(errorResponse.StatusCode, Is.EqualTo(HttpStatusCode.Unauthorized));
 
       // Will get called twice since it does not try to fix the access problem
-      Assert.AreEqual(2, CountingAuthorizationHandler.Count);
+      Assert.That(CountingAuthorizationHandler.Count, Is.EqualTo(2));
     }
 
 

@@ -22,9 +22,9 @@ namespace Ramone.Tests
       using (request.Post(new { x = 0 }))
       {
         // Assert
-        Assert.AreEqual(1, interceptor.MethodSet_Called);
-        Assert.AreEqual(1, interceptor.Headersready_Called);
-        Assert.AreEqual(1, interceptor.DataSent_Called);
+        Assert.That(interceptor.MethodSet_Called, Is.EqualTo(1));
+        Assert.That(interceptor.Headersready_Called, Is.EqualTo(1));
+        Assert.That(interceptor.DataSent_Called, Is.EqualTo(1));
       }
     }
 
@@ -42,9 +42,9 @@ namespace Ramone.Tests
       using (request.Post())
       {
         // Assert
-        Assert.AreEqual(1, interceptor.MethodSet_Called);
-        Assert.AreEqual(1, interceptor.Headersready_Called);
-        Assert.AreEqual(1, interceptor.DataSent_Called);
+        Assert.That(interceptor.MethodSet_Called, Is.EqualTo(1));
+        Assert.That(interceptor.Headersready_Called, Is.EqualTo(1));
+        Assert.That(interceptor.DataSent_Called, Is.EqualTo(1));
       }
     }
 
@@ -62,9 +62,9 @@ namespace Ramone.Tests
       using (request.Get())
       {
         // Assert
-        Assert.AreEqual(1, interceptor.MethodSet_Called);
-        Assert.AreEqual(1, interceptor.Headersready_Called);
-        Assert.AreEqual(1, interceptor.DataSent_Called);
+        Assert.That(interceptor.MethodSet_Called, Is.EqualTo(1));
+        Assert.That(interceptor.Headersready_Called, Is.EqualTo(1));
+        Assert.That(interceptor.DataSent_Called, Is.EqualTo(1));
       }
     }
 
@@ -82,9 +82,9 @@ namespace Ramone.Tests
       using (await request.Async().Post(new { x = 0 }))
       {
         // Assert
-        Assert.AreEqual(1, interceptor.MethodSet_Called);
-        Assert.AreEqual(1, interceptor.Headersready_Called);
-        Assert.AreEqual(1, interceptor.DataSent_Called);
+        Assert.That(interceptor.MethodSet_Called, Is.EqualTo(1));
+        Assert.That(interceptor.Headersready_Called, Is.EqualTo(1));
+        Assert.That(interceptor.DataSent_Called, Is.EqualTo(1));
       }
     }
 
@@ -102,9 +102,9 @@ namespace Ramone.Tests
       using (await request.Async().Post())
       {
         // Assert
-        Assert.AreEqual(1, interceptor.MethodSet_Called);
-        Assert.AreEqual(1, interceptor.Headersready_Called);
-        Assert.AreEqual(1, interceptor.DataSent_Called);
+        Assert.That(interceptor.MethodSet_Called, Is.EqualTo(1));
+        Assert.That(interceptor.Headersready_Called, Is.EqualTo(1));
+        Assert.That(interceptor.DataSent_Called, Is.EqualTo(1));
       }
     }
 
@@ -122,9 +122,9 @@ namespace Ramone.Tests
       using (await request.Async().Get())
       {
         // Assert
-        Assert.AreEqual(1, interceptor.MethodSet_Called);
-        Assert.AreEqual(1, interceptor.Headersready_Called);
-        Assert.AreEqual(1, interceptor.DataSent_Called);
+        Assert.That(interceptor.MethodSet_Called, Is.EqualTo(1));
+        Assert.That(interceptor.Headersready_Called, Is.EqualTo(1));
+        Assert.That(interceptor.DataSent_Called, Is.EqualTo(1));
       }
     }
 
@@ -146,9 +146,9 @@ namespace Ramone.Tests
           .Post(new { x = 0 }, response => { });
       });
 
-      Assert.AreEqual(1, interceptor.MethodSet_Called);
-      Assert.AreEqual(1, interceptor.Headersready_Called);
-      Assert.AreEqual(1, interceptor.DataSent_Called);
+      Assert.That(interceptor.MethodSet_Called, Is.EqualTo(1));
+      Assert.That(interceptor.Headersready_Called, Is.EqualTo(1));
+      Assert.That(interceptor.DataSent_Called, Is.EqualTo(1));
     }
 
 
@@ -169,9 +169,9 @@ namespace Ramone.Tests
           .Post(response => { });
       });
 
-      Assert.AreEqual(1, interceptor.MethodSet_Called);
-      Assert.AreEqual(1, interceptor.Headersready_Called);
-      Assert.AreEqual(1, interceptor.DataSent_Called);
+      Assert.That(interceptor.MethodSet_Called, Is.EqualTo(1));
+      Assert.That(interceptor.Headersready_Called, Is.EqualTo(1));
+      Assert.That(interceptor.DataSent_Called, Is.EqualTo(1));
     }
 
 
@@ -192,9 +192,9 @@ namespace Ramone.Tests
           .Get(response => { });
       });
 
-      Assert.AreEqual(1, interceptor.MethodSet_Called);
-      Assert.AreEqual(1, interceptor.Headersready_Called);
-      Assert.AreEqual(1, interceptor.DataSent_Called);
+      Assert.That(interceptor.MethodSet_Called, Is.EqualTo(1));
+      Assert.That(interceptor.Headersready_Called, Is.EqualTo(1));
+      Assert.That(interceptor.DataSent_Called, Is.EqualTo(1));
     }
 
 

@@ -27,7 +27,7 @@ namespace Ramone.Tests.Utility
       string result = Serialize(o);
 
       // Assert
-      Assert.AreEqual("|A=10|B=Train|C=true", result);
+      Assert.That(result, Is.EqualTo("|A=10|B=Train|C=true"));
     }
 
 
@@ -45,7 +45,7 @@ namespace Ramone.Tests.Utility
       string result = Serialize(o);
 
       // Assert
-      Assert.AreEqual("|A="+g.ToString(), result);
+      Assert.That(result, Is.EqualTo("|A=" +g.ToString()));
     }
 
 
@@ -65,7 +65,7 @@ namespace Ramone.Tests.Utility
       string result = Serialize(o);
 
       // Assert
-      Assert.AreEqual("|A=10|B[X]=100|B[K]=true", result);
+      Assert.That(result, Is.EqualTo("|A=10|B[X]=100|B[K]=true"));
     }
 
 
@@ -88,7 +88,7 @@ namespace Ramone.Tests.Utility
       string result = Serialize(o);
 
       // Assert
-      Assert.AreEqual("|A=10|B[X]=100|B[D][a]=Ok|B[D][b]=Fail", result);
+      Assert.That(result, Is.EqualTo("|A=10|B[X]=100|B[D][a]=Ok|B[D][b]=Fail"));
     }
 
 
@@ -106,7 +106,7 @@ namespace Ramone.Tests.Utility
       string result = Serialize(o);
 
       // Assert
-      Assert.AreEqual("|A=10|B[0]=10|B[1]=20", result);
+      Assert.That(result, Is.EqualTo("|A=10|B[0]=10|B[1]=20"));
     }
 
 
@@ -128,7 +128,7 @@ namespace Ramone.Tests.Utility
       string result = Serialize(o);
 
       // Assert
-      Assert.AreEqual("|A=10|B[0]=James|B[1][0]=Jamie|B[1][1]=Jolee", result);
+      Assert.That(result, Is.EqualTo("|A=10|B[0]=James|B[1][0]=Jamie|B[1][1]=Jolee"));
     }
 
 
@@ -146,7 +146,7 @@ namespace Ramone.Tests.Utility
       string result = Serialize(o);
 
       // Assert
-      Assert.AreEqual("|B.x=2|B.y=abc|A=10", result);
+      Assert.That(result, Is.EqualTo("|B.x=2|B.y=abc|A=10"));
     }
 
 
@@ -164,7 +164,7 @@ namespace Ramone.Tests.Utility
       string result = Serialize(o);
 
       // Assert
-      Assert.AreEqual("|B.y=abc", result);
+      Assert.That(result, Is.EqualTo("|B.y=abc"));
     }
 
 
@@ -191,7 +191,7 @@ namespace Ramone.Tests.Utility
       string result = Serialize(o, settings);
 
       // Assert
-      Assert.AreEqual("|B:0=abc|B:1=xyz|A#p=17|A#q=abc", result);
+      Assert.That(result, Is.EqualTo("|B:0=abc|B:1=xyz|A#p=17|A#q=abc"));
     }
 
 
@@ -223,7 +223,7 @@ namespace Ramone.Tests.Utility
       string result = Serialize(o);
 
       // Assert
-      Assert.AreEqual("|B.x=2|B.y=abc|A[0]=xyz|A[1][I].b=9|A[1][I].n=7|A[2].p=2|A[2].q=uuu", result);
+      Assert.That(result, Is.EqualTo("|B.x=2|B.y=abc|A[0]=xyz|A[1][I].b=9|A[1][I].n=7|A[2].p=2|A[2].q=uuu"));
     }
 
 
@@ -260,7 +260,7 @@ namespace Ramone.Tests.Utility
       string result = Serialize(o);
 
       // Assert
-      Assert.AreEqual("|X=15|Y=Abc|IntArray[0]=1|IntArray[1]=2|SubC.SubC.Data[0][w]=99|SubC.Data[0]=5|SubC.Data[1]=Hello|Dict[123]=abc|Date=2012-05-30T19:20:21", result);
+      Assert.That(result, Is.EqualTo("|X=15|Y=Abc|IntArray[0]=1|IntArray[1]=2|SubC.SubC.Data[0][w]=99|SubC.Data[0]=5|SubC.Data[1]=Hello|Dict[123]=abc|Date=2012-05-30T19:20:21"));
     }
 
 
@@ -284,7 +284,7 @@ namespace Ramone.Tests.Utility
       string result = Serialize(o, settings);
 
       // Assert
-      Assert.AreEqual("|A=|B[X]=100|B[Y]=", result);
+      Assert.That(result, Is.EqualTo("|A=|B[X]=100|B[Y]="));
     }
 
 
@@ -308,7 +308,7 @@ namespace Ramone.Tests.Utility
       string result = Serialize(o, settings);
 
       // Assert
-      Assert.AreEqual("|B[X]=100", result);
+      Assert.That(result, Is.EqualTo("|B[X]=100"));
     }
 
 
@@ -324,7 +324,7 @@ namespace Ramone.Tests.Utility
       string result = Serialize(o);
 
       // Assert
-      Assert.AreEqual("|A=0|B=X", result);
+      Assert.That(result, Is.EqualTo("|A=0|B=X"));
     }
 
 
@@ -343,7 +343,7 @@ namespace Ramone.Tests.Utility
       string result = Serialize(o);
 
       // Assert
-      Assert.AreEqual("|Dec=10.5|Flo=20.12|Dou=13.23", result);
+      Assert.That(result, Is.EqualTo("|Dec=10.5|Flo=20.12|Dou=13.23"));
     }
 
 
@@ -367,7 +367,7 @@ namespace Ramone.Tests.Utility
       string result = Serialize(o, settings);
 
       // Assert
-      Assert.AreEqual("|Dec=10,5|Flo=20,12|Dou=13,23", result);
+      Assert.That(result, Is.EqualTo("|Dec=10,5|Flo=20,12|Dou=13,23"));
     }
 
 
@@ -399,7 +399,7 @@ namespace Ramone.Tests.Utility
       string result = Serialize(o);
 
       // Assert
-      Assert.AreEqual("|A=XYZ", result);
+      Assert.That(result, Is.EqualTo("|A=XYZ"));
     }
 
 
@@ -446,7 +446,7 @@ namespace Ramone.Tests.Utility
       string result = Serialize(a);
 
       // Assert
-      Assert.AreEqual("|S=a|Other1.S=b|Other1.Other2.S=d|Other2.S=c|Other2.Other2.S=d", result);
+      Assert.That(result, Is.EqualTo("|S=a|Other1.S=b|Other1.Other2.S=d|Other2.S=c|Other2.Other2.S=d"));
     }
 
 

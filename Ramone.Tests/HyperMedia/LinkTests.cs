@@ -64,12 +64,12 @@ namespace Ramone.Tests.HyperMedia
       Assert.IsNotNull(l2b);
       Assert.IsNotNull(l3);
       Assert.IsNotNull(l4);
-      Assert.AreEqual(Link1.HRef, l1a.HRef);
-      Assert.AreEqual(Link2.HRef, l2a.HRef);
-      Assert.AreEqual(Link1.HRef, l1b.HRef);
-      Assert.AreEqual(Link2.HRef, l2b.HRef);
-      Assert.AreEqual(Link3.HRef, l3.HRef);
-      Assert.AreEqual(Link4.HRef, l4.HRef);
+      Assert.That(l1a.HRef, Is.EqualTo(Link1.HRef));
+      Assert.That(l2a.HRef, Is.EqualTo(Link2.HRef));
+      Assert.That(l1b.HRef, Is.EqualTo(Link1.HRef));
+      Assert.That(l2b.HRef, Is.EqualTo(Link2.HRef));
+      Assert.That(l3.HRef, Is.EqualTo(Link3.HRef));
+      Assert.That(l4.HRef, Is.EqualTo(Link4.HRef));
     }
 
 
@@ -102,10 +102,10 @@ namespace Ramone.Tests.HyperMedia
       Assert.IsNotNull(l5c);
       Assert.IsNotNull(l6a);
       Assert.IsNotNull(l6b);
-      Assert.AreEqual(Link5.HRef, l5a.HRef);
-      Assert.AreEqual(Link6.HRef, l6a.HRef);
-      Assert.AreEqual(3, Link5.RelationTypes.Count());
-      Assert.AreEqual(3, Link6.RelationTypes.Count());
+      Assert.That(l5a.HRef, Is.EqualTo(Link5.HRef));
+      Assert.That(l6a.HRef, Is.EqualTo(Link6.HRef));
+      Assert.That(Link5.RelationTypes.Count(), Is.EqualTo(3));
+      Assert.That(Link6.RelationTypes.Count(), Is.EqualTo(3));
     }
 
 
@@ -127,8 +127,8 @@ namespace Ramone.Tests.HyperMedia
       // Assert
       Assert.IsNotNull(l7a);
       Assert.IsNotNull(l7b);
-      Assert.AreEqual(Link7.HRef, l7a.HRef);
-      Assert.AreEqual(Link7.HRef, l7b.HRef);
+      Assert.That(l7a.HRef, Is.EqualTo(Link7.HRef));
+      Assert.That(l7b.HRef, Is.EqualTo(Link7.HRef));
     }
 
 
@@ -143,7 +143,7 @@ namespace Ramone.Tests.HyperMedia
 
       // Assert
       Assert.IsNotNull(request);
-      Assert.AreEqual(link.HRef, request.Url.AbsoluteUri);
+      Assert.That(request.Url.AbsoluteUri, Is.EqualTo(link.HRef.AbsoluteUri));
     }
 
 
@@ -195,11 +195,11 @@ namespace Ramone.Tests.HyperMedia
       {
         serializer.Serialize(w, r, xmlns);
 
-        Assert.AreEqual(@"<?xml version=""1.0"" encoding=""utf-16""?>
+        Assert.That(w.ToString(), Is.EqualTo(@"<?xml version=""1.0"" encoding=""utf-16""?>
 <Resource xmlns:atom=""http://www.w3.org/2005/Atom"">
   <atom:link href=""http://dr.dk/"" rel=""tv"" type=""text/html"" title=""Danish Television"" />
   <atom:link href=""http://elfisk.dk/"" rel=""home"" type=""text/html"" title=""Jorns website"" />
-</Resource>", w.ToString());
+</Resource>"));
       }
 
       // Success - no exceptions

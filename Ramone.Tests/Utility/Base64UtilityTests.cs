@@ -23,8 +23,8 @@ namespace Ramone.Tests.Utility
       string encodedPayload = Base64Utility.UTF8UrlEncode(jwtPayload);
 
       // Assert
-      Assert.AreEqual("eyJ0eXAiOiJKV1QiLA0KICJhbGciOiJIUzI1NiJ9", encodedHeader);
-      Assert.AreEqual("eyJpc3MiOiJqb2UiLA0KICJleHAiOjEzMDA4MTkzODAsDQogImh0dHA6Ly9leGFtcGxlLmNvbS9pc19yb290Ijp0cnVlfQ", encodedPayload);
+      Assert.That(encodedHeader, Is.EqualTo("eyJ0eXAiOiJKV1QiLA0KICJhbGciOiJIUzI1NiJ9"));
+      Assert.That(encodedPayload, Is.EqualTo("eyJpc3MiOiJqb2UiLA0KICJleHAiOjEzMDA4MTkzODAsDQogImh0dHA6Ly9leGFtcGxlLmNvbS9pc19yb290Ijp0cnVlfQ"));
     }
   }
 }

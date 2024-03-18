@@ -22,7 +22,7 @@ namespace Ramone.Tests
       using (var response = await request.Async().Get())
       {
         // Assert
-        Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
       }
     }
 

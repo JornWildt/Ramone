@@ -37,15 +37,15 @@ namespace Ramone.Tests.Blog
         HtmlNodeCollection posts = blog.Body.DocumentNode.SelectNodes(@"//div[@class=""post""]");
 
         // Assert ...
-        Assert.AreEqual(2, posts.Count);
+        Assert.That(posts.Count, Is.EqualTo(2));
 
         // - Check content of first post
         HtmlNode post1 = posts[0];
         Assert.IsNotNull(post1);
         HtmlNode post1Title = post1.SelectNodes(@".//*[@class=""post-title""]").First();
         HtmlNode post1Content = post1.SelectNodes(@".//*[@class=""post-content""]").First();
-        Assert.AreEqual("Hot summer", post1Title.InnerText);
-        Assert.AreEqual("It is a hot summer this year.", post1Content.InnerText);
+        Assert.That(post1Title.InnerText, Is.EqualTo("Hot summer"));
+        Assert.That(post1Content.InnerText, Is.EqualTo("It is a hot summer this year."));
       }
     }
 
@@ -73,7 +73,7 @@ namespace Ramone.Tests.Blog
 
           // - Check e-mail of author
           HtmlNode email = author.Body.DocumentNode.SelectNodes(@"//a[@rel=""email""]").First();
-          Assert.AreEqual("pp@ramonerest.dk", email.Attributes["href"].Value);
+          Assert.That(email.Attributes["href"].Value, Is.EqualTo("pp@ramonerest.dk"));
         }
       }
     }
@@ -115,7 +115,7 @@ namespace Ramone.Tests.Blog
         }
 
         // Assert ...
-        Assert.AreEqual(2, foundEMails.Count);
+        Assert.That(foundEMails.Count, Is.EqualTo(2));
         Assert.IsTrue(foundEMails.Contains("bb@ramonerest.dk"));
         Assert.IsTrue(foundEMails.Contains("cc@ramonerest.dk"));
       }
@@ -155,8 +155,8 @@ namespace Ramone.Tests.Blog
             Assert.IsNotNull(createdBlogItem);
             HtmlNode postTitle = createdBlogItem.Body.DocumentNode.SelectNodes(@"//*[@class=""post-title""]").First();
             HtmlNode postContent = createdBlogItem.Body.DocumentNode.SelectNodes(@"//*[@class=""post-content""]").First();
-            Assert.AreEqual("New item", postTitle.InnerText);
-            Assert.AreEqual("Yaj!", postContent.InnerText);
+            Assert.That(postTitle.InnerText, Is.EqualTo("New item"));
+            Assert.That(postContent.InnerText, Is.EqualTo("Yaj!"));
           }
         }
       }

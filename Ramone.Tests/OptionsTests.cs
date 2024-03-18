@@ -24,7 +24,7 @@ namespace Ramone.Tests
       {
         // Assert
         Assert.IsNotNull(response);
-        Assert.AreEqual("2", response.Headers["X-ExtraHeader"]);
+        Assert.That(response.Headers["X-ExtraHeader"], Is.EqualTo("2"));
       }
     }
 
@@ -40,7 +40,7 @@ namespace Ramone.Tests
           .Options(response =>
           {
             // Assert
-            Assert.AreEqual("2", response.Headers["X-ExtraHeader"]);
+            Assert.That(response.Headers["X-ExtraHeader"], Is.EqualTo("2"));
             wh.Set();
           });
       });
@@ -59,12 +59,12 @@ namespace Ramone.Tests
         Assert.IsNotNull(response1);
         Assert.IsNotNull(response2);
         Assert.IsNotNull(response3);
-        Assert.AreEqual("2", response1.Headers["X-ExtraHeader"]);
-        Assert.AreEqual("2", response2.Headers["X-ExtraHeader"]);
-        Assert.AreEqual("2", response3.Headers["X-ExtraHeader"]);
-        Assert.AreEqual("Yes", response1.Body);
-        Assert.AreEqual("Yes", response2.Body);
-        Assert.AreEqual("Yes", response3.Decode<string>());
+        Assert.That(response1.Headers["X-ExtraHeader"], Is.EqualTo("2"));
+        Assert.That(response2.Headers["X-ExtraHeader"], Is.EqualTo("2"));
+        Assert.That(response3.Headers["X-ExtraHeader"], Is.EqualTo("2"));
+        Assert.That(response1.Body, Is.EqualTo("Yes"));
+        Assert.That(response2.Body, Is.EqualTo("Yes"));
+        Assert.That(response3.Decode<string>(), Is.EqualTo("Yes"));
       }
     }
 
@@ -80,8 +80,8 @@ namespace Ramone.Tests
           .Options<string>(response =>
           {
             // Assert
-            Assert.AreEqual("2", response.Headers["X-ExtraHeader"]);
-            Assert.AreEqual("Yes", response.Body);
+            Assert.That(response.Headers["X-ExtraHeader"], Is.EqualTo("2"));
+            Assert.That(response.Body, Is.EqualTo("Yes"));
             wh.Set();
           });
       });

@@ -51,12 +51,12 @@ namespace Ramone.Tests.HyperMedia
       Assert.IsNotNull(l2b);
       Assert.IsNotNull(l3);
       Assert.IsNotNull(l4);
-      Assert.AreEqual(Url1.Template, l1a.Template);
-      Assert.AreEqual(Url2.Template, l2a.Template);
-      Assert.AreEqual(Url1.Template, l1b.Template);
-      Assert.AreEqual(Url2.Template, l2b.Template);
-      Assert.AreEqual(Url3.Template, l3.Template);
-      Assert.AreEqual(Url4.Template, l4.Template);
+      Assert.That(l1a.Template, Is.EqualTo(Url1.Template));
+      Assert.That(l2a.Template, Is.EqualTo(Url2.Template));
+      Assert.That(l1b.Template, Is.EqualTo(Url1.Template));
+      Assert.That(l2b.Template, Is.EqualTo(Url2.Template));
+      Assert.That(l3.Template, Is.EqualTo(Url3.Template));
+      Assert.That(l4.Template, Is.EqualTo(Url4.Template));
     }
 
 
@@ -76,7 +76,7 @@ namespace Ramone.Tests.HyperMedia
 
       // Assert
       Assert.IsNotNull(request);
-      Assert.AreEqual("http://search.com/?q=abc", request.Url.AbsoluteUri);
+      Assert.That(request.Url.AbsoluteUri, Is.EqualTo("http://search.com/?q=abc"));
     }
   }
 }

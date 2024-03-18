@@ -19,7 +19,7 @@ namespace Ramone.Tests.MediaTypes.Json
       {
         // Assert
         Assert.IsNotNull(cat.Body);
-        Assert.AreEqual("Ramstein", cat.Body.Name);
+        Assert.That(cat.Body.Name, Is.EqualTo("Ramstein"));
       }
     }
 
@@ -40,8 +40,8 @@ namespace Ramone.Tests.MediaTypes.Json
 
         // Assert
         Assert.IsNotNull(createdCat);
-        Assert.AreEqual("Prince", createdCat.Name);
-        Assert.AreEqual(cat.DateOfBirth, createdCat.DateOfBirth);
+        Assert.That(createdCat.Name, Is.EqualTo("Prince"));
+        Assert.That(createdCat.DateOfBirth, Is.EqualTo(cat.DateOfBirth));
       }
     }
 
@@ -60,7 +60,7 @@ namespace Ramone.Tests.MediaTypes.Json
 
         // Assert
         Assert.IsNotNull(createdCat);
-        Assert.AreEqual("Prince", createdCat.Name);
+        Assert.That(createdCat.Name, Is.EqualTo("Prince"));
       }
     }
 
@@ -73,7 +73,7 @@ namespace Ramone.Tests.MediaTypes.Json
 
       using (Response<UnregisteredClass> response = request.Accept("application/json").ContentType("application/json").Post<UnregisteredClass>(data))
       {
-        Assert.AreEqual(data.Text, response.Body.Text);
+        Assert.That(response.Body.Text, Is.EqualTo(data.Text));
       }
     }
 
@@ -86,7 +86,7 @@ namespace Ramone.Tests.MediaTypes.Json
 
       using (Response<UnregisteredClass> response = request.AsJson().AcceptJson().Post<UnregisteredClass>(data))
       {
-        Assert.AreEqual(data.Text, response.Body.Text);
+        Assert.That(response.Body.Text, Is.EqualTo(data.Text));
       }
     }
 

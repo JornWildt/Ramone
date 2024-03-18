@@ -25,8 +25,8 @@ namespace Ramone.Tests.MediaTypes.FormUrlEncoded
       using (Response<string> response = formdataReq.Accept("text/plain").ContentType("application/x-www-form-urlencoded").Post<string>(data))
       {
         // Assert
-        Assert.AreEqual("application/x-www-form-urlencoded", response.Headers["x-contenttype"]);
-        Assert.AreEqual("Pete-10-False", response.Body);
+        Assert.That(response.Headers["x-contenttype"], Is.EqualTo("application/x-www-form-urlencoded"));
+        Assert.That(response.Body, Is.EqualTo("Pete-10-False"));
       }
     }
 
@@ -42,8 +42,8 @@ namespace Ramone.Tests.MediaTypes.FormUrlEncoded
       using (Response<string> response = formdataReq.Accept("text/plain").AsFormUrlEncoded().Post<string>(data))
       {
         // Assert
-        Assert.AreEqual("application/x-www-form-urlencoded", response.Headers["x-contenttype"]);
-        Assert.AreEqual("Pete-10-True", response.Body);
+        Assert.That(response.Headers["x-contenttype"], Is.EqualTo("application/x-www-form-urlencoded"));
+        Assert.That(response.Body, Is.EqualTo("Pete-10-True"));
       }
     }
 
@@ -68,8 +68,8 @@ namespace Ramone.Tests.MediaTypes.FormUrlEncoded
       using (Response<string> response = formdataReq.Accept("text/plain").Post<string>(data))
       {
         // Assert
-        Assert.AreEqual("application/x-www-form-urlencoded", response.Headers["x-contenttype"]);
-        Assert.AreEqual("Pete-10-False", response.Body);
+        Assert.That(response.Headers["x-contenttype"], Is.EqualTo("application/x-www-form-urlencoded"));
+        Assert.That(response.Body, Is.EqualTo("Pete-10-False"));
       }
     }
 
@@ -88,7 +88,7 @@ namespace Ramone.Tests.MediaTypes.FormUrlEncoded
                                                     .Post<string>(data))
       {
         // Assert
-        Assert.AreNotEqual("ÆØÅüî-10", response.Body, "What a hack: OpenRasta always assume UTF-8, so if body is not identical to the expected it must mean that it was actually send in non-UTF-8!");
+        Assert.That(response.Body, Is.Not.EqualTo("ÆØÅüî-10"), "What a hack: OpenRasta always assume UTF-8, so if body is not identical to the expected it must mean that it was actually send in non-UTF-8!");
       }
     }
 
@@ -135,7 +135,7 @@ namespace Ramone.Tests.MediaTypes.FormUrlEncoded
       {
         // Assert
         Console.WriteLine(response.Body);
-        Assert.AreEqual("|X=15|Y=Abc|IntArray[0]=1|IntArray[1]=2|SubC.SubC.Data[0]=Benny|SubC.Data[0]=Brian|Dict[abc]=123|Dict[qwe]=xyz|Date=2012-10-30T12:13:14|Dou=15.234|GID=" + g.ToString(), response.Body);
+        Assert.That(response.Body, Is.EqualTo("|X=15|Y=Abc|IntArray[0]=1|IntArray[1]=2|SubC.SubC.Data[0]=Benny|SubC.Data[0]=Brian|Dict[abc]=123|Dict[qwe]=xyz|Date=2012-10-30T12:13:14|Dou=15.234|GID=" + g.ToString()));
       }
     }
 
@@ -153,8 +153,8 @@ namespace Ramone.Tests.MediaTypes.FormUrlEncoded
         FormUrlEncodedData data = response.Body;
 
         // Assert
-        Assert.AreEqual("Abc", data.Title);
-        Assert.AreEqual(15, data.Age);
+        Assert.That(data.Title, Is.EqualTo("Abc"));
+        Assert.That(data.Age, Is.EqualTo(15));
       }
     }
 
@@ -171,9 +171,9 @@ namespace Ramone.Tests.MediaTypes.FormUrlEncoded
         NameValueCollection data = response.Body;
 
         // Assert
-        Assert.AreEqual("Abc", data["Title"]);
-        Assert.AreEqual("15", data["Age"]);
-        Assert.AreEqual("Grete", data["SubData.Name"]);
+        Assert.That(data["Title"], Is.EqualTo("Abc"));
+        Assert.That(data["Age"], Is.EqualTo("15"));
+        Assert.That(data["SubData.Name"], Is.EqualTo("Grete"));
         Assert.IsTrue(data.AllKeys.Contains("NullValue"));
         Assert.IsEmpty(data["NullValue"]);
         Assert.IsFalse(data.AllKeys.Contains("Unused"));
@@ -198,8 +198,8 @@ namespace Ramone.Tests.MediaTypes.FormUrlEncoded
         FormUrlEncodedData data = response.Body;
 
         // Assert
-        Assert.AreEqual("ÆØÅ", data.Title);
-        Assert.AreEqual("Güntør", data.SubData.Name);
+        Assert.That(data.Title, Is.EqualTo("ÆØÅ"));
+        Assert.That(data.SubData.Name, Is.EqualTo("Güntør"));
       }
     }
 

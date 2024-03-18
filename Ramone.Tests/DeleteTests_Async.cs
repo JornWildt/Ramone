@@ -15,7 +15,7 @@ namespace Ramone.Tests
         resp =>
         {
           Assert.IsNotNull(resp.Body);
-          Assert.AreEqual(4, resp.Body.Time);
+          Assert.That(resp.Body.Time, Is.EqualTo(4));
         });
     }
   }

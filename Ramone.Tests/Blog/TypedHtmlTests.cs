@@ -34,15 +34,15 @@ namespace Ramone.Tests.Blog
 
         // Assert ...
         Assert.IsNotNull(blog);
-        Assert.AreEqual("A mixed blog", blog.Title);
+        Assert.That(blog.Title, Is.EqualTo("A mixed blog"));
         Assert.IsNotNull(blog.Posts);
-        Assert.AreEqual(2, blog.Posts.Count);
+        Assert.That(blog.Posts.Count, Is.EqualTo(2));
 
         // - Check content of first post
         Resources.Blog.Post post1 = blog.Posts[0];
         Assert.IsNotNull(post1);
-        Assert.AreEqual("Hot summer", post1.Title);
-        Assert.AreEqual("It is a hot summer this year.", post1.Text);
+        Assert.That(post1.Title, Is.EqualTo("Hot summer"));
+        Assert.That(post1.Text, Is.EqualTo("It is a hot summer this year."));
       }
     }
 
@@ -70,8 +70,8 @@ namespace Ramone.Tests.Blog
           Assert.IsNotNull(author.Body);
 
           // - Check e-mail of author
-          Assert.AreEqual("Pete Peterson", author.Body.Name);
-          Assert.AreEqual("pp@ramonerest.dk", author.Body.EMail);
+          Assert.That(author.Body.Name, Is.EqualTo("Pete Peterson"));
+          Assert.That(author.Body.EMail, Is.EqualTo("pp@ramonerest.dk"));
         }
       }
     }
@@ -105,7 +105,7 @@ namespace Ramone.Tests.Blog
         }
 
         // Assert ...
-        Assert.AreEqual(2, foundEMails.Count);
+        Assert.That(foundEMails.Count, Is.EqualTo(2));
         Assert.IsTrue(foundEMails.Contains("bb@ramonerest.dk"));
         Assert.IsTrue(foundEMails.Contains("cc@ramonerest.dk"));
       }
@@ -148,8 +148,8 @@ namespace Ramone.Tests.Blog
 
             // Assert ...
             Assert.IsNotNull(createdPost);
-            Assert.AreEqual("New item", createdPost.Title);
-            Assert.AreEqual("Yaj!", createdPost.Text);
+            Assert.That(createdPost.Title, Is.EqualTo("New item"));
+            Assert.That(createdPost.Text, Is.EqualTo("Yaj!"));
           }
         }
       }

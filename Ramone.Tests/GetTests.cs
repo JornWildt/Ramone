@@ -31,8 +31,8 @@ namespace Ramone.Tests
       using (var dossier = dossierReq.Get<Dossier>())
       {
         // Assert
-        Assert.AreEqual(8, dossier.Body.Id);
-        Assert.AreEqual("Dossier no. 8", dossier.Body.Title);
+        Assert.That(dossier.Body.Id, Is.EqualTo(8));
+        Assert.That(dossier.Body.Title, Is.EqualTo("Dossier no. 8"));
         Assert.IsNotNull(dossier.Body.Links);
       }
     }
@@ -50,8 +50,8 @@ namespace Ramone.Tests
       using (var dossier = dossierReq.Get<Dossier>())
       {
         // Assert
-        Assert.AreEqual(8, dossier.Body.Id);
-        Assert.AreEqual("Dossier no. 8", dossier.Body.Title);
+        Assert.That(dossier.Body.Id, Is.EqualTo(8));
+        Assert.That(dossier.Body.Title, Is.EqualTo("Dossier no. 8"));
         Assert.IsNotNull(dossier.Body.Links);
       }
     }
@@ -67,8 +67,8 @@ namespace Ramone.Tests
       using (var document = documentReq.Get<Document>())
       {
         // Assert
-        Assert.AreEqual(1, document.Body.Id);
-        Assert.AreEqual("Document no. 1", document.Body.Title);
+        Assert.That(document.Body.Id, Is.EqualTo(1));
+        Assert.That(document.Body.Title, Is.EqualTo("Document no. 1"));
       }
     }
 
@@ -84,7 +84,7 @@ namespace Ramone.Tests
       {
         // Assert
         Assert.IsNotNull(documents.Body);
-        Assert.AreEqual(2, documents.Body.Count);
+        Assert.That(documents.Body.Count, Is.EqualTo(2));
       }
     }
 
@@ -99,9 +99,9 @@ namespace Ramone.Tests
       using (var party = partyReq.Get<Party>())
       {
         // Assert
-        Assert.AreEqual(12, party.Body.Id);
-        Assert.AreEqual("Bart-12", party.Body.FullName);
-        Assert.AreEqual("bart-12@foo.bar", party.Body.EMail);
+        Assert.That(party.Body.Id, Is.EqualTo(12));
+        Assert.That(party.Body.FullName, Is.EqualTo("Bart-12"));
+        Assert.That(party.Body.EMail, Is.EqualTo("bart-12@foo.bar"));
       }
     }
 
@@ -163,8 +163,8 @@ namespace Ramone.Tests
         string name2 = body2.Name;
 
         // Assert
-        Assert.AreEqual("Fiona", name1);
-        Assert.AreEqual("Fiona", name2);
+        Assert.That(name1, Is.EqualTo("Fiona"));
+        Assert.That(name2, Is.EqualTo("Fiona"));
       }
     }
 
@@ -184,8 +184,8 @@ namespace Ramone.Tests
         string name2 = body2.Name;
 
         // Assert
-        Assert.AreEqual("Fiona", name1);
-        Assert.AreEqual("Fiona", name2);
+        Assert.That(name1, Is.EqualTo("Fiona"));
+        Assert.That(name2, Is.EqualTo("Fiona"));
       }
     }
   }

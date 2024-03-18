@@ -74,13 +74,13 @@ namespace Ramone.Tests
       NameValueCollection pcoll1 = HttpUtility.ParseQueryString(url1.Query);
       NameValueCollection pcoll2 = HttpUtility.ParseQueryString(url2.Query);
 
-      Assert.AreEqual(2, pcoll1.Count);
-      Assert.AreEqual("1", pcoll1["x"]);
-      Assert.AreEqual("hello,world", pcoll1["y"]);
+      Assert.That(pcoll1.Count, Is.EqualTo(2));
+      Assert.That(pcoll1["x"], Is.EqualTo("1"));
+      Assert.That(pcoll1["y"], Is.EqualTo("hello,world"));
 
-      Assert.AreEqual(2, pcoll2.Count);
-      Assert.AreEqual("john,1", pcoll2["x"]);
-      Assert.AreEqual("wide,hello,world", pcoll2["y"]);
+      Assert.That(pcoll2.Count, Is.EqualTo(2));
+      Assert.That(pcoll2["x"], Is.EqualTo("john,1"));
+      Assert.That(pcoll2["y"], Is.EqualTo("wide,hello,world"));
     }
 
 
@@ -94,7 +94,7 @@ namespace Ramone.Tests
       r.AddQueryParameters(new { x = 1 });
 
       // Assert
-      Assert.AreEqual("http://dr.dk/xyz?x=1", r.Url.AbsoluteUri);
+      Assert.That(r.Url.AbsoluteUri, Is.EqualTo("http://dr.dk/xyz?x=1"));
     }
 
 
@@ -118,24 +118,24 @@ namespace Ramone.Tests
       NameValueCollection pcoll3 = HttpUtility.ParseQueryString(url3.Query);
       NameValueCollection pcoll4 = HttpUtility.ParseQueryString(url4.Query);
 
-      Assert.AreEqual(2, pcoll1.Count);
-      Assert.AreEqual("1", pcoll1["x"]);
-      Assert.AreEqual("hello", pcoll1["y"]);
-      
-      Assert.AreEqual(3, pcoll2.Count);
-      Assert.AreEqual("1", pcoll2["x"]);
-      Assert.AreEqual("hello", pcoll2["y"]);
-      Assert.AreEqual("world", pcoll2["q"]);
-      
-      Assert.AreEqual(3, pcoll3.Count);
-      Assert.AreEqual("5,1", pcoll3["x"]);
-      Assert.AreEqual("hello", pcoll3["y"]);
-      Assert.AreEqual("web", pcoll3["q"]);
-      
-      Assert.AreEqual(3, pcoll4.Count);
-      Assert.AreEqual("8,1", pcoll4["x"]);
-      Assert.AreEqual("hello", pcoll4["y"]);
-      Assert.AreEqual("world,wide", pcoll4["q"]);
+      Assert.That(pcoll1.Count, Is.EqualTo(2));
+      Assert.That(pcoll1["x"], Is.EqualTo("1"));
+      Assert.That(pcoll1["y"], Is.EqualTo("hello"));
+
+      Assert.That(pcoll2.Count, Is.EqualTo(3));
+      Assert.That(pcoll2["x"], Is.EqualTo("1"));
+      Assert.That(pcoll2["y"], Is.EqualTo("hello"));
+      Assert.That(pcoll2["q"], Is.EqualTo("world"));
+
+      Assert.That(pcoll3.Count, Is.EqualTo(3));
+      Assert.That(pcoll3["x"], Is.EqualTo("5,1"));
+      Assert.That(pcoll3["y"], Is.EqualTo("hello"));
+      Assert.That(pcoll3["q"], Is.EqualTo("web"));
+
+      Assert.That(pcoll4.Count, Is.EqualTo(3));
+      Assert.That(pcoll4["x"], Is.EqualTo("8,1"));
+      Assert.That(pcoll4["y"], Is.EqualTo("hello"));
+      Assert.That(pcoll4["q"], Is.EqualTo("world,wide"));
     }
   }
 }

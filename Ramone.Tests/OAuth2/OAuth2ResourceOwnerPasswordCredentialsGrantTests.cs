@@ -45,8 +45,8 @@ namespace Ramone.Tests.OAuth2
 
       Assert.IsNotNull(token);
       Assert.That(token.access_token, Is.Not.Null.And.Not.Empty);
-      Assert.AreEqual(199, token.expires_in);
-      Assert.AreEqual("Even more special", (string)token.AllParameters["additional_param"]);
+      Assert.That(token.expires_in, Is.EqualTo(199));
+      Assert.That((string)token.AllParameters["additional_param"], Is.EqualTo("Even more special"));
     }
 
 
@@ -80,7 +80,7 @@ namespace Ramone.Tests.OAuth2
 
         // Assert
         Assert.IsNotNull(r);
-        Assert.AreEqual("Got it", r.Title);
+        Assert.That(r.Title, Is.EqualTo("Got it"));
       }
     }
 
@@ -120,7 +120,7 @@ namespace Ramone.Tests.OAuth2
 
         // Assert
         Assert.IsNotNull(r);
-        Assert.AreEqual("Got it", r.Title);
+        Assert.That(r.Title, Is.EqualTo("Got it"));
       }
     }
   }

@@ -28,8 +28,8 @@ namespace Ramone.Tests
 
         Assert.IsNotNull(createdDossierLocation);
         Assert.IsNotNull(createdDossier);
-        Assert.AreEqual("A new dossier", createdDossier.Title);
-        Assert.AreEqual(999, createdDossier.Id);
+        Assert.That(createdDossier.Title, Is.EqualTo("A new dossier"));
+        Assert.That(createdDossier.Id, Is.EqualTo(999));
       }
     }
 
@@ -85,8 +85,8 @@ namespace Ramone.Tests
 
               Assert.IsNotNull(createdDossierLocation);
               Assert.IsNotNull(createdDossier);
-              Assert.AreEqual("A new dossier", createdDossier.Title);
-              Assert.AreEqual(999, createdDossier.Id);
+              Assert.That(createdDossier.Title, Is.EqualTo("A new dossier"));
+              Assert.That(createdDossier.Id, Is.EqualTo(999));
               wh.Set();
             });
         });

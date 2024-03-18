@@ -23,7 +23,7 @@
 Ramone has built-in support for serialization of simple objects as JSON, XML, URL-encoding and multipart encoding.</Description>
     <Copyright>Copyright ©2010, Ramone team</Copyright>
     <Product />
-    <PackageReleaseNotes>Rebuild with the right code - was missing code from previous versions.</PackageReleaseNotes>
+    <PackageReleaseNotes>Use System.Net.Http.Headers.AuthenticationHeaderValue to parse authentication header.</PackageReleaseNotes>
     <AssemblyVersion>4.2.0.0</AssemblyVersion>
     <FileVersion>4.2.0.0</FileVersion>
   </PropertyGroup>

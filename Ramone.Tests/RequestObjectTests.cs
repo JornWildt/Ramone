@@ -11,7 +11,7 @@ namespace Ramone.Tests
     {
       Request req = Session.Bind("http://dr.dk");
 
-      Assert.AreEqual(Session, req.Session);
+      Assert.That(req.Session, Is.EqualTo(Session));
     }
   }
 }

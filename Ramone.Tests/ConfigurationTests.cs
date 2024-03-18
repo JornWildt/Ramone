@@ -19,13 +19,13 @@ namespace Ramone.Tests
       IService service = RamoneConfiguration.NewService(BaseUrl);
 
       // Assert
-      Assert.AreEqual("Ramone/1.0", service.UserAgent);
-      Assert.AreEqual(Encoding.UTF8, service.DefaultEncoding);
-      Assert.AreEqual("{0}[{1}]", service.SerializerSettings.ArrayFormat);
-      Assert.AreEqual("{0}[{1}]", service.SerializerSettings.DictionaryFormat);
-      Assert.AreEqual("{0}.{1}", service.SerializerSettings.PropertyFormat);
-      Assert.AreEqual("s", service.SerializerSettings.DateTimeFormat);
-      Assert.AreEqual(CultureInfo.InvariantCulture.Name, service.SerializerSettings.Culture.Name);
+      Assert.That(service.UserAgent, Is.EqualTo("Ramone/1.0"));
+      Assert.That(service.DefaultEncoding, Is.EqualTo(Encoding.UTF8));
+      Assert.That(service.SerializerSettings.ArrayFormat, Is.EqualTo("{0}[{1}]"));
+      Assert.That(service.SerializerSettings.DictionaryFormat, Is.EqualTo("{0}[{1}]"));
+      Assert.That(service.SerializerSettings.PropertyFormat, Is.EqualTo("{0}.{1}"));
+      Assert.That(service.SerializerSettings.DateTimeFormat, Is.EqualTo("s"));
+      Assert.That(service.SerializerSettings.Culture.Name, Is.EqualTo(CultureInfo.InvariantCulture.Name));
     }
 
 
@@ -79,11 +79,11 @@ namespace Ramone.Tests
       IService service = RamoneConfiguration.NewService(BaseUrl);
 
       // Assert
-      Assert.AreEqual("A", service.SerializerSettings.ArrayFormat);
-      Assert.AreEqual("B", service.SerializerSettings.DictionaryFormat);
-      Assert.AreEqual("C", service.SerializerSettings.PropertyFormat);
-      Assert.AreEqual("O", service.SerializerSettings.DateTimeFormat);
-      Assert.AreEqual("da-DK", service.SerializerSettings.Culture.Name);
+      Assert.That(service.SerializerSettings.ArrayFormat, Is.EqualTo("A"));
+      Assert.That(service.SerializerSettings.DictionaryFormat, Is.EqualTo("B"));
+      Assert.That(service.SerializerSettings.PropertyFormat, Is.EqualTo("C"));
+      Assert.That(service.SerializerSettings.DateTimeFormat, Is.EqualTo("O"));
+      Assert.That(service.SerializerSettings.Culture.Name, Is.EqualTo("da-DK"));
     }
 
 
@@ -97,8 +97,8 @@ namespace Ramone.Tests
       IService service = RamoneConfiguration.NewService(BaseUrl);
 
       // Assert
-      Assert.AreEqual("Tester", service.UserAgent);
-      Assert.AreEqual(Encoding.ASCII, service.DefaultEncoding);
+      Assert.That(service.UserAgent, Is.EqualTo("Tester"));
+      Assert.That(service.DefaultEncoding, Is.EqualTo(Encoding.ASCII));
     }
   }
 }

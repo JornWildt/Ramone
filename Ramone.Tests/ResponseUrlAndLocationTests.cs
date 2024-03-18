@@ -29,9 +29,9 @@ namespace Ramone.Tests
         Uri responseUrl = response.ResponseUri;
         Uri createdLocation = response.CreatedLocation;
 
-        Assert.AreEqual(DossiersUrl, responseUrl);
-        Assert.AreEqual(newDossierUrl, location);
-        Assert.AreEqual(newDossierUrl, createdLocation);
+        Assert.That(responseUrl, Is.EqualTo(DossiersUrl));
+        Assert.That(location, Is.EqualTo(newDossierUrl));
+        Assert.That(createdLocation, Is.EqualTo(newDossierUrl));
       }
     }
   }

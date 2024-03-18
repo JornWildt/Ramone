@@ -49,7 +49,7 @@ namespace Ramone.Tests.OAuth2
       string code2 = newSession.OAuth2_GetAuthorizationCodeFromRedirectUrl(successUrl);
 
       Assert.IsNull(code1);
-      Assert.AreEqual("xyz", code2);
+      Assert.That(code2, Is.EqualTo("xyz"));
     }
   }
 }

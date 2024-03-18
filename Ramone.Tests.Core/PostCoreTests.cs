@@ -32,8 +32,8 @@ namespace Ramone.Tests.Core
 
         Assert.IsNotNull(createdDossierLocation);
         Assert.IsNotNull(createdDossier);
-        Assert.AreEqual("A Core dossier", createdDossier.Title);
-        Assert.AreEqual(999, createdDossier.Id);
+        Assert.That(createdDossier.Title, Is.EqualTo("A Core dossier"));
+        Assert.That(createdDossier.Id, Is.EqualTo(999));
       }
     }
   }

@@ -25,12 +25,12 @@ namespace Ramone.Tests.Utility
 
       // Assert
       Assert.IsNotNull(data);
-      Assert.AreEqual(10, data.MyInt);
-      Assert.AreEqual("Abc", data.MyString);
-      Assert.AreEqual(new DateTime(2012,10,30,12,13,14), data.MyDate);
-      Assert.AreEqual(10.5f, data.MyFloat);
-      Assert.AreEqual(9.25d, data.MyDouble);
-      Assert.AreEqual(8.75m, data.MyDecimal);
+      Assert.That(data.MyInt, Is.EqualTo(10));
+      Assert.That(data.MyString, Is.EqualTo("Abc"));
+      Assert.That(data.MyDate, Is.EqualTo(new DateTime(2012,10,30,12,13,14)));
+      Assert.That(data.MyFloat, Is.EqualTo(10.5f));
+      Assert.That(data.MyDouble, Is.EqualTo(9.25d));
+      Assert.That(data.MyDecimal, Is.EqualTo(8.75m));
     }
 
 
@@ -45,8 +45,8 @@ namespace Ramone.Tests.Utility
 
       // Assert
       Assert.IsNotNull(data);
-      Assert.AreEqual(0, data.MyInt);
-      Assert.AreEqual("", data.MyString);
+      Assert.That(data.MyInt, Is.EqualTo(0));
+      Assert.That(data.MyString, Is.EqualTo(""));
     }
 
 
@@ -61,8 +61,8 @@ namespace Ramone.Tests.Utility
 
       // Assert
       Assert.IsNotNull(data);
-      Assert.AreEqual(0, data.MyInt);
-      Assert.AreEqual(null, data.MyString);
+      Assert.That(data.MyInt, Is.EqualTo(0));
+      Assert.That(data.MyString, Is.EqualTo(null));
     }
 
 
@@ -77,8 +77,8 @@ namespace Ramone.Tests.Utility
 
       // Assert
       Assert.IsNotNull(data);
-      Assert.AreEqual(0, data.MyInt);
-      Assert.AreEqual(null, data.MyString);
+      Assert.That(data.MyInt, Is.EqualTo(0));
+      Assert.That(data.MyString, Is.EqualTo(null));
     }
 
 
@@ -93,8 +93,8 @@ namespace Ramone.Tests.Utility
 
       // Assert
       Assert.IsNotNull(data);
-      Assert.AreEqual(2, data.MyInt);
-      Assert.AreEqual("Xyz", data.MyString);
+      Assert.That(data.MyInt, Is.EqualTo(2));
+      Assert.That(data.MyString, Is.EqualTo("Xyz"));
     }
 
 
@@ -109,10 +109,10 @@ namespace Ramone.Tests.Utility
 
       // Assert
       Assert.IsNotNull(data);
-      Assert.AreEqual(555, data.MyInt);
+      Assert.That(data.MyInt, Is.EqualTo(555));
       Assert.IsNotNull(data.Simple);
-      Assert.AreEqual("Abc", data.Simple.MyString);
-      Assert.AreEqual(10, data.Simple.MyInt);
+      Assert.That(data.Simple.MyString, Is.EqualTo("Abc"));
+      Assert.That(data.Simple.MyInt, Is.EqualTo(10));
     }
 
 
@@ -126,8 +126,8 @@ namespace Ramone.Tests.Utility
       Dictionary<string, string> data = Deserialize<Dictionary<string, string>>(s);
 
       // Assert
-      Assert.AreEqual("123", data["A"]);
-      Assert.AreEqual("Qwerty", data["B"]);
+      Assert.That(data["A"], Is.EqualTo("123"));
+      Assert.That(data["B"], Is.EqualTo("Qwerty"));
     }
 
     // TEST strong type with inner collections of the various types
@@ -142,8 +142,8 @@ namespace Ramone.Tests.Utility
       Hashtable data = Deserialize<Hashtable>(s);
 
       // Assert
-      Assert.AreEqual("123", data["A"]);
-      Assert.AreEqual("Qwerty", data["B"]);
+      Assert.That(data["A"], Is.EqualTo("123"));
+      Assert.That(data["B"], Is.EqualTo("Qwerty"));
     }
 
 
@@ -158,8 +158,8 @@ namespace Ramone.Tests.Utility
 
       // Assert
       Assert.IsInstanceOf<Hashtable>(data["A"]);
-      Assert.AreEqual("123", ((Hashtable)data["A"])["x"]);
-      Assert.AreEqual("Qwerty", ((Hashtable)data["B"])["y"]);
+      Assert.That(((Hashtable)data["A"])["x"], Is.EqualTo("123"));
+      Assert.That(((Hashtable)data["B"])["y"], Is.EqualTo("Qwerty"));
     }
 
 
@@ -174,8 +174,8 @@ namespace Ramone.Tests.Utility
       NameValueCollection data = Deserialize<NameValueCollection>(s);
 
       // Assert
-      Assert.AreEqual("123", data["A.x"]);
-      Assert.AreEqual("Qwerty", data["B.y"]);
+      Assert.That(data["A.x"], Is.EqualTo("123"));
+      Assert.That(data["B.y"], Is.EqualTo("Qwerty"));
     }
 
 
@@ -203,25 +203,25 @@ MyHashtable.A.Y.2=Q";
       // Assert
       Assert.IsInstanceOf<Hashtable>(data.MyHashtable["A"]);
       Hashtable a = (Hashtable)data.MyHashtable["A"];
-      Assert.AreEqual("1", ((Hashtable)a["X"])["1"]);
-      Assert.AreEqual("Q", ((Hashtable)a["Y"])["2"]);
+      Assert.That(((Hashtable)a["X"])["1"], Is.EqualTo("1"));
+      Assert.That(((Hashtable)a["Y"])["2"], Is.EqualTo("Q"));
       
       Assert.IsInstanceOf<NameValueCollection>(data.MyNameValueCollection);
-      Assert.AreEqual("5", data.MyNameValueCollection["K1.K2"]);
-      Assert.AreEqual("6", data.MyNameValueCollection["K1.K3"]);
-      Assert.AreEqual("7", data.MyNameValueCollection["K1"]);
-      Assert.AreEqual("8", data.MyNameValueCollection["X"]);
+      Assert.That(data.MyNameValueCollection["K1.K2"], Is.EqualTo("5"));
+      Assert.That(data.MyNameValueCollection["K1.K3"], Is.EqualTo("6"));
+      Assert.That(data.MyNameValueCollection["K1"], Is.EqualTo("7"));
+      Assert.That(data.MyNameValueCollection["X"], Is.EqualTo("8"));
 
       Assert.IsNotNull(data.MyDictionaryStringString);
-      Assert.AreEqual("1", data.MyDictionaryStringString["X"]);
-      Assert.AreEqual("2", data.MyDictionaryStringString["Y"]);
-      Assert.AreEqual("3", data.MyDictionaryStringString["X.Q"]);
+      Assert.That(data.MyDictionaryStringString["X"], Is.EqualTo("1"));
+      Assert.That(data.MyDictionaryStringString["Y"], Is.EqualTo("2"));
+      Assert.That(data.MyDictionaryStringString["X.Q"], Is.EqualTo("3"));
 
       Assert.IsNotNull(data.MyDictionaryStringNested);
       Assert.IsNotNull(data.MyDictionaryStringNested["X"]);
-      Assert.AreEqual(10, data.MyDictionaryStringNested["X"].MyInt);
-      Assert.AreEqual(20, data.MyDictionaryStringNested["Y"].MyInt);
-      Assert.AreEqual("30", data.MyDictionaryStringNested["A"].MyNameValueCollection["Z"]);
+      Assert.That(data.MyDictionaryStringNested["X"].MyInt, Is.EqualTo(10));
+      Assert.That(data.MyDictionaryStringNested["Y"].MyInt, Is.EqualTo(20));
+      Assert.That(data.MyDictionaryStringNested["A"].MyNameValueCollection["Z"], Is.EqualTo("30"));
     }
 
 
@@ -235,7 +235,7 @@ MyHashtable.A.Y.2=Q";
       NestedDataWithDictionaries data = Deserialize<NestedDataWithDictionaries>(s);
 
       // Assert
-      Assert.AreEqual("1", data.MyHashtable["A"]);
+      Assert.That(data.MyHashtable["A"], Is.EqualTo("1"));
     }
 
 
@@ -254,7 +254,7 @@ MyHashtable.A.Y.2=Q";
       Dictionary<string, string> data = Deserialize<Dictionary<string, string>>(input, charset);
 
       // Assert
-      Assert.AreEqual("Abc ÆØÅ^ü", data["MyString"]);
+      Assert.That(data["MyString"], Is.EqualTo("Abc ÆØÅ^ü"));
     }
 
 

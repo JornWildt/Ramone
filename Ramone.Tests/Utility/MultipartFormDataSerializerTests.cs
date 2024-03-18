@@ -41,7 +41,7 @@ Abc
         using (StreamReader r = new StreamReader(s))
         {
           string result = r.ReadToEnd();
-          Assert.AreEqual(expected, result);
+          Assert.That(result, Is.EqualTo(expected));
         }
       }
     }
@@ -75,7 +75,7 @@ Content-Disposition: form-data; name=""MyFile""; filename=""data1.txt""
         using (StreamReader r = new StreamReader(s))
         {
           string result = r.ReadToEnd();
-          Assert.AreEqual(expected, result);
+          Assert.That(result, Is.EqualTo(expected));
         }
       }
     }
@@ -106,7 +106,7 @@ Content-Disposition: form-data; name=""MyFile""; filename=""Bxllefrx.txt""; file
         using (StreamReader r = new StreamReader(s))
         {
           string result = r.ReadToEnd();
-          Assert.AreEqual(expected, result);
+          Assert.That(result, Is.EqualTo(expected));
         }
       }
     }
@@ -137,7 +137,7 @@ Content-Disposition: form-data; name=""MyFile""; filename=""Bxllefrx.txt""
         using (StreamReader r = new StreamReader(s))
         {
           string result = r.ReadToEnd();
-          Assert.AreEqual(expected, result);
+          Assert.That(result, Is.EqualTo(expected));
         }
       }
     }

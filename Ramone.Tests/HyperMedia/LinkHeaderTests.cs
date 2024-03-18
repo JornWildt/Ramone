@@ -20,9 +20,9 @@ namespace Ramone.Tests.HyperMedia
       {
         // Assert
         List<WebLink> links = response.Links().ToList();
-        Assert.AreEqual(2, links.Count);
-        Assert.AreEqual("http://example.com/TheBook/chapter2", links[0].HRef.AbsoluteUri);
-        Assert.AreEqual("http://example.com/TheBook/chapter4", links[1].HRef.AbsoluteUri);
+        Assert.That(links.Count, Is.EqualTo(2));
+        Assert.That(links[0].HRef.AbsoluteUri, Is.EqualTo("http://example.com/TheBook/chapter2"));
+        Assert.That(links[1].HRef.AbsoluteUri, Is.EqualTo("http://example.com/TheBook/chapter4"));
       }
     }
 
@@ -39,7 +39,7 @@ namespace Ramone.Tests.HyperMedia
         // Assert
         List<WebLink> links = response.Links().ToList();
         Assert.IsNotNull(links);
-        Assert.AreEqual(0, links.Count);
+        Assert.That(links.Count, Is.EqualTo(0));
       }
     }
   }

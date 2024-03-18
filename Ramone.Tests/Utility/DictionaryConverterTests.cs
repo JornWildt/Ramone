@@ -24,15 +24,15 @@ namespace Ramone.Tests.Utility
       // Assert
       Assert.IsNotNull(d1);
       Assert.IsNotNull(d2);
-      Assert.AreEqual(3, d1.Count);
-      Assert.AreEqual(4, d2.Count);
+      Assert.That(d1.Count, Is.EqualTo(3));
+      Assert.That(d2.Count, Is.EqualTo(4));
 
-      Assert.AreEqual("10", d1["A"]);
-      Assert.AreEqual("Train", d1["B"]);
-      Assert.AreEqual("true", d1["C"]);
-      Assert.AreEqual("10", d2["X"]);
-      Assert.AreEqual("Train", d2["Y"]);
-      Assert.AreEqual("true", d2["Z"]);
+      Assert.That(d1["A"], Is.EqualTo("10"));
+      Assert.That(d1["B"], Is.EqualTo("Train"));
+      Assert.That(d1["C"], Is.EqualTo("true"));
+      Assert.That(d2["X"], Is.EqualTo("10"));
+      Assert.That(d2["Y"], Is.EqualTo("Train"));
+      Assert.That(d2["Z"], Is.EqualTo("true"));
     }
 
 
@@ -46,7 +46,7 @@ namespace Ramone.Tests.Utility
 
       // Assert
       Assert.IsNotNull(d);
-      Assert.AreEqual(0, d.Count);
+      Assert.That(d.Count, Is.EqualTo(0));
     }
 
 
@@ -62,8 +62,8 @@ namespace Ramone.Tests.Utility
 
       // Assert
       Assert.IsNotNull(d2);
-      Assert.AreEqual(1, d2.Count);
-      Assert.AreEqual("Window", d2["W"]);
+      Assert.That(d2.Count, Is.EqualTo(1));
+      Assert.That(d2["W"], Is.EqualTo("Window"));
     }
 
 

@@ -106,17 +106,17 @@ namespace Ramone.Tests.Utility
       ContextRegistrator.RegisterContext(Session, baseUrl, src);
 
       // Assert
-      Assert.AreEqual(10, src.X);
-      Assert.AreEqual(baseUrl, src.A.BaseUri);
-      Assert.AreEqual(new Uri(baseUrl, "path"), src.Links[0].HRef);
-      Assert.AreEqual(baseUrl, src.R1.A.BaseUri);
-      Assert.AreEqual(new Uri(baseUrl, "other"), src.R1.Links[0].HRef);
-      Assert.AreEqual(baseUrl, src.RecordList[0].A.BaseUri);
-      Assert.AreEqual(new Uri(baseUrl, "sub"), src.RecordList[0].Links[0].HRef);
-      Assert.AreEqual(new Uri(baseUrl, "new"), src.RecordList[0].R1.Links[0].HRef);
-      Assert.AreEqual(baseUrl, src.RecordArray[0].A.BaseUri);
-      Assert.AreEqual(new Uri(baseUrl, "array2"), src.RecordArray[0].Links[0].HRef);
-      Assert.AreEqual(new Uri(baseUrl, "array1"), src.RecordArray[0].R1.Links[0].HRef);
+      Assert.That(src.X, Is.EqualTo(10));
+      Assert.That(src.A.BaseUri, Is.EqualTo(baseUrl));
+      Assert.That(src.Links[0].HRef, Is.EqualTo(new Uri(baseUrl, "path")));
+      Assert.That(src.R1.A.BaseUri, Is.EqualTo(baseUrl));
+      Assert.That(src.R1.Links[0].HRef, Is.EqualTo(new Uri(baseUrl, "other")));
+      Assert.That(src.RecordList[0].A.BaseUri, Is.EqualTo(baseUrl));
+      Assert.That(src.RecordList[0].Links[0].HRef, Is.EqualTo(new Uri(baseUrl, "sub")));
+      Assert.That(src.RecordList[0].R1.Links[0].HRef, Is.EqualTo(new Uri(baseUrl, "new")));
+      Assert.That(src.RecordArray[0].A.BaseUri, Is.EqualTo(baseUrl));
+      Assert.That(src.RecordArray[0].Links[0].HRef, Is.EqualTo(new Uri(baseUrl, "array2")));
+      Assert.That(src.RecordArray[0].R1.Links[0].HRef, Is.EqualTo(new Uri(baseUrl, "array1")));
     }
   }
 }

@@ -61,7 +61,7 @@ namespace Ramone.Tests.Common
       {
         foreach (ConnectionStatistics.ConnectionInfo c in connections)
           Console.WriteLine("Open connection to {0} ({1}).", c.Url, c.Method);
-        Assert.AreEqual(0, connections.Count, "All connections must have been closed (showing currently number of open connections).");
+        Assert.That(connections.Count, Is.EqualTo(0), "All connections must have been closed (showing currently number of open connections).");
       }
     }
   }

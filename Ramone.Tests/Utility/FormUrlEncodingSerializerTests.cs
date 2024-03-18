@@ -41,7 +41,7 @@ namespace Ramone.Tests.Utility
         using (StreamReader r = new StreamReader(s, Encoding.ASCII))
         {
           string result = r.ReadToEnd();
-          Assert.AreEqual(expected, result);
+          Assert.That(result, Is.EqualTo(expected));
         }
       }
     }
@@ -132,7 +132,7 @@ namespace Ramone.Tests.Utility
         using (StreamReader r = new StreamReader(s, Encoding.ASCII))
         {
           string result = r.ReadToEnd();
-          Assert.AreEqual(expected, result);
+          Assert.That(result, Is.EqualTo(expected));
         }
       }
     }

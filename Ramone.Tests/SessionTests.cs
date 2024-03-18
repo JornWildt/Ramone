@@ -34,12 +34,12 @@ namespace Ramone.Tests
       ISession session = service.NewSession();
 
       // Assert
-      Assert.AreEqual("Dummy", session.UserAgent);
-      Assert.AreEqual(Encoding.ASCII, session.DefaultEncoding);
-      Assert.AreEqual(new MediaType("X/1"), session.DefaultRequestMediaType);
-      Assert.AreEqual(new MediaType("Y/1"), session.DefaultResponseMediaType);
-      Assert.AreEqual(BaseUrl, session.BaseUri);
-      Assert.AreEqual(policy, session.CachePolicy);
+      Assert.That(session.UserAgent, Is.EqualTo("Dummy"));
+      Assert.That(session.DefaultEncoding, Is.EqualTo(Encoding.ASCII));
+      Assert.That(session.DefaultRequestMediaType, Is.EqualTo(new MediaType("X/1")));
+      Assert.That(session.DefaultResponseMediaType, Is.EqualTo(new MediaType("Y/1")));
+      Assert.That(session.BaseUri, Is.EqualTo(BaseUrl));
+      Assert.That(session.CachePolicy, Is.EqualTo(policy));
     }
 
 
@@ -88,10 +88,10 @@ namespace Ramone.Tests
       ISession session3 = service.NewSession();
 
       // Assert
-      Assert.AreEqual(11, service.GetAllowedRedirects(300));
-      Assert.AreEqual(0, session1.GetAllowedRedirects(300));
-      Assert.AreEqual(11, session2.GetAllowedRedirects(300));
-      Assert.AreEqual(7, session2.GetAllowedRedirects(301));
+      Assert.That(service.GetAllowedRedirects(300), Is.EqualTo(11));
+      Assert.That(session1.GetAllowedRedirects(300), Is.EqualTo(0));
+      Assert.That(session2.GetAllowedRedirects(300), Is.EqualTo(11));
+      Assert.That(session2.GetAllowedRedirects(301), Is.EqualTo(7));
     }
 
 
@@ -112,11 +112,11 @@ namespace Ramone.Tests
       ISession session3 = service.NewSession();
 
       // Assert
-      Assert.AreEqual(0, session1.RequestInterceptors.Count());
+      Assert.That(session1.RequestInterceptors.Count(), Is.EqualTo(0));
 
-      Assert.AreEqual(2, session2.RequestInterceptors.Count());
-      
-      Assert.AreEqual(1, session3.RequestInterceptors.Count());
+      Assert.That(session2.RequestInterceptors.Count(), Is.EqualTo(2));
+
+      Assert.That(session3.RequestInterceptors.Count(), Is.EqualTo(1));
     }
 
 
@@ -138,12 +138,12 @@ namespace Ramone.Tests
       ISession session = service.NewSession();
 
       // Assert
-      Assert.AreEqual("A", session.SerializerSettings.ArrayFormat);
-      Assert.AreEqual("B", session.SerializerSettings.DictionaryFormat);
-      Assert.AreEqual("C", session.SerializerSettings.PropertyFormat);
-      Assert.AreEqual("O", session.SerializerSettings.DateTimeFormat);
-      Assert.AreEqual("da-DK", session.SerializerSettings.Culture.Name);
-      Assert.AreEqual(Encoding.ASCII, session.SerializerSettings.Encoding);
+      Assert.That(session.SerializerSettings.ArrayFormat, Is.EqualTo("A"));
+      Assert.That(session.SerializerSettings.DictionaryFormat, Is.EqualTo("B"));
+      Assert.That(session.SerializerSettings.PropertyFormat, Is.EqualTo("C"));
+      Assert.That(session.SerializerSettings.DateTimeFormat, Is.EqualTo("O"));
+      Assert.That(session.SerializerSettings.Culture.Name, Is.EqualTo("da-DK"));
+      Assert.That(session.SerializerSettings.Encoding, Is.EqualTo(Encoding.ASCII));
       Assert.IsTrue(session.SerializerSettings.EnableNonAsciiCharactersInMultipartFilenames);
       
       // Act 2
@@ -157,19 +157,19 @@ namespace Ramone.Tests
       session.SerializerSettings.EnableNonAsciiCharactersInMultipartFilenames = false;
 
       // Assert
-      Assert.AreEqual("A2", session.SerializerSettings.ArrayFormat);
-      Assert.AreEqual("B2", session.SerializerSettings.DictionaryFormat);
-      Assert.AreEqual("C2", session.SerializerSettings.PropertyFormat);
-      Assert.AreEqual("R", session.SerializerSettings.DateTimeFormat);
-      Assert.AreEqual("pt-BR", session.SerializerSettings.Culture.Name);
-      Assert.AreEqual(Encoding.Unicode, session.SerializerSettings.Encoding);
+      Assert.That(session.SerializerSettings.ArrayFormat, Is.EqualTo("A2"));
+      Assert.That(session.SerializerSettings.DictionaryFormat, Is.EqualTo("B2"));
+      Assert.That(session.SerializerSettings.PropertyFormat, Is.EqualTo("C2"));
+      Assert.That(session.SerializerSettings.DateTimeFormat, Is.EqualTo("R"));
+      Assert.That(session.SerializerSettings.Culture.Name, Is.EqualTo("pt-BR"));
+      Assert.That(session.SerializerSettings.Encoding, Is.EqualTo(Encoding.Unicode));
       Assert.IsFalse(session.SerializerSettings.EnableNonAsciiCharactersInMultipartFilenames);
-      Assert.AreEqual("A", service.SerializerSettings.ArrayFormat);
-      Assert.AreEqual("B", service.SerializerSettings.DictionaryFormat);
-      Assert.AreEqual("C", service.SerializerSettings.PropertyFormat);
-      Assert.AreEqual("O", service.SerializerSettings.DateTimeFormat);
-      Assert.AreEqual("da-DK", service.SerializerSettings.Culture.Name);
-      Assert.AreEqual(Encoding.ASCII, service.SerializerSettings.Encoding);
+      Assert.That(service.SerializerSettings.ArrayFormat, Is.EqualTo("A"));
+      Assert.That(service.SerializerSettings.DictionaryFormat, Is.EqualTo("B"));
+      Assert.That(service.SerializerSettings.PropertyFormat, Is.EqualTo("C"));
+      Assert.That(service.SerializerSettings.DateTimeFormat, Is.EqualTo("O"));
+      Assert.That(service.SerializerSettings.Culture.Name, Is.EqualTo("da-DK"));
+      Assert.That(service.SerializerSettings.Encoding, Is.EqualTo(Encoding.ASCII));
       Assert.IsTrue(service.SerializerSettings.EnableNonAsciiCharactersInMultipartFilenames);
       Assert.IsNotNull(session.SerializerSettings.Formaters.GetFormater(typeof(SomeClass1)));
       Assert.IsNotNull(session.SerializerSettings.Formaters.GetFormater(typeof(SomeClass2)));
@@ -187,7 +187,7 @@ namespace Ramone.Tests
       // Assert
       Assert.IsNotNull(session.Service);
       Assert.IsNotNull(session.Service.BaseUri);
-      Assert.AreEqual(BaseUrl, BaseUrl.AbsoluteUri);
+      Assert.That(BaseUrl.AbsoluteUri, Is.EqualTo(session.Service.BaseUri.AbsoluteUri));
     }
 
 
@@ -202,7 +202,7 @@ namespace Ramone.Tests
       int x = (int)session.Items["X"];
 
       // Assert
-      Assert.AreEqual(1234, x);
+      Assert.That(x, Is.EqualTo(1234));
     }
 
 
@@ -218,7 +218,7 @@ namespace Ramone.Tests
       {
         // Assert
         Assert.IsNotNull(resp.Body);
-        Assert.AreEqual(0, resp.Body.Id);
+        Assert.That(resp.Body.Id, Is.EqualTo(0));
       }
     }
 

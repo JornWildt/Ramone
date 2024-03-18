@@ -28,14 +28,14 @@ namespace Ramone.Tests.HyperMedia
       WebLink l1 = new WebLink(new Uri("http://dr.dk"), "http://dr.dk", "abc", "app/x", "hello");
 
       // Assert
-      Assert.AreEqual("http://dr.dk/", l1.Parameters["href"]);
-      Assert.AreEqual("http://dr.dk/", l1.HRef.AbsoluteUri);
-      Assert.AreEqual("abc", l1.Parameters["rel"]);
-      Assert.AreEqual("abc", l1.RelationType);
-      Assert.AreEqual("app/x", l1.Parameters["type"]);
-      Assert.AreEqual("app/x", (string)l1.MediaType);
-      Assert.AreEqual("hello", l1.Parameters["title"]);
-      Assert.AreEqual("hello", l1.Title);
+      Assert.That(l1.Parameters["href"], Is.EqualTo("http://dr.dk/"));
+      Assert.That(l1.HRef.AbsoluteUri, Is.EqualTo("http://dr.dk/"));
+      Assert.That(l1.Parameters["rel"], Is.EqualTo("abc"));
+      Assert.That(l1.RelationType, Is.EqualTo("abc"));
+      Assert.That(l1.Parameters["type"], Is.EqualTo("app/x"));
+      Assert.That((string)l1.MediaType, Is.EqualTo("app/x"));
+      Assert.That(l1.Parameters["title"], Is.EqualTo("hello"));
+      Assert.That(l1.Title, Is.EqualTo("hello"));
     }
 
 
@@ -52,14 +52,14 @@ namespace Ramone.Tests.HyperMedia
       l1.Parameters["title"] = "bonsoir";
 
       // Assert
-      Assert.AreEqual("http://svt.se/", l1.Parameters["href"]);
-      Assert.AreEqual("http://svt.se/", l1.HRef.AbsoluteUri);
-      Assert.AreEqual("xyz", l1.Parameters["rel"]);
-      Assert.AreEqual("xyz", l1.RelationType);
-      Assert.AreEqual("app/y", l1.Parameters["type"]);
-      Assert.AreEqual("app/y", (string)l1.MediaType);
-      Assert.AreEqual("bonsoir", l1.Parameters["title"]);
-      Assert.AreEqual("bonsoir", l1.Title);
+      Assert.That(l1.Parameters["href"], Is.EqualTo("http://svt.se/"));
+      Assert.That(l1.HRef.AbsoluteUri, Is.EqualTo("http://svt.se/"));
+      Assert.That(l1.Parameters["rel"], Is.EqualTo("xyz"));
+      Assert.That(l1.RelationType, Is.EqualTo("xyz"));
+      Assert.That(l1.Parameters["type"], Is.EqualTo("app/y"));
+      Assert.That((string)l1.MediaType, Is.EqualTo("app/y"));
+      Assert.That(l1.Parameters["title"], Is.EqualTo("bonsoir"));
+      Assert.That(l1.Title, Is.EqualTo("bonsoir"));
     }
 
 
@@ -70,8 +70,8 @@ namespace Ramone.Tests.HyperMedia
       WebLink l = new WebLink(new Uri("http://dr.dk"), "/xxx/yyy?z=1", "abc", "app/x", "hello");
 
       // Assert
-      Assert.AreEqual("http://dr.dk/xxx/yyy?z=1", l.Parameters["href"]);
-      Assert.AreEqual("http://dr.dk/xxx/yyy?z=1", l.HRef.AbsoluteUri);
+      Assert.That(l.Parameters["href"], Is.EqualTo("http://dr.dk/xxx/yyy?z=1"));
+      Assert.That(l.HRef.AbsoluteUri, Is.EqualTo("http://dr.dk/xxx/yyy?z=1"));
     }
 
 
@@ -82,8 +82,8 @@ namespace Ramone.Tests.HyperMedia
       WebLink l = new WebLink(null, "http://dr.dk", "abc", "app/x", "hello");
 
       // Assert
-      Assert.AreEqual("http://dr.dk/", l.Parameters["href"]);
-      Assert.AreEqual("http://dr.dk/", l.HRef.AbsoluteUri);
+      Assert.That(l.Parameters["href"], Is.EqualTo("http://dr.dk/"));
+      Assert.That(l.HRef.AbsoluteUri, Is.EqualTo("http://dr.dk/"));
     }
 
 
@@ -94,9 +94,9 @@ namespace Ramone.Tests.HyperMedia
       WebLink l1 = new WebLink(new Uri("http://dr.dk"), "http://elfisk.dk next http://example.com prev", "app/x", "hello");
 
       // Assert
-      Assert.AreEqual("http://dr.dk/", l1.HRef.AbsoluteUri);
-      Assert.AreEqual("http://elfisk.dk next http://example.com prev", l1.RelationType);
-      Assert.AreEqual(4, l1.RelationTypes.Count());
+      Assert.That(l1.HRef.AbsoluteUri, Is.EqualTo("http://dr.dk/"));
+      Assert.That(l1.RelationType, Is.EqualTo("http://elfisk.dk next http://example.com prev"));
+      Assert.That(l1.RelationTypes.Count(), Is.EqualTo(4));
       Assert.Contains("http://elfisk.dk", l1.RelationTypes.ToList());
       Assert.Contains("next", l1.RelationTypes.ToList());
       Assert.Contains("prev", l1.RelationTypes.ToList());

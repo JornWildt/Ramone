@@ -42,7 +42,7 @@ namespace Ramone.Tests
       {
         // Assert
         Assert.IsNotNull(response);
-        Assert.AreEqual("Prince", response.Body);
+        Assert.That(response.Body, Is.EqualTo("Prince"));
       }
     }
   }

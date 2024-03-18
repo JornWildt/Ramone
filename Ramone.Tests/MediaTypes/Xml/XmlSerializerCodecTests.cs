@@ -16,7 +16,7 @@ namespace Ramone.Tests.MediaTypes.Xml
 
       using (Response<UnregisteredClass> response = request.Accept("application/xml").ContentType("application/xml").Post<UnregisteredClass>(data))
       {
-        Assert.AreEqual(data.Text, response.Body.Text);
+        Assert.That(response.Body.Text, Is.EqualTo(data.Text));
       }
     }
 
@@ -29,7 +29,7 @@ namespace Ramone.Tests.MediaTypes.Xml
 
       using (Response<UnregisteredClass> response = request.AsXml().AcceptXml().Post<UnregisteredClass>(data))
       {
-        Assert.AreEqual(data.Text, response.Body.Text);
+        Assert.That(response.Body.Text, Is.EqualTo(data.Text));
       }
     }
 
@@ -42,7 +42,7 @@ namespace Ramone.Tests.MediaTypes.Xml
 
       using (Response<RegisteredClass> response = request.Post<RegisteredClass>(data))
       {
-        Assert.AreEqual(data.Title, response.Body.Title);
+        Assert.That(response.Body.Title, Is.EqualTo(data.Title));
       }
     }
 
@@ -55,8 +55,8 @@ namespace Ramone.Tests.MediaTypes.Xml
 
       using (Response<RegisteredClass> response = request.Post<RegisteredClass>(data))
       {
-        Assert.AreEqual(data.Title, response.Body.Title);
-        Assert.AreEqual(data.Date, response.Body.Date);
+        Assert.That(response.Body.Title, Is.EqualTo(data.Title));
+        Assert.That(response.Body.Date, Is.EqualTo(data.Date));
       }
     }
 
@@ -75,12 +75,12 @@ namespace Ramone.Tests.MediaTypes.Xml
       {
         // Assert
         Assert.IsNotNull(d1a.Body);
-        Assert.AreEqual("Fido", d1a.Body.Name);
+        Assert.That(d1a.Body.Name, Is.EqualTo("Fido"));
         Assert.IsNotNull(d1b.Body);
-        Assert.AreEqual("Hugo", d1b.Body.Name);
+        Assert.That(d1b.Body.Name, Is.EqualTo("Hugo"));
         Assert.IsNotNull(d2.Body);
-        Assert.AreEqual("Hugo", d2.Body.Name);
-        Assert.AreEqual(25, d2.Body.Weight);
+        Assert.That(d2.Body.Name, Is.EqualTo("Hugo"));
+        Assert.That(d2.Body.Weight, Is.EqualTo(25));
       }
     }
   }

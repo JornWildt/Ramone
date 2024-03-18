@@ -46,7 +46,7 @@ namespace Ramone.Tests
 
       // Assert
       Assert.IsNotNull(result);
-      Assert.AreEqual(4, result.Time);
+      Assert.That(result.Time, Is.EqualTo(4));
       Assert.Greater(syncTime, TimeSpan.FromSeconds(3), "Request takes at least 4 seconds - 3 should be a safe test");
       Assert.Less(asyncTime, TimeSpan.FromSeconds(1), "Async should be instantaneous - 1 second should be safe");
     }
@@ -63,8 +63,8 @@ namespace Ramone.Tests
         // Act
         dossierReq.AsyncEvent().Get<Dossier>(dossier =>
         {
-          Assert.AreEqual(8, dossier.Body.Id);
-          Assert.AreEqual("Dossier no. 8", dossier.Body.Title);
+          Assert.That(dossier.Body.Id, Is.EqualTo(8));
+          Assert.That(dossier.Body.Title, Is.EqualTo("Dossier no. 8"));
           Assert.IsNotNull(dossier.Body.Links);
           wh.Set();
         });
@@ -84,8 +84,8 @@ namespace Ramone.Tests
         dossierReq.AsyncEvent().Get(response =>
         {
           Dossier dossier = response.Decode<Dossier>();
-          Assert.AreEqual(8, dossier.Id);
-          Assert.AreEqual("Dossier no. 8", dossier.Title);
+          Assert.That(dossier.Id, Is.EqualTo(8));
+          Assert.That(dossier.Title, Is.EqualTo("Dossier no. 8"));
           Assert.IsNotNull(dossier.Links);
           wh.Set();
         });

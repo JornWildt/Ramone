@@ -26,7 +26,7 @@ namespace Ramone.Tests.OAuth1
       string normalizedParameters = Helper.NormalizeRequestParameters(parameters);
 
       // Assert
-      Assert.AreEqual("age=6&name=J%C3%B8rn", normalizedParameters);
+      Assert.That(normalizedParameters, Is.EqualTo("age=6&name=J%C3%B8rn"));
     }
 
 
@@ -42,8 +42,7 @@ namespace Ramone.Tests.OAuth1
       string signatureBase = Helper.GenerateSignatureBase(RequestUrl, "xckey", "xcb", "xat", "post", "12345", "abcd", SignatureHelper.HMACSHA1SignatureType, out normalizedUrl, out normalizedRequestParameters);
 
       // Assert
-      Assert.AreEqual("POST&http%3A%2F%2Fhome.dk%2Fset&age%3D6%26name%3DJ%25C3%25B8rn%26oauth_callback%3Dxcb%26oauth_consumer_key%3Dxckey%26oauth_nonce%3Dabcd%26oauth_signature_method%3DHMAC-SHA1%26oauth_timestamp%3D12345%26oauth_token%3Dxat%26oauth_version%3D1.0", 
-                      signatureBase);
+      Assert.That(signatureBase, Is.EqualTo("POST&http%3A%2F%2Fhome.dk%2Fset&age%3D6%26name%3DJ%25C3%25B8rn%26oauth_callback%3Dxcb%26oauth_consumer_key%3Dxckey%26oauth_nonce%3Dabcd%26oauth_signature_method%3DHMAC-SHA1%26oauth_timestamp%3D12345%26oauth_token%3Dxat%26oauth_version%3D1.0"));
     }
 
 
@@ -59,8 +58,7 @@ namespace Ramone.Tests.OAuth1
       string signatureBase = Helper.GenerateSignatureBase(RequestUrl, "xÆckey", "xØcb", "xÅat", "post", "12345", "abcd", SignatureHelper.HMACSHA1SignatureType, out normalizedUrl, out normalizedRequestParameters);
 
       // Assert
-      Assert.AreEqual("POST&http%3A%2F%2Fhome.dk%2Fset&age%3D6%26name%3DJ%25C3%25B8rn%26oauth_callback%3Dx%25C3%2598cb%26oauth_consumer_key%3Dx%25C3%2586ckey%26oauth_nonce%3Dabcd%26oauth_signature_method%3DHMAC-SHA1%26oauth_timestamp%3D12345%26oauth_token%3Dx%25C3%2585at%26oauth_version%3D1.0",
-                      signatureBase);
+      Assert.That(signatureBase, Is.EqualTo("POST&http%3A%2F%2Fhome.dk%2Fset&age%3D6%26name%3DJ%25C3%25B8rn%26oauth_callback%3Dx%25C3%2598cb%26oauth_consumer_key%3Dx%25C3%2586ckey%26oauth_nonce%3Dabcd%26oauth_signature_method%3DHMAC-SHA1%26oauth_timestamp%3D12345%26oauth_token%3Dx%25C3%2585at%26oauth_version%3D1.0"));
     }
 
 
@@ -87,7 +85,7 @@ namespace Ramone.Tests.OAuth1
                                                   out normalizedRequestParameters);
 
       // Assert
-      Assert.AreEqual("V4iyFCIi0CtoAVdOA1UgpIOaRAw=", signature);
+      Assert.That(signature, Is.EqualTo("V4iyFCIi0CtoAVdOA1UgpIOaRAw="));
     }
 
 
@@ -114,7 +112,7 @@ namespace Ramone.Tests.OAuth1
                                                   out normalizedRequestParameters);
 
       // Assert
-      Assert.AreEqual("JtsXpw8uYg4ZhaxPyGUHbhYG/Wg=", signature);
+      Assert.That(signature, Is.EqualTo("JtsXpw8uYg4ZhaxPyGUHbhYG/Wg="));
     }
   }
 }

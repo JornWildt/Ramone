@@ -26,7 +26,7 @@ namespace Ramone.Tests
       using (Response response = DossierReq.Delete())
       {
         // Assert
-        Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
       }
     }
 
@@ -38,7 +38,7 @@ namespace Ramone.Tests
       using (Response<string> response = DossierReq.Delete<string>())
       {
         // Assert
-        Assert.AreEqual("Deleted, yup!", response.Body);
+        Assert.That(response.Body, Is.EqualTo("Deleted, yup!"));
       }
     }
 
@@ -50,7 +50,7 @@ namespace Ramone.Tests
       using (var r = DossierReq.Accept<string>().Delete())
       {
         // Assert
-        Assert.AreEqual("Deleted, yup!", r.Body);
+        Assert.That(r.Body, Is.EqualTo("Deleted, yup!"));
       }
     }
 
@@ -62,7 +62,7 @@ namespace Ramone.Tests
       using (var r = DossierReq.Accept<string>("text/plain").Delete())
       {
         // Assert
-        Assert.AreEqual("Deleted, yup!", r.Body);
+        Assert.That(r.Body, Is.EqualTo("Deleted, yup!"));
       }
     }
 

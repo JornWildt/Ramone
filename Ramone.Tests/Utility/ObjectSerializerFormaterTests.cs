@@ -41,7 +41,7 @@ namespace Ramone.Tests.Utility
       string result = Serialize(o, settings);
 
       // Assert
-      Assert.AreEqual("|Bool=false|Date=2012-10-12T15:14:13|Url=http://dr.dk/", result);
+      Assert.That(result, Is.EqualTo("|Bool=false|Date=2012-10-12T15:14:13|Url=http://dr.dk/"));
     }
 
 
@@ -66,7 +66,7 @@ namespace Ramone.Tests.Utility
       string result = Serialize(o, settings);
 
       // Assert
-      Assert.AreEqual("|Mail=jw@fjeldgruppen.dk|Bool=1", result);
+      Assert.That(result, Is.EqualTo("|Mail=jw@fjeldgruppen.dk|Bool=1"));
     }
 
 
@@ -84,8 +84,8 @@ namespace Ramone.Tests.Utility
       // Assert
       Assert.IsNotNull(f1);
       Assert.IsNotNull(f2);
-      Assert.AreEqual(typeof(MailObjectSerializerFormater), f1.GetType());
-      Assert.AreEqual(typeof(DelegateFormater<bool>), f2.GetType());
+      Assert.That(f1.GetType(), Is.EqualTo(typeof(MailObjectSerializerFormater)));
+      Assert.That(f2.GetType(), Is.EqualTo(typeof(DelegateFormater<bool>)));
     }
 
 

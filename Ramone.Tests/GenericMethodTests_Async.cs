@@ -23,8 +23,8 @@ namespace Ramone.Tests
         AssertThrows<WebException>(() => dossierReq.Execute<Dossier>("UNKNOWN"));
 
         // Assert
-        Assert.AreEqual(8, dossier1.Body.Id);
-        Assert.AreEqual(8, dossier2.Body.Id);
+        Assert.That(dossier1.Body.Id, Is.EqualTo(8));
+        Assert.That(dossier2.Body.Id, Is.EqualTo(8));
       }
     }
   }

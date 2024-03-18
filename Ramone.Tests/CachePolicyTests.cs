@@ -24,7 +24,7 @@ namespace Ramone.Tests
       RequestCachePolicy policy = null;
       using (request.OnHeadersReady(r => policy = r.CachePolicy).Get<HeaderList>())
       {
-        Assert.AreEqual(Policy, policy);
+        Assert.That(policy, Is.EqualTo(Policy));
       }
     }
 
@@ -45,7 +45,7 @@ namespace Ramone.Tests
               wh.Set();
             });
         });
-      Assert.AreEqual(Policy, policy);
+      Assert.That(policy, Is.EqualTo(Policy));
     }
 
 
@@ -63,7 +63,7 @@ namespace Ramone.Tests
       RequestCachePolicy policy = null;
       using (request.OnHeadersReady(r => policy = r.CachePolicy).AcceptXml().Get<HeaderList>())
       {
-        Assert.AreEqual(Policy, policy);
+        Assert.That(policy, Is.EqualTo(Policy));
       }
     }
 

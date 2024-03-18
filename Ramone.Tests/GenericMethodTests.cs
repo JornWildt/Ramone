@@ -32,8 +32,8 @@ namespace Ramone.Tests
         AssertThrows<WebException>(() => dossierReq.Execute<Dossier>("UNKNOWN"));
 
         // Assert
-        Assert.AreEqual(8, dossier1.Body.Id);
-        Assert.AreEqual(8, dossier2.Body.Id);
+        Assert.That(dossier1.Body.Id, Is.EqualTo(8));
+        Assert.That(dossier2.Body.Id, Is.EqualTo(8));
       }
     }
 
@@ -51,7 +51,7 @@ namespace Ramone.Tests
           .Execute<Dossier>("GET", response =>
           {
             // Assert
-            Assert.AreEqual(8, response.Body.Id);
+            Assert.That(response.Body.Id, Is.EqualTo(8));
             wh.Set();
           });
       });
@@ -71,7 +71,7 @@ namespace Ramone.Tests
         AssertThrows<WebException>(() => dossierReq.Execute("UNKNOWN"));
 
         // Assert
-        Assert.AreEqual(8, response1.Decode<Dossier>().Id);
+        Assert.That(response1.Decode<Dossier>().Id, Is.EqualTo(8));
       }
     }
 
@@ -89,7 +89,7 @@ namespace Ramone.Tests
           .Execute("GET", response =>
           {
             // Assert
-            Assert.AreEqual(8, response.Decode<Dossier>().Id);
+            Assert.That(response.Decode<Dossier>().Id, Is.EqualTo(8));
             wh.Set();
           });
       });
@@ -119,8 +119,8 @@ namespace Ramone.Tests
         AssertThrows<WebException>(() => dossiersReq.Execute<Dossier>("UNKNOWN", MyDossier));
 
         // Assert
-        Assert.AreEqual(999, dossier1.Id);
-        Assert.AreEqual(999, dossier2.Id);
+        Assert.That(dossier1.Id, Is.EqualTo(999));
+        Assert.That(dossier2.Id, Is.EqualTo(999));
       }
     }
 
@@ -138,7 +138,7 @@ namespace Ramone.Tests
           .Execute<Dossier>("POST", MyDossier, response =>
           {
             // Assert
-            Assert.AreEqual(999, response.Body.Id);
+            Assert.That(response.Body.Id, Is.EqualTo(999));
             wh.Set();
           });
       });
@@ -158,7 +158,7 @@ namespace Ramone.Tests
         AssertThrows<WebException>(() => dossiersReq.Execute("UNKNOWN", MyDossier));
 
         // Assert
-        Assert.AreEqual(999, response.Decode<Dossier>().Id);
+        Assert.That(response.Decode<Dossier>().Id, Is.EqualTo(999));
       }
     }
 
@@ -176,7 +176,7 @@ namespace Ramone.Tests
           .Execute("POST", MyDossier, response =>
           {
             // Assert
-            Assert.AreEqual(999, response.Decode<Dossier>().Id);
+            Assert.That(response.Decode<Dossier>().Id, Is.EqualTo(999));
             wh.Set();
           });
       });

@@ -20,7 +20,7 @@ namespace Ramone.Tests
       using (var c = catReq.Get<Cat>())
       {
         // Assert
-        Assert.AreEqual("Fiona", c.Body.Name);
+        Assert.That(c.Body.Name, Is.EqualTo("Fiona"));
       }
     }
 
@@ -35,7 +35,7 @@ namespace Ramone.Tests
       using (var c = catReq.Accept("text/html").Get<Cat>())
       {
         // Assert
-        Assert.AreEqual("<html><body><p>Fiona</p></body></html>", c.Body.Name);
+        Assert.That(c.Body.Name, Is.EqualTo("<html><body><p>Fiona</p></body></html>"));
       }
     }
 
@@ -58,7 +58,7 @@ namespace Ramone.Tests
       });
 
       // Assert
-      Assert.AreEqual(true, ok);
+      Assert.That(ok, Is.EqualTo(true));
     }
 
 
@@ -72,7 +72,7 @@ namespace Ramone.Tests
       using (var c = catReq.Accept("text/plain").Get<Cat>())
       {
         // Assert
-        Assert.AreEqual("Fiona", c.Body.Name);
+        Assert.That(c.Body.Name, Is.EqualTo("Fiona"));
       }
     }
 
@@ -87,7 +87,7 @@ namespace Ramone.Tests
       using (var c = catReq.Accept("text/plain").Get<Cat>())
       {
         // Assert
-        Assert.AreEqual("Fiona", c.Body.Name);
+        Assert.That(c.Body.Name, Is.EqualTo("Fiona"));
       }
     }
 
@@ -107,7 +107,7 @@ namespace Ramone.Tests
         Assert.IsNotNull(c);
         XmlNode nameNode = c.SelectSingleNode("//Cat/Name");
         Assert.IsNotNull(nameNode);
-        Assert.AreEqual("Fiona", nameNode.InnerText);
+        Assert.That(nameNode.InnerText, Is.EqualTo("Fiona"));
       }
     }
 
@@ -121,7 +121,7 @@ namespace Ramone.Tests
 
       // Act + Assert
       using (var c2 = catReq.Post<Cat>(c1))
-        Assert.AreEqual("Fiona", c2.Body.Name);
+        Assert.That(c2.Body.Name, Is.EqualTo("Fiona"));
     }
 
 

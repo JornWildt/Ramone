@@ -28,10 +28,10 @@ namespace Ramone.Tests
         {
           Assert.IsNotNull(response);
           Assert.IsNotNull(response.Body);
-          Assert.AreEqual(HttpStatusCode.BadRequest, response.StatusCode);
+          Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
           Assert.IsInstanceOf<ApplicationError>(response.Body);
-          Assert.AreEqual(10, response.Body.Code);
-          Assert.AreEqual("Error X", response.Body.Message);
+          Assert.That(response.Body.Code, Is.EqualTo(10));
+          Assert.That(response.Body.Message, Is.EqualTo("Error X"));
         }
       }
     }

@@ -17,9 +17,9 @@ namespace Ramone.Tests
       MediaType m = new MediaType("text/plain");
 
       // Assert
-      Assert.AreEqual("text/plain", (string)m);
-      Assert.AreEqual("text", m.TopLevelType);
-      Assert.AreEqual("plain", m.SubType);
+      Assert.That((string)m, Is.EqualTo("text/plain"));
+      Assert.That(m.TopLevelType, Is.EqualTo("text"));
+      Assert.That(m.SubType, Is.EqualTo("plain"));
     }
 
 
@@ -30,9 +30,9 @@ namespace Ramone.Tests
       MediaType m = new MediaType("text/plain; charset=utf-8");
 
       // Assert
-      Assert.AreEqual("text/plain", (string)m);
-      Assert.AreEqual("text", m.TopLevelType);
-      Assert.AreEqual("plain", m.SubType);
+      Assert.That((string)m, Is.EqualTo("text/plain"));
+      Assert.That(m.TopLevelType, Is.EqualTo("text"));
+      Assert.That(m.SubType, Is.EqualTo("plain"));
     }
 
 
@@ -44,16 +44,16 @@ namespace Ramone.Tests
       MediaType m2 = new MediaType("*/*");
 
       // Assert
-      Assert.AreEqual("text/*", (string)m1);
-      Assert.AreEqual("text", m1.TopLevelType);
-      Assert.AreEqual("*", m1.SubType);
+      Assert.That((string)m1, Is.EqualTo("text/*"));
+      Assert.That(m1.TopLevelType, Is.EqualTo("text"));
+      Assert.That(m1.SubType, Is.EqualTo("*"));
       Assert.IsFalse(m1.IsTopLevelWildcard);
       Assert.IsTrue(m1.IsSubTypeWildcard);
       Assert.IsFalse(m1.IsWildcard);
 
-      Assert.AreEqual("*/*", (string)m2);
-      Assert.AreEqual("*", m2.TopLevelType);
-      Assert.AreEqual("*", m2.SubType);
+      Assert.That((string)m2, Is.EqualTo("*/*"));
+      Assert.That(m2.TopLevelType, Is.EqualTo("*"));
+      Assert.That(m2.SubType, Is.EqualTo("*"));
       Assert.IsTrue(m2.IsTopLevelWildcard);
       Assert.IsTrue(m2.IsSubTypeWildcard);
       Assert.IsTrue(m2.IsWildcard);
@@ -115,7 +115,7 @@ namespace Ramone.Tests
       MediaType m = "app/x";
 
       // Assert
-      Assert.AreEqual("app/x", (string)m);
+      Assert.That((string)m, Is.EqualTo("app/x"));
     }
 
 
@@ -129,7 +129,7 @@ namespace Ramone.Tests
       string m = (string)mt;
 
       // Assert
-      Assert.AreEqual("app/x", m);
+      Assert.That(m, Is.EqualTo("app/x"));
     }
 
 

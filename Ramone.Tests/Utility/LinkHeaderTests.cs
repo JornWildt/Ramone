@@ -24,17 +24,17 @@ namespace Ramone.Tests.Utility
 
       // Assert
       Assert.IsNotNull(links);
-      Assert.AreEqual(2, links.Count);
+      Assert.That(links.Count, Is.EqualTo(2));
 
       ILink l1 = links[0];
-      Assert.AreEqual("http://example.com/TheBook/chapter2", l1.HRef.AbsoluteUri);
+      Assert.That(l1.HRef.AbsoluteUri, Is.EqualTo("http://example.com/TheBook/chapter2"));
       Assert.Contains("previous", l1.RelationTypes.ToList());
-      Assert.AreEqual("Previous chapter", l1.Title);
+      Assert.That(l1.Title, Is.EqualTo("Previous chapter"));
 
       ILink l2 = links[1];
-      Assert.AreEqual("http://example.com/TheBook/chapter4", l2.HRef.AbsoluteUri);
+      Assert.That(l2.HRef.AbsoluteUri, Is.EqualTo("http://example.com/TheBook/chapter4"));
       Assert.Contains("next", l2.RelationTypes.ToList());
-      Assert.AreEqual("Next chapter", l2.Title);
+      Assert.That(l2.Title, Is.EqualTo("Next chapter"));
     }
 
 
@@ -49,12 +49,12 @@ namespace Ramone.Tests.Utility
 
       // Assert
       Assert.IsNotNull(links);
-      Assert.AreEqual(1, links.Count);
+      Assert.That(links.Count, Is.EqualTo(1));
 
       ILink l1 = links[0];
-      Assert.AreEqual("http://example.com/TheBook/chapter3", l1.HRef.AbsoluteUri);
+      Assert.That(l1.HRef.AbsoluteUri, Is.EqualTo("http://example.com/TheBook/chapter3"));
       Assert.Contains("previous", l1.RelationTypes.ToList());
-      Assert.AreEqual("Previous chapter", l1.Title);
+      Assert.That(l1.Title, Is.EqualTo("Previous chapter"));
     }
 
 
@@ -69,11 +69,11 @@ namespace Ramone.Tests.Utility
 
       // Assert
       Assert.IsNotNull(links);
-      Assert.AreEqual(1, links.Count);
+      Assert.That(links.Count, Is.EqualTo(1));
 
       ILink l1 = links[0];
-      Assert.AreEqual("http://example.com/TheBook/chapter5", l1.HRef.AbsoluteUri);
-      Assert.AreEqual(0, l1.RelationTypes.Count());
+      Assert.That(l1.HRef.AbsoluteUri, Is.EqualTo("http://example.com/TheBook/chapter5"));
+      Assert.That(l1.RelationTypes.Count(), Is.EqualTo(0));
       Assert.IsNull(l1.Title);
     }
 
@@ -89,11 +89,11 @@ namespace Ramone.Tests.Utility
 
       // Assert
       Assert.IsNotNull(links);
-      Assert.AreEqual(1, links.Count);
+      Assert.That(links.Count, Is.EqualTo(1));
 
       ILink l1 = links[0];
-      Assert.AreEqual("http://example.com/TheBook/chapter6", l1.HRef.AbsoluteUri);
-      Assert.AreEqual("Nächstes Kapitel", l1.Title);
+      Assert.That(l1.HRef.AbsoluteUri, Is.EqualTo("http://example.com/TheBook/chapter6"));
+      Assert.That(l1.Title, Is.EqualTo("Nächstes Kapitel"));
     }
 
 
@@ -111,14 +111,14 @@ namespace Ramone.Tests.Utility
       // Assert
       Assert.IsNotNull(links1);
       Assert.IsNotNull(links2);
-      Assert.AreEqual(1, links1.Count);
-      Assert.AreEqual(1, links2.Count);
+      Assert.That(links1.Count, Is.EqualTo(1));
+      Assert.That(links2.Count, Is.EqualTo(1));
 
       ILink l1 = links1[0];
-      Assert.AreEqual("Nächstes Kapitel", l1.Title);
+      Assert.That(l1.Title, Is.EqualTo("Nächstes Kapitel"));
 
       ILink l2 = links2[0];
-      Assert.AreEqual("Nächstes Kapitel", l2.Title);
+      Assert.That(l2.Title, Is.EqualTo("Nächstes Kapitel"));
     }
 
 
@@ -133,10 +133,10 @@ namespace Ramone.Tests.Utility
 
       // Assert
       Assert.IsNotNull(links1);
-      Assert.AreEqual(1, links1.Count);
+      Assert.That(links1.Count, Is.EqualTo(1));
 
       ILink l1 = links1[0];
-      Assert.AreEqual("abc", l1.Title);
+      Assert.That(l1.Title, Is.EqualTo("abc"));
     }
 
 
@@ -151,7 +151,7 @@ namespace Ramone.Tests.Utility
 
       // Assert
       Assert.IsNotNull(links1);
-      Assert.AreEqual(1, links1.Count);
+      Assert.That(links1.Count, Is.EqualTo(1));
 
       ILink l1 = links1[0];
       Assert.Contains("previous", l1.RelationTypes.ToList());
@@ -169,7 +169,7 @@ namespace Ramone.Tests.Utility
 
       // Assert
       Assert.IsNotNull(links1);
-      Assert.AreEqual(1, links1.Count);
+      Assert.That(links1.Count, Is.EqualTo(1));
 
       ILink l1 = links1[0];
       Assert.Contains("next-chap.ter", l1.RelationTypes.ToList());
@@ -187,10 +187,10 @@ namespace Ramone.Tests.Utility
 
       // Assert
       Assert.IsNotNull(links1);
-      Assert.AreEqual(1, links1.Count);
+      Assert.That(links1.Count, Is.EqualTo(1));
 
       ILink l1 = links1[0];
-      Assert.AreEqual(3, l1.RelationTypes.Count());
+      Assert.That(l1.RelationTypes.Count(), Is.EqualTo(3));
       Assert.Contains("next-chap.ter", l1.RelationTypes.ToList());
       Assert.Contains("prev", l1.RelationTypes.ToList());
       Assert.Contains("next", l1.RelationTypes.ToList());
@@ -209,17 +209,17 @@ namespace Ramone.Tests.Utility
 
       // Assert
       Assert.IsNotNull(links1);
-      Assert.AreEqual(2, links1.Count);
+      Assert.That(links1.Count, Is.EqualTo(2));
 
       ILink l1 = links1[0];
-      Assert.AreEqual("http://example.com/TheBook/chapter6", l1.HRef.AbsoluteUri);
-      Assert.AreEqual(0, l1.RelationTypes.Count());
-      Assert.AreEqual("Abc", l1.Title);
+      Assert.That(l1.HRef.AbsoluteUri, Is.EqualTo("http://example.com/TheBook/chapter6"));
+      Assert.That(l1.RelationTypes.Count(), Is.EqualTo(0));
+      Assert.That(l1.Title, Is.EqualTo("Abc"));
 
       ILink l2 = links1[1];
-      Assert.AreEqual("http://example.com/TheBook/chapter1", l2.HRef.AbsoluteUri);
+      Assert.That(l2.HRef.AbsoluteUri, Is.EqualTo("http://example.com/TheBook/chapter1"));
       Assert.Contains("help", l2.RelationTypes.ToList());
-      Assert.AreEqual("Xyz", l2.Title);
+      Assert.That(l2.Title, Is.EqualTo("Xyz"));
     }
 
 
@@ -235,12 +235,12 @@ namespace Ramone.Tests.Utility
 
       // Assert
       Assert.IsNotNull(links1);
-      Assert.AreEqual(1, links1.Count);
+      Assert.That(links1.Count, Is.EqualTo(1));
 
       ILink l1 = links1[0];
-      Assert.AreEqual("http://example.com/TheBook/chapter1", l1.HRef.AbsoluteUri);
+      Assert.That(l1.HRef.AbsoluteUri, Is.EqualTo("http://example.com/TheBook/chapter1"));
       Assert.Contains("help", l1.RelationTypes.ToList());
-      Assert.AreEqual("Xyz", l1.Title);
+      Assert.That(l1.Title, Is.EqualTo("Xyz"));
     }
   }
 }

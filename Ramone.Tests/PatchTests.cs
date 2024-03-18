@@ -24,7 +24,7 @@ namespace Ramone.Tests
       using (Response response = DossierReq.AsFormUrlEncoded().Patch(new { title = "Duh" }))
       {
         // Assert
-        Assert.AreEqual("Duh: ok", response.Decode<Dossier>().Title);
+        Assert.That(response.Decode<Dossier>().Title, Is.EqualTo("Duh: ok"));
       }
     }
 
@@ -38,7 +38,7 @@ namespace Ramone.Tests
         DossierReq.AsFormUrlEncoded().AsyncEvent().Patch(new { title = "Duh" }, response =>
         {
           // Assert
-          Assert.AreEqual("Duh: ok", response.Decode<Dossier>().Title);
+          Assert.That(response.Decode<Dossier>().Title, Is.EqualTo("Duh: ok"));
           wh.Set();
         });
       });
@@ -52,7 +52,7 @@ namespace Ramone.Tests
       using (Response<Dossier> response = DossierReq.AsFormUrlEncoded().Patch<Dossier>(new { title = "Duh" }))
       {
         // Assert
-        Assert.AreEqual("Duh: ok", response.Body.Title);
+        Assert.That(response.Body.Title, Is.EqualTo("Duh: ok"));
       }
     }
 
@@ -66,7 +66,7 @@ namespace Ramone.Tests
         DossierReq.AsFormUrlEncoded().AsyncEvent().Patch<Dossier>(new { title = "Duh" }, response =>
         {
           // Assert
-          Assert.AreEqual("Duh: ok", response.Body.Title);
+          Assert.That(response.Body.Title, Is.EqualTo("Duh: ok"));
           wh.Set();
         });
       });
@@ -80,7 +80,7 @@ namespace Ramone.Tests
       using (var title = DossierReq.AsFormUrlEncoded().Accept<Dossier>().Patch(new { title = "Duh" }))
       {
         // Assert
-        Assert.AreEqual("Duh: ok", title.Body.Title);
+        Assert.That(title.Body.Title, Is.EqualTo("Duh: ok"));
       }
     }
 
@@ -92,7 +92,7 @@ namespace Ramone.Tests
       using (var title = DossierReq.AsFormUrlEncoded().Accept<Dossier>(CMSConstants.CMSMediaType).Patch(new { title = "Duh" }))
       {
         // Assert
-        Assert.AreEqual("Duh: ok", title.Body.Title);
+        Assert.That(title.Body.Title, Is.EqualTo("Duh: ok"));
       }
     }
 

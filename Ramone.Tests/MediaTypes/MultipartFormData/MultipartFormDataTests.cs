@@ -24,7 +24,7 @@ namespace Ramone.Tests.MediaTypes.MultipartFormData
       {
         // Assert
         Assert.IsTrue(response.Headers["x-contenttype"].StartsWith("multipart/form-data"));
-        Assert.AreEqual("Pete-10-True", response.Body);
+        Assert.That(response.Body, Is.EqualTo("Pete-10-True"));
       }
     }
 
@@ -41,7 +41,7 @@ namespace Ramone.Tests.MediaTypes.MultipartFormData
       {
         // Assert
         Assert.IsTrue(response.Headers["x-contenttype"].StartsWith("multipart/form-data"));
-        Assert.AreEqual("Pete-10-False", response.Body);
+        Assert.That(response.Body, Is.EqualTo("Pete-10-False"));
       }
     }
 
@@ -68,7 +68,7 @@ namespace Ramone.Tests.MediaTypes.MultipartFormData
       {
         // Assert
         Assert.IsTrue(response.Headers["x-contenttype"].StartsWith("multipart/form-data"));
-        Assert.AreEqual("data1.txt-text/plain-w4bDvMOuwrRgJw==-10", response.Body);
+        Assert.That(response.Body, Is.EqualTo("data1.txt-text/plain-w4bDvMOuwrRgJw==-10"));
       }
     }
 
@@ -88,7 +88,7 @@ namespace Ramone.Tests.MediaTypes.MultipartFormData
       {
         // Assert
         Assert.IsTrue(response.Headers["x-contenttype"].StartsWith("multipart/form-data"));
-        Assert.AreEqual("data1.txt-text/plain-w4bDvMOuwrRgJw==-10", response.Body);
+        Assert.That(response.Body, Is.EqualTo("data1.txt-text/plain-w4bDvMOuwrRgJw==-10"));
       }
     }
 
@@ -108,7 +108,7 @@ namespace Ramone.Tests.MediaTypes.MultipartFormData
       {
         // Assert
         Assert.IsTrue(response.Headers["x-contenttype"].StartsWith("multipart/form-data"));
-        Assert.AreEqual("Bxllefrx.txt-text/plain-w4bDvMOuwrRgJw==-10", response.Body);
+        Assert.That(response.Body, Is.EqualTo("Bxllefrx.txt-text/plain-w4bDvMOuwrRgJw==-10"));
       }
     }
 
@@ -126,7 +126,7 @@ namespace Ramone.Tests.MediaTypes.MultipartFormData
       {
         // Assert
         Assert.IsTrue(response.Headers["x-contenttype"].StartsWith("multipart/form-data"));
-        Assert.AreEqual("Bxllefrx.txt-text/plain-w4bDvMOuwrRgJw==-10", response.Body);
+        Assert.That(response.Body, Is.EqualTo("Bxllefrx.txt-text/plain-w4bDvMOuwrRgJw==-10"));
       }
     }
 
@@ -165,7 +165,7 @@ namespace Ramone.Tests.MediaTypes.MultipartFormData
       {
         // Assert
         Assert.IsTrue(response.Headers["x-contenttype"].StartsWith("multipart/form-data"));
-        Assert.AreEqual("data1.gif-image/gif-R0lGODlhAgACAA==-99", response.Body);
+        Assert.That(response.Body, Is.EqualTo("data1.gif-image/gif-R0lGODlhAgACAA==-99"));
       }
     }
 
@@ -183,7 +183,7 @@ namespace Ramone.Tests.MediaTypes.MultipartFormData
       {
         // Assert
         Assert.IsTrue(response.Headers["x-contenttype"].StartsWith("multipart/form-data"));
-        Assert.AreEqual("other-filename.guf-image/gif-R0lGODlhAgACAA==-99", response.Body);
+        Assert.That(response.Body, Is.EqualTo("other-filename.guf-image/gif-R0lGODlhAgACAA==-99"));
       }
     }
 
@@ -200,7 +200,7 @@ namespace Ramone.Tests.MediaTypes.MultipartFormData
       {
         // Assert
         Assert.IsTrue(response.Headers["x-contenttype"].StartsWith("multipart/form-data"));
-        Assert.AreEqual("Pete-10-False", response.Body);
+        Assert.That(response.Body, Is.EqualTo("Pete-10-False"));
       }
     }
 
@@ -226,8 +226,8 @@ namespace Ramone.Tests.MediaTypes.MultipartFormData
       {
         // Assert
         Assert.IsTrue(response.Headers["x-contenttype"].StartsWith("multipart/form-data"));
-        Assert.AreEqual(charsetOut, response.Headers["x-accept-charset"]);
-        Assert.AreEqual("ÆØÅüî-10-True", response.Body);
+        Assert.That(response.Headers["x-accept-charset"], Is.EqualTo(charsetOut));
+        Assert.That(response.Body, Is.EqualTo("ÆØÅüî-10-True"));
       }
     }
 
@@ -292,7 +292,7 @@ namespace Ramone.Tests.MediaTypes.MultipartFormData
       {
         // Assert
         Console.WriteLine(response.Body);
-        Assert.AreEqual("|X=15|Y=Abc|IntArray[0]=1|IntArray[1]=2|SubC.SubC.Data[0]=Benny|SubC.Data[0]=Brian|Dict[abc]=123|Dict[qwe]=xyz|Date=2012-10-30T12:13:14|Dou=15.234|GID=" + g.ToString(), response.Body);
+        Assert.That(response.Body, Is.EqualTo("|X=15|Y=Abc|IntArray[0]=1|IntArray[1]=2|SubC.SubC.Data[0]=Benny|SubC.Data[0]=Brian|Dict[abc]=123|Dict[qwe]=xyz|Date=2012-10-30T12:13:14|Dou=15.234|GID=" + g.ToString()));
       }
     }
   }

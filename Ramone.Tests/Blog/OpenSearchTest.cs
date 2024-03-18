@@ -47,11 +47,11 @@ namespace Ramone.Tests.Blog
         OpenSearchDescription search = response.Body;
 
         // Assert
-        Assert.AreEqual("Blog Search", search.ShortName);
-        Assert.AreEqual("Searching for blogs.", search.Description);
-        Assert.AreEqual("jw@fjeldgruppen.dk", search.Contact);
+        Assert.That(search.ShortName, Is.EqualTo("Blog Search"));
+        Assert.That(search.Description, Is.EqualTo("Searching for blogs."));
+        Assert.That(search.Contact, Is.EqualTo("jw@fjeldgruppen.dk"));
 
-        Assert.AreEqual(1, search.Urls.Count);
+        Assert.That(search.Urls.Count, Is.EqualTo(1));
         ILinkTemplate l1 = search.Urls.Select("results");
         Assert.IsNotNull(l1);
       }
@@ -72,9 +72,9 @@ namespace Ramone.Tests.Blog
 
         // Assert
         Assert.IsNotNull(result);
-        Assert.AreEqual(1, result.Items.Count());
+        Assert.That(result.Items.Count(), Is.EqualTo(1));
         SyndicationItem i1 = result.Items.First();
-        Assert.AreEqual("Result 1", ((TextSyndicationContent)i1.Title).Text);
+        Assert.That(((TextSyndicationContent)i1.Title).Text, Is.EqualTo("Result 1"));
       }
     }
 

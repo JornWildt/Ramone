@@ -20,7 +20,7 @@ namespace Ramone.Tests.HyperMedia.Html
       Form form = GetFormNode(missingNamesForm).Form(Session, new Uri("http://dr.dk"), "utf-8");
 
       // Assert
-      Assert.AreEqual(0, form.Values.Count);
+      Assert.That(form.Values.Count, Is.EqualTo(0));
     }
 
 
@@ -31,7 +31,7 @@ namespace Ramone.Tests.HyperMedia.Html
       Form form = GetFormNode(multipleNamesForm).Form(Session, new Uri("http://dr.dk"), "utf-8");
 
       // Assert
-      Assert.AreEqual(3, form.Values.Count);
+      Assert.That(form.Values.Count, Is.EqualTo(3));
     }
 
 

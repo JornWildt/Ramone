@@ -20,7 +20,7 @@ namespace Ramone.Tests
       int x = (int)service.Items["X"];
 
       // Assert
-      Assert.AreEqual(1234, x);
+      Assert.That(x, Is.EqualTo(1234));
     }
 
 
@@ -36,7 +36,7 @@ namespace Ramone.Tests
       int x = (int)session.Items["X"];
 
       // Assert
-      Assert.AreEqual(1234, x);
+      Assert.That(x, Is.EqualTo(1234));
     }
 
 
@@ -53,7 +53,7 @@ namespace Ramone.Tests
       session.Items.Remove("X");
 
       // Assert
-      Assert.AreEqual(1234, (int)service.Items["X"]);
+      Assert.That((int)service.Items["X"], Is.EqualTo(1234));
       Assert.IsFalse(service.Items.ContainsKey("Y"));
     }
 
@@ -71,7 +71,7 @@ namespace Ramone.Tests
       {
         // Assert
         Assert.IsNotNull(resp.Body);
-        Assert.AreEqual(0, resp.Body.Id);
+        Assert.That(resp.Body.Id, Is.EqualTo(0));
       }
     }
 

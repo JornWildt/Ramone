@@ -62,8 +62,8 @@ namespace Ramone.Tests
       using (var dossier = await dossierReq.Async().Get<Dossier>())
       {
         // Assert
-        Assert.AreEqual(8, dossier.Body.Id);
-        Assert.AreEqual("Dossier no. 8", dossier.Body.Title);
+        Assert.That(dossier.Body.Id, Is.EqualTo(8));
+        Assert.That(dossier.Body.Title, Is.EqualTo("Dossier no. 8"));
         Assert.IsNotNull(dossier.Body.Links);
       }
     }
@@ -81,8 +81,8 @@ namespace Ramone.Tests
       using (var dossier = await dossierReq.Async().Get<Dossier>())
       {
         // Assert
-        Assert.AreEqual(8, dossier.Body.Id);
-        Assert.AreEqual("Dossier no. 8", dossier.Body.Title);
+        Assert.That(dossier.Body.Id, Is.EqualTo(8));
+        Assert.That(dossier.Body.Title, Is.EqualTo("Dossier no. 8"));
         Assert.IsNotNull(dossier.Body.Links);
       }
     }

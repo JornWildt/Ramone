@@ -31,8 +31,8 @@ namespace Ramone.Tests
       using (var dossier = dossierReq.Get<Dossier>())
       {
         // Assert
-        Assert.AreEqual(1, StatusCodes.Count);
-        Assert.AreEqual(HttpStatusCode.OK, StatusCodes[0]);
+        Assert.That(StatusCodes.Count, Is.EqualTo(1));
+        Assert.That(StatusCodes[0], Is.EqualTo(HttpStatusCode.OK));
       }
     }
 
@@ -48,12 +48,12 @@ namespace Ramone.Tests
       using (var resp = req.Get())
       {
         // Assert
-        Assert.AreEqual(5, StatusCodes.Count);
-        Assert.AreEqual(HttpStatusCode.MovedPermanently, StatusCodes[0]);
-        Assert.AreEqual(HttpStatusCode.MovedPermanently, StatusCodes[1]);
-        Assert.AreEqual(HttpStatusCode.MovedPermanently, StatusCodes[2]);
-        Assert.AreEqual(HttpStatusCode.MovedPermanently, StatusCodes[3]);
-        Assert.AreEqual(HttpStatusCode.OK, StatusCodes[4]);
+        Assert.That(StatusCodes.Count, Is.EqualTo(5));
+        Assert.That(StatusCodes[0], Is.EqualTo(HttpStatusCode.MovedPermanently));
+        Assert.That(StatusCodes[1], Is.EqualTo(HttpStatusCode.MovedPermanently));
+        Assert.That(StatusCodes[2], Is.EqualTo(HttpStatusCode.MovedPermanently));
+        Assert.That(StatusCodes[3], Is.EqualTo(HttpStatusCode.MovedPermanently));
+        Assert.That(StatusCodes[4], Is.EqualTo(HttpStatusCode.OK));
       }
     }
 
@@ -69,8 +69,8 @@ namespace Ramone.Tests
       using (var dossier = await dossierReq.Async().Get<Dossier>())
       {
         // Assert
-        Assert.AreEqual(1, StatusCodes.Count);
-        Assert.AreEqual(HttpStatusCode.OK, StatusCodes[0]);
+        Assert.That(StatusCodes.Count, Is.EqualTo(1));
+        Assert.That(StatusCodes[0], Is.EqualTo(HttpStatusCode.OK));
       }
     }
 
@@ -88,8 +88,8 @@ namespace Ramone.Tests
         dossierReq.AsyncEvent().Get<Dossier>(dossier =>
         {
           // Assert
-          Assert.AreEqual(1, StatusCodes.Count);
-          Assert.AreEqual(HttpStatusCode.OK, StatusCodes[0]);
+          Assert.That(StatusCodes.Count, Is.EqualTo(1));
+          Assert.That(StatusCodes[0], Is.EqualTo(HttpStatusCode.OK));
           wh.Set();
         });
       });

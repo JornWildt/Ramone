@@ -24,7 +24,7 @@ namespace Ramone.Tests.MediaTypes.Atom
       {
         // Assert
         Assert.IsNotNull(feed.Body);
-        Assert.AreEqual("Mamas feed", feed.Body.Title.Text);
+        Assert.That(feed.Body.Title.Text, Is.EqualTo("Mamas feed"));
       }
     }
 
@@ -40,7 +40,7 @@ namespace Ramone.Tests.MediaTypes.Atom
       {
         // Assert
         Assert.IsNotNull(item);
-        Assert.AreEqual("No. 1", item.Body.Title.Text);
+        Assert.That(item.Body.Title.Text, Is.EqualTo("No. 1"));
       }
     }
 

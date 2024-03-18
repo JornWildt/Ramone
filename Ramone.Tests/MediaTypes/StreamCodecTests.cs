@@ -18,13 +18,13 @@ namespace Ramone.Tests.MediaTypes
       using (Response<Stream> response = fileReq.Accept("application/octet-stream").Get<Stream>())
       {
         // Assert
-        Assert.AreEqual(12, response.ContentLength);
+        Assert.That(response.ContentLength, Is.EqualTo(12));
         byte[] data = new byte[12];
         response.Body.Read(data, 0, 12);
-        Assert.AreEqual((int)'H', data[0]);
-        Assert.AreEqual((int)'e', data[1]);
-        Assert.AreEqual((int)'l', data[2]);
-        Assert.AreEqual((int)'l', data[3]);
+        Assert.That(data[0], Is.EqualTo((int)'H'));
+        Assert.That(data[1], Is.EqualTo((int)'e'));
+        Assert.That(data[2], Is.EqualTo((int)'l'));
+        Assert.That(data[3], Is.EqualTo((int)'l'));
       }
     }
 
@@ -42,11 +42,11 @@ namespace Ramone.Tests.MediaTypes
           fileReq.Accept("application/octet-stream").ContentType("application/octet-stream").Post<Stream>(s))
         {
           // Assert
-          Assert.AreEqual(4, response.ContentLength);
-          Assert.AreEqual(10, response.Body.ReadByte());
-          Assert.AreEqual(2, response.Body.ReadByte());
-          Assert.AreEqual(30, response.Body.ReadByte());
-          Assert.AreEqual(4, response.Body.ReadByte());
+          Assert.That(response.ContentLength, Is.EqualTo(4));
+          Assert.That(response.Body.ReadByte(), Is.EqualTo(10));
+          Assert.That(response.Body.ReadByte(), Is.EqualTo(2));
+          Assert.That(response.Body.ReadByte(), Is.EqualTo(30));
+          Assert.That(response.Body.ReadByte(), Is.EqualTo(4));
         }
       }
     }

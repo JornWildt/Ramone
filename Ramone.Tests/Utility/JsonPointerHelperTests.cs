@@ -19,47 +19,47 @@ namespace Ramone.Tests.Utility
     [Test]
     public void CanGetPathFromMemberExpressions()
     {
-      Assert.AreEqual("/Id", PObjHelper.GetPath(r => r.Id));
-      Assert.AreEqual("/Title", PObjHelper.GetPath(r => r.Title));
-      Assert.AreEqual("/Status", PObjHelper.GetPath(r => r.Status));
-      Assert.AreEqual("/Responsible", PObjHelper.GetPath(r => r.Responsible));
-      Assert.AreEqual("/Responsible/Name", PObjHelper.GetPath(r => r.Responsible.Name));
+      Assert.That(PObjHelper.GetPath(r => r.Id), Is.EqualTo("/Id"));
+      Assert.That(PObjHelper.GetPath(r => r.Title), Is.EqualTo("/Title"));
+      Assert.That(PObjHelper.GetPath(r => r.Status), Is.EqualTo("/Status"));
+      Assert.That(PObjHelper.GetPath(r => r.Responsible), Is.EqualTo("/Responsible"));
+      Assert.That(PObjHelper.GetPath(r => r.Responsible.Name), Is.EqualTo("/Responsible/Name"));
     }
 
 
     [Test]
     public void CanGetPathFromListIndex()
     {
-      Assert.AreEqual("/0", PListHelper.GetPath(r => r[0]));
-      Assert.AreEqual("/0/Title", PListHelper.GetPath(r => r[0].Title));
-      Assert.AreEqual("/3/ListOfRelatedParties/2/Name", PListHelper.GetPath(r => r[3].ListOfRelatedParties[2].Name));
-      Assert.AreEqual("/ListOfRelatedParties/2/Name", PObjHelper.GetPath(r => r.ListOfRelatedParties[2].Name));
+      Assert.That(PListHelper.GetPath(r => r[0]), Is.EqualTo("/0"));
+      Assert.That(PListHelper.GetPath(r => r[0].Title), Is.EqualTo("/0/Title"));
+      Assert.That(PListHelper.GetPath(r => r[3].ListOfRelatedParties[2].Name), Is.EqualTo("/3/ListOfRelatedParties/2/Name"));
+      Assert.That(PObjHelper.GetPath(r => r.ListOfRelatedParties[2].Name), Is.EqualTo("/ListOfRelatedParties/2/Name"));
     }
 
 
     [Test]
     public void CanGetPathFromArrayIndex()
     {
-      Assert.AreEqual("/0", PArrayHelper.GetPath(r => r[0]));
-      Assert.AreEqual("/0/Title", PArrayHelper.GetPath(r => r[0].Title));
-      Assert.AreEqual("/3/ArrayOfOtherParties/2/Name", PArrayHelper.GetPath(r => r[3].ArrayOfOtherParties[2].Name));
-      Assert.AreEqual("/ArrayOfOtherParties/2/Name", PObjHelper.GetPath(r => r.ArrayOfOtherParties[2].Name));
+      Assert.That(PArrayHelper.GetPath(r => r[0]), Is.EqualTo("/0"));
+      Assert.That(PArrayHelper.GetPath(r => r[0].Title), Is.EqualTo("/0/Title"));
+      Assert.That(PArrayHelper.GetPath(r => r[3].ArrayOfOtherParties[2].Name), Is.EqualTo("/3/ArrayOfOtherParties/2/Name"));
+      Assert.That(PObjHelper.GetPath(r => r.ArrayOfOtherParties[2].Name), Is.EqualTo("/ArrayOfOtherParties/2/Name"));
     }
 
 
     [Test]
     public void CanGetPathFromDictionaryIndex()
     {
-      Assert.AreEqual("/x", PDictHelper.GetPath(r => r["x"]));
-      Assert.AreEqual("/x/Title", PDictHelper.GetPath(r => r["x"].Title));
-      Assert.AreEqual("/y/AdditionalProperties/x", PDictHelper.GetPath(r => r["y"].AdditionalProperties["x"]));
+      Assert.That(PDictHelper.GetPath(r => r["x"]), Is.EqualTo("/x"));
+      Assert.That(PDictHelper.GetPath(r => r["x"].Title), Is.EqualTo("/x/Title"));
+      Assert.That(PDictHelper.GetPath(r => r["y"].AdditionalProperties["x"]), Is.EqualTo("/y/AdditionalProperties/x"));
     }
 
 
     [Test]
     public void CanGetPathForRoot()
     {
-      Assert.AreEqual("/", PArrayHelper.GetPath(r => r));
+      Assert.That(PArrayHelper.GetPath(r => r), Is.EqualTo("/"));
     }
 
 
@@ -67,7 +67,7 @@ namespace Ramone.Tests.Utility
     public void CanGetPathFromConversionExpression()
     {
       Expression<Func<BugReport, object>> expr = (r => r.Id);
-      Assert.AreEqual("/Id", PObjHelper.GetPath(expr));
+      Assert.That(PObjHelper.GetPath(expr), Is.EqualTo("/Id"));
     }
   }
 

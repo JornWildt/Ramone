@@ -174,7 +174,7 @@ namespace Ramone.Tests
         }).Get<string>(response => {});
       });
 
-      Assert.AreEqual(true, failedAsExpected);
+      Assert.That(failedAsExpected, Is.EqualTo(true));
 
       // Throws first time
       AssertThrowsWebException(() => Session.Request(BasicAuthUrl).Get<string>(), HttpStatusCode.Unauthorized);

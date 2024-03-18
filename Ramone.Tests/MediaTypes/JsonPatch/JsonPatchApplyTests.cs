@@ -26,7 +26,7 @@ namespace Ramone.Tests.MediaTypes.JsonPatch
       doc.Apply(callback);
 
       // Assert
-      Assert.AreEqual(doc.ToString(), callback.newDoc.ToString());
+      Assert.That(callback.newDoc.ToString(), Is.EqualTo(doc.ToString()));
       Assert.IsTrue(callback.IsComplete, "Apply() method must call Complete.");
     }
 
@@ -44,7 +44,7 @@ namespace Ramone.Tests.MediaTypes.JsonPatch
       doc.Apply(callback);
 
       // Assert
-      Assert.AreEqual("/Id => 10|", callback.Result);
+      Assert.That(callback.Result, Is.EqualTo("/Id => 10|"));
     }
 
 
@@ -91,7 +91,7 @@ namespace Ramone.Tests.MediaTypes.JsonPatch
       doc.Apply(callback);
 
       // Assert
-      Assert.AreEqual("/Responsible => |/Title => |/LastModified => |", callback.Result);
+      Assert.That(callback.Result, Is.EqualTo("/Responsible => |/Title => |/LastModified => |"));
     }
   }
 

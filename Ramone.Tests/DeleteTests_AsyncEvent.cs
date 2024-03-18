@@ -30,7 +30,7 @@ namespace Ramone.Tests
           r =>
           {
             // Assert
-            Assert.AreEqual("Deleted, yup!", r.Body);
+            Assert.That(r.Body, Is.EqualTo("Deleted, yup!"));
             wh.Set();
           });
       });
@@ -48,7 +48,7 @@ namespace Ramone.Tests
           r =>
           {
             // Assert
-            Assert.AreEqual("Deleted, yup!", r.Decode<string>());
+            Assert.That(r.Decode<string>(), Is.EqualTo("Deleted, yup!"));
             wh.Set();
           });
       });
