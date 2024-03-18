@@ -2,9 +2,6 @@
 <RunSettings>
   <RunConfiguration>
     <MaxCpuCount>1</MaxCpuCount>
-    <!-- TestSessionTimeout is only available with Visual Studio 2017 version 15.5 and higher -->
-    <!-- Using the fakes are fast, 20 seconds should be plenty -->
-    <TestSessionTimeout>20000</TestSessionTimeout>
   </RunConfiguration>
   <TestRunParameters>
     <Parameter name="RAMONETEST_BASEURL" value="http://ramone-testserver/" />

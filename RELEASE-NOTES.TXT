@@ -1,3 +1,8 @@
+Version 4.2.0.0
+---------------
+* Use System.Net.Http.Headers.AuthenticationHeaderValue to parse authentication header.
+* Fixed concurrency error in XmlSerializerCodec.
+
 Version 4.1.5.0
 ---------------
 * Rebuild with the right code - was missing code from previous versions.
