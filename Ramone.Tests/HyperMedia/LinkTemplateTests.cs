@@ -45,12 +45,12 @@ namespace Ramone.Tests.HyperMedia
       ILinkTemplate l4 = Urls.Select(Url4.RelationType, "application/atom+xml");
 
       // Assert
-      Assert.IsNotNull(l1a);
-      Assert.IsNotNull(l2a);
-      Assert.IsNotNull(l1b);
-      Assert.IsNotNull(l2b);
-      Assert.IsNotNull(l3);
-      Assert.IsNotNull(l4);
+      Assert.That(l1a, Is.Not.Null);
+      Assert.That(l2a, Is.Not.Null);
+      Assert.That(l1b, Is.Not.Null);
+      Assert.That(l2b, Is.Not.Null);
+      Assert.That(l3, Is.Not.Null);
+      Assert.That(l4, Is.Not.Null);
       Assert.That(l1a.Template, Is.EqualTo(Url1.Template));
       Assert.That(l2a.Template, Is.EqualTo(Url2.Template));
       Assert.That(l1b.Template, Is.EqualTo(Url1.Template));
@@ -75,7 +75,7 @@ namespace Ramone.Tests.HyperMedia
       Request request = Session.Bind(template, new { terms = "abc" });
 
       // Assert
-      Assert.IsNotNull(request);
+      Assert.That(request, Is.Not.Null);
       Assert.That(request.Url.AbsoluteUri, Is.EqualTo("http://search.com/?q=abc"));
     }
   }

@@ -28,7 +28,7 @@ namespace Ramone.Tests
         HeaderList headers = r.Body;
 
         // Assert
-        Assert.IsTrue(headers.Any(h => h == "If-None-Match: ab12"), "Must contain If-None-Match header");
+        Assert.That(headers.Any(h => h == "If-None-Match: ab12"), Is.True, "Must contain If-None-Match header");
       }
     }
 
@@ -49,7 +49,7 @@ namespace Ramone.Tests
         HeaderList headers = r.Body;
 
         // Assert
-        Assert.IsTrue(headers.Any(h => h == "If-None-Match: ab12"), "Must contain If-None-Match header");
+        Assert.That(headers.Any(h => h == "If-None-Match: ab12"), Is.True, "Must contain If-None-Match header");
       }
     }
 
@@ -70,7 +70,7 @@ namespace Ramone.Tests
         HeaderList headers = r.Body;
 
         // Assert
-        Assert.IsTrue(headers.Any(h => h == "If-None-Match: *"), "Must contain If-None-Match header");
+        Assert.That(headers.Any(h => h == "If-None-Match: *"), Is.True, "Must contain If-None-Match header");
       }
     }
 
@@ -91,7 +91,7 @@ namespace Ramone.Tests
         HeaderList headers = r.Body;
 
         // Assert
-        Assert.IsTrue(headers.Any(h => h == "If-None-Match: \"ab\", \"qw\""), "Must contain If-None-Match header");
+        Assert.That(headers.Any(h => h == "If-None-Match: \"ab\", \"qw\""), Is.True, "Must contain If-None-Match header");
       }
     }
 
@@ -115,7 +115,7 @@ namespace Ramone.Tests
             HeaderList headers = r.Body;
 
             // Assert
-            Assert.IsTrue(headers.Any(h => h == "If-None-Match: ab12"), "Must contain If-None-Match header");
+            Assert.That(headers.Any(h => h == "If-None-Match: ab12"), Is.True, "Must contain If-None-Match header");
             wh.Set();
           });
       });
@@ -141,7 +141,7 @@ namespace Ramone.Tests
             HeaderList headers = r.Body;
 
             // Assert
-            Assert.IsTrue(headers.Any(h => h == "If-None-Match: ab12"), "Must contain If-None-Match header");
+            Assert.That(headers.Any(h => h == "If-None-Match: ab12"), Is.True, "Must contain If-None-Match header");
             wh.Set();
           });
       });

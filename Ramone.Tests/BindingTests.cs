@@ -271,7 +271,7 @@ namespace Ramone.Tests
       Request req = Session.Bind(link);
 
       // Assert
-      Assert.IsNotNull(req);
+      Assert.That(req, Is.Not.Null);
       Assert.That(req.Url, Is.EqualTo(new Uri("http://dr.dk")));
     }
 
@@ -286,8 +286,8 @@ namespace Ramone.Tests
       Request req = link.Bind(Session, new { id = 5 });
 
       // Assert
-      Assert.IsNotNull(req);
-      Assert.IsNotNull(req.Session);
+      Assert.That(req, Is.Not.Null);
+      Assert.That(req.Session, Is.Not.Null);
       Assert.That(req.Url, Is.EqualTo(new Uri("http://host/api/items/5")));
     }
 
@@ -307,8 +307,8 @@ namespace Ramone.Tests
       Request req = links.Select("template").Bind(Session, new { id = 20 });
 
       // Assert
-      Assert.IsNotNull(req);
-      Assert.IsNotNull(req.Session);
+      Assert.That(req, Is.Not.Null);
+      Assert.That(req.Session, Is.Not.Null);
       Assert.That(req.Url, Is.EqualTo(new Uri("http://host/api/items/20")));
     }
 
@@ -324,8 +324,8 @@ namespace Ramone.Tests
       Request req = link.Bind(new { id = 5 });
 
       // Assert
-      Assert.IsNotNull(req);
-      Assert.IsNotNull(req.Session);
+      Assert.That(req, Is.Not.Null);
+      Assert.That(req.Session, Is.Not.Null);
       Assert.That(req.Url, Is.EqualTo(new Uri("http://host/api/items/5")));
     }
 
@@ -374,7 +374,7 @@ namespace Ramone.Tests
       Request r = Session.Bind(url, new { filter = "{\"a\":10}" });
 
       // Assert
-      Assert.IsNotNull(r);
+      Assert.That(r, Is.Not.Null);
       Assert.That(r.Url.ToString(), Is.EqualTo("http://example.com/?filter={\"a\"%3A10}"));
     }
 
@@ -389,7 +389,7 @@ namespace Ramone.Tests
       Request r = Session.Bind(url, new { filter = "{\"a\":10}" });
 
       // Assert
-      Assert.IsNotNull(r);
+      Assert.That(r, Is.Not.Null);
       Assert.That(r.Url.ToString(), Is.EqualTo("http://example.com/?filter={\"a\"%3A10}"));
     }
 

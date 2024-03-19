@@ -28,7 +28,7 @@ namespace Ramone.Tests
         HeaderList headers = r.Body;
 
         // Assert
-        Assert.IsTrue(headers.Any(h => h == "If-Match: ab12"), "Must contain If-Match header");
+        Assert.That(headers.Any(h => h == "If-Match: ab12"), Is.True, "Must contain If-Match header");
       }
     }
 
@@ -49,7 +49,7 @@ namespace Ramone.Tests
         HeaderList headers = r.Body;
 
         // Assert
-        Assert.IsTrue(headers.Any(h => h == "If-Match: ab12"), "Must contain If-Match header");
+        Assert.That(headers.Any(h => h == "If-Match: ab12"), Is.True, "Must contain If-Match header");
       }
     }
 
@@ -70,7 +70,7 @@ namespace Ramone.Tests
         HeaderList headers = r.Body;
 
         // Assert
-        Assert.IsTrue(headers.Any(h => h == "If-Match: *"), "Must contain If-Match header");
+        Assert.That(headers.Any(h => h == "If-Match: *"), Is.True, "Must contain If-Match header");
       }
     }
 
@@ -91,7 +91,7 @@ namespace Ramone.Tests
         HeaderList headers = r.Body;
 
         // Assert
-        Assert.IsTrue(headers.Any(h => h == "If-Match: \"ab\", \"qw\""), "Must contain If-Match header");
+        Assert.That(headers.Any(h => h == "If-Match: \"ab\", \"qw\""), Is.True, "Must contain If-Match header");
       }
     }
 
@@ -115,7 +115,7 @@ namespace Ramone.Tests
             HeaderList headers = r.Body;
 
             // Assert
-            Assert.IsTrue(headers.Any(h => h == "If-Match: ab12"), "Must contain If-Match header");
+            Assert.That(headers.Any(h => h == "If-Match: ab12"), Is.True, "Must contain If-Match header");
             wh.Set();
           });
       });
@@ -141,7 +141,7 @@ namespace Ramone.Tests
             HeaderList headers = r.Body;
 
             // Assert
-            Assert.IsTrue(headers.Any(h => h == "If-Match: ab12"), "Must contain If-Match header");
+            Assert.That(headers.Any(h => h == "If-Match: ab12"), Is.True, "Must contain If-Match header");
             wh.Set();
           });
       });

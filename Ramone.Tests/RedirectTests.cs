@@ -282,7 +282,7 @@ namespace Ramone.Tests
       {
         // Assert
         Assert.That(resp.RedirectCount, Is.EqualTo(0));
-        Assert.IsNull(resp.ContentType);
+        Assert.That(resp.ContentType, Is.Null);
       }
     }
 

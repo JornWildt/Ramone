@@ -26,7 +26,7 @@ namespace Ramone.Tests
       IResponseInterceptor i = ResponseInterceptorSet.Find("X");
 
       // Assert
-      Assert.IsNotNull(i);
+      Assert.That(i, Is.Not.Null);
     }
 
 
@@ -37,7 +37,7 @@ namespace Ramone.Tests
       IResponseInterceptor i = ResponseInterceptorSet.Find("Y");
 
       // Assert
-      Assert.IsNull(i);
+      Assert.That(i, Is.Null);
     }
 
 
@@ -61,8 +61,8 @@ namespace Ramone.Tests
       }
 
       // Assert
-      Assert.IsNotNull(x);
-      Assert.IsNotNull(y);
+      Assert.That(x, Is.Not.Null);
+      Assert.That(y, Is.Not.Null);
     }
 
 

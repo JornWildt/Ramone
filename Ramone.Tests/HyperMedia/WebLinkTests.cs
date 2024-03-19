@@ -17,7 +17,7 @@ namespace Ramone.Tests.HyperMedia
       WebLink l = new WebLink();
 
       // Assert
-      Assert.IsNotNull(l.Parameters);
+      Assert.That(l.Parameters, Is.Not.Null);
     }
 
 
@@ -97,10 +97,10 @@ namespace Ramone.Tests.HyperMedia
       Assert.That(l1.HRef.AbsoluteUri, Is.EqualTo("http://dr.dk/"));
       Assert.That(l1.RelationType, Is.EqualTo("http://elfisk.dk next http://example.com prev"));
       Assert.That(l1.RelationTypes.Count(), Is.EqualTo(4));
-      Assert.Contains("http://elfisk.dk", l1.RelationTypes.ToList());
-      Assert.Contains("next", l1.RelationTypes.ToList());
-      Assert.Contains("prev", l1.RelationTypes.ToList());
-      Assert.Contains("http://example.com", l1.RelationTypes.ToList());
+      Assert.That(l1.RelationTypes.ToList(), Does.Contain("http://elfisk.dk"));
+      Assert.That(l1.RelationTypes.ToList(), Does.Contain("next"));
+      Assert.That(l1.RelationTypes.ToList(), Does.Contain("prev"));
+      Assert.That(l1.RelationTypes.ToList(), Does.Contain("http://example.com"));
     }
   }
 }

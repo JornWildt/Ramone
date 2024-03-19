@@ -23,17 +23,17 @@ namespace Ramone.Tests.Utility
       IList<WebLink> links = WebLinkParser.ParseLinks(new Uri("http://example.com"), header);
 
       // Assert
-      Assert.IsNotNull(links);
+      Assert.That(links, Is.Not.Null);
       Assert.That(links.Count, Is.EqualTo(2));
 
       ILink l1 = links[0];
       Assert.That(l1.HRef.AbsoluteUri, Is.EqualTo("http://example.com/TheBook/chapter2"));
-      Assert.Contains("previous", l1.RelationTypes.ToList());
+      Assert.That(l1.RelationTypes.ToList(), Does.Contain("previous"));
       Assert.That(l1.Title, Is.EqualTo("Previous chapter"));
 
       ILink l2 = links[1];
       Assert.That(l2.HRef.AbsoluteUri, Is.EqualTo("http://example.com/TheBook/chapter4"));
-      Assert.Contains("next", l2.RelationTypes.ToList());
+      Assert.That(l2.RelationTypes.ToList(), Does.Contain("next"));
       Assert.That(l2.Title, Is.EqualTo("Next chapter"));
     }
 
@@ -48,12 +48,12 @@ namespace Ramone.Tests.Utility
       IList<WebLink> links = WebLinkParser.ParseLinks(new Uri("http://example.com"), header);
 
       // Assert
-      Assert.IsNotNull(links);
+      Assert.That(links, Is.Not.Null);
       Assert.That(links.Count, Is.EqualTo(1));
 
       ILink l1 = links[0];
       Assert.That(l1.HRef.AbsoluteUri, Is.EqualTo("http://example.com/TheBook/chapter3"));
-      Assert.Contains("previous", l1.RelationTypes.ToList());
+      Assert.That(l1.RelationTypes.ToList(), Does.Contain("previous"));
       Assert.That(l1.Title, Is.EqualTo("Previous chapter"));
     }
 
@@ -68,13 +68,13 @@ namespace Ramone.Tests.Utility
       IList<WebLink> links = WebLinkParser.ParseLinks(new Uri("http://example.com"), header);
 
       // Assert
-      Assert.IsNotNull(links);
+      Assert.That(links, Is.Not.Null);
       Assert.That(links.Count, Is.EqualTo(1));
 
       ILink l1 = links[0];
       Assert.That(l1.HRef.AbsoluteUri, Is.EqualTo("http://example.com/TheBook/chapter5"));
       Assert.That(l1.RelationTypes.Count(), Is.EqualTo(0));
-      Assert.IsNull(l1.Title);
+      Assert.That(l1.Title, Is.Null);
     }
 
 
@@ -88,7 +88,7 @@ namespace Ramone.Tests.Utility
       IList<WebLink> links = WebLinkParser.ParseLinks(new Uri("http://example.com"), header);
 
       // Assert
-      Assert.IsNotNull(links);
+      Assert.That(links, Is.Not.Null);
       Assert.That(links.Count, Is.EqualTo(1));
 
       ILink l1 = links[0];
@@ -109,8 +109,8 @@ namespace Ramone.Tests.Utility
       IList<WebLink> links2 = WebLinkParser.ParseLinks(new Uri("http://example.com"), header2);
 
       // Assert
-      Assert.IsNotNull(links1);
-      Assert.IsNotNull(links2);
+      Assert.That(links1, Is.Not.Null);
+      Assert.That(links2, Is.Not.Null);
       Assert.That(links1.Count, Is.EqualTo(1));
       Assert.That(links2.Count, Is.EqualTo(1));
 
@@ -132,7 +132,7 @@ namespace Ramone.Tests.Utility
       IList<WebLink> links1 = WebLinkParser.ParseLinks(new Uri("http://example.com"), header1);
 
       // Assert
-      Assert.IsNotNull(links1);
+      Assert.That(links1, Is.Not.Null);
       Assert.That(links1.Count, Is.EqualTo(1));
 
       ILink l1 = links1[0];
@@ -150,11 +150,11 @@ namespace Ramone.Tests.Utility
       IList<WebLink> links1 = WebLinkParser.ParseLinks(new Uri("http://example.com"), header1);
 
       // Assert
-      Assert.IsNotNull(links1);
+      Assert.That(links1, Is.Not.Null);
       Assert.That(links1.Count, Is.EqualTo(1));
 
       ILink l1 = links1[0];
-      Assert.Contains("previous", l1.RelationTypes.ToList());
+      Assert.That(l1.RelationTypes.ToList(), Does.Contain("previous"));
     }
 
 
@@ -168,11 +168,11 @@ namespace Ramone.Tests.Utility
       IList<WebLink> links1 = WebLinkParser.ParseLinks(new Uri("http://example.com"), header1);
 
       // Assert
-      Assert.IsNotNull(links1);
+      Assert.That(links1, Is.Not.Null);
       Assert.That(links1.Count, Is.EqualTo(1));
 
       ILink l1 = links1[0];
-      Assert.Contains("next-chap.ter", l1.RelationTypes.ToList());
+      Assert.That(l1.RelationTypes.ToList(), Does.Contain("next-chap.ter"));
     }
 
 
@@ -186,14 +186,14 @@ namespace Ramone.Tests.Utility
       IList<WebLink> links1 = WebLinkParser.ParseLinks(new Uri("http://example.com"), header1);
 
       // Assert
-      Assert.IsNotNull(links1);
+      Assert.That(links1, Is.Not.Null);
       Assert.That(links1.Count, Is.EqualTo(1));
 
       ILink l1 = links1[0];
       Assert.That(l1.RelationTypes.Count(), Is.EqualTo(3));
-      Assert.Contains("next-chap.ter", l1.RelationTypes.ToList());
-      Assert.Contains("prev", l1.RelationTypes.ToList());
-      Assert.Contains("next", l1.RelationTypes.ToList());
+      Assert.That(l1.RelationTypes.ToList(), Does.Contain("next-chap.ter"));
+      Assert.That(l1.RelationTypes.ToList(), Does.Contain("prev"));
+      Assert.That(l1.RelationTypes.ToList(), Does.Contain("next"));
     }
 
 
@@ -208,7 +208,7 @@ namespace Ramone.Tests.Utility
       IList<WebLink> links1 = WebLinkParser.ParseLinks(new Uri("http://example.com"), header1);
 
       // Assert
-      Assert.IsNotNull(links1);
+      Assert.That(links1, Is.Not.Null);
       Assert.That(links1.Count, Is.EqualTo(2));
 
       ILink l1 = links1[0];
@@ -218,7 +218,7 @@ namespace Ramone.Tests.Utility
 
       ILink l2 = links1[1];
       Assert.That(l2.HRef.AbsoluteUri, Is.EqualTo("http://example.com/TheBook/chapter1"));
-      Assert.Contains("help", l2.RelationTypes.ToList());
+      Assert.That(l2.RelationTypes.ToList(), Does.Contain("help"));
       Assert.That(l2.Title, Is.EqualTo("Xyz"));
     }
 
@@ -234,12 +234,12 @@ namespace Ramone.Tests.Utility
       IList<WebLink> links1 = WebLinkParser.ParseLinks(new Uri("http://example.com"), header1);
 
       // Assert
-      Assert.IsNotNull(links1);
+      Assert.That(links1, Is.Not.Null);
       Assert.That(links1.Count, Is.EqualTo(1));
 
       ILink l1 = links1[0];
       Assert.That(l1.HRef.AbsoluteUri, Is.EqualTo("http://example.com/TheBook/chapter1"));
-      Assert.Contains("help", l1.RelationTypes.ToList());
+      Assert.That(l1.RelationTypes.ToList(), Does.Contain("help"));
       Assert.That(l1.Title, Is.EqualTo("Xyz"));
     }
   }

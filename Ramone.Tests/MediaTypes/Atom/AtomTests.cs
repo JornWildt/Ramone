@@ -23,7 +23,7 @@ namespace Ramone.Tests.MediaTypes.Atom
       using (var feed = feedReq.Get<SyndicationFeed>())
       {
         // Assert
-        Assert.IsNotNull(feed.Body);
+        Assert.That(feed.Body, Is.Not.Null);
         Assert.That(feed.Body.Title.Text, Is.EqualTo("Mamas feed"));
       }
     }
@@ -39,7 +39,7 @@ namespace Ramone.Tests.MediaTypes.Atom
       using (var item = itemReq.Get<SyndicationItem>())
       {
         // Assert
-        Assert.IsNotNull(item);
+        Assert.That(item, Is.Not.Null);
         Assert.That(item.Body.Title.Text, Is.EqualTo("No. 1"));
       }
     }
@@ -62,7 +62,7 @@ namespace Ramone.Tests.MediaTypes.Atom
 
         string xml = w.ToString();
         Console.Write(xml);
-        Assert.IsTrue(xml.Contains(correctXml));
+        Assert.That(xml.Contains(correctXml), Is.True);
       }
     }
 
@@ -84,7 +84,7 @@ namespace Ramone.Tests.MediaTypes.Atom
 
         string xml = w.ToString();
         Console.Write(xml);
-        Assert.IsTrue(xml.Contains(correctXml));
+        Assert.That(xml.Contains(correctXml), Is.True);
       }
     }
 

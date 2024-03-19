@@ -38,7 +38,7 @@ namespace Ramone.Tests.HyperMedia
       {
         // Assert
         List<WebLink> links = response.Links().ToList();
-        Assert.IsNotNull(links);
+        Assert.That(links, Is.Not.Null);
         Assert.That(links.Count, Is.EqualTo(0));
       }
     }

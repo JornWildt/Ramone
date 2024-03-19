@@ -16,7 +16,7 @@ namespace Ramone.Tests
     {
       Session.RequestInterceptors.Add("WhenAuthorizationCodeIsSendItWorks", new BasicAuthorizationInterceptor("John", "magic"));
       using (var respone = Session.Request(BasicAuthUrl).Get<string>())
-        Assert.IsNotNull(respone.Body);
+        Assert.That(respone.Body, Is.Not.Null);
     }
 
 
@@ -30,7 +30,7 @@ namespace Ramone.Tests
         // Act
         Session.Request(BasicAuthUrl).AsyncEvent().Get<string>(response =>
         {
-          Assert.IsNotNull(response.Body);
+          Assert.That(response.Body, Is.Not.Null);
           wh.Set();
         });
       });
@@ -42,7 +42,7 @@ namespace Ramone.Tests
     {
       Session.BasicAuthentication("John", "magic");
       using (var respone = Session.Request(BasicAuthUrl).Get<string>())
-        Assert.IsNotNull(respone.Body);
+        Assert.That(respone.Body, Is.Not.Null);
     }
 
 
@@ -65,7 +65,7 @@ namespace Ramone.Tests
         // Act
         Session.Request(BasicAuthUrl).AsyncEvent().Get<string>(response =>
         {
-          Assert.IsNotNull(response.Body);
+          Assert.That(response.Body, Is.Not.Null);
           wh.Set();
         });
       });
@@ -84,7 +84,7 @@ namespace Ramone.Tests
       using (Response response = session.Request(BasicAuthUrl).Get())
       {
         // Assert
-        Assert.IsNotNull(response);
+        Assert.That(response, Is.Not.Null);
       }
     }
 
@@ -101,7 +101,7 @@ namespace Ramone.Tests
       using (Response response = session.Request(BasicAuthUrl).Get())
       {
         // Assert
-        Assert.IsNotNull(response);
+        Assert.That(response, Is.Not.Null);
       }
     }
 
@@ -113,7 +113,7 @@ namespace Ramone.Tests
       using (Response response = Session.Request(BasicAuthUrl).BasicAuthentication("John", "magic").Get())
       {
         // Assert
-        Assert.IsNotNull(response);
+        Assert.That(response, Is.Not.Null);
       }
     }
 
@@ -126,7 +126,7 @@ namespace Ramone.Tests
         // Act
         Session.Request(BasicAuthUrl).BasicAuthentication("John", "magic").AsyncEvent().Get<string>(response =>
         {
-          Assert.IsNotNull(response.Body);
+          Assert.That(response.Body, Is.Not.Null);
           wh.Set();
         });
       });
@@ -140,7 +140,7 @@ namespace Ramone.Tests
       using (Response response = Session.Request(BasicAuthUrl).BasicAuthentication("Jürgen Wølst", "hmpf").Get())
       {
         // Assert
-        Assert.IsNotNull(response);
+        Assert.That(response, Is.Not.Null);
       }
     }
 
@@ -155,7 +155,7 @@ namespace Ramone.Tests
       Session.AuthorizationDispatcher.Add("basic", new BasicAuthorizationHandler());
 
       using (var response = Session.Request(BasicAuthUrl).Get<string>())
-        Assert.IsNotNull(response.Body);
+        Assert.That(response.Body, Is.Not.Null);
     }
 
 
@@ -194,7 +194,7 @@ namespace Ramone.Tests
         });
       });
 
-      Assert.True(succeededAsExpected);
+      Assert.That(succeededAsExpected, Is.True);
     }
 
 

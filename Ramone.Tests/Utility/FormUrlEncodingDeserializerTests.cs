@@ -24,7 +24,7 @@ namespace Ramone.Tests.Utility
       SimpleData data = Deserialize<SimpleData>(s);
 
       // Assert
-      Assert.IsNotNull(data);
+      Assert.That(data, Is.Not.Null);
       Assert.That(data.MyInt, Is.EqualTo(10));
       Assert.That(data.MyString, Is.EqualTo("Abc"));
       Assert.That(data.MyDate, Is.EqualTo(new DateTime(2012,10,30,12,13,14)));
@@ -44,7 +44,7 @@ namespace Ramone.Tests.Utility
       SimpleData data = Deserialize<SimpleData>(s);
 
       // Assert
-      Assert.IsNotNull(data);
+      Assert.That(data, Is.Not.Null);
       Assert.That(data.MyInt, Is.EqualTo(0));
       Assert.That(data.MyString, Is.EqualTo(""));
     }
@@ -60,7 +60,7 @@ namespace Ramone.Tests.Utility
       SimpleData data = Deserialize<SimpleData>(s);
 
       // Assert
-      Assert.IsNotNull(data);
+      Assert.That(data, Is.Not.Null);
       Assert.That(data.MyInt, Is.EqualTo(0));
       Assert.That(data.MyString, Is.EqualTo(null));
     }
@@ -76,7 +76,7 @@ namespace Ramone.Tests.Utility
       SimpleData data = Deserialize<SimpleData>(s);
 
       // Assert
-      Assert.IsNotNull(data);
+      Assert.That(data, Is.Not.Null);
       Assert.That(data.MyInt, Is.EqualTo(0));
       Assert.That(data.MyString, Is.EqualTo(null));
     }
@@ -92,7 +92,7 @@ namespace Ramone.Tests.Utility
       SimpleData data = Deserialize<SimpleData>(s);
 
       // Assert
-      Assert.IsNotNull(data);
+      Assert.That(data, Is.Not.Null);
       Assert.That(data.MyInt, Is.EqualTo(2));
       Assert.That(data.MyString, Is.EqualTo("Xyz"));
     }
@@ -108,9 +108,9 @@ namespace Ramone.Tests.Utility
       NestedData data = Deserialize<NestedData>(s);
 
       // Assert
-      Assert.IsNotNull(data);
+      Assert.That(data, Is.Not.Null);
       Assert.That(data.MyInt, Is.EqualTo(555));
-      Assert.IsNotNull(data.Simple);
+      Assert.That(data.Simple, Is.Not.Null);
       Assert.That(data.Simple.MyString, Is.EqualTo("Abc"));
       Assert.That(data.Simple.MyInt, Is.EqualTo(10));
     }
@@ -157,7 +157,7 @@ namespace Ramone.Tests.Utility
       Hashtable data = Deserialize<Hashtable>(s);
 
       // Assert
-      Assert.IsInstanceOf<Hashtable>(data["A"]);
+      Assert.That(data["A"], Is.InstanceOf<Hashtable>());
       Assert.That(((Hashtable)data["A"])["x"], Is.EqualTo("123"));
       Assert.That(((Hashtable)data["B"])["y"], Is.EqualTo("Qwerty"));
     }
@@ -201,24 +201,24 @@ MyHashtable.A.Y.2=Q";
       NestedDataWithDictionaries data = Deserialize<NestedDataWithDictionaries>(s);
 
       // Assert
-      Assert.IsInstanceOf<Hashtable>(data.MyHashtable["A"]);
+      Assert.That(data.MyHashtable["A"], Is.InstanceOf<Hashtable>());
       Hashtable a = (Hashtable)data.MyHashtable["A"];
       Assert.That(((Hashtable)a["X"])["1"], Is.EqualTo("1"));
       Assert.That(((Hashtable)a["Y"])["2"], Is.EqualTo("Q"));
       
-      Assert.IsInstanceOf<NameValueCollection>(data.MyNameValueCollection);
+      Assert.That(data.MyNameValueCollection, Is.InstanceOf<NameValueCollection>());
       Assert.That(data.MyNameValueCollection["K1.K2"], Is.EqualTo("5"));
       Assert.That(data.MyNameValueCollection["K1.K3"], Is.EqualTo("6"));
       Assert.That(data.MyNameValueCollection["K1"], Is.EqualTo("7"));
       Assert.That(data.MyNameValueCollection["X"], Is.EqualTo("8"));
 
-      Assert.IsNotNull(data.MyDictionaryStringString);
+      Assert.That(data.MyDictionaryStringString, Is.Not.Null);
       Assert.That(data.MyDictionaryStringString["X"], Is.EqualTo("1"));
       Assert.That(data.MyDictionaryStringString["Y"], Is.EqualTo("2"));
       Assert.That(data.MyDictionaryStringString["X.Q"], Is.EqualTo("3"));
 
-      Assert.IsNotNull(data.MyDictionaryStringNested);
-      Assert.IsNotNull(data.MyDictionaryStringNested["X"]);
+      Assert.That(data.MyDictionaryStringNested, Is.Not.Null);
+      Assert.That(data.MyDictionaryStringNested["X"], Is.Not.Null);
       Assert.That(data.MyDictionaryStringNested["X"].MyInt, Is.EqualTo(10));
       Assert.That(data.MyDictionaryStringNested["Y"].MyInt, Is.EqualTo(20));
       Assert.That(data.MyDictionaryStringNested["A"].MyNameValueCollection["Z"], Is.EqualTo("30"));

@@ -325,9 +325,9 @@ namespace Ramone.Tests.Common
         TimeSpan responseTime = DateTime.Now - t2;
         TimeSpan totalTime = DateTime.Now - t1;
 
-        Assert.Less(getTime.TotalMilliseconds, 1000);
-        Assert.Less(responseTime.TotalMilliseconds, 1000);
-        Assert.GreaterOrEqual(totalTime.TotalMilliseconds, 4000);
+        Assert.That(getTime.TotalMilliseconds, Is.LessThan(1000));
+        Assert.That(responseTime.TotalMilliseconds, Is.LessThan(1000));
+        Assert.That(totalTime.TotalMilliseconds, Is.GreaterThanOrEqualTo(4000));
 
         if (verifier != null)
           verifier(response);
@@ -344,7 +344,7 @@ namespace Ramone.Tests.Common
       // Wait for request to complete
       bool signalReceived = handle.WaitOne(TimeSpan.FromSeconds(10));
 
-      Assert.IsTrue(signalReceived, "Timeout in async handler");
+      Assert.That(signalReceived, Is.True, "Timeout in async handler");
     }
   }
 }

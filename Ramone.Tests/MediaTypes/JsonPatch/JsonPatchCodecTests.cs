@@ -24,7 +24,7 @@ namespace Ramone.Tests.MediaTypes.JsonPatch
       using (var response = request.Patch<string>(patch))
       {
         // Assert - patch was sent to server and streamed back again
-        Assert.IsNotNull(response.Body);
+        Assert.That(response.Body, Is.Not.Null);
         Assert.That(response.Body, Is.EqualTo(@"[{""value"":10,""op"":""add"",""path"":""/X""},{""op"":""remove"",""path"":""/Y""},{""value"":""üÆ$€"",""op"":""add"",""path"":""/øÅ""}]"));
       }
     }

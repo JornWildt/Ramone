@@ -14,7 +14,7 @@ namespace Ramone.Tests
         async req => await req.Async().Delete<SlowResource>(),
         resp =>
         {
-          Assert.IsNotNull(resp.Body);
+          Assert.That(resp.Body, Is.Not.Null);
           Assert.That(resp.Body.Time, Is.EqualTo(4));
         });
     }

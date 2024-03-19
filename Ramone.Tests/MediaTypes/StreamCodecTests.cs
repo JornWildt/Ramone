@@ -66,8 +66,8 @@ namespace Ramone.Tests.MediaTypes
           HeaderList headers = response.Body;
 
           // Assert
-          Assert.IsNotNull(headers);
-          Assert.IsTrue(headers.Any(h => h == "Content-Type: application/octet-stream"), "Must contain content type octet stream");
+          Assert.That(headers, Is.Not.Null);
+          Assert.That(headers.Any(h => h == "Content-Type: application/octet-stream"), Is.True, "Must contain content type octet stream");
         }
       }
     }

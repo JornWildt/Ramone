@@ -104,9 +104,9 @@ namespace Ramone.Tests
         XmlDocument c = r.Body;
 
         // Assert
-        Assert.IsNotNull(c);
+        Assert.That(c, Is.Not.Null);
         XmlNode nameNode = c.SelectSingleNode("//Cat/Name");
-        Assert.IsNotNull(nameNode);
+        Assert.That(nameNode, Is.Not.Null);
         Assert.That(nameNode.InnerText, Is.EqualTo("Fiona"));
       }
     }
@@ -159,7 +159,7 @@ namespace Ramone.Tests
       using (var dossier = dossierReq.Accept<Dossier>().Get())
       {
         // Assert
-        Assert.IsNotNull(dossier.Body);
+        Assert.That(dossier.Body, Is.Not.Null);
       }
     }
 
@@ -174,7 +174,7 @@ namespace Ramone.Tests
       using (var c = catReq.Accept<Cat>("text/plain").Get())
       {
         // Assert
-        Assert.IsNotNull(c.Body);
+        Assert.That(c.Body, Is.Not.Null);
       }
     }
 

@@ -30,7 +30,7 @@ namespace Ramone.Tests
       using (Response response = DossierReq.Put(MyDossier))
       {
         // Assert
-        Assert.IsNotNull(response);
+        Assert.That(response, Is.Not.Null);
       }
     }
 
@@ -44,7 +44,7 @@ namespace Ramone.Tests
         Dossier newDossier = response.Body;
 
         // Assert
-        Assert.IsNotNull(newDossier);
+        Assert.That(newDossier, Is.Not.Null);
       }
     }
 
@@ -56,7 +56,7 @@ namespace Ramone.Tests
       using (var newDossier = DossierReq.Accept<Dossier>().Put(MyDossier))
       {
         // Assert
-        Assert.IsNotNull(newDossier.Body);
+        Assert.That(newDossier.Body, Is.Not.Null);
       }
     }
 
@@ -68,7 +68,7 @@ namespace Ramone.Tests
       using (var newDossier = DossierReq.Accept<Dossier>(CMSConstants.CMSMediaType).Put(MyDossier))
       {
         // Assert
-        Assert.IsNotNull(newDossier.Body);
+        Assert.That(newDossier.Body, Is.Not.Null);
       }
     }
 
@@ -83,7 +83,7 @@ namespace Ramone.Tests
       using (Response<string> response = request.Accept("text/plain").ContentType("application/x-www-url-formencoded").Put<string>())
       {
         // Assert
-        Assert.IsNull(response.Body);
+        Assert.That(response.Body, Is.Null);
       }
     }
 
@@ -98,7 +98,7 @@ namespace Ramone.Tests
       using (Response response = request.Accept("text/plain").ContentType("application/x-www-url-formencoded").Put())
       {
         // Assert
-        Assert.IsNull(response.Body);
+        Assert.That(response.Body, Is.Null);
       }
     }
   }

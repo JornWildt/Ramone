@@ -21,7 +21,7 @@ namespace Ramone.Tests
       catch (WebException ex)
       {
         HtmlDocument error = ((HttpWebResponse)ex.Response).AsRamoneResponse<HtmlDocument>(Session).Body;
-        Assert.IsNotNull(error);
+        Assert.That(error, Is.Not.Null);
       }
     }
 
@@ -35,7 +35,7 @@ namespace Ramone.Tests
                  .OnError(error =>
                   {
                     HtmlDocument html = error.Response.Decode<HtmlDocument>();
-                    Assert.IsNotNull(html);
+                    Assert.That(html, Is.Not.Null);
                     wh.Set();
                   })
                  .Get<string>(response => { });

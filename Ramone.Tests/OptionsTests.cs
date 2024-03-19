@@ -23,7 +23,7 @@ namespace Ramone.Tests
       using (Response response = DossierReq.Options())
       {
         // Assert
-        Assert.IsNotNull(response);
+        Assert.That(response, Is.Not.Null);
         Assert.That(response.Headers["X-ExtraHeader"], Is.EqualTo("2"));
       }
     }
@@ -56,9 +56,9 @@ namespace Ramone.Tests
       using (Response response3 = DossierReq.Accept("text/plain").Options())
       {
         // Assert
-        Assert.IsNotNull(response1);
-        Assert.IsNotNull(response2);
-        Assert.IsNotNull(response3);
+        Assert.That(response1, Is.Not.Null);
+        Assert.That(response2, Is.Not.Null);
+        Assert.That(response3, Is.Not.Null);
         Assert.That(response1.Headers["X-ExtraHeader"], Is.EqualTo("2"));
         Assert.That(response2.Headers["X-ExtraHeader"], Is.EqualTo("2"));
         Assert.That(response3.Headers["X-ExtraHeader"], Is.EqualTo("2"));

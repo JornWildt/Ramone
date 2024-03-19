@@ -20,7 +20,7 @@ namespace Ramone.Tests
         HeaderList headers = r.Body;
 
         // Assert
-        Assert.IsTrue(headers.Any(h => h == "X-Ramone: 123"), "Must contain customer header");
+        Assert.That(headers.Any(h => h == "X-Ramone: 123"), Is.True, "Must contain customer header");
       }
     }
 
@@ -39,7 +39,7 @@ namespace Ramone.Tests
               HeaderList headers = response.Body;
 
               // Assert
-              Assert.IsTrue(headers.Any(h => h == "X-Ramone: 123"), "Must contain customer header");
+              Assert.That(headers.Any(h => h == "X-Ramone: 123"), Is.True, "Must contain customer header");
 
               wh.Set();
             });

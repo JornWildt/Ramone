@@ -26,8 +26,8 @@ namespace Ramone.Tests
         Uri createdDossierLocation = response.CreatedLocation;
         Dossier createdDossier = response.Body;
 
-        Assert.IsNotNull(createdDossierLocation);
-        Assert.IsNotNull(createdDossier);
+        Assert.That(createdDossierLocation, Is.Not.Null);
+        Assert.That(createdDossier, Is.Not.Null);
         Assert.That(createdDossier.Title, Is.EqualTo("A new dossier"));
         Assert.That(createdDossier.Id, Is.EqualTo(999));
       }
@@ -56,9 +56,9 @@ namespace Ramone.Tests
         Uri createdDossierLocation = response.CreatedLocation;
         dynamic createdDossier = response.Body;
 
-        Assert.IsNotNull(createdDossierLocation);
-        Assert.IsNotNull(createdDossier);
-        Assert.AreEqual("A new dossier", createdDossier.Title);
+        Assert.That(createdDossierLocation, Is.Not.Null);
+        Assert.That(createdDossier, Is.Not.Null);
+        Assert.That("A new dossier", Is.EqualTo(createdDossier.Title));
       }
     }
 
@@ -83,8 +83,8 @@ namespace Ramone.Tests
               Uri createdDossierLocation = response.CreatedLocation;
               Dossier createdDossier = response.Body;
 
-              Assert.IsNotNull(createdDossierLocation);
-              Assert.IsNotNull(createdDossier);
+              Assert.That(createdDossierLocation, Is.Not.Null);
+              Assert.That(createdDossier, Is.Not.Null);
               Assert.That(createdDossier.Title, Is.EqualTo("A new dossier"));
               Assert.That(createdDossier.Id, Is.EqualTo(999));
               wh.Set();
@@ -111,12 +111,12 @@ namespace Ramone.Tests
         Uri createdDossierLocation = response.CreatedLocation;
         Dossier createdDossier = response.Body;
 
-        Assert.IsNotNull(createdDossierLocation);
-        Assert.Null(createdDossier);
+        Assert.That(createdDossierLocation, Is.Not.Null);
+        Assert.That(createdDossier, Is.Null);
 
         // Assert that client does as expected
         createdDossier = response.Created();
-        Assert.IsNotNull(createdDossier);
+        Assert.That(createdDossier, Is.Not.Null);
       }
     }
   }

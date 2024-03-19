@@ -17,7 +17,7 @@ namespace Ramone.Tests
       using (Response response = dossierReq.Head())
       {
         // Assert
-        Assert.IsNotNull(response);
+        Assert.That(response, Is.Not.Null);
         Assert.That(response.Headers["X-ExtraHeader"], Is.EqualTo("1"));
       }
     }

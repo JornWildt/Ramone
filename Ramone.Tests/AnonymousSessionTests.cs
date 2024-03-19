@@ -24,7 +24,7 @@ namespace Ramone.Tests
         var body = response.Body;
 
         // Assert
-        Assert.IsNotNull(body);
+        Assert.That(body, Is.Not.Null);
       }
     }
 
@@ -41,7 +41,7 @@ namespace Ramone.Tests
         var body = response.Body;
 
         // Assert
-        Assert.IsNotNull(body);
+        Assert.That(body, Is.Not.Null);
       }
     }
 
@@ -58,7 +58,7 @@ namespace Ramone.Tests
         var body = response.Body;
 
         // Assert
-        Assert.IsNotNull(body);
+        Assert.That(body, Is.Not.Null);
         Assert.That(body.Name, Is.EqualTo("Petra"));
       }
     }
@@ -76,7 +76,7 @@ namespace Ramone.Tests
         var body = response.Body;
 
         // Assert
-        Assert.IsNotNull(body);
+        Assert.That(body, Is.Not.Null);
         Assert.That(body.Name, Is.EqualTo("Petra"));
       }
     }
@@ -95,7 +95,7 @@ namespace Ramone.Tests
         var body = response.Body;
 
         // Assert
-        Assert.IsNotNull(body);
+        Assert.That(body, Is.Not.Null);
         Assert.That(body.Name, Is.EqualTo("MIAUW"));
       }
     }
@@ -119,7 +119,7 @@ namespace Ramone.Tests
         var body = response.Body;
 
         // Assert
-        Assert.IsNotNull(body);
+        Assert.That(body, Is.Not.Null);
         Assert.That(body.Name, Is.EqualTo("Petra"));
       }
     }
@@ -137,7 +137,7 @@ namespace Ramone.Tests
         var body = response.Body;
 
         // Assert
-        Assert.IsNotNull(body);
+        Assert.That(body, Is.Not.Null);
         Assert.That(body.Name, Is.EqualTo("Petra"));
       }
     }

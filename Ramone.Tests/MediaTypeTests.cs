@@ -47,16 +47,16 @@ namespace Ramone.Tests
       Assert.That((string)m1, Is.EqualTo("text/*"));
       Assert.That(m1.TopLevelType, Is.EqualTo("text"));
       Assert.That(m1.SubType, Is.EqualTo("*"));
-      Assert.IsFalse(m1.IsTopLevelWildcard);
-      Assert.IsTrue(m1.IsSubTypeWildcard);
-      Assert.IsFalse(m1.IsWildcard);
+      Assert.That(m1.IsTopLevelWildcard, Is.False);
+      Assert.That(m1.IsSubTypeWildcard, Is.True);
+      Assert.That(m1.IsWildcard, Is.False);
 
       Assert.That((string)m2, Is.EqualTo("*/*"));
       Assert.That(m2.TopLevelType, Is.EqualTo("*"));
       Assert.That(m2.SubType, Is.EqualTo("*"));
-      Assert.IsTrue(m2.IsTopLevelWildcard);
-      Assert.IsTrue(m2.IsSubTypeWildcard);
-      Assert.IsTrue(m2.IsWildcard);
+      Assert.That(m2.IsTopLevelWildcard, Is.True);
+      Assert.That(m2.IsSubTypeWildcard, Is.True);
+      Assert.That(m2.IsWildcard, Is.True);
     }
 
 
@@ -69,17 +69,17 @@ namespace Ramone.Tests
       MediaType m3 = new MediaType("*/*");
 
       // Assert
-      Assert.IsTrue(m1.Matches("text/plain"));
-      Assert.IsTrue(m1.Matches("text/PLAIN"));
-      Assert.IsFalse(m1.Matches("text/html"));
-      Assert.IsFalse(m1.Matches("image/html"));
-      Assert.IsFalse(m1.Matches("imAGe/hTML"));
-      Assert.IsTrue(m2.Matches("text/plain"));
-      Assert.IsTrue(m2.Matches("TEXT/html"));
-      Assert.IsFalse(m2.Matches("image/html"));
-      Assert.IsTrue(m3.Matches("text/plain"));
-      Assert.IsTrue(m3.Matches("text/HTML"));
-      Assert.IsTrue(m3.Matches("image/html"));
+      Assert.That(m1.Matches("text/plain"), Is.True);
+      Assert.That(m1.Matches("text/PLAIN"), Is.True);
+      Assert.That(m1.Matches("text/html"), Is.False);
+      Assert.That(m1.Matches("image/html"), Is.False);
+      Assert.That(m1.Matches("imAGe/hTML"), Is.False);
+      Assert.That(m2.Matches("text/plain"), Is.True);
+      Assert.That(m2.Matches("TEXT/html"), Is.True);
+      Assert.That(m2.Matches("image/html"), Is.False);
+      Assert.That(m3.Matches("text/plain"), Is.True);
+      Assert.That(m3.Matches("text/HTML"), Is.True);
+      Assert.That(m3.Matches("image/html"), Is.True);
     }
 
 
@@ -104,7 +104,7 @@ namespace Ramone.Tests
       MediaType m2 = new MediaType("X/Y");
 
       // Assert
-      Assert.IsTrue(m1 == m2);
+      Assert.That(m1 == m2, Is.True);
     }
 
 
@@ -143,7 +143,7 @@ namespace Ramone.Tests
       string m = (string)mt;
 
       // Assert
-      Assert.IsNull(m);
+      Assert.That(m, Is.Null);
     }
 
 
@@ -154,7 +154,7 @@ namespace Ramone.Tests
       MediaType m = MediaType.Create(null);
 
       // Assert
-      Assert.IsNull(m);
+      Assert.That(m, Is.Null);
     }
 
 
@@ -162,10 +162,10 @@ namespace Ramone.Tests
     public void CanCompareEmptyStringWithMediaType()
     {
       string ct = "";
-      Assert.IsFalse(ct == MediaType.ApplicationXml);
-      Assert.IsFalse(MediaType.ApplicationXml == ct);
-      Assert.IsTrue(ct != MediaType.ApplicationXml);
-      Assert.IsTrue(MediaType.ApplicationXml != ct);
+      Assert.That(ct == MediaType.ApplicationXml, Is.False);
+      Assert.That(MediaType.ApplicationXml == ct, Is.False);
+      Assert.That(ct != MediaType.ApplicationXml, Is.True);
+      Assert.That(MediaType.ApplicationXml != ct, Is.True);
     }
   }
 }

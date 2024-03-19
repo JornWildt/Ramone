@@ -43,9 +43,9 @@ namespace Ramone.Tests
         TimeSpan responseTime = DateTime.Now - t2;
         TimeSpan totalTime = DateTime.Now - t1;
 
-        Assert.Less(getTime.TotalMilliseconds, 1000);
-        Assert.Less(responseTime.TotalMilliseconds, 1000);
-        Assert.GreaterOrEqual(totalTime.TotalMilliseconds, 4000);
+        Assert.That(getTime.TotalMilliseconds, Is.LessThan(1000));
+        Assert.That(responseTime.TotalMilliseconds, Is.LessThan(1000));
+        Assert.That(totalTime.TotalMilliseconds, Is.GreaterThan(4000));
       }
     }
 
@@ -64,7 +64,7 @@ namespace Ramone.Tests
         // Assert
         Assert.That(dossier.Body.Id, Is.EqualTo(8));
         Assert.That(dossier.Body.Title, Is.EqualTo("Dossier no. 8"));
-        Assert.IsNotNull(dossier.Body.Links);
+        Assert.That(dossier.Body.Links, Is.Not.Null);
       }
     }
 
@@ -83,7 +83,7 @@ namespace Ramone.Tests
         // Assert
         Assert.That(dossier.Body.Id, Is.EqualTo(8));
         Assert.That(dossier.Body.Title, Is.EqualTo("Dossier no. 8"));
-        Assert.IsNotNull(dossier.Body.Links);
+        Assert.That(dossier.Body.Links, Is.Not.Null);
       }
     }
 

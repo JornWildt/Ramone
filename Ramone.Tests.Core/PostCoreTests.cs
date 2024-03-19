@@ -30,8 +30,8 @@ namespace Ramone.Tests.Core
         Uri createdDossierLocation = response.CreatedLocation;
         Dossier createdDossier = response.Body;
 
-        Assert.IsNotNull(createdDossierLocation);
-        Assert.IsNotNull(createdDossier);
+        Assert.That(createdDossierLocation, Is.Not.Null);
+        Assert.That(createdDossier, Is.Not.Null);
         Assert.That(createdDossier.Title, Is.EqualTo("A Core dossier"));
         Assert.That(createdDossier.Id, Is.EqualTo(999));
       }

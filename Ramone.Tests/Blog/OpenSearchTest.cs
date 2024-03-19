@@ -29,7 +29,7 @@ namespace Ramone.Tests.Blog
         ILink searchLink = blog.Body.Links.Select("search", "application/opensearchdescription+xml");
 
         // Assert
-        Assert.IsNotNull(searchLink);
+        Assert.That(searchLink, Is.Not.Null);
       }
     }
 
@@ -53,7 +53,7 @@ namespace Ramone.Tests.Blog
 
         Assert.That(search.Urls.Count, Is.EqualTo(1));
         ILinkTemplate l1 = search.Urls.Select("results");
-        Assert.IsNotNull(l1);
+        Assert.That(l1, Is.Not.Null);
       }
     }
 
@@ -71,7 +71,7 @@ namespace Ramone.Tests.Blog
         SyndicationFeed result = response.Body;
 
         // Assert
-        Assert.IsNotNull(result);
+        Assert.That(result, Is.Not.Null);
         Assert.That(result.Items.Count(), Is.EqualTo(1));
         SyndicationItem i1 = result.Items.First();
         Assert.That(((TextSyndicationContent)i1.Title).Text, Is.EqualTo("Result 1"));

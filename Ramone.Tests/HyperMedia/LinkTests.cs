@@ -58,12 +58,12 @@ namespace Ramone.Tests.HyperMedia
       ILink l4 = Links.Select(Link4.RelationType, "application/atom+xml");
 
       // Assert
-      Assert.IsNotNull(l1a);
-      Assert.IsNotNull(l2a);
-      Assert.IsNotNull(l1b);
-      Assert.IsNotNull(l2b);
-      Assert.IsNotNull(l3);
-      Assert.IsNotNull(l4);
+      Assert.That(l1a, Is.Not.Null);
+      Assert.That(l2a, Is.Not.Null);
+      Assert.That(l1b, Is.Not.Null);
+      Assert.That(l2b, Is.Not.Null);
+      Assert.That(l3, Is.Not.Null);
+      Assert.That(l4, Is.Not.Null);
       Assert.That(l1a.HRef, Is.EqualTo(Link1.HRef));
       Assert.That(l2a.HRef, Is.EqualTo(Link2.HRef));
       Assert.That(l1b.HRef, Is.EqualTo(Link1.HRef));
@@ -77,12 +77,12 @@ namespace Ramone.Tests.HyperMedia
     public void CanTestLinksInLinkList()
     {
       // Act + Assert
-      Assert.True(Links.Exists(Link1.RelationType));
-      Assert.True(Links.Exists(Link2.RelationType));
-      Assert.True(Links.Exists(Link1.RelationType, "text/html"));
-      Assert.True(Links.Exists(Link2.RelationType, "text/html"));
-      Assert.True(Links.Exists(Link3.RelationType, "application/atom+xml"));
-      Assert.True(Links.Exists(Link4.RelationType, "application/atom+xml"));
+      Assert.That(Links.Exists(Link1.RelationType), Is.True);
+      Assert.That(Links.Exists(Link2.RelationType), Is.True);
+      Assert.That(Links.Exists(Link1.RelationType, "text/html"), Is.True);
+      Assert.That(Links.Exists(Link2.RelationType, "text/html"), Is.True);
+      Assert.That(Links.Exists(Link3.RelationType, "application/atom+xml"), Is.True);
+      Assert.That(Links.Exists(Link4.RelationType, "application/atom+xml"), Is.True);
     }
 
 
@@ -97,11 +97,11 @@ namespace Ramone.Tests.HyperMedia
       ILink l6b = Links.Select("first", "text/html");
 
       // Assert
-      Assert.IsNotNull(l5a);
-      Assert.IsNotNull(l5b);
-      Assert.IsNotNull(l5c);
-      Assert.IsNotNull(l6a);
-      Assert.IsNotNull(l6b);
+      Assert.That(l5a, Is.Not.Null);
+      Assert.That(l5b, Is.Not.Null);
+      Assert.That(l5c, Is.Not.Null);
+      Assert.That(l6a, Is.Not.Null);
+      Assert.That(l6b, Is.Not.Null);
       Assert.That(l5a.HRef, Is.EqualTo(Link5.HRef));
       Assert.That(l6a.HRef, Is.EqualTo(Link6.HRef));
       Assert.That(Link5.RelationTypes.Count(), Is.EqualTo(3));
@@ -125,8 +125,8 @@ namespace Ramone.Tests.HyperMedia
       ILink l7b = Links.Select("LOWERcasE");
 
       // Assert
-      Assert.IsNotNull(l7a);
-      Assert.IsNotNull(l7b);
+      Assert.That(l7a, Is.Not.Null);
+      Assert.That(l7b, Is.Not.Null);
       Assert.That(l7a.HRef, Is.EqualTo(Link7.HRef));
       Assert.That(l7b.HRef, Is.EqualTo(Link7.HRef));
     }
@@ -142,7 +142,7 @@ namespace Ramone.Tests.HyperMedia
       Request request = link.Follow(Session);
 
       // Assert
-      Assert.IsNotNull(request);
+      Assert.That(request, Is.Not.Null);
       Assert.That(request.Url.AbsoluteUri, Is.EqualTo(link.HRef.AbsoluteUri));
     }
 

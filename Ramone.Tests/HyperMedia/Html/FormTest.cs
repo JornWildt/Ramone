@@ -30,7 +30,7 @@ namespace Ramone.Tests.HyperMedia.Html
         FormArgs result = r.Body;
 
         // Assert
-        Assert.IsNotNull(result);
+        Assert.That(result, Is.Not.Null);
         Assert.That(result.InputText, Is.EqualTo("text"));
         Assert.That(result.InputPassword, Is.EqualTo("password"));
         Assert.That(result.InputCheckbox, Is.EqualTo("checkbox"));
@@ -38,7 +38,7 @@ namespace Ramone.Tests.HyperMedia.Html
         Assert.That(result.TextArea, Is.EqualTo("textarea"));
         Assert.That(result.Select, Is.EqualTo("2"));
         Assert.That(result.Radio1, Is.EqualTo("1b"));
-        Assert.IsNull(result.Radio2);
+        Assert.That(result.Radio2, Is.Null);
         //Assert.AreEqual("B,C", result.MultiSelectValue);
         Assert.That(result.EncType, Is.EqualTo(encType));
       }
@@ -63,7 +63,7 @@ namespace Ramone.Tests.HyperMedia.Html
         FormArgs result = r.Body;
 
         // Assert
-        Assert.IsNotNull(result);
+        Assert.That(result, Is.Not.Null);
         Assert.That(result.InputText, Is.EqualTo("abc"));
         Assert.That(result.InputPassword, Is.EqualTo("1234"));
         Assert.That(result.InputCheckbox, Is.EqualTo("not"));
@@ -94,7 +94,7 @@ namespace Ramone.Tests.HyperMedia.Html
         FormArgs result = r.Body;
 
         // Assert
-        Assert.IsNotNull(result);
+        Assert.That(result, Is.Not.Null);
         Assert.That(result.InputText, Is.EqualTo("text"));
         Assert.That(result.InputPassword, Is.EqualTo("password"));
         Assert.That(result.InputCheckbox, Is.EqualTo("checkbox"));
@@ -102,7 +102,7 @@ namespace Ramone.Tests.HyperMedia.Html
         Assert.That(result.TextArea, Is.EqualTo("textarea"));
         Assert.That(result.Select, Is.EqualTo("2"));
         Assert.That(result.Radio1, Is.EqualTo("1b"));
-        Assert.IsNull(result.Radio2);
+        Assert.That(result.Radio2, Is.Null);
         //Assert.AreEqual("B,C", result.MultiSelectValue);
         Assert.That(result.EncType, Is.EqualTo(encType));
       }
@@ -133,7 +133,7 @@ namespace Ramone.Tests.HyperMedia.Html
         FormArgs result = r.Body;
 
         // Assert
-        Assert.IsNotNull(result);
+        Assert.That(result, Is.Not.Null);
         Assert.That(result.InputText, Is.EqualTo("abc"));
         Assert.That(result.InputPassword, Is.EqualTo("1234"));
         Assert.That(result.InputCheckbox, Is.EqualTo("not"));
@@ -161,10 +161,10 @@ namespace Ramone.Tests.HyperMedia.Html
         FormArgs result = r.Body;
 
         // Assert
-        Assert.IsNotNull(result);
+        Assert.That(result, Is.Not.Null);
         Assert.That(result.Save, Is.EqualTo("Save"));
-        Assert.IsNull(result.Cancel);
-        Assert.IsNull(result.Help);
+        Assert.That(result.Cancel, Is.Null);
+        Assert.That(result.Help, Is.Null);
       }
     }
 
@@ -182,10 +182,10 @@ namespace Ramone.Tests.HyperMedia.Html
         FormArgs result = r.Body;
 
         // Assert
-        Assert.IsNotNull(result);
-        Assert.IsNull(result.Save);
+        Assert.That(result, Is.Not.Null);
+        Assert.That(result.Save, Is.Null);
         Assert.That(result.Cancel, Is.EqualTo("Cancel"));
-        Assert.IsNull(result.Help);
+        Assert.That(result.Help, Is.Null);
       }
     }
 
@@ -203,9 +203,9 @@ namespace Ramone.Tests.HyperMedia.Html
         FormArgs result = r.Body;
 
         // Assert
-        Assert.IsNotNull(result);
-        Assert.IsNull(result.Save);
-        Assert.IsNull(result.Cancel);
+        Assert.That(result, Is.Not.Null);
+        Assert.That(result.Save, Is.Null);
+        Assert.That(result.Cancel, Is.Null);
         Assert.That(result.Help, Is.EqualTo("Help"));
       }
     }
@@ -224,7 +224,7 @@ namespace Ramone.Tests.HyperMedia.Html
         FormArgs result = r.Body;
 
         // Assert
-        Assert.IsNotNull(result);
+        Assert.That(result, Is.Not.Null);
         Assert.That(result.Cancel, Is.EqualTo("Cancel"));
       }
     }
@@ -243,7 +243,7 @@ namespace Ramone.Tests.HyperMedia.Html
         FormArgs result = r.Body;
 
         // Assert
-        Assert.IsNotNull(result);
+        Assert.That(result, Is.Not.Null);
         Assert.That(result.Cancel, Is.EqualTo("Cancel"));
       }
     }
@@ -270,7 +270,7 @@ namespace Ramone.Tests.HyperMedia.Html
         if (charset == "unused")
           charset = Session.DefaultEncoding.WebName;
         Assert.That(submitRequest.CodecParameter("Charset"), Is.EqualTo(charset));
-        Assert.IsNotNull(result);
+        Assert.That(result, Is.Not.Null);
         Assert.That(result.InputText, Is.EqualTo("ÆØÅüì"));
       }
     }
@@ -293,7 +293,7 @@ namespace Ramone.Tests.HyperMedia.Html
         FormArgs result = r.Body;
 
         // Assert
-        Assert.IsNotNull(result);
+        Assert.That(result, Is.Not.Null);
         Assert.That(result.Method, Is.EqualTo("GET"));
         Assert.That(result.InputText, Is.EqualTo(args.InputText));
         Assert.That(result.Select, Is.EqualTo(args.Select));
@@ -319,7 +319,7 @@ namespace Ramone.Tests.HyperMedia.Html
         FormArgs result = r.Body;
 
         // Assert
-        Assert.IsNotNull(result);
+        Assert.That(result, Is.Not.Null);
         Assert.That(result.Method, Is.EqualTo("POST"));
         Assert.That(result.InputText, Is.EqualTo(args.InputText));
         Assert.That(result.Select, Is.EqualTo(args.Select));

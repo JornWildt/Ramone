@@ -67,8 +67,8 @@ namespace Ramone.Tests.MediaTypes
         HeaderList headers = response.Body;
 
         // Assert
-        Assert.IsNotNull(headers);
-        Assert.IsTrue(headers.Any(h => h == "Content-Type: text/plain"), "Must contain content type text/plain");
+        Assert.That(headers, Is.Not.Null);
+        Assert.That(headers.Any(h => h == "Content-Type: text/plain"), Is.True, "Must contain content type text/plain");
       }
     }
   }

@@ -33,14 +33,14 @@ namespace Ramone.Tests.Blog
         Resources.Blog blog = response.Body;
 
         // Assert ...
-        Assert.IsNotNull(blog);
+        Assert.That(blog, Is.Not.Null);
         Assert.That(blog.Title, Is.EqualTo("A mixed blog"));
-        Assert.IsNotNull(blog.Posts);
+        Assert.That(blog.Posts, Is.Not.Null);
         Assert.That(blog.Posts.Count, Is.EqualTo(2));
 
         // - Check content of first post
         Resources.Blog.Post post1 = blog.Posts[0];
-        Assert.IsNotNull(post1);
+        Assert.That(post1, Is.Not.Null);
         Assert.That(post1.Title, Is.EqualTo("Hot summer"));
         Assert.That(post1.Text, Is.EqualTo("It is a hot summer this year."));
       }
@@ -67,7 +67,7 @@ namespace Ramone.Tests.Blog
         using (var author = authorLink.Follow(Session).Get<Resources.Author>())
         {
           // Assert ...
-          Assert.IsNotNull(author.Body);
+          Assert.That(author.Body, Is.Not.Null);
 
           // - Check e-mail of author
           Assert.That(author.Body.Name, Is.EqualTo("Pete Peterson"));
@@ -106,8 +106,8 @@ namespace Ramone.Tests.Blog
 
         // Assert ...
         Assert.That(foundEMails.Count, Is.EqualTo(2));
-        Assert.IsTrue(foundEMails.Contains("bb@ramonerest.dk"));
-        Assert.IsTrue(foundEMails.Contains("cc@ramonerest.dk"));
+        Assert.That(foundEMails.Contains("bb@ramonerest.dk"), Is.True);
+        Assert.That(foundEMails.Contains("cc@ramonerest.dk"), Is.True);
       }
     }
 
@@ -147,7 +147,7 @@ namespace Ramone.Tests.Blog
             Resources.Post createdPost = r2.Body;
 
             // Assert ...
-            Assert.IsNotNull(createdPost);
+            Assert.That(createdPost, Is.Not.Null);
             Assert.That(createdPost.Title, Is.EqualTo("New item"));
             Assert.That(createdPost.Text, Is.EqualTo("Yaj!"));
           }

@@ -24,8 +24,8 @@ namespace Ramone.Tests.OAuth2
       bool isActive2 = Session.OAuth2_HasActiveAccessToken();
 
       // Assert
-      Assert.IsFalse(isActive1);
-      Assert.IsTrue(isActive2);
+      Assert.That(isActive1, Is.False);
+      Assert.That(isActive2, Is.True);
     }
 
 
@@ -44,8 +44,8 @@ namespace Ramone.Tests.OAuth2
       OAuth2Settings settings2 = Session.OAuth2_GetSettings();
 
       // Assert
-      Assert.IsNull(settings1);
-      Assert.IsNotNull(settings2);
+      Assert.That(settings1, Is.Null);
+      Assert.That(settings2, Is.Not.Null);
     }
 
 

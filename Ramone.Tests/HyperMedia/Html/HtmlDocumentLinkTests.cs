@@ -58,12 +58,12 @@ namespace Ramone.Tests.HyperMedia.Html
       ILink l1 = links[0];
       Assert.That(l1.HRef.AbsoluteUri, Is.EqualTo("http://link1/"));
       Assert.That(l1.Title, Is.EqualTo("Link no. 1"));
-      Assert.Contains("next", l1.RelationTypes.ToList());
+      Assert.That(l1.RelationTypes.ToList(), Does.Contain("next"));
 
       ILink l2 = links[2];
       Assert.That(l2.HRef.AbsoluteUri, Is.EqualTo("http://link2/"));
       Assert.That(l2.Title, Is.EqualTo("Link no. 2"));
-      Assert.Contains("up", l2.RelationTypes.ToList());
+      Assert.That(l2.RelationTypes.ToList(), Does.Contain("up"));
     }
 
 
@@ -82,7 +82,7 @@ namespace Ramone.Tests.HyperMedia.Html
 
       Assert.That(l1.HRef.AbsoluteUri, Is.EqualTo("http://link2/"));
       Assert.That(l1.Title, Is.EqualTo("Link no. 2"));
-      Assert.Contains("up", l1.RelationTypes.ToList());
+      Assert.That(l1.RelationTypes.ToList(), Does.Contain("up"));
     }
 
 
@@ -96,11 +96,11 @@ namespace Ramone.Tests.HyperMedia.Html
       // Assert
       Assert.That(link1.HRef.AbsoluteUri, Is.EqualTo("http://link1/"));
       Assert.That(link1.Title, Is.EqualTo("Link no. 1"));
-      Assert.Contains("next", link1.RelationTypes.ToList());
+      Assert.That(link1.RelationTypes.ToList(), Does.Contain("next"));
 
       Assert.That(link2.HRef.AbsoluteUri, Is.EqualTo("http://link2/"));
       Assert.That(link2.Title, Is.EqualTo("Link no. 2"));
-      Assert.Contains("up", link2.RelationTypes.ToList());
+      Assert.That(link2.RelationTypes.ToList(), Does.Contain("up"));
     }
 
 
@@ -116,7 +116,7 @@ namespace Ramone.Tests.HyperMedia.Html
       // Assert
       Assert.That(link.HRef.AbsoluteUri, Is.EqualTo("http://link2/"));
       Assert.That(link.Title, Is.EqualTo("Link no. 2"));
-      Assert.Contains("up", link.RelationTypes.ToList());
+      Assert.That(link.RelationTypes.ToList(), Does.Contain("up"));
     }
 
 
@@ -139,7 +139,7 @@ namespace Ramone.Tests.HyperMedia.Html
 
       // Assert
       Assert.That(link1.HRef.AbsoluteUri, Is.EqualTo(new Uri(BaseUrl, "last-page.html").AbsoluteUri));
-      Assert.Contains("last", link1.RelationTypes.ToList());
+      Assert.That(link1.RelationTypes.ToList(), Does.Contain("last"));
     }
 
 
@@ -190,7 +190,7 @@ namespace Ramone.Tests.HyperMedia.Html
       ILink l1 = links[0];
       Assert.That(l1.HRef.AbsoluteUri, Is.EqualTo("http://example.com/"));
       Assert.That(l1.Title, Is.EqualTo("Content search"));
-      Assert.Contains("search", l1.RelationTypes.ToList());
+      Assert.That(l1.RelationTypes.ToList(), Does.Contain("search"));
       Assert.That((string)l1.MediaType, Is.EqualTo("application/opensearchdescription+xml"));
     }
 
@@ -207,7 +207,7 @@ namespace Ramone.Tests.HyperMedia.Html
       ILink l1 = links[0];
       Assert.That(l1.HRef.AbsoluteUri, Is.EqualTo("http://example.com/"));
       Assert.That(l1.Title, Is.EqualTo("Content search"));
-      Assert.Contains("search", l1.RelationTypes.ToList());
+      Assert.That(l1.RelationTypes.ToList(), Does.Contain("search"));
       Assert.That((string)l1.MediaType, Is.EqualTo("application/opensearchdescription+xml"));
     }
 
@@ -224,7 +224,7 @@ namespace Ramone.Tests.HyperMedia.Html
       ILink l1 = links[0];
       Assert.That(l1.HRef.AbsoluteUri, Is.EqualTo("http://example.com/"));
       Assert.That(l1.Title, Is.EqualTo("Content search"));
-      Assert.Contains("search", l1.RelationTypes.ToList());
+      Assert.That(l1.RelationTypes.ToList(), Does.Contain("search"));
       Assert.That((string)l1.MediaType, Is.EqualTo("application/opensearchdescription+xml"));
     }
 
@@ -238,7 +238,7 @@ namespace Ramone.Tests.HyperMedia.Html
       // Assert
       Assert.That(link.HRef.AbsoluteUri, Is.EqualTo("http://example.com/"));
       Assert.That(link.Title, Is.EqualTo("Content search"));
-      Assert.Contains("search", link.RelationTypes.ToList());
+      Assert.That(link.RelationTypes.ToList(), Does.Contain("search"));
       Assert.That((string)link.MediaType, Is.EqualTo("application/opensearchdescription+xml"));
     }
 
@@ -254,7 +254,7 @@ namespace Ramone.Tests.HyperMedia.Html
 
       ILink l1 = links[1];
       Assert.That(l1.HRef, Is.EqualTo(new Uri(BaseUrl, "mystyle.css")));
-      Assert.Contains("stylesheet", l1.RelationTypes.ToList());
+      Assert.That(l1.RelationTypes.ToList(), Does.Contain("stylesheet"));
     }
 
 

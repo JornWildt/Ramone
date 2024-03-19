@@ -21,8 +21,8 @@ namespace Ramone.Tests
         HeaderList headers = r.Body;
 
         // Assert
-        Assert.IsNotNull(headers);
-        Assert.IsTrue(headers.Exists(h => h == "User-Agent: AgentTest/007"));
+        Assert.That(headers, Is.Not.Null);
+        Assert.That(headers.Exists(h => h == "User-Agent: AgentTest/007"), Is.True);
       }
     }
   }

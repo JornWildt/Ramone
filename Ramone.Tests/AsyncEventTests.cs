@@ -30,7 +30,7 @@ namespace Ramone.Tests
       });
 
       // Assert
-      Assert.IsTrue(ok);
+      Assert.That(ok, Is.True);
     }
 
 
@@ -44,9 +44,9 @@ namespace Ramone.Tests
         {
           request.AsyncEvent().OnError(error =>
             {
-              Assert.IsNotNull(error);
-              Assert.IsNotNull(error.Exception);
-              Assert.IsNotNull(error.Response);
+              Assert.That(error, Is.Not.Null);
+              Assert.That(error.Exception, Is.Not.Null);
+              Assert.That(error.Response, Is.Not.Null);
               wh.Set();
             }).Get(r => { });
         });
@@ -74,7 +74,7 @@ namespace Ramone.Tests
       });
 
       // Assert
-      Assert.IsTrue(onErrorHandled);
+      Assert.That(onErrorHandled, Is.True);
     }
 
 
@@ -101,7 +101,7 @@ namespace Ramone.Tests
       });
 
       // Assert
-      Assert.IsTrue(onErrorHandled);
+      Assert.That(onErrorHandled, Is.True);
     }
 
 
@@ -123,9 +123,9 @@ namespace Ramone.Tests
                });
       });
 
-      Assert.IsNotNull(error);
-      Assert.IsInstanceOf<InvalidOperationException>(error.Exception);
-      Assert.IsNotNull(error.Response);
+      Assert.That(error, Is.Not.Null);
+      Assert.That(error.Exception, Is.InstanceOf<InvalidOperationException>());
+      Assert.That(error.Response, Is.Not.Null);
     }
 
 
@@ -150,9 +150,9 @@ namespace Ramone.Tests
       });
 
       // Assert
-      Assert.IsFalse(gotOk);
-      Assert.IsFalse(gotError);
-      Assert.IsTrue(gotComplete);
+      Assert.That(gotOk, Is.False);
+      Assert.That(gotError, Is.False);
+      Assert.That(gotComplete, Is.True);
     }
 
 
@@ -177,9 +177,9 @@ namespace Ramone.Tests
       request.CancelAsync();
 
       // Assert
-      Assert.IsTrue(gotOk);
-      Assert.IsFalse(gotError);
-      Assert.IsTrue(gotComplete);
+      Assert.That(gotOk, Is.True);
+      Assert.That(gotError, Is.False);
+      Assert.That(gotComplete, Is.True);
     }
   }
 }

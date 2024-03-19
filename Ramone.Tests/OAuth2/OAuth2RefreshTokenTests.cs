@@ -19,7 +19,7 @@ namespace Ramone.Tests.OAuth2
         .OAuth2_RefreshAccessToken("myrefreshtoken");
 
       // Assert
-      Assert.IsNotNull(token);
+      Assert.That(token, Is.Not.Null);
     }
   }
 }

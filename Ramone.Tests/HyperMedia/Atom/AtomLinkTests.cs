@@ -37,12 +37,12 @@ namespace Ramone.Tests.HyperMedia.Atom
 
       ILink l1 = links[0];
       Assert.That(l1.HRef.AbsoluteUri, Is.EqualTo("http://feed/"));
-      Assert.IsNull(l1.Title);
+      Assert.That(l1.Title, Is.Null);
 
       ILink l2 = links[1];
       Assert.That(l2.HRef.AbsoluteUri, Is.EqualTo("http://edit/"));
       Assert.That(l2.Title, Is.EqualTo("Edit feed"));
-      Assert.Contains("edit", l2.RelationTypes.ToList());
+      Assert.That(l2.RelationTypes.ToList(), Does.Contain("edit"));
     }
 
 
@@ -57,7 +57,7 @@ namespace Ramone.Tests.HyperMedia.Atom
 
       ILink l1 = links[0];
       Assert.That(l1.HRef.AbsoluteUri, Is.EqualTo("http://link1/"));
-      Assert.IsNull(l1.Title);
+      Assert.That(l1.Title, Is.Null);
     }
 
 
@@ -69,7 +69,7 @@ namespace Ramone.Tests.HyperMedia.Atom
       AtomLink link = slink.Link();
 
       // Assert
-      Assert.IsNotNull(link);
+      Assert.That(link, Is.Not.Null);
 
       Assert.That(link.HRef.AbsoluteUri, Is.EqualTo("http://edit/"));
       Assert.That(link.Title, Is.EqualTo("Edit feed"));
@@ -89,12 +89,12 @@ namespace Ramone.Tests.HyperMedia.Atom
 
       ILink l1 = links[0];
       Assert.That(l1.HRef.AbsoluteUri, Is.EqualTo("http://feed/"));
-      Assert.IsNull(l1.Title);
+      Assert.That(l1.Title, Is.Null);
 
       ILink l2 = links[1];
       Assert.That(l2.HRef.AbsoluteUri, Is.EqualTo("http://edit/"));
       Assert.That(l2.Title, Is.EqualTo("Edit feed"));
-      Assert.Contains("edit", l2.RelationTypes.ToList());
+      Assert.That(l2.RelationTypes.ToList(), Does.Contain("edit"));
     }
 
 
@@ -105,7 +105,7 @@ namespace Ramone.Tests.HyperMedia.Atom
       List<AtomLink> links = ((SyndicationItem)null).Links().ToList();
 
       // Assert
-      Assert.IsNotNull(links);
+      Assert.That(links, Is.Not.Null);
     }
 
 
@@ -116,7 +116,7 @@ namespace Ramone.Tests.HyperMedia.Atom
       List<AtomLink> links = ((SyndicationItem)null).Links().ToList();
 
       // Assert
-      Assert.IsNotNull(links);
+      Assert.That(links, Is.Not.Null);
     }
 
 
@@ -127,10 +127,10 @@ namespace Ramone.Tests.HyperMedia.Atom
       ILink link = Feed.Links().Select("edit");
 
       // Assert
-      Assert.IsNotNull(link);
+      Assert.That(link, Is.Not.Null);
       Assert.That(link.HRef.AbsoluteUri, Is.EqualTo("http://edit/"));
       Assert.That(link.Title, Is.EqualTo("Edit feed"));
-      Assert.Contains("edit", link.RelationTypes.ToList());
+      Assert.That(link.RelationTypes.ToList(), Does.Contain("edit"));
     }
 
 
@@ -141,7 +141,7 @@ namespace Ramone.Tests.HyperMedia.Atom
       Request request = Feed.Links.First().Follow(Session);
 
       // Assert
-      Assert.IsNotNull(request);
+      Assert.That(request, Is.Not.Null);
       Assert.That(request.Url.AbsoluteUri, Is.EqualTo("http://feed/"));
     }
 

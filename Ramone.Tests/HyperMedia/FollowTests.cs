@@ -24,7 +24,7 @@ namespace Ramone.Tests.HyperMedia
           DossierDocumentList documents = r2.Body;
 
           // Assert
-          Assert.IsNotNull(documents);
+          Assert.That(documents, Is.Not.Null);
           Assert.That(documents.Count, Is.EqualTo(2));
         }
       }
@@ -46,7 +46,7 @@ namespace Ramone.Tests.HyperMedia
           DossierDocumentList documents1 = r2.Body;
 
           // Assert
-          Assert.IsNotNull(documents1);
+          Assert.That(documents1, Is.Not.Null);
           Assert.That(documents1.Count, Is.EqualTo(2));
         }
       }
@@ -66,7 +66,7 @@ namespace Ramone.Tests.HyperMedia
           DossierDocumentList documents1 = r2.Body;
 
           // Assert
-          Assert.IsNotNull(documents1);
+          Assert.That(documents1, Is.Not.Null);
           Assert.That(documents1.Count, Is.EqualTo(2));
         }
       }
@@ -86,7 +86,7 @@ namespace Ramone.Tests.HyperMedia
           DossierDocumentList documents1 = r2.Body;
 
           // Assert
-          Assert.IsNotNull(documents1);
+          Assert.That(documents1, Is.Not.Null);
           Assert.That(documents1.Count, Is.EqualTo(2));
         }
       }

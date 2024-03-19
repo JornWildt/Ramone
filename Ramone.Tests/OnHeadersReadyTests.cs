@@ -21,7 +21,7 @@ namespace Ramone.Tests
 
       HttpWebRequest httpRequest = null;
       using (request.OnHeadersReady(r => httpRequest = r).Get<HeaderList>()) { }
-      Assert.IsNotNull(httpRequest);
+      Assert.That(httpRequest, Is.Not.Null);
     }
 
 
@@ -39,7 +39,7 @@ namespace Ramone.Tests
             wh.Set();
           });
         });
-      Assert.IsNotNull(httpRequest);
+      Assert.That(httpRequest, Is.Not.Null);
     }
   }
 }

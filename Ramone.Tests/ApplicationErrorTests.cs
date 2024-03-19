@@ -26,10 +26,10 @@ namespace Ramone.Tests
       {
         using (var response = Session.Decode<ApplicationError>(ex))
         {
-          Assert.IsNotNull(response);
-          Assert.IsNotNull(response.Body);
+          Assert.That(response, Is.Not.Null);
+          Assert.That(response.Body, Is.Not.Null);
           Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
-          Assert.IsInstanceOf<ApplicationError>(response.Body);
+          Assert.That(response.Body, Is.InstanceOf<ApplicationError>());
           Assert.That(response.Body.Code, Is.EqualTo(10));
           Assert.That(response.Body.Message, Is.EqualTo("Error X"));
         }
@@ -50,7 +50,7 @@ namespace Ramone.Tests
       {
         using (var response = Session.Decode<ApplicationError>(ex))
         {
-          Assert.IsNull(response);
+          Assert.That(response, Is.Null);
         }
       }
     }

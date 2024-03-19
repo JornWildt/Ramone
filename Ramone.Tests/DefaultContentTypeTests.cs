@@ -21,8 +21,8 @@ namespace Ramone.Tests
       using (dynamic response = request.Post(cat))
       {
         // Assert
-        Assert.IsNotNull(response);
-        Assert.AreEqual("Prince", response.Body.Name);
+        Assert.That(response, Is.Not.Null);
+        Assert.That(response.Body.Name, Is.EqualTo("Prince"));
       }
     }
 
@@ -41,7 +41,7 @@ namespace Ramone.Tests
       using (var response = request.Post<string>(cat))
       {
         // Assert
-        Assert.IsNotNull(response);
+        Assert.That(response, Is.Not.Null);
         Assert.That(response.Body, Is.EqualTo("Prince"));
       }
     }

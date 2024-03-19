@@ -21,14 +21,14 @@ namespace Ramone.Tests.MediaTypes.Html
 
         // Assert
         HtmlNode personNode = doc.DocumentNode.SelectSingleNode("//*[@class=\"Person\"]");
-        Assert.IsNotNull(personNode);
+        Assert.That(personNode, Is.Not.Null);
 
         HtmlNode nameNode = personNode.SelectSingleNode("//*[@class=\"Name\"]");
-        Assert.IsNotNull(nameNode);
+        Assert.That(nameNode, Is.Not.Null);
         Assert.That(nameNode.InnerText, Is.EqualTo("Petrea"));
 
         HtmlNode addressNode = personNode.SelectSingleNode("//*[@class=\"Address\"]");
-        Assert.IsNotNull(addressNode);
+        Assert.That(addressNode, Is.Not.Null);
         Assert.That(addressNode.InnerText, Is.EqualTo("At home"));
       }
     }
@@ -48,7 +48,7 @@ namespace Ramone.Tests.MediaTypes.Html
 
         // Assert
         HtmlNode nameNode = doc.DocumentNode.SelectSingleNode("/html/body");
-        Assert.IsNotNull(nameNode);
+        Assert.That(nameNode, Is.Not.Null);
 
         Assert.That(response.WebResponse.Headers["X-accept-charset"], Is.EqualTo(charset));
         Assert.That(nameNode.InnerText, Is.EqualTo("ÆØÅúï´`'"));

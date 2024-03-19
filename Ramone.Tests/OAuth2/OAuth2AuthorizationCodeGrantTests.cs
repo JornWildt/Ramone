@@ -20,9 +20,9 @@ namespace Ramone.Tests.OAuth2
       OAuth2SessionState state = Session.OAuth2_GetState();
 
       // Assert
-      Assert.IsNotNull(state);
-      Assert.IsNotNull(state.AuthorizationState);
-      Assert.Greater(state.AuthorizationState.Length, 8);
+      Assert.That(state, Is.Not.Null);
+      Assert.That(state.AuthorizationState, Is.Not.Null);
+      Assert.That(state.AuthorizationState.Length, Is.GreaterThan(8));
     }
 
 
@@ -48,7 +48,7 @@ namespace Ramone.Tests.OAuth2
       string code1 = newSession.OAuth2_GetAuthorizationCodeFromRedirectUrl(failUrl);
       string code2 = newSession.OAuth2_GetAuthorizationCodeFromRedirectUrl(successUrl);
 
-      Assert.IsNull(code1);
+      Assert.That(code1, Is.Null);
       Assert.That(code2, Is.EqualTo("xyz"));
     }
   }

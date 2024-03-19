@@ -24,10 +24,10 @@ namespace Ramone.Tests.MediaTypes.JsonPatch
 
       // Assert
       dynamic operations = patch.Operations;
-      Assert.IsNotNull(operations);
-      Assert.AreEqual(1, operations.Count);
-      Assert.AreEqual("add", operations[0].op);
-      Assert.AreEqual("/RelatedParties", operations[0].path);
+      Assert.That(operations, Is.Not.Null);
+      Assert.That(operations.Count, Is.EqualTo(1));
+      Assert.That(operations[0].op, Is.EqualTo("add"));
+      Assert.That(operations[0].path, Is.EqualTo("/RelatedParties"));
 
       // Not the best way to test, but some how we need to know that it Builds good JSON
       Assert.That(patch.ToString(), Is.EqualTo(@"[{""value"":{""Name"":""Liza"",""Id"":0},""op"":""add"",""path"":""/RelatedParties""}]"));
@@ -45,10 +45,10 @@ namespace Ramone.Tests.MediaTypes.JsonPatch
 
       // Assert
       dynamic operations = patch.Operations;
-      Assert.IsNotNull(operations);
-      Assert.AreEqual(1, operations.Count);
-      Assert.AreEqual("add", operations[0].op);
-      Assert.AreEqual("/RelatedParties", operations[0].path);
+      Assert.That(operations, Is.Not.Null);
+      Assert.That(operations.Count, Is.EqualTo(1));
+      Assert.That(operations[0].op, Is.EqualTo("add"));
+      Assert.That(operations[0].path, Is.EqualTo("/RelatedParties"));
 
       // Not the best way to test, but some how we need to know that it Builds good JSON
       Assert.That(patch.ToString(), Is.EqualTo(@"[{""value"":{""Name"":""Liza"",""Id"":0},""op"":""add"",""path"":""/RelatedParties""}]"));
@@ -66,10 +66,10 @@ namespace Ramone.Tests.MediaTypes.JsonPatch
 
       // Assert
       dynamic operations = patch.Operations;
-      Assert.IsNotNull(operations);
-      Assert.AreEqual(1, operations.Count);
-      Assert.AreEqual("remove", operations[0].op);
-      Assert.AreEqual("/Title", operations[0].path);
+      Assert.That(operations, Is.Not.Null);
+      Assert.That(operations.Count, Is.EqualTo(1));
+      Assert.That(operations[0].op, Is.EqualTo("remove"));
+      Assert.That(operations[0].path, Is.EqualTo("/Title"));
 
       // Not the best way to test, but some how we need to know that it Builds good JSON
       Assert.That(patch.ToString(), Is.EqualTo(@"[{""op"":""remove"",""path"":""/Title""}]"));
@@ -87,10 +87,10 @@ namespace Ramone.Tests.MediaTypes.JsonPatch
 
       // Assert
       dynamic operations = patch.Operations;
-      Assert.IsNotNull(operations);
-      Assert.AreEqual(1, operations.Count);
-      Assert.AreEqual("remove", operations[0].op);
-      Assert.AreEqual("/Responsible/Name", operations[0].path);
+      Assert.That(operations, Is.Not.Null);
+      Assert.That(operations.Count, Is.EqualTo(1));
+      Assert.That(operations[0].op, Is.EqualTo("remove"));
+      Assert.That(operations[0].path, Is.EqualTo("/Responsible/Name"));
 
       // Not the best way to test, but some how we need to know that it Builds good JSON
       Assert.That(patch.ToString(), Is.EqualTo(@"[{""op"":""remove"",""path"":""/Responsible/Name""}]"));
@@ -108,11 +108,11 @@ namespace Ramone.Tests.MediaTypes.JsonPatch
 
       // Assert
       dynamic operations = patch.Operations;
-      Assert.IsNotNull(operations);
-      Assert.AreEqual(1, operations.Count);
-      Assert.AreEqual("replace", operations[0].op);
-      Assert.AreEqual("/Title", operations[0].path);
-      Assert.AreEqual("Bummer", operations[0].value);
+      Assert.That(operations, Is.Not.Null);
+      Assert.That(operations.Count, Is.EqualTo(1));
+      Assert.That(operations[0].op, Is.EqualTo("replace"));
+      Assert.That(operations[0].path, Is.EqualTo("/Title"));
+      Assert.That(operations[0].value, Is.EqualTo("Bummer"));
 
       // Not the best way to test, but some how we need to know that it Builds good JSON
       Assert.That(patch.ToString(), Is.EqualTo(@"[{""value"":""Bummer"",""op"":""replace"",""path"":""/Title""}]"));
@@ -130,11 +130,11 @@ namespace Ramone.Tests.MediaTypes.JsonPatch
 
       // Assert
       dynamic operations = patch.Operations;
-      Assert.IsNotNull(operations);
-      Assert.AreEqual(1, operations.Count);
-      Assert.AreEqual("replace", operations[0].op);
-      Assert.AreEqual("/Responsible/Name", operations[0].path);
-      Assert.AreEqual("Bummer", operations[0].value);
+      Assert.That(operations, Is.Not.Null);
+      Assert.That(operations.Count, Is.EqualTo(1));
+      Assert.That(operations[0].op, Is.EqualTo("replace"));
+      Assert.That(operations[0].path, Is.EqualTo("/Responsible/Name"));
+      Assert.That(operations[0].value, Is.EqualTo("Bummer"));
 
       // Not the best way to test, but some how we need to know that it Builds good JSON
       Assert.That(patch.ToString(), Is.EqualTo(@"[{""value"":""Bummer"",""op"":""replace"",""path"":""/Responsible/Name""}]"));
@@ -153,11 +153,11 @@ namespace Ramone.Tests.MediaTypes.JsonPatch
 
       // Assert
       dynamic operations = patch.Operations;
-      Assert.IsNotNull(operations);
-      Assert.AreEqual(1, operations.Count);
-      Assert.AreEqual("replace", operations[0].op);
-      Assert.AreEqual("/Responsible", operations[0].path);
-      Assert.AreEqual(party, operations[0].value);
+      Assert.That(operations, Is.Not.Null);
+      Assert.That(operations.Count, Is.EqualTo(1));
+      Assert.That(operations[0].op, Is.EqualTo("replace"));
+      Assert.That(operations[0].path, Is.EqualTo("/Responsible"));
+      Assert.That(operations[0].value, Is.EqualTo(party));
 
       // Not the best way to test, but some how we need to know that it Builds good JSON
       Assert.That(patch.ToString(), Is.EqualTo(@"[{""value"":{""Name"":""John"",""Id"":0},""op"":""replace"",""path"":""/Responsible""}]"));
@@ -175,11 +175,11 @@ namespace Ramone.Tests.MediaTypes.JsonPatch
 
       // Assert
       dynamic operations = patch.Operations;
-      Assert.IsNotNull(operations);
-      Assert.AreEqual(1, operations.Count);
-      Assert.AreEqual("move", operations[0].op);
-      Assert.AreEqual("/Title", operations[0].from);
-      Assert.AreEqual("/AnotherTitle", operations[0].path);
+      Assert.That(operations, Is.Not.Null);
+      Assert.That(operations.Count, Is.EqualTo(1));
+      Assert.That(operations[0].op, Is.EqualTo("move"));
+      Assert.That(operations[0].from, Is.EqualTo("/Title"));
+      Assert.That(operations[0].path, Is.EqualTo("/AnotherTitle"));
 
       // Not the best way to test, but some how we need to know that it Builds good JSON
       Assert.That(patch.ToString(), Is.EqualTo(@"[{""from"":""/Title"",""op"":""move"",""path"":""/AnotherTitle""}]"));
@@ -197,11 +197,11 @@ namespace Ramone.Tests.MediaTypes.JsonPatch
 
       // Assert
       dynamic operations = patch.Operations;
-      Assert.IsNotNull(operations);
-      Assert.AreEqual(1, operations.Count);
-      Assert.AreEqual("move", operations[0].op);
-      Assert.AreEqual("/Title", operations[0].from);
-      Assert.AreEqual("/AnotherTitle", operations[0].path);
+      Assert.That(operations, Is.Not.Null);
+      Assert.That(operations.Count, Is.EqualTo(1));
+      Assert.That(operations[0].op, Is.EqualTo("move"));
+      Assert.That(operations[0].from, Is.EqualTo("/Title"));
+      Assert.That(operations[0].path, Is.EqualTo("/AnotherTitle"));
 
       // Not the best way to test, but some how we need to know that it Builds good JSON
       Assert.That(patch.ToString(), Is.EqualTo(@"[{""from"":""/Title"",""op"":""move"",""path"":""/AnotherTitle""}]"));
@@ -219,11 +219,11 @@ namespace Ramone.Tests.MediaTypes.JsonPatch
 
       // Assert
       dynamic operations = patch.Operations;
-      Assert.IsNotNull(operations);
-      Assert.AreEqual(1, operations.Count);
-      Assert.AreEqual("copy", operations[0].op);
-      Assert.AreEqual("/Title", operations[0].from);
-      Assert.AreEqual("/AnotherTitle", operations[0].path);
+      Assert.That(operations, Is.Not.Null);
+      Assert.That(operations.Count, Is.EqualTo(1));
+      Assert.That(operations[0].op, Is.EqualTo("copy"));
+      Assert.That(operations[0].from, Is.EqualTo("/Title"));
+      Assert.That(operations[0].path, Is.EqualTo("/AnotherTitle"));
 
       // Not the best way to test, but some how we need to know that it Builds good JSON
       Assert.That(patch.ToString(), Is.EqualTo(@"[{""from"":""/Title"",""op"":""copy"",""path"":""/AnotherTitle""}]"));
@@ -241,11 +241,11 @@ namespace Ramone.Tests.MediaTypes.JsonPatch
 
       // Assert
       dynamic operations = patch.Operations;
-      Assert.IsNotNull(operations);
-      Assert.AreEqual(1, operations.Count);
-      Assert.AreEqual("copy", operations[0].op);
-      Assert.AreEqual("/Title", operations[0].from);
-      Assert.AreEqual("/AnotherTitle", operations[0].path);
+      Assert.That(operations, Is.Not.Null);
+      Assert.That(operations.Count, Is.EqualTo(1));
+      Assert.That(operations[0].op, Is.EqualTo("copy"));
+      Assert.That(operations[0].from, Is.EqualTo("/Title"));
+      Assert.That(operations[0].path, Is.EqualTo("/AnotherTitle"));
 
       // Not the best way to test, but some how we need to know that it Builds good JSON
       Assert.That(patch.ToString(), Is.EqualTo(@"[{""from"":""/Title"",""op"":""copy"",""path"":""/AnotherTitle""}]"));
@@ -263,11 +263,11 @@ namespace Ramone.Tests.MediaTypes.JsonPatch
 
       // Assert
       dynamic operations = patch.Operations;
-      Assert.IsNotNull(operations);
-      Assert.AreEqual(1, operations.Count);
-      Assert.AreEqual("test", operations[0].op);
-      Assert.AreEqual("/Title", operations[0].path);
-      Assert.AreEqual("TestValue", operations[0].value);
+      Assert.That(operations, Is.Not.Null);
+      Assert.That(operations.Count, Is.EqualTo(1));
+      Assert.That(operations[0].op, Is.EqualTo("test"));
+      Assert.That(operations[0].path, Is.EqualTo("/Title"));
+      Assert.That(operations[0].value, Is.EqualTo("TestValue"));
 
       // Not the best way to test, but some how we need to know that it Builds good JSON
       Assert.That(patch.ToString(), Is.EqualTo(@"[{""value"":""TestValue"",""op"":""test"",""path"":""/Title""}]"));
@@ -285,11 +285,11 @@ namespace Ramone.Tests.MediaTypes.JsonPatch
 
       // Assert
       dynamic operations = patch.Operations;
-      Assert.IsNotNull(operations);
-      Assert.AreEqual(1, operations.Count);
-      Assert.AreEqual("test", operations[0].op);
-      Assert.AreEqual("/Title", operations[0].path);
-      Assert.AreEqual("TestValue", operations[0].value);
+      Assert.That(operations, Is.Not.Null);
+      Assert.That(operations.Count, Is.EqualTo(1));
+      Assert.That(operations[0].op, Is.EqualTo("test"));
+      Assert.That(operations[0].path, Is.EqualTo("/Title"));
+      Assert.That(operations[0].value, Is.EqualTo("TestValue"));
 
       // Not the best way to test, but some how we need to know that it Builds good JSON
       Assert.That(patch.ToString(), Is.EqualTo(@"[{""value"":""TestValue"",""op"":""test"",""path"":""/Title""}]"));
@@ -355,24 +355,24 @@ namespace Ramone.Tests.MediaTypes.JsonPatch
 
         // Assert
         dynamic operations = patch.Operations;
-        Assert.IsNotNull(operations);
-        Assert.AreEqual(6, operations.Count);
-        Assert.AreEqual("add", operations[0].op);
-        Assert.AreEqual("/RelatedParties", operations[0].path);
-        Assert.AreEqual("remove", operations[1].op);
-        Assert.AreEqual("/Title", operations[1].path);
-        Assert.AreEqual("replace", operations[2].op);
-        Assert.AreEqual("/Responsible", operations[2].path);
-        Assert.AreEqual("Liza", operations[2].value.Name);
-        Assert.AreEqual("move", operations[3].op);
-        Assert.AreEqual("/AnotherTitle", operations[3].from);
-        Assert.AreEqual("/Title", operations[3].path);
-        Assert.AreEqual("copy", operations[4].op);
-        Assert.AreEqual("/Title", operations[4].from);
-        Assert.AreEqual("/AnotherTitle", operations[4].path);
-        Assert.AreEqual("test", operations[5].op);
-        Assert.AreEqual("/RelatedParties", operations[5].path);
-        Assert.AreEqual("Liza", operations[5].value);
+        Assert.That(operations, Is.Not.Null);
+        Assert.That(operations.Count, Is.EqualTo(6));
+        Assert.That(operations[0].op, Is.EqualTo("add"));
+        Assert.That(operations[0].path, Is.EqualTo("/RelatedParties"));
+        Assert.That(operations[1].op, Is.EqualTo("remove"));
+        Assert.That(operations[1].path, Is.EqualTo("/Title"));
+        Assert.That(operations[2].op, Is.EqualTo("replace"));
+        Assert.That(operations[2].path, Is.EqualTo("/Responsible"));
+        Assert.That(operations[2].value.Name, Is.EqualTo("Liza"));
+        Assert.That(operations[3].op, Is.EqualTo("move"));
+        Assert.That(operations[3].from, Is.EqualTo("/AnotherTitle"));
+        Assert.That(operations[3].path, Is.EqualTo("/Title"));
+        Assert.That(operations[4].op, Is.EqualTo("copy"));
+        Assert.That(operations[4].from, Is.EqualTo("/Title"));
+        Assert.That(operations[4].path, Is.EqualTo("/AnotherTitle"));
+        Assert.That(operations[5].op, Is.EqualTo("test"));
+        Assert.That(operations[5].path, Is.EqualTo("/RelatedParties"));
+        Assert.That(operations[5].value, Is.EqualTo("Liza"));
       }
     }
 
@@ -392,10 +392,10 @@ namespace Ramone.Tests.MediaTypes.JsonPatch
 
         // Assert
         dynamic operations = patch.Operations;
-        Assert.IsNotNull(operations);
-        Assert.AreEqual(1, operations.Count);
-        Assert.AreEqual("remove", operations[0].op);
-        Assert.AreEqual("/Title", operations[0].path);
+        Assert.That(operations, Is.Not.Null);
+        Assert.That(operations.Count, Is.EqualTo(1));
+        Assert.That(operations[0].op, Is.EqualTo("remove"));
+        Assert.That(operations[0].path, Is.EqualTo("/Title"));
       }
     }
 

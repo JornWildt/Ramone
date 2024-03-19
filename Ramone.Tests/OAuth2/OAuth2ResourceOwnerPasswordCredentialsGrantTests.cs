@@ -27,7 +27,7 @@ namespace Ramone.Tests.OAuth2
 
       using (var response = request.Post<dynamic>(tokenRequest))
       {
-        Assert.IsNotNull(response.Body);
+        Assert.That(response.Body, Is.Not.Null);
         Assert.That(response.Body.access_token, Is.Not.Null.And.Not.Empty);
       }
     }
@@ -43,7 +43,7 @@ namespace Ramone.Tests.OAuth2
                  OAuth2TestConstants.UserPassword,
                  extraRequestArgs: new Dictionary<string, string> { ["additional"] = "Even more special" });
 
-      Assert.IsNotNull(token);
+      Assert.That(token, Is.Not.Null);
       Assert.That(token.access_token, Is.Not.Null.And.Not.Empty);
       Assert.That(token.expires_in, Is.EqualTo(199));
       Assert.That((string)token.AllParameters["additional_param"], Is.EqualTo("Even more special"));
@@ -57,7 +57,7 @@ namespace Ramone.Tests.OAuth2
         Session.OAuth2_Configure(GetSettings())
                .OAuth2_GetAccessTokenUsingOwnerUsernamePassword(OAuth2TestConstants.UsernameWithEmptyPassword, null);
 
-      Assert.IsNotNull(token);
+      Assert.That(token, Is.Not.Null);
       Assert.That(token.access_token, Is.Not.Null.And.Not.Empty);
     }
 
@@ -79,7 +79,7 @@ namespace Ramone.Tests.OAuth2
         ProtectedResource r = response.Body;
 
         // Assert
-        Assert.IsNotNull(r);
+        Assert.That(r, Is.Not.Null);
         Assert.That(r.Title, Is.EqualTo("Got it"));
       }
     }
@@ -119,7 +119,7 @@ namespace Ramone.Tests.OAuth2
         ProtectedResource r = response.Body;
 
         // Assert
-        Assert.IsNotNull(r);
+        Assert.That(r, Is.Not.Null);
         Assert.That(r.Title, Is.EqualTo("Got it"));
       }
     }

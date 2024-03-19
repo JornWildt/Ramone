@@ -41,7 +41,7 @@ namespace Ramone.Tests.Blog
 
         // - Check content of first post
         HtmlNode post1 = posts[0];
-        Assert.IsNotNull(post1);
+        Assert.That(post1, Is.Not.Null);
         HtmlNode post1Title = post1.SelectNodes(@".//*[@class=""post-title""]").First();
         HtmlNode post1Content = post1.SelectNodes(@".//*[@class=""post-content""]").First();
         Assert.That(post1Title.InnerText, Is.EqualTo("Hot summer"));
@@ -69,7 +69,7 @@ namespace Ramone.Tests.Blog
         using (var author = authorLink.Follow(Session).Get<HtmlDocument>())
         {
           // Assert ...
-          Assert.IsNotNull(author);
+          Assert.That(author, Is.Not.Null);
 
           // - Check e-mail of author
           HtmlNode email = author.Body.DocumentNode.SelectNodes(@"//a[@rel=""email""]").First();
@@ -116,8 +116,8 @@ namespace Ramone.Tests.Blog
 
         // Assert ...
         Assert.That(foundEMails.Count, Is.EqualTo(2));
-        Assert.IsTrue(foundEMails.Contains("bb@ramonerest.dk"));
-        Assert.IsTrue(foundEMails.Contains("cc@ramonerest.dk"));
+        Assert.That(foundEMails.Contains("bb@ramonerest.dk"), Is.True);
+        Assert.That(foundEMails.Contains("cc@ramonerest.dk"), Is.True);
       }
     }
 
@@ -152,7 +152,7 @@ namespace Ramone.Tests.Blog
           using (var createdBlogItem = form.Bind().Submit<HtmlDocument>())
           {
             // Assert ...
-            Assert.IsNotNull(createdBlogItem);
+            Assert.That(createdBlogItem, Is.Not.Null);
             HtmlNode postTitle = createdBlogItem.Body.DocumentNode.SelectNodes(@"//*[@class=""post-title""]").First();
             HtmlNode postContent = createdBlogItem.Body.DocumentNode.SelectNodes(@"//*[@class=""post-content""]").First();
             Assert.That(postTitle.InnerText, Is.EqualTo("New item"));

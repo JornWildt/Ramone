@@ -74,11 +74,11 @@ namespace Ramone.Tests.MediaTypes.Xml
       using (var d2 = dog2Request.Get<Dog2>())
       {
         // Assert
-        Assert.IsNotNull(d1a.Body);
+        Assert.That(d1a.Body, Is.Not.Null);
         Assert.That(d1a.Body.Name, Is.EqualTo("Fido"));
-        Assert.IsNotNull(d1b.Body);
+        Assert.That(d1b.Body, Is.Not.Null);
         Assert.That(d1b.Body.Name, Is.EqualTo("Hugo"));
-        Assert.IsNotNull(d2.Body);
+        Assert.That(d2.Body, Is.Not.Null);
         Assert.That(d2.Body.Name, Is.EqualTo("Hugo"));
         Assert.That(d2.Body.Weight, Is.EqualTo(25));
       }

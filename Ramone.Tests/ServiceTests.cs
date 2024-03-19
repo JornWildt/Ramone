@@ -54,7 +54,7 @@ namespace Ramone.Tests
 
       // Assert
       Assert.That((int)service.Items["X"], Is.EqualTo(1234));
-      Assert.IsFalse(service.Items.ContainsKey("Y"));
+      Assert.That(service.Items.ContainsKey("Y"), Is.False);
     }
 
 
@@ -70,7 +70,7 @@ namespace Ramone.Tests
       using (var resp = req.Get<Dossier>())
       {
         // Assert
-        Assert.IsNotNull(resp.Body);
+        Assert.That(resp.Body, Is.Not.Null);
         Assert.That(resp.Body.Id, Is.EqualTo(0));
       }
     }

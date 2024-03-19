@@ -16,7 +16,7 @@ namespace Ramone.Tests.OAuth2
         Session.OAuth2_Configure(GetSettings())
                .OAuth2_GetAccessTokenUsingClientCredentials();
 
-      Assert.IsNotNull(token);
+      Assert.That(token, Is.Not.Null);
       Assert.That(token.access_token, Is.Not.Null.And.Not.Empty);
       Assert.That(token.expires_in, Is.EqualTo(199));
       Assert.That((string)token.AllParameters["additional_param"], Is.EqualTo("Special"));

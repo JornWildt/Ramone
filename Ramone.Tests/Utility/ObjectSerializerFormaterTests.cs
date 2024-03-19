@@ -82,8 +82,8 @@ namespace Ramone.Tests.Utility
       IObjectSerializerFormater f2 = MyObjectSerializerFormaterManager.GetFormater(typeof(bool));
 
       // Assert
-      Assert.IsNotNull(f1);
-      Assert.IsNotNull(f2);
+      Assert.That(f1, Is.Not.Null);
+      Assert.That(f2, Is.Not.Null);
       Assert.That(f1.GetType(), Is.EqualTo(typeof(MailObjectSerializerFormater)));
       Assert.That(f2.GetType(), Is.EqualTo(typeof(DelegateFormater<bool>)));
     }

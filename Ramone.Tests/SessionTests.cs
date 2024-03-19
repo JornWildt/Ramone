@@ -60,14 +60,14 @@ namespace Ramone.Tests
       ISession session3 = service.NewSession();
 
       // Assert
-      Assert.IsNull(session1.AuthorizationDispatcher.Get("dummy1"));
-      Assert.IsNull(session1.AuthorizationDispatcher.Get("dummy2"));
+      Assert.That(session1.AuthorizationDispatcher.Get("dummy1"), Is.Null);
+      Assert.That(session1.AuthorizationDispatcher.Get("dummy2"), Is.Null);
       
-      Assert.IsNotNull(session2.AuthorizationDispatcher.Get("dummy1"));
-      Assert.IsNotNull(session2.AuthorizationDispatcher.Get("dummy2"));
+      Assert.That(session2.AuthorizationDispatcher.Get("dummy1"), Is.Not.Null);
+      Assert.That(session2.AuthorizationDispatcher.Get("dummy2"), Is.Not.Null);
       
-      Assert.IsNotNull(session3.AuthorizationDispatcher.Get("dummy1"));
-      Assert.IsNull(session3.AuthorizationDispatcher.Get("dummy2"));
+      Assert.That(session3.AuthorizationDispatcher.Get("dummy1"), Is.Not.Null);
+      Assert.That(session3.AuthorizationDispatcher.Get("dummy2"), Is.Null);
     }
 
 
@@ -144,7 +144,7 @@ namespace Ramone.Tests
       Assert.That(session.SerializerSettings.DateTimeFormat, Is.EqualTo("O"));
       Assert.That(session.SerializerSettings.Culture.Name, Is.EqualTo("da-DK"));
       Assert.That(session.SerializerSettings.Encoding, Is.EqualTo(Encoding.ASCII));
-      Assert.IsTrue(session.SerializerSettings.EnableNonAsciiCharactersInMultipartFilenames);
+      Assert.That(session.SerializerSettings.EnableNonAsciiCharactersInMultipartFilenames, Is.True);
       
       // Act 2
       session.SerializerSettings.ArrayFormat = "A2";
@@ -163,18 +163,18 @@ namespace Ramone.Tests
       Assert.That(session.SerializerSettings.DateTimeFormat, Is.EqualTo("R"));
       Assert.That(session.SerializerSettings.Culture.Name, Is.EqualTo("pt-BR"));
       Assert.That(session.SerializerSettings.Encoding, Is.EqualTo(Encoding.Unicode));
-      Assert.IsFalse(session.SerializerSettings.EnableNonAsciiCharactersInMultipartFilenames);
+      Assert.That(session.SerializerSettings.EnableNonAsciiCharactersInMultipartFilenames, Is.False);
       Assert.That(service.SerializerSettings.ArrayFormat, Is.EqualTo("A"));
       Assert.That(service.SerializerSettings.DictionaryFormat, Is.EqualTo("B"));
       Assert.That(service.SerializerSettings.PropertyFormat, Is.EqualTo("C"));
       Assert.That(service.SerializerSettings.DateTimeFormat, Is.EqualTo("O"));
       Assert.That(service.SerializerSettings.Culture.Name, Is.EqualTo("da-DK"));
       Assert.That(service.SerializerSettings.Encoding, Is.EqualTo(Encoding.ASCII));
-      Assert.IsTrue(service.SerializerSettings.EnableNonAsciiCharactersInMultipartFilenames);
-      Assert.IsNotNull(session.SerializerSettings.Formaters.GetFormater(typeof(SomeClass1)));
-      Assert.IsNotNull(session.SerializerSettings.Formaters.GetFormater(typeof(SomeClass2)));
-      Assert.IsNotNull(service.SerializerSettings.Formaters.GetFormater(typeof(SomeClass1)));
-      Assert.IsNull(service.SerializerSettings.Formaters.GetFormater(typeof(SomeClass2)));
+      Assert.That(service.SerializerSettings.EnableNonAsciiCharactersInMultipartFilenames, Is.True);
+      Assert.That(session.SerializerSettings.Formaters.GetFormater(typeof(SomeClass1)), Is.Not.Null);
+      Assert.That(session.SerializerSettings.Formaters.GetFormater(typeof(SomeClass2)), Is.Not.Null);
+      Assert.That(service.SerializerSettings.Formaters.GetFormater(typeof(SomeClass1)), Is.Not.Null);
+      Assert.That(service.SerializerSettings.Formaters.GetFormater(typeof(SomeClass2)), Is.Null);
     }
 
 
@@ -185,8 +185,8 @@ namespace Ramone.Tests
       ISession session = RamoneConfiguration.NewSession(BaseUrl);
 
       // Assert
-      Assert.IsNotNull(session.Service);
-      Assert.IsNotNull(session.Service.BaseUri);
+      Assert.That(session.Service, Is.Not.Null);
+      Assert.That(session.Service.BaseUri, Is.Not.Null);
       Assert.That(BaseUrl.AbsoluteUri, Is.EqualTo(session.Service.BaseUri.AbsoluteUri));
     }
 
@@ -217,7 +217,7 @@ namespace Ramone.Tests
       using (var resp = req.Get<Dossier>())
       {
         // Assert
-        Assert.IsNotNull(resp.Body);
+        Assert.That(resp.Body, Is.Not.Null);
         Assert.That(resp.Body.Id, Is.EqualTo(0));
       }
     }

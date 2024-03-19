@@ -18,7 +18,7 @@ namespace Ramone.Tests.MediaTypes.Json
       using (var cat = req.Accept("application/json").Get<Cat>())
       {
         // Assert
-        Assert.IsNotNull(cat.Body);
+        Assert.That(cat.Body, Is.Not.Null);
         Assert.That(cat.Body.Name, Is.EqualTo("Ramstein"));
       }
     }
@@ -39,7 +39,7 @@ namespace Ramone.Tests.MediaTypes.Json
         Cat createdCat = r.Created();
 
         // Assert
-        Assert.IsNotNull(createdCat);
+        Assert.That(createdCat, Is.Not.Null);
         Assert.That(createdCat.Name, Is.EqualTo("Prince"));
         Assert.That(createdCat.DateOfBirth, Is.EqualTo(cat.DateOfBirth));
       }
@@ -59,7 +59,7 @@ namespace Ramone.Tests.MediaTypes.Json
         Cat createdCat = r.Created();
 
         // Assert
-        Assert.IsNotNull(createdCat);
+        Assert.That(createdCat, Is.Not.Null);
         Assert.That(createdCat.Name, Is.EqualTo("Prince"));
       }
     }
@@ -103,8 +103,8 @@ namespace Ramone.Tests.MediaTypes.Json
         dynamic cat = r.Body;
 
         // Assert
-        Assert.IsNotNull(cat);
-        Assert.AreEqual("Ramstein", cat.Name);
+        Assert.That(cat, Is.Not.Null);
+        Assert.That(cat.Name, Is.EqualTo("Ramstein"));
       }
     }
 
@@ -122,8 +122,8 @@ namespace Ramone.Tests.MediaTypes.Json
         dynamic createdCat = r.Body;
 
         // Assert
-        Assert.IsNotNull(createdCat);
-        Assert.AreEqual("Prince", createdCat.Name);
+        Assert.That(createdCat, Is.Not.Null);
+        Assert.That(createdCat.Name, Is.EqualTo("Prince"));
       }
     }
   }

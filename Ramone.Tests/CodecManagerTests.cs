@@ -48,8 +48,8 @@ namespace Ramone.Tests
       MediaTypeWriterRegistration codecReg2 = CM.GetWriter(typeof(MyData), MediaType.ApplicationFormUrlEncoded);
 
       // Assert
-      Assert.IsNotNull(codecReg1);
-      Assert.IsNotNull(codecReg2);
+      Assert.That(codecReg1, Is.Not.Null);
+      Assert.That(codecReg2, Is.Not.Null);
       Assert.That(codecReg1.MediaType, Is.EqualTo(MediaType.ApplicationFormUrlEncoded));
       Assert.That(codecReg2.MediaType, Is.EqualTo(MediaType.ApplicationFormUrlEncoded));
       Assert.That(codecReg1.Codec.GetType(), Is.EqualTo(typeof(FormUrlEncodedSerializerCodec)));
@@ -65,7 +65,7 @@ namespace Ramone.Tests
       MediaTypeWriterRegistration codecReg = CM.GetWriter(typeof(MyData), new MediaType("application/ramone"));
 
       // Assert
-      Assert.IsNotNull(codecReg);
+      Assert.That(codecReg, Is.Not.Null);
       Assert.That(codecReg.MediaType, Is.EqualTo(new MediaType("application/ramone")));
       Assert.That(codecReg.Codec.GetType(), Is.EqualTo(typeof(FormUrlEncodedSerializerCodec)));
     }
@@ -80,8 +80,8 @@ namespace Ramone.Tests
       MediaTypeWriterRegistration codecReg2 = CM.GetWriter(typeof(MyData), MediaType.MultipartFormData);
 
       // Assert
-      Assert.IsNotNull(codecReg1);
-      Assert.IsNotNull(codecReg2);
+      Assert.That(codecReg1, Is.Not.Null);
+      Assert.That(codecReg2, Is.Not.Null);
       Assert.That(codecReg1.MediaType, Is.EqualTo(MediaType.MultipartFormData));
       Assert.That(codecReg2.MediaType, Is.EqualTo(MediaType.MultipartFormData));
       Assert.That(codecReg1.Codec.GetType(), Is.EqualTo(typeof(MultipartFormDataSerializerCodec)));
@@ -97,7 +97,7 @@ namespace Ramone.Tests
       MediaTypeWriterRegistration codecReg = CM.GetWriter(typeof(MyData), new MediaType("application/ramone"));
 
       // Assert
-      Assert.IsNotNull(codecReg);
+      Assert.That(codecReg, Is.Not.Null);
       Assert.That(codecReg.MediaType, Is.EqualTo(new MediaType("application/ramone")));
       Assert.That(codecReg.Codec.GetType(), Is.EqualTo(typeof(MultipartFormDataSerializerCodec)));
     }
@@ -112,8 +112,8 @@ namespace Ramone.Tests
       MediaTypeWriterRegistration codecReg2 = CM.GetWriter(typeof(MyData), MediaType.ApplicationXml);
 
       // Assert
-      Assert.IsNotNull(codecReg1);
-      Assert.IsNotNull(codecReg2);
+      Assert.That(codecReg1, Is.Not.Null);
+      Assert.That(codecReg2, Is.Not.Null);
       Assert.That(codecReg1.MediaType, Is.EqualTo(MediaType.ApplicationXml));
       Assert.That(codecReg2.MediaType, Is.EqualTo(MediaType.ApplicationXml));
       Assert.That(codecReg1.Codec.GetType(), Is.EqualTo(typeof(XmlSerializerCodec)));
@@ -129,7 +129,7 @@ namespace Ramone.Tests
       MediaTypeWriterRegistration codecReg = CM.GetWriter(typeof(MyData), new MediaType("application/ramone+xml"));
 
       // Assert
-      Assert.IsNotNull(codecReg);
+      Assert.That(codecReg, Is.Not.Null);
       Assert.That(codecReg.MediaType, Is.EqualTo(new MediaType("application/ramone+xml")));
       Assert.That(codecReg.Codec.GetType(), Is.EqualTo(typeof(XmlSerializerCodec)));
     }
@@ -144,8 +144,8 @@ namespace Ramone.Tests
       MediaTypeWriterRegistration codecReg2 = CM.GetWriter(typeof(MyData), MediaType.ApplicationJson);
 
       // Assert
-      Assert.IsNotNull(codecReg1);
-      Assert.IsNotNull(codecReg2);
+      Assert.That(codecReg1, Is.Not.Null);
+      Assert.That(codecReg2, Is.Not.Null);
       Assert.That(codecReg1.MediaType, Is.EqualTo(MediaType.ApplicationJson));
       Assert.That(codecReg2.MediaType, Is.EqualTo(MediaType.ApplicationJson));
       Assert.That(codecReg1.Codec.GetType(), Is.EqualTo(typeof(JsonSerializerCodec)));
@@ -161,7 +161,7 @@ namespace Ramone.Tests
       MediaTypeWriterRegistration codecReg = CM.GetWriter(typeof(MyData), new MediaType("application/ramone+json"));
 
       // Assert
-      Assert.IsNotNull(codecReg);
+      Assert.That(codecReg, Is.Not.Null);
       Assert.That(codecReg.MediaType, Is.EqualTo(new MediaType("application/ramone+json")));
       Assert.That(codecReg.Codec.GetType(), Is.EqualTo(typeof(JsonSerializerCodec)));
     }
@@ -175,7 +175,7 @@ namespace Ramone.Tests
       MediaTypeWriterRegistration codecReg = CM.GetWriter(typeof(MyData), new MediaType("appLICAtion/ramone+json"));
 
       // Assert
-      Assert.IsNotNull(codecReg);
+      Assert.That(codecReg, Is.Not.Null);
       Assert.That(codecReg.MediaType, Is.EqualTo(new MediaType("application/ramone+json")));
       Assert.That(codecReg.Codec.GetType(), Is.EqualTo(typeof(JsonSerializerCodec)));
     }
@@ -190,8 +190,8 @@ namespace Ramone.Tests
       MediaTypeWriterRegistration codecReg2 = CM.GetWriter(typeof(MyData), new MediaType("something/else"));
 
       // Assert
-      Assert.IsNotNull(codecReg1);
-      Assert.IsNotNull(codecReg2);
+      Assert.That(codecReg1, Is.Not.Null);
+      Assert.That(codecReg2, Is.Not.Null);
       Assert.That(codecReg1.MediaType, Is.EqualTo(new MediaType("*/*")));
       Assert.That(codecReg2.MediaType, Is.EqualTo(new MediaType("*/*")));
       Assert.That(codecReg1.Codec.GetType(), Is.EqualTo(typeof(JsonSerializerCodec)));
@@ -208,8 +208,8 @@ namespace Ramone.Tests
       MediaTypeReaderRegistration codecReg2 = CM.GetReader(typeof(MyData), new MediaType("something/else"));
 
       // Assert
-      Assert.IsNotNull(codecReg1);
-      Assert.IsNotNull(codecReg2);
+      Assert.That(codecReg1, Is.Not.Null);
+      Assert.That(codecReg2, Is.Not.Null);
       Assert.That(codecReg1.MediaType, Is.EqualTo(new MediaType("*/*")));
       Assert.That(codecReg2.MediaType, Is.EqualTo(new MediaType("*/*")));
       Assert.That(codecReg1.Codec.GetType(), Is.EqualTo(typeof(JsonSerializerCodec)));
@@ -226,8 +226,8 @@ namespace Ramone.Tests
       MediaTypeWriterRegistration codecReg2 = CM.GetWriter(typeof(MyData), new MediaType("application/other"));
 
       // Assert
-      Assert.IsNotNull(codecReg1);
-      Assert.IsNotNull(codecReg2);
+      Assert.That(codecReg1, Is.Not.Null);
+      Assert.That(codecReg2, Is.Not.Null);
       Assert.That(codecReg1.MediaType, Is.EqualTo(new MediaType("application/*")));
       Assert.That(codecReg2.MediaType, Is.EqualTo(new MediaType("application/*")));
       Assert.That(codecReg1.Codec.GetType(), Is.EqualTo(typeof(JsonSerializerCodec)));
@@ -244,8 +244,8 @@ namespace Ramone.Tests
       MediaTypeReaderRegistration codecReg2 = CM.GetReader(typeof(MyData), new MediaType("application/other"));
 
       // Assert
-      Assert.IsNotNull(codecReg1);
-      Assert.IsNotNull(codecReg2);
+      Assert.That(codecReg1, Is.Not.Null);
+      Assert.That(codecReg2, Is.Not.Null);
       Assert.That(codecReg1.MediaType, Is.EqualTo(new MediaType("application/*")));
       Assert.That(codecReg2.MediaType, Is.EqualTo(new MediaType("application/*")));
       Assert.That(codecReg1.Codec.GetType(), Is.EqualTo(typeof(JsonSerializerCodec)));

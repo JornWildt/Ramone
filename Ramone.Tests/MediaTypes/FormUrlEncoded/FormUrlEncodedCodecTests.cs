@@ -174,9 +174,9 @@ namespace Ramone.Tests.MediaTypes.FormUrlEncoded
         Assert.That(data["Title"], Is.EqualTo("Abc"));
         Assert.That(data["Age"], Is.EqualTo("15"));
         Assert.That(data["SubData.Name"], Is.EqualTo("Grete"));
-        Assert.IsTrue(data.AllKeys.Contains("NullValue"));
-        Assert.IsEmpty(data["NullValue"]);
-        Assert.IsFalse(data.AllKeys.Contains("Unused"));
+        Assert.That(data.AllKeys.Contains("NullValue"), Is.True);
+        Assert.That(data["NullValue"], Is.Empty);
+        Assert.That(data.AllKeys.Contains("Unused"), Is.False);
       }
     }
 
@@ -223,7 +223,7 @@ namespace Ramone.Tests.MediaTypes.FormUrlEncoded
 
         // Assert
         string header = headers.FirstOrDefault(h => h == "Content-Length: 6");
-        Assert.IsNotNull(header, "Must send 6 bytes of data (should not include byte order marks)");
+        Assert.That(header, Is.Not.Null, "Must send 6 bytes of data (should not include byte order marks)");
         Console.WriteLine(header);
       }
     }

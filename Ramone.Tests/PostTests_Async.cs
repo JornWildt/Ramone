@@ -31,7 +31,7 @@ namespace Ramone.Tests
         async req => await req.Async().Post<SlowResource>(), 
         resp =>
         {
-          Assert.IsNotNull(resp.Body);
+          Assert.That(resp.Body, Is.Not.Null);
           Assert.That(resp.Body.Time, Is.EqualTo(4));
         });
     }
@@ -44,7 +44,7 @@ namespace Ramone.Tests
         async req => await req.AsJson().Async().Post<SlowResource>(new SlowResource { Time = 10 }),
         resp =>
         {
-          Assert.IsNotNull(resp.Body);
+          Assert.That(resp.Body, Is.Not.Null);
           Assert.That(resp.Body.Time, Is.EqualTo(10));
         });
     }

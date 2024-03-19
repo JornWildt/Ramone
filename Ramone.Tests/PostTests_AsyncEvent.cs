@@ -51,10 +51,10 @@ namespace Ramone.Tests
       });
 
       // Assert
-      Assert.IsNotNull(result);
+      Assert.That(result, Is.Not.Null);
       Assert.That(result.Time, Is.EqualTo(4));
-      Assert.Greater(syncTime, TimeSpan.FromSeconds(3), "Request takes at least 4 seconds - 3 should be a safe test");
-      Assert.Less(asyncTime, TimeSpan.FromSeconds(1), "Async should be instantaneous - 1 second should be safe");
+      Assert.That(syncTime, Is.GreaterThan(TimeSpan.FromSeconds(3)), "Request takes at least 4 seconds - 3 should be a safe test");
+      Assert.That(asyncTime, Is.LessThan(TimeSpan.FromSeconds(1)), "Async should be instantaneous - 1 second should be safe");
     }
 
 
@@ -86,10 +86,10 @@ namespace Ramone.Tests
       });
 
       // Assert
-      Assert.IsNotNull(result);
+      Assert.That(result, Is.Not.Null);
       Assert.That(result.Time, Is.EqualTo(input.Time));
-      Assert.Greater(syncTime, TimeSpan.FromSeconds(3), "Request takes at least 4 seconds - 3 should be a safe test");
-      Assert.Less(asyncTime, TimeSpan.FromSeconds(1), "Async should be instantaneous - 1 second should be safe");
+      Assert.That(syncTime, Is.GreaterThan(TimeSpan.FromSeconds(3)), "Request takes at least 4 seconds - 3 should be a safe test");
+      Assert.That(asyncTime, Is.LessThan(TimeSpan.FromSeconds(1)), "Async should be instantaneous - 1 second should be safe");
     }
 
 

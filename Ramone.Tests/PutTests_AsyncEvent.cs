@@ -33,7 +33,7 @@ namespace Ramone.Tests
           Dossier newDossier = response.Body;
 
           // Assert
-          Assert.IsNotNull(newDossier);
+          Assert.That(newDossier, Is.Not.Null);
           wh.Set();
         });
       });

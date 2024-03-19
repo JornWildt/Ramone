@@ -44,7 +44,7 @@ namespace Ramone.Tests
         HeaderList headers = r.Body;
 
         // Assert
-        Assert.IsTrue(headers.Any(h => h == "Accept: application/xml"), "Must contain Accept header");
+        Assert.That(headers.Any(h => h == "Accept: application/xml"), Is.True, "Must contain Accept header");
       }
     }
 
@@ -63,7 +63,7 @@ namespace Ramone.Tests
         HeaderList headers = r.Body;
 
         // Assert
-        Assert.IsTrue(headers.Any(h => h == "Accept: application/xml, application/json"), "Must contain Accept header");
+        Assert.That(headers.Any(h => h == "Accept: application/xml, application/json"), Is.True, "Must contain Accept header");
       }
     }
 
@@ -82,7 +82,7 @@ namespace Ramone.Tests
         HeaderList headers = r.Body;
 
         // Assert
-        Assert.IsTrue(headers.Any(h => h == "Accept: application/xml; q=0.34"), "Must contain Accept header with q-value");
+        Assert.That(headers.Any(h => h == "Accept: application/xml; q=0.34"), Is.True, "Must contain Accept header with q-value");
       }
     }
 
@@ -101,7 +101,7 @@ namespace Ramone.Tests
         HeaderList headers = r.Body;
 
         // Assert
-        Assert.IsTrue(headers.Any(h => h == "Accept: application/xml; q=0.34, application/json; q=0.12"), "Must contain Accept header with q-value");
+        Assert.That(headers.Any(h => h == "Accept: application/xml; q=0.34, application/json; q=0.12"), Is.True, "Must contain Accept header with q-value");
       }
     }
 
@@ -120,7 +120,7 @@ namespace Ramone.Tests
         HeaderList headers = r.Body;
 
         // Assert
-        Assert.IsTrue(headers.Any(h => h == "Accept: application/xml"), "Must contain Accept header");
+        Assert.That(headers.Any(h => h == "Accept: application/xml"), Is.True, "Must contain Accept header");
       }
     }
 
@@ -139,7 +139,7 @@ namespace Ramone.Tests
         HeaderList headers = r.Body;
 
         // Assert
-        Assert.IsTrue(headers.Any(h => h == "Accept: application/xml, application/xhtml+xml"), "Must contain Accept header");
+        Assert.That(headers.Any(h => h == "Accept: application/xml, application/xhtml+xml"), Is.True, "Must contain Accept header");
       }
     }
 
@@ -158,7 +158,7 @@ namespace Ramone.Tests
         HeaderList headers = r.Body;
 
         // Assert
-        Assert.IsTrue(headers.Any(h => h == "Accept: application/xml; q=0.34"), "Must contain Accept header with q-value");
+        Assert.That(headers.Any(h => h == "Accept: application/xml; q=0.34"), Is.True, "Must contain Accept header with q-value");
       }
     }
 
@@ -177,7 +177,7 @@ namespace Ramone.Tests
         HeaderList headers = r.Body;
 
         // Assert
-        Assert.IsTrue(headers.Any(h => h == "Accept: application/xml; q=0.89, application/xhtml+xml; q=1.00"), "Must contain Accept header");
+        Assert.That(headers.Any(h => h == "Accept: application/xml; q=0.89, application/xhtml+xml; q=1.00"), Is.True, "Must contain Accept header");
       }
     }
 
@@ -193,7 +193,7 @@ namespace Ramone.Tests
         HeaderList headers = r.Body;
 
         // Assert
-        Assert.IsTrue(headers.Any(h => h == "Accept: application/xml; q=0.34"), "Must contain Accept header with q-value");
+        Assert.That(headers.Any(h => h == "Accept: application/xml; q=0.34"), Is.True, "Must contain Accept header with q-value");
       }
     }
 
@@ -212,7 +212,7 @@ namespace Ramone.Tests
         HeaderList headers = r.Body;
 
         // Assert
-        Assert.IsTrue(headers.Any(h => h == "Accept: application/xml"), "Must contain Accept header with q-value");
+        Assert.That(headers.Any(h => h == "Accept: application/xml"), Is.True, "Must contain Accept header with q-value");
       }
     }
 
@@ -232,7 +232,7 @@ namespace Ramone.Tests
         HeaderList headers = r.Body;
 
         // Assert
-        Assert.IsTrue(headers.Any(h => h == "Accept: application/json, text/csv; q=0.21, application/xml; q=0.88, text/plain"), "Must contain Accept header with q-value");
+        Assert.That(headers.Any(h => h == "Accept: application/json, text/csv; q=0.21, application/xml; q=0.88, text/plain"), Is.True, "Must contain Accept header with q-value");
       }
     }
 
@@ -255,7 +255,7 @@ namespace Ramone.Tests
         HeaderList headers = r.Body;
 
         // Assert
-        Assert.IsTrue(headers.Any(h => h == "Accept: application/json, text/csv; q=0.21, application/xml; q=0.88, text/plain, text/html"), "Must contain Accept header with q-value");
+        Assert.That(headers.Any(h => h == "Accept: application/json, text/csv; q=0.21, application/xml; q=0.88, text/plain, text/html"), Is.True, "Must contain Accept header with q-value");
       }
     }
   }

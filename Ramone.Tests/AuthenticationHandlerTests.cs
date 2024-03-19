@@ -42,7 +42,7 @@ namespace Ramone.Tests
           });
       });
 
-      Assert.IsNotNull(errorResponse);
+      Assert.That(errorResponse, Is.Not.Null);
       Assert.That(errorResponse.StatusCode, Is.EqualTo(HttpStatusCode.Unauthorized));
 
       // Will get called twice since it does not try to fix the access problem

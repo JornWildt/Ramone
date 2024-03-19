@@ -33,7 +33,7 @@ namespace Ramone.Tests
         // Assert
         Assert.That(dossier.Body.Id, Is.EqualTo(8));
         Assert.That(dossier.Body.Title, Is.EqualTo("Dossier no. 8"));
-        Assert.IsNotNull(dossier.Body.Links);
+        Assert.That(dossier.Body.Links, Is.Not.Null);
       }
     }
 
@@ -52,7 +52,7 @@ namespace Ramone.Tests
         // Assert
         Assert.That(dossier.Body.Id, Is.EqualTo(8));
         Assert.That(dossier.Body.Title, Is.EqualTo("Dossier no. 8"));
-        Assert.IsNotNull(dossier.Body.Links);
+        Assert.That(dossier.Body.Links, Is.Not.Null);
       }
     }
 
@@ -83,7 +83,7 @@ namespace Ramone.Tests
       using (var documents = dossierDocumentsReq.Get<DossierDocumentList>())
       {
         // Assert
-        Assert.IsNotNull(documents.Body);
+        Assert.That(documents.Body, Is.Not.Null);
         Assert.That(documents.Body.Count, Is.EqualTo(2));
       }
     }
@@ -119,8 +119,8 @@ namespace Ramone.Tests
         ILink documentsLink = dossier.Links.Select(CMSConstants.DocumentsLinkRelType);
 
         // Assert
-        Assert.IsNotNull(documentsLink);
-        Assert.Contains(CMSConstants.DocumentsLinkRelType, documentsLink.RelationTypes.ToList());
+        Assert.That(documentsLink, Is.Not.Null);
+        Assert.That(documentsLink.RelationTypes.ToList(), Does.Contain(CMSConstants.DocumentsLinkRelType));
       }
     }
 

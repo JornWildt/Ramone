@@ -210,7 +210,7 @@ namespace Ramone.Tests
       using (var response = r.Patch<HeaderList>(patch))
       {
         // Assert
-        Assert.IsTrue(response.Body.Contains("Method: PATCH"));
+        Assert.That(response.Body.Contains("Method: PATCH"), Is.True);
       }
     }
   }

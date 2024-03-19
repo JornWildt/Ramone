@@ -22,8 +22,8 @@ namespace Ramone.Tests.Utility
       Dictionary<string, string> d2 = DictionaryConverter.ConvertObjectPropertiesToDictionary(o2);
 
       // Assert
-      Assert.IsNotNull(d1);
-      Assert.IsNotNull(d2);
+      Assert.That(d1, Is.Not.Null);
+      Assert.That(d2, Is.Not.Null);
       Assert.That(d1.Count, Is.EqualTo(3));
       Assert.That(d2.Count, Is.EqualTo(4));
 
@@ -45,7 +45,7 @@ namespace Ramone.Tests.Utility
       Dictionary<string, string> d = DictionaryConverter.ConvertObjectPropertiesToDictionary(null);
 
       // Assert
-      Assert.IsNotNull(d);
+      Assert.That(d, Is.Not.Null);
       Assert.That(d.Count, Is.EqualTo(0));
     }
 
@@ -61,7 +61,7 @@ namespace Ramone.Tests.Utility
       Dictionary<string, string> d2 = DictionaryConverter.ConvertObjectPropertiesToDictionary(d1);
 
       // Assert
-      Assert.IsNotNull(d2);
+      Assert.That(d2, Is.Not.Null);
       Assert.That(d2.Count, Is.EqualTo(1));
       Assert.That(d2["W"], Is.EqualTo("Window"));
     }

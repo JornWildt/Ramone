@@ -36,19 +36,19 @@ namespace Ramone.Tests
       IService service = RamoneConfiguration.NewService(BaseUrl);
 
       // Assert (a few of them)
-      Assert.IsNotNull(service.CodecManager.GetReader(typeof(XmlDocument), MediaType.ApplicationXml));
-      Assert.IsNotNull(service.CodecManager.GetReader(typeof(object), MediaType.ApplicationJson));
-      Assert.IsNotNull(service.CodecManager.GetReader(typeof(SyndicationFeed), MediaType.ApplicationAtom));
+      Assert.That(service.CodecManager.GetReader(typeof(XmlDocument), MediaType.ApplicationXml), Is.Not.Null);
+      Assert.That(service.CodecManager.GetReader(typeof(object), MediaType.ApplicationJson), Is.Not.Null);
+      Assert.That(service.CodecManager.GetReader(typeof(SyndicationFeed), MediaType.ApplicationAtom), Is.Not.Null);
 
       // Streams can read/write any media-type
-      Assert.IsNotNull(service.CodecManager.GetReader(typeof(Stream), MediaType.ApplicationOctetStream));
-      Assert.IsNotNull(service.CodecManager.GetReader(typeof(Stream), new MediaType("image/jpeg")));
-      Assert.IsNotNull(service.CodecManager.GetReader(typeof(Stream), new MediaType("unknown/other")));
+      Assert.That(service.CodecManager.GetReader(typeof(Stream), MediaType.ApplicationOctetStream), Is.Not.Null);
+      Assert.That(service.CodecManager.GetReader(typeof(Stream), new MediaType("image/jpeg")), Is.Not.Null);
+      Assert.That(service.CodecManager.GetReader(typeof(Stream), new MediaType("unknown/other")), Is.Not.Null);
 
       // Writers
-      Assert.IsNotNull(service.CodecManager.GetWriter(typeof(Stream), MediaType.ApplicationOctetStream));
-      Assert.IsNotNull(service.CodecManager.GetWriter(typeof(Stream), new MediaType("image/jpeg")));
-      Assert.IsNotNull(service.CodecManager.GetWriter(typeof(Stream), new MediaType("unknown/other")));
+      Assert.That(service.CodecManager.GetWriter(typeof(Stream), MediaType.ApplicationOctetStream), Is.Not.Null);
+      Assert.That(service.CodecManager.GetWriter(typeof(Stream), new MediaType("image/jpeg")), Is.Not.Null);
+      Assert.That(service.CodecManager.GetWriter(typeof(Stream), new MediaType("unknown/other")), Is.Not.Null);
     }
 
 

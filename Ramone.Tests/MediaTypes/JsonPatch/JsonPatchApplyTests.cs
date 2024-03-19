@@ -27,7 +27,7 @@ namespace Ramone.Tests.MediaTypes.JsonPatch
 
       // Assert
       Assert.That(callback.newDoc.ToString(), Is.EqualTo(doc.ToString()));
-      Assert.IsTrue(callback.IsComplete, "Apply() method must call Complete.");
+      Assert.That(callback.IsComplete, Is.True, "Apply() method must call Complete.");
     }
 
 

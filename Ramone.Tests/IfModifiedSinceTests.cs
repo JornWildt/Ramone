@@ -28,7 +28,7 @@ namespace Ramone.Tests
         HeaderList headers = r.Body;
 
         // Assert
-        Assert.IsTrue(headers.Any(h => h == "If-Modified-Since: Wed, 01 May 2013 08:22:11 GMT"), "Must contain If-Modified-Since header");
+        Assert.That(headers.Any(h => h == "If-Modified-Since: Wed, 01 May 2013 08:22:11 GMT"), Is.True, "Must contain If-Modified-Since header");
       }
     }
 
@@ -49,7 +49,7 @@ namespace Ramone.Tests
         HeaderList headers = r.Body;
 
         // Assert
-        Assert.IsTrue(headers.Any(h => h == "If-Modified-Since: Wed, 01 May 2013 08:22:11 GMT"), "Must contain If-Modified-Since header");
+        Assert.That(headers.Any(h => h == "If-Modified-Since: Wed, 01 May 2013 08:22:11 GMT"), Is.True, "Must contain If-Modified-Since header");
       }
     }
 
@@ -73,7 +73,7 @@ namespace Ramone.Tests
             HeaderList headers = r.Body;
 
             // Assert
-            Assert.IsTrue(headers.Any(h => h == "If-Modified-Since: Wed, 01 May 2013 08:22:11 GMT"), "Must contain If-Modified-Since header");
+            Assert.That(headers.Any(h => h == "If-Modified-Since: Wed, 01 May 2013 08:22:11 GMT"), Is.True, "Must contain If-Modified-Since header");
             wh.Set();
           });
       });
@@ -99,7 +99,7 @@ namespace Ramone.Tests
             HeaderList headers = r.Body;
 
             // Assert
-            Assert.IsTrue(headers.Any(h => h == "If-Modified-Since: Wed, 01 May 2013 08:22:11 GMT"), "Must contain If-Modified-Since header");
+            Assert.That(headers.Any(h => h == "If-Modified-Since: Wed, 01 May 2013 08:22:11 GMT"), Is.True, "Must contain If-Modified-Since header");
             wh.Set();
           });
       });
