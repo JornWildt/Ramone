@@ -137,7 +137,7 @@ namespace Ramone.Tests.Blog
           {
             Title = "New item",
             Text = "Yaj!",
-            Image = new File("..\\..\\data1.gif", "image/gif")
+            Image = new File("..\\..\\..\\data1.gif", "image/gif")
           };
           form.Value(args);
 

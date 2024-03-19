@@ -55,7 +55,7 @@ Abc
         FileData data = new FileData
         {
           MyString = "Abc ÆØÅ",
-          MyFile = new Ramone.IO.File("..\\..\\data1.txt")
+          MyFile = new Ramone.IO.File("..\\..\\..\\data1.txt")
         };
         new MultipartFormDataSerializer(typeof(FileData)).Serialize(s, data, Encoding.UTF8, "xyzq");
 
@@ -91,7 +91,7 @@ Content-Disposition: form-data; name=""MyFile""; filename=""data1.txt""
       {
         FileData data = new FileData
         {
-          MyFile = new FileWithSpecialName("..\\..\\data1.txt", "Bøllefrø.txt")
+          MyFile = new FileWithSpecialName("..\\..\\..\\data1.txt", "Bøllefrø.txt")
         };
         new MultipartFormDataSerializer(typeof(FileData)).Serialize(s, data, Encoding.UTF8, "xyzq", settings);
 
@@ -122,7 +122,7 @@ Content-Disposition: form-data; name=""MyFile""; filename=""Bxllefrx.txt""; file
       {
         FileData data = new FileData
         {
-          MyFile = new FileWithSpecialName("..\\..\\data1.txt", "Bøllefrø.txt")
+          MyFile = new FileWithSpecialName("..\\..\\..\\data1.txt", "Bøllefrø.txt")
         };
         new MultipartFormDataSerializer(typeof(FileData)).Serialize(s, data, Encoding.UTF8, "xyzq", settings);
 
@@ -151,7 +151,7 @@ Content-Disposition: form-data; name=""MyFile""; filename=""Bxllefrx.txt""
         FileData data = new FileData
         {
           MyString = "Abc ÆØÅ",
-          MyFile = new Ramone.IO.File("..\\..\\data1.gif", "image/gif")
+          MyFile = new Ramone.IO.File("..\\..\\..\\data1.gif", "image/gif")
         };
         new MultipartFormDataSerializer(typeof(FileData)).Serialize(s, data, Encoding.UTF8, "xyzq");
 

@@ -57,7 +57,7 @@ namespace Ramone.Tests.MediaTypes.MultipartFormData
     public void CanPostMultipartFormDataWithFileUsingHashtable()
     {
       // Arrange
-      IFile file = new File("..\\..\\data1.txt");
+      IFile file = new File("..\\..\\..\\data1.txt");
       Hashtable data = new Hashtable();
       data["DataFile"] = file;
       data["Age"] = 10;
@@ -77,7 +77,7 @@ namespace Ramone.Tests.MediaTypes.MultipartFormData
     public void CanPostMultipartFormDataWithFile()
     {
       // Arrange
-      IFile file = new File("..\\..\\data1.txt");
+      IFile file = new File("..\\..\\..\\data1.txt");
       MultipartDataFile data = new MultipartDataFile { DataFile = file, Age = 10 };
       Request formdataReq = Session.Bind(MultipartFormDataFileTemplate);
 
@@ -97,7 +97,7 @@ namespace Ramone.Tests.MediaTypes.MultipartFormData
     public void CanPostMultipartFormDataWithSpecialFilenameUsingHashtable_ItMustReplaceSpecialCharsWithX()
     {
       // Arrange
-      IFile file = new FileWithSpecialName("..\\..\\data1.txt", "Bøllefrø.txt");
+      IFile file = new FileWithSpecialName("..\\..\\..\\data1.txt", "Bøllefrø.txt");
       Hashtable data = new Hashtable();
       data["DataFile"] = file;
       data["Age"] = 10;
@@ -117,7 +117,7 @@ namespace Ramone.Tests.MediaTypes.MultipartFormData
     public void CanPostMultipartFormDataWithSpecialFilename_ItMustReplaceSpecialCharsWithX()
     {
       // Arrange
-      IFile file = new FileWithSpecialName("..\\..\\data1.txt", "Bøllefrø.txt");
+      IFile file = new FileWithSpecialName("..\\..\\..\\data1.txt", "Bøllefrø.txt");
       MultipartDataFile data = new MultipartDataFile { DataFile = file, Age = 10 };
       Request formdataReq = Session.Bind(MultipartFormDataFileTemplate);
 
@@ -156,7 +156,7 @@ namespace Ramone.Tests.MediaTypes.MultipartFormData
     public void CanPostMultipartFormDataWithBinaryFile()
     {
       // Arrange
-      IFile file = new File("..\\..\\data1.gif", "image/gif");
+      IFile file = new File("..\\..\\..\\data1.gif", "image/gif");
       MultipartDataFile data = new MultipartDataFile { DataFile = file, Age = 99 };
       Request formdataReq = Session.Bind(MultipartFormDataFileTemplate);
 
@@ -174,7 +174,7 @@ namespace Ramone.Tests.MediaTypes.MultipartFormData
     public void CanPostMultipartFormDataWithAdditionalFilenameSpecified()
     {
       // Arrange
-      IFile file = new File("..\\..\\data1.gif", "image/gif", "other-filename.guf");
+      IFile file = new File("..\\..\\..\\data1.gif", "image/gif", "other-filename.guf");
       MultipartDataFile data = new MultipartDataFile { DataFile = file, Age = 99 };
       Request formdataReq = Session.Bind(MultipartFormDataFileTemplate);
 

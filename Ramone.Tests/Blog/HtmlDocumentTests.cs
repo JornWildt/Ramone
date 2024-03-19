@@ -143,7 +143,7 @@ namespace Ramone.Tests.Blog
           IKeyValueForm form = createDescriptor.Body.DocumentNode.SelectNodes(@"//form[@id=""create""]").First().Form(createDescriptor);
 
           // - Populate form inputs
-          IFile file = new File("..\\..\\data1.gif", "image/gif");
+          IFile file = new File("..\\..\\..\\data1.gif", "image/gif");
           form.Value("Title", "New item");
           form.Value("Text", "Yaj!");
           form.Value("Image", file);

@@ -103,7 +103,7 @@ namespace Ramone.Tests.Utility
       hashtable["B"] = "xyz";
 
       // Act
-      CheckSerialization("A=123&B=xyz", hashtable);
+      CheckSerialization("A=123&B=xyz", hashtable, "B=xyz&A=123");
     }
 
 
@@ -118,7 +118,7 @@ namespace Ramone.Tests.Utility
     }
 
 
-    protected void CheckSerialization(string expected, object data)
+    protected void CheckSerialization(string expected, object data, string alternative = "")
     {
       using (MemoryStream s = new MemoryStream())
       using (StreamWriter w = new StreamWriter(s))
@@ -132,7 +132,7 @@ namespace Ramone.Tests.Utility
         using (StreamReader r = new StreamReader(s, Encoding.ASCII))
         {
           string result = r.ReadToEnd();
-          Assert.That(result, Is.EqualTo(expected));
+          Assert.That(result, Is.EqualTo(expected).Or.EqualTo(alternative));
         }
       }
     }

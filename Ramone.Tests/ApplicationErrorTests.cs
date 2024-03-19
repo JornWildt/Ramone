@@ -62,6 +62,7 @@ namespace Ramone.Tests
       // Example: for some odd reasons a web response is created outside of Ramone and we now try to decode it,
       // but without a session at hand.
 
+#pragma warning disable SYSLIB0014
       WebRequest request = WebRequest.Create(BindingExtensions.BindTemplate(BaseUrl, DossierTemplate, new { id = 8 }));
       using (WebResponse response = request.GetResponse())
       {
@@ -70,6 +71,7 @@ namespace Ramone.Tests
           () => ramoneResponse.Decode<ApplicationError>(),
           ex => ex.Message.Contains("session"));
       }
+#pragma warning restore SYSLIB0014
     }
   }
 }

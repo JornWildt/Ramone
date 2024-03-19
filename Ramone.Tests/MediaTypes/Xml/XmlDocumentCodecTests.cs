@@ -5,7 +5,6 @@ using System;
 using Ramone.Tests.Common;
 using Ramone.MediaTypes.Xml;
 
-
 namespace Ramone.Tests.MediaTypes.Xml
 {
   [TestFixture]

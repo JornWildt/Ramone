@@ -177,8 +177,8 @@ namespace Ramone.Tests.Utility
         B = new string[] { "abc", "xyz" },
         A = new Hashtable()
       };
-      ((Hashtable)o.A)["p"] = 17;
-      ((Hashtable)o.A)["q"] = "abc";
+      o.A["p"] = 17;
+      o.A["q"] = "abc";
 
       ObjectSerializerSettings settings = new ObjectSerializerSettings
       {
@@ -191,7 +191,8 @@ namespace Ramone.Tests.Utility
       string result = Serialize(o, settings);
 
       // Assert
-      Assert.That(result, Is.EqualTo("|B:0=abc|B:1=xyz|A#p=17|A#q=abc"));
+      // - Check two different outcomes since Hashtable is not ordered.
+      Assert.That(result, Is.EqualTo("|B:0=abc|B:1=xyz|A#p=17|A#q=abc").Or.EqualTo("|B:0=abc|B:1=xyz|A#q=abc|A#p=17"));
     }
 
 

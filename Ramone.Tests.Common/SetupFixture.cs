@@ -17,7 +17,7 @@ namespace Ramone.Tests.Common
   public class SetupFixture
   {
     [OneTimeSetUp]
-    public void Setup()
+    public virtual void Setup()
     {
       Environment.CurrentDirectory = Path.GetDirectoryName(Assembly.GetAssembly(typeof(SetupFixture)).Location);
       AtomInitializer.Initialize();
