@@ -14,7 +14,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documents", "Documents", "{
 		test.runsettings = test.runsettings
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ramone.Tests", "Ramone.Tests\Ramone.Tests.csproj", "{D1BE3B6D-C886-4C78-8826-036E5834A08E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ramone.Tests", "Ramone.Tests\Ramone.Tests.csproj", "{D1BE3B6D-C886-4C78-8826-036E5834A08E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ramone.Tests.Server", "Ramone.Tests.Server\Ramone.Tests.Server.csproj", "{BC8D95DB-9320-4E7A-BD1E-C63F3710D9FB}"
 EndProject
@@ -27,8 +27,6 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ramone.MediaTypes.Atom", "Ramone.MediaTypes.Atom\Ramone.MediaTypes.Atom.csproj", "{082E983F-80BB-4CFA-81AA-907199B5EEBB}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ramone.OAuth2", "Ramone.OAuth2\Ramone.OAuth2.csproj", "{8CC811EC-D8F6-44D6-BF3C-026385956D5A}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ramone.Tests.Core", "Ramone.Tests.Core\Ramone.Tests.Core.csproj", "{EAEA6219-60FD-41FC-8040-FAEE045DAD39}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -118,18 +116,6 @@ Global
 		{8CC811EC-D8F6-44D6-BF3C-026385956D5A}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{8CC811EC-D8F6-44D6-BF3C-026385956D5A}.Release|x86.ActiveCfg = Release|Any CPU
 		{8CC811EC-D8F6-44D6-BF3C-026385956D5A}.Release|x86.Build.0 = Release|Any CPU
-		{EAEA6219-60FD-41FC-8040-FAEE045DAD39}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{EAEA6219-60FD-41FC-8040-FAEE045DAD39}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{EAEA6219-60FD-41FC-8040-FAEE045DAD39}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{EAEA6219-60FD-41FC-8040-FAEE045DAD39}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{EAEA6219-60FD-41FC-8040-FAEE045DAD39}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{EAEA6219-60FD-41FC-8040-FAEE045DAD39}.Debug|x86.Build.0 = Debug|Any CPU
-		{EAEA6219-60FD-41FC-8040-FAEE045DAD39}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{EAEA6219-60FD-41FC-8040-FAEE045DAD39}.Release|Any CPU.Build.0 = Release|Any CPU
-		{EAEA6219-60FD-41FC-8040-FAEE045DAD39}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{EAEA6219-60FD-41FC-8040-FAEE045DAD39}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{EAEA6219-60FD-41FC-8040-FAEE045DAD39}.Release|x86.ActiveCfg = Release|Any CPU
-		{EAEA6219-60FD-41FC-8040-FAEE045DAD39}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
