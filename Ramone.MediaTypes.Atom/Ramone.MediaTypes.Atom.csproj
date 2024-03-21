@@ -13,15 +13,18 @@
     <RepositoryUrl>https://github.com/JornWildt/Ramone.git</RepositoryUrl>
     <RepositoryType>GIT</RepositoryType>
     <PackageTags>REST JSON XML HTTP WEB API ATOM</PackageTags>
-    <PackageReleaseNotes>Multi target to avoid funny issues with missing System.Object.</PackageReleaseNotes>
-    <Version>1.1.0</Version>
-    <AssemblyVersion>1.1.0.0</AssemblyVersion>
-    <FileVersion>1.1.0.0</FileVersion>
+    <PackageReleaseNotes>
+      2.0.0 - Update System.ServiceModel.Syndication to version 8.0.0.
+              Removed support for .NET Core 3.1.
+      1.1.0 - Multi target to avoid funny issues with missing System.Object.</PackageReleaseNotes>
+    <Version>2.0.0</Version>
+    <AssemblyVersion>2.0.0.0</AssemblyVersion>
+    <FileVersion>2.0.0.0</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Ramone\Ramone.csproj" />
-    <PackageReference Include="System.ServiceModel.Syndication" Version="5.0.0" />
+    <PackageReference Include="System.ServiceModel.Syndication" Version="8.0.0" />
   </ItemGroup>
 
 </Project>

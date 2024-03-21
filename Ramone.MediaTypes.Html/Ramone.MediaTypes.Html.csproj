@@ -13,9 +13,14 @@
     <RepositoryUrl>https://github.com/JornWildt/Ramone.git</RepositoryUrl>
     <RepositoryType>GIT</RepositoryType>
     <PackageTags>REST JSON XML HTTP WEB API HTML</PackageTags>
-    <PackageReleaseNotes>Update HtmlAgilityPack reference to 1.11.34.
-Multi target to avoid funny issues with missing System.Object.</PackageReleaseNotes>
-    <Version>1.1.0</Version>
+    <PackageReleaseNotes>
+      2.0.0 - Update HtmlAgilityPack reference to 1.11.59
+              Removed support for .NET Core 3.1.
+      1.1.0 - Update HtmlAgilityPack reference to 1.11.34.
+              Multi target to avoid funny issues with missing System.Object.</PackageReleaseNotes>
+    <Version>2.0.0</Version>
+    <AssemblyVersion>2.0.0.0</AssemblyVersion>
+    <FileVersion>2.0.0.0</FileVersion>
   </PropertyGroup>
  
   <ItemGroup>

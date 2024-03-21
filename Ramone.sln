@@ -8,7 +8,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documents", "Documents", "{
 		BUILD.TXT = BUILD.TXT
 		LICENSE.TXT = LICENSE.TXT
 		make-doc.bat = make-doc.bat
-		Ramone\Ramone.nuspec = Ramone\Ramone.nuspec
 		README.TXT = README.TXT
 		RELEASE-NOTES.TXT = RELEASE-NOTES.TXT
 		test.runsettings = test.runsettings
