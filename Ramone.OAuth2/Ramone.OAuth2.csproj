@@ -18,7 +18,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="jose-jwt" Version="3.1.1" />
+    <PackageReference Include="jose-jwt" Version="4.1.0" />
   </ItemGroup>
 
   <ItemGroup>
