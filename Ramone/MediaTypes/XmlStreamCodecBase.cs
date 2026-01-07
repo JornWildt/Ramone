@@ -42,8 +42,9 @@ namespace Ramone.MediaTypes
     public void WriteTo(WriterContext context)
     {
       Encoding enc = MediaTypeParser.GetEncodingFromCharset(context.Request.ContentType, context.Session.DefaultEncoding);
+      var writerSettings = new XmlWriterSettings { Encoding = enc, CloseOutput = false };
 
-      using (var writer = new XmlTextWriter(context.HttpStream, enc))
+      using (var writer = XmlWriter.Create(context.HttpStream, writerSettings))
       {
         WriteTo(context.Data, writer, context);
       }

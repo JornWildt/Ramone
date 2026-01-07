@@ -28,7 +28,7 @@ namespace Ramone.Tests.Common.Codecs
     public void WriteTo(WriterContext context)
     {
       Cat c = (Cat)context.Data;
-      using (StreamWriter w = new StreamWriter(context.HttpStream, Encoding.UTF8))
+      using (StreamWriter w = new StreamWriter(context.HttpStream, Encoding.UTF8, 1024, leaveOpen: true))
       {
         w.Write(c.Name);
       }

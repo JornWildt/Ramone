@@ -33,7 +33,7 @@ namespace Ramone.MediaTypes
     {
       Encoding enc = MediaTypeParser.GetEncodingFromCharset(context.Request.ContentType, DefaultEncoding ?? context.Session.DefaultEncoding);
 
-      using (var writer = new StreamWriter(context.HttpStream, enc))
+      using (var writer = new StreamWriter(context.HttpStream, enc, 1024, leaveOpen: true))
       {
         WriteTo(context.Data as TEntity, writer, context);
       }
