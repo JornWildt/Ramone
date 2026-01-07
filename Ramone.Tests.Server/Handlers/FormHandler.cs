@@ -23,7 +23,7 @@ namespace Ramone.Tests.Server.Handlers
       Select = HttpUtility.UrlDecode(Select);
       string actionUrl = null;
       object parameters = new { actionUrlMode = actionUrlMode, encType = encType, charset = charset, method = method };
-      Uri newUri = BindingExtensions.BindTemplate(CommunicationContext.ApplicationBaseUri, new Template(Constants.FormSimplePath), parameters);
+      Uri newUri = BindingExtensions.BindTemplate(CommunicationContext.ApplicationBaseUri.EnsureHasTrailingSlash(), new Template(Constants.FormSimplePath), parameters);
 
       if (actionUrlMode == "absolute")
         actionUrl = newUri.AbsoluteUri;

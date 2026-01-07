@@ -1,3 +1,13 @@
+Version 5.0.1.0
+---------------
+* Avoid ObjectDisposedException when running on .NET 9+
+* Use latest Newtonsoft.Json - 13.0.4
+
+Version 5.0.0.0
+---------------
+* Removed support for .NET Core 3.1.
+* Use System.Net.Http.Headers.AuthenticationHeaderValue to parse authentication header.
+
 Version 4.2.0.0
 ---------------
 * Use System.Net.Http.Headers.AuthenticationHeaderValue to parse authentication header.

@@ -209,7 +209,7 @@ namespace Ramone.Tests
     public void CanBind_UriTemplate_NonTemplated()
     {
       // Act
-      Request req = Session.Bind(new Template("/cats"));
+      Request req = Session.Bind(new Template("cats"));
 
       // Assert
       Assert.That(req.Url.AbsoluteUri, Is.EqualTo(BaseUrl + "cats"));
@@ -220,7 +220,7 @@ namespace Ramone.Tests
     public void CanBind_String_NonTemplatedPath()
     {
       // Act
-      Request req = Session.Bind("/cats");
+      Request req = Session.Bind("cats");
 
       // Assert
       Assert.That(req.Url.AbsoluteUri, Is.EqualTo(BaseUrl + "cats"));
